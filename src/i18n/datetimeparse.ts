@@ -623,7 +623,8 @@ goog.scope(() => {
       case 'h': // HOUR (1..12)
       case 'K': // HOUR (0..11)
       case 'H': // HOUR_OF_DAY (0..23)
-      case 'k': { // HOUR_OF_DAY (1..24)
+      case 'k': {
+        // HOUR_OF_DAY (1..24)
         const success = this.subParseInt_(
           text,
           pos,
@@ -636,7 +637,8 @@ goog.scope(() => {
         );
         return predictive ? success : true;
       }
-      case 'm': { // MINUTE
+      case 'm': {
+        // MINUTE
         const success = this.subParseInt_(
           text,
           pos,

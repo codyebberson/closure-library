@@ -299,5 +299,6 @@ goog.editor.plugins.FirstStrong.isBlock_ = (node) =>
  */
 goog.editor.plugins.FirstStrong.isGeckoBlock_ = (node) =>
   !!node &&
-  /** @type {!Element} */ ((node).tagName == goog.dom.TagName.BR ||
-    goog.editor.plugins.FirstStrong.isBlock_(node));
+  /** @type {!Element} */ (
+    node.tagName == goog.dom.TagName.BR || goog.editor.plugins.FirstStrong.isBlock_(node)
+  );

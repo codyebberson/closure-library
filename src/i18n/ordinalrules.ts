@@ -198,7 +198,9 @@ goog.i18n.ordinalRules.azSelect_ = (n, precision) => {
     i % 10 == 5 ||
     i % 10 == 7 ||
     i % 10 == 8 ||
-    i % 100 == 20 || i % 100 == 50 || i % 100 == 70 ||
+    i % 100 == 20 ||
+    i % 100 == 50 ||
+    i % 100 == 70 ||
     i % 100 == 80
   ) {
     return goog.i18n.ordinalRules.Keyword.ONE;
@@ -207,13 +209,13 @@ goog.i18n.ordinalRules.azSelect_ = (n, precision) => {
     i % 10 == 3 ||
     i % 10 == 4 ||
     i % 1000 == 100 ||
-      i % 1000 == 200 ||
-      i % 1000 == 300 ||
-      i % 1000 == 400 ||
-      i % 1000 == 500 ||
-      i % 1000 == 600 ||
-      i % 1000 == 700 ||
-      i % 1000 == 800 ||
+    i % 1000 == 200 ||
+    i % 1000 == 300 ||
+    i % 1000 == 400 ||
+    i % 1000 == 500 ||
+    i % 1000 == 600 ||
+    i % 1000 == 700 ||
+    i % 1000 == 800 ||
     i % 1000 == 900
   ) {
     return goog.i18n.ordinalRules.Keyword.FEW;
@@ -239,7 +241,9 @@ goog.i18n.ordinalRules.kaSelect_ = (n, precision) => {
   }
   if (
     i == 0 ||
-    (i % 100 >= 2 && i % 100 <= 20) || i % 100 == 40 || i % 100 == 60 ||
+    (i % 100 >= 2 && i % 100 <= 20) ||
+    i % 100 == 40 ||
+    i % 100 == 60 ||
     i % 100 == 80
   ) {
     return goog.i18n.ordinalRules.Keyword.MANY;

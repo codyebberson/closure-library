@@ -890,7 +890,7 @@ goog.addSingletonGetter = (ctor) => {
       goog.instantiatedSingletons_[goog.instantiatedSingletons_.length] = ctor;
     }
     // Cast to avoid conformance violations that ctor.instance_ is unknown
-    return /** @type {!Object|undefined} */ ((ctor.instance_) = new ctor());
+    return /** @type {!Object|undefined} */ ((ctor.instance_ = new ctor()));
   };
 };
 

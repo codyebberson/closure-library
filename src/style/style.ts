@@ -479,7 +479,8 @@ goog.style.getVisibleRectForElement = (element) => {
       // body may have overflow set on it, yet we still get the entire
       // viewport. In some browsers, el.offsetParent may be
       // document.documentElement, so check for that too.
-      el != body && el != documentElement &&
+      el != body &&
+      el != documentElement &&
       goog.style.getStyle_(el, 'overflow') != 'visible'
     ) {
       var pos = goog.style.getPageOffset(el);

@@ -183,12 +183,10 @@ goog.ui.DimensionPickerRenderer.prototype.createDom = function (control) {
   var classNames = this.getClassNames(palette);
   // Hide the element from screen readers so they don't announce "1 of 1" for
   // the perceived number of items in the palette.
-  var element = palette
-    .getDomHelper()
-    .createDom(goog.dom.TagName.DIV, {
-      class: classNames ? classNames.join(' ') : '',
-      'aria-hidden': 'true',
-    });
+  var element = palette.getDomHelper().createDom(goog.dom.TagName.DIV, {
+    class: classNames ? classNames.join(' ') : '',
+    'aria-hidden': 'true',
+  });
   this.addElementContents_(palette, element);
   this.updateSize(palette, element);
   return element;
