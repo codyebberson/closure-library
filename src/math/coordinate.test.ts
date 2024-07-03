@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.math.CoordinateTest');
-goog.setTestOnly();
 
 const Coordinate = goog.require('goog.math.Coordinate');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -40,7 +39,7 @@ testSuite({
   },
 
   testCoordinate5() {
-    const dim5 = new Coordinate(NaN, 1000);
+    const dim5 = new Coordinate(Number.NaN, 1000);
     assertTrue(isNaN(dim5.x));
     assertEquals(1000, dim5.y);
     assertEquals('(NaN, 1000)', dim5.toString());
@@ -90,14 +89,16 @@ testSuite({
 
   testCoordinateDifference() {
     assertObjectEquals(
-        new Coordinate(3, -40),
-        Coordinate.difference(new Coordinate(5, 10), new Coordinate(2, 50)));
+      new Coordinate(3, -40),
+      Coordinate.difference(new Coordinate(5, 10), new Coordinate(2, 50))
+    );
   },
 
   testCoordinateSum() {
     assertObjectEquals(
-        new Coordinate(7, 60),
-        Coordinate.sum(new Coordinate(5, 10), new Coordinate(2, 50)));
+      new Coordinate(7, 60),
+      Coordinate.sum(new Coordinate(5, 10), new Coordinate(2, 50))
+    );
   },
 
   testCoordinateCeil() {

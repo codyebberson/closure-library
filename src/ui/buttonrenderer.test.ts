@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.ButtonRendererTest');
-goog.setTestOnly();
 
 const Button = goog.require('goog.ui.Button');
 const ButtonRenderer = goog.require('goog.ui.ButtonRenderer');
@@ -65,14 +64,15 @@ testSuite({
   },
 
   testConstructor() {
-    assertNotNull(
-        'ButtonRenderer singleton instance must not be null', buttonRenderer);
+    assertNotNull('ButtonRenderer singleton instance must not be null', buttonRenderer);
   },
 
   testGetAriaRole() {
     assertEquals(
-        'ButtonRenderer\'s ARIA role must have expected value', Role.BUTTON,
-        buttonRenderer.getAriaRole());
+      "ButtonRenderer's ARIA role must have expected value",
+      Role.BUTTON,
+      buttonRenderer.getAriaRole()
+    );
   },
 
   testCreateDom() {
@@ -80,8 +80,10 @@ testSuite({
     assertNotNull('Element must not be null', element);
     assertEquals('Element must be a DIV', String(TagName.DIV), element.tagName);
     assertHTMLEquals(
-        'Element must have expected structure',
-        '<div class="goog-button">Hello</div>', dom.getOuterHtml(element));
+      'Element must have expected structure',
+      '<div class="goog-button">Hello</div>',
+      dom.getOuterHtml(element)
+    );
 
     button.setTooltip('Hello, world!');
     button.setValue('foo');
@@ -89,19 +91,21 @@ testSuite({
     assertNotNull('Element must not be null', element);
     assertEquals('Element must be a DIV', 'DIV', element.tagName);
     assertSameElements(
-        'Element must have expected class name', ['goog-button'],
-        classlist.get(element));
-    assertEquals(
-        'Element must have expected title', 'Hello, world!', element.title);
+      'Element must have expected class name',
+      ['goog-button'],
+      classlist.get(element)
+    );
+    assertEquals('Element must have expected title', 'Hello, world!', element.title);
     assertUndefined('Element must have no value', element.value);
-    assertEquals(
-        'Element must have expected contents', 'Hello', element.innerHTML);
+    assertEquals('Element must have expected contents', 'Hello', element.innerHTML);
 
     button.setSupportedState(Component.State.CHECKED, true);
     element = buttonRenderer.createDom(button);
     assertEquals(
-        'button\'s aria-pressed attribute must be false', 'false',
-        aria.getState(element, State.PRESSED));
+      "button's aria-pressed attribute must be false",
+      'false',
+      aria.getState(element, State.PRESSED)
+    );
   },
 
   testSetTooltip() {
@@ -122,8 +126,10 @@ testSuite({
     const element = buttonRenderer.createDom(button);
 
     assertEquals(
-        'button\'s aria-pressed attribute must be true', 'true',
-        aria.getState(element, State.PRESSED));
+      "button's aria-pressed attribute must be true",
+      'true',
+      aria.getState(element, State.PRESSED)
+    );
   },
 
   testUseAriaPressedForSelected() {
@@ -134,11 +140,15 @@ testSuite({
     const element = button.getElement();
 
     assertEquals(
-        'button\'s aria-pressed attribute must be true', 'true',
-        aria.getState(element, State.PRESSED));
+      "button's aria-pressed attribute must be true",
+      'true',
+      aria.getState(element, State.PRESSED)
+    );
     assertEquals(
-        'button\'s aria-selected attribute must be empty', '',
-        aria.getState(element, State.SELECTED));
+      "button's aria-selected attribute must be empty",
+      '',
+      aria.getState(element, State.SELECTED)
+    );
   },
 
   testAriaDisabled() {
@@ -148,27 +158,27 @@ testSuite({
     const element = button.getElement();
 
     assertEquals(
-        'button\'s aria-disabled attribute must be true', 'true',
-        aria.getState(element, State.DISABLED));
+      "button's aria-disabled attribute must be true",
+      'true',
+      aria.getState(element, State.DISABLED)
+    );
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testDecorate() {
-    sandbox.innerHTML = '<div id="foo">Foo</div>\n' +
-        '<div id="bar" title="Hello, world!">Bar</div>\n' +
-        '<div id="toggle">Toggle</div>';
+    sandbox.innerHTML =
+      '<div id="foo">Foo</div>\n' +
+      '<div id="bar" title="Hello, world!">Bar</div>\n' +
+      '<div id="toggle">Toggle</div>';
 
     const foo = new Button(null, buttonRenderer);
     foo.decorate(dom.getElement('foo'));
-    assertEquals(
-        'foo\'s tooltip must be the empty string', '', foo.getTooltip());
+    assertEquals("foo's tooltip must be the empty string", '', foo.getTooltip());
     foo.dispose();
 
     const bar = new Button(null, buttonRenderer);
     bar.decorate(dom.getElement('bar'));
-    assertEquals(
-        'bar\'s tooltip must be initialized', 'Hello, world!',
-        bar.getTooltip());
+    assertEquals("bar's tooltip must be initialized", 'Hello, world!', bar.getTooltip());
     bar.dispose();
 
     const toggle = new Button(null, buttonRenderer);
@@ -177,8 +187,10 @@ testSuite({
     assertNotNull(element);
     toggle.decorate(element);
     assertEquals(
-        'toggle\'s aria-pressed attribute must be false', 'false',
-        aria.getState(element, State.PRESSED));
+      "toggle's aria-pressed attribute must be false",
+      'false',
+      aria.getState(element, State.PRESSED)
+    );
     toggle.dispose();
   },
 
@@ -186,17 +198,22 @@ testSuite({
   testCollapse() {
     buttonRenderer.setCollapsed(button, ButtonSide.START);
     assertSameElements(
-        'Button should have class to collapse start',
-        ['goog-button-collapse-left'], button.getExtraClassNames());
+      'Button should have class to collapse start',
+      ['goog-button-collapse-left'],
+      button.getExtraClassNames()
+    );
     buttonRenderer.setCollapsed(button, ButtonSide.END);
     assertSameElements(
-        'Button should have class to collapse end',
-        ['goog-button-collapse-right'], button.getExtraClassNames());
+      'Button should have class to collapse end',
+      ['goog-button-collapse-right'],
+      button.getExtraClassNames()
+    );
     buttonRenderer.setCollapsed(button, ButtonSide.BOTH);
     assertSameElements(
-        'Button should have classes to collapse both',
-        ['goog-button-collapse-left', 'goog-button-collapse-right'],
-        button.getExtraClassNames());
+      'Button should have classes to collapse both',
+      ['goog-button-collapse-left', 'goog-button-collapse-right'],
+      button.getExtraClassNames()
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -204,26 +221,32 @@ testSuite({
     button.setRightToLeft(true);
     buttonRenderer.setCollapsed(button, ButtonSide.START);
     assertSameElements(
-        'Button should have class to collapse start',
-        ['goog-button-collapse-right'], button.getExtraClassNames());
+      'Button should have class to collapse start',
+      ['goog-button-collapse-right'],
+      button.getExtraClassNames()
+    );
     buttonRenderer.setCollapsed(button, ButtonSide.END);
     assertSameElements(
-        'Button should have class to collapse end',
-        ['goog-button-collapse-left'], button.getExtraClassNames());
+      'Button should have class to collapse end',
+      ['goog-button-collapse-left'],
+      button.getExtraClassNames()
+    );
     buttonRenderer.setCollapsed(button, ButtonSide.BOTH);
     assertSameElements(
-        'Button should have classes to collapse both',
-        ['goog-button-collapse-left', 'goog-button-collapse-right'],
-        button.getExtraClassNames());
+      'Button should have classes to collapse both',
+      ['goog-button-collapse-left', 'goog-button-collapse-right'],
+      button.getExtraClassNames()
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
   testCollapseWithStructuralClass() {
     testRenderer.setCollapsed(button, ButtonSide.BOTH);
     assertSameElements(
-        'Should use structural class for collapse classes',
-        ['goog-base-collapse-left', 'goog-base-collapse-right'],
-        button.getExtraClassNames());
+      'Should use structural class for collapse classes',
+      ['goog-base-collapse-left', 'goog-base-collapse-right'],
+      button.getExtraClassNames()
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -231,23 +254,31 @@ testSuite({
     const element = buttonRenderer.createDom(button);
     buttonRenderer.updateAriaState(element, Component.State.CHECKED, true);
     assertEquals(
-        'Button must have pressed ARIA state', 'true',
-        aria.getState(element, State.PRESSED));
+      'Button must have pressed ARIA state',
+      'true',
+      aria.getState(element, State.PRESSED)
+    );
 
     // Test for updating a state other than CHECKED
     buttonRenderer.updateAriaState(element, Component.State.DISABLED, true);
     assertEquals(
-        'Button must have disabled ARIA state', 'true',
-        aria.getState(element, State.DISABLED));
+      'Button must have disabled ARIA state',
+      'true',
+      aria.getState(element, State.DISABLED)
+    );
 
     buttonRenderer.updateAriaState(element, Component.State.CHECKED, false);
     assertEquals(
-        'Control must no longer have pressed ARIA state', 'false',
-        aria.getState(element, State.PRESSED));
+      'Control must no longer have pressed ARIA state',
+      'false',
+      aria.getState(element, State.PRESSED)
+    );
     buttonRenderer.updateAriaState(element, Component.State.SELECTED, true);
     assertEquals(
-        'Button must have pressed ARIA state', 'true',
-        aria.getState(element, State.PRESSED));
+      'Button must have pressed ARIA state',
+      'true',
+      aria.getState(element, State.PRESSED)
+    );
   },
 
   testDoesntCallGetCssClassInConstructor() {

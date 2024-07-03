@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.structs.TrieTest');
-goog.setTestOnly();
 
 const Trie = goog.require('goog.structs.Trie');
 const googObject = goog.require('goog.object');
@@ -29,9 +28,7 @@ function makeTrie() {
 function checkTrie(trie) {
   assertEquals('get, should be 1', trie.get('hello'), 1);
   assertEquals('get, should be "howdy"', trie.get('hi'), 'howdy');
-  assertEquals(
-      'get, should be "an empty string key"', trie.get(''),
-      'an empty string key');
+  assertEquals('get, should be "an empty string key"', trie.get(''), 'an empty string key');
   assertEquals('get, should be ""', trie.get('empty value'), '');
   assertEquals('get, should be ""', typeof trie.get('empty value'), 'string');
   assertEquals('get, should be an object', typeof trie.get('object'), 'object');
@@ -75,15 +72,15 @@ testSuite({
 
   testTrieFromObject() {
     const someObject = {
-      'hello': 1,
-      'hi': 'howdy',
+      hello: 1,
+      hi: 'howdy',
       '': 'an empty string key',
       'empty value': '',
-      'object': {},
-      'zero': 0,
-      'null': null,
+      object: {},
+      zero: 0,
+      null: null,
       'hello, world': 2,
-      'world': {},
+      world: {},
     };
     const trie = new Trie(someObject);
     checkTrie(trie);
@@ -92,33 +89,22 @@ testSuite({
   testTrieGetValues() {
     const trie = makeTrie();
     const values = trie.getValues();
-    assertTrue(
-        'getValues, should contain "howdy"',
-        googObject.contains(values, 'howdy'));
+    assertTrue('getValues, should contain "howdy"', googObject.contains(values, 'howdy'));
     assertTrue('getValues, should contain 1', googObject.contains(values, 1));
     assertTrue('getValues, should contain 0', googObject.contains(values, 0));
     assertTrue('getValues, should contain ""', googObject.contains(values, ''));
-    assertTrue(
-        'getValues, should contain null', googObject.contains(values, null));
-    assertEquals(
-        'goog.structs.getCount(getValues()) should be 9',
-        structs.getCount(values), 9);
+    assertTrue('getValues, should contain null', googObject.contains(values, null));
+    assertEquals('goog.structs.getCount(getValues()) should be 9', structs.getCount(values), 9);
   },
 
   testTrieGetKeys() {
     const trie = makeTrie();
     const keys = trie.getKeys();
-    assertTrue(
-        'getKeys, should contain "hello"', googObject.contains(keys, 'hello'));
-    assertTrue(
-        'getKeys, should contain "empty value"',
-        googObject.contains(keys, 'empty value'));
+    assertTrue('getKeys, should contain "hello"', googObject.contains(keys, 'hello'));
+    assertTrue('getKeys, should contain "empty value"', googObject.contains(keys, 'empty value'));
     assertTrue('getKeys, should contain ""', googObject.contains(keys, ''));
-    assertTrue(
-        'getKeys, should contain "zero"', googObject.contains(keys, 'zero'));
-    assertEquals(
-        'goog.structs.getCount(getKeys()) should be 9', structs.getCount(keys),
-        9);
+    assertTrue('getKeys, should contain "zero"', googObject.contains(keys, 'zero'));
+    assertEquals('goog.structs.getCount(getKeys()) should be 9', structs.getCount(keys), 9);
   },
 
   testTrieCount() {
@@ -144,13 +130,12 @@ testSuite({
     assertUndefined('get "ke", should be undefined', trie.get('ke'));
     assertEquals('get "key1", should be "value1"', trie.get('key1'), 'value1');
     trie.add('a', 'value4');
-    assertTrue(
-        'testing internal structure, a should be a child',
-        'a' in trie.childNodes_);
+    assertTrue('testing internal structure, a should be a child', 'a' in trie.childNodes_);
     trie.remove('a');
     assertFalse(
-        'testing internal structure, a should no longer be a child',
-        'a' in trie.childNodes_);
+      'testing internal structure, a should no longer be a child',
+      'a' in trie.childNodes_
+    );
 
     trie.add('xyza', 'value');
     trie.remove('xyza');
@@ -165,9 +150,7 @@ testSuite({
     trie.add('xb', 'value');
     trie.remove('xyza');
     assertTrue('get "x" should be defined', 'x' in trie.childNodes_);
-    assertFalse(
-        'get "y" should be undefined',
-        'y' in trie.childNodes_['x'].childNodes_);
+    assertFalse('get "y" should be undefined', 'y' in trie.childNodes_['x'].childNodes_);
 
     trie.add('akey', 'value1');
     trie.add('akey1', 'value2');
@@ -192,20 +175,18 @@ testSuite({
     assertUndefined('get "ke", should be undefined', trie.get('ke'));
     assertEquals('get "key1", should be null', trie.get('key1'), null);
     trie.add('a', 'value4');
-    assertTrue(
-        'testing internal structure, a should be a child',
-        'a' in trie.childNodes_);
+    assertTrue('testing internal structure, a should be a child', 'a' in trie.childNodes_);
     trie.remove('a');
     assertFalse(
-        'testing internal structure, a should no longer be a child',
-        'a' in trie.childNodes_);
+      'testing internal structure, a should no longer be a child',
+      'a' in trie.childNodes_
+    );
 
     trie.add('xyza', null);
     trie.add('xb', 'value');
     trie.remove('xyza');
     assertTrue('Should have "x"', 'x' in trie.childNodes_);
-    assertFalse(
-        'Should not have "y"', 'y' in trie.childNodes_['x'].childNodes_);
+    assertFalse('Should not have "y"', 'y' in trie.childNodes_['x'].childNodes_);
   },
 
   testRemoveKeyException() {
@@ -214,10 +195,9 @@ testSuite({
     trie.add('abcz', 'value');
     trie.add('abc', 'value');
 
-    assertThrows(
-        'Remove should throw an error on removal of non-existent key', () => {
-          trie.remove('abcdefge');
-        });
+    assertThrows('Remove should throw an error on removal of non-existent key', () => {
+      trie.remove('abcdefge');
+    });
   },
 
   testTrieIsEmpty() {
@@ -256,78 +236,60 @@ testSuite({
 
   testTrieContainsKey() {
     const trie = makeTrie();
-    assertTrue(
-        'containsKey, should contain "hello"', trie.containsKey('hello'));
+    assertTrue('containsKey, should contain "hello"', trie.containsKey('hello'));
     assertTrue('containsKey, should contain "hi"', trie.containsKey('hi'));
     assertTrue('containsKey, should contain ""', trie.containsKey(''));
-    assertTrue(
-        'containsKey, should contain "empty value"',
-        trie.containsKey('empty value'));
-    assertTrue(
-        'containsKey, should contain "object"', trie.containsKey('object'));
+    assertTrue('containsKey, should contain "empty value"', trie.containsKey('empty value'));
+    assertTrue('containsKey, should contain "object"', trie.containsKey('object'));
     assertTrue('containsKey, should contain "zero"', trie.containsKey('zero'));
     assertTrue('containsKey, should contain "null"', trie.containsKey('null'));
-    assertFalse(
-        'containsKey, should not contain "blah"', trie.containsKey('blah'));
+    assertFalse('containsKey, should not contain "blah"', trie.containsKey('blah'));
     trie.remove('');
     trie.remove('hi');
     trie.remove('zero');
     trie.remove('null');
-    assertFalse(
-        'containsKey, should not contain "zero"', trie.containsKey('zero'));
+    assertFalse('containsKey, should not contain "zero"', trie.containsKey('zero'));
     assertFalse('containsKey, should not contain ""', trie.containsKey(''));
     assertFalse('containsKey, should not contain "hi"', trie.containsKey('hi'));
-    assertFalse(
-        'containsKey, should not contain "null"', trie.containsKey('null'));
+    assertFalse('containsKey, should not contain "null"', trie.containsKey('null'));
   },
 
   testTrieContainsPrefix() {
     // Empty trie.
     let trie = new Trie();
-    assertFalse(
-        'containsPrefix, should not contain ""', trie.containsPrefix(''));
-    assertFalse(
-        'containsPrefix, should not contain "any"', trie.containsPrefix('any'));
+    assertFalse('containsPrefix, should not contain ""', trie.containsPrefix(''));
+    assertFalse('containsPrefix, should not contain "any"', trie.containsPrefix('any'));
     trie.add('key', 'value');
     assertTrue('containsPrefix, should contain ""', trie.containsPrefix(''));
 
     // Non-empty trie.
     trie = makeTrie();
     assertTrue('containsPrefix, should contain ""', trie.containsPrefix(''));
-    assertFalse(
-        'containsPrefix, should not contain "blah"',
-        trie.containsPrefix('blah'));
+    assertFalse('containsPrefix, should not contain "blah"', trie.containsPrefix('blah'));
     assertTrue('containsPrefix, should contain "h"', trie.containsPrefix('h'));
+    assertTrue('containsPrefix, should contain "hello"', trie.containsPrefix('hello'));
     assertTrue(
-        'containsPrefix, should contain "hello"', trie.containsPrefix('hello'));
-    assertTrue(
-        'containsPrefix, should contain "hello, world"',
-        trie.containsPrefix('hello, world'));
+      'containsPrefix, should contain "hello, world"',
+      trie.containsPrefix('hello, world')
+    );
     assertFalse(
-        'containsPrefix, should not contain "hello, world!"',
-        trie.containsPrefix('hello, world!'));
-    assertTrue(
-        'containsPrefix, should contain "nu"', trie.containsPrefix('nu'));
-    assertTrue(
-        'containsPrefix, should contain "null"', trie.containsPrefix('null'));
-    assertTrue(
-        'containsPrefix, should contain "empty value"',
-        trie.containsPrefix('empty value'));
+      'containsPrefix, should not contain "hello, world!"',
+      trie.containsPrefix('hello, world!')
+    );
+    assertTrue('containsPrefix, should contain "nu"', trie.containsPrefix('nu'));
+    assertTrue('containsPrefix, should contain "null"', trie.containsPrefix('null'));
+    assertTrue('containsPrefix, should contain "empty value"', trie.containsPrefix('empty value'));
 
     // Remove nodes.
     trie.remove('');
     assertTrue('containsPrefix, should contain ""', trie.containsPrefix(''));
     trie.remove('hi');
     assertTrue('containsPrefix, should contain "h"', trie.containsPrefix('h'));
-    assertFalse(
-        'containsPrefix, should not contain "hi"', trie.containsPrefix('hi'));
+    assertFalse('containsPrefix, should not contain "hi"', trie.containsPrefix('hi'));
     trie.remove('hello');
     trie.remove('hello, world');
-    assertFalse(
-        'containsPrefix, should not contain "h"', trie.containsPrefix('h'));
-    assertFalse(
-        'containsPrefix, should not contain "hello"',
-        trie.containsPrefix('hello'));
+    assertFalse('containsPrefix, should not contain "h"', trie.containsPrefix('h'));
+    assertFalse('containsPrefix, should not contain "hello"', trie.containsPrefix('hello'));
 
     // Remove all nodes.
     trie.remove('empty value');
@@ -335,69 +297,48 @@ testSuite({
     trie.remove('object');
     trie.remove('null');
     trie.remove('world');
-    assertFalse(
-        'containsPrefix, should not contain ""', trie.containsPrefix(''));
-    assertFalse(
-        'containsPrefix, should not contain "h"', trie.containsPrefix('h'));
-    assertFalse(
-        'containsPrefix, should not contain "hi"', trie.containsPrefix('hi'));
+    assertFalse('containsPrefix, should not contain ""', trie.containsPrefix(''));
+    assertFalse('containsPrefix, should not contain "h"', trie.containsPrefix('h'));
+    assertFalse('containsPrefix, should not contain "hi"', trie.containsPrefix('hi'));
 
     // Add some new nodes.
     trie.add('hi', 'value');
     trie.add('null', 'value');
     assertTrue('containsPrefix, should contain ""', trie.containsPrefix(''));
     assertTrue('containsPrefix, should contain "h"', trie.containsPrefix('h'));
-    assertTrue(
-        'containsPrefix, should contain "hi"', trie.containsPrefix('hi'));
-    assertFalse(
-        'containsPrefix, should not contain "hello"',
-        trie.containsPrefix('hello'));
-    assertFalse(
-        'containsPrefix, should not contain "zero"',
-        trie.containsPrefix('zero'));
+    assertTrue('containsPrefix, should contain "hi"', trie.containsPrefix('hi'));
+    assertFalse('containsPrefix, should not contain "hello"', trie.containsPrefix('hello'));
+    assertFalse('containsPrefix, should not contain "zero"', trie.containsPrefix('zero'));
 
     // Clear the trie.
     trie.clear();
-    assertFalse(
-        'containsPrefix, should not contain ""', trie.containsPrefix(''));
-    assertFalse(
-        'containsPrefix, should not contain "h"', trie.containsPrefix('h'));
-    assertFalse(
-        'containsPrefix, should not contain "hi"', trie.containsPrefix('hi'));
+    assertFalse('containsPrefix, should not contain ""', trie.containsPrefix(''));
+    assertFalse('containsPrefix, should not contain "h"', trie.containsPrefix('h'));
+    assertFalse('containsPrefix, should not contain "hi"', trie.containsPrefix('hi'));
   },
 
   testTrieContainsValue() {
     const trie = makeTrie();
+    assertTrue('containsValue, should be true, should contain 1', trie.containsValue(1));
     assertTrue(
-        'containsValue, should be true, should contain 1',
-        trie.containsValue(1));
+      'containsValue, should be true, should contain "howdy"',
+      trie.containsValue('howdy')
+    );
+    assertTrue('containsValue, should be true, should contain ""', trie.containsValue(''));
+    assertTrue('containsValue, should be true, should contain 0', trie.containsValue(0));
+    assertTrue('containsValue, should be true, should contain null', trie.containsValue(null));
     assertTrue(
-        'containsValue, should be true, should contain "howdy"',
-        trie.containsValue('howdy'));
-    assertTrue(
-        'containsValue, should be true, should contain ""',
-        trie.containsValue(''));
-    assertTrue(
-        'containsValue, should be true, should contain 0',
-        trie.containsValue(0));
-    assertTrue(
-        'containsValue, should be true, should contain null',
-        trie.containsValue(null));
-    assertTrue(
-        'containsValue, should be true, should ' +
-            'contain "an empty string key"',
-        trie.containsValue('an empty string key'));
+      'containsValue, should be true, should ' + 'contain "an empty string key"',
+      trie.containsValue('an empty string key')
+    );
     assertFalse(
-        'containsValue, should be false, should not contain "blah"',
-        trie.containsValue('blah'));
+      'containsValue, should be false, should not contain "blah"',
+      trie.containsValue('blah')
+    );
     trie.remove('empty value');
     trie.remove('zero');
-    assertFalse(
-        'containsValue, should be false, should not contain 0',
-        trie.containsValue(0));
-    assertFalse(
-        'containsValue, should be false, should not contain ""',
-        trie.containsValue(''));
+    assertFalse('containsValue, should be false, should not contain 0', trie.containsValue(0));
+    assertFalse('containsValue, should be false, should not contain ""', trie.containsValue(''));
   },
 
   testTrieHandlingOfEmptyStrings() {
@@ -438,20 +379,25 @@ testSuite({
     const trie = makeTrie();
     // Note: trie has one of its keys as ''
     assertObjectEquals(
-        {0: 'an empty string key', 4: {}},  //
-        trie.getKeyAndPrefixes('world'));
+      { 0: 'an empty string key', 4: {} }, //
+      trie.getKeyAndPrefixes('world')
+    );
     assertObjectEquals(
-        {0: 'an empty string key', 4: 1},  //
-        trie.getKeyAndPrefixes('hello'));
+      { 0: 'an empty string key', 4: 1 }, //
+      trie.getKeyAndPrefixes('hello')
+    );
     assertObjectEquals(
-        {0: 'an empty string key', 4: 1},  //
-        trie.getKeyAndPrefixes('hello,'));
+      { 0: 'an empty string key', 4: 1 }, //
+      trie.getKeyAndPrefixes('hello,')
+    );
     assertObjectEquals(
-        {0: 'an empty string key', 4: 1, 11: 2},  //
-        trie.getKeyAndPrefixes('hello, world'));
+      { 0: 'an empty string key', 4: 1, 11: 2 }, //
+      trie.getKeyAndPrefixes('hello, world')
+    );
     assertObjectEquals(
-        {0: 'an empty string key'},  //
-        trie.getKeyAndPrefixes('hell'));
+      { 0: 'an empty string key' }, //
+      trie.getKeyAndPrefixes('hell')
+    );
   },
 
   testGetKeyAndPrefixesStartIndex() {
@@ -465,16 +411,24 @@ testSuite({
     trie.add('abc', 'five');
     trie.add('xyz', 'six');
     assertEquals(
-        'getKeyAndPrefixes, should be 3', 3,
-        googObject.getCount(trie.getKeyAndPrefixes('abcdefg', 0)));
+      'getKeyAndPrefixes, should be 3',
+      3,
+      googObject.getCount(trie.getKeyAndPrefixes('abcdefg', 0))
+    );
     assertEquals(
-        'getKeyAndPrefixes, should be 1', 1,
-        googObject.getCount(trie.getKeyAndPrefixes('abcdefg', 1)));
+      'getKeyAndPrefixes, should be 1',
+      1,
+      googObject.getCount(trie.getKeyAndPrefixes('abcdefg', 1))
+    );
     assertEquals(
-        'getKeyAndPrefixes, should be 1', 1,
-        googObject.getCount(trie.getKeyAndPrefixes('abcq', 3)));
+      'getKeyAndPrefixes, should be 1',
+      1,
+      googObject.getCount(trie.getKeyAndPrefixes('abcq', 3))
+    );
     assertEquals(
-        'getKeyAndPrefixes, should be 0', 0,
-        googObject.getCount(trie.getKeyAndPrefixes('abcd', 3)));
+      'getKeyAndPrefixes, should be 0',
+      0,
+      googObject.getCount(trie.getKeyAndPrefixes('abcd', 3))
+    );
   },
 });

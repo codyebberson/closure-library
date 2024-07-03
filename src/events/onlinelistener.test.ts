@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.events.OnlineHandlerTest');
-goog.setTestOnly();
 
 const GoogEvent = goog.require('goog.events.Event');
 const MockClock = goog.require('goog.testing.MockClock');
@@ -50,11 +49,10 @@ testSuite({
     oh.dispose();
   },
 
-
   testHtml5() {
     // Test for browsers that fire network events on window.
 
-    let oh = new OnlineHandler();
+    const oh = new OnlineHandler();
     listenToEvents(oh);
 
     online = false;

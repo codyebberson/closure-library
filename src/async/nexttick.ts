@@ -19,7 +19,6 @@ goog.require('goog.functions');
 goog.require('goog.labs.userAgent.browser');
 goog.require('goog.labs.userAgent.engine');
 
-
 /**
  * Fires the provided callbacks as soon as possible after the current JS
  * execution context. setTimeout(…, 0) takes at least 4ms when called from
@@ -37,8 +36,7 @@ goog.require('goog.labs.userAgent.engine');
  *     ensures correctness at the cost of speed. See comments for details.
  * @template SCOPE
  */
-goog.async.nextTick = function(callback, opt_context, opt_useSetImmediate) {
-  'use strict';
+goog.async.nextTick = (callback, opt_context, opt_useSetImmediate) => {
   var cb = callback;
   if (opt_context) {
     cb = goog.bind(callback, opt_context);
@@ -48,8 +46,10 @@ goog.async.nextTick = function(callback, opt_context, opt_useSetImmediate) {
   // to accept the possible tradeoffs of incorrectness in exchange for speed.
   // The IE fallback of readystate change is much slower. See useSetImmediate_
   // for details.
-  if (typeof goog.global.setImmediate === 'function' &&
-      (opt_useSetImmediate || goog.async.nextTick.useSetImmediate_())) {
+  if (
+    typeof goog.global.setImmediate === 'function' &&
+    (opt_useSetImmediate || goog.async.nextTick.useSetImmediate_())
+  ) {
     goog.global.setImmediate(cb);
     return;
   }
@@ -60,7 +60,6 @@ goog.async.nextTick = function(callback, opt_context, opt_useSetImmediate) {
   }
   goog.async.nextTick.nextTickImpl(cb);
 };
-
 
 /**
  * Returns whether should use setImmediate implementation currently on window.
@@ -80,8 +79,7 @@ goog.async.nextTick = function(callback, opt_context, opt_useSetImmediate) {
  * @private
  * @suppress {missingProperties} For "Window.prototype.setImmediate"
  */
-goog.async.nextTick.useSetImmediate_ = function() {
-  'use strict';
+goog.async.nextTick.useSetImmediate_ = () => {
   // Not a browser environment.
   if (!goog.global.Window || !goog.global.Window.prototype) {
     return true;
@@ -95,8 +93,10 @@ goog.async.nextTick.useSetImmediate_ = function() {
   // issues as IE10/11, but based on
   // https://dev.modern.ie/testdrive/demos/setimmediatesorting/
   // it seems they've been working to ensure it's WAI.
-  if (goog.labs.userAgent.browser.isEdge() ||
-      goog.global.Window.prototype.setImmediate != goog.global.setImmediate) {
+  if (
+    goog.labs.userAgent.browser.isEdge() ||
+    goog.global.Window.prototype.setImmediate != goog.global.setImmediate
+  ) {
     // Something redefined setImmediate in which case we decide to use it (This
     // is so that we use the mockClock setImmediate).
     return true;
@@ -105,7 +105,6 @@ goog.async.nextTick.useSetImmediate_ = function() {
   return false;
 };
 
-
 /**
  * Cache for the nextTick implementation. Exposed so tests can replace it,
  * if needed.
@@ -113,15 +112,13 @@ goog.async.nextTick.useSetImmediate_ = function() {
  */
 goog.async.nextTick.nextTickImpl;
 
-
 /**
  * Determines the best possible implementation to run a function as soon as
  * the JS event loop is idle.
  * @return {function(function())} The "setImmediate" implementation.
  * @private
  */
-goog.async.nextTick.getNextTickImpl_ = function() {
-  'use strict';
+goog.async.nextTick.getNextTickImpl_ = () => {
   // Create a private message channel and use it to postMessage empty messages
   // to ourselves.
   /** @type {!Function|undefined} */
@@ -130,14 +127,17 @@ goog.async.nextTick.getNextTickImpl_ = function() {
   // an iframe based polyfill in browsers that have postMessage and
   // document.addEventListener. The latter excludes IE8 because it has a
   // synchronous postMessage implementation.
-  if (typeof Channel === 'undefined' && typeof window !== 'undefined' &&
-      window.postMessage && window.addEventListener &&
-      // Presto (The old pre-blink Opera engine) has problems with iframes
-      // and contentWindow.
-      !goog.labs.userAgent.engine.isPresto()) {
+  if (
+    typeof Channel === 'undefined' &&
+    typeof window !== 'undefined' &&
+    window.postMessage &&
+    window.addEventListener &&
+    // Presto (The old pre-blink Opera engine) has problems with iframes
+    // and contentWindow.
+    !goog.labs.userAgent.engine.isPresto()
+  ) {
     /** @constructor */
-    Channel = function() {
-      'use strict';
+    Channel = function () {
       // Make an empty, invisible iframe.
       var iframe = goog.dom.createElement(goog.dom.TagName.IFRAME);
       iframe.style.display = 'none';
@@ -152,11 +152,9 @@ goog.async.nextTick.getNextTickImpl_ = function() {
       var message = 'callImmediate' + Math.random();
       // The same origin policy rejects attempts to postMessage from file: urls
       // unless the origin is '*'.
-      var origin = win.location.protocol == 'file:' ?
-          '*' :
-          win.location.protocol + '//' + win.location.host;
-      var onmessage = goog.bind(function(e) {
-        'use strict';
+      var origin =
+        win.location.protocol == 'file:' ? '*' : win.location.protocol + '//' + win.location.host;
+      var onmessage = goog.bind(function (e) {
         // Validate origin and message to make sure that this message was
         // intended for us. If the origin is set to '*' (see above) only the
         // message needs to match since, for example, '*' != 'file://'. Allowing
@@ -169,10 +167,9 @@ goog.async.nextTick.getNextTickImpl_ = function() {
       win.addEventListener('message', onmessage, false);
       this['port1'] = {};
       this['port2'] = {
-        postMessage: function() {
-          'use strict';
+        postMessage: () => {
           win.postMessage(message, origin);
-        }
+        },
       };
     };
   }
@@ -186,8 +183,7 @@ goog.async.nextTick.getNextTickImpl_ = function() {
     // Use a fifo linked list to call callbacks in the right order.
     var head = {};
     var tail = head;
-    channel['port1'].onmessage = function() {
-      'use strict';
+    channel['port1'].onmessage = () => {
       if (head.next !== undefined) {
         head = head.next;
         var cb = head.cb;
@@ -195,9 +191,8 @@ goog.async.nextTick.getNextTickImpl_ = function() {
         cb();
       }
     };
-    return function(cb) {
-      'use strict';
-      tail.next = {cb: cb};
+    return (cb) => {
+      tail.next = { cb: cb };
       tail = tail.next;
       channel['port2'].postMessage(0);
     };
@@ -205,12 +200,10 @@ goog.async.nextTick.getNextTickImpl_ = function() {
   // Fall back to setTimeout with 0. In browsers this creates a delay of 5ms
   // or more.
   // NOTE(user): This fallback is used for IE.
-  return function(cb) {
-    'use strict';
+  return (cb) => {
     goog.global.setTimeout(/** @type {function()} */ (cb), 0);
   };
 };
-
 
 /**
  * Helper function that is overrided to protect callbacks with entry point
@@ -221,16 +214,15 @@ goog.async.nextTick.getNextTickImpl_ = function() {
  */
 goog.async.nextTick.wrapCallback_ = goog.functions.identity;
 
-
 // Register the callback function as an entry point, so that it can be
 // monitored for exception handling, etc. This has to be done in this file
 // since it requires special code to handle all browsers.
 goog.debug.entryPointRegistry.register(
-    /**
-     * @param {function(!Function): !Function} transformer The transforming
-     *     function.
-     */
-    function(transformer) {
-      'use strict';
-      goog.async.nextTick.wrapCallback_ = transformer;
-    });
+  /**
+   * @param {function(!Function): !Function} transformer The transforming
+   *     function.
+   */
+  (transformer) => {
+    goog.async.nextTick.wrapCallback_ = transformer;
+  }
+);

@@ -4,11 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview A thin wrapper around the DOM element for rectangles.
  */
-
 
 goog.provide('goog.graphics.RectElement');
 
@@ -16,8 +14,6 @@ goog.require('goog.graphics.StrokeAndFillElement');
 goog.requireType('goog.graphics.AbstractGraphics');
 goog.requireType('goog.graphics.Fill');
 goog.requireType('goog.graphics.Stroke');
-
-
 
 /**
  * Interface for a graphics rectangle element.
@@ -34,13 +30,10 @@ goog.requireType('goog.graphics.Stroke');
  *     differences before the canvas tag was widely supported.  See
  *     http://en.wikipedia.org/wiki/Canvas_element for details.
  */
-goog.graphics.RectElement = function(element, graphics, stroke, fill) {
-  'use strict';
-  goog.graphics.StrokeAndFillElement.call(
-      this, element, graphics, stroke, fill);
+goog.graphics.RectElement = function (element, graphics, stroke, fill) {
+  goog.graphics.StrokeAndFillElement.call(this, element, graphics, stroke, fill);
 };
 goog.inherits(goog.graphics.RectElement, goog.graphics.StrokeAndFillElement);
-
 
 /**
  * Update the position of the rectangle.
@@ -48,7 +41,6 @@ goog.inherits(goog.graphics.RectElement, goog.graphics.StrokeAndFillElement);
  * @param {number} y Y coordinate (top).
  */
 goog.graphics.RectElement.prototype.setPosition = goog.abstractMethod;
-
 
 /**
  * Update the size of the rectangle.

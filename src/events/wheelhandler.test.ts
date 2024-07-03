@@ -10,7 +10,6 @@
  */
 
 goog.module('goog.events.WheelHandlerTest');
-goog.setTestOnly();
 
 const BrowserEvent = goog.require('goog.events.BrowserEvent');
 const EventsWheelEvent = goog.require('goog.events.WheelEvent');
@@ -65,39 +64,27 @@ function handleEvent(event) {
 
 function assertWheelEvent(deltaMode, deltaX, deltaY, deltaZ) {
   assertTrue('event should be non-null', !!mouseWheelEvent);
-  assertTrue(
-      'event should have correct JS type',
-      mouseWheelEvent instanceof EventsWheelEvent);
+  assertTrue('event should have correct JS type', mouseWheelEvent instanceof EventsWheelEvent);
   assertEquals(
-      'event should have correct deltaMode property', deltaMode,
-      mouseWheelEvent.deltaMode);
-  assertEquals(
-      'event should have correct deltaX property', deltaX,
-      mouseWheelEvent.deltaX);
-  assertEquals(
-      'event should have correct deltaY property', deltaY,
-      mouseWheelEvent.deltaY);
-  assertEquals(
-      'event should have correct deltaZ property', deltaZ,
-      mouseWheelEvent.deltaZ);
+    'event should have correct deltaMode property',
+    deltaMode,
+    mouseWheelEvent.deltaMode
+  );
+  assertEquals('event should have correct deltaX property', deltaX, mouseWheelEvent.deltaX);
+  assertEquals('event should have correct deltaY property', deltaY, mouseWheelEvent.deltaY);
+  assertEquals('event should have correct deltaZ property', deltaZ, mouseWheelEvent.deltaZ);
 
   // RTL
   assertTrue('event should be non-null', !!mouseWheelEventRtl);
-  assertTrue(
-      'event should have correct JS type',
-      mouseWheelEventRtl instanceof EventsWheelEvent);
+  assertTrue('event should have correct JS type', mouseWheelEventRtl instanceof EventsWheelEvent);
   assertEquals(
-      'event should have correct deltaMode property', deltaMode,
-      mouseWheelEventRtl.deltaMode);
-  assertEquals(
-      'event should have correct deltaX property', -deltaX,
-      mouseWheelEventRtl.deltaX);
-  assertEquals(
-      'event should have correct deltaY property', deltaY,
-      mouseWheelEventRtl.deltaY);
-  assertEquals(
-      'event should have correct deltaZ property', deltaZ,
-      mouseWheelEventRtl.deltaZ);
+    'event should have correct deltaMode property',
+    deltaMode,
+    mouseWheelEventRtl.deltaMode
+  );
+  assertEquals('event should have correct deltaX property', -deltaX, mouseWheelEventRtl.deltaX);
+  assertEquals('event should have correct deltaY property', deltaY, mouseWheelEventRtl.deltaY);
+  assertEquals('event should have correct deltaZ property', deltaZ, mouseWheelEventRtl.deltaZ);
 }
 
 function assertPixelDeltas(scale) {
@@ -106,17 +93,13 @@ function assertPixelDeltas(scale) {
   assertEquals(mouseWheelEvent.deltaZ * scale, mouseWheelEvent.pixelDeltaZ);
 
   // RTL
-  assertEquals(
-      mouseWheelEventRtl.deltaX * scale, mouseWheelEventRtl.pixelDeltaX);
-  assertEquals(
-      mouseWheelEventRtl.deltaY * scale, mouseWheelEventRtl.pixelDeltaY);
-  assertEquals(
-      mouseWheelEventRtl.deltaZ * scale, mouseWheelEventRtl.pixelDeltaZ);
+  assertEquals(mouseWheelEventRtl.deltaX * scale, mouseWheelEventRtl.pixelDeltaX);
+  assertEquals(mouseWheelEventRtl.deltaY * scale, mouseWheelEventRtl.pixelDeltaY);
+  assertEquals(mouseWheelEventRtl.deltaZ * scale, mouseWheelEventRtl.pixelDeltaZ);
 }
 
 /** @suppress {checkTypes} suppression added to enable type checking */
-function createFakePreferredEvent(
-    opt_deltaMode, opt_deltaX, opt_deltaY, opt_deltaZ) {
+function createFakePreferredEvent(opt_deltaMode, opt_deltaX, opt_deltaY, opt_deltaZ) {
   const event = {
     type: PREFERRED_TYPE,
     deltaMode: opt_deltaMode,
@@ -128,8 +111,7 @@ function createFakePreferredEvent(
 }
 
 /** @suppress {checkTypes} suppression added to enable type checking */
-function createFakeLegacyEvent(
-    opt_wheelDelta, opt_wheelDeltaX, opt_wheelDeltaY) {
+function createFakeLegacyEvent(opt_wheelDelta, opt_wheelDeltaX, opt_wheelDeltaY) {
   const event = {
     type: LEGACY_TYPE,
     wheelDelta: opt_wheelDelta,
@@ -162,14 +144,14 @@ testSuite({
       product: {
         CHROME: false,
         version: 0,
-        isVersion: function(version) {
+        isVersion: function (version) {
           return googString.compareVersions(this.version, version) >= 0;
         },
       },
       GECKO: false,
       IE: false,
       version: 0,
-      isVersionOrHigher: function(version) {
+      isVersionOrHigher: function (version) {
         return googString.compareVersions(this.version, version) >= 0;
       },
     };
@@ -191,8 +173,9 @@ testSuite({
 
     events.listen(mouseWheelHandler, EventsWheelEvent.EventType.WHEEL, (e) => {
       log.append(
-          document.createElement('br'),
-          googString.subs('(deltaX, deltaY): (%s, %s)', e.deltaX, e.deltaY));
+        document.createElement('br'),
+        googString.subs('(deltaX, deltaY): (%s, %s)', e.deltaX, e.deltaY)
+      );
     });
   },
 

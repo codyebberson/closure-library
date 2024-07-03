@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.soy.dataTest');
-goog.setTestOnly();
 
 const SafeHtml = goog.require('goog.html.SafeHtml');
 const SafeStyle = goog.require('goog.html.SafeStyle');
@@ -51,8 +50,7 @@ testSuite({
     let url;
 
     /** @suppress {checkTypes} suppression added to enable type checking */
-    url =
-        example.sanitizedTrustedResourceUriTemplate({}).toTrustedResourceUrl();
+    url = example.sanitizedTrustedResourceUriTemplate({}).toTrustedResourceUrl();
     assertEquals('https://google.com/a.js', TrustedResourceUrl.unwrap(url));
   },
 });

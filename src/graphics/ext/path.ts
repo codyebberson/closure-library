@@ -4,11 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview A thick wrapper around paths.
  */
-
 
 goog.provide('goog.graphics.ext.Path');
 
@@ -16,20 +14,16 @@ goog.require('goog.graphics.AffineTransform');
 goog.require('goog.graphics.Path');
 goog.require('goog.math.Rect');
 
-
-
 /**
  * Creates a path object
  * @constructor
  * @extends {goog.graphics.Path}
  * @final
  */
-goog.graphics.ext.Path = function() {
-  'use strict';
+goog.graphics.ext.Path = function () {
   goog.graphics.Path.call(this);
 };
 goog.inherits(goog.graphics.ext.Path, goog.graphics.Path);
-
 
 /**
  * Optional cached or user specified bounding box.  A user may wish to
@@ -40,20 +34,18 @@ goog.inherits(goog.graphics.ext.Path, goog.graphics.Path);
  */
 goog.graphics.ext.Path.prototype.bounds_ = null;
 
-
 /**
  * Clones the path.
  * @return {!goog.graphics.ext.Path} A clone of this path.
  * @override
  */
-goog.graphics.ext.Path.prototype.clone = function() {
-  'use strict';
-  const output = /** @type {goog.graphics.ext.Path} */
-      (goog.graphics.ext.Path.superClass_.clone.call(this));
+goog.graphics.ext.Path.prototype.clone = function () {
+  const output =
+    /** @type {goog.graphics.ext.Path} */
+    (goog.graphics.ext.Path.superClass_.clone.call(this));
   output.bounds_ = this.bounds_ && this.bounds_.clone();
   return output;
 };
-
 
 /**
  * Transforms the path. Only simple paths are transformable. Attempting
@@ -62,8 +54,7 @@ goog.graphics.ext.Path.prototype.clone = function() {
  * @return {!goog.graphics.ext.Path} The path itself.
  * @override
  */
-goog.graphics.ext.Path.prototype.transform = function(tx) {
-  'use strict';
+goog.graphics.ext.Path.prototype.transform = function (tx) {
   goog.graphics.ext.Path.superClass_.transform.call(this, tx);
 
   // Make sure the precomputed bounds are cleared when the path is transformed.
@@ -71,7 +62,6 @@ goog.graphics.ext.Path.prototype.transform = function(tx) {
 
   return this;
 };
-
 
 /**
  * Modify the bounding box of the path.  This may cause the path to be
@@ -84,9 +74,7 @@ goog.graphics.ext.Path.prototype.transform = function(tx) {
  *     by this number.
  * @return {!goog.graphics.ext.Path} The path itself.
  */
-goog.graphics.ext.Path.prototype.modifyBounds = function(
-    deltaX, deltaY, xFactor, yFactor) {
-  'use strict';
+goog.graphics.ext.Path.prototype.modifyBounds = function (deltaX, deltaY, xFactor, yFactor) {
   if (!this.isSimple()) {
     const simple = goog.graphics.Path.createSimplifiedPath(this);
     this.clear();
@@ -94,38 +82,32 @@ goog.graphics.ext.Path.prototype.modifyBounds = function(
   }
 
   return this.transform(
-      goog.graphics.AffineTransform.getScaleInstance(xFactor, yFactor)
-          .translate(deltaX, deltaY));
+    goog.graphics.AffineTransform.getScaleInstance(xFactor, yFactor).translate(deltaX, deltaY)
+  );
 };
-
 
 /**
  * Set the precomputed bounds.
  * @param {goog.math.Rect?} bounds The bounds to use, or set to null to clear
  *     and recompute on the next call to getBoundingBox.
  */
-goog.graphics.ext.Path.prototype.useBoundingBox = function(bounds) {
-  'use strict';
+goog.graphics.ext.Path.prototype.useBoundingBox = function (bounds) {
   this.bounds_ = bounds && bounds.clone();
 };
-
 
 /**
  * @return {goog.math.Rect?} The bounding box of the path, or null if the
  *     path is empty.
  */
-goog.graphics.ext.Path.prototype.getBoundingBox = function() {
-  'use strict';
+goog.graphics.ext.Path.prototype.getBoundingBox = function () {
   if (!this.bounds_ && !this.isEmpty()) {
     let minY;
-    let minX = minY = Number.POSITIVE_INFINITY;
+    let minX = (minY = Number.POSITIVE_INFINITY);
     let maxY;
-    let maxX = maxY = Number.NEGATIVE_INFINITY;
+    let maxX = (maxY = Number.NEGATIVE_INFINITY);
 
-    const simplePath =
-        this.isSimple() ? this : goog.graphics.Path.createSimplifiedPath(this);
-    simplePath.forEachSegment(function(type, points) {
-      'use strict';
+    const simplePath = this.isSimple() ? this : goog.graphics.Path.createSimplifiedPath(this);
+    simplePath.forEachSegment((type, points) => {
       for (let i = 0, len = points.length; i < len; i += 2) {
         minX = Math.min(minX, points[i]);
         maxX = Math.max(maxX, points[i]);

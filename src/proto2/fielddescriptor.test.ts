@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.proto2.FieldDescriptorTest');
-goog.setTestOnly();
 
 const FieldDescriptor = goog.require('goog.proto2.FieldDescriptor');
 const Message = goog.require('goog.proto2.Message');
@@ -30,8 +29,7 @@ testSuite({
 
     assertEquals(true, fieldDescriptor.isPacked());
 
-    assertEquals(
-        FieldDescriptor.FieldType.INT32, fieldDescriptor.getFieldType());
+    assertEquals(FieldDescriptor.FieldType.INT32, fieldDescriptor.getFieldType());
     assertEquals(Number, fieldDescriptor.getNativeType());
     assertEquals(0, fieldDescriptor.getDefaultValue());
   },
@@ -72,9 +70,12 @@ testSuite({
   testRepeatedField() {
     const messageType = {};
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const fieldDescriptor = new FieldDescriptor(
-        messageType, 10,
-        {name: 'test', repeated: true, fieldType: 7, type: Number});
+    const fieldDescriptor = new FieldDescriptor(messageType, 10, {
+      name: 'test',
+      repeated: true,
+      fieldType: 7,
+      type: Number,
+    });
 
     assertEquals(true, fieldDescriptor.isRepeated());
     assertEquals(false, fieldDescriptor.isRequired());
@@ -84,9 +85,12 @@ testSuite({
   testRequiredField() {
     const messageType = {};
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const fieldDescriptor = new FieldDescriptor(
-        messageType, 10,
-        {name: 'test', required: true, fieldType: 7, type: Number});
+    const fieldDescriptor = new FieldDescriptor(messageType, 10, {
+      name: 'test',
+      required: true,
+      fieldType: 7,
+      type: Number,
+    });
 
     assertEquals(false, fieldDescriptor.isRepeated());
     assertEquals(true, fieldDescriptor.isRequired());
@@ -96,8 +100,11 @@ testSuite({
   testOptionalField() {
     const messageType = {};
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const fieldDescriptor = new FieldDescriptor(
-        messageType, 10, {name: 'test', fieldType: 7, type: Number});
+    const fieldDescriptor = new FieldDescriptor(messageType, 10, {
+      name: 'test',
+      fieldType: 7,
+      type: Number,
+    });
 
     assertEquals(false, fieldDescriptor.isRepeated());
     assertEquals(false, fieldDescriptor.isRequired());
@@ -105,7 +112,7 @@ testSuite({
   },
 
   testContaingType() {
-    const MessageType = function() {
+    const MessageType = function () {
       MessageType.base(this, 'constructor');
     };
     goog.inherits(MessageType, Message);
@@ -114,11 +121,10 @@ testSuite({
       if (!MessageType.descriptor_) {
         // The descriptor is created lazily when we instantiate a new instance.
         const descriptorObj = {
-          0: {name: 'test_message', fullName: 'this.is.a.test_message'},
-          10: {name: 'test', fieldType: 7, type: Number},
+          0: { name: 'test_message', fullName: 'this.is.a.test_message' },
+          10: { name: 'test', fieldType: 7, type: Number },
         };
-        MessageType.descriptor_ =
-            Message.createDescriptor(MessageType, descriptorObj);
+        MessageType.descriptor_ = Message.createDescriptor(MessageType, descriptorObj);
       }
       return MessageType.descriptor_;
     };

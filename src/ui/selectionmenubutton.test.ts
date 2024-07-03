@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.SelectionMenuButtonTest');
-goog.setTestOnly();
 
 const Component = goog.require('goog.ui.Component');
 const SelectionMenuButton = goog.require('goog.ui.SelectionMenuButton');
@@ -19,8 +18,7 @@ let clonedSelectionMenuButtonDom;
 
 testSuite({
   setUp() {
-    clonedSelectionMenuButtonDom =
-        dom.getElement('demoSelectionMenuButton').cloneNode(true);
+    clonedSelectionMenuButtonDom = dom.getElement('demoSelectionMenuButton').cloneNode(true);
 
     selectionMenuButton = new SelectionMenuButton();
   },
@@ -42,21 +40,20 @@ testSuite({
 
     let menuItemClicked = 0;
     let lastMenuItemClicked = null;
-    events.listen(
-        selectionMenuButton.getMenu(), Component.EventType.ACTION, (e) => {
-          menuItemClicked++;
-          lastMenuItemClicked = e.target;
-        });
+    events.listen(selectionMenuButton.getMenu(), Component.EventType.ACTION, (e) => {
+      menuItemClicked++;
+      lastMenuItemClicked = e.target;
+    });
 
     const menuItem2 = dom.getElement('menuItem2');
     testingEvents.fireClickSequence(menuItem2);
-    assertFalse(
-        'Menu must close on clicking when open', selectionMenuButton.isOpen());
+    assertFalse('Menu must close on clicking when open', selectionMenuButton.isOpen());
+    assertEquals('Number of menu items clicked should be 1', 1, menuItemClicked);
     assertEquals(
-        'Number of menu items clicked should be 1', 1, menuItemClicked);
-    assertEquals(
-        'menuItem2 should be the last menuitem clicked', menuItem2,
-        lastMenuItemClicked.getElement());
+      'menuItem2 should be the last menuitem clicked',
+      menuItem2,
+      lastMenuItemClicked.getElement()
+    );
   },
 
   /**
@@ -70,15 +67,13 @@ testSuite({
 
     let menuItemClicked = 0;
     let lastMenuItemClicked = null;
-    events.listen(
-        selectionMenuButton.getMenu(), Component.EventType.ACTION, (e) => {
-          menuItemClicked++;
-          lastMenuItemClicked = e.target;
-        });
+    events.listen(selectionMenuButton.getMenu(), Component.EventType.ACTION, (e) => {
+      menuItemClicked++;
+      lastMenuItemClicked = e.target;
+    });
 
     const checkbox = dom.getElement('demoCheckbox');
-    assertFalse(
-        'Checkbox must be unchecked (i.e. unselected)', checkbox.checked);
+    assertFalse('Checkbox must be unchecked (i.e. unselected)', checkbox.checked);
 
     /**
      * @suppress {strictMissingProperties} suppression added to enable type
@@ -86,14 +81,13 @@ testSuite({
      */
     checkbox.checked = true;
     testingEvents.fireClickSequence(checkbox);
-    assertFalse(
-        'Menu must be closed when clicking checkbox',
-        selectionMenuButton.isOpen());
+    assertFalse('Menu must be closed when clicking checkbox', selectionMenuButton.isOpen());
+    assertEquals('Number of menu items clicked should be 1', 1, menuItemClicked);
     assertEquals(
-        'Number of menu items clicked should be 1', 1, menuItemClicked);
-    assertEquals(
-        'menuItem1 should be the last menuitem clicked',
-        dom.getElement('menuItem1'), lastMenuItemClicked.getElement());
+      'menuItem1 should be the last menuitem clicked',
+      dom.getElement('menuItem1'),
+      lastMenuItemClicked.getElement()
+    );
 
     /**
      * @suppress {strictMissingProperties} suppression added to enable type
@@ -101,14 +95,13 @@ testSuite({
      */
     checkbox.checked = false;
     testingEvents.fireClickSequence(checkbox);
-    assertFalse(
-        'Menu must be closed when clicking checkbox',
-        selectionMenuButton.isOpen());
+    assertFalse('Menu must be closed when clicking checkbox', selectionMenuButton.isOpen());
+    assertEquals('Number of menu items clicked should be 2', 2, menuItemClicked);
     assertEquals(
-        'Number of menu items clicked should be 2', 2, menuItemClicked);
-    assertEquals(
-        'menuItem2 should be the last menuitem clicked',
-        dom.getElement('menuItem2'), lastMenuItemClicked.getElement());
+      'menuItem2 should be the last menuitem clicked',
+      dom.getElement('menuItem2'),
+      lastMenuItemClicked.getElement()
+    );
   },
 
   /**
@@ -121,15 +114,13 @@ testSuite({
     selectionMenuButton.decorate(node);
 
     const checkbox = dom.getElement('demoCheckbox');
-    assertFalse(
-        'Checkbox must be unchecked (i.e. unselected)', checkbox.checked);
+    assertFalse('Checkbox must be unchecked (i.e. unselected)', checkbox.checked);
 
     testingEvents.fireClickSequence(dom.getElement('menuItem1'));
     assertTrue('Checkbox must be checked (i.e. selected)', checkbox.checked);
 
     testingEvents.fireClickSequence(dom.getElement('menuItem2'));
-    assertFalse(
-        'Checkbox must be unchecked (i.e. unselected)', checkbox.checked);
+    assertFalse('Checkbox must be unchecked (i.e. unselected)', checkbox.checked);
   },
 
   /**
@@ -142,34 +133,31 @@ testSuite({
     selectionMenuButton.decorate(node);
 
     const checkbox = dom.getElement('demoCheckbox');
-    assertFalse(
-        'Checkbox must be unchecked (i.e. unselected)', checkbox.checked);
+    assertFalse('Checkbox must be unchecked (i.e. unselected)', checkbox.checked);
 
-    selectionMenuButton.setSelectionState(
-        SelectionMenuButton.SelectionState.ALL);
-    assertTrue(
-        'Checkbox should be checked when selecting all', checkbox.checked);
+    selectionMenuButton.setSelectionState(SelectionMenuButton.SelectionState.ALL);
+    assertTrue('Checkbox should be checked when selecting all', checkbox.checked);
     assertEquals(
-        'selectionState should be ALL', selectionMenuButton.getSelectionState(),
-        SelectionMenuButton.SelectionState.ALL);
+      'selectionState should be ALL',
+      selectionMenuButton.getSelectionState(),
+      SelectionMenuButton.SelectionState.ALL
+    );
 
-    selectionMenuButton.setSelectionState(
-        SelectionMenuButton.SelectionState.NONE);
-    assertFalse(
-        'Checkbox should be checked when selecting all', checkbox.checked);
+    selectionMenuButton.setSelectionState(SelectionMenuButton.SelectionState.NONE);
+    assertFalse('Checkbox should be checked when selecting all', checkbox.checked);
     assertEquals(
-        'selectionState should be NONE',
-        selectionMenuButton.getSelectionState(),
-        SelectionMenuButton.SelectionState.NONE);
+      'selectionState should be NONE',
+      selectionMenuButton.getSelectionState(),
+      SelectionMenuButton.SelectionState.NONE
+    );
 
-    selectionMenuButton.setSelectionState(
-        SelectionMenuButton.SelectionState.SOME);
-    assertTrue(
-        'Checkbox should be checked when selecting all', checkbox.checked);
+    selectionMenuButton.setSelectionState(SelectionMenuButton.SelectionState.SOME);
+    assertTrue('Checkbox should be checked when selecting all', checkbox.checked);
     assertEquals(
-        'selectionState should be SOME',
-        selectionMenuButton.getSelectionState(),
-        SelectionMenuButton.SelectionState.SOME);
+      'selectionState should be SOME',
+      selectionMenuButton.getSelectionState(),
+      SelectionMenuButton.SelectionState.SOME
+    );
   },
 
   /**
@@ -198,17 +186,12 @@ testSuite({
 
     const checkbox = dom.getElement('demoCheckbox');
     testingEvents.fireMouseDownEvent(checkbox);
-    assertFalse(
-        'Menu must be closed when mousedown checkbox',
-        selectionMenuButton.isOpen());
+    assertFalse('Menu must be closed when mousedown checkbox', selectionMenuButton.isOpen());
     testingEvents.fireMouseUpEvent(checkbox);
-    assertFalse(
-        'Menu must remain closed when mouseup checkbox',
-        selectionMenuButton.isOpen());
+    assertFalse('Menu must remain closed when mouseup checkbox', selectionMenuButton.isOpen());
 
     selectionMenuButton.setOpen(true);
     testingEvents.fireClickSequence(checkbox);
-    assertFalse(
-        'Menu must close when clickin checkbox', selectionMenuButton.isOpen());
+    assertFalse('Menu must close when clickin checkbox', selectionMenuButton.isOpen());
   },
 });

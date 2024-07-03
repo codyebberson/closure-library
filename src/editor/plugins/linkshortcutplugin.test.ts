@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.plugins.LinkShortcutPluginTest');
-goog.setTestOnly();
 
 const BasicTextFormatter = goog.require('goog.editor.plugins.BasicTextFormatter');
 const Field = goog.require('goog.editor.Field');
@@ -53,7 +52,7 @@ testSuite({
     field.makeEditable();
     field.focusAndPlaceCursorAtStart();
     const textNode = testingDom.findTextNode('http://www.google.com/', fieldEl);
-    events.fireKeySequence(field.getElement(), KeyCodes.K, {ctrlKey: true});
+    events.fireKeySequence(field.getElement(), KeyCodes.K, { ctrlKey: true });
 
     /** @suppress {checkTypes} suppression added to enable type checking */
     const href = dom.getElementsByTagName(TagName.A, field.getElement())[0];

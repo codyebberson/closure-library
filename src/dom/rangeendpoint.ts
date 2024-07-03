@@ -8,9 +8,7 @@
  * @fileoverview Simple struct for endpoints of a range.
  */
 
-
 goog.provide('goog.dom.RangeEndpoint');
-
 
 /**
  * Constants for selection endpoints.
@@ -18,5 +16,5 @@ goog.provide('goog.dom.RangeEndpoint');
  */
 goog.dom.RangeEndpoint = {
   START: 1,
-  END: 0
+  END: 0,
 };

@@ -4,18 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview A thin wrapper around the DOM element for images.
  */
-
 
 goog.provide('goog.graphics.ImageElement');
 
 goog.require('goog.graphics.Element');
 goog.requireType('goog.graphics.AbstractGraphics');
-
-
 
 /**
  * Interface for a graphics image element.
@@ -32,12 +28,10 @@ goog.requireType('goog.graphics.AbstractGraphics');
  *     differences before the canvas tag was widely supported.  See
  *     http://en.wikipedia.org/wiki/Canvas_element for details.
  */
-goog.graphics.ImageElement = function(element, graphics) {
-  'use strict';
+goog.graphics.ImageElement = function (element, graphics) {
   goog.graphics.Element.call(this, element, graphics);
 };
 goog.inherits(goog.graphics.ImageElement, goog.graphics.Element);
-
 
 /**
  * Update the position of the image.
@@ -47,7 +41,6 @@ goog.inherits(goog.graphics.ImageElement, goog.graphics.Element);
  */
 goog.graphics.ImageElement.prototype.setPosition = goog.abstractMethod;
 
-
 /**
  * Update the size of the image.
  *
@@ -55,7 +48,6 @@ goog.graphics.ImageElement.prototype.setPosition = goog.abstractMethod;
  * @param {number} height Height of image.
  */
 goog.graphics.ImageElement.prototype.setSize = goog.abstractMethod;
-
 
 /**
  * Update the source of the image.

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.fx.DragScrollSupportTest');
-goog.setTestOnly();
 
 const Coordinate = goog.require('goog.math.Coordinate');
 const DragScrollSupport = goog.require('goog.fx.DragScrollSupport');
@@ -47,41 +46,48 @@ testSuite({
     events.fireMouseMoveEvent(vContainerDiv, new Coordinate(50, 20 + 50));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertEquals(
-        'Mousing inside the vContainer should not trigger scrolling.',
-        scrollTop, vContainerDiv.scrollTop);
-    assertEquals(
-        'Scroll timer should not tick yet', 0, clock.getTimeoutsMade());
+      'Mousing inside the vContainer should not trigger scrolling.',
+      scrollTop,
+      vContainerDiv.scrollTop
+    );
+    assertEquals('Scroll timer should not tick yet', 0, clock.getTimeoutsMade());
 
     scrollTop = vContainerDiv.scrollTop;
     events.fireMouseMoveEvent(vContainerDiv, new Coordinate(50, 10));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertTrue(
-        'Mousing above the vContainer should trigger scrolling up.',
-        scrollTop > vContainerDiv.scrollTop);
+      'Mousing above the vContainer should trigger scrolling up.',
+      scrollTop > vContainerDiv.scrollTop
+    );
     scrollTop = vContainerDiv.scrollTop;
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertTrue(
-        'Mousing above the vContainer should trigger scrolling up.',
-        scrollTop > vContainerDiv.scrollTop);
+      'Mousing above the vContainer should trigger scrolling up.',
+      scrollTop > vContainerDiv.scrollTop
+    );
 
     scrollTop = vContainerDiv.scrollTop;
     events.fireMouseMoveEvent(vContainerDiv, new Coordinate(50, 20 + 110));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertTrue(
-        'Mousing below the vContainer should trigger scrolling down.',
-        scrollTop < vContainerDiv.scrollTop);
+      'Mousing below the vContainer should trigger scrolling down.',
+      scrollTop < vContainerDiv.scrollTop
+    );
     scrollTop = vContainerDiv.scrollTop;
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertTrue(
-        'Mousing below the vContainer should trigger scrolling down.',
-        scrollTop < vContainerDiv.scrollTop);
+      'Mousing below the vContainer should trigger scrolling down.',
+      scrollTop < vContainerDiv.scrollTop
+    );
 
     scrollTop = vContainerDiv.scrollTop;
     events.fireMouseMoveEvent(vContainerDiv, new Coordinate(50, 20 + 50));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertEquals(
-        'Mousing inside the vContainer should stop scrolling.', scrollTop,
-        vContainerDiv.scrollTop);
+      'Mousing inside the vContainer should stop scrolling.',
+      scrollTop,
+      vContainerDiv.scrollTop
+    );
 
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
 
@@ -109,29 +115,34 @@ testSuite({
     events.fireMouseMoveEvent(vContainerDiv, new Coordinate(50, 50));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertEquals(
-        'Mousing inside the vContainer should not trigger scrolling.',
-        scrollTop, vContainerDiv.scrollTop);
-    assertEquals(
-        'Scroll timer should not tick yet', 0, clock.getTimeoutsMade());
+      'Mousing inside the vContainer should not trigger scrolling.',
+      scrollTop,
+      vContainerDiv.scrollTop
+    );
+    assertEquals('Scroll timer should not tick yet', 0, clock.getTimeoutsMade());
 
     scrollTop = vContainerDiv.scrollTop;
     events.fireMouseMoveEvent(vContainerDiv, new Coordinate(50, 110));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertTrue(
-        'Mousing below the vContainer should trigger scrolling down.',
-        scrollTop < vContainerDiv.scrollTop);
+      'Mousing below the vContainer should trigger scrolling down.',
+      scrollTop < vContainerDiv.scrollTop
+    );
     scrollTop = vContainerDiv.scrollTop;
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertTrue(
-        'Mousing below the vContainer should trigger scrolling down.',
-        scrollTop < vContainerDiv.scrollTop);
+      'Mousing below the vContainer should trigger scrolling down.',
+      scrollTop < vContainerDiv.scrollTop
+    );
 
     scrollTop = vContainerDiv.scrollTop;
     events.fireMouseMoveEvent(vContainerDiv, new Coordinate(50, 50));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertEquals(
-        'Mousing inside the vContainer should stop scrolling.', scrollTop,
-        vContainerDiv.scrollTop);
+      'Mousing inside the vContainer should stop scrolling.',
+      scrollTop,
+      vContainerDiv.scrollTop
+    );
 
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
 
@@ -156,42 +167,48 @@ testSuite({
     events.fireMouseMoveEvent(hContainerDiv, new Coordinate(200 + 50, 20 + 50));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertEquals(
-        'Mousing inside the hContainer should not trigger scrolling.',
-        scrollLeft, hContainerDiv.scrollLeft);
-    assertEquals(
-        'Scroll timer should not tick yet', 0, clock.getTimeoutsMade());
+      'Mousing inside the hContainer should not trigger scrolling.',
+      scrollLeft,
+      hContainerDiv.scrollLeft
+    );
+    assertEquals('Scroll timer should not tick yet', 0, clock.getTimeoutsMade());
 
     scrollLeft = hContainerDiv.scrollLeft;
     events.fireMouseMoveEvent(hContainerDiv, new Coordinate(200 - 10, 20 + 50));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertTrue(
-        'Mousing left of the hContainer should trigger scrolling left.',
-        scrollLeft > hContainerDiv.scrollLeft);
+      'Mousing left of the hContainer should trigger scrolling left.',
+      scrollLeft > hContainerDiv.scrollLeft
+    );
     scrollLeft = hContainerDiv.scrollLeft;
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertTrue(
-        'Mousing left of the hContainer should trigger scrolling left.',
-        scrollLeft > hContainerDiv.scrollLeft);
+      'Mousing left of the hContainer should trigger scrolling left.',
+      scrollLeft > hContainerDiv.scrollLeft
+    );
 
     scrollLeft = hContainerDiv.scrollLeft;
-    events.fireMouseMoveEvent(
-        hContainerDiv, new Coordinate(200 + 110, 20 + 50));
+    events.fireMouseMoveEvent(hContainerDiv, new Coordinate(200 + 110, 20 + 50));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertTrue(
-        'Mousing right of the hContainer should trigger scrolling right.',
-        scrollLeft < hContainerDiv.scrollLeft);
+      'Mousing right of the hContainer should trigger scrolling right.',
+      scrollLeft < hContainerDiv.scrollLeft
+    );
     scrollLeft = hContainerDiv.scrollLeft;
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertTrue(
-        'Mousing right of the hContainer should trigger scrolling right.',
-        scrollLeft < hContainerDiv.scrollLeft);
+      'Mousing right of the hContainer should trigger scrolling right.',
+      scrollLeft < hContainerDiv.scrollLeft
+    );
 
     scrollLeft = hContainerDiv.scrollLeft;
     events.fireMouseMoveEvent(hContainerDiv, new Coordinate(200 + 50, 20 + 50));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertEquals(
-        'Mousing inside the hContainer should stop scrolling.', scrollLeft,
-        hContainerDiv.scrollLeft);
+      'Mousing inside the hContainer should stop scrolling.',
+      scrollLeft,
+      hContainerDiv.scrollLeft
+    );
 
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
 
@@ -209,48 +226,53 @@ testSuite({
     events.fireMouseMoveEvent(vContainerDiv, new Coordinate(50, 20 + 50));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertEquals(
-        'Mousing inside the vContainer should not trigger scrolling.',
-        scrollTop, vContainerDiv.scrollTop);
-    assertEquals(
-        'Scroll timer should not tick yet', 0, clock.getTimeoutsMade());
+      'Mousing inside the vContainer should not trigger scrolling.',
+      scrollTop,
+      vContainerDiv.scrollTop
+    );
+    assertEquals('Scroll timer should not tick yet', 0, clock.getTimeoutsMade());
 
     scrollTop = vContainerDiv.scrollTop;
     events.fireMouseMoveEvent(vContainerDiv, new Coordinate(50, 30));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertTrue(
-        'Mousing above the margin should trigger scrolling up.',
-        scrollTop > vContainerDiv.scrollTop);
+      'Mousing above the margin should trigger scrolling up.',
+      scrollTop > vContainerDiv.scrollTop
+    );
     scrollTop = vContainerDiv.scrollTop;
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertTrue(
-        'Mousing above the margin should trigger scrolling up.',
-        scrollTop > vContainerDiv.scrollTop);
+      'Mousing above the margin should trigger scrolling up.',
+      scrollTop > vContainerDiv.scrollTop
+    );
 
     scrollTop = vContainerDiv.scrollTop;
     events.fireMouseMoveEvent(vContainerDiv, new Coordinate(50, 20 + 90));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertTrue(
-        'Mousing below the margin should trigger scrolling down.',
-        scrollTop < vContainerDiv.scrollTop);
+      'Mousing below the margin should trigger scrolling down.',
+      scrollTop < vContainerDiv.scrollTop
+    );
     scrollTop = vContainerDiv.scrollTop;
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertTrue(
-        'Mousing above the margin should trigger scrolling down.',
-        scrollTop < vContainerDiv.scrollTop);
+      'Mousing above the margin should trigger scrolling down.',
+      scrollTop < vContainerDiv.scrollTop
+    );
 
     scrollTop = vContainerDiv.scrollTop;
     events.fireMouseMoveEvent(vContainerDiv, new Coordinate(50, 20 + 50));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertEquals(
-        'Mousing inside the margin should stop scrolling.', scrollTop,
-        vContainerDiv.scrollTop);
+      'Mousing inside the margin should stop scrolling.',
+      scrollTop,
+      vContainerDiv.scrollTop
+    );
 
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
 
     // 5 timeouts are scheduled, but the last one is cancelled.
-    assertEquals(
-        'Scroll timer should have ticked 4 times', 4,
-        clock.getCallbacksTriggered());
+    assertEquals('Scroll timer should have ticked 4 times', 4, clock.getCallbacksTriggered());
 
     dsc.dispose();
   },
@@ -267,65 +289,80 @@ testSuite({
     events.fireMouseMoveEvent(vContainerDiv, new Coordinate(50, 20 + 50));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertEquals(
-        'Mousing inside the vContainer should not trigger scrolling.',
-        scrollTop, vContainerDiv.scrollTop);
-    assertEquals(
-        'Scroll timer should not tick yet', 0, clock.getTimeoutsMade());
+      'Mousing inside the vContainer should not trigger scrolling.',
+      scrollTop,
+      vContainerDiv.scrollTop
+    );
+    assertEquals('Scroll timer should not tick yet', 0, clock.getTimeoutsMade());
 
     scrollTop = vContainerDiv.scrollTop;
     events.fireMouseMoveEvent(vContainerDiv, new Coordinate(50, 30));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertTrue(
-        'Mousing above the margin should trigger scrolling up.',
-        scrollTop > vContainerDiv.scrollTop);
+      'Mousing above the margin should trigger scrolling up.',
+      scrollTop > vContainerDiv.scrollTop
+    );
     scrollTop = vContainerDiv.scrollTop;
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertTrue(
-        'Mousing above the margin should trigger scrolling up.',
-        scrollTop > vContainerDiv.scrollTop);
+      'Mousing above the margin should trigger scrolling up.',
+      scrollTop > vContainerDiv.scrollTop
+    );
 
     scrollTop = vContainerDiv.scrollTop;
     events.fireMouseMoveEvent(vContainerDiv, new Coordinate(50, 20 + 90));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertTrue(
-        'Mousing below the margin should trigger scrolling down.',
-        scrollTop < vContainerDiv.scrollTop);
+      'Mousing below the margin should trigger scrolling down.',
+      scrollTop < vContainerDiv.scrollTop
+    );
     scrollTop = vContainerDiv.scrollTop;
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertTrue(
-        'Mousing above the margin should trigger scrolling down.',
-        scrollTop < vContainerDiv.scrollTop);
+      'Mousing above the margin should trigger scrolling down.',
+      scrollTop < vContainerDiv.scrollTop
+    );
 
     scrollTop = vContainerDiv.scrollTop;
     events.fireMouseMoveEvent(vContainerDiv, new Coordinate(50, 20 + 50));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertEquals(
-        'Mousing inside the margin should stop scrolling.', scrollTop,
-        vContainerDiv.scrollTop);
+      'Mousing inside the margin should stop scrolling.',
+      scrollTop,
+      vContainerDiv.scrollTop
+    );
 
     scrollTop = vContainerDiv.scrollTop;
     events.fireMouseMoveEvent(vContainerDiv, new Coordinate(50, 10));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertEquals(
-        'Mousing above the vContainer should not trigger scrolling up.',
-        scrollTop, vContainerDiv.scrollTop);
+      'Mousing above the vContainer should not trigger scrolling up.',
+      scrollTop,
+      vContainerDiv.scrollTop
+    );
     scrollTop = vContainerDiv.scrollTop;
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertEquals(
-        'Mousing above the vContainer should not trigger scrolling up.',
-        scrollTop, vContainerDiv.scrollTop);
+      'Mousing above the vContainer should not trigger scrolling up.',
+      scrollTop,
+      vContainerDiv.scrollTop
+    );
 
     scrollTop = vContainerDiv.scrollTop;
     events.fireMouseMoveEvent(vContainerDiv, new Coordinate(50, 20 + 110));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertEquals(
-        'Mousing below the vContainer should not trigger scrolling down.',
-        scrollTop, vContainerDiv.scrollTop);
+      'Mousing below the vContainer should not trigger scrolling down.',
+      scrollTop,
+      vContainerDiv.scrollTop
+    );
     scrollTop = vContainerDiv.scrollTop;
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertEquals(
-        'Mousing below the vContainer should not trigger scrolling down.',
-        scrollTop, vContainerDiv.scrollTop);
+      'Mousing below the vContainer should not trigger scrolling down.',
+      scrollTop,
+      vContainerDiv.scrollTop
+    );
 
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
 
@@ -333,22 +370,22 @@ testSuite({
     events.fireMouseMoveEvent(vContainerDiv, new Coordinate(150, 20 + 90));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertEquals(
-        'Mousing to the right of the vContainer should not trigger ' +
-            'scrolling up.',
-        scrollTop, vContainerDiv.scrollTop);
+      'Mousing to the right of the vContainer should not trigger ' + 'scrolling up.',
+      scrollTop,
+      vContainerDiv.scrollTop
+    );
     scrollTop = vContainerDiv.scrollTop;
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertEquals(
-        'Mousing to the right of the vContainer should not trigger ' +
-            'scrolling up.',
-        scrollTop, vContainerDiv.scrollTop);
+      'Mousing to the right of the vContainer should not trigger ' + 'scrolling up.',
+      scrollTop,
+      vContainerDiv.scrollTop
+    );
 
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
 
     // 5 timeouts are scheduled, but the last one is cancelled.
-    assertEquals(
-        'Scroll timer should have ticked 4 times', 4,
-        clock.getCallbacksTriggered());
+    assertEquals('Scroll timer should have ticked 4 times', 4, clock.getCallbacksTriggered());
 
     dsc.dispose();
   },
@@ -364,24 +401,20 @@ testSuite({
 
     events.fireMouseMoveEvent(hContainerDiv, new Coordinate(200 - 10, 20 + 50));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
-    assertEquals(
-        'Horizontal scrolling should be turned off', 0,
-        clock.getTimeoutsMade());
+    assertEquals('Horizontal scrolling should be turned off', 0, clock.getTimeoutsMade());
 
-    events.fireMouseMoveEvent(
-        hContainerDiv, new Coordinate(200 + 110, 20 + 50));
+    events.fireMouseMoveEvent(hContainerDiv, new Coordinate(200 + 110, 20 + 50));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
-    assertEquals(
-        'Horizontal scrolling should be turned off', 0,
-        clock.getTimeoutsMade());
+    assertEquals('Horizontal scrolling should be turned off', 0, clock.getTimeoutsMade());
 
     dsc.setHorizontalScrolling(true);
     scrollLeft = hContainerDiv.scrollLeft;
     events.fireMouseMoveEvent(hContainerDiv, new Coordinate(200 - 10, 20 + 50));
     clock.tick(DragScrollSupport.TIMER_STEP_ + 1);
     assertTrue(
-        'Mousing left of the hContainer should trigger scrolling left.',
-        scrollLeft > hContainerDiv.scrollLeft);
+      'Mousing left of the hContainer should trigger scrolling left.',
+      scrollLeft > hContainerDiv.scrollLeft
+    );
 
     dsc.dispose();
   },
@@ -392,7 +425,9 @@ testSuite({
      * checking
      */
     const rect = DragScrollSupport.prototype.constrainBounds_.call(
-        {margin_: 25}, new GoogRect(0, 0, 100, 100));
+      { margin_: 25 },
+      new GoogRect(0, 0, 100, 100)
+    );
     assertEquals(25, rect.left);
     assertEquals(25, rect.top);
     assertEquals(25, rect.left);

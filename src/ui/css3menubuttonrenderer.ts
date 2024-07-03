@@ -28,8 +28,6 @@ goog.require('goog.ui.MenuButtonRenderer');
 goog.require('goog.ui.registry');
 goog.requireType('goog.ui.ControlContent');
 
-
-
 /**
  * Custom renderer for {@link goog.ui.MenuButton}s. Css3 buttons can contain
  * almost arbitrary HTML content, will flow like inline elements, but can be
@@ -39,13 +37,11 @@ goog.requireType('goog.ui.ControlContent');
  * @extends {goog.ui.MenuButtonRenderer}
  * @final
  */
-goog.ui.Css3MenuButtonRenderer = function() {
-  'use strict';
+goog.ui.Css3MenuButtonRenderer = function () {
   goog.ui.MenuButtonRenderer.call(this);
 };
 goog.inherits(goog.ui.Css3MenuButtonRenderer, goog.ui.MenuButtonRenderer);
 goog.addSingletonGetter(goog.ui.Css3MenuButtonRenderer);
-
 
 /**
  * Default CSS class to be applied to the root element of components rendered
@@ -54,18 +50,18 @@ goog.addSingletonGetter(goog.ui.Css3MenuButtonRenderer);
  */
 goog.ui.Css3MenuButtonRenderer.CSS_CLASS = goog.getCssName('goog-css3-button');
 
-
 /** @override */
-goog.ui.Css3MenuButtonRenderer.prototype.getContentElement = function(element) {
-  'use strict';
+goog.ui.Css3MenuButtonRenderer.prototype.getContentElement = function (element) {
   if (element) {
     var captionElem = goog.dom.getElementsByTagNameAndClass(
-        '*', goog.getCssName(this.getCssClass(), 'caption'), element)[0];
+      '*',
+      goog.getCssName(this.getCssClass(), 'caption'),
+      element
+    )[0];
     return captionElem;
   }
   return null;
 };
-
 
 /**
  * Returns true if this renderer can decorate the element.  Overrides
@@ -75,11 +71,8 @@ goog.ui.Css3MenuButtonRenderer.prototype.getContentElement = function(element) {
  * @return {boolean} Whether the renderer can decorate the element.
  * @override
  */
-goog.ui.Css3MenuButtonRenderer.prototype.canDecorate = function(element) {
-  'use strict';
-  return element.tagName == goog.dom.TagName.DIV;
-};
-
+goog.ui.Css3MenuButtonRenderer.prototype.canDecorate = (element) =>
+  element.tagName == goog.dom.TagName.DIV;
 
 /**
  * Takes a text caption or existing DOM structure, and returns the content
@@ -98,25 +91,23 @@ goog.ui.Css3MenuButtonRenderer.prototype.canDecorate = function(element) {
  * @return {!Element} Pseudo-rounded-corner box containing the content.
  * @override
  */
-goog.ui.Css3MenuButtonRenderer.prototype.createButton = function(content, dom) {
-  'use strict';
+goog.ui.Css3MenuButtonRenderer.prototype.createButton = function (content, dom) {
   var baseClass = this.getCssClass();
   var inlineBlock = goog.ui.INLINE_BLOCK_CLASSNAME + ' ';
   return dom.createDom(
-      goog.dom.TagName.DIV, inlineBlock,
-      dom.createDom(
-          goog.dom.TagName.DIV,
-          [
-            goog.getCssName(baseClass, 'caption'),
-            goog.getCssName('goog-inline-block')
-          ],
-          content),
-      dom.createDom(goog.dom.TagName.DIV, [
-        goog.getCssName(baseClass, 'dropdown'),
-        goog.getCssName('goog-inline-block')
-      ]));
+    goog.dom.TagName.DIV,
+    inlineBlock,
+    dom.createDom(
+      goog.dom.TagName.DIV,
+      [goog.getCssName(baseClass, 'caption'), goog.getCssName('goog-inline-block')],
+      content
+    ),
+    dom.createDom(goog.dom.TagName.DIV, [
+      goog.getCssName(baseClass, 'dropdown'),
+      goog.getCssName('goog-inline-block'),
+    ])
+  );
 };
-
 
 /**
  * Returns the CSS class to be applied to the root element of components
@@ -124,19 +115,14 @@ goog.ui.Css3MenuButtonRenderer.prototype.createButton = function(content, dom) {
  * @return {string} Renderer-specific CSS class.
  * @override
  */
-goog.ui.Css3MenuButtonRenderer.prototype.getCssClass = function() {
-  'use strict';
-  return goog.ui.Css3MenuButtonRenderer.CSS_CLASS;
-};
-
+goog.ui.Css3MenuButtonRenderer.prototype.getCssClass = () =>
+  goog.ui.Css3MenuButtonRenderer.CSS_CLASS;
 
 // Register a decorator factory function for goog.ui.Css3MenuButtonRenderer.
 // Since we're using goog-css3-button as the base class in order to get the
 // same styling as goog.ui.Css3ButtonRenderer, we need to be explicit about
 // giving goog-css3-menu-button here.
 goog.ui.registry.setDecoratorByClassName(
-    goog.getCssName('goog-css3-menu-button'), function() {
-      'use strict';
-      return new goog.ui.MenuButton(
-          null, null, goog.ui.Css3MenuButtonRenderer.getInstance());
-    });
+  goog.getCssName('goog-css3-menu-button'),
+  () => new goog.ui.MenuButton(null, null, goog.ui.Css3MenuButtonRenderer.getInstance())
+);

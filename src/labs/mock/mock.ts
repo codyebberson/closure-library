@@ -16,7 +16,6 @@
  * Manual: http://go/goog.labs.mock
  */
 
-
 goog.provide('goog.labs.mock');
 goog.provide('goog.labs.mock.TimeoutError');
 goog.provide('goog.labs.mock.VerificationError');
@@ -35,7 +34,6 @@ goog.require('goog.object');
 
 goog.setTestOnly('goog.labs.mock');
 
-
 /**
  * Mocks a given object or class.
  *
@@ -43,17 +41,14 @@ goog.setTestOnly('goog.labs.mock');
  *     mocked.
  * @return {!Object} The mocked object.
  */
-goog.labs.mock.mock = function(objectOrClass) {
-  'use strict';
+goog.labs.mock.mock = (objectOrClass) => {
   // Go over properties of 'objectOrClass' and create a MockManager to
   // be used for stubbing out calls to methods.
-  const mockObjectManager =
-      new goog.labs.mock.MockObjectManager_(objectOrClass);
+  const mockObjectManager = new goog.labs.mock.MockObjectManager_(objectOrClass);
   const mockedObject = mockObjectManager.getMockedItem();
   goog.asserts.assertObject(mockedObject);
   return /** @type {!Object} */ (mockedObject);
 };
-
 
 /**
  * Mocks a given function.
@@ -61,15 +56,14 @@ goog.labs.mock.mock = function(objectOrClass) {
  * @param {!Function=} opt_func A function to be mocked.
  * @return {!Function} The mocked function.
  */
-goog.labs.mock.mockFunction = function(opt_func) {
-  'use strict';
+goog.labs.mock.mockFunction = (opt_func) => {
   const mockFuncManager = new goog.labs.mock.MockFunctionManager_(
-      goog.labs.mock.getFunctionName_(opt_func || function() {}));
+    goog.labs.mock.getFunctionName_(opt_func || (() => {}))
+  );
   const mockedFunction = mockFuncManager.getMockedItem();
   goog.asserts.assertFunction(mockedFunction);
   return /** @type {!Function} */ (mockedFunction);
 };
-
 
 /**
  * Mocks a given constructor.
@@ -78,22 +72,19 @@ goog.labs.mock.mockFunction = function(opt_func) {
  * @return {function(new:T, ...?)} The mocked constructor.
  * @template T
  */
-goog.labs.mock.mockConstructor = function(ctor) {
-  'use strict';
+goog.labs.mock.mockConstructor = (ctor) => {
   const mockCtor = goog.labs.mock.mockFunction(ctor);
 
   // Copy class members from the real constructor to the mock. Do not copy
   // the closure superClass_ property (see goog.inherits), the built-in
   // prototype property, or properties added to Function.prototype
-  for (let property in ctor) {
-    if (property != 'superClass_' && property != 'prototype' &&
-        ctor.hasOwnProperty(property)) {
+  for (const property in ctor) {
+    if (property != 'superClass_' && property != 'prototype' && ctor.hasOwnProperty(property)) {
       mockCtor[property] = ctor[property];
     }
   }
   return mockCtor;
 };
-
 
 /**
  * Spies on a given object.
@@ -101,8 +92,7 @@ goog.labs.mock.mockConstructor = function(ctor) {
  * @param {!Object} obj The object to be spied on.
  * @return {!Object} The spy object.
  */
-goog.labs.mock.spy = function(obj) {
-  'use strict';
+goog.labs.mock.spy = (obj) => {
   // Go over properties of 'obj' and create a MockSpyManager_ to
   // be used for spying on calls to methods.
   const mockSpyManager = new goog.labs.mock.MockSpyManager_(obj);
@@ -110,7 +100,6 @@ goog.labs.mock.spy = function(obj) {
   goog.asserts.assert(spyObject);
   return spyObject;
 };
-
 
 /**
  * Returns an object that can be used to verify calls to specific methods of a
@@ -121,8 +110,7 @@ goog.labs.mock.spy = function(obj) {
  * @return {?} The verifier. Return type {?} to avoid compilation errors.
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.labs.mock.verify = function(obj, opt_verificationMode) {
-  'use strict';
+goog.labs.mock.verify = (obj, opt_verificationMode) => {
   const mode = opt_verificationMode || goog.labs.mock.verification.atLeast(1);
   obj.$verificationModeSetter(mode);
 
@@ -139,16 +127,16 @@ goog.labs.mock.verify = function(obj, opt_verificationMode) {
  * @return {?} The waiter. Return type {?} to avoid compilation errors.
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.labs.mock.waitAndVerify = function(obj, ...verificationOrTimeoutModes) {
+goog.labs.mock.waitAndVerify = (obj, ...verificationOrTimeoutModes) => {
   goog.asserts.assert(
-      verificationOrTimeoutModes.length <= 2,
-      'At most 2 arguments may be passed as Timeout and Verification modes.');
+    verificationOrTimeoutModes.length <= 2,
+    'At most 2 arguments may be passed as Timeout and Verification modes.'
+  );
   for (let i = 0; i < 2; i++) {
     const mode = verificationOrTimeoutModes[i];
     if (mode instanceof goog.labs.mock.timeout.TimeoutMode) {
       obj.$timeoutModeSetter(mode);
-    } else if (
-        mode instanceof goog.labs.mock.verification.BaseVerificationMode) {
+    } else if (mode instanceof goog.labs.mock.verification.BaseVerificationMode) {
       obj.$verificationModeSetter(mode);
     }
   }
@@ -163,15 +151,13 @@ goog.labs.mock.waitAndVerify = function(obj, ...verificationOrTimeoutModes) {
  * @param {!Function} func The function.
  * @return {string} The function name.
  */
-goog.labs.mock.getFunctionName_ = function(func) {
-  'use strict';
+goog.labs.mock.getFunctionName_ = (func) => {
   let funcName = goog.debug.getFunctionName(func);
   if (funcName == '' || funcName == '[Anonymous]') {
     funcName = '#anonymous' + goog.labs.mock.getUid(func);
   }
   return funcName;
 };
-
 
 /**
  * Returns a nicely formatted, readable representation of a method call.
@@ -180,18 +166,18 @@ goog.labs.mock.getFunctionName_ = function(func) {
  * @param {Array<?>=} opt_args The method arguments.
  * @return {string} The string representation of the method call.
  */
-goog.labs.mock.formatMethodCall_ = function(methodName, opt_args) {
-  'use strict';
+goog.labs.mock.formatMethodCall_ = (methodName, opt_args) => {
   opt_args = opt_args || [];
-  opt_args = opt_args.map(function(arg) {
-    'use strict';
+  opt_args = opt_args.map((arg) => {
     if (typeof arg === 'function') {
       const funcName = goog.labs.mock.getFunctionName_(arg);
       return '<function ' + funcName + '>';
     } else {
-      const isObjectWithClass = goog.isObject(arg) &&
-          typeof arg !== 'function' && !Array.isArray(arg) &&
-          arg.constructor != Object;
+      const isObjectWithClass =
+        goog.isObject(arg) &&
+        typeof arg !== 'function' &&
+        !Array.isArray(arg) &&
+        arg.constructor != Object;
       if (isObjectWithClass) {
         return arg.toString();
       }
@@ -201,7 +187,6 @@ goog.labs.mock.formatMethodCall_ = function(methodName, opt_args) {
   return methodName + '(' + opt_args.join(', ') + ')';
 };
 
-
 /**
  * An array to store objects for unique id generation.
  * @private
@@ -209,14 +194,12 @@ goog.labs.mock.formatMethodCall_ = function(methodName, opt_args) {
  */
 goog.labs.mock.uid_ = [];
 
-
 /**
  * A unique Id generator that does not modify the object.
  * @param {Object!} obj The object whose unique ID we want to generate.
  * @return {number} an unique id for the object.
  */
-goog.labs.mock.getUid = function(obj) {
-  'use strict';
+goog.labs.mock.getUid = (obj) => {
   let index = goog.labs.mock.uid_.indexOf(obj);
   if (index == -1) {
     index = goog.labs.mock.uid_.length;
@@ -224,7 +207,6 @@ goog.labs.mock.getUid = function(obj) {
   }
   return index;
 };
-
 
 /**
  * This is just another implementation of goog.debug.deepExpose with a more
@@ -235,19 +217,13 @@ goog.labs.mock.getUid = function(obj) {
  *     Defaults to true.
  * @return {string} The string representation of the object.
  */
-goog.labs.mock.formatValue_ = function(obj, opt_id) {
-  'use strict';
-  const id = (opt_id !== undefined) ? opt_id : true;
+goog.labs.mock.formatValue_ = (obj, opt_id) => {
+  const id = opt_id !== undefined ? opt_id : true;
   const previous = [];
   const output = [];
 
-  const helper = function(obj) {
-    'use strict';
-    const indentMultiline = function(output) {
-      'use strict';
-      return output.replace(/\n/g, '\n');
-    };
-
+  const helper = (obj) => {
+    const indentMultiline = (output) => output.replace(/\n/g, '\n');
 
     try {
       if (obj === undefined) {
@@ -266,19 +242,16 @@ goog.labs.mock.formatValue_ = function(obj, opt_id) {
       } else if (goog.isObject(obj)) {
         if (goog.array.contains(previous, obj)) {
           if (id) {
-            output.push(
-                '<recursive/dupe obj_' + goog.labs.mock.getUid(obj) + '>');
+            output.push('<recursive/dupe obj_' + goog.labs.mock.getUid(obj) + '>');
           } else {
             output.push('<recursive/dupe>');
           }
         } else {
           previous.push(obj);
           output.push('{');
-          for (let x in obj) {
+          for (const x in obj) {
             output.push(' ');
-            output.push(
-                '"' + x + '"' +
-                ':');
+            output.push('"' + x + '"' + ':');
             helper(obj[x]);
           }
           if (id) {
@@ -295,11 +268,11 @@ goog.labs.mock.formatValue_ = function(obj, opt_id) {
   };
 
   helper(obj);
-  return output.join('')
-      .replace(/"closure_uid_\d+"/g, '_id')
-      .replace(/{ /g, '{');
+  return output
+    .join('')
+    .replace(/"closure_uid_\d+"/g, '_id')
+    .replace(/{ /g, '{');
 };
-
 
 /**
  * Like getOwnPropertyDescriptor but walks prototype chain.
@@ -309,7 +282,7 @@ goog.labs.mock.formatValue_ = function(obj, opt_id) {
  * @return {!Object|undefined} a PropertyDescriptor or undefined if property was
  *     not found.
  */
-goog.labs.mock.getPropertyDescriptor_ = function(obj, name) {
+goog.labs.mock.getPropertyDescriptor_ = (obj, name) => {
   let proto = obj;
   while (proto) {
     const descriptor = Object.getOwnPropertyDescriptor(proto, name);
@@ -320,7 +293,6 @@ goog.labs.mock.getPropertyDescriptor_ = function(obj, name) {
   }
   return undefined;
 };
-
 
 /**
  * Sets expectations on mocked accessor descriptor (trivial `get` and `set`) so
@@ -336,13 +308,11 @@ goog.labs.mock.getPropertyDescriptor_ = function(obj, name) {
  * @param {?=} initialValue Optional initial value for the property.
  * @private
  */
-goog.labs.mock.mockDescriptorAsDataProperty_ = function(
-    property, initialValue = undefined) {
+goog.labs.mock.mockDescriptorAsDataProperty_ = (property, initialValue = undefined) => {
   let value = initialValue;
   property.get().then(() => value);
-  property.set({matches: () => true}).then((v) => value = v);
+  property.set({ matches: () => true }).then((v) => (value = v));
 };
-
 
 /**
  * Error thrown when verification failed.
@@ -357,15 +327,16 @@ goog.labs.mock.mockDescriptorAsDataProperty_ = function(
  * @extends {goog.debug.Error}
  * @final
  */
-goog.labs.mock.VerificationError = function(
-    recordedCalls, methodName, verificationMode, args) {
-  'use strict';
+goog.labs.mock.VerificationError = function (recordedCalls, methodName, verificationMode, args) {
   const msg = goog.labs.mock.VerificationError.getVerificationErrorMsg_(
-      recordedCalls, methodName, verificationMode, args);
+    recordedCalls,
+    methodName,
+    verificationMode,
+    args
+  );
   goog.labs.mock.VerificationError.base(this, 'constructor', msg);
 };
 goog.inherits(goog.labs.mock.VerificationError, goog.debug.Error);
-
 
 /** @override */
 goog.labs.mock.VerificationError.prototype.name = 'VerificationError';
@@ -383,11 +354,13 @@ goog.labs.mock.VerificationError.prototype.name = 'VerificationError';
  * @extends {goog.debug.Error}
  * @final
  */
-goog.labs.mock.TimeoutError = function(
-    recordedCalls, methodName, verificationMode, args) {
-  'use strict';
+goog.labs.mock.TimeoutError = function (recordedCalls, methodName, verificationMode, args) {
   const msg = goog.labs.mock.TimeoutError.getTimeoutErrorMsg_(
-      recordedCalls, methodName, verificationMode, args);
+    recordedCalls,
+    methodName,
+    verificationMode,
+    args
+  );
   goog.labs.mock.TimeoutError.base(this, 'constructor', msg);
 };
 goog.inherits(goog.labs.mock.TimeoutError, goog.debug.Error);
@@ -404,10 +377,14 @@ goog.labs.mock.TimeoutError.prototype.name = 'TimeoutError';
  * @private
  */
 goog.labs.mock.PROTOTYPE_FIELDS_ = [
-  'constructor', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable',
-  'toLocaleString', 'toString', 'valueOf'
+  'constructor',
+  'hasOwnProperty',
+  'isPrototypeOf',
+  'propertyIsEnumerable',
+  'toLocaleString',
+  'toString',
+  'valueOf',
 ];
-
 
 /**
  * Constructs a descriptive error message for an expected method call.
@@ -420,18 +397,17 @@ goog.labs.mock.PROTOTYPE_FIELDS_ = [
  * @param {!Array<?>} args The expected arguments.
  * @return {string} The error message.
  */
-goog.labs.mock.VerificationError.getVerificationErrorMsg_ = function(
-    recordedCalls, methodName, verificationMode, args) {
-  'use strict';
-  recordedCalls = recordedCalls.filter(function(binding) {
-    'use strict';
-    return binding.getMethodName() == methodName;
-  });
+goog.labs.mock.VerificationError.getVerificationErrorMsg_ = (
+  recordedCalls,
+  methodName,
+  verificationMode,
+  args
+) => {
+  recordedCalls = recordedCalls.filter((binding) => binding.getMethodName() == methodName);
 
   const expected = goog.labs.mock.formatMethodCall_(methodName, args);
 
-  let msg =
-      '\nExpected: ' + expected.toString() + ' ' + verificationMode.describe();
+  let msg = '\nExpected: ' + expected.toString() + ' ' + verificationMode.describe();
   msg += '\nRecorded: ';
 
   if (recordedCalls.length > 0) {
@@ -455,19 +431,24 @@ goog.labs.mock.VerificationError.getVerificationErrorMsg_ = function(
  * @param {!Array<?>} args The expected arguments.
  * @return {string} The error message.
  */
-goog.labs.mock.TimeoutError.getTimeoutErrorMsg_ = function(
-    recordedCalls, methodName, verificationMode, args) {
-  'use strict';
-  const verificationErrorMsg =
-      goog.labs.mock.VerificationError.getVerificationErrorMsg_(
-          recordedCalls, methodName, verificationMode, args);
+goog.labs.mock.TimeoutError.getTimeoutErrorMsg_ = (
+  recordedCalls,
+  methodName,
+  verificationMode,
+  args
+) => {
+  const verificationErrorMsg = goog.labs.mock.VerificationError.getVerificationErrorMsg_(
+    recordedCalls,
+    methodName,
+    verificationMode,
+    args
+  );
   const timeoutErrorMsg =
-      'Function call was either not invoked or never met criteria specified ' +
-      'by provided verification mode. ' + verificationErrorMsg;
+    'Function call was either not invoked or never met criteria specified ' +
+    'by provided verification mode. ' +
+    verificationErrorMsg;
   return timeoutErrorMsg;
 };
-
-
 
 /**
  * Base class that provides basic functionality for creating, adding and
@@ -479,8 +460,7 @@ goog.labs.mock.TimeoutError.getTimeoutErrorMsg_ = function(
  * @struct
  * @private
  */
-goog.labs.mock.MockManager_ = function() {
-  'use strict';
+goog.labs.mock.MockManager_ = function () {
   /**
    * Proxies the methods for the mocked object or class to execute the stubs.
    * @type {!Object}
@@ -536,7 +516,6 @@ goog.labs.mock.MockManager_ = function() {
   this.callListeners_ = {};
 };
 
-
 /**
  * Allows callers of `#verify` to override the default verification
  * mode of this MockManager.
@@ -544,9 +523,7 @@ goog.labs.mock.MockManager_ = function() {
  * @param {!goog.labs.mock.verification.VerificationMode} verificationMode
  * @private
  */
-goog.labs.mock.MockManager_.prototype.setVerificationMode_ = function(
-    verificationMode) {
-  'use strict';
+goog.labs.mock.MockManager_.prototype.setVerificationMode_ = function (verificationMode) {
   this.verificationMode_ = verificationMode;
 };
 
@@ -557,8 +534,7 @@ goog.labs.mock.MockManager_.prototype.setVerificationMode_ = function(
  * @param {!goog.labs.mock.timeout.TimeoutMode} timeoutMode
  * @private
  */
-goog.labs.mock.MockManager_.prototype.setTimeoutMode_ = function(timeoutMode) {
-  'use strict';
+goog.labs.mock.MockManager_.prototype.setTimeoutMode_ = function (timeoutMode) {
   this.timeoutMode_ = timeoutMode;
 };
 
@@ -571,13 +547,10 @@ goog.labs.mock.MockManager_.prototype.setTimeoutMode_ = function(timeoutMode) {
  * @return {!goog.labs.mock.StubBinder} The stub binder.
  * @private
  */
-goog.labs.mock.MockManager_.prototype.handleMockCall_ = function(
-    methodName, var_args) {
-  'use strict';
+goog.labs.mock.MockManager_.prototype.handleMockCall_ = function (methodName, var_args) {
   const args = Array.prototype.slice.call(arguments, 1);
   return new goog.labs.mock.StubBinderImpl_(this, methodName, args);
 };
-
 
 /**
  * Returns the mock object. This should have a stubbed method for each method
@@ -585,11 +558,9 @@ goog.labs.mock.MockManager_.prototype.handleMockCall_ = function(
  *
  * @return {!Object|!Function} The mock object.
  */
-goog.labs.mock.MockManager_.prototype.getMockedItem = function() {
-  'use strict';
+goog.labs.mock.MockManager_.prototype.getMockedItem = function () {
   return this.mockedItem;
 };
-
 
 /**
  * Adds a binding for the method name and arguments to be stubbed.
@@ -600,15 +571,12 @@ goog.labs.mock.MockManager_.prototype.getMockedItem = function() {
  * @return {!Array<?>} The array of stubs for further sequential stubs to be
  *     appended.
  */
-goog.labs.mock.MockManager_.prototype.addBinding = function(
-    methodName, args, func) {
-  'use strict';
+goog.labs.mock.MockManager_.prototype.addBinding = function (methodName, args, func) {
   const binding = new goog.labs.mock.MethodBinding_(methodName, args, func);
   const sequentialStubsArray = [binding];
   goog.array.insertAt(this.methodBindings, sequentialStubsArray, 0);
   return sequentialStubsArray;
 };
-
 
 /**
  * Returns a stub, if defined, for the method name and arguments passed in.
@@ -624,14 +592,10 @@ goog.labs.mock.MockManager_.prototype.addBinding = function(
  * @return {?Function} The stub function or null.
  * @protected
  */
-goog.labs.mock.MockManager_.prototype.getNextBinding = function(
-    methodName, args) {
-  'use strict';
-  const bindings = this.methodBindings.find(function(bindingArray) {
-    'use strict';
-    return bindingArray[0].matches(
-        methodName, args, false /* isVerification */);
-  });
+goog.labs.mock.MockManager_.prototype.getNextBinding = function (methodName, args) {
+  const bindings = this.methodBindings.find((bindingArray) =>
+    bindingArray[0].matches(methodName, args, false /* isVerification */)
+  );
   if (bindings == null) {
     return null;
   }
@@ -642,7 +606,6 @@ goog.labs.mock.MockManager_.prototype.getNextBinding = function(
   return bindings[0].getStub();
 };
 
-
 /**
  * Returns a stub, if defined, for the method name and arguments passed in as
  * parameters.
@@ -652,11 +615,9 @@ goog.labs.mock.MockManager_.prototype.getNextBinding = function(
  * @return {Function} The stub function or undefined.
  * @protected
  */
-goog.labs.mock.MockManager_.prototype.getExecutor = function(methodName, args) {
-  'use strict';
+goog.labs.mock.MockManager_.prototype.getExecutor = function (methodName, args) {
   return this.getNextBinding(methodName, args);
 };
-
 
 /**
  * Looks up the list of stubs defined on the mock object and executes the
@@ -667,9 +628,7 @@ goog.labs.mock.MockManager_.prototype.getExecutor = function(methodName, args) {
  * @return {*} Value returned by the stub function.
  * @protected
  */
-goog.labs.mock.MockManager_.prototype.executeStub = function(
-    methodName, var_args) {
-  'use strict';
+goog.labs.mock.MockManager_.prototype.executeStub = function (methodName, var_args) {
   const args = Array.prototype.slice.call(arguments, 1);
 
   const callRecord = this.recordCall_(methodName, args);
@@ -686,7 +645,6 @@ goog.labs.mock.MockManager_.prototype.executeStub = function(
   }
 };
 
-
 /**
  * Records a call to 'methodName' with arguments 'args'.
  *
@@ -695,15 +653,12 @@ goog.labs.mock.MockManager_.prototype.executeStub = function(
  * @return {!goog.labs.mock.MethodBinding_} The call record that was recorded.
  * @private
  */
-goog.labs.mock.MockManager_.prototype.recordCall_ = function(methodName, args) {
-  'use strict';
-  const callRecord =
-      new goog.labs.mock.MethodBinding_(methodName, args, () => {});
+goog.labs.mock.MockManager_.prototype.recordCall_ = function (methodName, args) {
+  const callRecord = new goog.labs.mock.MethodBinding_(methodName, args, () => {});
 
   this.callRecords_.push(callRecord);
   return callRecord;
 };
-
 
 /**
  * Verify invocation of a method with specific arguments.
@@ -712,21 +667,19 @@ goog.labs.mock.MockManager_.prototype.recordCall_ = function(methodName, args) {
  * @param {...*} var_args The arguments passed.
  * @protected
  */
-goog.labs.mock.MockManager_.prototype.verifyInvocation = function(
-    methodName, var_args) {
-  'use strict';
+goog.labs.mock.MockManager_.prototype.verifyInvocation = function (methodName, var_args) {
   const args = Array.prototype.slice.call(arguments, 1);
-  const count =
-      this.callRecords_
-          .filter(function(binding) {
-            'use strict';
-            return binding.matches(methodName, args, true /* isVerification */);
-          })
-          .length;
+  const count = this.callRecords_.filter((binding) =>
+    binding.matches(methodName, args, true /* isVerification */)
+  ).length;
 
   if (!this.verificationMode_.verify(count)) {
     throw new goog.labs.mock.VerificationError(
-        this.callRecords_, methodName, this.verificationMode_, args);
+      this.callRecords_,
+      methodName,
+      this.verificationMode_,
+      args
+    );
   }
 };
 
@@ -738,14 +691,10 @@ goog.labs.mock.MockManager_.prototype.verifyInvocation = function(
  *     according to its verification mode.
  * @protected
  */
-goog.labs.mock.MockManager_.prototype.waitForCall = function(
-    methodName, ...args) {
-  let count =
-      this.callRecords_
-          .filter(function(binding) {
-            return binding.matches(methodName, args, true /* isVerification */);
-          })
-          .length;
+goog.labs.mock.MockManager_.prototype.waitForCall = function (methodName, ...args) {
+  let count = this.callRecords_.filter((binding) =>
+    binding.matches(methodName, args, true /* isVerification */)
+  ).length;
 
   return new Promise((resolve, reject) => {
     // If the function has already been called, immediately resolve.
@@ -755,8 +704,9 @@ goog.labs.mock.MockManager_.prototype.waitForCall = function(
     }
 
     const timeout = setTimeout(() => {
-      reject(new goog.labs.mock.TimeoutError(
-          this.callRecords_, methodName, this.verificationMode_, args));
+      reject(
+        new goog.labs.mock.TimeoutError(this.callRecords_, methodName, this.verificationMode_, args)
+      );
       this.callListeners_[methodName].delete(listener);
     }, this.timeoutMode_.duration);
 
@@ -785,8 +735,6 @@ goog.labs.mock.MockManager_.prototype.waitForCall = function(
   });
 };
 
-
-
 /**
  * Sets up mock for the given object (or class), stubbing out all the defined
  * methods. By default, all stubs return `undefined`, though stubs can be
@@ -800,8 +748,7 @@ goog.labs.mock.MockManager_.prototype.waitForCall = function(
  * @suppress {strictMissingProperties} Part of the
  * go/strict_warnings_migration
  */
-goog.labs.mock.MockObjectManager_ = function(objOrClass) {
-  'use strict';
+goog.labs.mock.MockObjectManager_ = function (objOrClass) {
   goog.labs.mock.MockObjectManager_.base(this, 'constructor');
 
   /**
@@ -838,7 +785,7 @@ goog.labs.mock.MockObjectManager_ = function(objOrClass) {
      * @constructor
      * @final
      */
-    const tempCtor = function() {};
+    const tempCtor = () => {};
     goog.inherits(tempCtor, objOrClass);
     obj = new tempCtor();
   } else {
@@ -851,12 +798,11 @@ goog.labs.mock.MockObjectManager_ = function(objOrClass) {
    * @constructor
    * @final
    */
-  const mockedItemCtor = function() {};
+  const mockedItemCtor = () => {};
   mockedItemCtor.prototype = obj;
   this.mockedItem = new mockedItemCtor();
 
-  const propObj =
-      typeof objOrClass === 'function' ? objOrClass.prototype : objOrClass;
+  const propObj = typeof objOrClass === 'function' ? objOrClass.prototype : objOrClass;
   const enumerableProperties = goog.object.getAllPropertyNames(propObj);
   // The non enumerable properties are added due to the fact that IE8 does not
   // enumerate any of the prototype Object functions even when overridden and
@@ -872,19 +818,18 @@ goog.labs.mock.MockObjectManager_ = function(objOrClass) {
   // the instance.
   for (let i = 0; i < enumerableProperties.length; i++) {
     const prop = enumerableProperties[i];
-    const descriptor =
-        goog.labs.mock.getPropertyDescriptor_(propObj, prop) || {};
+    const descriptor = goog.labs.mock.getPropertyDescriptor_(propObj, prop) || {};
     if (descriptor.get || descriptor.set) {
       // A separate stub binder and verifier are needed for get/set functions.
       const stubDescriptor = {};
       /** @type {!goog.labs.mock.DescriptorStubBinder} */
-      const stubBinder = this.objectStubBinder_[prop] = {
+      const stubBinder = (this.objectStubBinder_[prop] = {
         asDataProperty(v = undefined) {
           goog.labs.mock.mockDescriptorAsDataProperty_(stubBinder, v);
         },
-      };
-      const callVerifier = this.objectCallVerifier_[prop] = {};
-      const callWaiter = this.objectCallWaiter_[prop] = {};
+      });
+      const callVerifier = (this.objectCallVerifier_[prop] = {});
+      const callWaiter = (this.objectCallWaiter_[prop] = {});
       for (const type of ['get', 'set']) {
         if (!descriptor[type]) {
           continue;
@@ -892,19 +837,16 @@ goog.labs.mock.MockObjectManager_ = function(objOrClass) {
         const specialProp = `${prop}.${type}`;
         stubDescriptor[type] = goog.bind(this.executeStub, this, specialProp);
         stubBinder[type] = goog.bind(this.handleMockCall_, this, specialProp);
-        callVerifier[type] =
-            goog.bind(this.verifyInvocation, this, specialProp);
+        callVerifier[type] = goog.bind(this.verifyInvocation, this, specialProp);
         callWaiter[type] = goog.bind(this.waitForCall, this, specialProp);
       }
       Object.defineProperty(this.mockedItem, prop, stubDescriptor);
     } else if (typeof propObj[prop] === 'function') {
       this.mockedItem[prop] = goog.bind(this.executeStub, this, prop);
       // The stub binder used to create bindings.
-      this.objectStubBinder_[prop] =
-          goog.bind(this.handleMockCall_, this, prop);
+      this.objectStubBinder_[prop] = goog.bind(this.handleMockCall_, this, prop);
       // The verifier verifies the calls.
-      this.objectCallVerifier_[prop] =
-          goog.bind(this.verifyInvocation, this, prop);
+      this.objectCallVerifier_[prop] = goog.bind(this.verifyInvocation, this, prop);
       // The call waiter waits for calls.
       this.objectCallWaiter_[prop] = goog.bind(this.waitForCall, this, prop);
     }
@@ -917,14 +859,11 @@ goog.labs.mock.MockObjectManager_ = function(objOrClass) {
 
   this.mockedItem.$callWaiter = this.objectCallWaiter_;
 
-  this.mockedItem.$verificationModeSetter =
-      goog.bind(this.setVerificationMode_, this);
+  this.mockedItem.$verificationModeSetter = goog.bind(this.setVerificationMode_, this);
 
   this.mockedItem.$timeoutModeSetter = goog.bind(this.setTimeoutMode_, this);
 };
 goog.inherits(goog.labs.mock.MockObjectManager_, goog.labs.mock.MockManager_);
-
-
 
 /**
  * Sets up the spying behavior for the given object.
@@ -936,13 +875,10 @@ goog.inherits(goog.labs.mock.MockObjectManager_, goog.labs.mock.MockManager_);
  * @extends {goog.labs.mock.MockObjectManager_}
  * @private
  */
-goog.labs.mock.MockSpyManager_ = function(obj) {
-  'use strict';
+goog.labs.mock.MockSpyManager_ = function (obj) {
   goog.labs.mock.MockSpyManager_.base(this, 'constructor', obj);
 };
-goog.inherits(
-    goog.labs.mock.MockSpyManager_, goog.labs.mock.MockObjectManager_);
-
+goog.inherits(goog.labs.mock.MockSpyManager_, goog.labs.mock.MockObjectManager_);
 
 /**
  * Return a stub, if defined, for the method and arguments passed in. If we
@@ -952,11 +888,8 @@ goog.inherits(
  * @return {!Function} The stub or the invocation logger, if defined.
  * @override
  */
-goog.labs.mock.MockSpyManager_.prototype.getNextBinding = function(
-    methodName, args) {
-  'use strict';
-  let stub = goog.labs.mock.MockSpyManager_.base(
-      this, 'getNextBinding', methodName, args);
+goog.labs.mock.MockSpyManager_.prototype.getNextBinding = function (methodName, args) {
+  let stub = goog.labs.mock.MockSpyManager_.base(this, 'getNextBinding', methodName, args);
 
   if (!stub) {
     stub = goog.bind(this.mockee[methodName], this.mockedItem);
@@ -964,8 +897,6 @@ goog.labs.mock.MockSpyManager_.prototype.getNextBinding = function(
 
   return stub;
 };
-
-
 
 /**
  * Sets up mock for the given function, stubbing out. By default, all stubs
@@ -979,8 +910,7 @@ goog.labs.mock.MockSpyManager_.prototype.getNextBinding = function(
  * @suppress {strictMissingProperties} Part of the
  * go/strict_warnings_migration
  */
-goog.labs.mock.MockFunctionManager_ = function(name) {
-  'use strict';
+goog.labs.mock.MockFunctionManager_ = function (name) {
   goog.labs.mock.MockFunctionManager_.base(this, 'constructor');
 
   this.name_ = name;
@@ -1001,8 +931,7 @@ goog.labs.mock.MockFunctionManager_ = function(name) {
    * Sets the first argument of verifyInvocation to the function name.
    * @type {!Function}
    */
-  this.mockedItem.$callVerifier =
-      this.useMockedFunctionName_(this.verifyInvocation);
+  this.mockedItem.$callVerifier = this.useMockedFunctionName_(this.verifyInvocation);
 
   /**
    * The call waiter is used to wait for function calls.
@@ -1013,12 +942,10 @@ goog.labs.mock.MockFunctionManager_ = function(name) {
 
   // These have to be repeated because if they're set in the base class they
   // will be stubbed by MockObjectManager.
-  this.mockedItem.$verificationModeSetter =
-      goog.bind(this.setVerificationMode_, this);
+  this.mockedItem.$verificationModeSetter = goog.bind(this.setVerificationMode_, this);
   this.mockedItem.$timeoutModeSetter = goog.bind(this.setTimeoutMode_, this);
 };
 goog.inherits(goog.labs.mock.MockFunctionManager_, goog.labs.mock.MockManager_);
-
 
 /**
  * Given a method, returns a new function that calls the first one setting
@@ -1028,28 +955,22 @@ goog.inherits(goog.labs.mock.MockFunctionManager_, goog.labs.mock.MockManager_);
  * @param {Function} nextFunc The function to override.
  * @return {!Function} The overloaded function.
  */
-goog.labs.mock.MockFunctionManager_.prototype.useMockedFunctionName_ = function(
-    nextFunc) {
-  'use strict';
-  const mockFunctionManager = this;
+goog.labs.mock.MockFunctionManager_.prototype.useMockedFunctionName_ = function (nextFunc) {
   // Avoid using 'this' because this function may be called with 'new'.
-  return function(var_args) {
-    'use strict';
+  return (var_args) => {
     const args = Array.prototype.slice.call(arguments);
-    const name = '#mockFor<' + mockFunctionManager.name_ + '>';
+    const name = '#mockFor<' + this.name_ + '>';
     goog.array.insertAt(args, name, 0);
-    return nextFunc.apply(mockFunctionManager, args);
+    return nextFunc.apply(this, args);
   };
 };
-
 
 /**
  * A stub binder is an object that helps define the stub by binding
  * method name to the stub method.
  * @interface
  */
-goog.labs.mock.StubBinder = function() {};
-
+goog.labs.mock.StubBinder = () => {};
 
 /**
  * Defines the function to be called for the method name and arguments bound
@@ -1069,7 +990,6 @@ goog.labs.mock.StubBinder = function() {};
  */
 goog.labs.mock.StubBinder.prototype.then = goog.abstractMethod;
 
-
 /**
  * Defines the constant return value for the stub represented by this
  * `StubBinder`.
@@ -1078,7 +998,6 @@ goog.labs.mock.StubBinder.prototype.then = goog.abstractMethod;
  * @return {!goog.labs.mock.StubBinder} Returns itself for chaining.
  */
 goog.labs.mock.StubBinder.prototype.thenReturn = goog.abstractMethod;
-
 
 /**
  * A `StubBinder` which uses `MockManager_` to manage stub
@@ -1092,8 +1011,7 @@ goog.labs.mock.StubBinder.prototype.thenReturn = goog.abstractMethod;
  * @implements {goog.labs.mock.StubBinder}
  * @private @constructor @struct @final
  */
-goog.labs.mock.StubBinderImpl_ = function(mockManager, name, args) {
-  'use strict';
+goog.labs.mock.StubBinderImpl_ = function (mockManager, name, args) {
   /**
    * The mock manager instance.
    * @type {!goog.labs.mock.MockManager_}
@@ -1123,31 +1041,26 @@ goog.labs.mock.StubBinderImpl_ = function(mockManager, name, args) {
   this.sequentialStubsArray_ = [];
 };
 
-
 /**
  * @override
  */
-goog.labs.mock.StubBinderImpl_.prototype.then = function(func) {
-  'use strict';
+goog.labs.mock.StubBinderImpl_.prototype.then = function (func) {
   if (this.sequentialStubsArray_.length) {
     this.sequentialStubsArray_.push(
-        new goog.labs.mock.MethodBinding_(this.name_, this.args_, func));
+      new goog.labs.mock.MethodBinding_(this.name_, this.args_, func)
+    );
   } else {
-    this.sequentialStubsArray_ =
-        this.mockManager_.addBinding(this.name_, this.args_, func);
+    this.sequentialStubsArray_ = this.mockManager_.addBinding(this.name_, this.args_, func);
   }
   return this;
 };
 
-
 /**
  * @override
  */
-goog.labs.mock.StubBinderImpl_.prototype.thenReturn = function(value) {
-  'use strict';
+goog.labs.mock.StubBinderImpl_.prototype.thenReturn = function (value) {
   return this.then(goog.functions.constant(value));
 };
-
 
 /**
  * A type for a mocked accessor descriptor.
@@ -1159,7 +1072,6 @@ goog.labs.mock.StubBinderImpl_.prototype.thenReturn = function(value) {
  * }}
  */
 goog.labs.mock.DescriptorStubBinder;
-
 
 /**
  * Facilitates (and is the first step in) setting up stubs. Obtains an object
@@ -1188,13 +1100,10 @@ goog.labs.mock.DescriptorStubBinder;
  * @suppress {strictMissingProperties} Part of the
  * go/strict_warnings_migration
  */
-goog.labs.mock.when = function(mockObject) {
-  'use strict';
+goog.labs.mock.when = (mockObject) => {
   goog.asserts.assert(mockObject.$stubBinder, 'Stub binder cannot be null!');
   return mockObject.$stubBinder;
 };
-
-
 
 /**
  * Represents a binding between a method name, args and a stub.
@@ -1207,8 +1116,7 @@ goog.labs.mock.when = function(mockObject) {
  * @struct
  * @private
  */
-goog.labs.mock.MethodBinding_ = function(methodName, args, stub) {
-  'use strict';
+goog.labs.mock.MethodBinding_ = function (methodName, args, stub) {
   /**
    * The name of the method being stubbed.
    * @type {?string}
@@ -1231,35 +1139,28 @@ goog.labs.mock.MethodBinding_ = function(methodName, args, stub) {
   this.stub_ = stub;
 };
 
-
 /**
  * @return {!Function} The stub to be executed.
  */
-goog.labs.mock.MethodBinding_.prototype.getStub = function() {
-  'use strict';
+goog.labs.mock.MethodBinding_.prototype.getStub = function () {
   return this.stub_;
 };
-
 
 /**
  * @override
  * @return {string} A readable string representation of the binding
  *  as a method call.
  */
-goog.labs.mock.MethodBinding_.prototype.toString = function() {
-  'use strict';
+goog.labs.mock.MethodBinding_.prototype.toString = function () {
   return goog.labs.mock.formatMethodCall_(this.methodName_ || '', this.args_);
 };
-
 
 /**
  * @return {string} The method name for this binding.
  */
-goog.labs.mock.MethodBinding_.prototype.getMethodName = function() {
-  'use strict';
+goog.labs.mock.MethodBinding_.prototype.getMethodName = function () {
   return this.methodName_ || '';
 };
-
 
 /**
  * Determines whether the given args match the stored args_. Used to determine
@@ -1271,23 +1172,22 @@ goog.labs.mock.MethodBinding_.prototype.getMethodName = function() {
  *     call or not.
  * @return {boolean} If it matches the stored arguments.
  */
-goog.labs.mock.MethodBinding_.prototype.matches = function(
-    methodName, args, isVerification) {
-  'use strict';
+goog.labs.mock.MethodBinding_.prototype.matches = function (methodName, args, isVerification) {
   const specs = isVerification ? args : this.args_;
   const calls = isVerification ? this.args_ : args;
 
   // TODO(vbhasin): More elaborate argument matching. Think about matching
   //    objects.
-  return this.methodName_ == methodName &&
-      goog.array.equals(calls, specs, function(arg, spec) {
-        'use strict';
-        // Duck-type to see if this is an object that implements the
-        // goog.labs.testing.Matcher interface.
-        if (spec && typeof spec.matches === 'function') {
-          return spec.matches(arg);
-        } else {
-          return goog.array.defaultCompareEquality(spec, arg);
-        }
-      });
+  return (
+    this.methodName_ == methodName &&
+    goog.array.equals(calls, specs, (arg, spec) => {
+      // Duck-type to see if this is an object that implements the
+      // goog.labs.testing.Matcher interface.
+      if (spec && typeof spec.matches === 'function') {
+        return spec.matches(arg);
+      } else {
+        return goog.array.defaultCompareEquality(spec, arg);
+      }
+    })
+  );
 };

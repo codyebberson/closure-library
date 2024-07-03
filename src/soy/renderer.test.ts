@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.soy.RendererTest');
-goog.setTestOnly();
 
 const NodeType = goog.require('goog.dom.NodeType');
 const Renderer = goog.require('goog.soy.Renderer');
@@ -21,17 +20,16 @@ const testSuite = goog.require('goog.testing.testSuite');
 let handleRender;
 
 const dataSupplier = {
-  getData: function() {
-    return {name: 'IjValue'};
-  }
+  getData: () => ({ name: 'IjValue' }),
 };
 
 testSuite({
   setUp() {
     // Replace the empty default implementation.
     /** @suppress {visibility} suppression added to enable type checking */
-    handleRender = Renderer.prototype.handleRender =
-        recordFunction(Renderer.prototype.handleRender);
+    handleRender = Renderer.prototype.handleRender = recordFunction(
+      Renderer.prototype.handleRender
+    );
   },
 
   testRenderElement() {
@@ -39,8 +37,9 @@ testSuite({
 
     /** @suppress {checkTypes} suppression added to enable type checking */
     const renderer = new Renderer(dataSupplier);
-    renderer.renderElement(
-        testDiv, example.injectedDataTemplate, {name: 'Value'});
+    renderer.renderElement(testDiv, example.injectedDataTemplate, {
+      name: 'Value',
+    });
     assertEquals('ValueIjValue', elementToInnerHtml(testDiv));
     assertEquals(testDiv, handleRender.getLastCall().getArguments()[0]);
     handleRender.assertCallCount(1);
@@ -60,8 +59,9 @@ testSuite({
   testRenderAsFragment() {
     /** @suppress {checkTypes} suppression added to enable type checking */
     const renderer = new Renderer(dataSupplier);
-    const fragment = renderer.renderAsFragment(
-        example.injectedDataTemplate, {name: 'Value'});
+    const fragment = renderer.renderAsFragment(example.injectedDataTemplate, {
+      name: 'Value',
+    });
     assertEquals('ValueIjValue', fragmentToHtml(fragment));
     assertEquals(fragment, handleRender.getLastCall().getArguments()[0]);
     handleRender.assertCallCount(1);
@@ -80,8 +80,9 @@ testSuite({
   testRenderAsElement() {
     /** @suppress {checkTypes} suppression added to enable type checking */
     const renderer = new Renderer(dataSupplier);
-    const element =
-        renderer.renderAsElement(example.injectedDataTemplate, {name: 'Value'});
+    const element = renderer.renderAsElement(example.injectedDataTemplate, {
+      name: 'Value',
+    });
     assertEquals('ValueIjValue', elementToInnerHtml(element));
     assertEquals(element, handleRender.getLastCall().getArguments()[0]);
     handleRender.assertCallCount(1);
@@ -99,8 +100,10 @@ testSuite({
     /** @suppress {checkTypes} suppression added to enable type checking */
     const renderer = new Renderer(dataSupplier);
     assertEquals(
-        'Output should be a string', 'Hello <b>World</b>',
-        renderer.render(example.sanitizedHtmlTemplate));
+      'Output should be a string',
+      'Hello <b>World</b>',
+      renderer.render(example.sanitizedHtmlTemplate)
+    );
     assertNull(handleRender.getLastCall().getArguments()[0]);
     handleRender.assertCallCount(1);
   },
@@ -109,17 +112,19 @@ testSuite({
     /** @suppress {checkTypes} suppression added to enable type checking */
     const renderer = new Renderer(dataSupplier);
     assertEquals(
-        'Assertion failed: ' +
-            'render was called with a strict template of kind other than "html"' +
-            ' (consider using renderText or renderStrict)',
-        assertThrows(/**
+      'Assertion failed: ' +
+        'render was called with a strict template of kind other than "html"' +
+        ' (consider using renderText or renderStrict)',
+      assertThrows(
+        /**
                         @suppress {checkTypes} suppression added to enable type
                         checking
                       */
-                     () => {
-                       renderer.render(example.sanitizedUriTemplate, {});
-                     })
-            .message);
+        () => {
+          renderer.render(example.sanitizedUriTemplate, {});
+        }
+      ).message
+    );
     handleRender.assertCallCount(0);
   },
 
@@ -143,48 +148,48 @@ testSuite({
     renderer.renderStrict(example.sanitizedHtmlTemplate, {});
     // No SanitizedContent at all.
     assertEquals(
-        'Assertion failed: ' +
-            'renderStrict cannot be called on a text soy template',
-        assertThrows(/**
+      'Assertion failed: ' + 'renderStrict cannot be called on a text soy template',
+      assertThrows(
+        /**
                         @suppress {checkTypes} suppression added to enable type
                         checking
                       */
-                     () => {
-                       renderer.renderStrict(example.stringTemplate, {});
-                     })
-            .message);
+        () => {
+          renderer.renderStrict(example.stringTemplate, {});
+        }
+      ).message
+    );
     assertNull(handleRender.getLastCall().getArguments()[0]);
     // Passes.
-    renderer.renderStrictOfKind(
-        example.sanitizedHtmlTemplate, {}, SanitizedContentKind.HTML);
+    renderer.renderStrictOfKind(example.sanitizedHtmlTemplate, {}, SanitizedContentKind.HTML);
     // Wrong content kind.
     assertEquals(
-        'Assertion failed: ' +
-            'renderStrict was called with the wrong kind of template',
-        assertThrows(/**
+      'Assertion failed: ' + 'renderStrict was called with the wrong kind of template',
+      assertThrows(
+        /**
                         @suppress {checkTypes} suppression added to enable type
                         checking
                       */
-                     () => {
-                       renderer.renderStrictOfKind(
-                           example.sanitizedHtmlTemplate, {},
-                           SanitizedContentKind.JS);
-                     })
-            .message);
+        () => {
+          renderer.renderStrictOfKind(example.sanitizedHtmlTemplate, {}, SanitizedContentKind.JS);
+        }
+      ).message
+    );
     assertNull(handleRender.getLastCall().getArguments()[0]);
 
     // Rendering non-HTML template fails:
     assertEquals(
-        'Assertion failed: ' +
-            'renderStrict was called with the wrong kind of template',
-        assertThrows(/**
+      'Assertion failed: ' + 'renderStrict was called with the wrong kind of template',
+      assertThrows(
+        /**
                         @suppress {checkTypes} suppression added to enable type
                         checking
                       */
-                     () => {
-                       renderer.renderStrict(example.sanitizedUriTemplate, {});
-                     })
-            .message);
+        () => {
+          renderer.renderStrict(example.sanitizedUriTemplate, {});
+        }
+      ).message
+    );
     assertNull(handleRender.getLastCall().getArguments()[0]);
     handleRender.assertCallCount(2);
   },
@@ -196,17 +201,17 @@ testSuite({
     const result = renderer.renderStrictUri(example.sanitizedUriTemplate, {});
     assertEquals(SanitizedContentKind.URI, result.contentKind);
     assertEquals(
-        'Assertion failed: ' +
-            'renderStrict was called with the wrong kind of template',
-        assertThrows(/**
+      'Assertion failed: ' + 'renderStrict was called with the wrong kind of template',
+      assertThrows(
+        /**
                         @suppress {checkTypes} suppression added to enable type
                         checking
                       */
-                     () => {
-                       renderer.renderStrictUri(
-                           example.sanitizedHtmlTemplate, {});
-                     })
-            .message);
+        () => {
+          renderer.renderStrictUri(example.sanitizedHtmlTemplate, {});
+        }
+      ).message
+    );
     handleRender.assertCallCount(1);
   },
 
@@ -217,16 +222,17 @@ testSuite({
     assertEquals('<b>XSS</b>', renderer.renderText(example.stringTemplate));
     // RenderText on non-text template fails.
     assertEquals(
-        'Assertion failed: ' +
-            'renderText was called with a template of kind other than "text"',
-        assertThrows(/**
+      'Assertion failed: ' + 'renderText was called with a template of kind other than "text"',
+      assertThrows(
+        /**
                         @suppress {checkTypes} suppression added to enable type
                         checking
                       */
-                     () => {
-                       renderer.renderText(example.sanitizedHtmlTemplate, {});
-                     })
-            .message);
+        () => {
+          renderer.renderText(example.sanitizedHtmlTemplate, {});
+        }
+      ).message
+    );
   },
 
   testRenderSafeHtml() {

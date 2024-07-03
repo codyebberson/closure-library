@@ -30,8 +30,6 @@ goog.requireType('goog.ui.Control');
 goog.requireType('goog.ui.ControlContent');
 goog.requireType('goog.ui.Palette');
 
-
-
 /**
  * Default renderer for {@link goog.ui.Palette}s.  Renders the palette as an
  * HTML table wrapped in a DIV, with one palette item per cell:
@@ -54,13 +52,11 @@ goog.requireType('goog.ui.Palette');
  * @constructor
  * @extends {goog.ui.ControlRenderer}
  */
-goog.ui.PaletteRenderer = function() {
-  'use strict';
+goog.ui.PaletteRenderer = function () {
   goog.ui.ControlRenderer.call(this);
 };
 goog.inherits(goog.ui.PaletteRenderer, goog.ui.ControlRenderer);
 goog.addSingletonGetter(goog.ui.PaletteRenderer);
-
 
 /**
  * Globally unique ID sequence for cells rendered by this renderer class.
@@ -69,7 +65,6 @@ goog.addSingletonGetter(goog.ui.PaletteRenderer);
  */
 goog.ui.PaletteRenderer.cellId_ = 0;
 
-
 /**
  * Default CSS class to be applied to the root element of components rendered
  * by this renderer.
@@ -77,13 +72,11 @@ goog.ui.PaletteRenderer.cellId_ = 0;
  */
 goog.ui.PaletteRenderer.CSS_CLASS = goog.getCssName('goog-palette');
 
-
 /**
  * Data attribute to store grid width from palette control.
  * @const {string}
  */
 goog.ui.PaletteRenderer.GRID_WIDTH_ATTRIBUTE = 'gridWidth';
-
 
 /**
  * Returns the palette items arranged in a table wrapped in a DIV, with the
@@ -94,23 +87,29 @@ goog.ui.PaletteRenderer.GRID_WIDTH_ATTRIBUTE = 'gridWidth';
  * @override
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.ui.PaletteRenderer.prototype.createDom = function(palette) {
-  'use strict';
+goog.ui.PaletteRenderer.prototype.createDom = function (palette) {
   var classNames = this.getClassNames(palette);
   /** @suppress {strictMissingProperties} Added to tighten compiler checks */
-  var element = palette.getDomHelper().createDom(
-      goog.dom.TagName.DIV, classNames,
+  var element = palette
+    .getDomHelper()
+    .createDom(
+      goog.dom.TagName.DIV,
+      classNames,
       this.createGrid(
-          /** @type {Array<Node>} */ (palette.getContent()), palette.getSize(),
-          palette.getDomHelper()));
+        /** @type {Array<Node>} */ (palette.getContent()),
+        palette.getSize(),
+        palette.getDomHelper()
+      )
+    );
   // It's safe to store grid width here since `goog.ui.Palette#setSize` cannot
   // be called after createDom.
   goog.dom.dataset.set(
-      element, goog.ui.PaletteRenderer.GRID_WIDTH_ATTRIBUTE,
-      palette.getSize().width);
+    element,
+    goog.ui.PaletteRenderer.GRID_WIDTH_ATTRIBUTE,
+    palette.getSize().width
+  );
   return element;
 };
-
 
 /**
  * Returns the given items in a table with `size.width` columns and
@@ -123,8 +122,7 @@ goog.ui.PaletteRenderer.prototype.createDom = function(palette) {
  * @param {goog.dom.DomHelper} dom DOM helper for document interaction.
  * @return {!Element} Palette table element.
  */
-goog.ui.PaletteRenderer.prototype.createGrid = function(items, size, dom) {
-  'use strict';
+goog.ui.PaletteRenderer.prototype.createGrid = function (items, size, dom) {
   var rows = [];
   for (var row = 0, index = 0; row < size.height; row++) {
     var cells = [];
@@ -138,26 +136,23 @@ goog.ui.PaletteRenderer.prototype.createGrid = function(items, size, dom) {
   return this.createTable(rows, dom);
 };
 
-
 /**
  * Returns a table element (or equivalent) that wraps the given rows.
  * @param {Array<Element>} rows Array of row elements.
  * @param {goog.dom.DomHelper} dom DOM helper for document interaction.
  * @return {!Element} Palette table element.
  */
-goog.ui.PaletteRenderer.prototype.createTable = function(rows, dom) {
-  'use strict';
+goog.ui.PaletteRenderer.prototype.createTable = function (rows, dom) {
   var table = dom.createDom(
-      goog.dom.TagName.TABLE, goog.getCssName(this.getCssClass(), 'table'),
-      dom.createDom(
-          goog.dom.TagName.TBODY, goog.getCssName(this.getCssClass(), 'body'),
-          rows));
+    goog.dom.TagName.TABLE,
+    goog.getCssName(this.getCssClass(), 'table'),
+    dom.createDom(goog.dom.TagName.TBODY, goog.getCssName(this.getCssClass(), 'body'), rows)
+  );
   goog.a11y.aria.setRole(table, goog.a11y.aria.Role.GRID);
   table.cellSpacing = '0';
   table.cellPadding = '0';
   return table;
 };
-
 
 /**
  * Returns a table row element (or equivalent) that wraps the given cells.
@@ -165,14 +160,11 @@ goog.ui.PaletteRenderer.prototype.createTable = function(rows, dom) {
  * @param {goog.dom.DomHelper} dom DOM helper for document interaction.
  * @return {!Element} Row element.
  */
-goog.ui.PaletteRenderer.prototype.createRow = function(cells, dom) {
-  'use strict';
-  var row = dom.createDom(
-      goog.dom.TagName.TR, goog.getCssName(this.getCssClass(), 'row'), cells);
+goog.ui.PaletteRenderer.prototype.createRow = function (cells, dom) {
+  var row = dom.createDom(goog.dom.TagName.TR, goog.getCssName(this.getCssClass(), 'row'), cells);
   goog.a11y.aria.setRole(row, goog.a11y.aria.Role.ROW);
   return row;
 };
-
 
 /**
  * Returns a table cell element (or equivalent) that wraps the given palette
@@ -181,16 +173,16 @@ goog.ui.PaletteRenderer.prototype.createRow = function(cells, dom) {
  * @param {goog.dom.DomHelper} dom DOM helper for document interaction.
  * @return {!Element} Cell element.
  */
-goog.ui.PaletteRenderer.prototype.createCell = function(node, dom) {
-  'use strict';
+goog.ui.PaletteRenderer.prototype.createCell = function (node, dom) {
   var cell = dom.createDom(
-      goog.dom.TagName.TD, {
-        'class': goog.getCssName(this.getCssClass(), 'cell'),
-        // Cells must have an ID, for accessibility, so we generate one here.
-        'id': goog.getCssName(this.getCssClass(), 'cell-') +
-            goog.ui.PaletteRenderer.cellId_++
-      },
-      node);
+    goog.dom.TagName.TD,
+    {
+      class: goog.getCssName(this.getCssClass(), 'cell'),
+      // Cells must have an ID, for accessibility, so we generate one here.
+      id: goog.getCssName(this.getCssClass(), 'cell-') + goog.ui.PaletteRenderer.cellId_++,
+    },
+    node
+  );
   goog.a11y.aria.setRole(cell, goog.a11y.aria.Role.GRIDCELL);
   // Initialize to an unselected state.
   goog.a11y.aria.setState(cell, goog.a11y.aria.State.SELECTED, false);
@@ -199,7 +191,6 @@ goog.ui.PaletteRenderer.prototype.createCell = function(node, dom) {
   return cell;
 };
 
-
 /**
  * Updates the aria label of the cell if it doesn't have one. Descends the DOM
  * and tries to find an aria label for a grid cell from the first child with a
@@ -207,8 +198,7 @@ goog.ui.PaletteRenderer.prototype.createCell = function(node, dom) {
  * @param {!Element} cell The cell.
  * @private
  */
-goog.ui.PaletteRenderer.prototype.maybeUpdateAriaLabel_ = function(cell) {
-  'use strict';
+goog.ui.PaletteRenderer.prototype.maybeUpdateAriaLabel_ = (cell) => {
   if (goog.dom.getTextContent(cell) || goog.a11y.aria.getLabel(cell)) {
     return;
   }
@@ -220,8 +210,7 @@ goog.ui.PaletteRenderer.prototype.maybeUpdateAriaLabel_ = function(cell) {
       /**
        * @suppress {strictMissingProperties} Added to tighten compiler checks
        */
-      label =
-          goog.a11y.aria.getLabel(/** @type {!Element} */ (node)) || node.title;
+      label = goog.a11y.aria.getLabel(/** @type {!Element} */ (node)) || node.title;
     }
   }
   if (label) {
@@ -231,7 +220,6 @@ goog.ui.PaletteRenderer.prototype.maybeUpdateAriaLabel_ = function(cell) {
   return;
 };
 
-
 /**
  * Overrides {@link goog.ui.ControlRenderer#canDecorate} to always return false.
  * @param {Element} element Ignored.
@@ -239,11 +227,7 @@ goog.ui.PaletteRenderer.prototype.maybeUpdateAriaLabel_ = function(cell) {
  *     now).
  * @override
  */
-goog.ui.PaletteRenderer.prototype.canDecorate = function(element) {
-  'use strict';
-  return false;
-};
-
+goog.ui.PaletteRenderer.prototype.canDecorate = (element) => false;
 
 /**
  * Overrides {@link goog.ui.ControlRenderer#decorate} to be a no-op, since
@@ -253,11 +237,7 @@ goog.ui.PaletteRenderer.prototype.canDecorate = function(element) {
  * @return {null} Always null.
  * @override
  */
-goog.ui.PaletteRenderer.prototype.decorate = function(palette, element) {
-  'use strict';
-  return null;
-};
-
+goog.ui.PaletteRenderer.prototype.decorate = (palette, element) => null;
 
 /**
  * Overrides {@link goog.ui.ControlRenderer#setContent} for palettes.  Locates
@@ -272,37 +252,43 @@ goog.ui.PaletteRenderer.prototype.decorate = function(palette, element) {
  * @override
  * @suppress {strictPrimitiveOperators}
  */
-goog.ui.PaletteRenderer.prototype.setContent = function(element, content) {
-  'use strict';
+goog.ui.PaletteRenderer.prototype.setContent = function (element, content) {
   var items = /** @type {Array<Node>} */ (content);
   if (element) {
     var tbody = goog.dom.getElementsByTagNameAndClass(
-        goog.dom.TagName.TBODY, goog.getCssName(this.getCssClass(), 'body'),
-        element)[0];
+      goog.dom.TagName.TBODY,
+      goog.getCssName(this.getCssClass(), 'body'),
+      element
+    )[0];
     if (tbody) {
       var index = 0;
-      Array.prototype.forEach.call(tbody.rows, function(row) {
-        'use strict';
-        goog.array.forEach(row.cells, function(cell) {
-          'use strict';
-          goog.dom.removeChildren(cell);
-          goog.a11y.aria.removeState(cell, goog.a11y.aria.State.LABEL);
-          if (items) {
-            var item = items[index++];
-            if (item) {
-              goog.dom.appendChild(cell, item);
-              this.maybeUpdateAriaLabel_(cell);
-            }
-          }
-        }, this);
-      }, this);
+      Array.prototype.forEach.call(
+        tbody.rows,
+        function (row) {
+          goog.array.forEach(
+            row.cells,
+            function (cell) {
+              goog.dom.removeChildren(cell);
+              goog.a11y.aria.removeState(cell, goog.a11y.aria.State.LABEL);
+              if (items) {
+                var item = items[index++];
+                if (item) {
+                  goog.dom.appendChild(cell, item);
+                  this.maybeUpdateAriaLabel_(cell);
+                }
+              }
+            },
+            this
+          );
+        },
+        this
+      );
 
       // Make space for any additional items.
       if (index < items.length) {
         var cells = [];
         var dom = goog.dom.getDomHelper(element);
-        var width = goog.dom.dataset.get(
-            element, goog.ui.PaletteRenderer.GRID_WIDTH_ATTRIBUTE);
+        var width = goog.dom.dataset.get(element, goog.ui.PaletteRenderer.GRID_WIDTH_ATTRIBUTE);
         while (index < items.length) {
           var item = items[index++];
           cells.push(this.createCell(item, dom));
@@ -326,7 +312,6 @@ goog.ui.PaletteRenderer.prototype.setContent = function(element, content) {
   }
 };
 
-
 /**
  * Returns the item corresponding to the given node, or null if the node is
  * neither a palette cell nor part of a palette item.
@@ -335,14 +320,16 @@ goog.ui.PaletteRenderer.prototype.setContent = function(element, content) {
  * @return {Node} The corresponding palette item (null if not found).
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.ui.PaletteRenderer.prototype.getContainingItem = function(palette, node) {
-  'use strict';
+goog.ui.PaletteRenderer.prototype.getContainingItem = function (palette, node) {
   var root = palette.getElement();
   while (node && node.nodeType == goog.dom.NodeType.ELEMENT && node != root) {
-    if (node.tagName == goog.dom.TagName.TD &&
-        goog.dom.classlist.contains(
-            /** @type {!Element} */ (node),
-            goog.getCssName(this.getCssClass(), 'cell'))) {
+    if (
+      node.tagName == goog.dom.TagName.TD &&
+      goog.dom.classlist.contains(
+        /** @type {!Element} */ (node),
+        goog.getCssName(this.getCssClass(), 'cell')
+      )
+    ) {
       return node.firstChild;
     }
     node = node.parentNode;
@@ -350,7 +337,6 @@ goog.ui.PaletteRenderer.prototype.getContainingItem = function(palette, node) {
 
   return null;
 };
-
 
 /**
  * Updates the highlight styling of the palette cell containing the given node
@@ -360,41 +346,33 @@ goog.ui.PaletteRenderer.prototype.getContainingItem = function(palette, node) {
  * @param {boolean} highlight If true, the cell is highlighted; otherwise it is
  *     un-highlighted.
  */
-goog.ui.PaletteRenderer.prototype.highlightCell = function(
-    palette, node, highlight) {
-  'use strict';
+goog.ui.PaletteRenderer.prototype.highlightCell = function (palette, node, highlight) {
   if (node) {
     var cell = this.getCellForItem(node);
     goog.asserts.assert(cell);
-    goog.dom.classlist.enable(
-        cell, goog.getCssName(this.getCssClass(), 'cell-hover'), highlight);
+    goog.dom.classlist.enable(cell, goog.getCssName(this.getCssClass(), 'cell-hover'), highlight);
     // See https://www.w3.org/TR/wai-aria/#aria-activedescendant
     // for an explanation of the activedescendant.
     if (highlight) {
       goog.a11y.aria.setState(
-          palette.getElementStrict(), goog.a11y.aria.State.ACTIVEDESCENDANT,
-          cell.id);
+        palette.getElementStrict(),
+        goog.a11y.aria.State.ACTIVEDESCENDANT,
+        cell.id
+      );
     } else if (
-        cell.id ==
-        goog.a11y.aria.getState(
-            palette.getElementStrict(),
-            goog.a11y.aria.State.ACTIVEDESCENDANT)) {
-      goog.a11y.aria.removeState(
-          palette.getElementStrict(), goog.a11y.aria.State.ACTIVEDESCENDANT);
+      cell.id ==
+      goog.a11y.aria.getState(palette.getElementStrict(), goog.a11y.aria.State.ACTIVEDESCENDANT)
+    ) {
+      goog.a11y.aria.removeState(palette.getElementStrict(), goog.a11y.aria.State.ACTIVEDESCENDANT);
     }
   }
 };
-
 
 /**
  * @param {Node} node Item whose cell is to be returned.
  * @return {Element} The grid cell for the palette item.
  */
-goog.ui.PaletteRenderer.prototype.getCellForItem = function(node) {
-  'use strict';
-  return /** @type {Element} */ (node ? node.parentNode : null);
-};
-
+goog.ui.PaletteRenderer.prototype.getCellForItem = (node) => (node ? node.parentNode : null);
 
 /**
  * Updates the selection styling of the palette cell containing the given node
@@ -404,16 +382,13 @@ goog.ui.PaletteRenderer.prototype.getCellForItem = function(node) {
  * @param {boolean} select If true, the cell is selected; otherwise it is
  *     deselected.
  */
-goog.ui.PaletteRenderer.prototype.selectCell = function(palette, node, select) {
-  'use strict';
+goog.ui.PaletteRenderer.prototype.selectCell = function (palette, node, select) {
   if (node) {
     var cell = /** @type {!Element} */ (node.parentNode);
-    goog.dom.classlist.enable(
-        cell, goog.getCssName(this.getCssClass(), 'cell-selected'), select);
+    goog.dom.classlist.enable(cell, goog.getCssName(this.getCssClass(), 'cell-selected'), select);
     goog.a11y.aria.setState(cell, goog.a11y.aria.State.SELECTED, select);
   }
 };
-
 
 /**
  * Returns the CSS class to be applied to the root element of components
@@ -421,7 +396,4 @@ goog.ui.PaletteRenderer.prototype.selectCell = function(palette, node, select) {
  * @return {string} Renderer-specific CSS class.
  * @override
  */
-goog.ui.PaletteRenderer.prototype.getCssClass = function() {
-  'use strict';
-  return goog.ui.PaletteRenderer.CSS_CLASS;
-};
+goog.ui.PaletteRenderer.prototype.getCssClass = () => goog.ui.PaletteRenderer.CSS_CLASS;

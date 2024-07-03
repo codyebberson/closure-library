@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.MockActivityMonitorTest');
-goog.setTestOnly();
 
 const ActivityMonitor = goog.require('goog.ui.ActivityMonitor');
 const MockActivityMonitor = goog.require('goog.ui.MockActivityMonitor');

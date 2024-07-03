@@ -26,14 +26,16 @@ goog.require('goog.dom.TagName');
  * @param {string} text
  * @return {string}
  */
-goog.dom.textAssert.assertHtmlFree = function(text) {
-  'use strict';
+goog.dom.textAssert.assertHtmlFree = (text) => {
   if (goog.asserts.ENABLE_ASSERTS) {
     var elmt = goog.dom.createElement(goog.dom.TagName.BODY);
     elmt.textContent = text;
     goog.asserts.assert(
-        elmt.innerHTML == elmt.textContent,
-        'String has HTML original: %s, escaped: %s', text, elmt.innerHTML);
+      elmt.innerHTML == elmt.textContent,
+      'String has HTML original: %s, escaped: %s',
+      text,
+      elmt.innerHTML
+    );
   }
   return text;
 };

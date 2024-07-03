@@ -17,8 +17,6 @@ goog.require('goog.ui.Container');
 goog.require('goog.ui.ToolbarRenderer');
 goog.requireType('goog.dom.DomHelper');
 
-
-
 /**
  * A toolbar class, implemented as a {@link goog.ui.Container} that defaults to
  * having a horizontal orientation and {@link goog.ui.ToolbarRenderer} as its
@@ -31,18 +29,18 @@ goog.requireType('goog.dom.DomHelper');
  * @constructor
  * @extends {goog.ui.Container}
  */
-goog.ui.Toolbar = function(opt_renderer, opt_orientation, opt_domHelper) {
-  'use strict';
+goog.ui.Toolbar = function (opt_renderer, opt_orientation, opt_domHelper) {
   goog.ui.Container.call(
-      this, opt_orientation,
-      opt_renderer || goog.ui.ToolbarRenderer.getInstance(), opt_domHelper);
+    this,
+    opt_orientation,
+    opt_renderer || goog.ui.ToolbarRenderer.getInstance(),
+    opt_domHelper
+  );
 };
 goog.inherits(goog.ui.Toolbar, goog.ui.Container);
 
-
 /** @override */
-goog.ui.Toolbar.prototype.handleFocus = function(e) {
-  'use strict';
+goog.ui.Toolbar.prototype.handleFocus = function (e) {
   goog.ui.Toolbar.base(this, 'handleFocus', e);
   // Highlight the first highlightable item on focus via the keyboard for ARIA
   // spec compliance. Do not highlight the item if the mouse button is pressed,

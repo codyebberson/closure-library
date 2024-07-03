@@ -16,8 +16,6 @@ goog.provide('goog.dom.iter.SiblingIterator');
 goog.require('goog.iter');
 goog.require('goog.iter.Iterator');
 
-
-
 /**
  * Iterator over a Node's siblings.
  * @param {Node} node The node to start with.
@@ -28,8 +26,7 @@ goog.require('goog.iter.Iterator');
  * @constructor
  * @extends {goog.iter.Iterator}
  */
-goog.dom.iter.SiblingIterator = function(node, opt_includeNode, opt_reverse) {
-  'use strict';
+goog.dom.iter.SiblingIterator = function (node, opt_includeNode, opt_reverse) {
   /**
    * The current node, or null if iteration is finished.
    * @type {Node}
@@ -50,13 +47,11 @@ goog.dom.iter.SiblingIterator = function(node, opt_includeNode, opt_reverse) {
 };
 goog.inherits(goog.dom.iter.SiblingIterator, goog.iter.Iterator);
 
-
 /**
  * @return {!IIterableResult<!Node>}
  * @override
  */
-goog.dom.iter.SiblingIterator.prototype.next = function() {
-  'use strict';
+goog.dom.iter.SiblingIterator.prototype.next = function () {
   var node = this.node_;
   if (!node) {
     return goog.iter.ES6_ITERATOR_DONE;
@@ -64,7 +59,6 @@ goog.dom.iter.SiblingIterator.prototype.next = function() {
   this.node_ = this.reverse_ ? node.previousSibling : node.nextSibling;
   return goog.iter.createEs6IteratorYield(node);
 };
-
 
 /**
  * Iterator over an Element's children.
@@ -76,19 +70,13 @@ goog.dom.iter.SiblingIterator.prototype.next = function() {
  * @extends {goog.dom.iter.SiblingIterator}
  * @final
  */
-goog.dom.iter.ChildIterator = function(element, opt_reverse, opt_startIndex) {
-  'use strict';
+goog.dom.iter.ChildIterator = function (element, opt_reverse, opt_startIndex) {
   if (opt_startIndex === undefined) {
-    opt_startIndex = opt_reverse && element.childNodes.length ?
-        element.childNodes.length - 1 :
-        0;
+    opt_startIndex = opt_reverse && element.childNodes.length ? element.childNodes.length - 1 : 0;
   }
-  goog.dom.iter.SiblingIterator.call(
-      this, element.childNodes[opt_startIndex], true, opt_reverse);
+  goog.dom.iter.SiblingIterator.call(this, element.childNodes[opt_startIndex], true, opt_reverse);
 };
 goog.inherits(goog.dom.iter.ChildIterator, goog.dom.iter.SiblingIterator);
-
-
 
 /**
  * Iterator over a Node's ancestors, stopping after the document body.
@@ -99,8 +87,7 @@ goog.inherits(goog.dom.iter.ChildIterator, goog.dom.iter.SiblingIterator);
  * @extends {goog.iter.Iterator}
  * @final
  */
-goog.dom.iter.AncestorIterator = function(node, opt_includeNode) {
-  'use strict';
+goog.dom.iter.AncestorIterator = function (node, opt_includeNode) {
   /**
    * The current node, or null if iteration is finished.
    * @type {Node}
@@ -114,13 +101,11 @@ goog.dom.iter.AncestorIterator = function(node, opt_includeNode) {
 };
 goog.inherits(goog.dom.iter.AncestorIterator, goog.iter.Iterator);
 
-
 /**
  * @return {!IIterableResult<!Node>}
  * @override
  */
-goog.dom.iter.AncestorIterator.prototype.next = function() {
-  'use strict';
+goog.dom.iter.AncestorIterator.prototype.next = function () {
   var node = this.node_;
   if (!node) {
     return goog.iter.ES6_ITERATOR_DONE;

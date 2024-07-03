@@ -22,20 +22,21 @@ goog.require('goog.labs.userAgent.util');
  *
  * @return {boolean} Whether the user is using a mobile device.
  */
-goog.labs.userAgent.device.isMobile = function() {
-  'use strict';
-  if (goog.labs.userAgent.util.ASSUME_CLIENT_HINTS_SUPPORT ||
-      goog.labs.userAgent.useClientHints() &&
-          goog.labs.userAgent.util.getUserAgentData()) {
+goog.labs.userAgent.device.isMobile = () => {
+  if (
+    goog.labs.userAgent.util.ASSUME_CLIENT_HINTS_SUPPORT ||
+    (goog.labs.userAgent.useClientHints() && goog.labs.userAgent.util.getUserAgentData())
+  ) {
     return goog.labs.userAgent.util.getUserAgentData().mobile;
   }
-  return !goog.labs.userAgent.device.isTablet() &&
-      (goog.labs.userAgent.util.matchUserAgent('iPod') ||
-       goog.labs.userAgent.util.matchUserAgent('iPhone') ||
-       goog.labs.userAgent.util.matchUserAgent('Android') ||
-       goog.labs.userAgent.util.matchUserAgent('IEMobile'));
+  return (
+    !goog.labs.userAgent.device.isTablet() &&
+    (goog.labs.userAgent.util.matchUserAgent('iPod') ||
+      goog.labs.userAgent.util.matchUserAgent('iPhone') ||
+      goog.labs.userAgent.util.matchUserAgent('Android') ||
+      goog.labs.userAgent.util.matchUserAgent('IEMobile'))
+  );
 };
-
 
 /**
  * Currently we detect Kindle Fire, iPad, and Android tablets (devices that have
@@ -43,30 +44,30 @@ goog.labs.userAgent.device.isMobile = function() {
  *
  * @return {boolean} Whether the user is using a tablet.
  */
-goog.labs.userAgent.device.isTablet = function() {
-  'use strict';
-  if (goog.labs.userAgent.util.ASSUME_CLIENT_HINTS_SUPPORT ||
-      (goog.labs.userAgent.useClientHints() &&
-       goog.labs.userAgent.util.getUserAgentData())) {
-    return !goog.labs.userAgent.util.getUserAgentData().mobile &&
-        (goog.labs.userAgent.util.matchUserAgent('iPad') ||
-         goog.labs.userAgent.util.matchUserAgent('Android') ||
-         goog.labs.userAgent.util.matchUserAgent('Silk'));
+goog.labs.userAgent.device.isTablet = () => {
+  if (
+    goog.labs.userAgent.util.ASSUME_CLIENT_HINTS_SUPPORT ||
+    (goog.labs.userAgent.useClientHints() && goog.labs.userAgent.util.getUserAgentData())
+  ) {
+    return (
+      !goog.labs.userAgent.util.getUserAgentData().mobile &&
+      (goog.labs.userAgent.util.matchUserAgent('iPad') ||
+        goog.labs.userAgent.util.matchUserAgent('Android') ||
+        goog.labs.userAgent.util.matchUserAgent('Silk'))
+    );
   }
-  return goog.labs.userAgent.util.matchUserAgent('iPad') ||
-      (goog.labs.userAgent.util.matchUserAgent('Android') &&
-       !goog.labs.userAgent.util.matchUserAgent('Mobile')) ||
-      goog.labs.userAgent.util.matchUserAgent('Silk');
+  return (
+    goog.labs.userAgent.util.matchUserAgent('iPad') ||
+    (goog.labs.userAgent.util.matchUserAgent('Android') &&
+      !goog.labs.userAgent.util.matchUserAgent('Mobile')) ||
+    goog.labs.userAgent.util.matchUserAgent('Silk')
+  );
 };
-
 
 /**
  * @return {boolean} Whether the user is using a desktop computer (which we
  *     assume to be the case if they are not using either a mobile or tablet
  *     device).
  */
-goog.labs.userAgent.device.isDesktop = function() {
-  'use strict';
-  return !goog.labs.userAgent.device.isMobile() &&
-      !goog.labs.userAgent.device.isTablet();
-};
+goog.labs.userAgent.device.isDesktop = () =>
+  !goog.labs.userAgent.device.isMobile() && !goog.labs.userAgent.device.isTablet();

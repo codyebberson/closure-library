@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.i18n.currencyTest');
-goog.setTestOnly();
 
 const NumberFormat = goog.require('goog.i18n.NumberFormat');
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
@@ -20,8 +19,7 @@ const stubs = new PropertyReplacer();
 
 testSuite({
   setUp() {
-    stubs.replace(
-        currency, 'CurrencyInfo', googObject.clone(currency.CurrencyInfo));
+    stubs.replace(currency, 'CurrencyInfo', googObject.clone(currency.CurrencyInfo));
     CurrencyInfo = currency.CurrencyInfo;
   },
 
@@ -44,38 +42,37 @@ testSuite({
 
     currency.addTier2Support();
     assertTrue('LRD' in CurrencyInfo);
-    assertEquals('\'$\'#,##0.00', currency.getLocalCurrencyPattern('LRD'));
+    assertEquals("'$'#,##0.00", currency.getLocalCurrencyPattern('LRD'));
   },
 
   testCurrencyPattern() {
-    assertEquals('\'$\'#,##0.00', currency.getLocalCurrencyPattern('USD'));
-    assertEquals('\'US$\'#,##0.00', currency.getPortableCurrencyPattern('USD'));
-    assertEquals('USD \'$\'#,##0.00', currency.getGlobalCurrencyPattern('USD'));
+    assertEquals("'$'#,##0.00", currency.getLocalCurrencyPattern('USD'));
+    assertEquals("'US$'#,##0.00", currency.getPortableCurrencyPattern('USD'));
+    assertEquals("USD '$'#,##0.00", currency.getGlobalCurrencyPattern('USD'));
 
-    assertEquals('\'¥\'#,##0', currency.getLocalCurrencyPattern('JPY'));
-    assertEquals('\'JP¥\'#,##0', currency.getPortableCurrencyPattern('JPY'));
-    assertEquals('JPY \'¥\'#,##0', currency.getGlobalCurrencyPattern('JPY'));
+    assertEquals("'¥'#,##0", currency.getLocalCurrencyPattern('JPY'));
+    assertEquals("'JP¥'#,##0", currency.getPortableCurrencyPattern('JPY'));
+    assertEquals("JPY '¥'#,##0", currency.getGlobalCurrencyPattern('JPY'));
 
-    assertEquals('\'€\'#,##0.00', currency.getLocalCurrencyPattern('EUR'));
-    assertEquals('\'€\'#,##0.00', currency.getPortableCurrencyPattern('EUR'));
-    assertEquals('EUR \'€\'#,##0.00', currency.getGlobalCurrencyPattern('EUR'));
+    assertEquals("'€'#,##0.00", currency.getLocalCurrencyPattern('EUR'));
+    assertEquals("'€'#,##0.00", currency.getPortableCurrencyPattern('EUR'));
+    assertEquals("EUR '€'#,##0.00", currency.getGlobalCurrencyPattern('EUR'));
 
-    assertEquals('\'¥\'#,##0.00', currency.getLocalCurrencyPattern('CNY'));
-    assertEquals(
-        '\'RMB¥\'#,##0.00', currency.getPortableCurrencyPattern('CNY'));
-    assertEquals('CNY \'¥\'#,##0.00', currency.getGlobalCurrencyPattern('CNY'));
+    assertEquals("'¥'#,##0.00", currency.getLocalCurrencyPattern('CNY'));
+    assertEquals("'RMB¥'#,##0.00", currency.getPortableCurrencyPattern('CNY'));
+    assertEquals("CNY '¥'#,##0.00", currency.getGlobalCurrencyPattern('CNY'));
 
-    assertEquals('\'Rial\'#,##0', currency.getLocalCurrencyPattern('YER'));
-    assertEquals('\'Rial\'#,##0', currency.getPortableCurrencyPattern('YER'));
-    assertEquals('YER \'Rial\'#,##0', currency.getGlobalCurrencyPattern('YER'));
+    assertEquals("'Rial'#,##0", currency.getLocalCurrencyPattern('YER'));
+    assertEquals("'Rial'#,##0", currency.getPortableCurrencyPattern('YER'));
+    assertEquals("YER 'Rial'#,##0", currency.getGlobalCurrencyPattern('YER'));
 
-    assertEquals('\'CHF\'#,##0.00', currency.getLocalCurrencyPattern('CHF'));
-    assertEquals('\'CHF\'#,##0.00', currency.getPortableCurrencyPattern('CHF'));
-    assertEquals('\'CHF\'#,##0.00', currency.getGlobalCurrencyPattern('CHF'));
+    assertEquals("'CHF'#,##0.00", currency.getLocalCurrencyPattern('CHF'));
+    assertEquals("'CHF'#,##0.00", currency.getPortableCurrencyPattern('CHF'));
+    assertEquals("'CHF'#,##0.00", currency.getGlobalCurrencyPattern('CHF'));
 
-    assertEquals('\'$\'#,##0.00', currency.getLocalCurrencyPattern('TWD'));
-    assertEquals('\'NT$\'#,##0.00', currency.getPortableCurrencyPattern('TWD'));
-    assertEquals('TWD \'$\'#,##0.00', currency.getGlobalCurrencyPattern('TWD'));
+    assertEquals("'$'#,##0.00", currency.getLocalCurrencyPattern('TWD'));
+    assertEquals("'NT$'#,##0.00", currency.getPortableCurrencyPattern('TWD'));
+    assertEquals("TWD '$'#,##0.00", currency.getGlobalCurrencyPattern('TWD'));
   },
 
   testCurrencyFormatTWD() {

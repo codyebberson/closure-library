@@ -14,15 +14,12 @@ goog.requireType('goog.math.Box');
 goog.requireType('goog.math.Size');
 goog.requireType('goog.positioning.Corner');
 
-
-
 /**
  * Abstract position object. Encapsulates position and overflow handling.
  *
  * @constructor
  */
-goog.positioning.AbstractPosition = function() {};
-
+goog.positioning.AbstractPosition = () => {};
 
 /**
  * Repositions the element. Abstract method, should be overloaded.
@@ -34,5 +31,9 @@ goog.positioning.AbstractPosition = function() {};
  * @param {goog.math.Size=} opt_preferredSize PreferredSize of the
  *     movableElement.
  */
-goog.positioning.AbstractPosition.prototype.reposition = function(
-    movableElement, corner, opt_margin, opt_preferredSize) {};
+goog.positioning.AbstractPosition.prototype.reposition = (
+  movableElement,
+  corner,
+  opt_margin,
+  opt_preferredSize
+) => {};

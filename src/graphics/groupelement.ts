@@ -4,18 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview A thin wrapper around the DOM element for graphics groups.
  */
-
 
 goog.provide('goog.graphics.GroupElement');
 
 goog.require('goog.graphics.Element');
 goog.requireType('goog.graphics.AbstractGraphics');
-
-
 
 /**
  * Interface for a graphics group element.
@@ -30,18 +26,15 @@ goog.requireType('goog.graphics.AbstractGraphics');
  *     differences before the canvas tag was widely supported.  See
  *     http://en.wikipedia.org/wiki/Canvas_element for details.
  */
-goog.graphics.GroupElement = function(element, graphics) {
-  'use strict';
+goog.graphics.GroupElement = function (element, graphics) {
   goog.graphics.Element.call(this, element, graphics);
 };
 goog.inherits(goog.graphics.GroupElement, goog.graphics.Element);
-
 
 /**
  * Remove all drawing elements from the group.
  */
 goog.graphics.GroupElement.prototype.clear = goog.abstractMethod;
-
 
 /**
  * Set the size of the group element.

@@ -43,8 +43,6 @@ goog.require('goog.object');
 //
 // WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 
-
-
 /**
  * Creates a new cross domain channel that sends data to the specified
  * host URL. By default, if no reply arrives within 5s, the channel
@@ -60,8 +58,7 @@ goog.require('goog.object');
  * @constructor
  * @final
  */
-goog.net.Jsonp = function(uri, opt_callbackParamName) {
-  'use strict';
+goog.net.Jsonp = function (uri, opt_callbackParamName) {
   /**
    * The uri_ object will be used to encode the payload that is sent to the
    * server.
@@ -75,8 +72,7 @@ goog.net.Jsonp = function(uri, opt_callbackParamName) {
    * @type {string}
    * @private
    */
-  this.callbackParamName_ =
-      opt_callbackParamName ? opt_callbackParamName : 'callback';
+  this.callbackParamName_ = opt_callbackParamName ? opt_callbackParamName : 'callback';
 
   /**
    * The length of time, in milliseconds, this channel is prepared
@@ -96,12 +92,10 @@ goog.net.Jsonp = function(uri, opt_callbackParamName) {
   this.nonce_ = '';
 };
 
-
 /**
  * The prefix for the callback name which will be stored on goog.global.
  */
 goog.net.Jsonp.CALLBACKS = '_callbacks_';
-
 
 /**
  * Used to generate unique callback IDs. The counter must be global because
@@ -109,7 +103,6 @@ goog.net.Jsonp.CALLBACKS = '_callbacks_';
  * @private
  */
 goog.net.Jsonp.scriptCounter_ = 0;
-
 
 /**
  * Static private method which returns the global unique callback id.
@@ -119,11 +112,7 @@ goog.net.Jsonp.scriptCounter_ = 0;
  *     object.
  * @private
  */
-goog.net.Jsonp.getCallbackId_ = function(id) {
-  'use strict';
-  return goog.net.Jsonp.CALLBACKS + '__' + id;
-};
-
+goog.net.Jsonp.getCallbackId_ = (id) => goog.net.Jsonp.CALLBACKS + '__' + id;
 
 /**
  * Sets the length of time, in milliseconds, this channel is prepared
@@ -135,22 +124,18 @@ goog.net.Jsonp.getCallbackId_ = function(id) {
  * @param {number} timeout The length of time before calls are
  * interrupted.
  */
-goog.net.Jsonp.prototype.setRequestTimeout = function(timeout) {
-  'use strict';
+goog.net.Jsonp.prototype.setRequestTimeout = function (timeout) {
   this.timeout_ = timeout;
 };
-
 
 /**
  * Returns the current timeout value, in milliseconds.
  *
  * @return {number} The timeout value.
  */
-goog.net.Jsonp.prototype.getRequestTimeout = function() {
-  'use strict';
+goog.net.Jsonp.prototype.getRequestTimeout = function () {
   return this.timeout_;
 };
-
 
 /**
  * Sets the nonce value for CSP. This nonce value will be added to any created
@@ -160,11 +145,9 @@ goog.net.Jsonp.prototype.getRequestTimeout = function() {
  *
  * @param {string} nonce The CSP nonce value.
  */
-goog.net.Jsonp.prototype.setNonce = function(nonce) {
-  'use strict';
+goog.net.Jsonp.prototype.setNonce = function (nonce) {
   this.nonce_ = nonce;
 };
-
 
 /**
  * Sends the given payload to the URL specified at the construction
@@ -200,14 +183,17 @@ goog.net.Jsonp.prototype.setNonce = function(nonce) {
  * @return {!Object} A request descriptor that may be used to cancel this
  *     transmission, or null, if the message may not be cancelled.
  */
-goog.net.Jsonp.prototype.send = function(
-    opt_payload, opt_replyCallback, opt_errorCallback, opt_callbackParamValue) {
-  'use strict';
+goog.net.Jsonp.prototype.send = function (
+  opt_payload,
+  opt_replyCallback,
+  opt_errorCallback,
+  opt_callbackParamValue
+) {
   const payload = opt_payload ? goog.object.clone(opt_payload) : {};
 
-  const id = opt_callbackParamValue ||
-      '_' + (goog.net.Jsonp.scriptCounter_++).toString(36) +
-          Date.now().toString(36);
+  const id =
+    opt_callbackParamValue ||
+    '_' + (goog.net.Jsonp.scriptCounter_++).toString(36) + Date.now().toString(36);
   const callbackId = goog.net.Jsonp.getCallbackId_(id);
 
   if (opt_replyCallback) {
@@ -218,9 +204,9 @@ goog.net.Jsonp.prototype.send = function(
     payload[this.callbackParamName_] = callbackId;
   }
 
-  const options = {timeout: this.timeout_, cleanupWhenDone: true};
+  const options = { timeout: this.timeout_, cleanupWhenDone: true };
   if (this.nonce_) {
-    options.attributes = {'nonce': this.nonce_};
+    options.attributes = { nonce: this.nonce_ };
   }
 
   const uri = this.uri_.cloneWithParams(payload);
@@ -229,9 +215,8 @@ goog.net.Jsonp.prototype.send = function(
   const error = goog.net.Jsonp.newErrorHandler_(id, payload, opt_errorCallback);
   deferred.addErrback(error);
 
-  return {id_: id, deferred_: deferred};
+  return { id_: id, deferred_: deferred };
 };
-
 
 /**
  * Cancels a given request. The request must be exactly the object returned by
@@ -239,8 +224,7 @@ goog.net.Jsonp.prototype.send = function(
  * @param {Object} request The request object returned by the send method.
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.net.Jsonp.prototype.cancel = function(request) {
-  'use strict';
+goog.net.Jsonp.prototype.cancel = (request) => {
   if (request) {
     if (request.deferred_) {
       request.deferred_.cancel();
@@ -250,7 +234,6 @@ goog.net.Jsonp.prototype.cancel = function(request) {
     }
   }
 };
-
 
 /**
  * Creates a timeout callback that calls the given timeoutCallback with the
@@ -262,22 +245,19 @@ goog.net.Jsonp.prototype.cancel = function(request) {
  * @return {!Function} A zero argument function that handles callback duties.
  * @private
  */
-goog.net.Jsonp.newErrorHandler_ = function(id, payload, opt_errorCallback) {
-  'use strict';
+goog.net.Jsonp.newErrorHandler_ = (id, payload, opt_errorCallback) => {
   /**
    * When we call across domains with a request, this function is the
    * timeout handler. Once it's done executing the user-specified
    * error-handler, it removes the script node and original function.
    */
-  return function() {
-    'use strict';
+  return () => {
     goog.net.Jsonp.cleanup_(id, false);
     if (opt_errorCallback) {
       opt_errorCallback(payload);
     }
   };
 };
-
 
 /**
  * Creates a reply callback that calls the given replyCallback with data
@@ -288,8 +268,7 @@ goog.net.Jsonp.newErrorHandler_ = function(id, payload, opt_errorCallback) {
  * @return {!Function} A reply callback function.
  * @private
  */
-goog.net.Jsonp.newReplyHandler_ = function(id, replyCallback) {
-  'use strict';
+goog.net.Jsonp.newReplyHandler_ = (id, replyCallback) => {
   /**
    * This function is the handler for the all-is-well response. It
    * clears the error timeout handler, calls the user's handler, then
@@ -297,14 +276,12 @@ goog.net.Jsonp.newReplyHandler_ = function(id, replyCallback) {
    *
    * @param {...Object} var_args The response data sent from the server.
    */
-  const handler = function(var_args) {
-    'use strict';
+  const handler = (var_args) => {
     goog.net.Jsonp.cleanup_(id, true);
     replyCallback.apply(undefined, arguments);
   };
   return handler;
 };
-
 
 /**
  * Removes the reply handler registered on goog.global object.
@@ -315,8 +292,7 @@ goog.net.Jsonp.newReplyHandler_ = function(id, replyCallback) {
  *     never be called again).
  * @private
  */
-goog.net.Jsonp.cleanup_ = function(id, deleteReplyHandler) {
-  'use strict';
+goog.net.Jsonp.cleanup_ = (id, deleteReplyHandler) => {
   const callbackId = goog.net.Jsonp.getCallbackId_(id);
   if (goog.global[callbackId]) {
     if (deleteReplyHandler) {
@@ -334,7 +310,6 @@ goog.net.Jsonp.cleanup_ = function(id, deleteReplyHandler) {
     }
   }
 };
-
 
 // WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 //

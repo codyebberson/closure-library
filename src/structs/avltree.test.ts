@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.structs.AvlTreeTest');
-goog.setTestOnly();
 
 const AvlTree = goog.require('goog.structs.AvlTree');
 const googArray = goog.require('goog.array');
@@ -70,14 +69,16 @@ testSuite({
 
     // Verify that no nodes are visited if the start value is larger than all
     // values
-    tree.inOrderTraverse(/**
+    tree.inOrderTraverse(
+      /**
                             @suppress {checkTypes} suppression added to enable
                             type checking
                           */
-                         (value) => {
-                           fail();
-                         },
-                         'zed');
+      (value) => {
+        fail();
+      },
+      'zed'
+    );
 
     // Verify strings are stored in sorted order
     i = values.length;
@@ -89,14 +90,16 @@ testSuite({
 
     // Verify that no nodes are visited if the start value is smaller than all
     // values
-    tree.reverseOrderTraverse(/**
+    tree.reverseOrderTraverse(
+      /**
                                  @suppress {checkTypes} suppression added to
                                  enable type checking
                                */
-                              (value) => {
-                                fail();
-                              },
-                              'aardvark');
+      (value) => {
+        fail();
+      },
+      'aardvark'
+    );
   },
 
   /**
@@ -190,9 +193,9 @@ testSuite({
     }
 
     assertTrue(
-        tree.getHeight() <=
-        1.4405 * (Math.log(NUM_TO_INSERT - NUM_TO_REMOVE + 2) / Math.log(2)) -
-            1.3277);
+      tree.getHeight() <=
+        1.4405 * (Math.log(NUM_TO_INSERT - NUM_TO_REMOVE + 2) / Math.log(2)) - 1.3277
+    );
   },
 
   /**
@@ -341,8 +344,7 @@ testSuite({
     tree.add(values[2]);
     tree.add('pippin');
     assertEquals(10, tree.getCount());
-    assertEquals(
-        tree.root_.left.count + tree.root_.right.count + 1, tree.getCount());
+    assertEquals(tree.root_.left.count + tree.root_.right.count + 1, tree.getCount());
 
     // Remove strings from tree
     assertEquals('samwise', tree.remove('samwise'));
@@ -351,8 +353,7 @@ testSuite({
     assertEquals(null, tree.remove('merry'));
     assertEquals(7, tree.getCount());
 
-    assertEquals(
-        tree.root_.left.count + tree.root_.right.count + 1, tree.getCount());
+    assertEquals(tree.root_.left.count + tree.root_.right.count + 1, tree.getCount());
   },
 
   /** This test verifies that getKthOrder gets the correct value. */
@@ -700,15 +701,15 @@ testSuite({
    */
   testCopyCustomCopyFunction() {
     const tree = new AvlTree((a, b) => a.i - b.i);
-    tree.add({i: 100});
-    tree.add({i: 150});
-    tree.add({i: 50});
-    tree.add({i: 0});
-    tree.add({i: 112});
-    tree.add({i: 200});
-    tree.add({i: 125});
+    tree.add({ i: 100 });
+    tree.add({ i: 150 });
+    tree.add({ i: 50 });
+    tree.add({ i: 0 });
+    tree.add({ i: 112 });
+    tree.add({ i: 200 });
+    tree.add({ i: 125 });
 
-    const copy = tree.copy(v => ({i: v.i}));
+    const copy = tree.copy((v) => ({ i: v.i }));
 
     assertEquals(4, copy.getHeight());
     assertEquals(100, copy.root_.value.i);
@@ -729,7 +730,7 @@ testSuite({
   testBadCopyFunction() {
     const tree = new AvlTree((a, b) => a - b);
     tree.add(1);
-    assertThrows(() => tree.copy(n => n * -1));
+    assertThrows(() => tree.copy((n) => n * -1));
   },
 
   /** @suppress {visibility} suppression added to enable type checking */

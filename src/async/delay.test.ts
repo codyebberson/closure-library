@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 goog.module('goog.async.DelayTest');
-goog.setTestOnly();
 
 const Delay = goog.require('goog.async.Delay');
 const MockClock = goog.require('goog.testing.MockClock');
@@ -134,10 +133,7 @@ testSuite({
 
     invoked = false;
     clock.tick(200);
-    assertFalse(
-        'Delay fired early with fire call, timeout should have been ' +
-            'cleared',
-        invoked);
+    assertFalse('Delay fired early with fire call, timeout should have been ' + 'cleared', invoked);
   },
 
   testFireIfActive() {
@@ -150,8 +146,8 @@ testSuite({
     invoked = false;
     clock.tick(300);
     assertFalse(
-        'Delay fired early with fireIfActive, timeout should have been ' +
-            'cleared',
-        invoked);
+      'Delay fired early with fireIfActive, timeout should have been ' + 'cleared',
+      invoked
+    );
   },
 });

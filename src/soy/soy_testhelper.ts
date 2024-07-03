@@ -22,8 +22,6 @@ goog.require('goog.string');
 goog.require('goog.testing.asserts');
 goog.require('goog.userAgent');
 
-
-
 /**
  * Instantiable subclass of SanitizedContent.
  *
@@ -42,7 +40,6 @@ function SanitizedContentSubclass(content, kind) {
 }
 goog.inherits(SanitizedContentSubclass, goog.soy.data.SanitizedContent);
 
-
 /**
  * Instantiable subclass of SanitizedCss.
  * @param {string} content
@@ -56,7 +53,6 @@ function SanitizedCssSubclass(content) {
 }
 goog.inherits(SanitizedCssSubclass, goog.soy.data.SanitizedCss);
 
-
 /**
  * @param {string} content The text.
  * @param {goog.soy.data.SanitizedContentKind|string} kind The kind of safe
@@ -65,11 +61,10 @@ goog.inherits(SanitizedCssSubclass, goog.soy.data.SanitizedCss);
  */
 function makeSanitizedContent(content, kind) {
   return new SanitizedContentSubclass(
-      content,
-      /** @type {goog.soy.data.SanitizedContentKind} */ (kind));
+    content,
+    /** @type {goog.soy.data.SanitizedContentKind} */ (kind)
+  );
 }
-
-
 
 /**
  * Instantiable subclass of SanitizedTrustedResourceUri.
@@ -87,11 +82,7 @@ function SanitizedTrustedResourceUriSubclass(content) {
   this.content = content;
   this.contentKind = goog.soy.data.SanitizedContentKind.TRUSTED_RESOURCE_URI;
 }
-goog.inherits(
-    SanitizedTrustedResourceUriSubclass,
-    goog.soy.data.SanitizedTrustedResourceUri);
-
-
+goog.inherits(SanitizedTrustedResourceUriSubclass, goog.soy.data.SanitizedTrustedResourceUri);
 
 //
 // Fake Soy-generated template functions.
@@ -99,51 +90,47 @@ goog.inherits(
 
 const example = {};
 
+/**
+ * @param {{name: string}} data
+ * @param {?Object<string, *>=} opt_injectedData
+ * @return {!goog.soy.data.SanitizedContent}
+ */
+example.textNodeTemplate = (data, opt_injectedData) => {
+  assertNotNull(data);
+  assertNotUndefined(data);
+  return makeSanitizedContent(
+    goog.string.htmlEscape(data.name),
+    goog.soy.data.SanitizedContentKind.HTML
+  );
+};
 
 /**
  * @param {{name: string}} data
  * @param {?Object<string, *>=} opt_injectedData
  * @return {!goog.soy.data.SanitizedContent}
  */
-example.textNodeTemplate = function(data, opt_injectedData) {
-  'use strict';
+example.singleRootTemplate = (data, opt_injectedData) => {
   assertNotNull(data);
   assertNotUndefined(data);
   return makeSanitizedContent(
-      goog.string.htmlEscape(data.name),
-      goog.soy.data.SanitizedContentKind.HTML);
+    '<span>' + goog.string.htmlEscape(data.name) + '</span>',
+    goog.soy.data.SanitizedContentKind.HTML
+  );
 };
-
 
 /**
  * @param {{name: string}} data
  * @param {?Object<string, *>=} opt_injectedData
  * @return {!goog.soy.data.SanitizedContent}
  */
-example.singleRootTemplate = function(data, opt_injectedData) {
-  'use strict';
+example.multiRootTemplate = (data, opt_injectedData) => {
   assertNotNull(data);
   assertNotUndefined(data);
   return makeSanitizedContent(
-      '<span>' + goog.string.htmlEscape(data.name) + '</span>',
-      goog.soy.data.SanitizedContentKind.HTML);
+    '<div>Hello</div><div>' + goog.string.htmlEscape(data.name) + '</div>',
+    goog.soy.data.SanitizedContentKind.HTML
+  );
 };
-
-
-/**
- * @param {{name: string}} data
- * @param {?Object<string, *>=} opt_injectedData
- * @return {!goog.soy.data.SanitizedContent}
- */
-example.multiRootTemplate = function(data, opt_injectedData) {
-  'use strict';
-  assertNotNull(data);
-  assertNotUndefined(data);
-  return makeSanitizedContent(
-      '<div>Hello</div><div>' + goog.string.htmlEscape(data.name) + '</div>',
-      goog.soy.data.SanitizedContentKind.HTML);
-};
-
 
 /**
  * @param {{name: string}} data
@@ -151,187 +138,146 @@ example.multiRootTemplate = function(data, opt_injectedData) {
  * @return {!goog.soy.data.SanitizedContent}
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-example.injectedDataTemplate = function(data, opt_injectedData) {
-  'use strict';
+example.injectedDataTemplate = (data, opt_injectedData) => {
   assertNotNull(data);
   assertNotUndefined(data);
   return makeSanitizedContent(
-      goog.string.htmlEscape(data.name) +
-          goog.string.htmlEscape(opt_injectedData.name),
-      goog.soy.data.SanitizedContentKind.HTML);
+    goog.string.htmlEscape(data.name) + goog.string.htmlEscape(opt_injectedData.name),
+    goog.soy.data.SanitizedContentKind.HTML
+  );
 };
-
 
 /**
  * @param {{name: string}} data
  * @param {Object<string, *>=} opt_injectedData
  * @return {!goog.soy.data.SanitizedContent}
  */
-example.noDataTemplate = function(data, opt_injectedData) {
-  'use strict';
+example.noDataTemplate = (data, opt_injectedData) => {
   assertNotNull(data);
   assertNotUndefined(data);
-  return makeSanitizedContent(
-      '<div>Hello</div>', goog.soy.data.SanitizedContentKind.HTML);
+  return makeSanitizedContent('<div>Hello</div>', goog.soy.data.SanitizedContentKind.HTML);
 };
-
 
 /**
  * @param {{name: string}} data
  * @param {Object<string, *>=} opt_injectedData
  * @return {!SanitizedContentSubclass}
  */
-example.sanitizedHtmlTemplate = function(data, opt_injectedData) {
-  'use strict';
+example.sanitizedHtmlTemplate = (data, opt_injectedData) => {
   // Test the SanitizedContent constructor.
   const sanitized = makeSanitizedContent(
-      'Hello <b>World</b>', goog.soy.data.SanitizedContentKind.HTML);
+    'Hello <b>World</b>',
+    goog.soy.data.SanitizedContentKind.HTML
+  );
   sanitized.contentDir = goog.i18n.bidi.Dir.LTR;
   return sanitized;
 };
 
-
 /**
  * @param {{name: string}} data
  * @param {Object<string, *>=} opt_injectedData
  * @return {!SanitizedContentSubclass}
  */
-example.sanitizedHtmlAttributesTemplate = function(data, opt_injectedData) {
-  'use strict';
-  return makeSanitizedContent(
-      'foo="bar"', goog.soy.data.SanitizedContentKind.ATTRIBUTES);
-};
-
+example.sanitizedHtmlAttributesTemplate = (data, opt_injectedData) =>
+  makeSanitizedContent('foo="bar"', goog.soy.data.SanitizedContentKind.ATTRIBUTES);
 
 /**
  * @param {{name: string}} data
  * @param {?Object<string, *>=} opt_injectedData
  * @return {!SanitizedContentSubclass}
  */
-example.sanitizedSmsUrlTemplate = function(data, opt_injectedData) {
-  'use strict';
+example.sanitizedSmsUrlTemplate = (data, opt_injectedData) => {
   // Test the SanitizedContent constructor.
-  const sanitized = makeSanitizedContent(
-      'sms:123456789', goog.soy.data.SanitizedContentKind.URI);
+  const sanitized = makeSanitizedContent('sms:123456789', goog.soy.data.SanitizedContentKind.URI);
   return sanitized;
 };
-
 
 /**
  * @param {{name: string}} data
  * @param {?Object<string, *>=} opt_injectedData
  * @return {!SanitizedContentSubclass}
  */
-example.sanitizedHttpUrlTemplate = function(data, opt_injectedData) {
-  'use strict';
+example.sanitizedHttpUrlTemplate = (data, opt_injectedData) => {
   // Test the SanitizedContent constructor.
   const sanitized = makeSanitizedContent(
-      'https://google.com/foo?n=917', goog.soy.data.SanitizedContentKind.URI);
+    'https://google.com/foo?n=917',
+    goog.soy.data.SanitizedContentKind.URI
+  );
   return sanitized;
 };
-
 
 /**
  * @param {{name: string}} data
  * @param {?Object<string, *>=} opt_injectedData
  * @return {!goog.soy.data.SanitizedTrustedResourceUri}
  */
-example.sanitizedTrustedResourceUriTemplate = function(data, opt_injectedData) {
-  'use strict';
-  return new SanitizedTrustedResourceUriSubclass('https://google.com/a.js');
-};
-
+example.sanitizedTrustedResourceUriTemplate = (data, opt_injectedData) =>
+  new SanitizedTrustedResourceUriSubclass('https://google.com/a.js');
 
 /**
  * @param {!Object<string, *>} data
  * @param {Object<string, *>=} opt_injectedData
  * @return {!goog.soy.data.SanitizedCss}
  */
-example.sanitizedCssTemplate = function(data, opt_injectedData) {
-  'use strict';
-  return new SanitizedCssSubclass('html{display:none}');
-};
-
+example.sanitizedCssTemplate = (data, opt_injectedData) =>
+  new SanitizedCssSubclass('html{display:none}');
 
 /**
  * @param {!Object<string, *>} data
  * @param {!Object<string, *>=} opt_injectedData
  * @return {!goog.soy.data.SanitizedCss}
  */
-example.sanitizedStyleTemplate = function(data, opt_injectedData) {
-  'use strict';
-  return new SanitizedCssSubclass('display:none;');
-};
-
+example.sanitizedStyleTemplate = (data, opt_injectedData) =>
+  new SanitizedCssSubclass('display:none;');
 
 /**
  * @param {{name: string}} data
  * @param {Object<string, *>=} opt_injectedData
  * @return {string}
  */
-example.stringTemplate = function(data, opt_injectedData) {
-  'use strict';
-  return '<b>XSS</b>';
-};
-
+example.stringTemplate = (data, opt_injectedData) => '<b>XSS</b>';
 
 /**
  * @param {{name: string}} data
  * @param {?Object<string, *>=} opt_injectedData
  * @return {!SanitizedContentSubclass}
  */
-example.sanitizedUriTemplate = function(data, opt_injectedData) {
-  'use strict';
-  return makeSanitizedContent(
-      'https://example.com', goog.soy.data.SanitizedContentKind.URI);
-};
-
+example.sanitizedUriTemplate = (data, opt_injectedData) =>
+  makeSanitizedContent('https://example.com', goog.soy.data.SanitizedContentKind.URI);
 
 /**
  * @param {{name: string}} data
  * @param {Object<string, *>=} opt_injectedData
  * @return {!SanitizedContentSubclass}
  */
-example.templateSpoofingSanitizedContentString = function(
-    data, opt_injectedData) {
-  'use strict';
-  return makeSanitizedContent(
-      'Hello World',
-      // This is to ensure we're using triple-equals against a unique JavaScript
-      // object.  For example, in JavaScript, consider ({}) == '[Object object]'
-      // is true.
-      goog.soy.data.SanitizedContentKind.HTML.toString());
-};
-
+example.templateSpoofingSanitizedContentString = (data, opt_injectedData) =>
+  makeSanitizedContent(
+    'Hello World',
+    // This is to ensure we're using triple-equals against a unique JavaScript
+    // object.  For example, in JavaScript, consider ({}) == '[Object object]'
+    // is true.
+    goog.soy.data.SanitizedContentKind.HTML.toString()
+  );
 
 /**
  * @param {{name: string}} data
  * @param {Object<string, *>=} opt_injectedData
  * @return {!goog.soy.data.SanitizedContent}
  */
-example.tableRowTemplate = function(data, opt_injectedData) {
-  'use strict';
-  return makeSanitizedContent(
-      '<tr><td></td></tr>', goog.soy.data.SanitizedContentKind.HTML);
-};
-
+example.tableRowTemplate = (data, opt_injectedData) =>
+  makeSanitizedContent('<tr><td></td></tr>', goog.soy.data.SanitizedContentKind.HTML);
 
 /**
  * @param {{name: string}} data
  * @param {Object<string, *>=} opt_injectedData
  * @return {!goog.soy.data.SanitizedContent}
  */
-example.colGroupTemplateCaps = function(data, opt_injectedData) {
-  'use strict';
-  return makeSanitizedContent(
-      '<COLGROUP></COLGROUP>', goog.soy.data.SanitizedContentKind.HTML);
-};
-
+example.colGroupTemplateCaps = (data, opt_injectedData) =>
+  makeSanitizedContent('<COLGROUP></COLGROUP>', goog.soy.data.SanitizedContentKind.HTML);
 
 //
 // Test helper functions.
 //
-
 
 /**
  * Retrieves the content of document fragment as HTML.
@@ -343,7 +289,6 @@ function fragmentToHtml(fragment) {
   testDiv.appendChild(fragment);
   return elementToInnerHtml(testDiv);
 }
-
 
 /**
  * Retrieves the content of an element as HTML.

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.PluginTest');
-goog.setTestOnly();
 
 const Field = goog.require('goog.editor.Field');
 const Plugin = goog.require('goog.editor.Plugin');
@@ -31,12 +30,12 @@ testSuite({
   testRegisterFieldObject() {
     plugin.registerFieldObject(fieldObject);
     assertEquals(
-        'Register field object must be stored in protected field.', fieldObject,
-        plugin.fieldObject);
+      'Register field object must be stored in protected field.',
+      fieldObject,
+      plugin.fieldObject
+    );
 
-    assertFalse(
-        'Newly registered plugin must not be enabled.',
-        plugin.isEnabled(fieldObject));
+    assertFalse('Newly registered plugin must not be enabled.', plugin.isEnabled(fieldObject));
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -46,12 +45,10 @@ testSuite({
     plugin.unregisterFieldObject(fieldObject);
 
     assertNull(
-        'fieldObject property must be undefined after ' +
-            'unregistering a field object.',
-        plugin.fieldObject);
-    assertFalse(
-        'Unregistered field object must not be enabled',
-        plugin.isEnabled(fieldObject));
+      'fieldObject property must be undefined after ' + 'unregistering a field object.',
+      plugin.fieldObject
+    );
+    assertFalse('Unregistered field object must not be enabled', plugin.isEnabled(fieldObject));
   },
 
   testEnable() {
@@ -59,8 +56,9 @@ testSuite({
     plugin.enable(fieldObject);
 
     assertTrue(
-        'Enabled field object must be enabled according to isEnabled().',
-        plugin.isEnabled(fieldObject));
+      'Enabled field object must be enabled according to isEnabled().',
+      plugin.isEnabled(fieldObject)
+    );
   },
 
   testDisable() {
@@ -69,24 +67,25 @@ testSuite({
     plugin.disable(fieldObject);
 
     assertFalse(
-        'Disabled field object must be disabled according to ' +
-            'isEnabled().',
-        plugin.isEnabled(fieldObject));
+      'Disabled field object must be disabled according to ' + 'isEnabled().',
+      plugin.isEnabled(fieldObject)
+    );
   },
 
   testIsEnabled() {
     // Other base cases covered while testing enable() and disable().
 
     assertFalse(
-        'Unregistered field object must be disabled according ' +
-            'to isEnabled().',
-        plugin.isEnabled(fieldObject));
+      'Unregistered field object must be disabled according ' + 'to isEnabled().',
+      plugin.isEnabled(fieldObject)
+    );
   },
 
   testIsSupportedCommand() {
     assertFalse(
-        'Base plugin class must not support any commands.',
-        plugin.isSupportedCommand('+indent'));
+      'Base plugin class must not support any commands.',
+      plugin.isSupportedCommand('+indent')
+    );
   },
 
   /**
@@ -174,11 +173,11 @@ testSuite({
     plugin.registerFieldObject(fieldObject);
     plugin.dispose();
     assert(plugin.getDisposed());
-    assertNull(
-        'Disposed plugin must not have a field object.', plugin.fieldObject);
+    assertNull('Disposed plugin must not have a field object.', plugin.fieldObject);
     assertFalse(
-        'Disposed plugin must not have an enabled field object.',
-        plugin.isEnabled(fieldObject));
+      'Disposed plugin must not have an enabled field object.',
+      plugin.isEnabled(fieldObject)
+    );
   },
 
   testIsAndSetAutoDispose() {

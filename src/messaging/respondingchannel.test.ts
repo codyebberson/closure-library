@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.messaging.RespondingChannelTest');
-goog.setTestOnly();
 
 const GoogPromise = goog.require('goog.Promise');
 const MockControl = goog.require('goog.testing.MockControl');
@@ -16,16 +15,16 @@ const recordFunction = goog.require('goog.testing.recordFunction');
 const testSuite = goog.require('goog.testing.testSuite');
 
 const CH1_REQUEST = {
-  'request': 'quux1'
+  request: 'quux1',
 };
 const CH2_REQUEST = {
-  'request': 'quux2'
+  request: 'quux2',
 };
 const CH1_RESPONSE = {
-  'response': 'baz1'
+  response: 'baz1',
 };
 const CH2_RESPONSE = {
-  'response': 'baz2'
+  response: 'baz2',
 };
 const SERVICE_NAME = 'serviceName';
 
@@ -58,15 +57,15 @@ testSuite({
 
   testSendWithSignature() {
     // 1 to 2 and back.
-    const message1Ch1Request = {'data': CH1_REQUEST, 'signature': 0};
-    const message1Ch2Response = {'data': CH2_RESPONSE, 'signature': 0};
-    const message2Ch1Request = {'data': CH1_REQUEST, 'signature': 1};
-    const message2Ch2Response = {'data': CH2_RESPONSE, 'signature': 1};
+    const message1Ch1Request = { data: CH1_REQUEST, signature: 0 };
+    const message1Ch2Response = { data: CH2_RESPONSE, signature: 0 };
+    const message2Ch1Request = { data: CH1_REQUEST, signature: 1 };
+    const message2Ch2Response = { data: CH2_RESPONSE, signature: 1 };
     // 2 to 1 and back.
-    const message3Ch2Request = {'data': CH2_REQUEST, 'signature': 0};
-    const message3Ch1Response = {'data': CH1_RESPONSE, 'signature': 0};
-    const message4Ch2Request = {'data': CH2_REQUEST, 'signature': 1};
-    const message4Ch1Response = {'data': CH1_RESPONSE, 'signature': 1};
+    const message3Ch2Request = { data: CH2_REQUEST, signature: 0 };
+    const message3Ch1Response = { data: CH1_RESPONSE, signature: 0 };
+    const message4Ch2Request = { data: CH2_REQUEST, signature: 1 };
+    const message4Ch1Response = { data: CH1_RESPONSE, signature: 1 };
 
     // The RespondingChannel calls send() synchronously from its send() method.
     // Request sent from channel 1 to channel 2.
@@ -136,23 +135,20 @@ testSuite({
 
     // Wait for asynchronous calls to occur.
     return GoogPromise.resolve().then(() => {
-      assertTrue(
-          hasInvokedCh1 && hasInvokedCh2 && hasReturnedFromCh1 &&
-          hasReturnedFromCh2);
+      assertTrue(hasInvokedCh1 && hasInvokedCh2 && hasReturnedFromCh1 && hasReturnedFromCh2);
     });
   },
 
   testWaitsForAsyncCallbackBeforeSendingResponse() {
     stubs.set(ch1, 'send', recordFunction());
-    ch1.send('private:mics', {'data': CH1_RESPONSE, 'signature': 0});
+    ch1.send('private:mics', { data: CH1_RESPONSE, signature: 0 });
     mockControl.$replayAll();
 
     const whenResponseReady = GoogPromise.withResolver();
     const serviceHandler = (message) => whenResponseReady.promise;
 
     respondingCh1.registerService(SERVICE_NAME, serviceHandler);
-    ch1.receive(
-        `public:${SERVICE_NAME}`, {'data': CH1_REQUEST, 'signature': 0});
+    ch1.receive(`public:${SERVICE_NAME}`, { data: CH1_REQUEST, signature: 0 });
     // The call to send() before $replayAll() counts as one call.
     ch1.send.assertCallCount(1);
 

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.proto2.messageTest');
-goog.setTestOnly();
 
 const FieldDescriptor = goog.require('goog.proto2.FieldDescriptor');
 const TestAllTypes = goog.require('proto2.TestAllTypes');
@@ -348,67 +347,41 @@ testSuite({
     // Check the array values.
     assertEquals(message.getRepeatedInt32(0), message.repeatedInt32Array()[0]);
     assertEquals(message.getRepeatedInt64(0), message.repeatedInt64Array()[0]);
-    assertEquals(
-        message.getRepeatedUint32(0), message.repeatedUint32Array()[0]);
-    assertEquals(
-        message.getRepeatedUint64(0), message.repeatedUint64Array()[0]);
-    assertEquals(
-        message.getRepeatedSint32(0), message.repeatedSint32Array()[0]);
-    assertEquals(
-        message.getRepeatedSint64(0), message.repeatedSint64Array()[0]);
-    assertEquals(
-        message.getRepeatedFixed32(0), message.repeatedFixed32Array()[0]);
-    assertEquals(
-        message.getRepeatedFixed64(0), message.repeatedFixed64Array()[0]);
-    assertEquals(
-        message.getRepeatedSfixed32(0), message.repeatedSfixed32Array()[0]);
-    assertEquals(
-        message.getRepeatedSfixed64(0), message.repeatedSfixed64Array()[0]);
+    assertEquals(message.getRepeatedUint32(0), message.repeatedUint32Array()[0]);
+    assertEquals(message.getRepeatedUint64(0), message.repeatedUint64Array()[0]);
+    assertEquals(message.getRepeatedSint32(0), message.repeatedSint32Array()[0]);
+    assertEquals(message.getRepeatedSint64(0), message.repeatedSint64Array()[0]);
+    assertEquals(message.getRepeatedFixed32(0), message.repeatedFixed32Array()[0]);
+    assertEquals(message.getRepeatedFixed64(0), message.repeatedFixed64Array()[0]);
+    assertEquals(message.getRepeatedSfixed32(0), message.repeatedSfixed32Array()[0]);
+    assertEquals(message.getRepeatedSfixed64(0), message.repeatedSfixed64Array()[0]);
     assertEquals(message.getRepeatedFloat(0), message.repeatedFloatArray()[0]);
-    assertEquals(
-        message.getRepeatedDouble(0), message.repeatedDoubleArray()[0]);
+    assertEquals(message.getRepeatedDouble(0), message.repeatedDoubleArray()[0]);
     assertEquals(message.getRepeatedBool(0), message.repeatedBoolArray()[0]);
-    assertEquals(
-        message.getRepeatedString(0), message.repeatedStringArray()[0]);
+    assertEquals(message.getRepeatedString(0), message.repeatedStringArray()[0]);
     assertEquals(message.getRepeatedBytes(0), message.repeatedBytesArray()[0]);
     assertEquals(message.getRepeatedgroup(0), message.repeatedgroupArray()[0]);
-    assertEquals(
-        message.getRepeatedNestedMessage(0),
-        message.repeatedNestedMessageArray()[0]);
-    assertEquals(
-        message.getRepeatedNestedEnum(0), message.repeatedNestedEnumArray()[0]);
+    assertEquals(message.getRepeatedNestedMessage(0), message.repeatedNestedMessageArray()[0]);
+    assertEquals(message.getRepeatedNestedEnum(0), message.repeatedNestedEnumArray()[0]);
 
     assertEquals(message.getRepeatedInt32(1), message.repeatedInt32Array()[1]);
     assertEquals(message.getRepeatedInt64(1), message.repeatedInt64Array()[1]);
-    assertEquals(
-        message.getRepeatedUint32(1), message.repeatedUint32Array()[1]);
-    assertEquals(
-        message.getRepeatedUint64(1), message.repeatedUint64Array()[1]);
-    assertEquals(
-        message.getRepeatedSint32(1), message.repeatedSint32Array()[1]);
-    assertEquals(
-        message.getRepeatedSint64(1), message.repeatedSint64Array()[1]);
-    assertEquals(
-        message.getRepeatedFixed32(1), message.repeatedFixed32Array()[1]);
-    assertEquals(
-        message.getRepeatedFixed64(1), message.repeatedFixed64Array()[1]);
-    assertEquals(
-        message.getRepeatedSfixed32(1), message.repeatedSfixed32Array()[1]);
-    assertEquals(
-        message.getRepeatedSfixed64(1), message.repeatedSfixed64Array()[1]);
+    assertEquals(message.getRepeatedUint32(1), message.repeatedUint32Array()[1]);
+    assertEquals(message.getRepeatedUint64(1), message.repeatedUint64Array()[1]);
+    assertEquals(message.getRepeatedSint32(1), message.repeatedSint32Array()[1]);
+    assertEquals(message.getRepeatedSint64(1), message.repeatedSint64Array()[1]);
+    assertEquals(message.getRepeatedFixed32(1), message.repeatedFixed32Array()[1]);
+    assertEquals(message.getRepeatedFixed64(1), message.repeatedFixed64Array()[1]);
+    assertEquals(message.getRepeatedSfixed32(1), message.repeatedSfixed32Array()[1]);
+    assertEquals(message.getRepeatedSfixed64(1), message.repeatedSfixed64Array()[1]);
     assertEquals(message.getRepeatedFloat(1), message.repeatedFloatArray()[1]);
-    assertEquals(
-        message.getRepeatedDouble(1), message.repeatedDoubleArray()[1]);
+    assertEquals(message.getRepeatedDouble(1), message.repeatedDoubleArray()[1]);
     assertEquals(message.getRepeatedBool(1), message.repeatedBoolArray()[1]);
-    assertEquals(
-        message.getRepeatedString(1), message.repeatedStringArray()[1]);
+    assertEquals(message.getRepeatedString(1), message.repeatedStringArray()[1]);
     assertEquals(message.getRepeatedBytes(1), message.repeatedBytesArray()[1]);
     assertEquals(message.getRepeatedgroup(1), message.repeatedgroupArray()[1]);
-    assertEquals(
-        message.getRepeatedNestedMessage(1),
-        message.repeatedNestedMessageArray()[1]);
-    assertEquals(
-        message.getRepeatedNestedEnum(1), message.repeatedNestedEnumArray()[1]);
+    assertEquals(message.getRepeatedNestedMessage(1), message.repeatedNestedMessageArray()[1]);
+    assertEquals(message.getRepeatedNestedEnum(1), message.repeatedNestedEnumArray()[1]);
   },
 
   testDescriptor() {
@@ -559,8 +532,7 @@ testSuite({
     // Check the field native types.
     // Singular.
     assertEquals(Number, fields[0].getNativeType());
-    assertEquals(
-        String, fields[1].getNativeType());  // 64 bit values are strings.
+    assertEquals(String, fields[1].getNativeType()); // 64 bit values are strings.
     assertEquals(Number, fields[2].getNativeType());
     assertEquals(String, fields[3].getNativeType());
     assertEquals(Number, fields[4].getNativeType());
@@ -581,7 +553,7 @@ testSuite({
     assertEquals(TestAllTypes.NestedMessage, fields[16].getNativeType());
     assertEquals(TestAllTypes.NestedEnum, fields[17].getNativeType());
 
-    assertEquals(Number, fields[36].getNativeType());  // [jstype="number"]
+    assertEquals(Number, fields[36].getNativeType()); // [jstype="number"]
     assertEquals(String, fields[37].getNativeType());
 
     // Repeated.
@@ -607,7 +579,7 @@ testSuite({
     assertEquals(TestAllTypes.NestedMessage, fields[34].getNativeType());
     assertEquals(TestAllTypes.NestedEnum, fields[35].getNativeType());
 
-    assertEquals(Number, fields[38].getNativeType());  // [jstype="number"]
+    assertEquals(Number, fields[38].getNativeType()); // [jstype="number"]
     assertEquals(String, fields[39].getNativeType());
 
     // Packed (only numeric types can be packed).
@@ -728,11 +700,9 @@ testSuite({
     // Check the array.
     assertEquals(2, message.arrayOf(repeatedInt64).length);
 
-    assertEquals(
-        message.get(repeatedInt64, 0), message.arrayOf(repeatedInt64)[0]);
+    assertEquals(message.get(repeatedInt64, 0), message.arrayOf(repeatedInt64)[0]);
 
-    assertEquals(
-        message.get(repeatedInt64, 1), message.arrayOf(repeatedInt64)[1]);
+    assertEquals(message.get(repeatedInt64, 1), message.arrayOf(repeatedInt64)[1]);
   },
 
   testDefaultValuesForMessages() {

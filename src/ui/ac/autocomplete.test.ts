@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.ac.AutoCompleteTest');
-goog.setTestOnly();
 
 const AutoComplete = goog.require('goog.ui.ac.AutoComplete');
 const EventHandler = goog.require('goog.events.EventHandler');
@@ -29,7 +28,7 @@ class MockDS {
   constructor(autoHilite = undefined) {
     this.autoHilite_ = autoHilite;
     const disabledRow = {
-      match: function(str) {
+      match: function (str) {
         return this.text.match(str);
       },
       rowDisabled: true,
@@ -76,7 +75,7 @@ class MockDS {
 function MockSelect() {}
 goog.inherits(MockSelect, GoogEventTarget);
 
-MockSelect.prototype.selectRow = function(row) {
+MockSelect.prototype.selectRow = function (row) {
   this.selectedRow = row;
 };
 
@@ -114,7 +113,7 @@ function checkHilitedIndex(renderer, index) {
 
 testSuite({
   setUp() {
-    inputElement = dom.createDom(TagName.INPUT, {type: InputType.TEXT});
+    inputElement = dom.createDom(TagName.INPUT, { type: InputType.TEXT });
     handler = new EventHandler();
     mockControl = new MockControl();
   },
@@ -178,8 +177,7 @@ testSuite({
     const hilitedRowDiv = rend.getRowDiv(3);
     events.fireMouseOverEvent(hilitedRowDiv);
     assertEquals(2, updates);
-    assertTrue(
-        googString.contains(rowNode.innerHTML, 'mice@myotherdomain.com'));
+    assertTrue(googString.contains(rowNode.innerHTML, 'mice@myotherdomain.com'));
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -224,8 +222,7 @@ testSuite({
     const targetRowDiv = rend.getRowDiv(0);
     events.fireClickEvent(targetRowDiv);
 
-    assertEquals(
-        '"Zaphod Beeblebrox" <theprez@universe.gov>', select.selectedRow);
+    assertEquals('"Zaphod Beeblebrox" <theprez@universe.gov>', select.selectedRow);
   },
 
   testMouseClickOnRowAfterBlur() {
@@ -265,7 +262,7 @@ testSuite({
     assertUndefined(select.selectedRow);
 
     // Dispatch an event that does not specify a row.
-    rend.dispatchEvent({type: AutoComplete.EventType.SELECT, row: ''});
+    rend.dispatchEvent({ type: AutoComplete.EventType.SELECT, row: '' });
 
     assertEquals('the.mice@magrathea.com', select.selectedRow);
   },
@@ -1431,7 +1428,7 @@ testSuite({
     const ac = new AutoComplete(ds, rend, select);
     ac.setWrap(true);
     ac.setAllowFreeSelect(true);
-    ac.setAutoHilite(false);  // Will be overruled.
+    ac.setAutoHilite(false); // Will be overruled.
     ac.setMaxMatches(4);
 
     ac.setToken('the');
@@ -1449,7 +1446,7 @@ testSuite({
     const ac = new AutoComplete(ds, rend, select);
     ac.setWrap(true);
     ac.setAllowFreeSelect(true);
-    ac.setAutoHilite(true);  // Will be overruled.
+    ac.setAutoHilite(true); // Will be overruled.
     ac.setMaxMatches(4);
 
     ac.setToken('the');
@@ -1494,9 +1491,7 @@ testSuite({
     ac = new AutoComplete(ds, rend, select);
     ac.setToken('m');
     ac.selectHilited();
-    assertEquals(
-        '"Slartibartfast Theadore" <fjordmaster@magrathea.com>',
-        select.selectedRow);
+    assertEquals('"Slartibartfast Theadore" <fjordmaster@magrathea.com>', select.selectedRow);
 
     // try second item
     ac = new AutoComplete(ds, rend, select);
@@ -1632,7 +1627,9 @@ testSuite({
     const mockRenderer = mockControl.createLooseMock(Renderer, true);
     const mockInputHandler = mockControl.createLooseMock(InputHandler, true);
     const anchorElement = dom.createDom(TagName.DIV, null, inputElement);
-    const inputElement2 = dom.createDom(TagName.INPUT, {type: InputType.TEXT});
+    const inputElement2 = dom.createDom(TagName.INPUT, {
+      type: InputType.TEXT,
+    });
     const anchorElement2 = dom.createDom(TagName.DIV, null, inputElement2);
 
     mockControl.$replayAll();

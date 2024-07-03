@@ -9,10 +9,7 @@
  *
  */
 
-
 goog.provide('goog.labs.net.webChannel.ConnectionState');
-
-
 
 /**
  * The connectivity state of the channel.
@@ -22,8 +19,7 @@ goog.provide('goog.labs.net.webChannel.ConnectionState');
  * @constructor
  * @struct
  */
-goog.labs.net.webChannel.ConnectionState = function() {
-  'use strict';
+goog.labs.net.webChannel.ConnectionState = function () {
   /**
    * Handshake result.
    * @type {?Array<string>}

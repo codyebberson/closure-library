@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.net.FetchXmlHttpFactoryTest');
-goog.setTestOnly();
 
 const FetchXmlHttp = goog.require('goog.net.FetchXmlHttp');
 const FetchXmlHttpFactory = goog.require('goog.net.FetchXmlHttpFactory');
@@ -41,8 +40,12 @@ let stubs;
  * @return {!Promise<void>}
  */
 function verifySend(
-    sendMethod, expectedStatusCode = 200, isStream = false,
-    isArrayBuffer = false, isStreamBinaryChunks = false) {
+  sendMethod,
+  expectedStatusCode = 200,
+  isStream = false,
+  isArrayBuffer = false,
+  isStreamBinaryChunks = false
+) {
   return new Promise((resolve, reject) => {
     const xhr = factory.createInstance();
     const expectedBody = 'responseBody';
@@ -60,11 +63,9 @@ function verifySend(
     xhr.onreadystatechange = () => {
       if (xhr.readyState === FetchXmlHttp.RequestState.HEADER_RECEIVED) {
         lastState = xhr.readyState;
-        let expectedHeaders =
-            'dummyheader: dummyHeaderValue\r\ndummyheader2: dummyHeaderValue2';
+        let expectedHeaders = 'dummyheader: dummyHeaderValue\r\ndummyheader2: dummyHeaderValue2';
         if (!isStream && !isArrayBuffer) {
-          expectedHeaders =
-              `content-type: text/plain;charset=UTF-8\r\n${expectedHeaders}`;
+          expectedHeaders = `content-type: text/plain;charset=UTF-8\r\n${expectedHeaders}`;
         }
         assertEquals(expectedStatusCode, xhr.status);
         assertEquals('', xhr.responseText);
@@ -91,7 +92,7 @@ function verifySend(
         if (isStreamBinaryChunks) {
           const bytes = new TextEncoder().encode('responseBody');
           assertEquals(bytes.length, xhr.response.length);
-          assertTrue((xhr.response)[0] instanceof Uint8Array);
+          assertTrue(xhr.response[0] instanceof Uint8Array);
           for (let i = 0; i < bytes.length; i++) {
             assertTrue(bytes[i] === xhr.response[i][0]);
           }
@@ -118,8 +119,10 @@ function createSuccessResponse() {
   const headers = new Headers();
   headers.set('dummyHeader', 'dummyHeaderValue');
   headers.set('dummyHeader2', 'dummyHeaderValue2');
-  return new Response(
-      'responseBody' /* opt_body */, {status: 200, headers: headers});
+  return new Response('responseBody' /* opt_body */, {
+    status: 200,
+    headers: headers,
+  });
 }
 
 /**
@@ -140,7 +143,11 @@ function createSuccessStreamingResponse() {
       controller.close();
     },
   });
-  return new Response(body, {status: 200, statusText: 'OK', headers: headers});
+  return new Response(body, {
+    status: 200,
+    statusText: 'OK',
+    headers: headers,
+  });
 }
 
 /**
@@ -151,8 +158,11 @@ function createArrayBufferResponse() {
   const headers = new Headers();
   headers.set('dummyHeader', 'dummyHeaderValue');
   headers.set('dummyHeader2', 'dummyHeaderValue2');
-  return new Response(
-      new ArrayBuffer(8), {status: 200, statusText: 'OK', headers: headers});
+  return new Response(new ArrayBuffer(8), {
+    status: 200,
+    statusText: 'OK',
+    headers: headers,
+  });
 }
 
 /**
@@ -163,8 +173,10 @@ function createFailedResponse() {
   const headers = new Headers();
   headers.set('dummyHeader', 'dummyHeaderValue');
   headers.set('dummyHeader2', 'dummyHeaderValue2');
-  return new Response(
-      'responseBody' /* opt_body */, {status: 500, headers: headers});
+  return new Response('responseBody' /* opt_body */, {
+    status: 500,
+    headers: headers,
+  });
 }
 testSuite({
   /**
@@ -185,7 +197,7 @@ testSuite({
     worker.fetch = fetchMock;
     stubs = new PropertyReplacer();
     stubs.replace(globalThis, 'fetch', fetchMock);
-    factory = new FetchXmlHttpFactory({worker: worker});
+    factory = new FetchXmlHttpFactory({ worker: worker });
   },
 
   tearDown() {
@@ -246,10 +258,12 @@ testSuite({
    * @return {!Promise<void>}
    */
   testSend() {
-    fetchMock(new Request('https://www.google.com', {
-      headers: new Headers(),
-      method: 'GET',
-    })).$returns(Promise.resolve(createSuccessResponse()));
+    fetchMock(
+      new Request('https://www.google.com', {
+        headers: new Headers(),
+        method: 'GET',
+      })
+    ).$returns(Promise.resolve(createSuccessResponse()));
 
     mockControl.$replayAll();
     return verifySend('GET');
@@ -260,10 +274,12 @@ testSuite({
    * @return {!Promise<void>}
    */
   testSend_nonServiceWorker() {
-    fetchMock(new Request('https://www.google.com', {
-      headers: new Headers(),
-      method: 'GET',
-    })).$returns(Promise.resolve(createSuccessResponse()));
+    fetchMock(
+      new Request('https://www.google.com', {
+        headers: new Headers(),
+        method: 'GET',
+      })
+    ).$returns(Promise.resolve(createSuccessResponse()));
 
     mockControl.$replayAll();
     factory = new FetchXmlHttpFactory({});
@@ -275,10 +291,12 @@ testSuite({
    * @return {!Promise<void>}
    */
   testSendPost() {
-    fetchMock(new Request('https://www.google.com', {
-      headers: new Headers(),
-      method: 'POST',
-    })).$returns(Promise.resolve(createSuccessResponse()));
+    fetchMock(
+      new Request('https://www.google.com', {
+        headers: new Headers(),
+        method: 'POST',
+      })
+    ).$returns(Promise.resolve(createSuccessResponse()));
 
     mockControl.$replayAll();
     return verifySend('POST');
@@ -289,12 +307,14 @@ testSuite({
    * @return {!Promise<void>}
    */
   testSend_includeCredentials() {
-    factory.setCredentialsMode(/** @type {RequestCredentials} */ ('include'));
-    fetchMock(new Request('https://www.google.com', {
-      headers: new Headers(),
-      method: 'POST',
-      credentials: 'include',
-    })).$returns(Promise.resolve(createSuccessResponse()));
+    factory.setCredentialsMode(/** @type {RequestCredentials} */ 'include');
+    fetchMock(
+      new Request('https://www.google.com', {
+        headers: new Headers(),
+        method: 'POST',
+        credentials: 'include',
+      })
+    ).$returns(Promise.resolve(createSuccessResponse()));
 
     mockControl.$replayAll();
     return verifySend('POST');
@@ -305,12 +325,14 @@ testSuite({
    * @return {!Promise<void>}
    */
   testSend_setCacheMode() {
-    factory.setCacheMode(/** @type {RequestCache} */ ('no-cache'));
-    fetchMock(new Request('https://www.google.com', {
-      headers: new Headers(),
-      method: 'POST',
-      cache: 'no-cache',
-    })).$returns(Promise.resolve(createSuccessResponse()));
+    factory.setCacheMode(/** @type {RequestCache} */ 'no-cache');
+    fetchMock(
+      new Request('https://www.google.com', {
+        headers: new Headers(),
+        method: 'POST',
+        cache: 'no-cache',
+      })
+    ).$returns(Promise.resolve(createSuccessResponse()));
 
     mockControl.$replayAll();
     return verifySend('POST');
@@ -321,10 +343,12 @@ testSuite({
    * @return {!Promise<void>}
    */
   testSend_error() {
-    fetchMock(new Request('https://www.google.com', {
-      headers: new Headers(),
-      method: 'GET',
-    })).$returns(Promise.resolve(createFailedResponse()));
+    fetchMock(
+      new Request('https://www.google.com', {
+        headers: new Headers(),
+        method: 'GET',
+      })
+    ).$returns(Promise.resolve(createFailedResponse()));
 
     mockControl.$replayAll();
 
@@ -336,14 +360,15 @@ testSuite({
    * @return {!Promise<void>}
    */
   testSend_streaming() {
-    fetchMock(new Request('https://www.google.com', {
-      headers: new Headers(),
-      method: 'POST',
-    })).$returns(Promise.resolve(createSuccessStreamingResponse()));
+    fetchMock(
+      new Request('https://www.google.com', {
+        headers: new Headers(),
+        method: 'POST',
+      })
+    ).$returns(Promise.resolve(createSuccessStreamingResponse()));
 
     mockControl.$replayAll();
-    return verifySend(
-        'POST', 200 /* expectedStatusCode */, true /* isStream */);
+    return verifySend('POST', 200 /* expectedStatusCode */, true /* isStream */);
   },
 
   /**
@@ -351,18 +376,26 @@ testSuite({
    * @return {!Promise<void>}
    */
   testSend_streamBinaryChunks() {
-    fetchMock(new Request('https://www.google.com', {
-      headers: new Headers(),
-      method: 'POST',
-    })).$returns(Promise.resolve(createSuccessStreamingResponse()));
+    fetchMock(
+      new Request('https://www.google.com', {
+        headers: new Headers(),
+        method: 'POST',
+      })
+    ).$returns(Promise.resolve(createSuccessStreamingResponse()));
 
     mockControl.$replayAll();
 
-    factory =
-        new FetchXmlHttpFactory({worker: worker, streamBinaryChunks: true});
+    factory = new FetchXmlHttpFactory({
+      worker: worker,
+      streamBinaryChunks: true,
+    });
     return verifySend(
-        'POST', 200 /* expectedStatusCode */, true /* isStream */,
-        false /* isArrayBuffer */, true /* isStreamBinaryCrunks */);
+      'POST',
+      200 /* expectedStatusCode */,
+      true /* isStream */,
+      false /* isArrayBuffer */,
+      true /* isStreamBinaryCrunks */
+    );
   },
 
   /**
@@ -370,14 +403,19 @@ testSuite({
    * @return {!Promise<void>}
    */
   testSend_arrayBuffer() {
-    fetchMock(new Request('https://www.google.com', {
-      headers: new Headers(),
-      method: 'POST',
-    })).$returns(Promise.resolve(createArrayBufferResponse()));
+    fetchMock(
+      new Request('https://www.google.com', {
+        headers: new Headers(),
+        method: 'POST',
+      })
+    ).$returns(Promise.resolve(createArrayBufferResponse()));
     mockControl.$replayAll();
     return verifySend(
-        'POST', 200 /* expectedStatusCode */, false /* isStream */,
-        true /* isArrayBuffer */);
+      'POST',
+      200 /* expectedStatusCode */,
+      false /* isStream */,
+      true /* isArrayBuffer */
+    );
   },
 
   /**
@@ -388,10 +426,12 @@ testSuite({
     const failedPromise = new Promise(() => {
       throw new Error('failed to fetch');
     });
-    fetchMock(new Request('https://www.google.com', {
-      headers: new Headers(),
-      method: 'GET',
-    })).$returns(failedPromise);
+    fetchMock(
+      new Request('https://www.google.com', {
+        headers: new Headers(),
+        method: 'GET',
+      })
+    ).$returns(failedPromise);
 
     mockControl.$replayAll();
     return new Promise((resolve) => {
@@ -451,5 +491,5 @@ testSuite({
 
     xhr.setCredentialsMode('omit');
     assertEquals(xhr.withCredentials, false);
-  }
+  },
 });

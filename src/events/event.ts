@@ -8,7 +8,6 @@
  * @fileoverview A base class for event objects.
  */
 
-
 goog.provide('goog.events.Event');
 
 /**
@@ -18,7 +17,6 @@ goog.provide('goog.events.Event');
  */
 goog.require('goog.Disposable');
 goog.require('goog.events.EventId');
-
 
 /**
  * A base class for event objects, so that they can support preventDefault and
@@ -30,8 +28,7 @@ goog.require('goog.events.EventId');
  *     declared at {@link http://developer.mozilla.org/en/DOM/EventTarget}.
  * @constructor
  */
-goog.events.Event = function(type, opt_target) {
-  'use strict';
+goog.events.Event = function (type, opt_target) {
   /**
    * Event type.
    * @type {string}
@@ -74,8 +71,7 @@ goog.events.Event = function(type, opt_target) {
 /**
  * @return {boolean} true iff internal propagation has been stopped.
  */
-goog.events.Event.prototype.hasPropagationStopped = function() {
-  'use strict';
+goog.events.Event.prototype.hasPropagationStopped = function () {
   return this.propagationStopped_;
 };
 
@@ -83,21 +79,17 @@ goog.events.Event.prototype.hasPropagationStopped = function() {
  * Stops event propagation.
  * @return {void}
  */
-goog.events.Event.prototype.stopPropagation = function() {
-  'use strict';
+goog.events.Event.prototype.stopPropagation = function () {
   this.propagationStopped_ = true;
 };
-
 
 /**
  * Prevents the default action, for example a link redirecting to a url.
  * @return {void}
  */
-goog.events.Event.prototype.preventDefault = function() {
-  'use strict';
+goog.events.Event.prototype.preventDefault = function () {
   this.defaultPrevented = true;
 };
-
 
 /**
  * Stops the propagation of the event. It is equivalent to
@@ -106,11 +98,9 @@ goog.events.Event.prototype.preventDefault = function() {
  * @param {!goog.events.Event} e An event.
  * @return {void}
  */
-goog.events.Event.stopPropagation = function(e) {
-  'use strict';
+goog.events.Event.stopPropagation = (e) => {
   e.stopPropagation();
 };
-
 
 /**
  * Prevents the default action. It is equivalent to
@@ -119,7 +109,6 @@ goog.events.Event.stopPropagation = function(e) {
  * @param {!goog.events.Event} e An event.
  * @return {void}
  */
-goog.events.Event.preventDefault = function(e) {
-  'use strict';
+goog.events.Event.preventDefault = (e) => {
   e.preventDefault();
 };

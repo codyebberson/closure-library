@@ -34,8 +34,6 @@ goog.require('goog.events.EventType');
 goog.require('goog.events.KeyCodes');
 goog.require('goog.userAgent');
 
-
-
 /**
  * A wrapper around an element that you want to listen to ACTION events on.
  * @param {Element|Document} element The element or document to listen on.
@@ -43,8 +41,7 @@ goog.require('goog.userAgent');
  * @extends {goog.events.EventTarget}
  * @final
  */
-goog.events.ActionHandler = function(element) {
-  'use strict';
+goog.events.ActionHandler = function (element) {
   goog.events.EventTarget.call(this);
 
   /**
@@ -54,13 +51,10 @@ goog.events.ActionHandler = function(element) {
    */
   this.element_ = element;
 
-  goog.events.listen(
-      element, goog.events.EventType.KEYDOWN, this.handleKeyDown_, false, this);
-  goog.events.listen(
-      element, goog.events.EventType.CLICK, this.handleClick_, false, this);
+  goog.events.listen(element, goog.events.EventType.KEYDOWN, this.handleKeyDown_, false, this);
+  goog.events.listen(element, goog.events.EventType.CLICK, this.handleClick_, false, this);
 };
 goog.inherits(goog.events.ActionHandler, goog.events.EventTarget);
-
 
 /**
  * Enum type for the events fired by the action handler
@@ -68,42 +62,38 @@ goog.inherits(goog.events.ActionHandler, goog.events.EventTarget);
  */
 goog.events.ActionHandler.EventType = {
   ACTION: 'action',
-  BEFOREACTION: 'beforeaction'
+  BEFOREACTION: 'beforeaction',
 };
-
 
 /**
  * Handles key press events.
  * @param {!goog.events.BrowserEvent} e The key press event.
  * @private
  */
-goog.events.ActionHandler.prototype.handleKeyDown_ = function(e) {
-  'use strict';
-  if (e.keyCode == goog.events.KeyCodes.ENTER ||
-      goog.userAgent.WEBKIT && e.keyCode == goog.events.KeyCodes.MAC_ENTER) {
+goog.events.ActionHandler.prototype.handleKeyDown_ = function (e) {
+  if (
+    e.keyCode == goog.events.KeyCodes.ENTER ||
+    (goog.userAgent.WEBKIT && e.keyCode == goog.events.KeyCodes.MAC_ENTER)
+  ) {
     this.dispatchEvents_(e);
   }
 };
-
 
 /**
  * Handles mouse events.
  * @param {!goog.events.BrowserEvent} e The click event.
  * @private
  */
-goog.events.ActionHandler.prototype.handleClick_ = function(e) {
-  'use strict';
+goog.events.ActionHandler.prototype.handleClick_ = function (e) {
   this.dispatchEvents_(e);
 };
-
 
 /**
  * Dispatches BeforeAction and Action events to the element
  * @param {!goog.events.BrowserEvent} e The event causing dispatches.
  * @private
  */
-goog.events.ActionHandler.prototype.dispatchEvents_ = function(e) {
-  'use strict';
+goog.events.ActionHandler.prototype.dispatchEvents_ = function (e) {
   var beforeActionEvent = new goog.events.BeforeActionEvent(e);
 
   // Allow application specific logic here before the ACTION event.
@@ -113,7 +103,6 @@ goog.events.ActionHandler.prototype.dispatchEvents_ = function(e) {
     // ACTION event.
     return;
   }
-
 
   // Wrap up original event and send it off
   var actionEvent = new goog.events.ActionEvent(e);
@@ -125,21 +114,19 @@ goog.events.ActionHandler.prototype.dispatchEvents_ = function(e) {
   }
 };
 
-
 /** @override */
-goog.events.ActionHandler.prototype.disposeInternal = function() {
-  'use strict';
+goog.events.ActionHandler.prototype.disposeInternal = function () {
   goog.events.ActionHandler.superClass_.disposeInternal.call(this);
   goog.events.unlisten(
-      this.element_, goog.events.EventType.KEYDOWN, this.handleKeyDown_, false,
-      this);
-  goog.events.unlisten(
-      this.element_, goog.events.EventType.CLICK, this.handleClick_, false,
-      this);
+    this.element_,
+    goog.events.EventType.KEYDOWN,
+    this.handleKeyDown_,
+    false,
+    this
+  );
+  goog.events.unlisten(this.element_, goog.events.EventType.CLICK, this.handleClick_, false, this);
   delete this.element_;
 };
-
-
 
 /**
  * This class is used for the goog.events.ActionHandler.EventType.ACTION event.
@@ -148,14 +135,11 @@ goog.events.ActionHandler.prototype.disposeInternal = function() {
  * @extends {goog.events.BrowserEvent}
  * @final
  */
-goog.events.ActionEvent = function(browserEvent) {
-  'use strict';
+goog.events.ActionEvent = function (browserEvent) {
   goog.events.BrowserEvent.call(this, browserEvent.getBrowserEvent());
   this.type = goog.events.ActionHandler.EventType.ACTION;
 };
 goog.inherits(goog.events.ActionEvent, goog.events.BrowserEvent);
-
-
 
 /**
  * This class is used for the goog.events.ActionHandler.EventType.BEFOREACTION
@@ -166,8 +150,7 @@ goog.inherits(goog.events.ActionEvent, goog.events.BrowserEvent);
  * @extends {goog.events.BrowserEvent}
  * @final
  */
-goog.events.BeforeActionEvent = function(browserEvent) {
-  'use strict';
+goog.events.BeforeActionEvent = function (browserEvent) {
   goog.events.BrowserEvent.call(this, browserEvent.getBrowserEvent());
   this.type = goog.events.ActionHandler.EventType.BEFOREACTION;
 };

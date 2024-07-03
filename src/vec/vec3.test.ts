@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.vec.Vec3Test');
-goog.setTestOnly();
 
 const Vec3 = goog.require('goog.vec.Vec3');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -225,8 +224,10 @@ testSuite({
     Vec3.setFromValues(v1, 0, 0, 0);
     Vec3.direction(v0, v1, dirVec);
     assertElementsRoughlyEqual(
-        [-0.5773502588272095, -0.5773502588272095, -0.5773502588272095], dirVec,
-        vec.EPSILON);
+      [-0.5773502588272095, -0.5773502588272095, -0.5773502588272095],
+      dirVec,
+      vec.EPSILON
+    );
   },
 
   testLerp() {
@@ -238,7 +239,7 @@ testSuite({
     assertElementsEquals([1, 2, 3], v2);
     Vec3.lerp(v2, v1, 1, v2);
     assertElementsEquals([10, 20, 30], v2);
-    Vec3.lerp(v0, v1, .5, v2);
+    Vec3.lerp(v0, v1, 0.5, v2);
     assertElementsEquals([5.5, 11, 16.5], v2);
   },
 

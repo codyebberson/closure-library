@@ -6,10 +6,9 @@
 
 goog.module('goog.delegate.DelegateRegistry');
 
-const {ENABLE_ASSERTS, assert} = goog.require('goog.asserts');
-const {binarySelect} = goog.require('goog.array');
-const {freeze} = goog.require('goog.debug');
-
+const { ENABLE_ASSERTS, assert } = goog.require('goog.asserts');
+const { binarySelect } = goog.require('goog.array');
+const { freeze } = goog.require('goog.debug');
 
 /**
  * @record
@@ -36,7 +35,6 @@ class Registration {
     this.priority;
   }
 }
-
 
 /**
  * Base class for delegate registries.  Does not specify a policy for handling
@@ -96,9 +94,9 @@ class DelegateRegistryBase {
     if (ENABLE_ASSERTS) {
       this.delegatesConstructed_ = true;
     }
-    return this.registered_.length ?
-        this.instantiate_(this.registered_[0], instantiate) :
-        undefined;
+    return this.registered_.length
+      ? this.instantiate_(this.registered_[0], instantiate)
+      : undefined;
   }
 
   /**
@@ -115,7 +113,7 @@ class DelegateRegistryBase {
     if (ENABLE_ASSERTS) {
       this.delegatesConstructed_ = true;
     }
-    return freeze(this.registered_.map(r => this.instantiate_(r, instantiate)));
+    return freeze(this.registered_.map((r) => this.instantiate_(r, instantiate)));
   }
 
   /**
@@ -140,11 +138,11 @@ class DelegateRegistryBase {
    */
   checkRegistration_() {
     assert(
-        this.allowLateRegistration_ || !this.delegatesConstructed_,
-        'Cannot register new delegates after instantiation.');
+      this.allowLateRegistration_ || !this.delegatesConstructed_,
+      'Cannot register new delegates after instantiation.'
+    );
   }
 }
-
 
 /**
  * Delegates provide a system for hygienic modification of a delegating class's
@@ -294,7 +292,7 @@ class DelegateRegistry extends DelegateRegistryBase {
    */
   registerClass(ctor) {
     this.checkRegistration_();
-    this.registered_.push({ctor});
+    this.registered_.push({ ctor });
   }
 
   /**
@@ -302,21 +300,21 @@ class DelegateRegistry extends DelegateRegistryBase {
    */
   registerInstance(instance) {
     this.checkRegistration_();
-    this.registered_.push({instance});
+    this.registered_.push({ instance });
   }
 
   /** @override @private */
   checkRegistration_() {
     super.checkRegistration_();
-    if (ENABLE_ASSERTS && this.expectAtMostOneDelegate_ &&
-        this.registered_.length) {
+    if (ENABLE_ASSERTS && this.expectAtMostOneDelegate_ && this.registered_.length) {
       assert(
-          false, 'delegate already registered: %s',
-          this.registered_[0].ctor || this.registered_[0].instance);
+        false,
+        'delegate already registered: %s',
+        this.registered_[0].ctor || this.registered_[0].instance
+      );
     }
   }
 }
-
 
 /**
  * A delegate registry that allows multiple delegates, each of which must have a
@@ -334,7 +332,7 @@ DelegateRegistry.Prioritized = class extends DelegateRegistryBase {
    * @param {number} priority
    */
   registerClass(ctor, priority) {
-    this.add_({ctor, priority});
+    this.add_({ ctor, priority });
   }
 
   /**
@@ -342,7 +340,7 @@ DelegateRegistry.Prioritized = class extends DelegateRegistryBase {
    * @param {number} priority
    */
   registerInstance(instance, priority) {
-    this.add_({instance, priority});
+    this.add_({ instance, priority });
   }
 
   /**
@@ -354,18 +352,19 @@ DelegateRegistry.Prioritized = class extends DelegateRegistryBase {
     const priority = registration.priority;
     // Note: index will always be negative since the evaluator never returns 0.
     // This ensures that ties will be broken to the right.  Sort highest-first.
-    const index =
-        ~binarySelect(this.registered_, (r) => r.priority < priority ? -1 : 1);
+    const index = ~binarySelect(this.registered_, (r) => (r.priority < priority ? -1 : 1));
     const previous = index > 0 ? this.registered_[index - 1] : null;
     if (ENABLE_ASSERTS && previous && previous.priority <= priority) {
       assert(
-          false, 'two delegates registered with same priority (%s): %s and %s',
-          priority, previous.ctor || previous.instance,
-          registration.ctor || registration.instance);
+        false,
+        'two delegates registered with same priority (%s): %s and %s',
+        priority,
+        previous.ctor || previous.instance,
+        registration.ctor || registration.instance
+      );
     }
     this.registered_.splice(index, 0, registration);
   }
 };
-
 
 exports = DelegateRegistry;

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.MockRangeTest');
-goog.setTestOnly();
 
 const MockRange = goog.require('goog.testing.MockRange');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -21,9 +20,7 @@ testSuite({
     mockRange.getStartOffset().$returns(42);
     mockRange.$replay();
 
-    assertEquals(
-        'Mock method should return recorded value', 42,
-        mockRange.getStartOffset());
+    assertEquals('Mock method should return recorded value', 42, mockRange.getStartOffset());
     mockRange.$verify();
   },
 });

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.DrilldownRowTest');
-goog.setTestOnly();
 
 const DrilldownRow = goog.require('goog.ui.DrilldownRow');
 const SafeHtml = goog.require('goog.html.SafeHtml');
@@ -15,18 +14,21 @@ const testSuite = goog.require('goog.testing.testSuite');
 
 function createHtmlForRow(rowText) {
   return SafeHtml.create(
-      TagName.TR, {},
-      SafeHtml.concat(
-          SafeHtml.create(TagName.TD, {}, rowText),
-          SafeHtml.create(TagName.TD, {}, 'Second column')));
+    TagName.TR,
+    {},
+    SafeHtml.concat(
+      SafeHtml.create(TagName.TD, {}, rowText),
+      SafeHtml.create(TagName.TD, {}, 'Second column')
+    )
+  );
 }
 testSuite({
   testMakeRows() {
     const ff = dom.getElement('firstRow');
     const d = new DrilldownRow({});
-    const d1 = new DrilldownRow({html: createHtmlForRow('Second row')});
-    const d2 = new DrilldownRow({html: createHtmlForRow('Third row')});
-    const d21 = new DrilldownRow({html: createHtmlForRow('Fourth row')});
+    const d1 = new DrilldownRow({ html: createHtmlForRow('Second row') });
+    const d2 = new DrilldownRow({ html: createHtmlForRow('Third row') });
+    const d21 = new DrilldownRow({ html: createHtmlForRow('Fourth row') });
     /** @suppress {checkTypes} suppression added to enable type checking */
     const d22 = new DrilldownRow(DrilldownRow.sampleProperties);
     d.decorate(ff);

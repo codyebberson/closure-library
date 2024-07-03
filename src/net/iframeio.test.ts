@@ -30,7 +30,6 @@ log.setLevel(log.getRootLogger(), Level.INFO);
 let logconsole;
 const testLogger = log.getLogger('test');
 
-
 /**
  * Creates an iframeIo instance and sets up the test environment.
  * @return {!IframeIo}
@@ -49,7 +48,6 @@ function getTestIframeIo() {
   return io;
 }
 
-
 /**
  * Checks for error strings returned by the GSE and error variables that
  * the Gmail server and GFE set on certain errors.
@@ -65,23 +63,21 @@ function checkForError(doc) {
   } else if (win.gmail_error) {
     return win.gmail_error + 700;
   } else if (win.rc) {
-    return 600 + win.rc % 100;
+    return 600 + (win.rc % 100);
   } else {
     return null;
   }
 }
-
 
 /**
  * Logs the status of an iframeIo object
  * @param {!IframeIo} i
  */
 function logStatus(i) {
-  log.fine(testLogger, 'Is complete/success/active: ' + [
-    i.isComplete(),
-    i.isSuccess(),
-    i.isActive(),
-  ].join('/'));
+  log.fine(
+    testLogger,
+    'Is complete/success/active: ' + [i.isComplete(), i.isSuccess(), i.isActive()].join('/')
+  );
 }
 
 /**
@@ -112,13 +108,11 @@ function onReady(e) {
   e.target.dispose();
 }
 
-
 function simpleGet() {
   const io = getTestIframeIo();
   events.listen(io, 'complete', onSimpleTestComplete);
   io.send('/iframeio/ping', 'GET');
 }
-
 
 function simplePost() {
   const io = getTestIframeIo();
@@ -156,7 +150,6 @@ function onAbort(e) {
   log.info(testLogger, 'Request aborted');
 }
 
-
 function errorGse404() {
   const io = getTestIframeIo();
   io.send('/iframeio/404', 'GET');
@@ -168,7 +161,7 @@ function errorGse404() {
 function jsonEcho(method) {
   const io = getTestIframeIo();
   events.listen(io, 'complete', onJsonComplete);
-  const data = {'p1': 'x', 'p2': 'y', 'p3': 'z', 'r': 10};
+  const data = { p1: 'x', p2: 'y', p3: 'z', r: 10 };
   io.send('/iframeio/jsonecho?q1=a&q2=b&q3=c&r=5', method, false, data);
 }
 
@@ -185,7 +178,6 @@ function onJsonComplete(e) {
   const json = e.target.getResponseJson();
   log.info(testLogger, 'ResponseJson:\n' + debug.deepExpose(json, true));
 }
-
 
 /** @suppress {checkTypes} suppression added to enable type checking */
 function sendFromForm() {
@@ -212,7 +204,6 @@ function onUploadError(e) {
   log.log(testLogger, Level.SHOUT, 'Upload Errored');
   log.info(testLogger, 'ResponseText: ' + e.target.getResponseText());
 }
-
 
 function redirect1() {
   const io = getTestIframeIo();
@@ -263,7 +254,6 @@ function onTestCacheSuccess(e) {
   log.info(testLogger, 'Date reported: ' + e.target.getResponseText());
 }
 
-
 function errorGmail() {
   const io = getTestIframeIo();
   events.listen(io, 'error', onGmailError);
@@ -277,7 +267,6 @@ function errorGmail() {
 function onGmailError(e) {
   log.info(testLogger, 'Gmail error: ' + e.target.getLastError());
 }
-
 
 function errorGfe() {
   const io = getTestIframeIo();
@@ -293,18 +282,15 @@ function onGfeError(e) {
   log.info(testLogger, 'GFE error: ' + e.target.getLastError());
 }
 
-
-
 function incremental() {
   const io = getTestIframeIo();
   io.send('/iframeio/incremental', 'GET');
 }
 
-window['P'] = function(iframe, data) {
+window['P'] = (iframe, data) => {
   IframeIo.getInstanceByName(iframe.name);
   log.info(testLogger, 'Data received - ' + data);
 };
-
 
 /** @suppress {checkTypes} suppression added to enable type checking */
 function postForm() {
@@ -312,7 +298,6 @@ function postForm() {
   events.listen(io, 'complete', onJsonComplete);
   io.sendFromForm(document.getElementById('testfrm'));
 }
-
 
 // UNIT TESTS
 testSuite({
@@ -325,7 +310,6 @@ testSuite({
   // help for the IE code path, but since the other browsers require weird
   // behaviors this becomes very tricky.
 
-
   testGetForm() {
     /** @suppress {checkTypes} suppression added to enable type checking */
     const frm1 = TEST_ONLY.getForm();
@@ -334,11 +318,10 @@ testSuite({
     assertEquals(frm1, frm2);
   },
 
-
   /** @suppress {visibility} suppression added to enable type checking */
   testAddFormInputs() {
     const form = dom.createElement(TagName.FORM);
-    IframeIo.addFormInputs_(form, {'a': 1, 'b': 2, 'c': 3});
+    IframeIo.addFormInputs_(form, { a: 1, b: 2, c: 3 });
     const inputs = dom.getElementsByTagName(dom.TagName.INPUT, form);
     assertEquals(3, inputs.length);
     for (let i = 0; i < inputs.length; i++) {
@@ -351,7 +334,7 @@ testSuite({
   /** @suppress {visibility} suppression added to enable type checking */
   testAddFormArrayInputs() {
     const form = dom.createElement(TagName.FORM);
-    const data = {'a': ['blue', 'green'], 'b': ['red', 'pink', 'white']};
+    const data = { a: ['blue', 'green'], b: ['red', 'pink', 'white'] };
     IframeIo.addFormInputs_(form, data);
     const inputs = dom.getElementsByTagName(TagName.INPUT, form);
     assertEquals(5, inputs.length);
@@ -371,8 +354,7 @@ testSuite({
     const iframeIo = new IframeIo();
     iframeIo.send('about:blank');
     // Simulate the frame finishing loading.
-    testingEvents.fireBrowserEvent(
-        new Event(EventType.LOAD, iframeIo.getRequestIframe()));
+    testingEvents.fireBrowserEvent(new Event(EventType.LOAD, iframeIo.getRequestIframe()));
     assertTrue(iframeIo.isComplete());
   },
 
@@ -381,11 +363,8 @@ testSuite({
     iframeIo.setIgnoreResponse(true);
     iframeIo.send('about:blank');
     // Simulate the frame finishing loading.
-    testingEvents.fireBrowserEvent(
-        new Event(EventType.LOAD, iframeIo.getRequestIframe()));
+    testingEvents.fireBrowserEvent(new Event(EventType.LOAD, iframeIo.getRequestIframe()));
     // Although the request is complete, the IframeIo isn't paying attention.
     assertFalse(iframeIo.isComplete());
   },
-
-
 });

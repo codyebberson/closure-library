@@ -31,8 +31,6 @@ goog.provide('goog.events.WheelEvent');
 goog.require('goog.asserts');
 goog.require('goog.events.BrowserEvent');
 
-
-
 /**
  * A common class for wheel events. This is used with the WheelHandler.
  *
@@ -46,9 +44,7 @@ goog.require('goog.events.BrowserEvent');
  * @extends {goog.events.BrowserEvent}
  * @final
  */
-goog.events.WheelEvent = function(
-    browserEvent, deltaMode, deltaX, deltaY, deltaZ) {
-  'use strict';
+goog.events.WheelEvent = function (browserEvent, deltaMode, deltaX, deltaY, deltaZ) {
   goog.events.WheelEvent.base(this, 'constructor', browserEvent);
   goog.asserts.assert(browserEvent, 'Expecting a non-null browserEvent');
 
@@ -80,7 +76,7 @@ goog.events.WheelEvent = function(
   this.deltaZ = deltaZ;
 
   // Ratio between delta and pixel values.
-  var pixelRatio = 1;  // Value for DeltaMode.PIXEL
+  var pixelRatio = 1; // Value for DeltaMode.PIXEL
   switch (deltaMode) {
     case goog.events.WheelEvent.DeltaMode.PAGE:
       pixelRatio *= goog.events.WheelEvent.PIXELS_PER_PAGE_;
@@ -113,16 +109,14 @@ goog.events.WheelEvent = function(
 };
 goog.inherits(goog.events.WheelEvent, goog.events.BrowserEvent);
 
-
 /**
  * Enum type for the events fired by the wheel handler.
  * @enum {string}
  */
 goog.events.WheelEvent.EventType = {
   /** The user has provided wheel-based input. */
-  WHEEL: 'wheel'
+  WHEEL: 'wheel',
 };
-
 
 /**
  * Units for the deltas in a WheelEvent.
@@ -134,9 +128,8 @@ goog.events.WheelEvent.DeltaMode = {
   /** The units are in lines. From DOM_DELTA_LINE. */
   LINE: 1,
   /** The units are in pages. From DOM_DELTA_PAGE. */
-  PAGE: 2
+  PAGE: 2,
 };
-
 
 /**
  * A conversion number between line scroll units and pixel scroll units. The
@@ -148,7 +141,6 @@ goog.events.WheelEvent.DeltaMode = {
  */
 goog.events.WheelEvent.PIXELS_PER_LINE_ = 15;
 
-
 /**
  * A conversion number between page scroll units and pixel scroll units. The
  * actual value per page can vary a lot as many different devices have different
@@ -158,5 +150,4 @@ goog.events.WheelEvent.PIXELS_PER_LINE_ = 15;
  * @const {number}
  * @private
  */
-goog.events.WheelEvent.PIXELS_PER_PAGE_ =
-    30 * goog.events.WheelEvent.PIXELS_PER_LINE_;
+goog.events.WheelEvent.PIXELS_PER_PAGE_ = 30 * goog.events.WheelEvent.PIXELS_PER_LINE_;

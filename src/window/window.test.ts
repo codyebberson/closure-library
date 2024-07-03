@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.windowTest');
-goog.setTestOnly();
 
 const GoogPromise = goog.require('goog.Promise');
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
@@ -24,7 +23,7 @@ const testSuite = goog.require('goog.testing.testSuite');
 
 const REDIRECT_URL_PREFIX = 'window_test.html?runTests=';
 const WIN_LOAD_TRY_TIMEOUT = 100;
-const MAX_WIN_LOAD_TRIES = 50;  // 50x100ms = 5s waiting for window to load.
+const MAX_WIN_LOAD_TRIES = 50; // 50x100ms = 5s waiting for window to load.
 
 const stubs = new PropertyReplacer();
 
@@ -39,7 +38,6 @@ window.newWinLoaded = true;
 
 let /** ?Window */ newWin = null;
 
-
 /**
  * Returns a promise for `win` once JS has been evaluated in it.
  * @param {Window} win
@@ -53,27 +51,26 @@ function waitForTestWindow(win) {
     }
 
     let attemptCount = 0;
-    const intervalToken =
-        window
-            .setInterval(/**
+    const intervalToken = window.setInterval(
+      /**
                             @suppress {strictMissingProperties} suppression
                             added to enable type checking
                           */
-                         () => {
-                           if (++attemptCount > MAX_WIN_LOAD_TRIES) {
-                             try {
-                               fail(
-                                   'Window did not load after maximum number of checks.');
-                             } catch (e) {
-                               window.clearInterval(intervalToken);
-                               reject(e);
-                             }
-                           } else if (win.newWinLoaded) {
-                             window.clearInterval(intervalToken);
-                             resolve(win);
-                           }
-                         },
-                         WIN_LOAD_TRY_TIMEOUT);
+      () => {
+        if (++attemptCount > MAX_WIN_LOAD_TRIES) {
+          try {
+            fail('Window did not load after maximum number of checks.');
+          } catch (e) {
+            window.clearInterval(intervalToken);
+            reject(e);
+          }
+        } else if (win.newWinLoaded) {
+          window.clearInterval(intervalToken);
+          resolve(win);
+        }
+      },
+      WIN_LOAD_TRY_TIMEOUT
+    );
   });
 }
 
@@ -96,9 +93,10 @@ function doTestOpenWindow(noreferrer, urlParam, encodeUrlParam_opt) {
   // allow it to be undefined, which in IE seems to result in the same window
   // being reused, instead of a new one being created. If goog.window.open()
   // is fixed to use "_blank" by default then target can be removed here.
-  newWin = googWindow.open(
-      REDIRECT_URL_PREFIX + urlParam,
-      {'noreferrer': noreferrer, 'target': '_blank'});
+  newWin = googWindow.open(REDIRECT_URL_PREFIX + urlParam, {
+    noreferrer: noreferrer,
+    target: '_blank',
+  });
 
   return waitForTestWindow(newWin).then((win) => {
     verifyWindow(win, noreferrer, urlParam);
@@ -113,16 +111,15 @@ function doTestOpenWindow(noreferrer, urlParam, encodeUrlParam_opt) {
  */
 function verifyWindow(win, noreferrer, urlParam) {
   if (noreferrer && self.crossOriginIsolated === undefined) {
-    assertEquals(
-        'Referrer should have been stripped', '', win.document.referrer);
+    assertEquals('Referrer should have been stripped', '', win.document.referrer);
   }
 
   const winUrl = decodeURI(String(win.location));
   const expectedUrlSuffix = decodeURI(urlParam);
   assertTrue(
-      `New window href should have ended with <${expectedUrlSuffix}` +
-          '> but was <' + winUrl + '>',
-      googString.endsWith(winUrl, expectedUrlSuffix));
+    `New window href should have ended with <${expectedUrlSuffix}` + '> but was <' + winUrl + '>',
+    googString.endsWith(winUrl, expectedUrlSuffix)
+  );
 }
 
 testSuite({
@@ -132,14 +129,13 @@ testSuite({
   },
 
   setUpPage() {
-    const anchors =
-        dom.getElementsByTagNameAndClass(TagName.DIV, 'goog-like-link');
+    const anchors = dom.getElementsByTagNameAndClass(TagName.DIV, 'goog-like-link');
     for (let i = 0; i < anchors.length; i++) {
       events.listen(anchors[i], 'click', (e) => {
-        googWindow.open(dom.getTextContent(e.target), {'noreferrer': true});
+        googWindow.open(dom.getTextContent(e.target), { noreferrer: true });
       });
     }
-    TestCase.getActiveTestCase().promiseTimeout = 60000;  // 60s
+    TestCase.getActiveTestCase().promiseTimeout = 60000; // 60s
   },
 
   setUp() {
@@ -192,7 +188,7 @@ testSuite({
   },
 
   testOpenSingleQuote() {
-    return doTestOpenWindow(true, '\'');
+    return doTestOpenWindow(true, "'");
   },
 
   testOpenDoubleQuote() {
@@ -206,19 +202,19 @@ testSuite({
   testOpenWindowSanitization() {
     let navigatedUrl;
     const /** ? */ mockWin = {
-      open: function(url) {
-        navigatedUrl = url;
-      },
-    };
+        open: (url) => {
+          navigatedUrl = url;
+        },
+      };
 
     googWindow.open('javascript:evil();', {}, mockWin);
     assertEquals(SafeUrl.INNOCUOUS_STRING, navigatedUrl);
 
     // Try the other code path
-    googWindow.open({href: 'javascript:evil();'}, {}, mockWin);
+    googWindow.open({ href: 'javascript:evil();' }, {}, mockWin);
     assertEquals(SafeUrl.INNOCUOUS_STRING, navigatedUrl);
 
-    googWindow.open('javascript:\'\'', {}, mockWin);
+    googWindow.open("javascript:''", {}, mockWin);
     assertEquals(SafeUrl.INNOCUOUS_STRING, navigatedUrl);
 
     googWindow.open('about:blank', {}, mockWin);
@@ -228,10 +224,10 @@ testSuite({
   testOpenWindowNoSanitization() {
     let navigatedUrl;
     const /** ? */ mockWin = {
-      open: function(url) {
-        navigatedUrl = url;
-      },
-    };
+        open: (url) => {
+          navigatedUrl = url;
+        },
+      };
 
     googWindow.open('', {}, mockWin);
     assertEquals('', navigatedUrl);
@@ -252,9 +248,8 @@ testSuite({
   async testOpenBlankNoReferrer() {
     let newBlankWin;
     try {
-      newBlankWin = googWindow.openBlank('', {'noreferrer': true});
-      if (!newBlankWin)
-        throw new Error('Unable to open blank window - check popup blockers?');
+      newBlankWin = googWindow.openBlank('', { noreferrer: true });
+      if (!newBlankWin) throw new Error('Unable to open blank window - check popup blockers?');
       const urlParam = 'bogus~';
       newBlankWin.location.href = REDIRECT_URL_PREFIX + urlParam;
       await waitForTestWindow(newBlankWin);
@@ -277,7 +272,7 @@ testSuite({
       newBlankWin = await new Promise((resolve, reject) => {
         const b = document.createElement('button');
         b.onclick = () => {
-          const w = googWindow.openBlank('', {'noreferrer': true});
+          const w = googWindow.openBlank('', { noreferrer: true });
           w.onerror = (e) => {
             reject(e);
           };
@@ -288,8 +283,7 @@ testSuite({
         b.remove();
       });
       if (!newBlankWin) {
-        throw new Error(
-            'unable to create blank window - check popup blockers?');
+        throw new Error('unable to create blank window - check popup blockers?');
       }
       await new Promise((resolve) => {
         setTimeout(resolve, 10000);
@@ -298,7 +292,7 @@ testSuite({
       // load the test window, but in practice it is not loaded and
       // the page is blank. Check here to see if the contents are
       // actually loaded.
-      if (/** @type {?} */ (newBlankWin).newWinLoaded) {
+      if (/** @type {?} */ newBlankWin.newWinLoaded) {
         fail('new window loaded the test window JS!');
         return;
       }
@@ -344,12 +338,10 @@ testSuite({
 
   testOpenBlankReturnsNullPopupBlocker() {
     const /** ? */ mockWin = {
-      // emulate popup-blocker by returning a null window on open().
-      open: function() {
-        return null;
-      },
-    };
-    const win = googWindow.openBlank('', {noreferrer: true}, mockWin);
+        // emulate popup-blocker by returning a null window on open().
+        open: () => null,
+      };
+    const win = googWindow.openBlank('', { noreferrer: true }, mockWin);
     assertNull(win);
   },
 
@@ -360,7 +352,7 @@ testSuite({
     }
     let dispatchedEvent = null;
     const element = {
-      dispatchEvent: function(event) {
+      dispatchEvent: (event) => {
         dispatchedEvent = event;
       },
       href: undefined,
@@ -379,7 +371,7 @@ testSuite({
     stubs.set(window.navigator, 'standalone', true);
     stubs.replace(platform, 'isIos', functions.TRUE);
 
-    const newWin = googWindow.open('http://google.com', {target: '_blank'});
+    const newWin = googWindow.open('http://google.com', { target: '_blank' });
 
     // This mode cannot return a new window.
     assertNotNull(newWin);
@@ -404,7 +396,7 @@ testSuite({
     }
     let dispatchedEvent = null;
     const element = {
-      dispatchEvent: function(event) {
+      dispatchEvent: (event) => {
         dispatchedEvent = event;
       },
       href: undefined,
@@ -423,8 +415,10 @@ testSuite({
     stubs.set(window.navigator, 'standalone', true);
     stubs.replace(platform, 'isIos', functions.TRUE);
 
-    const newWin = googWindow.open(
-        'http://google.com', {target: '_blank', noreferrer: true});
+    const newWin = googWindow.open('http://google.com', {
+      target: '_blank',
+      noreferrer: true,
+    });
 
     // This mode cannot return a new window.
     assertNotNull(newWin);
@@ -435,8 +429,7 @@ testSuite({
     // with element.setAttribute.
     assertEquals('http://google.com', element.href);
     assertEquals('_blank', element.target);
-    const expectedRel =
-        self.crossOriginIsolated === undefined ? 'noreferrer' : undefined;
+    const expectedRel = self.crossOriginIsolated === undefined ? 'noreferrer' : undefined;
     assertEquals(expectedRel, element.rel);
 
     // Click event.
@@ -449,19 +442,19 @@ testSuite({
     let openedUrl;
     const mockNewWin = {};
     mockNewWin.document = {
-      write: function(html) {
+      write: (html) => {
         documentWriteHtml = html;
       },
-      close: function() {},
+      close: () => {},
     };
     const /** ? */ mockWin = {
-      open: function(url) {
-        openedUrl = url;
-        return mockNewWin;
-      },
-    };
+        open: (url) => {
+          openedUrl = url;
+          return mockNewWin;
+        },
+      };
     mockNewWin.opener = mockWin;
-    const options = {noreferrer: true};
+    const options = { noreferrer: true };
     const win = googWindow.open('https://hello&world', options, mockWin);
     assertNull(win.opener);
     if (self.crossOriginIsolated !== undefined) {
@@ -470,16 +463,19 @@ testSuite({
     } else {
       assertEquals('', openedUrl);
       assertRegExp(
-          `Does not contain expected HTML-escaped string: ${documentWriteHtml}`,
-          /hello&amp;world/, documentWriteHtml);
+        `Does not contain expected HTML-escaped string: ${documentWriteHtml}`,
+        /hello&amp;world/,
+        documentWriteHtml
+      );
     }
     assertEquals(true, options.noreferrer);
   },
 
   testOpenNewWindowNoopener() {
-    newWin = googWindow.open(
-        `${REDIRECT_URL_PREFIX}theBest`,
-        {'target': '_blank', 'noopener': true});
+    newWin = googWindow.open(`${REDIRECT_URL_PREFIX}theBest`, {
+      target: '_blank',
+      noopener: true,
+    });
 
     // This mode cannot return a new window.
     assertNotNull(newWin);
@@ -496,19 +492,19 @@ testSuite({
     let openedUrl;
     const mockNewWin = {};
     mockNewWin.document = {
-      write: function(html) {
+      write: (html) => {
         documentWriteHtml = html;
       },
-      close: function() {},
+      close: () => {},
     };
     const /** ? */ mockWin = {
-      open: function(url) {
-        openedUrl = url;
-        return mockNewWin;
-      },
-    };
+        open: (url) => {
+          openedUrl = url;
+          return mockNewWin;
+        },
+      };
     mockNewWin.opener = mockWin;
-    const options = {noreferrer: true};
+    const options = { noreferrer: true };
     const win = googWindow.open('https://example.com', options, mockWin);
     assertNull(win.opener);
     if (self.crossOriginIsolated !== undefined) {
@@ -516,8 +512,9 @@ testSuite({
       assertEquals('https://example.com', openedUrl);
     } else {
       assertEquals(
-          '<meta name="referrer" content="no-referrer"><meta http-equiv="refresh" content="0; url=https://example.com">',
-          documentWriteHtml);
+        '<meta name="referrer" content="no-referrer"><meta http-equiv="refresh" content="0; url=https://example.com">',
+        documentWriteHtml
+      );
       assertEquals('', openedUrl);
     }
   },

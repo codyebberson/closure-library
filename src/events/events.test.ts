@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.eventsTest');
-goog.setTestOnly();
 
 const CaptureSimulationMode = goog.require('goog.events.CaptureSimulationMode');
 const EntryPointMonitor = goog.require('goog.debug.EntryPointMonitor');
@@ -23,7 +22,7 @@ const events = goog.require('goog.events');
 const functions = goog.require('goog.functions');
 const recordFunction = goog.require('goog.testing.recordFunction');
 const testSuite = goog.require('goog.testing.testSuite');
-const {AssertionError} = goog.require('goog.asserts');
+const { AssertionError } = goog.require('goog.asserts');
 
 /** @suppress {visibility} suppression added to enable type checking */
 const originalHandleBrowserEvent = events.handleBrowserEvent_;
@@ -38,8 +37,22 @@ function dispatchClick(target) {
   } else {
     const e = document.createEvent('MouseEvents');
     e.initMouseEvent(
-        'click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false,
-        0, null);
+      'click',
+      true,
+      true,
+      window,
+      0,
+      0,
+      0,
+      0,
+      0,
+      false,
+      false,
+      false,
+      false,
+      0,
+      null
+    );
     target.dispatchEvent(e);
   }
 }
@@ -166,7 +179,7 @@ testSuite({
     /** @suppress {visibility} suppression added to enable type checking */
     const browserEventHandler = recordFunction(events.handleBrowserEvent_);
     /** @suppress {visibility} suppression added to enable type checking */
-    events.handleBrowserEvent_ = function() {
+    events.handleBrowserEvent_ = function () {
       try {
         browserEventHandler.apply(this, arguments);
       } catch (e) {
@@ -182,9 +195,7 @@ testSuite({
 
     dispatchClick(body);
 
-    assertEquals(
-        'Error handler callback should be called.', 1,
-        errorHandlerFn.getCallCount());
+    assertEquals('Error handler callback should be called.', 1, errorHandlerFn.getCallCount());
     assertEquals(err, errorHandlerFn.getLastCall().getArgument(0));
 
     assertEquals(1, browserEventHandler.getCallCount());
@@ -362,12 +373,12 @@ testSuite({
     // Try again with the new API:
     count = 0;
 
-    events.listen(et1, 'test', callbackCapture1, {capture: true});
-    events.listen(et1, 'test', callbackBubble1, {capture: false});
-    events.listen(et2, 'test', callbackCapture2, {capture: true});
-    events.listen(et2, 'test', callbackBubble2, {capture: false});
-    events.listen(et3, 'test', callbackCapture3, {capture: true});
-    events.listen(et3, 'test', callbackBubble3, {capture: false});
+    events.listen(et1, 'test', callbackCapture1, { capture: true });
+    events.listen(et1, 'test', callbackBubble1, { capture: false });
+    events.listen(et2, 'test', callbackCapture2, { capture: true });
+    events.listen(et2, 'test', callbackBubble2, { capture: false });
+    events.listen(et3, 'test', callbackCapture3, { capture: true });
+    events.listen(et3, 'test', callbackBubble3, { capture: false });
 
     et1.dispatchEvent('test');
 
@@ -381,12 +392,12 @@ testSuite({
     events['CAPTURE_SIMULATION_MODE'] = CaptureSimulationMode.OFF_AND_FAIL;
     count = 0;
 
-    events.listen(et1, 'test', callbackCapture1, {capture: true});
-    events.listen(et1, 'test', callbackBubble1, {capture: false});
-    events.listen(et2, 'test', callbackCapture2, {capture: true});
-    events.listen(et2, 'test', callbackBubble2, {capture: false});
-    events.listen(et3, 'test', callbackCapture3, {capture: true});
-    events.listen(et3, 'test', callbackBubble3, {capture: false});
+    events.listen(et1, 'test', callbackCapture1, { capture: true });
+    events.listen(et1, 'test', callbackBubble1, { capture: false });
+    events.listen(et2, 'test', callbackCapture2, { capture: true });
+    events.listen(et2, 'test', callbackBubble2, { capture: false });
+    events.listen(et3, 'test', callbackCapture3, { capture: true });
+    events.listen(et3, 'test', callbackBubble3, { capture: false });
 
     et1.dispatchEvent('test');
 
@@ -430,9 +441,14 @@ testSuite({
   testHandleBrowserEventCapturingListener() {
     let count = 0;
     const body = document.body;
-    events.listen(body, 'click', () => {
-      count++;
-    }, true);
+    events.listen(
+      body,
+      'click',
+      () => {
+        count++;
+      },
+      true
+    );
     dispatchClick(body);
     assertEquals(1, count);
   },
@@ -440,12 +456,22 @@ testSuite({
   testHandleBrowserEventCapturingAndBubblingListener() {
     let count = 1;
     const body = document.body;
-    events.listen(body, 'click', () => {
-      count += 3;
-    }, true);
-    events.listen(body, 'click', () => {
-      count *= 5;
-    }, false);
+    events.listen(
+      body,
+      'click',
+      () => {
+        count += 3;
+      },
+      true
+    );
+    events.listen(
+      body,
+      'click',
+      () => {
+        count *= 5;
+      },
+      false
+    );
     dispatchClick(body);
     assertEquals(20, count);
   },
@@ -474,12 +500,22 @@ testSuite({
 
   testHandleEventPropagationOnParentElement() {
     let count = 1;
-    events.listen(document.documentElement, 'click', () => {
-      count += 3;
-    }, true);
-    events.listen(document.documentElement, 'click', () => {
-      count *= 5;
-    }, false);
+    events.listen(
+      document.documentElement,
+      'click',
+      () => {
+        count += 3;
+      },
+      true
+    );
+    events.listen(
+      document.documentElement,
+      'click',
+      () => {
+        count *= 5;
+      },
+      false
+    );
     dispatchClick(document.body);
     assertEquals(20, count);
   },
@@ -506,8 +542,7 @@ testSuite({
 
     et1.dispatchEvent('foo');
 
-    assertEquals(
-        'Handler should be called only once.', 1, handleFoo.getCallCount());
+    assertEquals('Handler should be called only once.', 1, handleFoo.getCallCount());
   },
 
   testCreationStack() {
@@ -621,7 +656,9 @@ testSuite({
   },
 
   testAssertWhenUsedWithUninitializedCustomEventTarget() {
-    const SubClass = function() { /* does not call superclass ctor */ };
+    const SubClass = () => {
+      /* does not call superclass ctor */
+    };
     goog.inherits(SubClass, GoogEventTarget);
 
     /** @suppress {checkTypes} suppression added to enable type checking */
@@ -644,13 +681,15 @@ testSuite({
 
   testAssertWhenDispatchEventIsUsedWithNonCustomEventTarget() {
     const obj = {};
-    let e = assertThrows(/**
+    const e = assertThrows(
+      /**
                             @suppress {checkTypes} suppression added to enable
                             type checking
                           */
-                         () => {
-                           events.dispatchEvent(obj, 'test1');
-                         });
+      () => {
+        events.dispatchEvent(obj, 'test1');
+      }
+    );
     assertTrue(e instanceof AssertionError);
   },
 

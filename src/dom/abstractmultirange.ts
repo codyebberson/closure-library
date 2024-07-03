@@ -9,15 +9,12 @@
  * sub-ranges.
  */
 
-
 goog.provide('goog.dom.AbstractMultiRange');
 
 goog.require('goog.array');
 goog.require('goog.dom');
 goog.require('goog.dom.AbstractRange');
 goog.require('goog.dom.TextRange');
-
-
 
 /**
  * Creates a new multi range with no properties.  Do not use this
@@ -26,14 +23,11 @@ goog.require('goog.dom.TextRange');
  * @extends {goog.dom.AbstractRange}
  * @abstract
  */
-goog.dom.AbstractMultiRange = function() {};
+goog.dom.AbstractMultiRange = () => {};
 goog.inherits(goog.dom.AbstractMultiRange, goog.dom.AbstractRange);
 
-
 /** @override */
-goog.dom.AbstractMultiRange.prototype.containsRange = function(
-    otherRange, opt_allowPartial) {
-  'use strict';
+goog.dom.AbstractMultiRange.prototype.containsRange = function (otherRange, opt_allowPartial) {
   // TODO(user): This will incorrectly return false if two (or more) adjacent
   // elements are both in the control range, and are also in the text range
   // being compared to.
@@ -41,29 +35,18 @@ goog.dom.AbstractMultiRange.prototype.containsRange = function(
   var otherRanges = otherRange.getTextRanges();
 
   var fn = opt_allowPartial ? goog.array.some : goog.array.every;
-  return fn(otherRanges, function(otherRange) {
-    'use strict';
-    return goog.array.some(ranges, function(range) {
-      'use strict';
-      return range.containsRange(otherRange, opt_allowPartial);
-    });
-  });
+  return fn(otherRanges, (otherRange) =>
+    goog.array.some(ranges, (range) => range.containsRange(otherRange, opt_allowPartial))
+  );
 };
 
-
 /** @override */
-goog.dom.AbstractMultiRange.prototype.containsNode = function(
-    node, opt_allowPartial) {
-  'use strict';
-  return this.containsRange(
-      goog.dom.TextRange.createFromNodeContents(node), opt_allowPartial);
+goog.dom.AbstractMultiRange.prototype.containsNode = function (node, opt_allowPartial) {
+  return this.containsRange(goog.dom.TextRange.createFromNodeContents(node), opt_allowPartial);
 };
 
-
-
 /** @override */
-goog.dom.AbstractMultiRange.prototype.insertNode = function(node, before) {
-  'use strict';
+goog.dom.AbstractMultiRange.prototype.insertNode = function (node, before) {
   if (before) {
     goog.dom.insertSiblingBefore(node, this.getStartNode());
   } else {
@@ -72,11 +55,8 @@ goog.dom.AbstractMultiRange.prototype.insertNode = function(node, before) {
   return node;
 };
 
-
 /** @override */
-goog.dom.AbstractMultiRange.prototype.surroundWithNodes = function(
-    startNode, endNode) {
-  'use strict';
+goog.dom.AbstractMultiRange.prototype.surroundWithNodes = function (startNode, endNode) {
   this.insertNode(startNode, true);
   this.insertNode(endNode, false);
 };

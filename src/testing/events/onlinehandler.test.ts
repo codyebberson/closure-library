@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.events.OnlineHandlerTest');
-goog.setTestOnly();
 
 const EventObserver = goog.require('goog.testing.events.EventObserver');
 const NetworkStatusMonitor = goog.require('goog.net.NetworkStatusMonitor');
@@ -21,21 +20,21 @@ function createHandler(initialValue) {
   handler = new OnlineHandler(initialValue);
   observer = new EventObserver();
   events.listen(
-      handler,
-      [
-        NetworkStatusMonitor.EventType.ONLINE,
-        NetworkStatusMonitor.EventType.OFFLINE,
-      ],
-      observer);
+    handler,
+    [NetworkStatusMonitor.EventType.ONLINE, NetworkStatusMonitor.EventType.OFFLINE],
+    observer
+  );
 }
 
 function assertEventCounts(expectedOnlineEvents, expectedOfflineEvents) {
   assertEquals(
-      expectedOnlineEvents,
-      observer.getEvents(NetworkStatusMonitor.EventType.ONLINE).length);
+    expectedOnlineEvents,
+    observer.getEvents(NetworkStatusMonitor.EventType.ONLINE).length
+  );
   assertEquals(
-      expectedOfflineEvents,
-      observer.getEvents(NetworkStatusMonitor.EventType.OFFLINE).length);
+    expectedOfflineEvents,
+    observer.getEvents(NetworkStatusMonitor.EventType.OFFLINE).length
+  );
 }
 testSuite({
   tearDown() {
@@ -52,31 +51,26 @@ testSuite({
 
   testStateChange() {
     createHandler(true);
-    assertEventCounts(
-        0 /* expectedOnlineEvents */, 0 /* expectedOfflineEvents */);
+    assertEventCounts(0 /* expectedOnlineEvents */, 0 /* expectedOfflineEvents */);
 
     // Expect no events.
     handler.setOnline(true);
     assertEquals(true, handler.isOnline());
-    assertEventCounts(
-        0 /* expectedOnlineEvents */, 0 /* expectedOfflineEvents */);
+    assertEventCounts(0 /* expectedOnlineEvents */, 0 /* expectedOfflineEvents */);
 
     // Expect one offline event.
     handler.setOnline(false);
     assertEquals(false, handler.isOnline());
-    assertEventCounts(
-        0 /* expectedOnlineEvents */, 1 /* expectedOfflineEvents */);
+    assertEventCounts(0 /* expectedOnlineEvents */, 1 /* expectedOfflineEvents */);
 
     // Expect no events.
     handler.setOnline(false);
     assertEquals(false, handler.isOnline());
-    assertEventCounts(
-        0 /* expectedOnlineEvents */, 1 /* expectedOfflineEvents */);
+    assertEventCounts(0 /* expectedOnlineEvents */, 1 /* expectedOfflineEvents */);
 
     // Expect one online event.
     handler.setOnline(true);
     assertEquals(true, handler.isOnline());
-    assertEventCounts(
-        1 /* expectedOnlineEvents */, 1 /* expectedOfflineEvents */);
+    assertEventCounts(1 /* expectedOnlineEvents */, 1 /* expectedOfflineEvents */);
   },
 });

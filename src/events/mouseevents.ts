@@ -6,7 +6,6 @@
 
 goog.provide('goog.events.MouseEvents');
 
-
 /**
  * Mapping of mouse event names to underlying browser event names.
  * @typedef {{

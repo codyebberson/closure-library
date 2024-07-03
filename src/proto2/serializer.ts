@@ -15,8 +15,6 @@ goog.require('goog.proto2.FieldDescriptor');
 goog.require('goog.proto2.Message');
 goog.requireType('goog.proto2.Descriptor');
 
-
-
 /**
  * Abstract base class for PB2 serializers. A serializer is a class which
  * implements the serialization and deserialization of a Protocol Buffer Message
@@ -24,16 +22,16 @@ goog.requireType('goog.proto2.Descriptor');
  *
  * @constructor
  */
-goog.proto2.Serializer = function() {};
-
+goog.proto2.Serializer = () => {};
 
 /**
  * @define {boolean} Whether to decode and convert symbolic enum values to
  * actual enum values or leave them as strings.
  */
-goog.proto2.Serializer.DECODE_SYMBOLIC_ENUMS =
-    goog.define('goog.proto2.Serializer.DECODE_SYMBOLIC_ENUMS', false);
-
+goog.proto2.Serializer.DECODE_SYMBOLIC_ENUMS = goog.define(
+  'goog.proto2.Serializer.DECODE_SYMBOLIC_ENUMS',
+  false
+);
 
 /**
  * Serializes a message to the expected format.
@@ -43,7 +41,6 @@ goog.proto2.Serializer.DECODE_SYMBOLIC_ENUMS =
  * @return {*} The serialized form of the message.
  */
 goog.proto2.Serializer.prototype.serialize = goog.abstractMethod;
-
 
 /**
  * Returns the serialized form of the given value for the given field if the
@@ -59,8 +56,7 @@ goog.proto2.Serializer.prototype.serialize = goog.abstractMethod;
  * @return {*} The value.
  * @protected
  */
-goog.proto2.Serializer.prototype.getSerializedValue = function(field, value) {
-  'use strict';
+goog.proto2.Serializer.prototype.getSerializedValue = function (field, value) {
   if (field.isCompositeType()) {
     return this.serialize(/** @type {goog.proto2.Message} */ (value));
   } else if (typeof value === 'number' && !isFinite(value)) {
@@ -69,7 +65,6 @@ goog.proto2.Serializer.prototype.getSerializedValue = function(field, value) {
     return value;
   }
 };
-
 
 /**
  * Deserializes a message from the expected format.
@@ -80,14 +75,12 @@ goog.proto2.Serializer.prototype.getSerializedValue = function(field, value) {
  *
  * @return {!goog.proto2.Message} The message created.
  */
-goog.proto2.Serializer.prototype.deserialize = function(descriptor, data) {
-  'use strict';
+goog.proto2.Serializer.prototype.deserialize = function (descriptor, data) {
   var message = descriptor.createMessageInstance();
   this.deserializeTo(message, data);
   goog.asserts.assert(message instanceof goog.proto2.Message);
   return message;
 };
-
 
 /**
  * Deserializes a message from the expected format and places the
@@ -98,7 +91,6 @@ goog.proto2.Serializer.prototype.deserialize = function(descriptor, data) {
  * @param {*} data The data of the message.
  */
 goog.proto2.Serializer.prototype.deserializeTo = goog.abstractMethod;
-
 
 /**
  * Returns the deserialized form of the given value for the given field if the
@@ -113,8 +105,7 @@ goog.proto2.Serializer.prototype.deserializeTo = goog.abstractMethod;
  * @return {*} The value.
  * @protected
  */
-goog.proto2.Serializer.prototype.getDeserializedValue = function(field, value) {
-  'use strict';
+goog.proto2.Serializer.prototype.getDeserializedValue = function (field, value) {
   // Composite types are deserialized recursively.
   if (field.isCompositeType()) {
     if (value instanceof goog.proto2.Message) {
@@ -129,8 +120,7 @@ goog.proto2.Serializer.prototype.getDeserializedValue = function(field, value) {
     // If it's a string, get enum value by name.
     // NB: In order this feature to work, property renaming should be turned off
     // for the respective enums.
-    if (goog.proto2.Serializer.DECODE_SYMBOLIC_ENUMS &&
-        typeof value === 'string') {
+    if (goog.proto2.Serializer.DECODE_SYMBOLIC_ENUMS && typeof value === 'string') {
       // enumType is a regular JavaScript enum as defined in field's metadata.
       var enumType = field.getNativeType();
       if (enumType.hasOwnProperty(value)) {
@@ -140,8 +130,7 @@ goog.proto2.Serializer.prototype.getDeserializedValue = function(field, value) {
 
     // If it's a string containing a positive integer, this looks like a viable
     // enum int value. Return as numeric.
-    if (typeof value === 'string' &&
-        goog.proto2.Serializer.INTEGER_REGEX.test(value)) {
+    if (typeof value === 'string' && goog.proto2.Serializer.INTEGER_REGEX.test(value)) {
       var numeric = Number(value);
       if (numeric > 0) {
         return numeric;
@@ -189,7 +178,6 @@ goog.proto2.Serializer.prototype.getDeserializedValue = function(field, value) {
 
   return value;
 };
-
 
 /** @const {!RegExp} */
 goog.proto2.Serializer.INTEGER_REGEX = /^-?[0-9]+$/;

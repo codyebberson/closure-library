@@ -13,7 +13,6 @@
 // does on this file: blaze run //javascript/refactoring/es6_classes:convert.
 
 goog.module('goog.ui.SliderBaseTest');
-goog.setTestOnly();
 
 const Animation = goog.require('goog.fx.Animation');
 const Component = goog.require('goog.ui.Component');
@@ -58,9 +57,9 @@ class OneThumbSlider extends SliderBase {
   constructor(testOnlyIsRightToLeft = false) {
     super();
     this.testOnlyIsRightToLeft_ = testOnlyIsRightToLeft;
-    SliderBase.call(
-        this, undefined /* domHelper */,
-        (value) => value > 5 ? 'A big value.' : 'A small value.');
+    SliderBase.call(this, undefined /* domHelper */, (value) =>
+      value > 5 ? 'A big value.' : 'A small value.'
+    );
   }
 
   /** @override */
@@ -144,14 +143,16 @@ function assertHighlightedRange(rangeHighlight, startValue, endValue) {
   const rangeStr = `[${startValue}, ${endValue}]`;
   const rangeStart = 10 + 10 * startValue;
   assertEquals(
-      `Range highlight for ${rangeStr} should start at ${rangeStart}` +
-          'px.',
-      rangeStart, rangeHighlight.offsetLeft);
+    `Range highlight for ${rangeStr} should start at ${rangeStart}` + 'px.',
+    rangeStart,
+    rangeHighlight.offsetLeft
+  );
   const rangeSize = 10 * (endValue - startValue);
   assertEquals(
-      `Range highlight for ${rangeStr} should have size ${rangeSize}` +
-          'px.',
-      rangeSize, rangeHighlight.offsetWidth);
+    `Range highlight for ${rangeStr} should have size ${rangeSize}` + 'px.',
+    rangeSize,
+    rangeHighlight.offsetWidth
+  );
 }
 
 testSuite({
@@ -160,8 +161,10 @@ testSuite({
     mockClock = new MockClock(true);
 
     const oneThumbElem = dom.createDom(
-        TagName.DIV, {'id': 'oneThumbSlider'},
-        dom.createDom(TagName.SPAN, {'id': 'thumb'}));
+      TagName.DIV,
+      { id: 'oneThumbSlider' },
+      dom.createDom(TagName.SPAN, { id: 'thumb' })
+    );
     sandBox.appendChild(oneThumbElem);
     oneThumbSlider = new OneThumbSlider();
     oneThumbSlider.decorate(oneThumbElem);
@@ -171,10 +174,12 @@ testSuite({
     });
 
     const twoThumbElem = dom.createDom(
-        TagName.DIV, {'id': 'twoThumbSlider'},
-        dom.createDom(TagName.DIV, {'id': 'rangeHighlight'}),
-        dom.createDom(TagName.SPAN, {'id': 'valueThumb'}),
-        dom.createDom(TagName.SPAN, {'id': 'extentThumb'}));
+      TagName.DIV,
+      { id: 'twoThumbSlider' },
+      dom.createDom(TagName.DIV, { id: 'rangeHighlight' }),
+      dom.createDom(TagName.SPAN, { id: 'valueThumb' }),
+      dom.createDom(TagName.SPAN, { id: 'extentThumb' })
+    );
     sandBox.appendChild(twoThumbElem);
     twoThumbSlider = new TwoThumbSlider();
     twoThumbSlider.decorate(twoThumbElem);
@@ -183,13 +188,17 @@ testSuite({
       twoChangeEventCount++;
     });
 
-    const sandBoxRtl = dom.createDom(
-        TagName.DIV, {'dir': 'rtl', 'style': 'position:absolute;'});
+    const sandBoxRtl = dom.createDom(TagName.DIV, {
+      dir: 'rtl',
+      style: 'position:absolute;',
+    });
     sandBox.appendChild(sandBoxRtl);
 
     const oneThumbElemRtl = dom.createDom(
-        TagName.DIV, {'id': 'oneThumbSliderRtl'},
-        dom.createDom(TagName.SPAN, {'id': 'thumbRtl'}));
+      TagName.DIV,
+      { id: 'oneThumbSliderRtl' },
+      dom.createDom(TagName.SPAN, { id: 'thumbRtl' })
+    );
     sandBoxRtl.appendChild(oneThumbElemRtl);
     oneThumbSliderRtl = new OneThumbSlider(true /* testOnlyIsRightToLeft */);
     oneThumbSliderRtl.enableFlipForRtl(true);
@@ -199,10 +208,12 @@ testSuite({
     });
 
     const twoThumbElemRtl = dom.createDom(
-        TagName.DIV, {'id': 'twoThumbSliderRtl'},
-        dom.createDom(TagName.DIV, {'id': 'rangeHighlightRtl'}),
-        dom.createDom(TagName.SPAN, {'id': 'valueThumbRtl'}),
-        dom.createDom(TagName.SPAN, {'id': 'extentThumbRtl'}));
+      TagName.DIV,
+      { id: 'twoThumbSliderRtl' },
+      dom.createDom(TagName.DIV, { id: 'rangeHighlightRtl' }),
+      dom.createDom(TagName.SPAN, { id: 'valueThumbRtl' }),
+      dom.createDom(TagName.SPAN, { id: 'extentThumbRtl' })
+    );
     sandBoxRtl.appendChild(twoThumbElemRtl);
     twoThumbSliderRtl = new TwoThumbSlider(true /* testOnlyIsRightToLeft */);
     twoThumbSliderRtl.enableFlipForRtl(true);
@@ -226,22 +237,18 @@ testSuite({
     oneThumbSlider.setValue(30);
     assertEquals(30, oneThumbSlider.getValue());
     assertEquals(
-        'Setting valid value must dispatch only a single change event.', 1,
-        oneChangeEventCount);
+      'Setting valid value must dispatch only a single change event.',
+      1,
+      oneChangeEventCount
+    );
 
     oneThumbSlider.setValue(30);
     assertEquals(30, oneThumbSlider.getValue());
-    assertEquals(
-        'Setting to same value must not dispatch change event.', 1,
-        oneChangeEventCount);
+    assertEquals('Setting to same value must not dispatch change event.', 1, oneChangeEventCount);
 
     oneThumbSlider.setValue(-30);
-    assertEquals(
-        'Setting invalid value must not change value.', 30,
-        oneThumbSlider.getValue());
-    assertEquals(
-        'Setting invalid value must not dispatch change event.', 1,
-        oneChangeEventCount);
+    assertEquals('Setting invalid value must not change value.', 30, oneThumbSlider.getValue());
+    assertEquals('Setting invalid value must not dispatch change event.', 1, oneChangeEventCount);
 
     // Value thumb can't go past extent thumb, so we must move that first to
     // allow setting value.
@@ -250,22 +257,18 @@ testSuite({
     twoThumbSlider.setValue(60);
     assertEquals(60, twoThumbSlider.getValue());
     assertEquals(
-        'Setting valid value must dispatch only a single change event.', 1,
-        twoChangeEventCount);
+      'Setting valid value must dispatch only a single change event.',
+      1,
+      twoChangeEventCount
+    );
 
     twoThumbSlider.setValue(60);
     assertEquals(60, twoThumbSlider.getValue());
-    assertEquals(
-        'Setting to same value must not dispatch change event.', 1,
-        twoChangeEventCount);
+    assertEquals('Setting to same value must not dispatch change event.', 1, twoChangeEventCount);
 
     twoThumbSlider.setValue(-60);
-    assertEquals(
-        'Setting invalid value must not change value.', 60,
-        twoThumbSlider.getValue());
-    assertEquals(
-        'Setting invalid value must not dispatch change event.', 1,
-        twoChangeEventCount);
+    assertEquals('Setting invalid value must not change value.', 60, twoThumbSlider.getValue());
+    assertEquals('Setting invalid value must not dispatch change event.', 1, twoChangeEventCount);
   },
 
   testGetAndSetValueRtl() {
@@ -277,25 +280,21 @@ testSuite({
     oneThumbSliderRtl.setValue(30);
     assertEquals(30, oneThumbSliderRtl.getValue());
     assertEquals(
-        'Setting valid value must dispatch only a single change event.', 1,
-        oneChangeEventCount);
+      'Setting valid value must dispatch only a single change event.',
+      1,
+      oneChangeEventCount
+    );
 
     assertEquals('', thumbElement.style.left);
     assertEquals('294px', thumbElement.style.right);
 
     oneThumbSliderRtl.setValue(30);
     assertEquals(30, oneThumbSliderRtl.getValue());
-    assertEquals(
-        'Setting to same value must not dispatch change event.', 1,
-        oneChangeEventCount);
+    assertEquals('Setting to same value must not dispatch change event.', 1, oneChangeEventCount);
 
     oneThumbSliderRtl.setValue(-30);
-    assertEquals(
-        'Setting invalid value must not change value.', 30,
-        oneThumbSliderRtl.getValue());
-    assertEquals(
-        'Setting invalid value must not dispatch change event.', 1,
-        oneChangeEventCount);
+    assertEquals('Setting invalid value must not change value.', 30, oneThumbSliderRtl.getValue());
+    assertEquals('Setting invalid value must not dispatch change event.', 1, oneChangeEventCount);
 
     // Value thumb can't go past extent thumb, so we must move that first to
     // allow setting value.
@@ -313,14 +312,14 @@ testSuite({
     twoThumbSliderRtl.setValue(60);
     assertEquals(60, twoThumbSliderRtl.getValue());
     assertEquals(
-        'Setting valid value must dispatch only a single change event.', 1,
-        twoChangeEventCount);
+      'Setting valid value must dispatch only a single change event.',
+      1,
+      twoChangeEventCount
+    );
 
     twoThumbSliderRtl.setValue(60);
     assertEquals(60, twoThumbSliderRtl.getValue());
-    assertEquals(
-        'Setting to same value must not dispatch change event.', 1,
-        twoChangeEventCount);
+    assertEquals('Setting to same value must not dispatch change event.', 1, twoChangeEventCount);
 
     assertEquals('', valueThumbElement.style.left);
     assertEquals('600px', valueThumbElement.style.right);
@@ -328,12 +327,8 @@ testSuite({
     assertEquals('700px', extentThumbElement.style.right);
 
     twoThumbSliderRtl.setValue(-60);
-    assertEquals(
-        'Setting invalid value must not change value.', 60,
-        twoThumbSliderRtl.getValue());
-    assertEquals(
-        'Setting invalid value must not dispatch change event.', 1,
-        twoChangeEventCount);
+    assertEquals('Setting invalid value must not change value.', 60, twoThumbSliderRtl.getValue());
+    assertEquals('Setting invalid value must not dispatch change event.', 1, twoChangeEventCount);
   },
 
   testGetAndSetExtent() {
@@ -343,22 +338,18 @@ testSuite({
     twoThumbSlider.setExtent(7);
     assertEquals(7, twoThumbSlider.getExtent());
     assertEquals(
-        'Setting valid value must dispatch only a single change event.', 1,
-        twoChangeEventCount);
+      'Setting valid value must dispatch only a single change event.',
+      1,
+      twoChangeEventCount
+    );
 
     twoThumbSlider.setExtent(7);
     assertEquals(7, twoThumbSlider.getExtent());
-    assertEquals(
-        'Setting to same value must not dispatch change event.', 1,
-        twoChangeEventCount);
+    assertEquals('Setting to same value must not dispatch change event.', 1, twoChangeEventCount);
 
     twoThumbSlider.setExtent(-7);
-    assertEquals(
-        'Setting invalid value must not change value.', 7,
-        twoThumbSlider.getExtent());
-    assertEquals(
-        'Setting invalid value must not dispatch change event.', 1,
-        twoChangeEventCount);
+    assertEquals('Setting invalid value must not change value.', 7, twoThumbSlider.getExtent());
+    assertEquals('Setting invalid value must not dispatch change event.', 1, twoChangeEventCount);
   },
 
   testUpdateValueExtent() {
@@ -366,8 +357,10 @@ testSuite({
 
     assertNotNull(twoThumbSlider.getElement());
     assertEquals(
-        'Setting value results in updating aria-valuenow', '30',
-        aria.getState(twoThumbSlider.getElement(), State.VALUENOW));
+      'Setting value results in updating aria-valuenow',
+      '30',
+      aria.getState(twoThumbSlider.getElement(), State.VALUENOW)
+    );
     assertEquals(30, twoThumbSlider.getValue());
     assertEquals(50, twoThumbSlider.getExtent());
   },
@@ -375,28 +368,36 @@ testSuite({
   testValueText() {
     oneThumbSlider.setValue(10);
     assertEquals(
-        'Setting value results in correct aria-valuetext', 'A big value.',
-        aria.getState(oneThumbSlider.getElement(), State.VALUETEXT));
+      'Setting value results in correct aria-valuetext',
+      'A big value.',
+      aria.getState(oneThumbSlider.getElement(), State.VALUETEXT)
+    );
     oneThumbSlider.setValue(2);
     assertEquals(
-        'Updating value results in updated aria-valuetext', 'A small value.',
-        aria.getState(oneThumbSlider.getElement(), State.VALUETEXT));
+      'Updating value results in updated aria-valuetext',
+      'A small value.',
+      aria.getState(oneThumbSlider.getElement(), State.VALUETEXT)
+    );
   },
 
   testGetValueText() {
     oneThumbSlider.setValue(10);
     assertEquals(
-        'Getting the text value gets the correct description', 'A big value.',
-        oneThumbSlider.getTextValue());
+      'Getting the text value gets the correct description',
+      'A big value.',
+      oneThumbSlider.getTextValue()
+    );
     oneThumbSlider.setValue(2);
     assertEquals(
-        'Getting the updated text value gets the correct updated description',
-        'A small value.', oneThumbSlider.getTextValue());
+      'Getting the updated text value gets the correct updated description',
+      'A small value.',
+      oneThumbSlider.getTextValue()
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
   testRangeListener() {
-    const slider = new SliderBase;
+    const slider = new SliderBase();
     /** @suppress {visibility} suppression added to enable type checking */
     slider.updateUi_ = slider.updateAriaStates = () => {};
     slider.rangeModel.setValue(0);
@@ -410,9 +411,11 @@ testSuite({
     slider.exitDocument();
     slider.rangeModel.setValue(0);
     assertEquals(
-        'The range model listener should not have been removed so we ' +
-            'should have gotten a second event dispatch',
-        2, f.getCallCount());
+      'The range model listener should not have been removed so we ' +
+        'should have gotten a second event dispatch',
+      2,
+      f.getCallCount()
+    );
   },
 
   testKeyHandlingTests() {
@@ -437,23 +440,27 @@ testSuite({
     assertEquals(0, twoThumbSlider.getValue());
     assertEquals(98, twoThumbSlider.getExtent());
 
-    testingEvents.fireKeySequence(
-        twoThumbSlider.getElement(), KeyCodes.RIGHT, {shiftKey: true});
+    testingEvents.fireKeySequence(twoThumbSlider.getElement(), KeyCodes.RIGHT, {
+      shiftKey: true,
+    });
     assertEquals(10, twoThumbSlider.getValue());
     assertEquals(90, twoThumbSlider.getExtent());
 
-    testingEvents.fireKeySequence(
-        twoThumbSlider.getElement(), KeyCodes.RIGHT, {shiftKey: true});
+    testingEvents.fireKeySequence(twoThumbSlider.getElement(), KeyCodes.RIGHT, {
+      shiftKey: true,
+    });
     assertEquals(20, twoThumbSlider.getValue());
     assertEquals(80, twoThumbSlider.getExtent());
 
-    testingEvents.fireKeySequence(
-        twoThumbSlider.getElement(), KeyCodes.LEFT, {shiftKey: true});
+    testingEvents.fireKeySequence(twoThumbSlider.getElement(), KeyCodes.LEFT, {
+      shiftKey: true,
+    });
     assertEquals(10, twoThumbSlider.getValue());
     assertEquals(80, twoThumbSlider.getExtent());
 
-    testingEvents.fireKeySequence(
-        twoThumbSlider.getElement(), KeyCodes.LEFT, {shiftKey: true});
+    testingEvents.fireKeySequence(twoThumbSlider.getElement(), KeyCodes.LEFT, {
+      shiftKey: true,
+    });
     assertEquals(0, twoThumbSlider.getValue());
     assertEquals(80, twoThumbSlider.getExtent());
   },
@@ -488,43 +495,43 @@ testSuite({
     assertEquals(0, twoThumbSliderRtl.getValue());
     assertEquals(100, twoThumbSliderRtl.getExtent());
 
-    testingEvents.fireKeySequence(
-        twoThumbSliderRtl.getElement(), KeyCodes.RIGHT);
+    testingEvents.fireKeySequence(twoThumbSliderRtl.getElement(), KeyCodes.RIGHT);
     assertEquals(0, twoThumbSliderRtl.getValue());
     assertEquals(99, twoThumbSliderRtl.getExtent());
 
-    testingEvents.fireKeySequence(
-        twoThumbSliderRtl.getElement(), KeyCodes.RIGHT);
+    testingEvents.fireKeySequence(twoThumbSliderRtl.getElement(), KeyCodes.RIGHT);
     assertEquals(0, twoThumbSliderRtl.getValue());
     assertEquals(98, twoThumbSliderRtl.getExtent());
 
-    testingEvents.fireKeySequence(
-        twoThumbSliderRtl.getElement(), KeyCodes.LEFT);
+    testingEvents.fireKeySequence(twoThumbSliderRtl.getElement(), KeyCodes.LEFT);
     assertEquals(1, twoThumbSliderRtl.getValue());
     assertEquals(98, twoThumbSliderRtl.getExtent());
 
-    testingEvents.fireKeySequence(
-        twoThumbSliderRtl.getElement(), KeyCodes.LEFT);
+    testingEvents.fireKeySequence(twoThumbSliderRtl.getElement(), KeyCodes.LEFT);
     assertEquals(2, twoThumbSliderRtl.getValue());
     assertEquals(98, twoThumbSliderRtl.getExtent());
 
-    testingEvents.fireKeySequence(
-        twoThumbSliderRtl.getElement(), KeyCodes.RIGHT, {shiftKey: true});
+    testingEvents.fireKeySequence(twoThumbSliderRtl.getElement(), KeyCodes.RIGHT, {
+      shiftKey: true,
+    });
     assertEquals(0, twoThumbSliderRtl.getValue());
     assertEquals(90, twoThumbSliderRtl.getExtent());
 
-    testingEvents.fireKeySequence(
-        twoThumbSliderRtl.getElement(), KeyCodes.RIGHT, {shiftKey: true});
+    testingEvents.fireKeySequence(twoThumbSliderRtl.getElement(), KeyCodes.RIGHT, {
+      shiftKey: true,
+    });
     assertEquals(0, twoThumbSliderRtl.getValue());
     assertEquals(80, twoThumbSliderRtl.getExtent());
 
-    testingEvents.fireKeySequence(
-        twoThumbSliderRtl.getElement(), KeyCodes.LEFT, {shiftKey: true});
+    testingEvents.fireKeySequence(twoThumbSliderRtl.getElement(), KeyCodes.LEFT, {
+      shiftKey: true,
+    });
     assertEquals(10, twoThumbSliderRtl.getValue());
     assertEquals(80, twoThumbSliderRtl.getExtent());
 
-    testingEvents.fireKeySequence(
-        twoThumbSliderRtl.getElement(), KeyCodes.LEFT, {shiftKey: true});
+    testingEvents.fireKeySequence(twoThumbSliderRtl.getElement(), KeyCodes.LEFT, {
+      shiftKey: true,
+    });
     assertEquals(20, twoThumbSliderRtl.getValue());
     assertEquals(80, twoThumbSliderRtl.getExtent());
   },
@@ -551,8 +558,7 @@ testSuite({
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testRangeHighlightAnimation() {
-    let animationDelay =
-        160;  // Delay in ms, is a bit higher than actual delay.
+    let animationDelay = 160; // Delay in ms, is a bit higher than actual delay.
     if (userAgent.IE) {
       // For some reason, (probably due to how timing works), IE7 and IE8
       // will not stop if we don't wait for it.
@@ -595,8 +601,10 @@ testSuite({
     // The setVisible call is used to force a UI update.
     twoThumbSlider.setVisible(true);
     assertEquals(
-        'Range highlight size should be 0 when slider size is 0', 0,
-        dom.getElement('rangeHighlight').offsetWidth);
+      'Range highlight size should be 0 when slider size is 0',
+      0,
+      dom.getElement('rangeHighlight').offsetWidth
+    );
   },
 
   /**
@@ -610,8 +618,7 @@ testSuite({
     const mockAnimation1 = mockControl.createLooseMock(Animation);
     const mockAnimation2 = mockControl.createLooseMock(Animation);
     const testAnimations = [mockAnimation1, mockAnimation2];
-    oneThumbSlider.setAdditionalAnimations(
-        new AnimationFactory(testAnimations));
+    oneThumbSlider.setAdditionalAnimations(new AnimationFactory(testAnimations));
 
     // Expect the animations to be played.
     mockAnimation1.play(false);
@@ -641,8 +648,7 @@ testSuite({
 
     // Test that mouse wheel handling can be disabled before rendering a
     // slider.
-    const wheelDisabledElem =
-        dom.createDom(TagName.DIV, {}, dom.createDom(TagName.SPAN));
+    const wheelDisabledElem = dom.createDom(TagName.DIV, {}, dom.createDom(TagName.SPAN));
     const wheelDisabledSlider = new OneThumbSlider();
     wheelDisabledSlider.setHandleMouseWheel(false);
     wheelDisabledSlider.decorate(wheelDisabledElem);
@@ -659,23 +665,22 @@ testSuite({
     // Disable the slider and check its state
     oneThumbSlider.setEnabled(false);
     assertFalse(oneThumbSlider.isEnabled());
-    assertTrue(classlist.contains(
-        oneThumbSlider.getElement(), 'goog-slider-disabled'));
+    assertTrue(classlist.contains(oneThumbSlider.getElement(), 'goog-slider-disabled'));
     assertEquals(0, oneThumbSlider.getHandler().getListenerCount());
 
     // setValue should work unaffected even when the slider is disabled.
     oneThumbSlider.setValue(30);
     assertEquals(30, oneThumbSlider.getValue());
     assertEquals(
-        'Setting valid value must dispatch a change event ' +
-            'even when slider is disabled.',
-        1, oneChangeEventCount);
+      'Setting valid value must dispatch a change event ' + 'even when slider is disabled.',
+      1,
+      oneChangeEventCount
+    );
 
     // Test the transition from disabled to enabled
     oneThumbSlider.setEnabled(true);
     assertTrue(oneThumbSlider.isEnabled());
-    assertFalse(classlist.contains(
-        oneThumbSlider.getElement(), 'goog-slider-disabled'));
+    assertFalse(classlist.contains(oneThumbSlider.getElement(), 'goog-slider-disabled'));
     assertTrue(listenerCount == oneThumbSlider.getHandler().getListenerCount());
   },
 
@@ -686,52 +691,42 @@ testSuite({
     // events.
     testingEvents.fireMouseDownEvent(oneThumbSlider.getElement());
     assertEquals(
-        1,
-        events
-            .getListeners(
-                oneThumbSlider.getElement(), EventType.MOUSEMOVE, false)
-            .length);
+      1,
+      events.getListeners(oneThumbSlider.getElement(), EventType.MOUSEMOVE, false).length
+    );
     assertEquals(1, events.getListeners(doc, EventType.MOUSEUP, true).length);
 
     testingEvents.fireMouseUpEvent(oneThumbSlider.getElement());
 
     assertEquals(
-        0,
-        events
-            .getListeners(
-                oneThumbSlider.getElement(), EventType.MOUSEMOVE, false)
-            .length);
+      0,
+      events.getListeners(oneThumbSlider.getElement(), EventType.MOUSEMOVE, false).length
+    );
     assertEquals(0, events.getListeners(doc, EventType.MOUSEUP, true).length);
 
     // Case when the slider is disabled between the mouse down and up
     // events.
     testingEvents.fireMouseDownEvent(oneThumbSlider.getElement());
     assertEquals(
-        1,
-        events
-            .getListeners(
-                oneThumbSlider.getElement(), EventType.MOUSEMOVE, false)
-            .length);
+      1,
+      events.getListeners(oneThumbSlider.getElement(), EventType.MOUSEMOVE, false).length
+    );
     assertEquals(1, events.getListeners(doc, EventType.MOUSEUP, true).length);
 
     oneThumbSlider.setEnabled(false);
 
     assertEquals(
-        0,
-        events
-            .getListeners(
-                oneThumbSlider.getElement(), EventType.MOUSEMOVE, false)
-            .length);
+      0,
+      events.getListeners(oneThumbSlider.getElement(), EventType.MOUSEMOVE, false).length
+    );
     assertEquals(0, events.getListeners(doc, EventType.MOUSEUP, true).length);
     assertEquals(1, oneThumbSlider.getHandler().getListenerCount());
 
     testingEvents.fireMouseUpEvent(oneThumbSlider.getElement());
     assertEquals(
-        0,
-        events
-            .getListeners(
-                oneThumbSlider.getElement(), EventType.MOUSEMOVE, false)
-            .length);
+      0,
+      events.getListeners(oneThumbSlider.getElement(), EventType.MOUSEMOVE, false).length
+    );
     assertEquals(0, events.getListeners(doc, EventType.MOUSEUP, true).length);
   },
 
@@ -743,7 +738,8 @@ testSuite({
 
     // Figure out the number of pixels per step.
     const numSteps = Math.round(
-        (oneThumbSlider.getMaximum() - oneThumbSlider.getMinimum()) / stepSize);
+      (oneThumbSlider.getMaximum() - oneThumbSlider.getMinimum()) / stepSize
+    );
     const size = style.getSize(oneThumbSlider.getElement());
     const pixelsPerStep = Math.round(size.width / numSteps);
 
@@ -752,14 +748,18 @@ testSuite({
 
     // Case when value is increased
     testingEvents.fireClickSequence(
-        oneThumbSlider.getElement(),
-        /* opt_button */ undefined, coords);
+      oneThumbSlider.getElement(),
+      /* opt_button */ undefined,
+      coords
+    );
     assertEquals(oneThumbSlider.getValue(), initialValue + stepSize);
 
     // Case when value is decreased
     testingEvents.fireClickSequence(
-        oneThumbSlider.getElement(),
-        /* opt_button */ undefined, coords);
+      oneThumbSlider.getElement(),
+      /* opt_button */ undefined,
+      coords
+    );
     assertEquals(oneThumbSlider.getValue(), initialValue);
 
     // Case when thumb is clicked
@@ -795,13 +795,12 @@ testSuite({
     /** @suppress {visibility} suppression added to enable type checking */
     const originalY = style.getPosition(oneThumbSlider.valueThumb).y;
     /** @suppress {visibility} suppression added to enable type checking */
-    const width = oneThumbSlider.getElement().clientWidth -
-        oneThumbSlider.valueThumb.offsetWidth;
+    const width = oneThumbSlider.getElement().clientWidth - oneThumbSlider.valueThumb.offsetWidth;
     const range = oneThumbSlider.getMaximum() - oneThumbSlider.getMinimum();
 
     // Verify coordinate for a particular value.
     const value = 20;
-    const expectedX = Math.round(value / range * width);
+    const expectedX = Math.round((value / range) * width);
     const expectedCoord = new Coordinate(expectedX, originalY);
     let coord = oneThumbSlider.getThumbCoordinateForValue(value);
     assertObjectEquals(expectedCoord, coord);
@@ -818,13 +817,13 @@ testSuite({
     /** @suppress {visibility} suppression added to enable type checking */
     const originalX = style.getPosition(oneThumbSlider.valueThumb).x;
     /** @suppress {visibility} suppression added to enable type checking */
-    const height = oneThumbSlider.getElement().clientHeight -
-        oneThumbSlider.valueThumb.offsetHeight;
+    const height =
+      oneThumbSlider.getElement().clientHeight - oneThumbSlider.valueThumb.offsetHeight;
     const range = oneThumbSlider.getMaximum() - oneThumbSlider.getMinimum();
 
     // Verify coordinate for a particular value.
     const value = 20;
-    const expectedY = height - Math.round(value / range * height);
+    const expectedY = height - Math.round((value / range) * height);
     const expectedCoord = new Coordinate(originalX, expectedY);
     let coord = oneThumbSlider.getThumbCoordinateForValue(value);
     assertObjectEquals(expectedCoord, coord);
@@ -854,12 +853,10 @@ testSuite({
     });
     testingEvents.fireMouseMoveEvent(oneThumbSlider, offset);
     assertNotEquals(e, null);
-    assertRoughlyEquals(
-        value, Math.round(oneThumbSlider.getValueFromMousePosition(e)), 1);
+    assertRoughlyEquals(value, Math.round(oneThumbSlider.getValueFromMousePosition(e)), 1);
     // Verify this works regardless of current position.
     oneThumbSlider.setValue(value / 2);
-    assertRoughlyEquals(
-        value, Math.round(oneThumbSlider.getValueFromMousePosition(e)), 1);
+    assertRoughlyEquals(value, Math.round(oneThumbSlider.getValueFromMousePosition(e)), 1);
   },
 
   /**
@@ -888,7 +885,7 @@ testSuite({
 
     // set coordinate for a particular value.
     const valueOne = 10;
-    offset.x = offsetXAtZero + Math.round(valueOne / range * width);
+    offset.x = offsetXAtZero + Math.round((valueOne / range) * width);
     testingEvents.fireMouseDownEvent(sliderElement, null, offset);
     assertEquals(valueOne, oneThumbSlider.getValue());
 
@@ -897,7 +894,7 @@ testSuite({
     /** @suppress {visibility} suppression added to enable type checking */
     theTime += oneThumbSlider.MOUSE_DOWN_DELAY_ / 2;
     const valueTwo = 20;
-    offset.x = offsetXAtZero + Math.round(valueTwo / range * width);
+    offset.x = offsetXAtZero + Math.round((valueTwo / range) * width);
     testingEvents.fireClickEvent(sliderElement, null, offset);
     assertEquals(valueOne, oneThumbSlider.getValue());
 
@@ -928,28 +925,32 @@ testSuite({
     };
 
     events.listen(
-        oneThumbSlider,
-        [
-          SliderBase.EventType.DRAG_START,
-          SliderBase.EventType.DRAG_END,
-          SliderBase.EventType.DRAG_VALUE_START,
-          SliderBase.EventType.DRAG_VALUE_END,
-          SliderBase.EventType.DRAG_EXTENT_START,
-          SliderBase.EventType.DRAG_EXTENT_END,
-          Component.EventType.CHANGE,
-        ],
-        handler);
+      oneThumbSlider,
+      [
+        SliderBase.EventType.DRAG_START,
+        SliderBase.EventType.DRAG_END,
+        SliderBase.EventType.DRAG_VALUE_START,
+        SliderBase.EventType.DRAG_VALUE_END,
+        SliderBase.EventType.DRAG_EXTENT_START,
+        SliderBase.EventType.DRAG_EXTENT_END,
+        Component.EventType.CHANGE,
+      ],
+      handler
+    );
 
     // Since the order of the events between value and extent is not
     // guaranteed across browsers, we need to allow for both here and once
     // we have them all, make sure that they were different.
     function isValueOrExtentDragStart(type) {
-      return type == SliderBase.EventType.DRAG_VALUE_START ||
-          type == SliderBase.EventType.DRAG_EXTENT_START;
+      return (
+        type == SliderBase.EventType.DRAG_VALUE_START ||
+        type == SliderBase.EventType.DRAG_EXTENT_START
+      );
     }
     function isValueOrExtentDragEnd(type) {
-      return type == SliderBase.EventType.DRAG_VALUE_END ||
-          type == SliderBase.EventType.DRAG_EXTENT_END;
+      return (
+        type == SliderBase.EventType.DRAG_VALUE_END || type == SliderBase.EventType.DRAG_EXTENT_END
+      );
     }
 
     // Test that dragging the thumb calls all the correct events.
@@ -1031,13 +1032,13 @@ testSuite({
 
     // Scroll to 30 in the range of 0-200. Given that this is LTR mode, that
     // means the value will be 100 + 30 = 130.
-    offset.x = offsetXAtZero + Math.round(30 / range * width);
+    offset.x = offsetXAtZero + Math.round((30 / range) * width);
     testingEvents.fireMouseMoveEvent(oneThumbSlider.valueThumb, offset);
     assertEquals(130, oneThumbSlider.getValue());
 
     // Scroll to 70 in the range of 0-200. Given that this is LTR mode, that
     // means the value will be 100 + 70 = 170.
-    offset.x = offsetXAtZero + Math.round(70 / range * width);
+    offset.x = offsetXAtZero + Math.round((70 / range) * width);
     testingEvents.fireMouseMoveEvent(oneThumbSlider.valueThumb, offset);
     assertEquals(170, oneThumbSlider.getValue());
 
@@ -1057,27 +1058,26 @@ testSuite({
 
     /** @suppress {visibility} suppression added to enable type checking */
     const offset = style.getPageOffset(oneThumbSliderRtl.valueThumb);
-    let offsetXAtZero = offset.x;
+    const offsetXAtZero = offset.x;
     /** @suppress {visibility} suppression added to enable type checking */
     const thumbSize = style.getSize(oneThumbSliderRtl.valueThumb);
 
     const sliderElement = oneThumbSliderRtl.getElementStrict();
     const width = sliderElement.clientWidth - thumbSize.width;
-    const range =
-        oneThumbSliderRtl.getMaximum() - oneThumbSliderRtl.getMinimum();
+    const range = oneThumbSliderRtl.getMaximum() - oneThumbSliderRtl.getMinimum();
 
     // Test that dragging the thumb calls all the correct events.
     testingEvents.fireMouseDownEvent(oneThumbSliderRtl.valueThumb);
 
     // Scroll to 30 in the range of 0-200. Given that this is RTL mode, that
     // means the value will be 100 - (-30) = 130.
-    offset.x = offsetXAtZero - Math.round(30 / range * width);
+    offset.x = offsetXAtZero - Math.round((30 / range) * width);
     testingEvents.fireMouseMoveEvent(oneThumbSliderRtl.valueThumb, offset);
     assertEquals(130, oneThumbSliderRtl.getValue());
 
     // Scroll to 70 in the range of 0-200. Given that this is RTL mode, that
     // means the value will be 100 - (-70) = 170.
-    offset.x = offsetXAtZero - Math.round(70 / range * width);
+    offset.x = offsetXAtZero - Math.round((70 / range) * width);
     testingEvents.fireMouseMoveEvent(oneThumbSliderRtl.valueThumb, offset);
     assertEquals(170, oneThumbSliderRtl.getValue());
 
@@ -1096,8 +1096,7 @@ testSuite({
     const handler = (evt) => {
       event_types.push(evt.type);
     };
-    let animationDelay =
-        160;  // Delay in ms, is a bit higher than actual delay.
+    let animationDelay = 160; // Delay in ms, is a bit higher than actual delay.
     if (userAgent.IE) {
       // For some reason, (probably due to how timing works), IE7 and IE8
       // will not stop if we don't wait for it.
@@ -1111,7 +1110,10 @@ testSuite({
     }
     offset.x += 100;
     testingEvents.fireClickSequence(
-        oneThumbSlider.getElement(), /* opt_button */ undefined, offset);
+      oneThumbSlider.getElement(),
+      /* opt_button */ undefined,
+      offset
+    );
 
     mockClock.tick(animationDelay);
     assertEquals(1, event_types.length);
@@ -1126,8 +1128,7 @@ testSuite({
   testFocusOnSliderAfterClickIfFocusElementOnSliderDragTrue() {
     const sliderElement = oneThumbSlider.getElement();
     const coords = style.getClientPosition(sliderElement);
-    testingEvents.fireClickSequence(
-        sliderElement, /* opt_button */ undefined, coords);
+    testingEvents.fireClickSequence(sliderElement, /* opt_button */ undefined, coords);
 
     const activeElement = oneThumbSlider.getDomHelper().getActiveElement();
     assertEquals(sliderElement, activeElement);
@@ -1141,8 +1142,7 @@ testSuite({
     oneThumbSlider.setFocusElementOnSliderDrag(false);
     const sliderElement = oneThumbSlider.getElement();
     const coords = style.getClientPosition(sliderElement);
-    testingEvents.fireClickSequence(
-        sliderElement, /* opt_button */ undefined, coords);
+    testingEvents.fireClickSequence(sliderElement, /* opt_button */ undefined, coords);
 
     const activeElement = oneThumbSlider.getDomHelper().getActiveElement();
     assertNotEquals(sliderElement, activeElement);

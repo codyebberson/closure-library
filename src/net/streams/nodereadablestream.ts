@@ -28,15 +28,12 @@
 
 goog.provide('goog.net.streams.NodeReadableStream');
 
-
-
 /**
  * This interface represents a readable stream.
  *
  * @interface
  */
-goog.net.streams.NodeReadableStream = function() {};
-
+goog.net.streams.NodeReadableStream = () => {};
 
 /**
  * Read events for the stream.
@@ -49,7 +46,6 @@ goog.net.streams.NodeReadableStream.EventType = {
   CLOSE: 'close',
   ERROR: 'error',
 };
-
 
 /**
  * Register a callback to handle I/O events.
@@ -71,7 +67,6 @@ goog.net.streams.NodeReadableStream.EventType = {
  */
 goog.net.streams.NodeReadableStream.prototype.on = goog.abstractMethod;
 
-
 /**
  * Register a callback to handle I/O events. This is an alias to on().
  *
@@ -82,7 +77,6 @@ goog.net.streams.NodeReadableStream.prototype.on = goog.abstractMethod;
  */
 goog.net.streams.NodeReadableStream.prototype.addListener = goog.abstractMethod;
 
-
 /**
  * Unregister an existing callback, including one-time callbacks.
  *
@@ -90,9 +84,7 @@ goog.net.streams.NodeReadableStream.prototype.addListener = goog.abstractMethod;
  * @param {function(!Object=)} callback The call back to unregister
  * @return {goog.net.streams.NodeReadableStream} this object
  */
-goog.net.streams.NodeReadableStream.prototype.removeListener =
-    goog.abstractMethod;
-
+goog.net.streams.NodeReadableStream.prototype.removeListener = goog.abstractMethod;
 
 /**
  * Register a one-time callback to handle I/O events.

@@ -13,8 +13,6 @@ goog.provide('goog.testing.fs.File');
 
 goog.require('goog.testing.fs.Blob');
 
-
-
 /**
  * A mock file object.
  *
@@ -27,8 +25,7 @@ goog.require('goog.testing.fs.Blob');
  * @extends {goog.testing.fs.Blob}
  * @final
  */
-goog.testing.fs.File = function(name, opt_lastModified, opt_data, opt_type) {
-  'use strict';
+goog.testing.fs.File = function (name, opt_lastModified, opt_data, opt_type) {
   goog.testing.fs.File.base(this, 'constructor', opt_data, opt_type);
 
   /**

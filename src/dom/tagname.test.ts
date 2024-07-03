@@ -5,25 +5,20 @@
  */
 
 goog.module('goog.dom.TagNameTest');
-goog.setTestOnly();
 
 const TagName = goog.require('goog.dom.TagName');
 const testSuite = goog.require('goog.testing.testSuite');
 
 testSuite({
   testCorrectNumberOfTagNames() {
-    assertEquals(
-        130,
-        Object.entries(TagName)
-            .filter(([k, v]) => typeof v === 'string')
-            .length);
+    assertEquals(130, Object.entries(TagName).filter(([k, v]) => typeof v === 'string').length);
   },
 
   testPropertyNamesEqualValues() {
     Object.entries(TagName)
-        .filter(([k, v]) => typeof v === 'string')
-        .forEach(([k, v]) => {
-          assertEquals(k, v);
-        });
+      .filter(([k, v]) => typeof v === 'string')
+      .forEach(([k, v]) => {
+        assertEquals(k, v);
+      });
   },
 });

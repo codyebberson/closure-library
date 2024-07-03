@@ -24,16 +24,13 @@ goog.require('goog.object');
 goog.require('goog.userAgent');
 goog.requireType('goog.dom.AbstractRange');
 
-
-
 /**
  * Plugin that adds support for table creation and editing commands.
  * @constructor
  * @extends {goog.editor.Plugin}
  * @final
  */
-goog.editor.plugins.TableEditor = function() {
-  'use strict';
+goog.editor.plugins.TableEditor = function () {
   goog.editor.plugins.TableEditor.base(this, 'constructor');
 
   /**
@@ -54,15 +51,12 @@ goog.editor.plugins.TableEditor = function() {
 };
 goog.inherits(goog.editor.plugins.TableEditor, goog.editor.Plugin);
 
-
 /** @override */
 // TODO(user): remove this once there's a sensible default
 // implementation in the base Plugin.
-goog.editor.plugins.TableEditor.prototype.getTrogClassId = function() {
-  'use strict';
+goog.editor.plugins.TableEditor.prototype.getTrogClassId = function () {
   return String(goog.getUid(this.constructor));
 };
-
 
 /**
  * Commands supported by goog.editor.plugins.TableEditor.
@@ -78,9 +72,8 @@ goog.editor.plugins.TableEditor.COMMAND = {
   REMOVE_COLUMNS: '+removeColumns',
   SPLIT_CELL: '+splitCell',
   MERGE_CELLS: '+mergeCells',
-  REMOVE_TABLE: '+removeTable'
+  REMOVE_TABLE: '+removeTable',
 };
-
 
 /**
  * Inverse map of execCommand strings to
@@ -90,9 +83,9 @@ goog.editor.plugins.TableEditor.COMMAND = {
  * @type {Object}
  * @private
  */
-goog.editor.plugins.TableEditor.SUPPORTED_COMMANDS_ =
-    goog.object.transpose(goog.editor.plugins.TableEditor.COMMAND);
-
+goog.editor.plugins.TableEditor.SUPPORTED_COMMANDS_ = goog.object.transpose(
+  goog.editor.plugins.TableEditor.COMMAND
+);
 
 /**
  * Whether the string corresponds to a command this plugin handles.
@@ -101,16 +94,11 @@ goog.editor.plugins.TableEditor.SUPPORTED_COMMANDS_ =
  *     this plugin handles.
  * @override
  */
-goog.editor.plugins.TableEditor.prototype.isSupportedCommand = function(
-    command) {
-  'use strict';
-  return command in goog.editor.plugins.TableEditor.SUPPORTED_COMMANDS_;
-};
-
+goog.editor.plugins.TableEditor.prototype.isSupportedCommand = (command) =>
+  command in goog.editor.plugins.TableEditor.SUPPORTED_COMMANDS_;
 
 /** @override */
-goog.editor.plugins.TableEditor.prototype.enable = function(fieldObject) {
-  'use strict';
+goog.editor.plugins.TableEditor.prototype.enable = function (fieldObject) {
   goog.editor.plugins.TableEditor.base(this, 'enable', fieldObject);
 
   // enableObjectResizing is supported only for Gecko.
@@ -122,19 +110,16 @@ goog.editor.plugins.TableEditor.prototype.enable = function(fieldObject) {
   }
 };
 
-
 /**
  * Returns the currently selected table.
  * @return {Element?} The table in which the current selection is
  *     contained, or null if there isn't such a table.
  * @private
  */
-goog.editor.plugins.TableEditor.prototype.getCurrentTable_ = function() {
-  'use strict';
+goog.editor.plugins.TableEditor.prototype.getCurrentTable_ = function () {
   var selectedElement = this.getFieldObject().getRange().getContainer();
   return this.getAncestorTable_(selectedElement);
 };
-
 
 /**
  * Finds the first user-editable table element in the input node's ancestors.
@@ -142,10 +127,8 @@ goog.editor.plugins.TableEditor.prototype.getCurrentTable_ = function() {
  * @return {Element?} The table element that is closest ancestor of the node.
  * @private
  */
-goog.editor.plugins.TableEditor.prototype.getAncestorTable_ = function(node) {
-  'use strict';
-  var ancestor =
-      goog.dom.getAncestor(node, this.isUserEditableTableBound_, true);
+goog.editor.plugins.TableEditor.prototype.getAncestorTable_ = function (node) {
+  var ancestor = goog.dom.getAncestor(node, this.isUserEditableTableBound_, true);
   if (goog.editor.node.isEditable(ancestor)) {
     return /** @type {Element?} */ (ancestor);
   } else {
@@ -153,28 +136,22 @@ goog.editor.plugins.TableEditor.prototype.getAncestorTable_ = function(node) {
   }
 };
 
-
 /**
  * Returns the current value of a given command. Currently this plugin
  * only returns a value for goog.editor.plugins.TableEditor.COMMAND.TABLE.
  * @override
  */
-goog.editor.plugins.TableEditor.prototype.queryCommandValue = function(
-    command) {
-  'use strict';
+goog.editor.plugins.TableEditor.prototype.queryCommandValue = function (command) {
   if (command == goog.editor.plugins.TableEditor.COMMAND.TABLE) {
     return !!this.getCurrentTable_();
   }
 };
 
-
 /**
  * @override
  * @suppress {missingProperties} "row" is not declared
  */
-goog.editor.plugins.TableEditor.prototype.execCommandInternal = function(
-    command, opt_arg) {
-  'use strict';
+goog.editor.plugins.TableEditor.prototype.execCommandInternal = function (command, opt_arg) {
   var result = null;
   // TD/TH in which to place the cursor, if the command destroys the current
   // cursor position.
@@ -186,10 +163,9 @@ goog.editor.plugins.TableEditor.prototype.execCommandInternal = function(
       return null;
     }
     // Create the table.
-    var tableProps = opt_arg || {width: 4, height: 2};
+    var tableProps = opt_arg || { width: 4, height: 2 };
     var doc = this.getFieldDomHelper().getDocument();
-    var table = goog.editor.Table.createDomTable(
-        doc, tableProps.width, tableProps.height);
+    var table = goog.editor.Table.createDomTable(doc, tableProps.width, tableProps.height);
     range.replaceContentsWithNode(table);
     // In IE, replaceContentsWithNode uses pasteHTML, so we lose our reference
     // to the inserted table.
@@ -200,7 +176,9 @@ goog.editor.plugins.TableEditor.prototype.execCommandInternal = function(
     }
   } else {
     var cellSelection = new goog.editor.plugins.TableEditor.CellSelection_(
-        range, goog.bind(this.getAncestorTable_, this));
+      range,
+      goog.bind(this.getAncestorTable_, this)
+    );
     var table = cellSelection.getTable();
     if (!table) {
       return null;
@@ -221,13 +199,12 @@ goog.editor.plugins.TableEditor.prototype.execCommandInternal = function(
       case goog.editor.plugins.TableEditor.COMMAND.REMOVE_ROWS:
         var startRow = cellSelection.getFirstRowIndex();
         var endRow = cellSelection.getLastRowIndex();
-        if (startRow == 0 && endRow == (table.rows.length - 1)) {
+        if (startRow == 0 && endRow == table.rows.length - 1) {
           // Instead of deleting all rows, delete the entire table.
-          return this.execCommandInternal(
-              goog.editor.plugins.TableEditor.COMMAND.REMOVE_TABLE);
+          return this.execCommandInternal(goog.editor.plugins.TableEditor.COMMAND.REMOVE_TABLE);
         }
         var startColumn = cellSelection.getFirstColumnIndex();
-        var rowCount = (endRow - startRow) + 1;
+        var rowCount = endRow - startRow + 1;
         for (var i = 0; i < rowCount; i++) {
           table.removeRow(startRow);
         }
@@ -240,13 +217,12 @@ goog.editor.plugins.TableEditor.prototype.execCommandInternal = function(
       case goog.editor.plugins.TableEditor.COMMAND.REMOVE_COLUMNS:
         var startCol = cellSelection.getFirstColumnIndex();
         var endCol = cellSelection.getLastColumnIndex();
-        if (startCol == 0 && endCol == (table.rows[0].columns.length - 1)) {
+        if (startCol == 0 && endCol == table.rows[0].columns.length - 1) {
           // Instead of deleting all columns, delete the entire table.
-          return this.execCommandInternal(
-              goog.editor.plugins.TableEditor.COMMAND.REMOVE_TABLE);
+          return this.execCommandInternal(goog.editor.plugins.TableEditor.COMMAND.REMOVE_TABLE);
         }
         var startRow = cellSelection.getFirstRowIndex();
-        var removeCount = (endCol - startCol) + 1;
+        var removeCount = endCol - startCol + 1;
         for (var i = 0; i < removeCount; i++) {
           table.removeColumn(startCol);
         }
@@ -260,17 +236,16 @@ goog.editor.plugins.TableEditor.prototype.execCommandInternal = function(
       case goog.editor.plugins.TableEditor.COMMAND.MERGE_CELLS:
         if (cellSelection.isRectangle()) {
           table.mergeCells(
-              cellSelection.getFirstRowIndex(),
-              cellSelection.getFirstColumnIndex(),
-              cellSelection.getLastRowIndex(),
-              cellSelection.getLastColumnIndex());
+            cellSelection.getFirstRowIndex(),
+            cellSelection.getFirstColumnIndex(),
+            cellSelection.getLastRowIndex(),
+            cellSelection.getLastColumnIndex()
+          );
         }
         break;
       case goog.editor.plugins.TableEditor.COMMAND.SPLIT_CELL:
         if (cellSelection.containsSingleCell()) {
-          table.splitCell(
-              cellSelection.getFirstRowIndex(),
-              cellSelection.getFirstColumnIndex());
+          table.splitCell(cellSelection.getFirstRowIndex(), cellSelection.getFirstColumnIndex());
         }
         break;
       case goog.editor.plugins.TableEditor.COMMAND.REMOVE_TABLE:
@@ -287,7 +262,6 @@ goog.editor.plugins.TableEditor.prototype.execCommandInternal = function(
   return result;
 };
 
-
 /**
  * Checks whether the element is a table editable by the user.
  * @param {Node} element The element in question.
@@ -295,34 +269,24 @@ goog.editor.plugins.TableEditor.prototype.execCommandInternal = function(
  * @private
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.editor.plugins.TableEditor.prototype.isUserEditableTable_ = function(
-    element) {
-  'use strict';
+goog.editor.plugins.TableEditor.prototype.isUserEditableTable_ = function (element) {
   // Default implementation.
   if (element.tagName != goog.dom.TagName.TABLE) {
     return false;
   }
 
   // Check for extra user-editable filters.
-  return this.isTableEditableFunctions_.every(function(func) {
-    'use strict';
-    return func(/** @type {Element} */ (element));
-  });
+  return this.isTableEditableFunctions_.every((func) => func(/** @type {Element} */ (element)));
 };
-
 
 /**
  * Adds a function to filter out non-user-editable tables.
  * @param {function(Element):boolean} func A function to decide whether the
  *   table element could be editable by the user or not.
  */
-goog.editor.plugins.TableEditor.prototype.addIsTableEditableFunction = function(
-    func) {
-  'use strict';
+goog.editor.plugins.TableEditor.prototype.addIsTableEditableFunction = function (func) {
   goog.array.insert(this.isTableEditableFunctions_, func);
 };
-
-
 
 /**
  * Class representing the selected cell objects within a single  table.
@@ -334,9 +298,7 @@ goog.editor.plugins.TableEditor.prototype.addIsTableEditableFunction = function(
  * @private
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.editor.plugins.TableEditor.CellSelection_ = function(
-    range, getParentTableFunction) {
-  'use strict';
+goog.editor.plugins.TableEditor.CellSelection_ = function (range, getParentTableFunction) {
   /** @private {number} */
   this.firstRowIndex_;
 
@@ -359,14 +321,12 @@ goog.editor.plugins.TableEditor.CellSelection_ = function(
   // currently support this.
   // TODO(user): support this case in range.js
   var selectionContainer = range.getContainerElement();
-  var elementInSelection = function(node) {
-    'use strict';
-    return selectionContainer == node ||
-        selectionContainer.parentNode == node || range.containsNode(node, true);
-  };
+  var elementInSelection = (node) =>
+    selectionContainer == node ||
+    selectionContainer.parentNode == node ||
+    range.containsNode(node, true);
 
-  var parentTableElement =
-      selectionContainer && getParentTableFunction(selectionContainer);
+  var parentTableElement = selectionContainer && getParentTableFunction(selectionContainer);
   if (!parentTableElement) {
     return;
   }
@@ -378,8 +338,8 @@ goog.editor.plugins.TableEditor.CellSelection_ = function(
     return;
   }
   // Loop through cells to calculate dimensions for this CellSelection.
-  for (var i = 0, row; row = parentTable.rows[i]; i++) {
-    for (var j = 0, cell; cell = row.columns[j]; j++) {
+  for (var i = 0, row; (row = parentTable.rows[i]); i++) {
+    for (var j = 0, cell; (cell = row.columns[j]); j++) {
       if (elementInSelection(cell.element)) {
         // Update dimensions based on cell.
         if (!this.cells_.length) {
@@ -400,71 +360,54 @@ goog.editor.plugins.TableEditor.CellSelection_ = function(
   this.parentTable_ = parentTable;
 };
 
-
 /**
  * Returns the EditableTable object of which this selection's cells are a
  * subset.
  * @return {!goog.editor.Table} the table.
  */
-goog.editor.plugins.TableEditor.CellSelection_.prototype.getTable = function() {
-  'use strict';
+goog.editor.plugins.TableEditor.CellSelection_.prototype.getTable = function () {
   return this.parentTable_;
 };
-
 
 /**
  * Returns the row index of the uppermost cell in this selection.
  * @return {number} The row index.
  */
-goog.editor.plugins.TableEditor.CellSelection_.prototype.getFirstRowIndex =
-    function() {
-  'use strict';
+goog.editor.plugins.TableEditor.CellSelection_.prototype.getFirstRowIndex = function () {
   return this.firstRowIndex_;
 };
-
 
 /**
  * Returns the row index of the lowermost cell in this selection.
  * @return {number} The row index.
  */
-goog.editor.plugins.TableEditor.CellSelection_.prototype.getLastRowIndex =
-    function() {
-  'use strict';
+goog.editor.plugins.TableEditor.CellSelection_.prototype.getLastRowIndex = function () {
   return this.lastRowIndex_;
 };
-
 
 /**
  * Returns the column index of the farthest left cell in this selection.
  * @return {number} The column index.
  */
-goog.editor.plugins.TableEditor.CellSelection_.prototype.getFirstColumnIndex =
-    function() {
-  'use strict';
+goog.editor.plugins.TableEditor.CellSelection_.prototype.getFirstColumnIndex = function () {
   return this.firstColIndex_;
 };
-
 
 /**
  * Returns the column index of the farthest right cell in this selection.
  * @return {number} The column index.
  */
-goog.editor.plugins.TableEditor.CellSelection_.prototype.getLastColumnIndex =
-    function() {
-  'use strict';
+goog.editor.plugins.TableEditor.CellSelection_.prototype.getLastColumnIndex = function () {
   return this.lastColIndex_;
 };
-
 
 /**
  * Returns the cells in this selection.
  * @return {!Array<Element>} Cells in this selection.
  */
-goog.editor.plugins.TableEditor.CellSelection_.prototype.getCells = function() {
-  'use strict';
+goog.editor.plugins.TableEditor.CellSelection_.prototype.getCells = function () {
   return this.cells_;
 };
-
 
 /**
  * Returns a boolean value indicating whether or not the cells in this
@@ -472,9 +415,7 @@ goog.editor.plugins.TableEditor.CellSelection_.prototype.getCells = function() {
  * @return {boolean} Whether the selection forms a rectangle.
  * @suppress {missingProperties} missing endRow, endCol prop definitions
  */
-goog.editor.plugins.TableEditor.CellSelection_.prototype.isRectangle =
-    function() {
-  'use strict';
+goog.editor.plugins.TableEditor.CellSelection_.prototype.isRectangle = function () {
   // TODO(user): check for missing cells. Right now this returns
   // whether all cells in the selection are in the rectangle, but doesn't
   // verify that every expected cell is present.
@@ -484,12 +425,12 @@ goog.editor.plugins.TableEditor.CellSelection_.prototype.isRectangle =
   var firstCell = this.cells_[0];
   var lastCell = this.cells_[this.cells_.length - 1];
   return !(
-      this.firstRowIndex_ < firstCell.startRow ||
-      this.lastRowIndex_ > lastCell.endRow ||
-      this.firstColIndex_ < firstCell.startCol ||
-      this.lastColIndex_ > lastCell.endCol);
+    this.firstRowIndex_ < firstCell.startRow ||
+    this.lastRowIndex_ > lastCell.endRow ||
+    this.firstColIndex_ < firstCell.startCol ||
+    this.lastColIndex_ > lastCell.endCol
+  );
 };
-
 
 /**
  * Returns a boolean value indicating whether or not there is exactly
@@ -498,9 +439,7 @@ goog.editor.plugins.TableEditor.CellSelection_.prototype.isRectangle =
  * rowSpan/colSpan set it will appear multiple times.
  * @return {boolean} Whether there is exatly one cell in this selection.
  */
-goog.editor.plugins.TableEditor.CellSelection_.prototype.containsSingleCell =
-    function() {
-  'use strict';
+goog.editor.plugins.TableEditor.CellSelection_.prototype.containsSingleCell = function () {
   var cellCount = this.cells_.length;
-  return cellCount > 0 && (this.cells_[0] == this.cells_[cellCount - 1]);
+  return cellCount > 0 && this.cells_[0] == this.cells_[cellCount - 1];
 };

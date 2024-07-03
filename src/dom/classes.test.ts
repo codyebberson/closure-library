@@ -9,7 +9,6 @@
  */
 
 goog.module('goog.dom.classes_test');
-goog.setTestOnly();
 
 const TagName = goog.require('goog.dom.TagName');
 const classes = goog.require('goog.dom.classes');

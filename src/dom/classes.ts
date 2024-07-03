@@ -15,11 +15,9 @@
  * will not work on elements with differing interfaces (such as SVGElements).
  */
 
-
 goog.provide('goog.dom.classes');
 
 goog.require('goog.array');
-
 
 /**
  * Sets the entire class name of an element.
@@ -27,11 +25,9 @@ goog.require('goog.array');
  * @param {string} className Class name(s) to apply to element.
  * @deprecated Use goog.dom.classlist.set instead.
  */
-goog.dom.classes.set = function(element, className) {
-  'use strict';
+goog.dom.classes.set = (element, className) => {
   /** @type {!HTMLElement} */ (element).className = className;
 };
-
 
 /**
  * Gets an array of class names on an element
@@ -40,15 +36,13 @@ goog.dom.classes.set = function(element, className) {
  *     properties to the array. Do not depend on any of these!
  * @deprecated Use goog.dom.classlist.get instead.
  */
-goog.dom.classes.get = function(element) {
-  'use strict';
+goog.dom.classes.get = (element) => {
   var className = /** @type {!Element} */ (element).className;
   // Some types of elements don't have a className in IE (e.g. iframes).
   // Furthermore, in Firefox, className is not a string when the element is
   // an SVG element.
-  return typeof className === 'string' && className.match(/\S+/g) || [];
+  return (typeof className === 'string' && className.match(/\S+/g)) || [];
 };
-
 
 /**
  * Adds a class or classes to an element. Does not add multiples of class names.
@@ -57,8 +51,7 @@ goog.dom.classes.get = function(element) {
  * @return {boolean} Whether class was added (or all classes were added).
  * @deprecated Use goog.dom.classlist.add or goog.dom.classlist.addAll instead.
  */
-goog.dom.classes.add = function(element, var_args) {
-  'use strict';
+goog.dom.classes.add = (element, var_args) => {
   var classes = goog.dom.classes.get(element);
   var args = Array.prototype.slice.call(arguments, 1);
   var expectedCount = classes.length + args.length;
@@ -66,7 +59,6 @@ goog.dom.classes.add = function(element, var_args) {
   goog.dom.classes.set(element, classes.join(' '));
   return classes.length == expectedCount;
 };
-
 
 /**
  * Removes a class or classes from an element.
@@ -77,15 +69,13 @@ goog.dom.classes.add = function(element, var_args) {
  * @deprecated Use goog.dom.classlist.remove or goog.dom.classlist.removeAll
  *     instead.
  */
-goog.dom.classes.remove = function(element, var_args) {
-  'use strict';
+goog.dom.classes.remove = (element, var_args) => {
   var classes = goog.dom.classes.get(element);
   var args = Array.prototype.slice.call(arguments, 1);
   var newClasses = goog.dom.classes.getDifference_(classes, args);
   goog.dom.classes.set(element, newClasses.join(' '));
   return newClasses.length == classes.length - args.length;
 };
-
 
 /**
  * Helper method for {@link goog.dom.classes.add} and
@@ -96,15 +86,13 @@ goog.dom.classes.remove = function(element, var_args) {
  * @param {Array<string>} args Class names to add.
  * @private
  */
-goog.dom.classes.add_ = function(classes, args) {
-  'use strict';
+goog.dom.classes.add_ = (classes, args) => {
   for (var i = 0; i < args.length; i++) {
     if (!goog.array.contains(classes, args[i])) {
       classes.push(args[i]);
     }
   }
 };
-
 
 /**
  * Helper method for {@link goog.dom.classes.remove} and
@@ -115,14 +103,8 @@ goog.dom.classes.add_ = function(classes, args) {
  *     array.
  * @private
  */
-goog.dom.classes.getDifference_ = function(arr1, arr2) {
-  'use strict';
-  return arr1.filter(function(item) {
-    'use strict';
-    return !goog.array.contains(arr2, item);
-  });
-};
-
+goog.dom.classes.getDifference_ = (arr1, arr2) =>
+  arr1.filter((item) => !goog.array.contains(arr2, item));
 
 /**
  * Switches a class on an element from one to another without disturbing other
@@ -133,8 +115,7 @@ goog.dom.classes.getDifference_ = function(arr1, arr2) {
  * @return {boolean} Whether classes were switched.
  * @deprecated Use goog.dom.classlist.swap instead.
  */
-goog.dom.classes.swap = function(element, fromClass, toClass) {
-  'use strict';
+goog.dom.classes.swap = (element, fromClass, toClass) => {
   var classes = goog.dom.classes.get(element);
 
   var removed = false;
@@ -153,7 +134,6 @@ goog.dom.classes.swap = function(element, fromClass, toClass) {
   return removed;
 };
 
-
 /**
  * Adds zero or more classes to an element and removes zero or more as a single
  * operation. Unlike calling {@link goog.dom.classes.add} and
@@ -171,8 +151,7 @@ goog.dom.classes.swap = function(element, fromClass, toClass) {
  *     null no classes are added.
  * @deprecated Use goog.dom.classlist.addRemove instead.
  */
-goog.dom.classes.addRemove = function(element, classesToRemove, classesToAdd) {
-  'use strict';
+goog.dom.classes.addRemove = (element, classesToRemove, classesToAdd) => {
   var classes = goog.dom.classes.get(element);
   if (typeof classesToRemove === 'string') {
     goog.array.remove(classes, classesToRemove);
@@ -180,8 +159,7 @@ goog.dom.classes.addRemove = function(element, classesToRemove, classesToAdd) {
     classes = goog.dom.classes.getDifference_(classes, classesToRemove);
   }
 
-  if (typeof classesToAdd === 'string' &&
-      !goog.array.contains(classes, classesToAdd)) {
+  if (typeof classesToAdd === 'string' && !goog.array.contains(classes, classesToAdd)) {
     classes.push(classesToAdd);
   } else if (Array.isArray(classesToAdd)) {
     goog.dom.classes.add_(classes, classesToAdd);
@@ -190,7 +168,6 @@ goog.dom.classes.addRemove = function(element, classesToRemove, classesToAdd) {
   goog.dom.classes.set(element, classes.join(' '));
 };
 
-
 /**
  * Returns true if an element has a class.
  * @param {Node} element DOM node to test.
@@ -198,11 +175,8 @@ goog.dom.classes.addRemove = function(element, classesToRemove, classesToAdd) {
  * @return {boolean} Whether element has the class.
  * @deprecated Use goog.dom.classlist.contains instead.
  */
-goog.dom.classes.has = function(element, className) {
-  'use strict';
-  return goog.array.contains(goog.dom.classes.get(element), className);
-};
-
+goog.dom.classes.has = (element, className) =>
+  goog.array.contains(goog.dom.classes.get(element), className);
 
 /**
  * Adds or removes a class depending on the enabled argument.
@@ -213,15 +187,13 @@ goog.dom.classes.has = function(element, className) {
  * @deprecated Use goog.dom.classlist.enable or goog.dom.classlist.enableAll
  *     instead.
  */
-goog.dom.classes.enable = function(element, className, enabled) {
-  'use strict';
+goog.dom.classes.enable = (element, className, enabled) => {
   if (enabled) {
     goog.dom.classes.add(element, className);
   } else {
     goog.dom.classes.remove(element, className);
   }
 };
-
 
 /**
  * Removes a class if an element has it, and adds it the element doesn't have
@@ -233,8 +205,7 @@ goog.dom.classes.enable = function(element, className, enabled) {
  *     been called).
  * @deprecated Use goog.dom.classlist.toggle instead.
  */
-goog.dom.classes.toggle = function(element, className) {
-  'use strict';
+goog.dom.classes.toggle = (element, className) => {
   var add = !goog.dom.classes.has(element, className);
   goog.dom.classes.enable(element, className, add);
   return add;

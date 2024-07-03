@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.graphics.SolidFillTest');
-goog.setTestOnly();
 
 const SolidFill = goog.require('goog.graphics.SolidFill');
 const testSuite = goog.require('goog.testing.testSuite');

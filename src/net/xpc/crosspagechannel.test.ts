@@ -31,7 +31,6 @@ const xpc = goog.require('goog.net.xpc');
 /** @suppress {extraRequire} Needed for G_testRunner.log() */
 goog.require('goog.testing.jsunit');
 
-
 // Set this to false when working on this test.  It needs to be true for
 // automated testing, as some browsers (eg IE8) choke on the large numbers of
 // iframes this test would otherwise leave active.
@@ -46,7 +45,6 @@ let driver;
 let accessCheckPromise = null;
 
 testSuite({
-
   setUpPage() {
     // This test is insanely slow on IE8 and Safari for some reason.
     TestCase.getActiveTestCase().promiseTimeout = 40 * 1000;
@@ -55,24 +53,22 @@ testSuite({
     const debugDiv = dom.getElement('debugDiv');
     const logger = log.getLogger('goog.net.xpc');
     log.setLevel(logger, Level.ALL);
-    log.addHandler(logger, function(logRecord) {
+    log.addHandler(logger, (logRecord) => {
       const msgElm = dom.createDom(TagName.DIV);
       msgElm.innerHTML = logRecord.getMessage();
       dom.appendChild(debugDiv, msgElm);
     });
 
-    accessCheckPromise = new GoogPromise(function(resolve, reject) {
+    accessCheckPromise = new GoogPromise((resolve, reject) => {
       const accessCheckIframes = [];
 
-      accessCheckIframes.push(
-          create1x1Iframe('nonexistent', 'testdata/i_am_non_existent.html'));
-      window.setTimeout(function() {
-        accessCheckIframes.push(
-            create1x1Iframe('existent', 'testdata/access_checker.html'));
+      accessCheckIframes.push(create1x1Iframe('nonexistent', 'testdata/i_am_non_existent.html'));
+      window.setTimeout(() => {
+        accessCheckIframes.push(create1x1Iframe('existent', 'testdata/access_checker.html'));
       }, 10);
 
       // Called from testdata/access_checker.html
-      window['sameDomainIframeAccessComplete'] = function() {
+      window['sameDomainIframeAccessComplete'] = () => {
         for (let i = 0; i < accessCheckIframes.length; i++) {
           document.body.removeChild(accessCheckIframes[i]);
         }
@@ -80,7 +76,6 @@ testSuite({
       };
     });
   },
-
 
   setUp() {
     driver = new Driver();
@@ -92,30 +87,26 @@ testSuite({
     return accessCheckPromise;
   },
 
-
   tearDown() {
     stubs.reset();
     driver.dispose();
   },
 
-
   testCreateIframeSpecifyId() {
     driver.createPeerIframe('new_iframe');
 
-    return Timer.promise(IFRAME_LOAD_WAIT_MS).then(function() {
+    return Timer.promise(IFRAME_LOAD_WAIT_MS).then(() => {
       driver.checkPeerIframe();
     });
   },
-
 
   testCreateIframeRandomId() {
     driver.createPeerIframe();
 
-    return Timer.promise(IFRAME_LOAD_WAIT_MS).then(function() {
+    return Timer.promise(IFRAME_LOAD_WAIT_MS).then(() => {
       driver.checkPeerIframe();
     });
   },
-
 
   testGetRole() {
     const cfg = {};
@@ -126,11 +117,12 @@ testSuite({
     /** @suppress {visibility} suppression added to enable type checking */
     channel.peerWindowObject_ = window.parent;
     assertEquals(
-        'Channel should use role from the config.', CrossPageChannelRole.OUTER,
-        channel.getRole());
+      'Channel should use role from the config.',
+      CrossPageChannelRole.OUTER,
+      channel.getRole()
+    );
     channel.dispose();
   },
-
 
   // The following batch of tests:
   // * Establishes a peer iframe
@@ -156,101 +148,137 @@ testSuite({
   // V1 peers to v2 is supported, as is replacing the only v2 peer in a
   // connection with a v1.
 
-
   testLifeCycle_v1_v1() {
     return checkLifeCycle(
-        false /* oneSidedHandshake */, 1 /* innerProtocolVersion */,
-        1 /* outerProtocolVersion */, true /* outerFrameReconnectSupported */,
-        true /* innerFrameMigrationSupported */, false /* reverse */);
+      false /* oneSidedHandshake */,
+      1 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      true /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      false /* reverse */
+    );
   },
-
 
   testLifeCycle_v1_v1_rev() {
     return checkLifeCycle(
-        false /* oneSidedHandshake */, 1 /* innerProtocolVersion */,
-        1 /* outerProtocolVersion */, true /* outerFrameReconnectSupported */,
-        true /* innerFrameMigrationSupported */, true /* reverse */);
+      false /* oneSidedHandshake */,
+      1 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      true /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      true /* reverse */
+    );
   },
-
 
   testLifeCycle_v1_v1_onesided() {
     return checkLifeCycle(
-        true /* oneSidedHandshake */, 1 /* innerProtocolVersion */,
-        1 /* outerProtocolVersion */, false /* outerFrameReconnectSupported */,
-        true /* innerFrameMigrationSupported */, false /* reverse */);
+      true /* oneSidedHandshake */,
+      1 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      false /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      false /* reverse */
+    );
   },
-
 
   testLifeCycle_v1_v1_onesided_rev() {
     return checkLifeCycle(
-        true /* oneSidedHandshake */, 1 /* innerProtocolVersion */,
-        1 /* outerProtocolVersion */, false /* outerFrameReconnectSupported */,
-        true /* innerFrameMigrationSupported */, true /* reverse */);
+      true /* oneSidedHandshake */,
+      1 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      false /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      true /* reverse */
+    );
   },
-
 
   testLifeCycle_v1_v2() {
     return checkLifeCycle(
-        false /* oneSidedHandshake */, 1 /* innerProtocolVersion */,
-        2 /* outerProtocolVersion */, true /* outerFrameReconnectSupported */,
-        true /* innerFrameMigrationSupported */, false /* reverse */);
+      false /* oneSidedHandshake */,
+      1 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      true /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      false /* reverse */
+    );
   },
-
 
   testLifeCycle_v1_v2_rev() {
     return checkLifeCycle(
-        false /* oneSidedHandshake */, 1 /* innerProtocolVersion */,
-        2 /* outerProtocolVersion */, true /* outerFrameReconnectSupported */,
-        true /* innerFrameMigrationSupported */, true /* reverse */);
+      false /* oneSidedHandshake */,
+      1 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      true /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      true /* reverse */
+    );
   },
-
 
   testLifeCycle_v1_v2_onesided() {
     return checkLifeCycle(
-        true /* oneSidedHandshake */, 1 /* innerProtocolVersion */,
-        2 /* outerProtocolVersion */, false /* outerFrameReconnectSupported */,
-        true /* innerFrameMigrationSupported */, false /* reverse */);
+      true /* oneSidedHandshake */,
+      1 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      false /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      false /* reverse */
+    );
   },
-
 
   testLifeCycle_v1_v2_onesided_rev() {
     return checkLifeCycle(
-        true /* oneSidedHandshake */, 1 /* innerProtocolVersion */,
-        2 /* outerProtocolVersion */, false /* outerFrameReconnectSupported */,
-        true /* innerFrameMigrationSupported */, true /* reverse */);
+      true /* oneSidedHandshake */,
+      1 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      false /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      true /* reverse */
+    );
   },
-
 
   testLifeCycle_v2_v1() {
     return checkLifeCycle(
-        false /* oneSidedHandshake */, 2 /* innerProtocolVersion */,
-        1 /* outerProtocolVersion */, true /* outerFrameReconnectSupported */,
-        true /* innerFrameMigrationSupported */, false /* reverse */);
+      false /* oneSidedHandshake */,
+      2 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      true /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      false /* reverse */
+    );
   },
-
 
   testLifeCycle_v2_v1_rev() {
     return checkLifeCycle(
-        false /* oneSidedHandshake */, 2 /* innerProtocolVersion */,
-        1 /* outerProtocolVersion */, true /* outerFrameReconnectSupported */,
-        true /* innerFrameMigrationSupported */, true /* reverse */);
+      false /* oneSidedHandshake */,
+      2 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      true /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      true /* reverse */
+    );
   },
-
 
   testLifeCycle_v2_v1_onesided() {
     return checkLifeCycle(
-        true /* oneSidedHandshake */, 2 /* innerProtocolVersion */,
-        1 /* outerProtocolVersion */, false /* outerFrameReconnectSupported */,
-        true /* innerFrameMigrationSupported */, false /* reverse */);
+      true /* oneSidedHandshake */,
+      2 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      false /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      false /* reverse */
+    );
   },
 
   testLifeCycle_v2_v1_onesided_rev() {
     return checkLifeCycle(
-        true /* oneSidedHandshake */, 2 /* innerProtocolVersion */,
-        1 /* outerProtocolVersion */, false /* outerFrameReconnectSupported */,
-        true /* innerFrameMigrationSupported */, true /* reverse */);
+      true /* oneSidedHandshake */,
+      2 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      false /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      true /* reverse */
+    );
   },
-
 
   testLifeCycle_v2_v2() {
     // Test flakes on IE 10+ and Chrome: see b/22873770 and b/18595666.
@@ -259,35 +287,47 @@ testSuite({
     }
 
     return checkLifeCycle(
-        false /* oneSidedHandshake */, 2 /* innerProtocolVersion */,
-        2 /* outerProtocolVersion */, true /* outerFrameReconnectSupported */,
-        false /* innerFrameMigrationSupported */, false /* reverse */);
+      false /* oneSidedHandshake */,
+      2 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      true /* outerFrameReconnectSupported */,
+      false /* innerFrameMigrationSupported */,
+      false /* reverse */
+    );
   },
-
 
   testLifeCycle_v2_v2_rev() {
     return checkLifeCycle(
-        false /* oneSidedHandshake */, 2 /* innerProtocolVersion */,
-        2 /* outerProtocolVersion */, true /* outerFrameReconnectSupported */,
-        false /* innerFrameMigrationSupported */, true /* reverse */);
+      false /* oneSidedHandshake */,
+      2 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      true /* outerFrameReconnectSupported */,
+      false /* innerFrameMigrationSupported */,
+      true /* reverse */
+    );
   },
-
 
   testLifeCycle_v2_v2_onesided() {
     return checkLifeCycle(
-        true /* oneSidedHandshake */, 2 /* innerProtocolVersion */,
-        2 /* outerProtocolVersion */, false /* outerFrameReconnectSupported */,
-        false /* innerFrameMigrationSupported */, false /* reverse */);
+      true /* oneSidedHandshake */,
+      2 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      false /* outerFrameReconnectSupported */,
+      false /* innerFrameMigrationSupported */,
+      false /* reverse */
+    );
   },
-
 
   testLifeCycle_v2_v2_onesided_rev() {
     return checkLifeCycle(
-        true /* oneSidedHandshake */, 2 /* innerProtocolVersion */,
-        2 /* outerProtocolVersion */, false /* outerFrameReconnectSupported */,
-        false /* innerFrameMigrationSupported */, true /* reverse */);
+      true /* oneSidedHandshake */,
+      2 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      false /* outerFrameReconnectSupported */,
+      false /* innerFrameMigrationSupported */,
+      true /* reverse */
+    );
   },
-
 
   // testConnectMismatchedNames have been flaky on IEs.
   // Flakiness is tracked in http://b/18595666
@@ -299,10 +339,11 @@ testSuite({
     }
 
     return checkConnectMismatchedNames(
-        1 /* innerProtocolVersion */, 1 /* outerProtocolVersion */,
-        false /* reverse */);
+      1 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      false /* reverse */
+    );
   },
-
 
   testConnectMismatchedNames_v1_v1_rev() {
     if (browser.isIE()) {
@@ -310,10 +351,11 @@ testSuite({
     }
 
     return checkConnectMismatchedNames(
-        1 /* innerProtocolVersion */, 1 /* outerProtocolVersion */,
-        true /* reverse */);
+      1 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      true /* reverse */
+    );
   },
-
 
   testConnectMismatchedNames_v1_v2() {
     if (browser.isIE()) {
@@ -321,10 +363,11 @@ testSuite({
     }
 
     return checkConnectMismatchedNames(
-        1 /* innerProtocolVersion */, 2 /* outerProtocolVersion */,
-        false /* reverse */);
+      1 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      false /* reverse */
+    );
   },
-
 
   testConnectMismatchedNames_v1_v2_rev() {
     if (browser.isIE()) {
@@ -332,10 +375,11 @@ testSuite({
     }
 
     return checkConnectMismatchedNames(
-        1 /* innerProtocolVersion */, 2 /* outerProtocolVersion */,
-        true /* reverse */);
+      1 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      true /* reverse */
+    );
   },
-
 
   testConnectMismatchedNames_v2_v1() {
     if (browser.isIE()) {
@@ -343,10 +387,11 @@ testSuite({
     }
 
     return checkConnectMismatchedNames(
-        2 /* innerProtocolVersion */, 1 /* outerProtocolVersion */,
-        false /* reverse */);
+      2 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      false /* reverse */
+    );
   },
-
 
   testConnectMismatchedNames_v2_v1_rev() {
     if (browser.isIE()) {
@@ -354,10 +399,11 @@ testSuite({
     }
 
     return checkConnectMismatchedNames(
-        2 /* innerProtocolVersion */, 1 /* outerProtocolVersion */,
-        true /* reverse */);
+      2 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      true /* reverse */
+    );
   },
-
 
   testConnectMismatchedNames_v2_v2() {
     if (browser.isIE()) {
@@ -365,10 +411,11 @@ testSuite({
     }
 
     return checkConnectMismatchedNames(
-        2 /* innerProtocolVersion */, 2 /* outerProtocolVersion */,
-        false /* reverse */);
+      2 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      false /* reverse */
+    );
   },
-
 
   testConnectMismatchedNames_v2_v2_rev() {
     if (browser.isIE()) {
@@ -376,93 +423,80 @@ testSuite({
     }
 
     return checkConnectMismatchedNames(
-        2 /* innerProtocolVersion */, 2 /* outerProtocolVersion */,
-        true /* reverse */);
+      2 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      true /* reverse */
+    );
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testEscapeServiceName() {
     /** @suppress {visibility} suppression added to enable type checking */
     const escape = CrossPageChannel.prototype.escapeServiceName_;
+    assertEquals("Shouldn't escape alphanumeric name", 'fooBar123', escape('fooBar123'));
     assertEquals(
-        'Shouldn\'t escape alphanumeric name', 'fooBar123',
-        escape('fooBar123'));
-    assertEquals(
-        'Shouldn\'t escape most non-alphanumeric characters',
-        '`~!@#$^&*()_-=+ []{}\'";,<.>/?\\',
-        escape('`~!@#$^&*()_-=+ []{}\'";,<.>/?\\'));
-    assertEquals(
-        'Should escape %, |, and :', 'foo%3ABar%7C123%25',
-        escape('foo:Bar|123%'));
+      "Shouldn't escape most non-alphanumeric characters",
+      '`~!@#$^&*()_-=+ []{}\'";,<.>/?\\',
+      escape('`~!@#$^&*()_-=+ []{}\'";,<.>/?\\')
+    );
+    assertEquals('Should escape %, |, and :', 'foo%3ABar%7C123%25', escape('foo:Bar|123%'));
     assertEquals('Should escape tp', '%25tp', escape('tp'));
     assertEquals('Should escape %tp', '%25%25tp', escape('%tp'));
     assertEquals('Should not escape stp', 'stp', escape('stp'));
     assertEquals('Should not escape s%tp', 's%25tp', escape('s%tp'));
   },
 
-
   testSameDomainCheck_noMessageOrigin() {
-    const channel = new CrossPageChannel(
-        object.create(CfgFields.PEER_HOSTNAME, 'http://foo.com'));
+    const channel = new CrossPageChannel(object.create(CfgFields.PEER_HOSTNAME, 'http://foo.com'));
     assertTrue(channel.isMessageOriginAcceptable(undefined));
   },
-
 
   testSameDomainCheck_noPeerHostname() {
     const channel = new CrossPageChannel({});
     assertTrue(channel.isMessageOriginAcceptable('http://foo.com'));
   },
 
-
   testSameDomainCheck_unconfigured() {
     const channel = new CrossPageChannel({});
     assertTrue(channel.isMessageOriginAcceptable(undefined));
   },
 
-
   testSameDomainCheck_originsMatch() {
-    const channel = new CrossPageChannel(
-        object.create(CfgFields.PEER_HOSTNAME, 'http://foo.com'));
+    const channel = new CrossPageChannel(object.create(CfgFields.PEER_HOSTNAME, 'http://foo.com'));
     assertTrue(channel.isMessageOriginAcceptable('http://foo.com'));
   },
 
-
   testSameDomainCheck_originsMismatch() {
-    const channel = new CrossPageChannel(
-        object.create(CfgFields.PEER_HOSTNAME, 'http://foo.com'));
+    const channel = new CrossPageChannel(object.create(CfgFields.PEER_HOSTNAME, 'http://foo.com'));
     assertFalse(channel.isMessageOriginAcceptable('http://nasty.com'));
   },
-
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testUnescapeServiceName() {
     /** @suppress {visibility} suppression added to enable type checking */
     const unescape = CrossPageChannel.prototype.unescapeServiceName_;
+    assertEquals("Shouldn't modify alphanumeric name", 'fooBar123', unescape('fooBar123'));
     assertEquals(
-        'Shouldn\'t modify alphanumeric name', 'fooBar123',
-        unescape('fooBar123'));
-    assertEquals(
-        'Shouldn\'t modify most non-alphanumeric characters',
-        '`~!@#$^&*()_-=+ []{}\'";,<.>/?\\',
-        unescape('`~!@#$^&*()_-=+ []{}\'";,<.>/?\\'));
-    assertEquals(
-        'Should unescape URL-escapes', 'foo:Bar|123%',
-        unescape('foo%3ABar%7C123%25'));
+      "Shouldn't modify most non-alphanumeric characters",
+      '`~!@#$^&*()_-=+ []{}\'";,<.>/?\\',
+      unescape('`~!@#$^&*()_-=+ []{}\'";,<.>/?\\')
+    );
+    assertEquals('Should unescape URL-escapes', 'foo:Bar|123%', unescape('foo%3ABar%7C123%25'));
     assertEquals('Should unescape tp', 'tp', unescape('%25tp'));
     assertEquals('Should unescape %tp', '%tp', unescape('%25%25tp'));
     assertEquals('Should not escape stp', 'stp', unescape('stp'));
     assertEquals('Should not escape s%tp', 's%tp', unescape('s%25tp'));
   },
 
-
   async testDisposeImmediate() {
     // Given
     driver.createPeerIframe(
-        'new_iframe',
-        /* oneSidedHandshake= */ false,
-        /* innerProtocolVersion= */ 2,
-        /* outerProtocolVersion= */ 2,
-        /* opt_randomChannelNames= */ true);
+      'new_iframe',
+      /* oneSidedHandshake= */ false,
+      /* innerProtocolVersion= */ 2,
+      /* outerProtocolVersion= */ 2,
+      /* opt_randomChannelNames= */ true
+    );
 
     assertEquals(driver.getChannel().state_, ChannelStates.NOT_CONNECTED);
     assertNull(driver.getChannel().transport_);
@@ -479,11 +513,12 @@ testSuite({
   async testDisposeBeforePeerNotification() {
     // Given
     driver.createPeerIframe(
-        'new_iframe',
-        /* oneSidedHandshake= */ false,
-        /* innerProtocolVersion= */ 2,
-        /* outerProtocolVersion= */ 2,
-        /* opt_randomChannelNames= */ true);
+      'new_iframe',
+      /* oneSidedHandshake= */ false,
+      /* innerProtocolVersion= */ 2,
+      /* outerProtocolVersion= */ 2,
+      /* opt_randomChannelNames= */ true
+    );
 
     await driver.connectAndWaitForPeer();
 
@@ -500,11 +535,7 @@ testSuite({
     // Let any errors caused by erroneous retries happen.
     await Timer.promise(2000);
   },
-
-
-
 });
-
 
 /**
  * @param {string} iframeId
@@ -530,14 +561,25 @@ function create1x1Iframe(iframeId, src) {
  * @return {!GoogPromise<undefined>}
  */
 function checkLifeCycle(
-    oneSidedHandshake, innerProtocolVersion, outerProtocolVersion,
-    outerFrameReconnectSupported, innerFrameMigrationSupported, reverse) {
+  oneSidedHandshake,
+  innerProtocolVersion,
+  outerProtocolVersion,
+  outerFrameReconnectSupported,
+  innerFrameMigrationSupported,
+  reverse
+) {
   driver.createPeerIframe(
-      'new_iframe', oneSidedHandshake, innerProtocolVersion,
-      outerProtocolVersion);
+    'new_iframe',
+    oneSidedHandshake,
+    innerProtocolVersion,
+    outerProtocolVersion
+  );
   return driver.connect(
-      true /* fullLifeCycleTest */, outerFrameReconnectSupported,
-      innerFrameMigrationSupported, reverse);
+    true /* fullLifeCycleTest */,
+    outerFrameReconnectSupported,
+    innerFrameMigrationSupported,
+    reverse
+  );
 }
 
 /**
@@ -546,17 +588,21 @@ function checkLifeCycle(
  * @param {boolean} reverse
  * @return {!GoogPromise<undefined>}
  */
-function checkConnectMismatchedNames(
-    innerProtocolVersion, outerProtocolVersion, reverse) {
+function checkConnectMismatchedNames(innerProtocolVersion, outerProtocolVersion, reverse) {
   driver.createPeerIframe(
-      'new_iframe', false /* oneSidedHandshake */, innerProtocolVersion,
-      outerProtocolVersion, true /* opt_randomChannelNames */);
+    'new_iframe',
+    false /* oneSidedHandshake */,
+    innerProtocolVersion,
+    outerProtocolVersion,
+    true /* opt_randomChannelNames */
+  );
   return driver.connect(
-      false /* fullLifeCycleTest */, false /* outerFrameReconnectSupported */,
-      false /* innerFrameMigrationSupported */, reverse /* reverse */);
+    false /* fullLifeCycleTest */,
+    false /* outerFrameReconnectSupported */,
+    false /* innerFrameMigrationSupported */,
+    reverse /* reverse */
+  );
 }
-
-
 
 /**
  * Driver for the tests for CrossPageChannel.
@@ -677,9 +723,13 @@ const Driver = class extends Disposable {
    * @suppress {missingReturn} suppression added to enable type checking
    */
   setConfiguration_(
-      opt_iframeId, opt_oneSidedHandshake, opt_channelName,
-      opt_innerProtocolVersion, opt_outerProtocolVersion,
-      opt_randomChannelNames) {
+    opt_iframeId,
+    opt_oneSidedHandshake,
+    opt_channelName,
+    opt_innerProtocolVersion,
+    opt_outerProtocolVersion,
+    opt_randomChannelNames
+  ) {
     const cfg = {};
     if (opt_iframeId) {
       cfg[CfgFields.IFRAME_ID] = opt_iframeId;
@@ -694,16 +744,14 @@ const Driver = class extends Disposable {
     cfg[CfgFields.ONE_SIDED_HANDSHAKE] = !!opt_oneSidedHandshake;
     cfg[CfgFields.NATIVE_TRANSPORT_PROTOCOL_VERSION] = opt_outerProtocolVersion;
     function resolveUri(fieldName) {
-      cfg[fieldName] =
-          Uri.resolve(window.location.href, cfg[fieldName]).toString();
+      cfg[fieldName] = Uri.resolve(window.location.href, cfg[fieldName]).toString();
     }
     resolveUri(CfgFields.PEER_URI);
     resolveUri(CfgFields.LOCAL_POLL_URI);
     resolveUri(CfgFields.PEER_POLL_URI);
     this.outerFrameCfg_ = cfg;
     this.innerFrameCfg_ = object.clone(cfg);
-    this.innerFrameCfg_[CfgFields.NATIVE_TRANSPORT_PROTOCOL_VERSION] =
-        opt_innerProtocolVersion;
+    this.innerFrameCfg_[CfgFields.NATIVE_TRANSPORT_PROTOCOL_VERSION] = opt_innerProtocolVersion;
   }
 
   /**
@@ -718,8 +766,7 @@ const Driver = class extends Disposable {
     }
     this.channel_ = new CrossPageChannel(this.outerFrameCfg_);
     this.channel_.registerService('echo', goog.bind(this.echoHandler_, this));
-    this.channel_.registerService(
-        'response', goog.bind(this.responseHandler_, this));
+    this.channel_.registerService('response', goog.bind(this.responseHandler_, this));
 
     return this.channel_.name;
   }
@@ -773,27 +820,31 @@ const Driver = class extends Disposable {
    * @suppress {missingReturn} suppression added to enable type checking
    */
   createPeerIframe(
-      opt_iframeId, opt_oneSidedHandshake, opt_innerProtocolVersion,
-      opt_outerProtocolVersion, opt_randomChannelNames) {
+    opt_iframeId,
+    opt_oneSidedHandshake,
+    opt_innerProtocolVersion,
+    opt_outerProtocolVersion,
+    opt_randomChannelNames
+  ) {
     let expectedIframeId;
 
     if (opt_iframeId) {
       expectedIframeId = opt_iframeId = opt_iframeId + uniqueId++;
     } else {
       // Have createPeerIframe() generate an ID
-      stubs.set(xpc, 'getRandomString', function(length) {
-        return '' + length;
-      });
+      stubs.set(xpc, 'getRandomString', (length) => '' + length);
       expectedIframeId = 'xpcpeer4';
     }
-    assertNull(
-        'element[id=' + expectedIframeId + '] exists',
-        dom.getElement(expectedIframeId));
+    assertNull('element[id=' + expectedIframeId + '] exists', dom.getElement(expectedIframeId));
 
     this.setConfiguration_(
-        opt_iframeId, opt_oneSidedHandshake, undefined /* opt_channelName */,
-        opt_innerProtocolVersion, opt_outerProtocolVersion,
-        opt_randomChannelNames);
+      opt_iframeId,
+      opt_oneSidedHandshake,
+      undefined /* opt_channelName */,
+      opt_innerProtocolVersion,
+      opt_outerProtocolVersion,
+      opt_randomChannelNames
+    );
     const channelName = this.createChannel_();
     this.initialOuterChannelName_ = channelName;
     this.iframe_ = this.channel_.createPeerIframe(document.body);
@@ -820,9 +871,7 @@ const Driver = class extends Disposable {
    * @return {!GoogPromise<undefined>}
    * @suppress {checkTypes} suppression added to enable type checking
    */
-  connect(
-      fullLifeCycleTest, outerFrameReconnectSupported,
-      innerFrameMigrationSupported, reverse) {
+  connect(fullLifeCycleTest, outerFrameReconnectSupported, innerFrameMigrationSupported, reverse) {
     if (!this.isTransportTestable_()) {
       return;
     }
@@ -830,13 +879,17 @@ const Driver = class extends Disposable {
     // Set the criteria for the initial handshake portion of the test.
     this.reinitializePromises_();
 
-    this.innerFrameResponseReceived_.promise.then(
-        this.checkChannelNames_, null, this);
+    this.innerFrameResponseReceived_.promise.then(this.checkChannelNames_, null, this);
 
     if (fullLifeCycleTest) {
-      this.innerFrameResponseReceived_.promise.then(goog.bind(
-          this.testReconnects_, this, outerFrameReconnectSupported,
-          innerFrameMigrationSupported));
+      this.innerFrameResponseReceived_.promise.then(
+        goog.bind(
+          this.testReconnects_,
+          this,
+          outerFrameReconnectSupported,
+          innerFrameMigrationSupported
+        )
+      );
     }
 
     this.continueConnect_(reverse);
@@ -861,15 +914,19 @@ const Driver = class extends Disposable {
     }
 
     const connectFromOuterFrame = goog.bind(
-        this.channel_.connect, this.channel_,
-        goog.bind(this.outerFrameConnected_, this));
+      this.channel_.connect,
+      this.channel_,
+      goog.bind(this.outerFrameConnected_, this)
+    );
     const innerConfig = this.innerFrameCfg_;
     /**
      * @suppress {missingProperties} suppression added to enable type checking
      */
     const connectFromInnerFrame = goog.bind(
-        this.getInnerPeer_().instantiateChannel, this.getInnerPeer_(),
-        innerConfig);
+      this.getInnerPeer_().instantiateChannel,
+      this.getInnerPeer_(),
+      innerConfig
+    );
 
     // Take control of the timing and reverse of each frame's first SETUP call.
     // If these happen to fire right on top of each other, that tends to mask
@@ -883,7 +940,7 @@ const Driver = class extends Disposable {
    * @private
    */
   outerFrameConnected_() {
-    const payload = this.outerFrameEchoPayload_ = xpc.getRandomString(10);
+    const payload = (this.outerFrameEchoPayload_ = xpc.getRandomString(10));
     this.channel_.send('echo', payload);
   }
 
@@ -892,7 +949,7 @@ const Driver = class extends Disposable {
    * @suppress {missingProperties} suppression added to enable type checking
    */
   innerFrameConnected() {
-    const payload = this.innerFrameEchoPayload_ = xpc.getRandomString(10);
+    const payload = (this.innerFrameEchoPayload_ = xpc.getRandomString(10));
     this.getInnerPeer_().sendEcho(payload);
   }
 
@@ -951,16 +1008,14 @@ const Driver = class extends Disposable {
   testReconnects_(outerFrameReconnectSupported, innerFrameMigrationSupported) {
     G_testRunner.log('Performing inner frame reconnect');
     this.reinitializePromises_();
-    this.innerFrameResponseReceived_.promise.then(
-        this.checkChannelNames_, null, this);
+    this.innerFrameResponseReceived_.promise.then(this.checkChannelNames_, null, this);
 
     if (outerFrameReconnectSupported) {
-      this.innerFrameResponseReceived_.promise.then(goog.bind(
-          this.performOuterFrameReconnect_, this,
-          innerFrameMigrationSupported));
-    } else if (innerFrameMigrationSupported) {
       this.innerFrameResponseReceived_.promise.then(
-          this.migrateInnerFrame_, null, this);
+        goog.bind(this.performOuterFrameReconnect_, this, innerFrameMigrationSupported)
+      );
+    } else if (innerFrameMigrationSupported) {
+      this.innerFrameResponseReceived_.promise.then(this.migrateInnerFrame_, null, this);
     }
 
     this.performInnerFrameReconnect_();
@@ -1012,11 +1067,9 @@ const Driver = class extends Disposable {
 
     G_testRunner.log('Reconnecting outer frame');
     this.reinitializePromises_();
-    this.innerFrameResponseReceived_.promise.then(
-        this.checkChannelNames_, null, this);
+    this.innerFrameResponseReceived_.promise.then(this.checkChannelNames_, null, this);
     if (innerFrameMigrationSupported) {
-      this.outerFrameResponseReceived_.promise.then(
-          this.migrateInnerFrame_, null, this);
+      this.outerFrameResponseReceived_.promise.then(this.migrateInnerFrame_, null, this);
     }
     this.channel_.connect(goog.bind(this.outerFrameConnected_, this));
   }
@@ -1028,12 +1081,10 @@ const Driver = class extends Disposable {
   migrateInnerFrame_() {
     G_testRunner.log('Migrating inner frame');
     this.reinitializePromises_();
-    const innerFrameProtoVersion =
-        this.innerFrameCfg_[CfgFields.NATIVE_TRANSPORT_PROTOCOL_VERSION];
-    this.innerFrameResponseReceived_.promise.then(
-        this.checkChannelNames_, null, this);
+    const innerFrameProtoVersion = this.innerFrameCfg_[CfgFields.NATIVE_TRANSPORT_PROTOCOL_VERSION];
+    this.innerFrameResponseReceived_.promise.then(this.checkChannelNames_, null, this);
     this.innerFrameCfg_[CfgFields.NATIVE_TRANSPORT_PROTOCOL_VERSION] =
-        innerFrameProtoVersion == 1 ? 2 : 1;
+      innerFrameProtoVersion == 1 ? 2 : 1;
     this.performInnerFrameReconnect_();
   }
 
@@ -1074,7 +1125,8 @@ const Driver = class extends Disposable {
     this.channel_.connect();
     // Set a listener for when the peer exists.
     return new Promise(
-        /** @suppress {visibility} suppression added to enable type checking */
-        (res) => this.channel_.peerWindowDeferred_.addCallback(res));
+      /** @suppress {visibility} suppression added to enable type checking */
+      (res) => this.channel_.peerWindowDeferred_.addCallback(res)
+    );
   }
 };

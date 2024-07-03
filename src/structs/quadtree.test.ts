@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.structs.QuadTreeTest');
-goog.setTestOnly();
 
 const QuadTree = goog.require('goog.structs.QuadTree');
 const structs = goog.require('goog.structs');
@@ -24,11 +23,9 @@ function getTree() {
 // Helper functions
 
 function assertFails(context, fn, args) {
-  assertThrows(
-      'Exception expected from ' + fn.toString() + ' with arguments ' + args,
-      () => {
-        fn.apply(context, args);
-      });
+  assertThrows('Exception expected from ' + fn.toString() + ' with arguments ' + args, () => {
+    fn.apply(context, args);
+  });
 }
 
 function assertTreesChildrenAreNull(qt) {
@@ -57,8 +54,10 @@ testSuite({
     const values = getTree().getValues();
     const valueString = values.sort().join(',');
     assertEquals(
-        'Sorted values should be Bar,Baz,Bing,Bong,Foo',
-        'Bar,Baz,Bing,Bong,Foo', valueString);
+      'Sorted values should be Bar,Baz,Bing,Bong,Foo',
+      'Bar,Baz,Bing,Bong,Foo',
+      valueString
+    );
   },
 
   testContains() {
@@ -97,7 +96,7 @@ testSuite({
     assertEquals('(5, 20) should be removed', 'Baz', qt.remove(47, 96));
     assertEquals('(5, 20) should be removed', 'Bing', qt.remove(50, 50));
     assertEquals('(5, 20) should be removed', 'Bong', qt.remove(12, 0));
-    assertNull('(6, 6) wasn\'t there to remove', qt.remove(6, 6));
+    assertNull("(6, 6) wasn't there to remove", qt.remove(6, 6));
     assertTrue('Tree should be empty', qt.isEmpty());
     assertTreesChildrenAreNull(qt);
   },
@@ -106,9 +105,7 @@ testSuite({
     const qt = getTree();
     qt.clear();
     assertTrue(qt.isEmpty());
-    assertEquals(
-        'Root should  be empty node', QuadTree.NodeType.EMPTY,
-        qt.getRootNode().nodeType);
+    assertEquals('Root should  be empty node', QuadTree.NodeType.EMPTY, qt.getRootNode().nodeType);
     assertTreesChildrenAreNull(qt);
   },
 
@@ -130,8 +127,7 @@ testSuite({
     // Add a point to the NW quadrant.
     qt.set(25, 25, 'first');
 
-    assertEquals(
-        'Root should be a leaf node.', QuadTree.NodeType.LEAF, root.nodeType);
+    assertEquals('Root should be a leaf node.', QuadTree.NodeType.LEAF, root.nodeType);
     assertTreesChildrenAreNull(qt);
 
     assertEquals('first', root.point.value);
@@ -139,9 +135,7 @@ testSuite({
     // Add another point in the NW quadrant
     qt.set(25, 30, 'second');
 
-    assertEquals(
-        'Root should now be a pointer.', QuadTree.NodeType.POINTER,
-        root.nodeType);
+    assertEquals('Root should now be a pointer.', QuadTree.NodeType.POINTER, root.nodeType);
     assertNotNull('NE should be not be null', root.ne);
     assertNotNull('NW should be not be null', root.nw);
     assertNotNull('SE should be not be null', root.se);
@@ -152,8 +146,10 @@ testSuite({
     qt.remove(25, 30);
 
     assertEquals(
-        'Root should have been rebalanced and be a leaf node.',
-        QuadTree.NodeType.LEAF, root.nodeType);
+      'Root should have been rebalanced and be a leaf node.',
+      QuadTree.NodeType.LEAF,
+      root.nodeType
+    );
     assertTreesChildrenAreNull(qt);
     assertEquals('first', root.point.value);
   },

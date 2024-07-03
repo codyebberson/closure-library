@@ -34,7 +34,7 @@ goog.require('goog.locale');
 
 /* ~!@# genmethods.scriptToLanguages() #@!~ */
 goog.locale.scriptToLanguages = {
-  'Arab': [
+  Arab: [
     'prd',
     'doi',
     'lah',
@@ -54,28 +54,15 @@ goog.locale.scriptToLanguages = {
     'ha',
     'ky',
     'ug',
-    'sd'
+    'sd',
   ],
-  'Armn': ['hy'],
-  'Beng': [
-    'mni',
-    'grt',
-    'bn',
-    'syl',
-    'as',
-    'ril',
-    'ccp'
-  ],
-  'Blis': ['zbl'],
-  'Cans': [
-    'cr',
-    'iu',
-    'cwd',
-    'crk'
-  ],
-  'Cham': ['cja'],
-  'Cher': ['chr'],
-  'Cyrl': [
+  Armn: ['hy'],
+  Beng: ['mni', 'grt', 'bn', 'syl', 'as', 'ril', 'ccp'],
+  Blis: ['zbl'],
+  Cans: ['cr', 'iu', 'cwd', 'crk'],
+  Cham: ['cja'],
+  Cher: ['chr'],
+  Cyrl: [
     'ab',
     'rom',
     'mns',
@@ -135,9 +122,9 @@ goog.locale.scriptToLanguages = {
     'sr',
     'lbe',
     'ky',
-    'os'
+    'os',
   ],
-  'Deva': [
+  Deva: [
     'btv',
     'kfr',
     'bho',
@@ -164,38 +151,22 @@ goog.locale.scriptToLanguages = {
     'bft',
     'new',
     'bfy',
-    'sd'
+    'sd',
   ],
-  'Ethi': [
-    'byn',
-    'wal',
-    'ti',
-    'tig',
-    'am'
-  ],
-  'Geor': ['ka'],
-  'Grek': ['el'],
-  'Gujr': ['gu'],
-  'Guru': ['pa'],
-  'Hans': [
-    'zh',
-    'za'
-  ],
-  'Hant': ['zh'],
-  'Hebr': [
-    'lad',
-    'yi',
-    'he'
-  ],
-  'Jpan': ['ja'],
-  'Khmr': ['km'],
-  'Knda': [
-    'kn',
-    'tcy'
-  ],
-  'Kore': ['ko'],
-  'Laoo': ['lo'],
-  'Latn': [
+  Ethi: ['byn', 'wal', 'ti', 'tig', 'am'],
+  Geor: ['ka'],
+  Grek: ['el'],
+  Gujr: ['gu'],
+  Guru: ['pa'],
+  Hans: ['zh', 'za'],
+  Hant: ['zh'],
+  Hebr: ['lad', 'yi', 'he'],
+  Jpan: ['ja'],
+  Khmr: ['km'],
+  Knda: ['kn', 'tcy'],
+  Kore: ['ko'],
+  Laoo: ['lo'],
+  Latn: [
     'gv',
     'sco',
     'scn',
@@ -423,52 +394,25 @@ goog.locale.scriptToLanguages = {
     'sl',
     'sg',
     'tiv',
-    'se'
+    'se',
   ],
-  'Lepc': ['lep'],
-  'Limb': ['lif'],
-  'Mlym': ['ml'],
-  'Mong': [
-    'mnc',
-    'mn'
-  ],
-  'Mymr': [
-    'my',
-    'kht',
-    'shn',
-    'mnw'
-  ],
-  'Nkoo': [
-    'nqo',
-    'emk'
-  ],
-  'Orya': ['or'],
-  'Sinh': ['si'],
-  'Tale': ['tdd'],
-  'Talu': ['khb'],
-  'Taml': [
-    'bfq',
-    'ta'
-  ],
-  'Telu': [
-    'te',
-    'gon',
-    'lmn'
-  ],
-  'Tfng': ['tzm'],
-  'Thaa': ['dv'],
-  'Thai': [
-    'tts',
-    'lwl',
-    'th',
-    'kdt',
-    'lcp'
-  ],
-  'Tibt': [
-    'bo',
-    'dz'
-  ],
-  'Yiii': ['ii'],
-  'und': ['sat']
+  Lepc: ['lep'],
+  Limb: ['lif'],
+  Mlym: ['ml'],
+  Mong: ['mnc', 'mn'],
+  Mymr: ['my', 'kht', 'shn', 'mnw'],
+  Nkoo: ['nqo', 'emk'],
+  Orya: ['or'],
+  Sinh: ['si'],
+  Tale: ['tdd'],
+  Talu: ['khb'],
+  Taml: ['bfq', 'ta'],
+  Telu: ['te', 'gon', 'lmn'],
+  Tfng: ['tzm'],
+  Thaa: ['dv'],
+  Thai: ['tts', 'lwl', 'th', 'kdt', 'lcp'],
+  Tibt: ['bo', 'dz'],
+  Yiii: ['ii'],
+  und: ['sat'],
 };
 /* ~!@# END #@!~ */

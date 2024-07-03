@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.debug.asyncStackTagTest');
-goog.setTestOnly();
 
 const asyncStackTag = goog.require('goog.debug.asyncStackTag');
 const recordFunction = goog.require('goog.testing.recordFunction');

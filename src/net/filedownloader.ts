@@ -48,8 +48,6 @@ goog.requireType('goog.fs.FileEntry');
 goog.requireType('goog.fs.FileWriter');
 goog.requireType('goog.net.ErrorCode');
 
-
-
 /**
  * A class for downloading remote files and storing them locally using the
  * HTML5 filesystem API.
@@ -63,8 +61,7 @@ goog.requireType('goog.net.ErrorCode');
  * @extends {goog.Disposable}
  * @final
  */
-goog.net.FileDownloader = function(dir, opt_pool) {
-  'use strict';
+goog.net.FileDownloader = function (dir, opt_pool) {
   goog.net.FileDownloader.base(this, 'constructor');
 
   /**
@@ -97,7 +94,6 @@ goog.net.FileDownloader = function(dir, opt_pool) {
 };
 goog.inherits(goog.net.FileDownloader, goog.Disposable);
 
-
 /**
  * Download a remote file and save its contents to the filesystem. A given file
  * is uniquely identified by its URL string; this means that the relative and
@@ -120,8 +116,7 @@ goog.inherits(goog.net.FileDownloader, goog.Disposable);
  * @param {string} url The URL of the file to download.
  * @return {!goog.async.Deferred} The deferred result blob.
  */
-goog.net.FileDownloader.prototype.download = function(url) {
-  'use strict';
+goog.net.FileDownloader.prototype.download = function (url) {
   if (this.isDownloading(url)) {
     return this.downloads_[url].deferred.branch(true /* opt_propagateCancel */);
   }
@@ -131,7 +126,6 @@ goog.net.FileDownloader.prototype.download = function(url) {
   this.pool_.getObject(goog.bind(this.gotXhr_, this, download));
   return download.deferred.branch(true /* opt_propagateCancel */);
 };
-
 
 /**
  * Return a Deferred that will fire once no download is active for a given URL.
@@ -143,12 +137,10 @@ goog.net.FileDownloader.prototype.download = function(url) {
  * @return {!goog.async.Deferred} The Deferred that will fire when the download
  *     is complete.
  */
-goog.net.FileDownloader.prototype.waitForDownload = function(url) {
-  'use strict';
+goog.net.FileDownloader.prototype.waitForDownload = function (url) {
   const deferred = new goog.async.Deferred();
   if (this.isDownloading(url)) {
-    this.downloads_[url].deferred.addBoth(function() {
-      'use strict';
+    this.downloads_[url].deferred.addBoth(() => {
       deferred.callback(null);
     }, this);
   } else {
@@ -157,18 +149,15 @@ goog.net.FileDownloader.prototype.waitForDownload = function(url) {
   return deferred;
 };
 
-
 /**
  * Returns whether or not there is an active download for a given URL.
  *
  * @param {string} url The URL of the download to check.
  * @return {boolean} Whether or not there is an active download for the URL.
  */
-goog.net.FileDownloader.prototype.isDownloading = function(url) {
-  'use strict';
+goog.net.FileDownloader.prototype.isDownloading = function (url) {
   return url in this.downloads_;
 };
-
 
 /**
  * Load a downloaded blob from the filesystem. Will fire a deferred error if the
@@ -179,14 +168,9 @@ goog.net.FileDownloader.prototype.isDownloading = function(url) {
  *     passed the blob. If a file API error occurs while loading the blob, that
  *     error will be passed to the errback.
  */
-goog.net.FileDownloader.prototype.getDownloadedBlob = function(url) {
-  'use strict';
-  return this.getFile_(url).addCallback(function(fileEntry) {
-    'use strict';
-    return fileEntry.file();
-  });
+goog.net.FileDownloader.prototype.getDownloadedBlob = function (url) {
+  return this.getFile_(url).addCallback((fileEntry) => fileEntry.file());
 };
-
 
 /**
  * Get the local filesystem: URL for a downloaded file. This is different from
@@ -205,14 +189,9 @@ goog.net.FileDownloader.prototype.getDownloadedBlob = function(url) {
  *     will be passed the URL. If a file API error occurs while loading the
  *     blob, that error will be passed to the errback.
  */
-goog.net.FileDownloader.prototype.getLocalUrl = function(url) {
-  'use strict';
-  return this.getFile_(url).addCallback(function(fileEntry) {
-    'use strict';
-    return fileEntry.toUrl();
-  });
+goog.net.FileDownloader.prototype.getLocalUrl = function (url) {
+  return this.getFile_(url).addCallback((fileEntry) => fileEntry.toUrl());
 };
-
 
 /**
  * Return (deferred) whether or not a URL has been downloaded. Will fire a
@@ -224,16 +203,13 @@ goog.net.FileDownloader.prototype.getLocalUrl = function(url) {
  *     existence of the downloaded URL, that error will be passed to the
  *     errback.
  */
-goog.net.FileDownloader.prototype.isDownloaded = function(url) {
-  'use strict';
+goog.net.FileDownloader.prototype.isDownloaded = function (url) {
   const deferred = new goog.async.Deferred();
   const blobDeferred = this.getDownloadedBlob(url);
-  blobDeferred.addCallback(function() {
-    'use strict';
+  blobDeferred.addCallback(() => {
     deferred.callback(true);
   });
-  blobDeferred.addErrback(function(err) {
-    'use strict';
+  blobDeferred.addErrback((err) => {
     if (err.name == goog.fs.Error.ErrorName.NOT_FOUND) {
       deferred.callback(false);
     } else {
@@ -242,7 +218,6 @@ goog.net.FileDownloader.prototype.isDownloaded = function(url) {
   });
   return deferred;
 };
-
 
 /**
  * Remove a URL from the FileDownloader.
@@ -255,15 +230,11 @@ goog.net.FileDownloader.prototype.isDownloaded = function(url) {
  * @return {!goog.async.Deferred} The deferred used for registering callbacks on
  *     success or on error.
  */
-goog.net.FileDownloader.prototype.remove = function(url) {
-  'use strict';
-  return this.getDir_(url, goog.fs.DirectoryEntry.Behavior.DEFAULT)
-      .addCallback(function(dir) {
-        'use strict';
-        return dir.removeRecursively();
-      });
+goog.net.FileDownloader.prototype.remove = function (url) {
+  return this.getDir_(url, goog.fs.DirectoryEntry.Behavior.DEFAULT).addCallback((dir) =>
+    dir.removeRecursively()
+  );
 };
-
 
 /**
  * Save a blob for a given URL. This works just as through the blob were
@@ -285,23 +256,17 @@ goog.net.FileDownloader.prototype.remove = function(url) {
  *     Deferred. The objects passed to the errback will be
  *     {@link goog.net.FileDownloader.Error}s.
  */
-goog.net.FileDownloader.prototype.setBlob = function(url, blob, opt_name) {
-  'use strict';
+goog.net.FileDownloader.prototype.setBlob = function (url, blob, opt_name) {
   const name = this.sanitize_(opt_name || this.urlToName_(url));
   const download = new goog.net.FileDownloader.Download_(url, this);
   this.downloads_[url] = download;
   download.blob = blob;
   this.getDir_(download.url, goog.fs.DirectoryEntry.Behavior.CREATE_EXCLUSIVE)
-      .addCallback(function(dir) {
-        'use strict';
-        return dir.getFile(
-            name, goog.fs.DirectoryEntry.Behavior.CREATE_EXCLUSIVE);
-      })
-      .addCallback(goog.bind(this.fileSuccess_, this, download))
-      .addErrback(goog.bind(this.error_, this, download));
+    .addCallback((dir) => dir.getFile(name, goog.fs.DirectoryEntry.Behavior.CREATE_EXCLUSIVE))
+    .addCallback(goog.bind(this.fileSuccess_, this, download))
+    .addErrback(goog.bind(this.error_, this, download));
   return download.deferred.branch(true /* opt_propagateCancel */);
 };
-
 
 /**
  * The callback called when an XHR becomes available from the XHR pool.
@@ -311,27 +276,28 @@ goog.net.FileDownloader.prototype.setBlob = function(url, blob, opt_name) {
  * @param {!goog.net.XhrIo} xhr The XhrIo object for downloading the page.
  * @private
  */
-goog.net.FileDownloader.prototype.gotXhr_ = function(download, xhr) {
-  'use strict';
+goog.net.FileDownloader.prototype.gotXhr_ = function (download, xhr) {
   if (download.cancelled) {
     this.freeXhr_(xhr);
     return;
   }
 
   this.eventHandler_.listen(
-      xhr, goog.net.EventType.SUCCESS,
-      goog.bind(this.xhrSuccess_, this, download));
+    xhr,
+    goog.net.EventType.SUCCESS,
+    goog.bind(this.xhrSuccess_, this, download)
+  );
   this.eventHandler_.listen(
-      xhr, [goog.net.EventType.ERROR, goog.net.EventType.ABORT],
-      goog.bind(this.error_, this, download));
-  this.eventHandler_.listen(
-      xhr, goog.net.EventType.READY, goog.bind(this.freeXhr_, this, xhr));
+    xhr,
+    [goog.net.EventType.ERROR, goog.net.EventType.ABORT],
+    goog.bind(this.error_, this, download)
+  );
+  this.eventHandler_.listen(xhr, goog.net.EventType.READY, goog.bind(this.freeXhr_, this, xhr));
 
   download.xhr = xhr;
   xhr.setResponseType(goog.net.XhrIo.ResponseType.ARRAY_BUFFER);
   xhr.send(download.url);
 };
-
 
 /**
  * The callback called when an XHR succeeds in downloading a remote file.
@@ -340,14 +306,12 @@ goog.net.FileDownloader.prototype.gotXhr_ = function(download, xhr) {
  *     this download.
  * @private
  */
-goog.net.FileDownloader.prototype.xhrSuccess_ = function(download) {
-  'use strict';
+goog.net.FileDownloader.prototype.xhrSuccess_ = function (download) {
   if (download.cancelled) {
     return;
   }
 
-  const name = this.sanitize_(this.getName_(
-      /** @type {!goog.net.XhrIo} */ (download.xhr)));
+  const name = this.sanitize_(this.getName_(/** @type {!goog.net.XhrIo} */ (download.xhr)));
   const resp = /** @type {ArrayBuffer} */ (download.xhr.getResponse());
   if (!resp) {
     // This should never happen - it indicates the XHR hasn't completed, has
@@ -362,15 +326,10 @@ goog.net.FileDownloader.prototype.xhrSuccess_ = function(download) {
   delete download.xhr;
 
   this.getDir_(download.url, goog.fs.DirectoryEntry.Behavior.CREATE_EXCLUSIVE)
-      .addCallback(function(dir) {
-        'use strict';
-        return dir.getFile(
-            name, goog.fs.DirectoryEntry.Behavior.CREATE_EXCLUSIVE);
-      })
-      .addCallback(goog.bind(this.fileSuccess_, this, download))
-      .addErrback(goog.bind(this.error_, this, download));
+    .addCallback((dir) => dir.getFile(name, goog.fs.DirectoryEntry.Behavior.CREATE_EXCLUSIVE))
+    .addCallback(goog.bind(this.fileSuccess_, this, download))
+    .addErrback(goog.bind(this.error_, this, download));
 };
-
 
 /**
  * The callback called when a file that will be used for saving a file is
@@ -381,19 +340,18 @@ goog.net.FileDownloader.prototype.xhrSuccess_ = function(download) {
  * @param {!goog.fs.FileEntry} file The newly-opened file object.
  * @private
  */
-goog.net.FileDownloader.prototype.fileSuccess_ = function(download, file) {
-  'use strict';
+goog.net.FileDownloader.prototype.fileSuccess_ = function (download, file) {
   if (download.cancelled) {
     file.remove();
     return;
   }
 
   download.file = file;
-  file.createWriter()
-      .addCallback(goog.bind(this.fileWriterSuccess_, this, download))
-      .addErrback(goog.bind(this.error_, this, download));
+  file
+    .createWriter()
+    .addCallback(goog.bind(this.fileWriterSuccess_, this, download))
+    .addErrback(goog.bind(this.error_, this, download));
 };
-
 
 /**
  * The callback called when a file writer is successfully created for writing a
@@ -404,9 +362,7 @@ goog.net.FileDownloader.prototype.fileSuccess_ = function(download, file) {
  * @param {!goog.fs.FileWriter} writer The newly-created file writer object.
  * @private
  */
-goog.net.FileDownloader.prototype.fileWriterSuccess_ = function(
-    download, writer) {
-  'use strict';
+goog.net.FileDownloader.prototype.fileWriterSuccess_ = function (download, writer) {
   if (download.cancelled) {
     download.file.remove();
     return;
@@ -415,10 +371,11 @@ goog.net.FileDownloader.prototype.fileWriterSuccess_ = function(
   download.writer = writer;
   writer.write(/** @type {!Blob} */ (download.blob));
   this.eventHandler_.listenOnce(
-      writer, goog.fs.FileSaver.EventType.WRITE_END,
-      goog.bind(this.writeEnd_, this, download));
+    writer,
+    goog.fs.FileSaver.EventType.WRITE_END,
+    goog.bind(this.writeEnd_, this, download)
+  );
 };
-
 
 /**
  * The callback called when file writing ends, whether or not it's successful.
@@ -427,8 +384,7 @@ goog.net.FileDownloader.prototype.fileWriterSuccess_ = function(
  *     this download.
  * @private
  */
-goog.net.FileDownloader.prototype.writeEnd_ = function(download) {
-  'use strict';
+goog.net.FileDownloader.prototype.writeEnd_ = function (download) {
   if (download.cancelled || download.writer.getError()) {
     this.error_(download, download.writer.getError());
     return;
@@ -437,7 +393,6 @@ goog.net.FileDownloader.prototype.writeEnd_ = function(download) {
   delete this.downloads_[download.url];
   download.deferred.callback(download.blob);
 };
-
 
 /**
  * The error callback for all asynchronous operations. Ensures that all stages
@@ -449,8 +404,7 @@ goog.net.FileDownloader.prototype.writeEnd_ = function(download) {
  *     error was raised by the file API.
  * @private
  */
-goog.net.FileDownloader.prototype.error_ = function(download, opt_err) {
-  'use strict';
+goog.net.FileDownloader.prototype.error_ = function (download, opt_err) {
   if (download.file) {
     download.file.remove();
   }
@@ -460,10 +414,8 @@ goog.net.FileDownloader.prototype.error_ = function(download, opt_err) {
   }
 
   delete this.downloads_[download.url];
-  download.deferred.errback(
-      new goog.net.FileDownloader.Error(download, opt_err));
+  download.deferred.errback(new goog.net.FileDownloader.Error(download, opt_err));
 };
-
 
 /**
  * Abort the download of the given URL.
@@ -471,12 +423,10 @@ goog.net.FileDownloader.prototype.error_ = function(download, opt_err) {
  * @param {!goog.net.FileDownloader.Download_} download The download to abort.
  * @private
  */
-goog.net.FileDownloader.prototype.cancel_ = function(download) {
-  'use strict';
+goog.net.FileDownloader.prototype.cancel_ = function (download) {
   goog.dispose(download);
   delete this.downloads_[download.url];
 };
-
 
 /**
  * Get the directory for a given URL. If the directory already exists when this
@@ -496,8 +446,7 @@ goog.net.FileDownloader.prototype.cancel_ = function(download) {
  * @return {!goog.async.Deferred} The deferred DirectoryEntry object.
  * @private
  */
-goog.net.FileDownloader.prototype.getDir_ = function(url, behavior) {
-  'use strict';
+goog.net.FileDownloader.prototype.getDir_ = function (url, behavior) {
   // 3 hex digits provide 16**3 = 4096 different possible dirnames, which is
   // less than the maximum of 5000 entries. Downloaded files should be
   // distributed roughly evenly throughout the directories due to the hash
@@ -508,18 +457,14 @@ goog.net.FileDownloader.prototype.getDir_ = function(url, behavior) {
   // filenames are URL-decoded before checking their validity, so filenames
   // containing e.g. '%3f' (the URL-encoding of :, an invalid character) are
   // rejected.
-  const dirname = '`' +
-      Math.abs(goog.crypt.hash32.encodeString(url))
-          .toString(16)
-          .substring(0, 3);
+  const dirname = '`' + Math.abs(goog.crypt.hash32.encodeString(url)).toString(16).substring(0, 3);
 
-  return this.dir_.getDirectory(dirname, goog.fs.DirectoryEntry.Behavior.CREATE)
-      .addCallback(function(dir) {
-        'use strict';
-        return dir.getDirectory(this.sanitize_(url), behavior);
-      }, this);
+  return this.dir_
+    .getDirectory(dirname, goog.fs.DirectoryEntry.Behavior.CREATE)
+    .addCallback(function (dir) {
+      return dir.getDirectory(this.sanitize_(url), behavior);
+    }, this);
 };
-
 
 /**
  * Get the file for a given URL. This will only retrieve files that have already
@@ -531,22 +476,17 @@ goog.net.FileDownloader.prototype.getDir_ = function(url, behavior) {
  * @return {!goog.async.Deferred} The deferred FileEntry object.
  * @private
  */
-goog.net.FileDownloader.prototype.getFile_ = function(url) {
-  'use strict';
-  return this.getDir_(url, goog.fs.DirectoryEntry.Behavior.DEFAULT)
-      .addCallback(function(dir) {
-        'use strict';
-        return dir.listDirectory().addCallback(function(files) {
-          'use strict';
-          goog.asserts.assert(files.length == 1);
-          // If the filesystem somehow gets corrupted and we end up with an
-          // empty directory here, it makes sense to just return the normal
-          // file-not-found error.
-          return files[0] || dir.getFile('file');
-        });
-      });
+goog.net.FileDownloader.prototype.getFile_ = function (url) {
+  return this.getDir_(url, goog.fs.DirectoryEntry.Behavior.DEFAULT).addCallback((dir) =>
+    dir.listDirectory().addCallback((files) => {
+      goog.asserts.assert(files.length == 1);
+      // If the filesystem somehow gets corrupted and we end up with an
+      // empty directory here, it makes sense to just return the normal
+      // file-not-found error.
+      return files[0] || dir.getFile('file');
+    })
+  );
 };
-
 
 /**
  * Sanitize a string so it can be safely used as a file or directory name for
@@ -556,17 +496,14 @@ goog.net.FileDownloader.prototype.getFile_ = function(url) {
  * @return {string} The sanitized string.
  * @private
  */
-goog.net.FileDownloader.prototype.sanitize_ = function(str) {
-  'use strict';
+goog.net.FileDownloader.prototype.sanitize_ = (str) => {
   // Add a prefix, since certain prefixes are disallowed for paths. None of the
   // disallowed prefixes start with '`'. We use ` rather than % for escaping the
   // filename due to a Chrome bug (as of 12.0.725.0 dev) where filenames are
   // URL-decoded before checking their validity, so filenames containing e.g.
   // '%3f' (the URL-encoding of :, an invalid character) are rejected.
-  return '`' +
-      str.replace(/[\/\\<>:?*"|%`]/g, encodeURIComponent).replace(/%/g, '`');
+  return '`' + str.replace(/[\/\\<>:?*"|%`]/g, encodeURIComponent).replace(/%/g, '`');
 };
-
 
 /**
  * Gets the filename specified by the XHR. This first attempts to parse the
@@ -577,11 +514,9 @@ goog.net.FileDownloader.prototype.sanitize_ = function(str) {
  * @return {string} The filename.
  * @private
  */
-goog.net.FileDownloader.prototype.getName_ = function(xhr) {
-  'use strict';
+goog.net.FileDownloader.prototype.getName_ = function (xhr) {
   const disposition = xhr.getResponseHeader('Content-Disposition');
-  const match =
-      disposition && disposition.match(/^attachment *; *filename="(.*)"$/i);
+  const match = disposition && disposition.match(/^attachment *; *filename="(.*)"$/i);
   if (match) {
     // The Content-Disposition header allows for arbitrary backslash-escaped
     // characters (usually " and \). We want to unescape them before using them
@@ -592,7 +527,6 @@ goog.net.FileDownloader.prototype.getName_ = function(xhr) {
   return this.urlToName_(xhr.getLastUri());
 };
 
-
 /**
  * Extracts the basename from a URL.
  *
@@ -600,12 +534,10 @@ goog.net.FileDownloader.prototype.getName_ = function(xhr) {
  * @return {string} The basename.
  * @private
  */
-goog.net.FileDownloader.prototype.urlToName_ = function(url) {
-  'use strict';
+goog.net.FileDownloader.prototype.urlToName_ = (url) => {
   const segments = url.split('/');
   return segments[segments.length - 1];
 };
-
 
 /**
  * Remove all event listeners for an XHR and release it back into the pool.
@@ -613,31 +545,29 @@ goog.net.FileDownloader.prototype.urlToName_ = function(url) {
  * @param {!goog.net.XhrIo} xhr The XHR to free.
  * @private
  */
-goog.net.FileDownloader.prototype.freeXhr_ = function(xhr) {
-  'use strict';
+goog.net.FileDownloader.prototype.freeXhr_ = function (xhr) {
   goog.events.removeAll(xhr);
   this.pool_.addFreeObject(xhr);
 };
 
-
 /** @override */
-goog.net.FileDownloader.prototype.disposeInternal = function() {
-  'use strict';
+goog.net.FileDownloader.prototype.disposeInternal = function () {
   delete this.dir_;
   goog.dispose(this.eventHandler_);
   delete this.eventHandler_;
-  goog.object.forEach(this.downloads_, function(download) {
-    'use strict';
-    download.deferred.cancel();
-  }, this);
+  goog.object.forEach(
+    this.downloads_,
+    (download) => {
+      download.deferred.cancel();
+    },
+    this
+  );
   delete this.downloads_;
   goog.dispose(this.pool_);
   delete this.pool_;
 
   goog.net.FileDownloader.base(this, 'disposeInternal');
 };
-
-
 
 /**
  * The error object for FileDownloader download errors.
@@ -651,10 +581,8 @@ goog.net.FileDownloader.prototype.disposeInternal = function() {
  * @extends {goog.debug.Error}
  * @final
  */
-goog.net.FileDownloader.Error = function(download, opt_fsErr) {
-  'use strict';
-  goog.net.FileDownloader.Error.base(
-      this, 'constructor', 'Error capturing URL ' + download.url);
+goog.net.FileDownloader.Error = function (download, opt_fsErr) {
+  goog.net.FileDownloader.Error.base(this, 'constructor', 'Error capturing URL ' + download.url);
 
   /**
    * The URL the event relates to.
@@ -665,8 +593,8 @@ goog.net.FileDownloader.Error = function(download, opt_fsErr) {
   if (download.xhr) {
     this.xhrStatus = download.xhr.getStatus();
     this.xhrErrorCode = download.xhr.getLastErrorCode();
-    this.message += ': XHR failed with status ' + this.xhrStatus +
-        ' (error code ' + this.xhrErrorCode + ')';
+    this.message +=
+      ': XHR failed with status ' + this.xhrStatus + ' (error code ' + this.xhrErrorCode + ')';
   } else if (opt_fsErr) {
     this.fileError = opt_fsErr;
     this.message += ': file API failed (' + opt_fsErr.message + ')';
@@ -674,13 +602,11 @@ goog.net.FileDownloader.Error = function(download, opt_fsErr) {
 };
 goog.inherits(goog.net.FileDownloader.Error, goog.debug.Error);
 
-
 /**
  * The status of the XHR. Only set if the error was caused by an XHR failure.
  * @type {number|undefined}
  */
 goog.net.FileDownloader.Error.prototype.xhrStatus;
-
 
 /**
  * The error code of the XHR. Only set if the error was caused by an XHR
@@ -689,14 +615,11 @@ goog.net.FileDownloader.Error.prototype.xhrStatus;
  */
 goog.net.FileDownloader.Error.prototype.xhrErrorCode;
 
-
 /**
  * The file API error. Only set if the error was caused by the file API.
  * @type {goog.fs.Error|undefined}
  */
 goog.net.FileDownloader.Error.prototype.fileError;
-
-
 
 /**
  * A struct containing the data for a single download.
@@ -707,8 +630,7 @@ goog.net.FileDownloader.Error.prototype.fileError;
  * @constructor
  * @private
  */
-goog.net.FileDownloader.Download_ = function(url, downloader) {
-  'use strict';
+goog.net.FileDownloader.Download_ = function (url, downloader) {
   goog.net.FileDownloader.Download_.base(this, 'constructor');
 
   /**
@@ -721,8 +643,7 @@ goog.net.FileDownloader.Download_ = function(url, downloader) {
    * The Deferred that will be fired when the download is complete.
    * @type {!goog.async.Deferred}
    */
-  this.deferred =
-      new goog.async.Deferred(goog.bind(downloader.cancel_, downloader, this));
+  this.deferred = new goog.async.Deferred(goog.bind(downloader.cancel_, downloader, this));
 
   /**
    * Whether this download has been cancelled by the user.
@@ -767,16 +688,12 @@ goog.net.FileDownloader.Download_ = function(url, downloader) {
 };
 goog.inherits(goog.net.FileDownloader.Download_, goog.Disposable);
 
-
 /** @override */
-goog.net.FileDownloader.Download_.prototype.disposeInternal = function() {
-  'use strict';
+goog.net.FileDownloader.Download_.prototype.disposeInternal = function () {
   this.cancelled = true;
   if (this.xhr) {
     this.xhr.abort();
-  } else if (
-      this.writer &&
-      this.writer.getReadyState() == goog.fs.FileSaver.ReadyState.WRITING) {
+  } else if (this.writer && this.writer.getReadyState() == goog.fs.FileSaver.ReadyState.WRITING) {
     this.writer.abort();
   }
 

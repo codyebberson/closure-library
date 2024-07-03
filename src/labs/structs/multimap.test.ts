@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.labs.structs.MultimapTest');
-goog.setTestOnly();
 
 const Multimap = goog.require('goog.labs.structs.Multimap');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -131,17 +130,17 @@ testSuite({
   },
 
   testRemoveWithNaN() {
-    map.add('key', NaN);
-    map.add('key', NaN);
+    map.add('key', Number.NaN);
+    map.add('key', Number.NaN);
 
-    assertTrue(map.remove('key', NaN));
+    assertTrue(map.remove('key', Number.NaN));
     const values = map.get('key');
     assertEquals(1, values.length);
     assertTrue(isNaN(values[0]));
 
-    assertTrue(map.remove('key', NaN));
+    assertTrue(map.remove('key', Number.NaN));
     assertEquals(0, map.get('key').length);
-    assertFalse(map.remove('key', NaN));
+    assertFalse(map.remove('key', Number.NaN));
   },
 
   testRemoveWithNegativeZero() {

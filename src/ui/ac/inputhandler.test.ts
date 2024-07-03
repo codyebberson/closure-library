@@ -10,7 +10,6 @@
  */
 
 goog.module('goog.ui.ac.InputHandlerTest');
-goog.setTestOnly();
 
 const BrowserEvent = goog.require('goog.events.BrowserEvent');
 const GoogEvent = goog.require('goog.events.Event');
@@ -35,7 +34,7 @@ class MockElement extends GoogEventTarget {
   constructor() {
     super();
     this.setAttributeNS = () => {};
-    this.setAttribute = function(key, value) {
+    this.setAttribute = function (key, value) {
       /** @suppress {checkTypes} suppression added to enable type checking */
       this[key] = value;
     };
@@ -54,17 +53,17 @@ class MockAutoCompleter {
     this.dismissWasCalled = false;
     this.getTarget = () => mockElement;
     this.setTarget = () => {};
-    this.setToken = function(token) {
+    this.setToken = function (token) {
       this.setTokenWasCalled = true;
       this.setToken = token;
     };
-    this.selectHilited = function() {
+    this.selectHilited = function () {
       this.selectHilitedWasCalled = true;
-      return true;  // Success.
+      return true; // Success.
     };
     this.cancelDelayedDismiss = () => {};
     this.dismissOnDelay = () => {};
-    this.dismiss = function() {
+    this.dismiss = function () {
       this.dismissWasCalled = true;
     };
     this.isOpen = functions.TRUE;
@@ -139,7 +138,6 @@ let oldWebkit;
 let oldVersion;
 let mockElement;
 let mockClock;
-
 
 /** Used to simulate behavior of Windows/Firefox */
 function simulateWinFirefox() {
@@ -226,8 +224,8 @@ testSuite({
     oldWebkit = userAgent.WEBKIT;
     oldVersion = userAgent.VERSION;
     mockClock = new MockClock(true);
-    mockElement = new MockElement;
-    mh = new MockInputHandler;
+    mockElement = new MockElement();
+    mh = new MockInputHandler();
   },
 
   tearDown() {
@@ -577,13 +575,15 @@ testSuite({
 
     ih.update();
     assertFalse(
-        'update should not call setToken on selectRow',
-        mockAutoCompleter.setTokenWasCalled);
+      'update should not call setToken on selectRow',
+      mockAutoCompleter.setTokenWasCalled
+    );
 
     ih.update();
     assertFalse(
-        'update should not call setToken on selectRow',
-        mockAutoCompleter.setTokenWasCalled);
+      'update should not call setToken on selectRow',
+      mockAutoCompleter.setTokenWasCalled
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -701,12 +701,8 @@ testSuite({
     selection.setStart(mockElement, 2);
 
     ih.update();
-    assertTrue(
-        'update should call setToken on selectRow',
-        mockAutoCompleter.setTokenWasCalled);
-    assertEquals(
-        'update should be called with empty string', '',
-        mockAutoCompleter.setToken);
+    assertTrue('update should call setToken on selectRow', mockAutoCompleter.setTokenWasCalled);
+    assertEquals('update should be called with empty string', '', mockAutoCompleter.setToken);
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -726,12 +722,8 @@ testSuite({
     selection.setStart(mockElement, 5);
 
     ih.update();
-    assertTrue(
-        'update should call setToken on selectRow',
-        mockAutoCompleter.setTokenWasCalled);
-    assertEquals(
-        'update should be called with expected string', 'joe',
-        mockAutoCompleter.setToken);
+    assertTrue('update should call setToken on selectRow', mockAutoCompleter.setTokenWasCalled);
+    assertEquals('update should be called with expected string', 'joe', mockAutoCompleter.setToken);
   },
 
   testGetThrottleTime() {
@@ -779,7 +771,7 @@ testSuite({
   testShiftTabDoesNotSelect() {
     mh.fireEvent('focus', '');
     mh.ac_.isOpen = functions.TRUE;
-    mh.fireKeyEvents(KeyCodes.TAB, true, true, true, {shiftKey: true});
+    mh.fireKeyEvents(KeyCodes.TAB, true, true, true, { shiftKey: true });
     assertFalse('Should NOT hilite', mh.ac_.selectHilitedWasCalled);
     assertTrue('Should be dismissed', mh.ac_.dismissWasCalled);
   },

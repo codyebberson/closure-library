@@ -30,4 +30,4 @@ function isSafariDesktopOnMobile() {
   return platform.isMacintosh() && goog.global.navigator.maxTouchPoints > 0;
 }
 
-exports = {isSafariDesktopOnMobile};
+exports = { isSafariDesktopOnMobile };

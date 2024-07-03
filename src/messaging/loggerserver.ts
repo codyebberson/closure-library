@@ -58,8 +58,7 @@ class LoggerServer extends Disposable {
      */
     this.channelName_ = channelName || 'remote logger';
 
-    this.channel_.registerService(
-        this.serviceName_, this.log_.bind(this), true /* opt_json */);
+    this.channel_.registerService(this.serviceName_, this.log_.bind(this), true /* opt_json */);
   }
 
   /**
@@ -70,11 +69,11 @@ class LoggerServer extends Disposable {
    */
   log_(message) {
     const args =
-        /**
-         * @type {{level: number, message: string,
-         *           name: string, exception: Object}}
-         */
-        (message);
+      /**
+       * @type {{level: number, message: string,
+       *           name: string, exception: Object}}
+       */
+      (message);
     const level = Level.getPredefinedLevelByValue(args['level']);
     if (level) {
       const msg = '[' + this.channelName_ + '] ' + args['message'];

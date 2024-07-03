@@ -17,11 +17,10 @@ goog.module.declareLegacyNamespace();
  * special information. The function takes no parameters and return void.
  * @param {Function} startHook  The function for the start hook.
  */
-const setStartThreadExecutionHook = function(startHook) {
+const setStartThreadExecutionHook = (startHook) => {
   startExecutionHook = startHook;
 };
 exports.setStartThreadExecutionHook = setStartThreadExecutionHook;
-
 
 /**
  * Allows the application to set an execution hooks for when BrowserChannel
@@ -34,15 +33,13 @@ function setEndThreadExecutionHook(endHook) {
 }
 exports.setEndThreadExecutionHook = setEndThreadExecutionHook;
 
-
 /**
  * Application provided execution hook for the start hook.
  *
  * @type {Function}
  * @private
  */
-let startExecutionHook = function() {};
-
+let startExecutionHook = () => {};
 
 /**
  * Application provided execution hook for the end hook.
@@ -50,8 +47,7 @@ let startExecutionHook = function() {};
  * @type {Function}
  * @private
  */
-let endExecutionHook = function() {};
-
+let endExecutionHook = () => {};
 
 /**
  * Helper function to call the start hook
@@ -61,7 +57,6 @@ function onStartExecution() {
 }
 exports.onStartExecution = onStartExecution;
 
-
 /**
  * Helper function to call the end hook
  */
@@ -69,7 +64,6 @@ function onEndExecution() {
   endExecutionHook();
 }
 exports.onEndExecution = onEndExecution;
-
 
 /**
  * Wrapper around SafeTimeout which calls the start and end execution hooks
@@ -82,7 +76,7 @@ function setTimeout(fn, ms) {
   if (typeof fn !== 'function') {
     throw new Error('Fn must not be null and must be a function');
   }
-  return goog.global.setTimeout(function() {
+  return goog.global.setTimeout(() => {
     onStartExecution();
     try {
       fn();

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.MenuSeparatorRendererTest');
-goog.setTestOnly();
 
 const MenuSeparator = goog.require('goog.ui.MenuSeparator');
 const MenuSeparatorRenderer = goog.require('goog.ui.MenuSeparatorRenderer');

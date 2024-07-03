@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.fx.AnimationTest');
-goog.setTestOnly();
 
 const Animation = goog.require('goog.fx.Animation');
 const MockClock = goog.require('goog.testing.MockClock');

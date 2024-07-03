@@ -15,8 +15,6 @@ goog.require('goog.events.BrowserEvent');
 goog.require('goog.events.EventType');
 goog.require('goog.testing.events.Event');
 
-
-
 /**
  * Creates a new fake MessageEvent.
  *
@@ -32,11 +30,14 @@ goog.require('goog.testing.events.Event');
  * @constructor
  * @final
  */
-goog.testing.messaging.MockMessageEvent = function(
-    data, opt_origin, opt_lastEventId, opt_source, opt_ports) {
-  'use strict';
-  goog.testing.messaging.MockMessageEvent.base(
-      this, 'constructor', goog.events.EventType.MESSAGE);
+goog.testing.messaging.MockMessageEvent = function (
+  data,
+  opt_origin,
+  opt_lastEventId,
+  opt_source,
+  opt_ports
+) {
+  goog.testing.messaging.MockMessageEvent.base(this, 'constructor', goog.events.EventType.MESSAGE);
 
   /**
    * The data of the message.
@@ -69,9 +70,7 @@ goog.testing.messaging.MockMessageEvent = function(
    */
   this.ports = opt_ports || null;
 };
-goog.inherits(
-    goog.testing.messaging.MockMessageEvent, goog.testing.events.Event);
-
+goog.inherits(goog.testing.messaging.MockMessageEvent, goog.testing.events.Event);
 
 /**
  * Wraps a new fake MessageEvent in a BrowserEvent, like how a real MessageEvent
@@ -87,10 +86,19 @@ goog.inherits(
  *     message, for cross-document and channel events.
  * @return {!goog.events.BrowserEvent} The wrapping event.
  */
-goog.testing.messaging.MockMessageEvent.wrap = function(
-    data, opt_origin, opt_lastEventId, opt_source, opt_ports) {
-  'use strict';
-  return new goog.events.BrowserEvent(
-      new goog.testing.messaging.MockMessageEvent(
-          data, opt_origin, opt_lastEventId, opt_source, opt_ports));
-};
+goog.testing.messaging.MockMessageEvent.wrap = (
+  data,
+  opt_origin,
+  opt_lastEventId,
+  opt_source,
+  opt_ports
+) =>
+  new goog.events.BrowserEvent(
+    new goog.testing.messaging.MockMessageEvent(
+      data,
+      opt_origin,
+      opt_lastEventId,
+      opt_source,
+      opt_ports
+    )
+  );

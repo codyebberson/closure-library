@@ -17,8 +17,6 @@ goog.requireType('goog.dom.DomHelper');
 goog.requireType('goog.ui.ButtonRenderer');
 goog.requireType('goog.ui.ControlContent');
 
-
-
 /**
  * A custom button control.  Identical to {@link goog.ui.Button}, except it
  * defaults its renderer to {@link goog.ui.CustomButtonRenderer}.  One could
@@ -36,19 +34,18 @@ goog.requireType('goog.ui.ControlContent');
  * @constructor
  * @extends {goog.ui.Button}
  */
-goog.ui.CustomButton = function(content, opt_renderer, opt_domHelper) {
-  'use strict';
+goog.ui.CustomButton = function (content, opt_renderer, opt_domHelper) {
   goog.ui.Button.call(
-      this, content, opt_renderer || goog.ui.CustomButtonRenderer.getInstance(),
-      opt_domHelper);
+    this,
+    content,
+    opt_renderer || goog.ui.CustomButtonRenderer.getInstance(),
+    opt_domHelper
+  );
 };
 goog.inherits(goog.ui.CustomButton, goog.ui.Button);
 
-
 // Register a decorator factory function for goog.ui.CustomButtons.
-goog.ui.registry.setDecoratorByClassName(
-    goog.ui.CustomButtonRenderer.CSS_CLASS, function() {
-      'use strict';
-      // CustomButton defaults to using CustomButtonRenderer.
-      return new goog.ui.CustomButton(null);
-    });
+goog.ui.registry.setDecoratorByClassName(goog.ui.CustomButtonRenderer.CSS_CLASS, () => {
+  // CustomButton defaults to using CustomButtonRenderer.
+  return new goog.ui.CustomButton(null);
+});

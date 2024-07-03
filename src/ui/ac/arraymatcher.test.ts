@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.ac.ArrayMatcherTest');
-goog.setTestOnly();
 
 const ArrayMatcher = goog.require('goog.ui.ac.ArrayMatcher');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -79,7 +78,7 @@ testSuite({
 
     const res = am.getPrefixMatches('a', 10);
     assertEquals('Should have one match', 1, res.length);
-    assertEquals('Should return \'a\'', 'a', res[0]);
+    assertEquals("Should return 'a'", 'a', res[0]);
     const res2 = ArrayMatcher.getPrefixMatchesForRows('a', 10, items);
     assertArrayEquals(res, res2);
   },

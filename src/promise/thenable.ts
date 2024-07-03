@@ -7,7 +7,7 @@ goog.module('goog.Thenable');
 goog.module.declareLegacyNamespace();
 
 /** @suppress {extraRequire} used in complex type */
-const GoogPromise = goog.requireType('goog.Promise');  // for the type reference.
+const GoogPromise = goog.requireType('goog.Promise'); // for the type reference.
 
 /**
  * Provides a more strict interface for Thenables in terms of
@@ -62,8 +62,7 @@ function Thenable() {}
  *  =:
  *
  */
-Thenable.prototype.then = function(
-    opt_onFulfilled, opt_onRejected, opt_context) {};
+Thenable.prototype.then = (opt_onFulfilled, opt_onRejected, opt_context) => {};
 
 /**
  * An expando property to indicate that an object implements
@@ -85,7 +84,7 @@ Thenable.IMPLEMENTED_BY_PROP = '$goog_Thenable';
  * @param {function(new:Thenable,...?)} ctor The class constructor. The
  *     corresponding class must have already implemented the interface.
  */
-Thenable.addImplementation = function(ctor) {
+Thenable.addImplementation = (ctor) => {
   if (COMPILED) {
     ctor.prototype[Thenable.IMPLEMENTED_BY_PROP] = true;
   } else {
@@ -99,7 +98,7 @@ Thenable.addImplementation = function(ctor) {
  * @return {boolean} Whether a given instance implements `Thenable`.
  *     The class/superclass of the instance must call `addImplementation`.
  */
-Thenable.isImplementedBy = function(object) {
+Thenable.isImplementedBy = (object) => {
   if (!object) {
     return false;
   }

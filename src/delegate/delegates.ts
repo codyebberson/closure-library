@@ -13,7 +13,6 @@
 
 goog.module('goog.delegate.delegates');
 
-
 /**
  * Calls the first delegate, or returns undefined if none are given.
  * @param {!Array<T>} delegates
@@ -27,7 +26,6 @@ exports.callFirst = (delegates, mapper) => {
   }
   return mapper(delegates[0]);
 };
-
 
 /**
  * Calls delegates until one returns a defined, non-null result.  Returns
@@ -44,7 +42,6 @@ exports.callUntilDefinedAndNotNull = (delegates, mapper) => {
   }
   return undefined;
 };
-
 
 /**
  * Calls delegates until one returns a truthy result.  Returns false if no such

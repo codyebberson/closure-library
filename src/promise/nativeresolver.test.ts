@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.promise.nativeResolverTest');
-goog.setTestOnly();
 
 const NativeResolver = goog.require('goog.promise.NativeResolver');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -29,5 +28,5 @@ testSuite({
     return resolver.promise.then(fail, (e) => {
       assertEquals('test', e.message);
     });
-  }
+  },
 });

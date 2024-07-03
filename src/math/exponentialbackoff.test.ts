@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.math.ExponentialBackoffTest');
-goog.setTestOnly();
 
 const ExponentialBackoff = goog.require('goog.math.ExponentialBackoff');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -30,15 +29,13 @@ function assertValueAndDecayCount(value, count, backoff) {
   assertEquals('Wrong decay count', count, backoff.getDecayCount());
 }
 
-function assertValueRangeAndBackoffCount(
-    minBackoffValue, maxBackoffValue, count, backoff) {
+function assertValueRangeAndBackoffCount(minBackoffValue, maxBackoffValue, count, backoff) {
   assertTrue('Value too small', backoff.getValue() >= minBackoffValue);
   assertTrue('Value too large', backoff.getValue() <= maxBackoffValue);
   assertEquals('Wrong backoff count', count, backoff.getBackoffCount());
 }
 
-function assertValueRangeAndDecayCount(
-    minBackoffValue, maxBackoffValue, count, backoff) {
+function assertValueRangeAndDecayCount(minBackoffValue, maxBackoffValue, count, backoff) {
   assertTrue('Value too small', backoff.getValue() >= minBackoffValue);
   assertTrue('Value too large', backoff.getValue() <= maxBackoffValue);
   assertEquals('Wrong decay count', count, backoff.getDecayCount());
@@ -81,53 +78,62 @@ testSuite({
     backoff.backoff();
     backoff.decay();
     backoff.reset();
-    assertValueAndCounts(
-        INITIAL_VALUE, 0 /* backoff count */, 0 /* decay count */, backoff);
+    assertValueAndCounts(INITIAL_VALUE, 0 /* backoff count */, 0 /* decay count */, backoff);
     backoff.backoff();
-    assertValueAndCounts(
-        2 /* value */, 1 /* backoff count */, 0 /* decay count */, backoff);
+    assertValueAndCounts(2 /* value */, 1 /* backoff count */, 0 /* decay count */, backoff);
     backoff.decay();
-    assertValueAndCounts(
-        INITIAL_VALUE, 1 /* backoff count */, 1 /* decay count */, backoff);
+    assertValueAndCounts(INITIAL_VALUE, 1 /* backoff count */, 1 /* decay count */, backoff);
   },
 
   testRandomFactorBackoff() {
     const initialValue = 1;
     const maxValue = 20;
     const randomFactor = 0.5;
-    const backoff =
-        new ExponentialBackoff(initialValue, maxValue, randomFactor);
+    const backoff = new ExponentialBackoff(initialValue, maxValue, randomFactor);
 
-    assertValueAndBackoffCount(
-        initialValue /* value */, 0 /* count */, backoff);
+    assertValueAndBackoffCount(initialValue /* value */, 0 /* count */, backoff);
     backoff.backoff();
     assertValueRangeAndBackoffCount(
-        getMinBackoff(2, randomFactor), getMaxBackoff(2, randomFactor),
-        1 /* count */, backoff);
+      getMinBackoff(2, randomFactor),
+      getMaxBackoff(2, randomFactor),
+      1 /* count */,
+      backoff
+    );
     backoff.backoff();
     assertValueRangeAndBackoffCount(
-        getMinBackoff(4, randomFactor), getMaxBackoff(4, randomFactor),
-        2 /* count */, backoff);
+      getMinBackoff(4, randomFactor),
+      getMaxBackoff(4, randomFactor),
+      2 /* count */,
+      backoff
+    );
     backoff.backoff();
     assertValueRangeAndBackoffCount(
-        getMinBackoff(8, randomFactor), getMaxBackoff(8, randomFactor),
-        3 /* count */, backoff);
+      getMinBackoff(8, randomFactor),
+      getMaxBackoff(8, randomFactor),
+      3 /* count */,
+      backoff
+    );
     backoff.backoff();
     assertValueRangeAndBackoffCount(
-        getMinBackoff(16, randomFactor), maxValue /* max backoff value */,
-        4 /* count */, backoff);
+      getMinBackoff(16, randomFactor),
+      maxValue /* max backoff value */,
+      4 /* count */,
+      backoff
+    );
     backoff.backoff();
     assertValueRangeAndBackoffCount(
-        getMinBackoff(maxValue, randomFactor), maxValue /* max backoff value */,
-        5 /* count */, backoff);
+      getMinBackoff(maxValue, randomFactor),
+      maxValue /* max backoff value */,
+      5 /* count */,
+      backoff
+    );
   },
 
   testRandomFactorDecay() {
     const initialValue = 1;
     const maxValue = 8;
     const randomFactor = 0.5;
-    const backoff =
-        new ExponentialBackoff(initialValue, maxValue, randomFactor);
+    const backoff = new ExponentialBackoff(initialValue, maxValue, randomFactor);
 
     backoff.backoff();
     backoff.backoff();
@@ -135,20 +141,32 @@ testSuite({
     backoff.backoff();
     backoff.backoff();
     assertValueRangeAndBackoffCount(
-        getMinBackoff(maxValue, randomFactor), maxValue /* max backoff value */,
-        5 /* count */, backoff);
+      getMinBackoff(maxValue, randomFactor),
+      maxValue /* max backoff value */,
+      5 /* count */,
+      backoff
+    );
     backoff.decay();
     assertValueRangeAndDecayCount(
-        getMinBackoff(4, randomFactor), getMaxBackoff(4, randomFactor),
-        1 /* count */, backoff);
+      getMinBackoff(4, randomFactor),
+      getMaxBackoff(4, randomFactor),
+      1 /* count */,
+      backoff
+    );
     backoff.decay();
     assertValueRangeAndDecayCount(
-        getMinBackoff(2, randomFactor), getMaxBackoff(2, randomFactor),
-        2 /* count */, backoff);
+      getMinBackoff(2, randomFactor),
+      getMaxBackoff(2, randomFactor),
+      2 /* count */,
+      backoff
+    );
     backoff.decay();
     assertValueRangeAndDecayCount(
-        initialValue, getMaxBackoff(initialValue, randomFactor), 3 /* count */,
-        backoff);
+      initialValue,
+      getMaxBackoff(initialValue, randomFactor),
+      3 /* count */,
+      backoff
+    );
   },
 
   testBackoffFactor() {
@@ -156,8 +174,7 @@ testSuite({
     const maxValue = 30;
     const randomFactor = undefined;
     const backoffFactor = 3;
-    const backoff = new ExponentialBackoff(
-        initialValue, maxValue, randomFactor, backoffFactor);
+    const backoff = new ExponentialBackoff(initialValue, maxValue, randomFactor, backoffFactor);
 
     backoff.backoff();
     assertValueAndBackoffCount(3 /* value */, 1 /* count */, backoff);
@@ -178,15 +195,19 @@ testSuite({
     const backoffFactor = undefined;
     const decayFactor = 3;
     const backoff = new ExponentialBackoff(
-        initialValue, maxValue, randomFactor, backoffFactor, decayFactor);
+      initialValue,
+      maxValue,
+      randomFactor,
+      backoffFactor,
+      decayFactor
+    );
 
     backoff.backoff();
     backoff.backoff();
     backoff.backoff();
     backoff.backoff();
     backoff.backoff();
-    assertValueAndCounts(
-        maxValue, 5 /* backoff count */, 0 /* decay count */, backoff);
+    assertValueAndCounts(maxValue, 5 /* backoff count */, 0 /* decay count */, backoff);
     backoff.decay();
     assertValueAndDecayCount(9, 1 /* count */, backoff);
     backoff.decay();

@@ -16,29 +16,26 @@
 
 goog.provide('goog.net.streams.StreamParser');
 
-
-
 /**
  * This interface represents a stream parser.
  *
  * @interface
  * @package
  */
-goog.net.streams.StreamParser = function() {};
-
+goog.net.streams.StreamParser = () => {};
 
 /**
  * Checks if the parser is aborted due to invalid input.
  *
  * @return {boolean} true if the input is still valid.
  */
-goog.net.streams.StreamParser.prototype.isInputValid = function() {};
+goog.net.streams.StreamParser.prototype.isInputValid = () => {};
 
 /**
  * @return {boolean} True if this parser should parse binary(Array or
  *     ArrayBuffer) input, otherwise only string input will be accepted.
  */
-goog.net.streams.StreamParser.prototype.acceptsBinaryInput = function() {};
+goog.net.streams.StreamParser.prototype.acceptsBinaryInput = () => {};
 
 /**
  * Checks the error message.
@@ -46,8 +43,7 @@ goog.net.streams.StreamParser.prototype.acceptsBinaryInput = function() {};
  * @return {?string} any debug info on the first invalid input, or null if
  *    the input is still valid.
  */
-goog.net.streams.StreamParser.prototype.getErrorMessage = function() {};
-
+goog.net.streams.StreamParser.prototype.getErrorMessage = () => {};
 
 /**
  * Parse the new input.
@@ -60,4 +56,4 @@ goog.net.streams.StreamParser.prototype.getErrorMessage = function() {};
  * @return {?Array<string|!Object>} any parsed objects (atomic messages)
  *    in an array, or null if more data needs be read to parse any new object.
  */
-goog.net.streams.StreamParser.prototype.parse = function(input) {};
+goog.net.streams.StreamParser.prototype.parse = (input) => {};

@@ -16,7 +16,6 @@ goog.require('goog.html.uncheckedconversions');
 goog.require('goog.string');
 goog.require('goog.string.Const');
 
-
 /**
  * Options bag for linkifyPlainTextAsHtml's second parameter.
  * @record
@@ -44,7 +43,6 @@ goog.string.linkify.LinkifyOptions = class {
   }
 };
 
-
 /**
  * Takes a string of plain text and linkifies URLs and email addresses. For a
  * URL (unless opt_attributes is specified), the target of the link will be
@@ -56,10 +54,8 @@ goog.string.linkify.LinkifyOptions = class {
  *      link will be HTML-escaped.
  * @suppress {strictMissingProperties} opt_attributes type is a union
  */
-goog.string.linkify.linkifyPlainTextAsHtml = function(text, opt_options) {
-  'use strict';
-  const {attributes = {}, preserveNewlines, preserveSpacesAndTabs, ...rest} =
-      opt_options || {};
+goog.string.linkify.linkifyPlainTextAsHtml = (text, opt_options) => {
+  const { attributes = {}, preserveNewlines, preserveSpacesAndTabs, ...rest } = opt_options || {};
   if (goog.DEBUG) {
     for (const key in rest) {
       if (rest.hasOwnProperty(key)) {
@@ -72,25 +68,24 @@ goog.string.linkify.linkifyPlainTextAsHtml = function(text, opt_options) {
    * @param {string} plainText
    * @return {!goog.html.SafeHtml} html
    */
-  const htmlEscape = function(plainText) {
+  const htmlEscape = (plainText) => {
     if (preserveSpacesAndTabs) {
       const html = goog.html.SafeHtml.htmlEscape(plainText);
-      let modifiedHtml =
-          goog.html.SafeHtml
-              .unwrap(html)
-              // Leading space is converted into a non-breaking space, and
-              // spaces following whitespace are converted into non-breaking
-              // spaces. This must happen first, to ensure we preserve spaces
-              // after newlines.
-              .replace(/(^|[\n\r\t\ ])\ /g, '$1&#160;')
-              // Preserve tabs by using style="white-space:pre"
-              .replace(/(\t+)/g, '<span style="white-space:pre">$1</span>');
+      let modifiedHtml = goog.html.SafeHtml.unwrap(html)
+        // Leading space is converted into a non-breaking space, and
+        // spaces following whitespace are converted into non-breaking
+        // spaces. This must happen first, to ensure we preserve spaces
+        // after newlines.
+        .replace(/(^|[\n\r\t\ ])\ /g, '$1&#160;')
+        // Preserve tabs by using style="white-space:pre"
+        .replace(/(\t+)/g, '<span style="white-space:pre">$1</span>');
       if (preserveNewlines) {
         modifiedHtml = goog.string.newLineToBr(modifiedHtml);
       }
-      return goog.html.uncheckedconversions
-          .safeHtmlFromStringKnownToSatisfyTypeContract(
-              goog.string.Const.from('Escaped plain text'), modifiedHtml);
+      return goog.html.uncheckedconversions.safeHtmlFromStringKnownToSatisfyTypeContract(
+        goog.string.Const.from('Escaped plain text'),
+        modifiedHtml
+      );
     } else if (preserveNewlines) {
       return goog.html.SafeHtml.htmlEscapePreservingNewlines(plainText);
     } else {
@@ -101,14 +96,18 @@ goog.string.linkify.linkifyPlainTextAsHtml = function(text, opt_options) {
   // This shortcut makes linkifyPlainText ~10x faster if text doesn't contain
   // URLs or email addresses and adds insignificant performance penalty if it
   // does.
-  if (text.indexOf('@') == -1 && text.indexOf('://') == -1 &&
-      text.indexOf('www.') == -1 && text.indexOf('Www.') == -1 &&
-      text.indexOf('WWW.') == -1) {
+  if (
+    text.indexOf('@') == -1 &&
+    text.indexOf('://') == -1 &&
+    text.indexOf('www.') == -1 &&
+    text.indexOf('Www.') == -1 &&
+    text.indexOf('WWW.') == -1
+  ) {
     return htmlEscape(text);
   }
 
   const attributesMap = {};
-  for (let key in attributes) {
+  for (const key in attributes) {
     if (!attributes[key]) {
       // Our API allows '' to omit the attribute, SafeHtml requires null.
       attributesMap[key] = null;
@@ -126,94 +125,85 @@ goog.string.linkify.linkifyPlainTextAsHtml = function(text, opt_options) {
 
   const output = [];
   // Return value is ignored.
-  text.replace(
-      goog.string.linkify.FIND_LINKS_RE_,
-      function(part, before, original, email, protocol) {
-        'use strict';
-        output.push(htmlEscape(before));
-        if (!original) {
-          return '';
-        }
-        let href = '';
-        /** @type {string} */
-        let linkText;
-        /** @type {string} */
-        let afterLink;
-        if (email) {
-          href = 'mailto:';
-          linkText = email;
-          afterLink = '';
-        } else {
-          // This is a full url link.
-          if (!protocol) {
-            href = 'http://';
-          }
-          const splitEndingPunctuation =
-              original.match(goog.string.linkify.ENDS_WITH_PUNCTUATION_RE_);
-          // An open paren in the link will often be matched with a close paren
-          // at the end, so skip cutting off ending punctuation if
-          // opening/closing parens are matched in the link. Same for curly
-          // brackets. For example:
-          // End symbol is linkified:
-          // * http://en.wikipedia.org/wiki/Titanic_(1997_film)
-          // * http://google.com/abc{arg=1}
-          // e.g. needEndingPunctuationForBalance for split
-          // 'http://google.com/abc{arg=', and '} is true.
-          // End symbol is not linkified because there is no open parens to
-          // close in the link itself, as the open parens occurs before the URL:
-          // * (http://google.com/)
-          // e.g. needEndingPunctuationForBalance for split 'http://google.com/
-          // and ')' is false.
-          function needEndingPunctuationForBalance(
-              split, openSymbol, closeSymbol) {
-            return goog.string.contains(split[2], closeSymbol) &&
-                goog.string.countOf(split[1], openSymbol) >
-                goog.string.countOf(split[1], closeSymbol);
-          }
-          if (splitEndingPunctuation &&
-              !needEndingPunctuationForBalance(
-                  splitEndingPunctuation, '(', ')') &&
-              !needEndingPunctuationForBalance(
-                  splitEndingPunctuation, '{', '}')) {
-            linkText = splitEndingPunctuation[1];
-            afterLink = splitEndingPunctuation[2];
-          } else {
-            linkText = original;
-            afterLink = '';
-          }
-        }
-        attributesMap['href'] = href + linkText;
-        output.push(goog.html.SafeHtml.create('a', attributesMap, linkText));
-        output.push(htmlEscape(afterLink));
-        return '';
-      });
+  text.replace(goog.string.linkify.FIND_LINKS_RE_, (part, before, original, email, protocol) => {
+    output.push(htmlEscape(before));
+    if (!original) {
+      return '';
+    }
+    let href = '';
+    /** @type {string} */
+    let linkText;
+    /** @type {string} */
+    let afterLink;
+    if (email) {
+      href = 'mailto:';
+      linkText = email;
+      afterLink = '';
+    } else {
+      // This is a full url link.
+      if (!protocol) {
+        href = 'http://';
+      }
+      const splitEndingPunctuation = original.match(goog.string.linkify.ENDS_WITH_PUNCTUATION_RE_);
+      // An open paren in the link will often be matched with a close paren
+      // at the end, so skip cutting off ending punctuation if
+      // opening/closing parens are matched in the link. Same for curly
+      // brackets. For example:
+      // End symbol is linkified:
+      // * http://en.wikipedia.org/wiki/Titanic_(1997_film)
+      // * http://google.com/abc{arg=1}
+      // e.g. needEndingPunctuationForBalance for split
+      // 'http://google.com/abc{arg=', and '} is true.
+      // End symbol is not linkified because there is no open parens to
+      // close in the link itself, as the open parens occurs before the URL:
+      // * (http://google.com/)
+      // e.g. needEndingPunctuationForBalance for split 'http://google.com/
+      // and ')' is false.
+      function needEndingPunctuationForBalance(split, openSymbol, closeSymbol) {
+        return (
+          goog.string.contains(split[2], closeSymbol) &&
+          goog.string.countOf(split[1], openSymbol) > goog.string.countOf(split[1], closeSymbol)
+        );
+      }
+      if (
+        splitEndingPunctuation &&
+        !needEndingPunctuationForBalance(splitEndingPunctuation, '(', ')') &&
+        !needEndingPunctuationForBalance(splitEndingPunctuation, '{', '}')
+      ) {
+        linkText = splitEndingPunctuation[1];
+        afterLink = splitEndingPunctuation[2];
+      } else {
+        linkText = original;
+        afterLink = '';
+      }
+    }
+    attributesMap['href'] = href + linkText;
+    output.push(goog.html.SafeHtml.create('a', attributesMap, linkText));
+    output.push(htmlEscape(afterLink));
+    return '';
+  });
   return goog.html.SafeHtml.concat(output);
 };
-
 
 /**
  * Gets the first URI in text.
  * @param {string} text Plain text.
  * @return {string} The first URL, or an empty string if not found.
  */
-goog.string.linkify.findFirstUrl = function(text) {
-  'use strict';
+goog.string.linkify.findFirstUrl = (text) => {
   const link = text.match(goog.string.linkify.URL_RE_);
   return link != null ? link[0] : '';
 };
-
 
 /**
  * Gets the first email address in text.
  * @param {string} text Plain text.
  * @return {string} The first email address, or an empty string if not found.
  */
-goog.string.linkify.findFirstEmail = function(text) {
-  'use strict';
+goog.string.linkify.findFirstEmail = (text) => {
   const email = text.match(goog.string.linkify.EMAIL_RE_);
   return email != null ? email[0] : '';
 };
-
 
 /**
  * If a series of these characters is at the end of a url, it will be considered
@@ -222,8 +212,7 @@ goog.string.linkify.findFirstEmail = function(text) {
  * @const
  * @private
  */
-goog.string.linkify.ENDING_PUNCTUATION_CHARS_ = '\':;,\\.?}\\]\\)!';
-
+goog.string.linkify.ENDING_PUNCTUATION_CHARS_ = "':;,\\.?}\\]\\)!";
 
 /**
  * @type {!RegExp}
@@ -231,8 +220,8 @@ goog.string.linkify.ENDING_PUNCTUATION_CHARS_ = '\':;,\\.?}\\]\\)!';
  * @private
  */
 goog.string.linkify.ENDS_WITH_PUNCTUATION_RE_ = new RegExp(
-    '^(.*?)([' + goog.string.linkify.ENDING_PUNCTUATION_CHARS_ + ']+)$');
-
+  '^(.*?)([' + goog.string.linkify.ENDING_PUNCTUATION_CHARS_ + ']+)$'
+);
 
 /**
  * Set of characters to be put into a regex character set ("[...]"), used to
@@ -245,7 +234,6 @@ goog.string.linkify.ENDS_WITH_PUNCTUATION_RE_ = new RegExp(
  */
 goog.string.linkify.ACCEPTABLE_URL_CHARS_ = '\\w#-;!=?@\\[\\\\\\]_`{|}~';
 
-
 /**
  * List of all protocols patterns recognized in urls (mailto is handled in email
  * matching).
@@ -255,7 +243,6 @@ goog.string.linkify.ACCEPTABLE_URL_CHARS_ = '\\w#-;!=?@\\[\\\\\\]_`{|}~';
  */
 goog.string.linkify.RECOGNIZED_PROTOCOLS_ = ['https?', 'ftp'];
 
-
 /**
  * Regular expression pattern that matches the beginning of an url.
  * Contains a catching group to capture the scheme.
@@ -264,8 +251,7 @@ goog.string.linkify.RECOGNIZED_PROTOCOLS_ = ['https?', 'ftp'];
  * @private
  */
 goog.string.linkify.PROTOCOL_START_ =
-    '(' + goog.string.linkify.RECOGNIZED_PROTOCOLS_.join('|') + ')://';
-
+  '(' + goog.string.linkify.RECOGNIZED_PROTOCOLS_.join('|') + ')://';
 
 /**
  * Regular expression pattern that matches the beginning of a typical
@@ -276,7 +262,6 @@ goog.string.linkify.PROTOCOL_START_ =
  */
 goog.string.linkify.WWW_START_ = 'www\\.';
 
-
 /**
  * Regular expression pattern that matches an url.
  * @type {string}
@@ -284,10 +269,13 @@ goog.string.linkify.WWW_START_ = 'www\\.';
  * @private
  */
 goog.string.linkify.URL_RE_STRING_ =
-    '(?:' + goog.string.linkify.PROTOCOL_START_ + '|' +
-    goog.string.linkify.WWW_START_ + ')[' +
-    goog.string.linkify.ACCEPTABLE_URL_CHARS_ + ']+';
-
+  '(?:' +
+  goog.string.linkify.PROTOCOL_START_ +
+  '|' +
+  goog.string.linkify.WWW_START_ +
+  ')[' +
+  goog.string.linkify.ACCEPTABLE_URL_CHARS_ +
+  ']+';
 
 /**
  * Regular expression that matches an url. Case-insensitive.
@@ -295,9 +283,7 @@ goog.string.linkify.URL_RE_STRING_ =
  * @const
  * @private
  */
-goog.string.linkify.URL_RE_ =
-    new RegExp(goog.string.linkify.URL_RE_STRING_, 'i');
-
+goog.string.linkify.URL_RE_ = new RegExp(goog.string.linkify.URL_RE_STRING_, 'i');
 
 /**
  * Regular expression pattern that matches a top level domain.
@@ -305,13 +291,13 @@ goog.string.linkify.URL_RE_ =
  * @const
  * @private
  */
-goog.string.linkify.TOP_LEVEL_DOMAIN_ = '(?:com|org|net|edu|gov' +
-    // from http://www.iana.org/gtld/gtld.htm
-    '|aero|biz|cat|coop|info|int|jobs|mobi|museum|name|pro|travel' +
-    '|arpa|asia|xxx' +
-    // a two letter country code
-    '|[a-z][a-z])\\b';
-
+goog.string.linkify.TOP_LEVEL_DOMAIN_ =
+  '(?:com|org|net|edu|gov' +
+  // from http://www.iana.org/gtld/gtld.htm
+  '|aero|biz|cat|coop|info|int|jobs|mobi|museum|name|pro|travel' +
+  '|arpa|asia|xxx' +
+  // a two letter country code
+  '|[a-z][a-z])\\b';
 
 /**
  * Regular expression pattern that matches an email.
@@ -322,9 +308,9 @@ goog.string.linkify.TOP_LEVEL_DOMAIN_ = '(?:com|org|net|edu|gov' +
  * @private
  */
 goog.string.linkify.EMAIL_RE_STRING_ =
-    '(?:mailto:)?([\\w.!#$%&\'*+-/=?^_`{|}~]+@[A-Za-z0-9.-]+\\.' +
-    goog.string.linkify.TOP_LEVEL_DOMAIN_ + ')';
-
+  "(?:mailto:)?([\\w.!#$%&'*+-/=?^_`{|}~]+@[A-Za-z0-9.-]+\\." +
+  goog.string.linkify.TOP_LEVEL_DOMAIN_ +
+  ')';
 
 /**
  * Regular expression that matches an email. Case-insensitive.
@@ -332,9 +318,7 @@ goog.string.linkify.EMAIL_RE_STRING_ =
  * @const
  * @private
  */
-goog.string.linkify.EMAIL_RE_ =
-    new RegExp(goog.string.linkify.EMAIL_RE_STRING_, 'i');
-
+goog.string.linkify.EMAIL_RE_ = new RegExp(goog.string.linkify.EMAIL_RE_STRING_, 'i');
 
 /**
  * Regular expression to match all the links (url or email) in a string.
@@ -347,10 +331,15 @@ goog.string.linkify.EMAIL_RE_ =
  * @private
  */
 goog.string.linkify.FIND_LINKS_RE_ = new RegExp(
-    // Match everything including newlines.
-    '([\\S\\s]*?)(' +
-        // Match email after a word break.
-        '\\b' + goog.string.linkify.EMAIL_RE_STRING_ + '|' +
-        // Match url after a word break.
-        '\\b' + goog.string.linkify.URL_RE_STRING_ + '|$)',
-    'gi');
+  // Match everything including newlines.
+  '([\\S\\s]*?)(' +
+    // Match email after a word break.
+    '\\b' +
+    goog.string.linkify.EMAIL_RE_STRING_ +
+    '|' +
+    // Match url after a word break.
+    '\\b' +
+    goog.string.linkify.URL_RE_STRING_ +
+    '|$)',
+  'gi'
+);

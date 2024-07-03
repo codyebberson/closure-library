@@ -4,14 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 ////////////////////////// NOTE ABOUT EDITING THIS FILE ///////////////////////
 //                                                                           //
 // Any edits to this file must be applied to mat3d.js by running:            //
 //   swap_type.sh mat3f.js > mat3d.js                                        //
 //                                                                           //
 ////////////////////////// NOTE ABOUT EDITING THIS FILE ///////////////////////
-
 
 /**
  * @fileoverview Provides functions for operating on 3x3 float (32bit)
@@ -30,33 +28,25 @@ goog.provide('goog.vec.mat3f.Type');
 goog.require('goog.vec');
 goog.require('goog.vec.vec3f.Type');
 
-
 /** @typedef {!goog.vec.Float32} */ goog.vec.mat3f.Type;
-
 
 /**
  * Creates a mat3f with all elements initialized to zero.
  *
  * @return {!goog.vec.mat3f.Type} The new mat3f.
  */
-goog.vec.mat3f.create = function() {
-  'use strict';
-  return new Float32Array(9);
-};
-
+goog.vec.mat3f.create = () => new Float32Array(9);
 
 /**
  * Creates a mat3f identity matrix.
  *
  * @return {!goog.vec.mat3f.Type} The new mat3f.
  */
-goog.vec.mat3f.createIdentity = function() {
-  'use strict';
+goog.vec.mat3f.createIdentity = () => {
   const mat = goog.vec.mat3f.create();
   mat[0] = mat[4] = mat[8] = 1;
   return mat;
 };
-
 
 /**
  * Initializes the matrix from the set of values. Note the values supplied are
@@ -76,9 +66,7 @@ goog.vec.mat3f.createIdentity = function() {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.setFromValues = function(
-    mat, v00, v10, v20, v01, v11, v21, v02, v12, v22) {
-  'use strict';
+goog.vec.mat3f.setFromValues = (mat, v00, v10, v20, v01, v11, v21, v02, v12, v22) => {
   mat[0] = v00;
   mat[1] = v10;
   mat[2] = v20;
@@ -91,7 +79,6 @@ goog.vec.mat3f.setFromValues = function(
   return mat;
 };
 
-
 /**
  * Initializes mat3f mat from mat3f src.
  *
@@ -100,8 +87,7 @@ goog.vec.mat3f.setFromValues = function(
  * @return {!goog.vec.mat3f.Type} Return mat so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.setFromMat3f = function(mat, src) {
-  'use strict';
+goog.vec.mat3f.setFromMat3f = (mat, src) => {
   mat[0] = src[0];
   mat[1] = src[1];
   mat[2] = src[2];
@@ -113,7 +99,6 @@ goog.vec.mat3f.setFromMat3f = function(mat, src) {
   mat[8] = src[8];
   return mat;
 };
-
 
 /**
  * Initializes mat3f mat from mat3d src (typed as a Float64Array to
@@ -124,8 +109,7 @@ goog.vec.mat3f.setFromMat3f = function(mat, src) {
  * @return {!goog.vec.mat3f.Type} Return mat so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.setFromMat3d = function(mat, src) {
-  'use strict';
+goog.vec.mat3f.setFromMat3d = (mat, src) => {
   mat[0] = src[0];
   mat[1] = src[1];
   mat[2] = src[2];
@@ -137,7 +121,6 @@ goog.vec.mat3f.setFromMat3d = function(mat, src) {
   mat[8] = src[8];
   return mat;
 };
-
 
 /**
  * Initializes mat3f mat from Array src.
@@ -147,8 +130,7 @@ goog.vec.mat3f.setFromMat3d = function(mat, src) {
  * @return {!goog.vec.mat3f.Type} Return mat so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.setFromArray = function(mat, src) {
-  'use strict';
+goog.vec.mat3f.setFromArray = (mat, src) => {
   mat[0] = src[0];
   mat[1] = src[1];
   mat[2] = src[2];
@@ -160,7 +142,6 @@ goog.vec.mat3f.setFromArray = function(mat, src) {
   mat[8] = src[8];
   return mat;
 };
-
 
 /**
  * Retrieves the element at the requested row and column.
@@ -171,11 +152,7 @@ goog.vec.mat3f.setFromArray = function(mat, src) {
  * @param {number} column The column index.
  * @return {number} The element value at the requested row, column indices.
  */
-goog.vec.mat3f.getElement = function(mat, row, column) {
-  'use strict';
-  return mat[row + column * 3];
-};
-
+goog.vec.mat3f.getElement = (mat, row, column) => mat[row + column * 3];
 
 /**
  * Sets the element at the requested row and column.
@@ -188,12 +165,10 @@ goog.vec.mat3f.getElement = function(mat, row, column) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.setElement = function(mat, row, column, value) {
-  'use strict';
+goog.vec.mat3f.setElement = (mat, row, column, value) => {
   mat[row + column * 3] = value;
   return mat;
 };
-
 
 /**
  * Sets the diagonal values of the matrix from the given values.
@@ -205,14 +180,12 @@ goog.vec.mat3f.setElement = function(mat, row, column, value) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.setDiagonalValues = function(mat, v00, v11, v22) {
-  'use strict';
+goog.vec.mat3f.setDiagonalValues = (mat, v00, v11, v22) => {
   mat[0] = v00;
   mat[4] = v11;
   mat[8] = v22;
   return mat;
 };
-
 
 /**
  * Sets the diagonal values of the matrix from the given vector.
@@ -222,14 +195,12 @@ goog.vec.mat3f.setDiagonalValues = function(mat, v00, v11, v22) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.setDiagonal = function(mat, vec) {
-  'use strict';
+goog.vec.mat3f.setDiagonal = (mat, vec) => {
   mat[0] = vec[0];
   mat[4] = vec[1];
   mat[8] = vec[2];
   return mat;
 };
-
 
 /**
  * Sets the specified column with the supplied values.
@@ -242,15 +213,13 @@ goog.vec.mat3f.setDiagonal = function(mat, vec) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.setColumnValues = function(mat, column, v0, v1, v2) {
-  'use strict';
+goog.vec.mat3f.setColumnValues = (mat, column, v0, v1, v2) => {
   const i = column * 3;
   mat[i] = v0;
   mat[i + 1] = v1;
   mat[i + 2] = v2;
   return mat;
 };
-
 
 /**
  * Sets the specified column with the value from the supplied array.
@@ -261,15 +230,13 @@ goog.vec.mat3f.setColumnValues = function(mat, column, v0, v1, v2) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.setColumn = function(mat, column, vec) {
-  'use strict';
+goog.vec.mat3f.setColumn = (mat, column, vec) => {
   const i = column * 3;
   mat[i] = vec[0];
   mat[i + 1] = vec[1];
   mat[i + 2] = vec[2];
   return mat;
 };
-
 
 /**
  * Retrieves the specified column from the matrix into the given vector
@@ -282,15 +249,13 @@ goog.vec.mat3f.setColumn = function(mat, column, vec) {
  * @return {!goog.vec.vec3f.Type} return vec so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.getColumn = function(mat, column, vec) {
-  'use strict';
+goog.vec.mat3f.getColumn = (mat, column, vec) => {
   const i = column * 3;
   vec[0] = mat[i];
   vec[1] = mat[i + 1];
   vec[2] = mat[i + 2];
   return vec;
 };
-
 
 /**
  * Sets the columns of the matrix from the set of vector elements.
@@ -302,14 +267,12 @@ goog.vec.mat3f.getColumn = function(mat, column, vec) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.setColumns = function(mat, vec0, vec1, vec2) {
-  'use strict';
+goog.vec.mat3f.setColumns = (mat, vec0, vec1, vec2) => {
   goog.vec.mat3f.setColumn(mat, 0, vec0);
   goog.vec.mat3f.setColumn(mat, 1, vec1);
   goog.vec.mat3f.setColumn(mat, 2, vec2);
   return /** @type {!goog.vec.mat3f.Type} */ (mat);
 };
-
 
 /**
  * Retrieves the column values from the given matrix into the given vector
@@ -320,13 +283,11 @@ goog.vec.mat3f.setColumns = function(mat, vec0, vec1, vec2) {
  * @param {!goog.vec.vec3f.Type} vec1 The vector to receive column 1.
  * @param {!goog.vec.vec3f.Type} vec2 The vector to receive column 2.
  */
-goog.vec.mat3f.getColumns = function(mat, vec0, vec1, vec2) {
-  'use strict';
+goog.vec.mat3f.getColumns = (mat, vec0, vec1, vec2) => {
   goog.vec.mat3f.getColumn(mat, 0, vec0);
   goog.vec.mat3f.getColumn(mat, 1, vec1);
   goog.vec.mat3f.getColumn(mat, 2, vec2);
 };
-
 
 /**
  * Sets the row values from the supplied values.
@@ -339,14 +300,12 @@ goog.vec.mat3f.getColumns = function(mat, vec0, vec1, vec2) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.setRowValues = function(mat, row, v0, v1, v2) {
-  'use strict';
+goog.vec.mat3f.setRowValues = (mat, row, v0, v1, v2) => {
   mat[row] = v0;
   mat[row + 3] = v1;
   mat[row + 6] = v2;
   return mat;
 };
-
 
 /**
  * Sets the row values from the supplied vector.
@@ -357,14 +316,12 @@ goog.vec.mat3f.setRowValues = function(mat, row, v0, v1, v2) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.setRow = function(mat, row, vec) {
-  'use strict';
+goog.vec.mat3f.setRow = (mat, row, vec) => {
   mat[row] = vec[0];
   mat[row + 3] = vec[1];
   mat[row + 6] = vec[2];
   return mat;
 };
-
 
 /**
  * Retrieves the row values into the given vector.
@@ -375,14 +332,12 @@ goog.vec.mat3f.setRow = function(mat, row, vec) {
  * @return {!goog.vec.vec3f.Type} return vec so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.getRow = function(mat, row, vec) {
-  'use strict';
+goog.vec.mat3f.getRow = (mat, row, vec) => {
   vec[0] = mat[row];
   vec[1] = mat[row + 3];
   vec[2] = mat[row + 6];
   return vec;
 };
-
 
 /**
  * Sets the rows of the matrix from the supplied vectors.
@@ -394,14 +349,12 @@ goog.vec.mat3f.getRow = function(mat, row, vec) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.setRows = function(mat, vec0, vec1, vec2) {
-  'use strict';
+goog.vec.mat3f.setRows = (mat, vec0, vec1, vec2) => {
   goog.vec.mat3f.setRow(mat, 0, vec0);
   goog.vec.mat3f.setRow(mat, 1, vec1);
   goog.vec.mat3f.setRow(mat, 2, vec2);
   return /** @type {!goog.vec.mat3f.Type} */ (mat);
 };
-
 
 /**
  * Retrieves the rows of the matrix into the supplied vectors.
@@ -411,13 +364,11 @@ goog.vec.mat3f.setRows = function(mat, vec0, vec1, vec2) {
  * @param {!goog.vec.vec3f.Type} vec1 The vector to receive row 1.
  * @param {!goog.vec.vec3f.Type} vec2 The vector to receive row 2.
  */
-goog.vec.mat3f.getRows = function(mat, vec0, vec1, vec2) {
-  'use strict';
+goog.vec.mat3f.getRows = (mat, vec0, vec1, vec2) => {
   goog.vec.mat3f.getRow(mat, 0, vec0);
   goog.vec.mat3f.getRow(mat, 1, vec1);
   goog.vec.mat3f.getRow(mat, 2, vec2);
 };
-
 
 /**
  * Makes the given 3x3 matrix the zero matrix.
@@ -425,8 +376,7 @@ goog.vec.mat3f.getRows = function(mat, vec0, vec1, vec2) {
  * @param {!goog.vec.mat3f.Type} mat The matrix.
  * @return {!goog.vec.mat3f.Type} return mat so operations can be chained.
  */
-goog.vec.mat3f.makeZero = function(mat) {
-  'use strict';
+goog.vec.mat3f.makeZero = (mat) => {
   mat[0] = 0;
   mat[1] = 0;
   mat[2] = 0;
@@ -439,15 +389,13 @@ goog.vec.mat3f.makeZero = function(mat) {
   return mat;
 };
 
-
 /**
  * Makes the given 3x3 matrix the identity matrix.
  *
  * @param {!goog.vec.mat3f.Type} mat The matrix.
  * @return {!goog.vec.mat3f.Type} return mat so operations can be chained.
  */
-goog.vec.mat3f.makeIdentity = function(mat) {
-  'use strict';
+goog.vec.mat3f.makeIdentity = (mat) => {
   mat[0] = 1;
   mat[1] = 0;
   mat[2] = 0;
@@ -460,7 +408,6 @@ goog.vec.mat3f.makeIdentity = function(mat) {
   return mat;
 };
 
-
 /**
  * Performs a per-component addition of the matrices mat0 and mat1, storing
  * the result into resultMat.
@@ -472,8 +419,7 @@ goog.vec.mat3f.makeIdentity = function(mat) {
  * @return {!goog.vec.mat3f.Type} return resultMat so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.addMat = function(mat0, mat1, resultMat) {
-  'use strict';
+goog.vec.mat3f.addMat = (mat0, mat1, resultMat) => {
   resultMat[0] = mat0[0] + mat1[0];
   resultMat[1] = mat0[1] + mat1[1];
   resultMat[2] = mat0[2] + mat1[2];
@@ -486,7 +432,6 @@ goog.vec.mat3f.addMat = function(mat0, mat1, resultMat) {
   return resultMat;
 };
 
-
 /**
  * Performs a per-component subtraction of the matrices mat0 and mat1,
  * storing the result into resultMat.
@@ -498,8 +443,7 @@ goog.vec.mat3f.addMat = function(mat0, mat1, resultMat) {
  * @return {!goog.vec.mat3f.Type} return resultMat so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.subMat = function(mat0, mat1, resultMat) {
-  'use strict';
+goog.vec.mat3f.subMat = (mat0, mat1, resultMat) => {
   resultMat[0] = mat0[0] - mat1[0];
   resultMat[1] = mat0[1] - mat1[1];
   resultMat[2] = mat0[2] - mat1[2];
@@ -512,7 +456,6 @@ goog.vec.mat3f.subMat = function(mat0, mat1, resultMat) {
   return resultMat;
 };
 
-
 /**
  * Multiplies matrix mat0 with the given scalar, storing the result
  * into resultMat.
@@ -524,8 +467,7 @@ goog.vec.mat3f.subMat = function(mat0, mat1, resultMat) {
  * @return {!goog.vec.mat3f.Type} return resultMat so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.multScalar = function(mat, scalar, resultMat) {
-  'use strict';
+goog.vec.mat3f.multScalar = (mat, scalar, resultMat) => {
   resultMat[0] = mat[0] * scalar;
   resultMat[1] = mat[1] * scalar;
   resultMat[2] = mat[2] * scalar;
@@ -538,7 +480,6 @@ goog.vec.mat3f.multScalar = function(mat, scalar, resultMat) {
   return resultMat;
 };
 
-
 /**
  * Multiplies the two matrices mat0 and mat1 using matrix multiplication,
  * storing the result into resultMat.
@@ -550,8 +491,7 @@ goog.vec.mat3f.multScalar = function(mat, scalar, resultMat) {
  * @return {!goog.vec.mat3f.Type} return resultMat so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.multMat = function(mat0, mat1, resultMat) {
-  'use strict';
+goog.vec.mat3f.multMat = (mat0, mat1, resultMat) => {
   const a00 = mat0[0];
   const a10 = mat0[1];
   const a20 = mat0[2];
@@ -563,7 +503,6 @@ goog.vec.mat3f.multMat = function(mat0, mat1, resultMat) {
   const a02 = mat0[6];
   const a12 = mat0[7];
   const a22 = mat0[8];
-
 
   const b00 = mat1[0];
   const b10 = mat1[1];
@@ -577,7 +516,6 @@ goog.vec.mat3f.multMat = function(mat0, mat1, resultMat) {
   const b12 = mat1[7];
   const b22 = mat1[8];
 
-
   resultMat[0] = a00 * b00 + a01 * b10 + a02 * b20;
   resultMat[1] = a10 * b00 + a11 * b10 + a12 * b20;
   resultMat[2] = a20 * b00 + a21 * b10 + a22 * b20;
@@ -590,7 +528,6 @@ goog.vec.mat3f.multMat = function(mat0, mat1, resultMat) {
   return resultMat;
 };
 
-
 /**
  * Transposes the given matrix mat storing the result into resultMat.
  *
@@ -600,8 +537,7 @@ goog.vec.mat3f.multMat = function(mat0, mat1, resultMat) {
  * @return {!goog.vec.mat3f.Type} return resultMat so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.transpose = function(mat, resultMat) {
-  'use strict';
+goog.vec.mat3f.transpose = (mat, resultMat) => {
   if (resultMat == mat) {
     const a10 = mat[1];
     const a20 = mat[2];
@@ -627,7 +563,6 @@ goog.vec.mat3f.transpose = function(mat, resultMat) {
   return resultMat;
 };
 
-
 /**
  * Computes the inverse of mat0 storing the result into resultMat. If the
  * inverse is defined, this function returns true, false otherwise.
@@ -638,8 +573,7 @@ goog.vec.mat3f.transpose = function(mat, resultMat) {
  * @return {boolean} True if the inverse is defined. If false is returned,
  *     resultMat is not modified.
  */
-goog.vec.mat3f.invert = function(mat0, resultMat) {
-  'use strict';
+goog.vec.mat3f.invert = (mat0, resultMat) => {
   const a00 = mat0[0];
   const a10 = mat0[1];
   const a20 = mat0[2];
@@ -651,7 +585,6 @@ goog.vec.mat3f.invert = function(mat0, resultMat) {
   const a02 = mat0[6];
   const a12 = mat0[7];
   const a22 = mat0[8];
-
 
   const t00 = a11 * a22 - a12 * a21;
   const t10 = a12 * a20 - a10 * a22;
@@ -676,7 +609,6 @@ goog.vec.mat3f.invert = function(mat0, resultMat) {
   return true;
 };
 
-
 /**
  * Returns true if the components of mat0 are equal to the components of mat1.
  *
@@ -684,14 +616,17 @@ goog.vec.mat3f.invert = function(mat0, resultMat) {
  * @param {!goog.vec.mat3f.Type} mat1 The second matrix.
  * @return {boolean} True if the two matrices are equivalent.
  */
-goog.vec.mat3f.equals = function(mat0, mat1) {
-  'use strict';
-  return mat0.length == mat1.length && mat0[0] == mat1[0] &&
-      mat0[1] == mat1[1] && mat0[2] == mat1[2] && mat0[3] == mat1[3] &&
-      mat0[4] == mat1[4] && mat0[5] == mat1[5] && mat0[6] == mat1[6] &&
-      mat0[7] == mat1[7] && mat0[8] == mat1[8];
-};
-
+goog.vec.mat3f.equals = (mat0, mat1) =>
+  mat0.length == mat1.length &&
+  mat0[0] == mat1[0] &&
+  mat0[1] == mat1[1] &&
+  mat0[2] == mat1[2] &&
+  mat0[3] == mat1[3] &&
+  mat0[4] == mat1[4] &&
+  mat0[5] == mat1[5] &&
+  mat0[6] == mat1[6] &&
+  mat0[7] == mat1[7] &&
+  mat0[8] == mat1[8];
 
 /**
  * Transforms the given vector with the given matrix storing the resulting,
@@ -704,8 +639,7 @@ goog.vec.mat3f.equals = function(mat0, mat1) {
  * @return {!goog.vec.vec3f.Type} return resultVec so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.multVec3 = function(mat, vec, resultVec) {
-  'use strict';
+goog.vec.mat3f.multVec3 = (mat, vec, resultVec) => {
   const x = vec[0];
   const y = vec[1];
   const z = vec[2];
@@ -715,7 +649,6 @@ goog.vec.mat3f.multVec3 = function(mat, vec, resultVec) {
   resultVec[2] = x * mat[2] + y * mat[5] + z * mat[8];
   return resultVec;
 };
-
 
 /**
  * Makes the given 3x3 matrix a translation matrix with x and y
@@ -727,8 +660,7 @@ goog.vec.mat3f.multVec3 = function(mat, vec, resultVec) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained.
  */
-goog.vec.mat3f.makeTranslate = function(mat, x, y) {
-  'use strict';
+goog.vec.mat3f.makeTranslate = (mat, x, y) => {
   mat[0] = 1;
   mat[1] = 0;
   mat[2] = 0;
@@ -741,7 +673,6 @@ goog.vec.mat3f.makeTranslate = function(mat, x, y) {
   return mat;
 };
 
-
 /**
  * Makes the given 3x3 matrix a scale matrix with x, y, and z scale factors.
  *
@@ -753,8 +684,7 @@ goog.vec.mat3f.makeTranslate = function(mat, x, y) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained.
  */
-goog.vec.mat3f.makeScale = function(mat, x, y, z) {
-  'use strict';
+goog.vec.mat3f.makeScale = (mat, x, y, z) => {
   mat[0] = x;
   mat[1] = 0;
   mat[2] = 0;
@@ -766,7 +696,6 @@ goog.vec.mat3f.makeScale = function(mat, x, y, z) {
   mat[8] = z;
   return mat;
 };
-
 
 /**
  * Makes the given 3x3 matrix a rotation matrix with the given rotation
@@ -780,8 +709,7 @@ goog.vec.mat3f.makeScale = function(mat, x, y, z) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained.
  */
-goog.vec.mat3f.makeRotate = function(mat, angle, ax, ay, az) {
-  'use strict';
+goog.vec.mat3f.makeRotate = (mat, angle, ax, ay, az) => {
   const c = Math.cos(angle);
   const d = 1 - c;
   const s = Math.sin(angle);
@@ -799,7 +727,6 @@ goog.vec.mat3f.makeRotate = function(mat, angle, ax, ay, az) {
   return mat;
 };
 
-
 /**
  * Makes the given 3x3 matrix a rotation matrix with the given rotation
  * angle about the X axis.
@@ -809,8 +736,7 @@ goog.vec.mat3f.makeRotate = function(mat, angle, ax, ay, az) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained.
  */
-goog.vec.mat3f.makeRotateX = function(mat, angle) {
-  'use strict';
+goog.vec.mat3f.makeRotateX = (mat, angle) => {
   const c = Math.cos(angle);
   const s = Math.sin(angle);
 
@@ -827,7 +753,6 @@ goog.vec.mat3f.makeRotateX = function(mat, angle) {
   return mat;
 };
 
-
 /**
  * Makes the given 3x3 matrix a rotation matrix with the given rotation
  * angle about the Y axis.
@@ -837,8 +762,7 @@ goog.vec.mat3f.makeRotateX = function(mat, angle) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained.
  */
-goog.vec.mat3f.makeRotateY = function(mat, angle) {
-  'use strict';
+goog.vec.mat3f.makeRotateY = (mat, angle) => {
   const c = Math.cos(angle);
   const s = Math.sin(angle);
 
@@ -855,7 +779,6 @@ goog.vec.mat3f.makeRotateY = function(mat, angle) {
   return mat;
 };
 
-
 /**
  * Makes the given 3x3 matrix a rotation matrix with the given rotation
  * angle about the Z axis.
@@ -865,8 +788,7 @@ goog.vec.mat3f.makeRotateY = function(mat, angle) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained.
  */
-goog.vec.mat3f.makeRotateZ = function(mat, angle) {
-  'use strict';
+goog.vec.mat3f.makeRotateZ = (mat, angle) => {
   const c = Math.cos(angle);
   const s = Math.sin(angle);
 
@@ -883,7 +805,6 @@ goog.vec.mat3f.makeRotateZ = function(mat, angle) {
   return mat;
 };
 
-
 /**
  * Rotate the given matrix by angle about the x,y,z axis.  Equivalent to:
  * goog.vec.mat3f.multMat(
@@ -899,8 +820,7 @@ goog.vec.mat3f.makeRotateZ = function(mat, angle) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained.
  */
-goog.vec.mat3f.rotate = function(mat, angle, x, y, z) {
-  'use strict';
+goog.vec.mat3f.rotate = (mat, angle, x, y, z) => {
   const m00 = mat[0];
   const m10 = mat[1];
   const m20 = mat[2];
@@ -912,7 +832,6 @@ goog.vec.mat3f.rotate = function(mat, angle, x, y, z) {
   const m02 = mat[6];
   const m12 = mat[7];
   const m22 = mat[8];
-
 
   const cosAngle = Math.cos(angle);
   const sinAngle = Math.sin(angle);
@@ -942,7 +861,6 @@ goog.vec.mat3f.rotate = function(mat, angle, x, y, z) {
   return mat;
 };
 
-
 /**
  * Rotate the given matrix by angle about the x axis.  Equivalent to:
  * goog.vec.mat3f.multMat(
@@ -955,8 +873,7 @@ goog.vec.mat3f.rotate = function(mat, angle, x, y, z) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained.
  */
-goog.vec.mat3f.rotateX = function(mat, angle) {
-  'use strict';
+goog.vec.mat3f.rotateX = (mat, angle) => {
   const m01 = mat[3];
   const m11 = mat[4];
   const m21 = mat[5];
@@ -964,7 +881,6 @@ goog.vec.mat3f.rotateX = function(mat, angle) {
   const m02 = mat[6];
   const m12 = mat[7];
   const m22 = mat[8];
-
 
   const c = Math.cos(angle);
   const s = Math.sin(angle);
@@ -979,7 +895,6 @@ goog.vec.mat3f.rotateX = function(mat, angle) {
   return mat;
 };
 
-
 /**
  * Rotate the given matrix by angle about the y axis.  Equivalent to:
  * goog.vec.mat3f.multMat(
@@ -992,8 +907,7 @@ goog.vec.mat3f.rotateX = function(mat, angle) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained.
  */
-goog.vec.mat3f.rotateY = function(mat, angle) {
-  'use strict';
+goog.vec.mat3f.rotateY = (mat, angle) => {
   const m00 = mat[0];
   const m10 = mat[1];
   const m20 = mat[2];
@@ -1001,7 +915,6 @@ goog.vec.mat3f.rotateY = function(mat, angle) {
   const m02 = mat[6];
   const m12 = mat[7];
   const m22 = mat[8];
-
 
   const c = Math.cos(angle);
   const s = Math.sin(angle);
@@ -1016,7 +929,6 @@ goog.vec.mat3f.rotateY = function(mat, angle) {
   return mat;
 };
 
-
 /**
  * Rotate the given matrix by angle about the z axis.  Equivalent to:
  * goog.vec.mat3f.multMat(
@@ -1029,8 +941,7 @@ goog.vec.mat3f.rotateY = function(mat, angle) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained.
  */
-goog.vec.mat3f.rotateZ = function(mat, angle) {
-  'use strict';
+goog.vec.mat3f.rotateZ = (mat, angle) => {
   const m00 = mat[0];
   const m10 = mat[1];
   const m20 = mat[2];
@@ -1038,7 +949,6 @@ goog.vec.mat3f.rotateZ = function(mat, angle) {
   const m01 = mat[3];
   const m11 = mat[4];
   const m21 = mat[5];
-
 
   const c = Math.cos(angle);
   const s = Math.sin(angle);
@@ -1052,7 +962,6 @@ goog.vec.mat3f.rotateZ = function(mat, angle) {
 
   return mat;
 };
-
 
 /**
  * Makes the given 3x3 matrix a rotation matrix given Euler angles using
@@ -1069,8 +978,7 @@ goog.vec.mat3f.rotateZ = function(mat, angle) {
  * @return {!goog.vec.mat3f.Type} return mat so that operations can be
  *     chained.
  */
-goog.vec.mat3f.makeEulerZXZ = function(mat, theta1, theta2, theta3) {
-  'use strict';
+goog.vec.mat3f.makeEulerZXZ = (mat, theta1, theta2, theta3) => {
   const c1 = Math.cos(theta1);
   const s1 = Math.sin(theta1);
 
@@ -1095,7 +1003,6 @@ goog.vec.mat3f.makeEulerZXZ = function(mat, theta1, theta2, theta3) {
   return mat;
 };
 
-
 /**
  * Decomposes a rotation matrix into Euler angles using the ZXZ convention so
  * that rotation = rotation_z(theta1) * rotation_x(theta2) * rotation_z(theta3),
@@ -1110,8 +1017,7 @@ goog.vec.mat3f.makeEulerZXZ = function(mat, theta1, theta2, theta3) {
  * @return {!goog.vec.vec3f.Type} return euler so that operations can be
  *     chained together.
  */
-goog.vec.mat3f.toEulerZXZ = function(mat, euler, opt_theta2IsNegative) {
-  'use strict';
+goog.vec.mat3f.toEulerZXZ = (mat, euler, opt_theta2IsNegative) => {
   // There is an ambiguity in the sign of sinTheta2 because of the sqrt.
   const sinTheta2 = Math.sqrt(mat[2] * mat[2] + mat[5] * mat[5]);
 
@@ -1138,8 +1044,7 @@ goog.vec.mat3f.toEulerZXZ = function(mat, euler, opt_theta2IsNegative) {
   euler[2] = (euler[2] + Math.PI * 2) % (Math.PI * 2);
   // For theta2 we want the angle to be in [0, pi] or [-pi, 0] depending on
   // signTheta2.
-  euler[1] =
-      ((euler[1] * signTheta2 + Math.PI * 2) % (Math.PI * 2)) * signTheta2;
+  euler[1] = ((euler[1] * signTheta2 + Math.PI * 2) % (Math.PI * 2)) * signTheta2;
 
   return euler;
 };

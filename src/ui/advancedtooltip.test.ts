@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.AdvancedTooltipTest');
-goog.setTestOnly();
 
 const AdvancedTooltip = goog.require('goog.ui.AdvancedTooltip');
 const Box = goog.require('goog.math.Box');
@@ -33,8 +32,7 @@ const TRACKINGDELAY = 100;
 
 function isWindowTooSmall() {
   // Firefox 3 fails if the window is too small.
-  return userAgent.GECKO &&
-      (window.innerWidth < 350 || window.innerHeight < 100);
+  return userAgent.GECKO && (window.innerWidth < 350 || window.innerHeight < 100);
 }
 
 function assertVisible(msg, element) {
@@ -63,14 +61,12 @@ function fireMouseEvents(from, to) {
   events.fireMouseOutEvent(from, to);
   events.fireMouseOverEvent(to, from);
   const bounds = style.getBounds(to);
-  events.fireMouseMoveEvent(
-      document, new Coordinate(bounds.left + 1, bounds.top + 1));
+  events.fireMouseMoveEvent(document, new Coordinate(bounds.left + 1, bounds.top + 1));
 }
 
 /** @suppress {checkTypes} suppression added to enable type checking */
 function checkNestedTooltips(useAdvancedTooltip) {
-  popup.appendChild(
-      dom.createDom(TagName.SPAN, {id: 'nestedAnchor'}, 'Nested Anchor'));
+  popup.appendChild(dom.createDom(TagName.SPAN, { id: 'nestedAnchor' }, 'Nested Anchor'));
   const nestedAnchor = dom.getElement('nestedAnchor');
   let nestedTooltip;
   if (useAdvancedTooltip) {
@@ -93,8 +89,7 @@ function checkNestedTooltips(useAdvancedTooltip) {
   clock.tick(HIDEDELAY);
   assertHidden('Mouse out of nested popup should hide it', nestedPopup);
   clock.tick(HIDEDELAY);
-  assertHidden(
-      'Mouse out of nested popup should eventually hide parent', popup);
+  assertHidden('Mouse out of nested popup should eventually hide parent', popup);
 
   events.fireBrowserEvent(new GoogEvent(EventType.FOCUS, anchor));
   clock.tick(SHOWDELAY);
@@ -108,8 +103,7 @@ function checkNestedTooltips(useAdvancedTooltip) {
   events.fireBrowserEvent(new GoogEvent(EventType.FOCUS, anchor));
   clock.tick(HIDEDELAY + HIDEDELAY);
   assertHidden('Lose focus hides nested popup', nestedPopup);
-  assertVisible(
-      "Moving focus from nested anchor to parent doesn't hide parent", popup);
+  assertVisible("Moving focus from nested anchor to parent doesn't hide parent", popup);
 
   events.fireBrowserEvent(new GoogEvent(EventType.BLUR, anchor));
   events.fireBrowserEvent(new GoogEvent(EventType.FOCUS, nestedAnchor));
@@ -134,8 +128,10 @@ function checkNestedTooltips(useAdvancedTooltip) {
 testSuite({
   setUp() {
     popup = dom.createDom(
-        TagName.SPAN,
-        {id: 'popup', style: 'position:absolute;top:300;left:300'}, 'Hello');
+      TagName.SPAN,
+      { id: 'popup', style: 'position:absolute;top:300;left:300' },
+      'Hello'
+    );
     att = new AdvancedTooltip('hovertarget');
     att.setElement(popup);
     att.setCursorTracking(true);
@@ -181,7 +177,7 @@ testSuite({
     events.fireMouseOutEvent(anchor, elsewhere);
     events.fireMouseMoveEvent(document, oneThirdOfTheWay);
     clock.tick(HIDEDELAY);
-    assertVisible('Moving mouse towards popup shouldn\'t hide it', popup);
+    assertVisible("Moving mouse towards popup shouldn't hide it", popup);
 
     events.fireMouseMoveEvent(document, twoThirdsOfTheWay);
     events.fireMouseMoveEvent(document, oneThirdOfTheWay);
@@ -207,15 +203,13 @@ testSuite({
 
     const attBounds = style.getBounds(popup);
     const inPadding = new Coordinate(attBounds.left - 5, attBounds.top - 5);
-    const outOfPadding =
-        new Coordinate(attBounds.left - 15, attBounds.top - 15);
+    const outOfPadding = new Coordinate(attBounds.left - 15, attBounds.top - 15);
 
     fireMouseEvents(anchor, popup);
     events.fireMouseOutEvent(popup, elsewhere);
     events.fireMouseMoveEvent(document, inPadding);
     clock.tick(HIDEDELAY);
-    assertVisible(
-        'Mouse out of popup but within padding shouldn\'t hide it', popup);
+    assertVisible("Mouse out of popup but within padding shouldn't hide it", popup);
 
     events.fireMouseMoveEvent(document, outOfPadding);
     clock.tick(HIDEDELAY);
@@ -252,17 +246,14 @@ testSuite({
     clock.tick(SHOWDELAY);
     popup.style.height = '100px';
     const attBounds = style.getBounds(popup);
-    const inPadding = new Coordinate(
-        attBounds.left + 5, attBounds.top + attBounds.height + 5);
-    const outOfPadding = new Coordinate(
-        attBounds.left + 5, attBounds.top + attBounds.height + 15);
+    const inPadding = new Coordinate(attBounds.left + 5, attBounds.top + attBounds.height + 5);
+    const outOfPadding = new Coordinate(attBounds.left + 5, attBounds.top + attBounds.height + 15);
 
     fireMouseEvents(anchor, popup);
     events.fireMouseOutEvent(popup, elsewhere);
     events.fireMouseMoveEvent(document, inPadding);
     clock.tick(HIDEDELAY);
-    assertVisible(
-        'Mouse out of popup but within padding shouldn\'t hide it', popup);
+    assertVisible("Mouse out of popup but within padding shouldn't hide it", popup);
 
     events.fireMouseMoveEvent(document, outOfPadding);
     clock.tick(HIDEDELAY);

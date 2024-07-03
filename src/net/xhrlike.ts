@@ -6,8 +6,6 @@
 
 goog.provide('goog.net.XhrLike');
 
-
-
 /**
  * Interface for the common parts of XMLHttpRequest.
  *
@@ -16,8 +14,7 @@ goog.provide('goog.net.XhrLike');
  * @interface
  * @see http://www.w3.org/TR/XMLHttpRequest/
  */
-goog.net.XhrLike = function() {};
-
+goog.net.XhrLike = () => {};
 
 /**
  * Typedef that refers to either native or custom-implemented XHR objects.
@@ -25,13 +22,11 @@ goog.net.XhrLike = function() {};
  */
 goog.net.XhrLike.OrNative;
 
-
 /**
  * @type {function()|null|undefined}
  * @see http://www.w3.org/TR/XMLHttpRequest/#handler-xhr-onreadystatechange
  */
 goog.net.XhrLike.prototype.onreadystatechange;
-
 
 /**
  * @type {?ArrayBuffer|?Blob|?Document|?Object|?string}
@@ -39,13 +34,11 @@ goog.net.XhrLike.prototype.onreadystatechange;
  */
 goog.net.XhrLike.prototype.response;
 
-
 /**
  * @type {string}
  * @see http://www.w3.org/TR/XMLHttpRequest/#the-responsetext-attribute
  */
 goog.net.XhrLike.prototype.responseText;
-
 
 /**
  * @type {string}
@@ -53,13 +46,11 @@ goog.net.XhrLike.prototype.responseText;
  */
 goog.net.XhrLike.prototype.responseType;
 
-
 /**
  * @type {Document}
  * @see http://www.w3.org/TR/XMLHttpRequest/#the-responsexml-attribute
  */
 goog.net.XhrLike.prototype.responseXML;
-
 
 /**
  * @type {number}
@@ -67,20 +58,17 @@ goog.net.XhrLike.prototype.responseXML;
  */
 goog.net.XhrLike.prototype.readyState;
 
-
 /**
  * @type {number}
  * @see http://www.w3.org/TR/XMLHttpRequest/#status
  */
 goog.net.XhrLike.prototype.status;
 
-
 /**
  * @type {string}
  * @see http://www.w3.org/TR/XMLHttpRequest/#statustext
  */
 goog.net.XhrLike.prototype.statusText;
-
 
 /**
  * @param {string} method
@@ -90,47 +78,41 @@ goog.net.XhrLike.prototype.statusText;
  * @param {?string=} opt_password
  * @see http://www.w3.org/TR/XMLHttpRequest/#the-open()-method
  */
-goog.net.XhrLike.prototype.open = function(
-    method, url, opt_async, opt_user, opt_password) {};
-
+goog.net.XhrLike.prototype.open = (method, url, opt_async, opt_user, opt_password) => {};
 
 /**
  * @param {ArrayBuffer|ArrayBufferView|Blob|Document|FormData|string=} opt_data
  * @see http://www.w3.org/TR/XMLHttpRequest/#the-send()-method
  */
-goog.net.XhrLike.prototype.send = function(opt_data) {};
-
+goog.net.XhrLike.prototype.send = (opt_data) => {};
 
 /**
  * @see http://www.w3.org/TR/XMLHttpRequest/#the-abort()-method
  */
-goog.net.XhrLike.prototype.abort = function() {};
-
+goog.net.XhrLike.prototype.abort = () => {};
 
 /**
  * @param {string} header
  * @param {string} value
  * @see http://www.w3.org/TR/XMLHttpRequest/#the-setrequestheader()-method
  */
-goog.net.XhrLike.prototype.setRequestHeader = function(header, value) {};
-
+goog.net.XhrLike.prototype.setRequestHeader = (header, value) => {};
 
 /**
  * @param {string} header
  * @return {?string}
  * @see http://www.w3.org/TR/XMLHttpRequest/#the-getresponseheader()-method
  */
-goog.net.XhrLike.prototype.getResponseHeader = function(header) {};
-
+goog.net.XhrLike.prototype.getResponseHeader = (header) => {};
 
 /**
  * @return {string}
  * @see http://www.w3.org/TR/XMLHttpRequest/#the-getallresponseheaders()-method
  */
-goog.net.XhrLike.prototype.getAllResponseHeaders = function() {};
+goog.net.XhrLike.prototype.getAllResponseHeaders = () => {};
 
 /**
  * @type {?function(!TrustTokenAttributeType): void | undefined}
  * @see https://docs.google.com/document/d/1qUjtKgA7nMv9YGMhi0xWKEojkSITKzGLdIcZgoz6ZkI.
  */
-goog.net.XhrLike.prototype.setTrustToken = function(trustTokenAttribute) {};
+goog.net.XhrLike.prototype.setTrustToken = (trustTokenAttribute) => {};

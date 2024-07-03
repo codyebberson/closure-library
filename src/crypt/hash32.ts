@@ -14,14 +14,12 @@ goog.provide('goog.crypt.hash32');
 
 goog.require('goog.crypt');
 
-
 /**
  * Default seed used during hashing, digits of pie.
  * See SEED32 in http://go/base.hash.java
  * @type {number}
  */
 goog.crypt.hash32.SEED32 = 314159265;
-
 
 /**
  * Arbitrary constant used during hashing.
@@ -30,16 +28,12 @@ goog.crypt.hash32.SEED32 = 314159265;
  */
 goog.crypt.hash32.CONSTANT32 = -1640531527;
 
-
 /**
  * Hashes a string to a 32-bit value.
  * @param {string} str String to hash.
  * @return {number} 32-bit hash.
  */
-goog.crypt.hash32.encodeBinaryString = function(str) {
-  return goog.crypt.hash32.encodeString(str, true);
-};
-
+goog.crypt.hash32.encodeBinaryString = (str) => goog.crypt.hash32.encodeString(str, true);
 
 /**
  * Hashes a string to a 32-bit value.
@@ -47,12 +41,8 @@ goog.crypt.hash32.encodeBinaryString = function(str) {
  * @param {boolean=} throwSync Whether to throw synchronously on unicode input.
  * @return {number} 32-bit hash.
  */
-goog.crypt.hash32.encodeString = function(str, throwSync) {
-  'use strict';
-  return goog.crypt.hash32.encodeByteArray(
-      goog.crypt.stringToByteArray(str, throwSync));
-};
-
+goog.crypt.hash32.encodeString = (str, throwSync) =>
+  goog.crypt.hash32.encodeByteArray(goog.crypt.stringToByteArray(str, throwSync));
 
 /**
  * Hashes a string to a 32-bit value, converting the string to UTF-8 before
@@ -60,10 +50,7 @@ goog.crypt.hash32.encodeString = function(str, throwSync) {
  * @param {string} str String to hash.
  * @return {number} 32-bit hash.
  */
-goog.crypt.hash32.encodeStringUtf8 = function(str) {
-  return goog.crypt.hash32.encodeText(str);
-};
-
+goog.crypt.hash32.encodeStringUtf8 = (str) => goog.crypt.hash32.encodeText(str);
 
 /**
  * Hashes a string to a 32-bit value, converting the string to UTF-8 before
@@ -71,26 +58,23 @@ goog.crypt.hash32.encodeStringUtf8 = function(str) {
  * @param {string} str String to hash.
  * @return {number} 32-bit hash.
  */
-goog.crypt.hash32.encodeText = function(str) {
-  'use strict';
-  return goog.crypt.hash32.encodeByteArray(
-      goog.crypt.stringToUtf8ByteArray(str));
-};
-
+goog.crypt.hash32.encodeText = (str) =>
+  goog.crypt.hash32.encodeByteArray(goog.crypt.stringToUtf8ByteArray(str));
 
 /**
  * Hashes an integer to a 32-bit value.
  * @param {number} value Number to hash.
  * @return {number} 32-bit hash.
  */
-goog.crypt.hash32.encodeInteger = function(value) {
-  'use strict';
+goog.crypt.hash32.encodeInteger = (value) => {
   // TODO(user): Does this make sense in JavaScript with doubles?  Should we
   // force the value to be in the correct range?
-  return goog.crypt.hash32.mix32_(
-      {a: value, b: goog.crypt.hash32.CONSTANT32, c: goog.crypt.hash32.SEED32});
+  return goog.crypt.hash32.mix32_({
+    a: value,
+    b: goog.crypt.hash32.CONSTANT32,
+    c: goog.crypt.hash32.SEED32,
+  });
 };
-
 
 /**
  * Hashes a "byte" array to a 32-bit value using the supplied seed.
@@ -101,9 +85,7 @@ goog.crypt.hash32.encodeInteger = function(value) {
  * @param {number=} opt_seed The seed.
  * @return {number} 32-bit hash.
  */
-goog.crypt.hash32.encodeByteArray = function(
-    bytes, opt_offset, opt_length, opt_seed) {
-  'use strict';
+goog.crypt.hash32.encodeByteArray = (bytes, opt_offset, opt_length, opt_seed) => {
   var offset = opt_offset || 0;
   var length = opt_length || bytes.length;
   var seed = opt_seed || goog.crypt.hash32.SEED32;
@@ -111,7 +93,7 @@ goog.crypt.hash32.encodeByteArray = function(
   var mix = {
     a: goog.crypt.hash32.CONSTANT32,
     b: goog.crypt.hash32.CONSTANT32,
-    c: seed
+    c: seed,
   };
 
   var keylen;
@@ -123,9 +105,11 @@ goog.crypt.hash32.encodeByteArray = function(
   }
   // Hash any remaining bytes
   mix.c += length;
-  switch (keylen) {  // deal with rest.  Some cases fall through
+  switch (
+    keylen // deal with rest.  Some cases fall through
+  ) {
     case 11:
-      mix.c += (bytes[offset + 10]) << 24;
+      mix.c += bytes[offset + 10] << 24;
     case 10:
       mix.c += (bytes[offset + 9] & 0xff) << 16;
     case 9:
@@ -140,7 +124,7 @@ goog.crypt.hash32.encodeByteArray = function(
     case 6:
       mix.b += (bytes[offset + 5] & 0xff) << 8;
     case 5:
-      mix.b += (bytes[offset + 4] & 0xff);
+      mix.b += bytes[offset + 4] & 0xff;
     case 4:
       mix.a += goog.crypt.hash32.wordAt_(bytes, offset);
       break;
@@ -149,12 +133,11 @@ goog.crypt.hash32.encodeByteArray = function(
     case 2:
       mix.a += (bytes[offset + 1] & 0xff) << 8;
     case 1:
-      mix.a += (bytes[offset + 0] & 0xff);
-      // case 0 : nothing left to add
+      mix.a += bytes[offset + 0] & 0xff;
+    // case 0 : nothing left to add
   }
   return goog.crypt.hash32.mix32_(mix);
 };
-
 
 /**
  * Performs an inplace mix of an object with the integer properties (a, b, c)
@@ -163,9 +146,10 @@ goog.crypt.hash32.encodeByteArray = function(
  * @return {number} The end c-value for the mixing.
  * @private
  */
-goog.crypt.hash32.mix32_ = function(mix) {
-  'use strict';
-  var a = mix.a, b = mix.b, c = mix.c;
+goog.crypt.hash32.mix32_ = (mix) => {
+  var a = mix.a,
+    b = mix.b,
+    c = mix.c;
   a -= b;
   a -= c;
   a ^= c >>> 13;
@@ -199,7 +183,6 @@ goog.crypt.hash32.mix32_ = function(mix) {
   return c;
 };
 
-
 /**
  * Returns the word at a given offset.  Treating an array of bytes a word at a
  * time is far more efficient than byte-by-byte.
@@ -208,15 +191,13 @@ goog.crypt.hash32.mix32_ = function(mix) {
  * @return {number} Integer value for the word.
  * @private
  */
-goog.crypt.hash32.wordAt_ = function(bytes, offset) {
-  'use strict';
+goog.crypt.hash32.wordAt_ = (bytes, offset) => {
   var a = goog.crypt.hash32.toSigned_(bytes[offset + 0]);
   var b = goog.crypt.hash32.toSigned_(bytes[offset + 1]);
   var c = goog.crypt.hash32.toSigned_(bytes[offset + 2]);
   var d = goog.crypt.hash32.toSigned_(bytes[offset + 3]);
   return a + (b << 8) + (c << 16) + (d << 24);
 };
-
 
 /**
  * Converts an unsigned "byte" to signed, that is, convert a value in the range
@@ -225,7 +206,4 @@ goog.crypt.hash32.wordAt_ = function(bytes, offset) {
  * @return {number} Signed "byte" value.
  * @private
  */
-goog.crypt.hash32.toSigned_ = function(n) {
-  'use strict';
-  return n > 127 ? n - 256 : n;
-};
+goog.crypt.hash32.toSigned_ = (n) => (n > 127 ? n - 256 : n);

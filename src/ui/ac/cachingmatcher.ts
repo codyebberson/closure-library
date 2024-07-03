@@ -9,14 +9,11 @@
  * other matcher.
  */
 
-
 goog.provide('goog.ui.ac.CachingMatcher');
 
 goog.require('goog.async.Throttle');
 goog.require('goog.ui.ac.ArrayMatcher');
 goog.require('goog.ui.ac.RenderOptions');
-
-
 
 /**
  * A matcher which wraps another (typically slow) matcher and
@@ -35,8 +32,7 @@ goog.require('goog.ui.ac.RenderOptions');
  *     requestMatchingRows.
  * @final
  */
-goog.ui.ac.CachingMatcher = function(baseMatcher) {
-  'use strict';
+goog.ui.ac.CachingMatcher = function (baseMatcher) {
   /** @private {!Array<!Object>}} The cache. */
   this.rows_ = [];
 
@@ -68,8 +64,7 @@ goog.ui.ac.CachingMatcher = function(baseMatcher) {
   this.baseMatcherMaxMatches_ = 100;
 
   /** @private {goog.async.Throttle} */
-  this.throttledTriggerBaseMatch_ =
-      new goog.async.Throttle(this.triggerBaseMatch_, 150, this);
+  this.throttledTriggerBaseMatch_ = new goog.async.Throttle(this.triggerBaseMatch_, 150, this);
 
   /** @private {string} */
   this.mostRecentToken_ = '';
@@ -96,7 +91,6 @@ goog.ui.ac.CachingMatcher = function(baseMatcher) {
   this.mostRecentMatches_ = [];
 };
 
-
 /**
  * Sets the number of milliseconds with which to throttle the match requests
  * on the underlying matcher.
@@ -105,12 +99,13 @@ goog.ui.ac.CachingMatcher = function(baseMatcher) {
  *
  * @param {number} throttleTime .
  */
-goog.ui.ac.CachingMatcher.prototype.setThrottleTime = function(throttleTime) {
-  'use strict';
-  this.throttledTriggerBaseMatch_ =
-      new goog.async.Throttle(this.triggerBaseMatch_, throttleTime, this);
+goog.ui.ac.CachingMatcher.prototype.setThrottleTime = function (throttleTime) {
+  this.throttledTriggerBaseMatch_ = new goog.async.Throttle(
+    this.triggerBaseMatch_,
+    throttleTime,
+    this
+  );
 };
-
 
 /**
  * Sets the maxMatches to use for the base matcher. If the base matcher makes
@@ -121,12 +116,9 @@ goog.ui.ac.CachingMatcher.prototype.setThrottleTime = function(throttleTime) {
  *
  * @param {number} maxMatches The value to set.
  */
-goog.ui.ac.CachingMatcher.prototype.setBaseMatcherMaxMatches = function(
-    maxMatches) {
-  'use strict';
+goog.ui.ac.CachingMatcher.prototype.setBaseMatcherMaxMatches = function (maxMatches) {
   this.baseMatcherMaxMatches_ = maxMatches;
 };
-
 
 /**
  * Sets the maximum size of the local cache. If the local cache grows larger
@@ -136,11 +128,9 @@ goog.ui.ac.CachingMatcher.prototype.setBaseMatcherMaxMatches = function(
  *
  * @param {number} maxCacheSize .
  */
-goog.ui.ac.CachingMatcher.prototype.setMaxCacheSize = function(maxCacheSize) {
-  'use strict';
+goog.ui.ac.CachingMatcher.prototype.setMaxCacheSize = function (maxCacheSize) {
   this.maxCacheSize_ = maxCacheSize;
 };
-
 
 /**
  * Sets the local matcher to use.
@@ -155,11 +145,9 @@ goog.ui.ac.CachingMatcher.prototype.setMaxCacheSize = function(maxCacheSize) {
  * @param {function(string, number, !Array<!Object>): !Array<!Object>}
  *     localMatcher
  */
-goog.ui.ac.CachingMatcher.prototype.setLocalMatcher = function(localMatcher) {
-  'use strict';
+goog.ui.ac.CachingMatcher.prototype.setLocalMatcher = function (localMatcher) {
   this.getMatchesForRows_ = localMatcher;
 };
-
 
 /**
  * Function used to pass matches to the autocomplete.
@@ -167,9 +155,11 @@ goog.ui.ac.CachingMatcher.prototype.setLocalMatcher = function(localMatcher) {
  * @param {number} maxMatches Max number of matches to return.
  * @param {Function} matchHandler callback to execute after matching.
  */
-goog.ui.ac.CachingMatcher.prototype.requestMatchingRows = function(
-    token, maxMatches, matchHandler) {
-  'use strict';
+goog.ui.ac.CachingMatcher.prototype.requestMatchingRows = function (
+  token,
+  maxMatches,
+  matchHandler
+) {
   this.mostRecentMaxMatches_ = maxMatches;
   this.mostRecentToken_ = token;
   this.mostRecentMatchHandler_ = matchHandler;
@@ -180,24 +170,19 @@ goog.ui.ac.CachingMatcher.prototype.requestMatchingRows = function(
   this.mostRecentMatches_ = matches;
 };
 
-
 /** Clears the cache. */
-goog.ui.ac.CachingMatcher.prototype.clearCache = function() {
-  'use strict';
+goog.ui.ac.CachingMatcher.prototype.clearCache = function () {
   this.rows_ = [];
   this.rowStrings_ = {};
 };
-
 
 /**
  * Adds the specified rows to the cache.
  * @param {!Array<!Object>} rows .
  * @private
  */
-goog.ui.ac.CachingMatcher.prototype.addRows_ = function(rows) {
-  'use strict';
-  rows.forEach(function(row) {
-    'use strict';
+goog.ui.ac.CachingMatcher.prototype.addRows_ = function (rows) {
+  rows.forEach(function (row) {
     // The ' ' prefix is to avoid colliding with builtins like toString.
     if (!this.rowStrings_[' ' + row]) {
       this.rows_.push(row);
@@ -206,18 +191,15 @@ goog.ui.ac.CachingMatcher.prototype.addRows_ = function(rows) {
   }, this);
 };
 
-
 /**
  * Checks if the cache is larger than the maximum cache size. If so clears it.
  * @private
  */
-goog.ui.ac.CachingMatcher.prototype.clearCacheIfTooLarge_ = function() {
-  'use strict';
+goog.ui.ac.CachingMatcher.prototype.clearCacheIfTooLarge_ = function () {
   if (this.rows_.length > this.maxCacheSize_) {
     this.clearCache();
   }
 };
-
 
 /**
  * Triggers a match request against the base matcher. This function is
@@ -226,13 +208,13 @@ goog.ui.ac.CachingMatcher.prototype.clearCacheIfTooLarge_ = function() {
  * @private
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.ui.ac.CachingMatcher.prototype.triggerBaseMatch_ = function() {
-  'use strict';
+goog.ui.ac.CachingMatcher.prototype.triggerBaseMatch_ = function () {
   this.baseMatcher_.requestMatchingRows(
-      this.mostRecentToken_, this.baseMatcherMaxMatches_,
-      goog.bind(this.onBaseMatch_, this));
+    this.mostRecentToken_,
+    this.baseMatcherMaxMatches_,
+    goog.bind(this.onBaseMatch_, this)
+  );
 };
-
 
 /**
  * Handles a match response from the base matcher.
@@ -240,8 +222,7 @@ goog.ui.ac.CachingMatcher.prototype.triggerBaseMatch_ = function() {
  * @param {!Array<!Object>} matches The matches returned by the base matcher.
  * @private
  */
-goog.ui.ac.CachingMatcher.prototype.onBaseMatch_ = function(token, matches) {
-  'use strict';
+goog.ui.ac.CachingMatcher.prototype.onBaseMatch_ = function (token, matches) {
   // NOTE(reinerp): The user might have typed some more characters since the
   // base matcher request was sent out, which manifests in that token might be
   // older than this.mostRecentToken_. We make sure to do our local matches
@@ -257,19 +238,17 @@ goog.ui.ac.CachingMatcher.prototype.onBaseMatch_ = function(token, matches) {
   this.addRows_(matches);
 
   var oldMatchesSet = {};
-  this.mostRecentMatches_.forEach(function(match) {
-    'use strict';
+  this.mostRecentMatches_.forEach((match) => {
     // The ' ' prefix is to avoid colliding with builtins like toString.
     oldMatchesSet[' ' + match] = true;
   });
   var newMatches = this.getMatchesForRows_(
-      this.mostRecentToken_, this.mostRecentMaxMatches_, this.rows_);
-  newMatches = newMatches.filter(function(match) {
-    'use strict';
-    return !oldMatchesSet[' ' + match];
-  });
-  newMatches = this.mostRecentMatches_.concat(newMatches)
-                   .slice(0, this.mostRecentMaxMatches_);
+    this.mostRecentToken_,
+    this.mostRecentMaxMatches_,
+    this.rows_
+  );
+  newMatches = newMatches.filter((match) => !oldMatchesSet[' ' + match]);
+  newMatches = this.mostRecentMatches_.concat(newMatches).slice(0, this.mostRecentMaxMatches_);
 
   this.mostRecentMatches_ = newMatches;
 

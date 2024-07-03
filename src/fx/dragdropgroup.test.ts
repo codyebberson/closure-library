@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.fx.DragDropGroupTest');
-goog.setTestOnly();
 
 const DragDropGroup = goog.require('goog.fx.DragDropGroup');
 const events = goog.require('goog.events');

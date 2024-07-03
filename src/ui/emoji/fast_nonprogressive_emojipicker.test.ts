@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.emoji.FastNonProgressiveEmojiPickerTest');
-goog.setTestOnly();
 
 const Emoji = goog.require('goog.ui.emoji.Emoji');
 const EmojiPicker = goog.require('goog.ui.emoji.EmojiPicker');
@@ -41,10 +40,15 @@ const sprite2 = base + '/sprite2.png';
  * @param {boolean=} animated Whether the sprite info is for an animated emoji.
  */
 function si(
-    cssClass, url = undefined, width = undefined, height = undefined,
-    xOffset = undefined, yOffset = undefined, animated = undefined) {
-  return new SpriteInfo(
-      cssClass, url, width, height, xOffset, yOffset, animated);
+  cssClass,
+  url = undefined,
+  width = undefined,
+  height = undefined,
+  xOffset = undefined,
+  yOffset = undefined,
+  animated = undefined
+) {
+  return new SpriteInfo(cssClass, url, width, height, xOffset, yOffset, animated);
 }
 
 // This group contains a mix of sprited emoji via css, sprited emoji via
@@ -111,68 +115,64 @@ testSuite({
       const emojiInfo = emoji[1][i];
       const cell = palette.getSelectedItem();
       const id = cell.getAttribute(Emoji.ATTRIBUTE);
-      const inner = /** @type {Element} */ (cell.firstChild);
+      const inner = /** @type {Element} */ cell.firstChild;
 
       // Check that the cell is a div wrapped around something else, and that
       // the outer div contains the goomoji attribute
       assertEquals(
-          'The palette item should be a div wrapped around something',
-          cell.tagName, 'DIV');
-      assertNotNull(
-          'The outer div is not wrapped around another element', inner);
+        'The palette item should be a div wrapped around something',
+        cell.tagName,
+        'DIV'
+      );
+      assertNotNull('The outer div is not wrapped around another element', inner);
       assertEquals(
-          'The palette item should have the goomoji attribute',
-          cell.getAttribute(Emoji.ATTRIBUTE), emojiInfo[1]);
+        'The palette item should have the goomoji attribute',
+        cell.getAttribute(Emoji.ATTRIBUTE),
+        emojiInfo[1]
+      );
       assertEquals(
-          'The palette item should have the data-goomoji attribute',
-          cell.getAttribute(Emoji.DATA_ATTRIBUTE), emojiInfo[1]);
+        'The palette item should have the data-goomoji attribute',
+        cell.getAttribute(Emoji.DATA_ATTRIBUTE),
+        emojiInfo[1]
+      );
 
       // Now check the contents of the cells
-      const url = emojiInfo[0];  // url of the animated emoji
+      const url = emojiInfo[0]; // url of the animated emoji
       const spriteInfo = emojiInfo[2];
       if (spriteInfo) {
         assertEquals(inner.tagName, 'DIV');
         if (spriteInfo.isAnimated()) {
           const img = images[id];
-          checkPathsEndWithSameFile(
-              style.getStyle(inner, 'background-image'), url);
+          checkPathsEndWithSameFile(style.getStyle(inner, 'background-image'), url);
           assertEquals(
-              String(img.width),
-              style.getStyle(inner, 'width')
-                  .replace(/px/g, '')
-                  .replace(/pt/g, ''));
+            String(img.width),
+            style.getStyle(inner, 'width').replace(/px/g, '').replace(/pt/g, '')
+          );
           assertEquals(
-              String(img.height),
-              style.getStyle(inner, 'height')
-                  .replace(/px/g, '')
-                  .replace(/pt/g, ''));
+            String(img.height),
+            style.getStyle(inner, 'height').replace(/px/g, '').replace(/pt/g, '')
+          );
           assertEquals(
-              '0 0',
-              style.getStyle(inner, 'background-position')
-                  .replace(/px/g, '')
-                  .replace(/pt/g, ''));
+            '0 0',
+            style.getStyle(inner, 'background-position').replace(/px/g, '').replace(/pt/g, '')
+          );
         } else {
           const cssClass = spriteInfo.getCssClass();
           if (cssClass) {
-            assertTrue(
-                'Sprite should have its CSS class set',
-                classlist.contains(inner, cssClass));
+            assertTrue('Sprite should have its CSS class set', classlist.contains(inner, cssClass));
           } else {
             checkPathsEndWithSameFile(
-                style.getStyle(inner, 'background-image'), spriteInfo.getUrl());
+              style.getStyle(inner, 'background-image'),
+              spriteInfo.getUrl()
+            );
+            assertEquals(spriteInfo.getWidthCssValue(), style.getStyle(inner, 'width'));
+            assertEquals(spriteInfo.getHeightCssValue(), style.getStyle(inner, 'height'));
             assertEquals(
-                spriteInfo.getWidthCssValue(), style.getStyle(inner, 'width'));
-            assertEquals(
-                spriteInfo.getHeightCssValue(),
-                style.getStyle(inner, 'height'));
-            assertEquals(
-                (spriteInfo.getXOffsetCssValue() + ' ' +
-                 spriteInfo.getYOffsetCssValue())
-                    .replace(/px/g, '')
-                    .replace(/pt/g, ''),
-                style.getStyle(inner, 'background-position')
-                    .replace(/px/g, '')
-                    .replace(/pt/g, ''));
+              (spriteInfo.getXOffsetCssValue() + ' ' + spriteInfo.getYOffsetCssValue())
+                .replace(/px/g, '')
+                .replace(/pt/g, ''),
+              style.getStyle(inner, 'background-position').replace(/px/g, '').replace(/pt/g, '')
+            );
           }
         }
       } else {

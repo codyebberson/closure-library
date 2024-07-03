@@ -4,21 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Defines an interface for parsing strings into objects.
  */
 
 goog.provide('goog.string.Parser');
 
-
-
 /**
  * An interface for parsing strings into objects.
  * @interface
  */
-goog.string.Parser = function() {};
-
+goog.string.Parser = () => {};
 
 /**
  * Parses a string into an object and returns the result.

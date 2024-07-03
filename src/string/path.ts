@@ -14,7 +14,6 @@ goog.provide('goog.string.path');
 goog.require('goog.array');
 goog.require('goog.string');
 
-
 /**
  * Returns the final component of a pathname.
  * See http://docs.python.org/library/os.path.html#os.path.basename
@@ -22,12 +21,10 @@ goog.require('goog.string');
  * @return {string} path The final component of a pathname, i.e. everything
  *     after the final slash.
  */
-goog.string.path.baseName = function(path) {
-  'use strict';
+goog.string.path.baseName = (path) => {
   const i = path.lastIndexOf('/') + 1;
   return path.slice(i);
 };
-
 
 /**
  * Alias to goog.string.path.baseName.
@@ -37,7 +34,6 @@ goog.string.path.baseName = function(path) {
  */
 goog.string.path.basename = goog.string.path.baseName;
 
-
 /**
  * Returns the directory component of a pathname.
  * See http://docs.python.org/library/os.path.html#os.path.dirname
@@ -45,8 +41,7 @@ goog.string.path.basename = goog.string.path.baseName;
  * @return {string} The directory component of a pathname, i.e. everything
  *     leading up to the final slash.
  */
-goog.string.path.dirname = function(path) {
-  'use strict';
+goog.string.path.dirname = (path) => {
   const i = path.lastIndexOf('/') + 1;
   let head = path.slice(0, i);
   // If the path isn't all forward slashes, trim the trailing slashes.
@@ -56,21 +51,18 @@ goog.string.path.dirname = function(path) {
   return head;
 };
 
-
 /**
  * Extracts the extension part of a pathname.
  * @param {string} path The path name to process.
  * @return {string} The extension if any, otherwise the empty string.
  */
-goog.string.path.extension = function(path) {
-  'use strict';
+goog.string.path.extension = (path) => {
   const separator = '.';
   // Combining all adjacent periods in the basename to a single period.
   const baseName = goog.string.path.baseName(path).replace(/\.+/g, separator);
   const separatorIndex = baseName.lastIndexOf(separator);
   return separatorIndex <= 0 ? '' : baseName.slice(separatorIndex + 1);
 };
-
 
 // TODO(johnlenz): goog.string.path.join should not accept undefined
 /**
@@ -80,8 +72,7 @@ goog.string.path.extension = function(path) {
  * @param {...(string|undefined)} var_args One of more path components.
  * @return {string} The path components joined.
  */
-goog.string.path.join = function(var_args) {
-  'use strict';
+goog.string.path.join = (var_args) => {
   let path = arguments[0];
 
   for (let i = 1; i < arguments.length; i++) {
@@ -98,7 +89,6 @@ goog.string.path.join = function(var_args) {
   return path;
 };
 
-
 /**
  * Normalizes a pathname by collapsing duplicate separators, parent directory
  * references ('..'), and current directory references ('.').
@@ -106,8 +96,7 @@ goog.string.path.join = function(var_args) {
  * @param {string} path One or more path components.
  * @return {string} The path after normalization.
  */
-goog.string.path.normalizePath = function(path) {
-  'use strict';
+goog.string.path.normalizePath = (path) => {
   if (path == '') {
     return '.';
   }
@@ -116,8 +105,7 @@ goog.string.path.normalizePath = function(path) {
   // POSIX will keep two slashes, but three or more will be collapsed to one.
   if (goog.string.startsWith(path, '/')) {
     initialSlashes = '/';
-    if (goog.string.startsWith(path, '//') &&
-        !goog.string.startsWith(path, '///')) {
+    if (goog.string.startsWith(path, '//') && !goog.string.startsWith(path, '///')) {
       initialSlashes = '//';
     }
   }
@@ -136,8 +124,11 @@ goog.string.path.normalizePath = function(path) {
     // A '..' should pop a directory unless this is not an absolute path and
     // we're at the root, or we've travelled upwards relatively in the last
     // iteration.
-    if (part != '..' || (!initialSlashes && !newParts.length) ||
-        goog.array.peek(newParts) == '..') {
+    if (
+      part != '..' ||
+      (!initialSlashes && !newParts.length) ||
+      goog.array.peek(newParts) == '..'
+    ) {
       newParts.push(part);
     } else {
       newParts.pop();
@@ -148,7 +139,6 @@ goog.string.path.normalizePath = function(path) {
   return returnPath || '.';
 };
 
-
 /**
  * Splits a pathname into "dirname" and "baseName" components, where "baseName"
  * is everything after the final slash. Either part may return an empty string.
@@ -156,8 +146,7 @@ goog.string.path.normalizePath = function(path) {
  * @param {string} path A pathname.
  * @return {!Array<string>} An array of [dirname, basename].
  */
-goog.string.path.split = function(path) {
-  'use strict';
+goog.string.path.split = (path) => {
   const head = goog.string.path.dirname(path);
   const tail = goog.string.path.baseName(path);
   return [head, tail];

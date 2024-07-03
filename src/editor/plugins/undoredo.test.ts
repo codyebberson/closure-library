@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.plugins.UndoRedoTest');
-goog.setTestOnly();
 
 const Field = goog.require('goog.editor.Field');
 const LoremIpsum = goog.require('goog.editor.plugins.LoremIpsum');
@@ -66,12 +65,12 @@ testSuite({
 
     // Update the arg list verifier for dispatchCommandValueChange to
     // correctly compare arguments that are arrays (or other complex objects).
-    mockEditableField.$registerArgumentListVerifier(
-        'dispatchEvent',
-        (expected, args) => googArray.equals(expected, args, (a, b) => {
-          assertObjectEquals(a, b);
-          return true;
-        }));
+    mockEditableField.$registerArgumentListVerifier('dispatchEvent', (expected, args) =>
+      googArray.equals(expected, args, (a, b) => {
+        assertObjectEquals(a, b);
+        return true;
+      })
+    );
     /**
      * @suppress {strictMissingProperties} suppression added to enable type
      * checking
@@ -100,10 +99,7 @@ testSuite({
      */
     mockState.addEventListener = () => {};
 
-    commands = [
-      UndoRedo.COMMAND.REDO,
-      UndoRedo.COMMAND.UNDO,
-    ];
+    commands = [UndoRedo.COMMAND.REDO, UndoRedo.COMMAND.UNDO];
     /** @suppress {visibility} suppression added to enable type checking */
     state = new UndoRedo.UndoState_('1', '', null, () => {});
 
@@ -124,8 +120,7 @@ testSuite({
     // it is lame. It manifests its lameness by throwing an exception.
     // Kudos to XT for helping me to figure this out.
     try {
-    } catch (e) {
-    }
+    } catch (e) {}
 
     if (!editableField.isUneditable()) {
       editableField.makeUneditable();
@@ -138,18 +133,21 @@ testSuite({
   /** @suppress {visibility} suppression added to enable type checking */
   testQueryCommandValue() {
     assertFalse(
-        'Must return false for empty undo stack.',
-        undoPlugin.queryCommandValue(UndoRedo.COMMAND.UNDO));
+      'Must return false for empty undo stack.',
+      undoPlugin.queryCommandValue(UndoRedo.COMMAND.UNDO)
+    );
 
     assertFalse(
-        'Must return false for empty redo stack.',
-        undoPlugin.queryCommandValue(UndoRedo.COMMAND.REDO));
+      'Must return false for empty redo stack.',
+      undoPlugin.queryCommandValue(UndoRedo.COMMAND.REDO)
+    );
 
     undoPlugin.undoManager_.addState(mockState);
 
     assertTrue(
-        'Must return true for a non-empty undo stack.',
-        undoPlugin.queryCommandValue(UndoRedo.COMMAND.UNDO));
+      'Must return true for a non-empty undo stack.',
+      undoPlugin.queryCommandValue(UndoRedo.COMMAND.UNDO)
+    );
   },
 
   /**
@@ -186,9 +184,9 @@ testSuite({
     undoPlugin.undoManager_.undo();
     mockEditableField.$reset();
 
-    const stubUndoEvent = {ctrlKey: true, altKey: false, shiftKey: false};
-    const stubRedoEvent = {ctrlKey: true, altKey: false, shiftKey: true};
-    const stubRedoEvent2 = {ctrlKey: true, altKey: false, shiftKey: false};
+    const stubUndoEvent = { ctrlKey: true, altKey: false, shiftKey: false };
+    const stubRedoEvent = { ctrlKey: true, altKey: false, shiftKey: true };
+    const stubRedoEvent2 = { ctrlKey: true, altKey: false, shiftKey: false };
     let result;
 
     // Test handling Trogedit undos. Should always call EditableField's
@@ -217,15 +215,13 @@ testSuite({
 
     mockEditableField.$replay();
     result = undoPlugin.handleKeyboardShortcut(stubRedoEvent2, 'y', false);
-    assertFalse(
-        'Plugin must return false when modifier is not pressed.', result);
+    assertFalse('Plugin must return false when modifier is not pressed.', result);
     mockEditableField.$verify();
     mockEditableField.$reset();
 
     mockEditableField.$replay();
     result = undoPlugin.handleKeyboardShortcut(stubUndoEvent, 'f', true);
-    assertFalse(
-        'Plugin must return false when it doesn\'t handle shortcut.', result);
+    assertFalse("Plugin must return false when it doesn't handle shortcut.", result);
     mockEditableField.$verify();
   },
 
@@ -234,7 +230,7 @@ testSuite({
      checking
    */
   testHandleKeyboardShortcut_NotTrogStates() {
-    const stubUndoEvent = {ctrlKey: true, altKey: false, shiftKey: false};
+    const stubUndoEvent = { ctrlKey: true, altKey: false, shiftKey: false };
 
     // Trogedit undo states all have a fieldHashCode, nulling that out makes
     // this state be treated as a non-Trogedit undo-redo state.
@@ -257,8 +253,7 @@ testSuite({
   },
 
   testEnable() {
-    assertFalse(
-        'Plugin must start disabled.', undoPlugin.isEnabled(editableField));
+    assertFalse('Plugin must start disabled.', undoPlugin.isEnabled(editableField));
 
     editableField.makeEditable();
     editableField.setSafeHtml(false, SafeHtml.create('div', {}, 'a'));
@@ -266,27 +261,28 @@ testSuite({
 
     assertTrue(undoPlugin.isEnabled(editableField));
     assertNotNull(
-        'Must have an event handler for enabled field.',
-        undoPlugin.eventHandlers_[fieldHashCode]);
+      'Must have an event handler for enabled field.',
+      undoPlugin.eventHandlers_[fieldHashCode]
+    );
 
     const currentState = undoPlugin.currentStates_[fieldHashCode];
     assertNotNull('Enabled plugin must have a current state.', currentState);
     assertEquals(
-        'After enable, undo content must match the field content.',
-        editableField.getElement().innerHTML, currentState.undoContent_);
+      'After enable, undo content must match the field content.',
+      editableField.getElement().innerHTML,
+      currentState.undoContent_
+    );
 
     assertTrue(
-        'After enable, undo cursorPosition must match the field cursor' +
-            'position.',
-        cursorPositionsEqual(
-            getCurrentCursorPosition(), currentState.undoCursorPosition_));
+      'After enable, undo cursorPosition must match the field cursor' + 'position.',
+      cursorPositionsEqual(getCurrentCursorPosition(), currentState.undoCursorPosition_)
+    );
 
+    assertUndefined('Current state must never have redo content.', currentState.redoContent_);
     assertUndefined(
-        'Current state must never have redo content.',
-        currentState.redoContent_);
-    assertUndefined(
-        'Current state must never have redo cursor position.',
-        currentState.redoCursorPosition_);
+      'Current state must never have redo cursor position.',
+      currentState.redoCursorPosition_
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -294,8 +290,9 @@ testSuite({
     editableField.makeEditable();
     undoPlugin.enable(editableField);
     assertTrue(
-        'Plugin must be enabled so we can test disabling.',
-        undoPlugin.isEnabled(editableField));
+      'Plugin must be enabled so we can test disabling.',
+      undoPlugin.isEnabled(editableField)
+    );
 
     let delayedChangeFired = false;
     events.listenOnce(editableField, Field.EventType.DELAYEDCHANGE, (e) => {
@@ -304,19 +301,22 @@ testSuite({
     editableField.setSafeHtml(false, SafeHtml.htmlEscape('foo'));
 
     undoPlugin.disable(editableField);
-    assertTrue(
-        'disable must fire pending delayed changes.', delayedChangeFired);
+    assertTrue('disable must fire pending delayed changes.', delayedChangeFired);
     assertEquals(
-        'disable must add undo state from pending change.', 1,
-        undoPlugin.undoManager_.undoStack_.length);
+      'disable must add undo state from pending change.',
+      1,
+      undoPlugin.undoManager_.undoStack_.length
+    );
 
     assertFalse(undoPlugin.isEnabled(editableField));
     assertUndefined(
-        'Disabled plugin must not have current state.',
-        undoPlugin.eventHandlers_[fieldHashCode]);
+      'Disabled plugin must not have current state.',
+      undoPlugin.eventHandlers_[fieldHashCode]
+    );
     assertUndefined(
-        'Disabled plugin must not have event handlers.',
-        undoPlugin.eventHandlers_[fieldHashCode]);
+      'Disabled plugin must not have event handlers.',
+      undoPlugin.eventHandlers_[fieldHashCode]
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -327,8 +327,9 @@ testSuite({
     undoPlugin.updateCurrentState_(editableField);
     let currentState = undoPlugin.currentStates_[fieldHashCode];
     assertNotUndefined(
-        'Must create empty states for field using lorem ipsum.',
-        undoPlugin.currentStates_[fieldHashCode]);
+      'Must create empty states for field using lorem ipsum.',
+      undoPlugin.currentStates_[fieldHashCode]
+    );
     assertEquals('', currentState.undoContent_);
     assertNull(currentState.undoCursorPosition_);
 
@@ -336,8 +337,7 @@ testSuite({
 
     // Pretend foo is the default contents to test '' == default contents
     // behavior.
-    editableField.getInjectableContents = (contents, styles) =>
-        contents == '' ? 'foo' : contents;
+    editableField.getInjectableContents = (contents, styles) => (contents == '' ? 'foo' : contents);
     editableField.setSafeHtml(false, SafeHtml.htmlEscape('foo'));
     undoPlugin.updateCurrentState_(editableField);
     assertEquals(currentState, undoPlugin.currentStates_[fieldHashCode]);
@@ -347,65 +347,59 @@ testSuite({
     editableField.setSafeHtml(false, SafeHtml.create('div', {}, 'a'));
     // Select some text so we have a valid selection that gets saved in the
     // UndoState.
-    browserrange.createRangeFromNodeContents(editableField.getElement())
-        .select();
+    browserrange.createRangeFromNodeContents(editableField.getElement()).select();
 
     undoPlugin.updateCurrentState_(editableField);
     currentState = undoPlugin.currentStates_[fieldHashCode];
-    assertNotNull(
-        'Must create state for field not using lorem ipsum', currentState);
+    assertNotNull('Must create state for field not using lorem ipsum', currentState);
     assertEquals(fieldHashCode, currentState.fieldHashCode);
     const content = editableField.getElement().innerHTML;
     const cursorPosition = getCurrentCursorPosition();
     assertEquals(content, currentState.undoContent_);
-    assertTrue(
-        cursorPositionsEqual(cursorPosition, currentState.undoCursorPosition_));
+    assertTrue(cursorPositionsEqual(cursorPosition, currentState.undoCursorPosition_));
     assertUndefined(currentState.redoContent_);
     assertUndefined(currentState.redoCursorPosition_);
 
     undoPlugin.updateCurrentState_(editableField);
     assertEquals(
-        'Updating state when state has not changed must not add undo ' +
-            'state to stack.',
-        1, undoPlugin.undoManager_.undoStack_.length);
+      'Updating state when state has not changed must not add undo ' + 'state to stack.',
+      1,
+      undoPlugin.undoManager_.undoStack_.length
+    );
     assertEquals(
-        'Updating state when state has not changed must not create ' +
-            'a new state.',
-        currentState, undoPlugin.currentStates_[fieldHashCode]);
+      'Updating state when state has not changed must not create ' + 'a new state.',
+      currentState,
+      undoPlugin.currentStates_[fieldHashCode]
+    );
     assertUndefined(
-        'Updating state when state has not changed must not add ' +
-            'redo content.',
-        currentState.redoContent_);
+      'Updating state when state has not changed must not add ' + 'redo content.',
+      currentState.redoContent_
+    );
     assertUndefined(
-        'Updating state when state has not changed must not add ' +
-            'redo cursor position.',
-        currentState.redoCursorPosition_);
+      'Updating state when state has not changed must not add ' + 'redo cursor position.',
+      currentState.redoCursorPosition_
+    );
 
     editableField.setSafeHtml(false, SafeHtml.create('div', {}, 'b'));
     undoPlugin.updateCurrentState_(editableField);
     currentState = undoPlugin.currentStates_[fieldHashCode];
-    assertNotNull(
-        'Must create state for field not using lorem ipsum', currentState);
+    assertNotNull('Must create state for field not using lorem ipsum', currentState);
     assertEquals(fieldHashCode, currentState.fieldHashCode);
     const newContent = editableField.getElement().innerHTML;
     const newCursorPosition = getCurrentCursorPosition();
     assertEquals(newContent, currentState.undoContent_);
-    assertTrue(cursorPositionsEqual(
-        newCursorPosition, currentState.undoCursorPosition_));
+    assertTrue(cursorPositionsEqual(newCursorPosition, currentState.undoCursorPosition_));
     assertUndefined(currentState.redoContent_);
     assertUndefined(currentState.redoCursorPosition_);
 
     /** @suppress {visibility} suppression added to enable type checking */
     const undoState = googArray.peek(undoPlugin.undoManager_.undoStack_);
-    assertNotNull(
-        'Must create state for field not using lorem ipsum', currentState);
+    assertNotNull('Must create state for field not using lorem ipsum', currentState);
     assertEquals(fieldHashCode, currentState.fieldHashCode);
     assertEquals(content, undoState.undoContent_);
-    assertTrue(
-        cursorPositionsEqual(cursorPosition, undoState.undoCursorPosition_));
+    assertTrue(cursorPositionsEqual(cursorPosition, undoState.undoCursorPosition_));
     assertEquals(newContent, undoState.redoContent_);
-    assertTrue(
-        cursorPositionsEqual(newCursorPosition, undoState.redoCursorPosition_));
+    assertTrue(cursorPositionsEqual(newCursorPosition, undoState.redoCursorPosition_));
   },
 
   /**
@@ -426,19 +420,25 @@ testSuite({
 
     const currentState = undoPlugin.currentStates_[fieldHashCode];
     stubs.set(
-        editableField, 'setCursorPosition',
-        functions.error('Faking exception during setCursorPosition()'));
+      editableField,
+      'setCursorPosition',
+      functions.error('Faking exception during setCursorPosition()')
+    );
     try {
       currentState.undo();
     } catch (e) {
       fail('Exception should not have been thrown during undo()');
     }
     assertEquals(
-        'Change events should be on', 0,
-        editableField.stoppedEvents_[Field.EventType.CHANGE]);
+      'Change events should be on',
+      0,
+      editableField.stoppedEvents_[Field.EventType.CHANGE]
+    );
     assertEquals(
-        'Delayed change events should be on', 0,
-        editableField.stoppedEvents_[Field.EventType.DELAYEDCHANGE]);
+      'Delayed change events should be on',
+      0,
+      editableField.stoppedEvents_[Field.EventType.DELAYEDCHANGE]
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -454,59 +454,54 @@ testSuite({
     let content = editableField.getElement().innerHTML;
     let cursorPosition = getCurrentCursorPosition();
     assertEquals(content, currentState.undoContent_);
-    assertTrue(
-        cursorPositionsEqual(cursorPosition, currentState.undoCursorPosition_));
+    assertTrue(cursorPositionsEqual(cursorPosition, currentState.undoCursorPosition_));
 
     // Update the field w/o dispatching delayed change, and verify that the
     // current state hasn't changed to reflect new values.
     editableField.setSafeHtml(false, SafeHtml.create('div', {}, 'b'), true);
     clock.tick(1000);
     currentState = undoPlugin.currentStates_[fieldHashCode];
-    assertEquals(
-        'Content must match old state.', content, currentState.undoContent_);
+    assertEquals('Content must match old state.', content, currentState.undoContent_);
     assertTrue(
-        'Cursor position must match old state.',
-        cursorPositionsEqual(cursorPosition, currentState.undoCursorPosition_));
+      'Cursor position must match old state.',
+      cursorPositionsEqual(cursorPosition, currentState.undoCursorPosition_)
+    );
 
     undoPlugin.refreshCurrentState(editableField);
     assertFalse(
-        'Refresh must not cause states to go on the undo-redo stack.',
-        undoPlugin.undoManager_.hasUndoState());
+      'Refresh must not cause states to go on the undo-redo stack.',
+      undoPlugin.undoManager_.hasUndoState()
+    );
     currentState = undoPlugin.currentStates_[fieldHashCode];
     content = editableField.getElement().innerHTML;
     cursorPosition = getCurrentCursorPosition();
-    assertEquals(
-        'Content must match current field state.', content,
-        currentState.undoContent_);
+    assertEquals('Content must match current field state.', content, currentState.undoContent_);
     assertTrue(
-        'Cursor position must match current field state.',
-        cursorPositionsEqual(cursorPosition, currentState.undoCursorPosition_));
+      'Cursor position must match current field state.',
+      cursorPositionsEqual(cursorPosition, currentState.undoCursorPosition_)
+    );
 
     undoPlugin.disable(editableField);
     assertUndefined(undoPlugin.currentStates_[fieldHashCode]);
     undoPlugin.refreshCurrentState(editableField);
     assertUndefined(
-        'Must not refresh current state of fields that do not have ' +
-            'undo-redo enabled.',
-        undoPlugin.currentStates_[fieldHashCode]);
+      'Must not refresh current state of fields that do not have ' + 'undo-redo enabled.',
+      undoPlugin.currentStates_[fieldHashCode]
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
   testSetUndoState() {
     state.setUndoState('content', 'position');
     assertEquals('Undo content incorrectly set', 'content', state.undoContent_);
-    assertEquals(
-        'Undo cursor position incorrectly set', 'position',
-        state.undoCursorPosition_);
+    assertEquals('Undo cursor position incorrectly set', 'position', state.undoCursorPosition_);
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
   testSetRedoState() {
     state.setRedoState('content', 'position');
     assertEquals('Redo content incorrectly set', 'content', state.redoContent_);
-    assertEquals(
-        'Redo cursor position incorrectly set', 'position',
-        state.redoCursorPosition_);
+    assertEquals('Redo cursor position incorrectly set', 'position', state.redoCursorPosition_);
   },
 
   testEquals() {
@@ -518,40 +513,33 @@ testSuite({
      */
     let state2 = new UndoRedo.UndoState_('1', '', null);
     assertTrue(
-        'A state must equal a state with the same hash code and content.',
-        state.equals(state2));
+      'A state must equal a state with the same hash code and content.',
+      state.equals(state2)
+    );
 
     /**
      * @suppress {checkTypes,visibility} suppression added to enable type
      * checking
      */
     state2 = new UndoRedo.UndoState_('1', '', 'foo');
-    assertTrue(
-        'States with different cursor positions must be equal',
-        state.equals(state2));
+    assertTrue('States with different cursor positions must be equal', state.equals(state2));
 
     state2.setRedoState('bar', null);
-    assertFalse(
-        'States with different redo content must not be equal',
-        state.equals(state2));
+    assertFalse('States with different redo content must not be equal', state.equals(state2));
 
     /**
      * @suppress {checkTypes,visibility} suppression added to enable type
      * checking
      */
     state2 = new UndoRedo.UndoState_('3', '', null);
-    assertFalse(
-        'States with different field hash codes must not be equal',
-        state.equals(state2));
+    assertFalse('States with different field hash codes must not be equal', state.equals(state2));
 
     /**
      * @suppress {checkTypes,visibility} suppression added to enable type
      * checking
      */
     state2 = new UndoRedo.UndoState_('1', 'baz', null);
-    assertFalse(
-        'States with different undoContent must not be equal',
-        state.equals(state2));
+    assertFalse('States with different undoContent must not be equal', state.equals(state2));
   },
 
   /**
@@ -583,9 +571,7 @@ testSuite({
     });
     undoRedoPlugin.clearHistory();
     // 1 call from stopChangeEvents(). 0 calls from startChangeEvents().
-    assertEquals(
-        'clearHistory must not cause delayed change when none pending', 1,
-        numCalls);
+    assertEquals('clearHistory must not cause delayed change when none pending', 1, numCalls);
 
     clock.tick(10000);
     assertFalse(undoRedoPlugin.undoManager_.hasUndoState());

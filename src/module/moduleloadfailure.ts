@@ -31,8 +31,7 @@ class ModuleLoadFailure {
    * @override
    */
   toString() {
-    return `${this.getReadableError_()} (${
-        this.status != undefined ? this.status : '?'})`;
+    return `${this.getReadableError_()} (${this.status != undefined ? this.status : '?'})`;
   }
 
   /**
@@ -76,7 +75,7 @@ const Type = {
   OLD_CODE_GONE: 3,
 
   /** The onLoad callbacks failed. */
-  INIT_ERROR: 4
+  INIT_ERROR: 4,
 };
 
 exports = ModuleLoadFailure;

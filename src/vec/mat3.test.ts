@@ -5,16 +5,22 @@
  */
 
 goog.module('goog.vec.Mat3Test');
-goog.setTestOnly();
 
 const Mat3 = goog.require('goog.vec.Mat3');
 const testSuite = goog.require('goog.testing.testSuite');
 const vec = goog.require('goog.vec');
 
 const randomMat3 = Mat3.createFloat32FromValues(
-    0.8025078773498535, 0.7559120655059814, 0.15274643898010254,
-    0.19196106493473053, 0.0890120416879654, 0.15422114729881287,
-    0.09754583984613419, 0.44862601161003113, 0.9196512699127197);
+  0.8025078773498535,
+  0.7559120655059814,
+  0.15274643898010254,
+  0.19196106493473053,
+  0.0890120416879654,
+  0.15422114729881287,
+  0.09754583984613419,
+  0.44862601161003113,
+  0.9196512699127197
+);
 
 testSuite({
   testDeprecatedConstructor() {
@@ -253,7 +259,7 @@ testSuite({
     assertTrue(Mat3.invert(m0, m0));
     assertElementsEquals([0.5, -1.0, 0.5, -3.5, 2.0, 0.5, 2.5, -1.0, -0.5], m0);
 
-    Mat3.makeScale(m0, .01, .01, .01);
+    Mat3.makeScale(m0, 0.01, 0.01, 0.01);
     assertTrue(Mat3.invert(m0, m0));
     const m1 = Mat3.create();
     Mat3.makeScale(m1, 100, 100, 100);
@@ -364,8 +370,10 @@ testSuite({
 
     Mat3.rotate(m0, -Math.PI / 4, 0, 0, 1);
     assertElementsRoughlyEqual(
-        [0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 0, 0, 1], m0,
-        vec.EPSILON);
+      [0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 0, 0, 1],
+      m0,
+      vec.EPSILON
+    );
   },
 
   testRotateX() {
@@ -441,8 +449,7 @@ testSuite({
 
     const euler = [0, 0, 0];
     Mat3.toEulerZXZ(m0, euler);
-    assertElementsRoughlyEqual(
-        [Math.PI, Math.PI / 2, Math.PI], euler, vec.EPSILON);
+    assertElementsRoughlyEqual([Math.PI, Math.PI / 2, Math.PI], euler, vec.EPSILON);
     Mat3.makeEulerZXZ(m1, euler[0], euler[1], euler[2]);
     assertElementsRoughlyEqual(m0, m1, vec.EPSILON);
   },

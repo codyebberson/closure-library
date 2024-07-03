@@ -18,8 +18,7 @@ goog.module.declareLegacyNamespace();
  * @return {!Document}
  */
 function createInertDocument() {
-  'use strict';
   return document.implementation.createHTMLDocument('');
 }
 
-exports = {createInertDocument};
+exports = { createInertDocument };

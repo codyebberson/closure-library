@@ -9,10 +9,7 @@
  * has a dispose method to to clean up references and resources.
  */
 
-
 goog.provide('goog.disposable.IDisposable');
-
-
 
 /**
  * Interface for a disposable object.  If a instance requires cleanup, it should
@@ -32,15 +29,13 @@ goog.provide('goog.disposable.IDisposable');
  *
  * @record
  */
-goog.disposable.IDisposable = function() {};
-
+goog.disposable.IDisposable = () => {};
 
 /**
  * Disposes of the object and its resources.
  * @return {void} Nothing.
  */
 goog.disposable.IDisposable.prototype.dispose = goog.abstractMethod;
-
 
 /**
  * @return {boolean} Whether the object has been disposed of.

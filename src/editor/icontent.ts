@@ -22,8 +22,6 @@ goog.require('goog.html.legacyconversions');
 goog.require('goog.style');
 goog.require('goog.userAgent');
 
-
-
 /**
  * A data structure for storing simple rendering info about a field.
  *
@@ -37,17 +35,19 @@ goog.require('goog.userAgent');
  * @constructor
  * @final
  */
-goog.editor.icontent.FieldFormatInfo = function(
-    fieldId, standards, blended, fixedHeight, opt_extraStyles) {
-  'use strict';
+goog.editor.icontent.FieldFormatInfo = function (
+  fieldId,
+  standards,
+  blended,
+  fixedHeight,
+  opt_extraStyles
+) {
   this.fieldId_ = fieldId;
   this.standards_ = standards;
   this.blended_ = blended;
   this.fixedHeight_ = fixedHeight;
   this.extraStyles_ = opt_extraStyles || {};
 };
-
-
 
 /**
  * A data structure for storing simple info about the styles of a field.
@@ -57,12 +57,10 @@ goog.editor.icontent.FieldFormatInfo = function(
  * @constructor
  * @final
  */
-goog.editor.icontent.FieldStyleInfo = function(wrapper, css) {
-  'use strict';
+goog.editor.icontent.FieldStyleInfo = function (wrapper, css) {
   this.wrapper_ = wrapper;
   this.css_ = css;
 };
-
 
 /**
  * Whether to always use standards-mode iframes.
@@ -71,15 +69,12 @@ goog.editor.icontent.FieldStyleInfo = function(wrapper, css) {
  */
 goog.editor.icontent.useStandardsModeIframes_ = false;
 
-
 /**
  * Sets up goog.editor.icontent to always use standards-mode iframes.
  */
-goog.editor.icontent.forceStandardsModeIframes = function() {
-  'use strict';
+goog.editor.icontent.forceStandardsModeIframes = () => {
   goog.editor.icontent.useStandardsModeIframes_ = true;
 };
-
 
 /**
  * Generate the initial iframe content.
@@ -91,13 +86,10 @@ goog.editor.icontent.forceStandardsModeIframes = function() {
  * @return {string} The initial IFRAME content HTML.
  * @private
  */
-goog.editor.icontent.getInitialIframeContent_ = function(
-    info, bodyHtml, style) {
-  'use strict';
+goog.editor.icontent.getInitialIframeContent_ = (info, bodyHtml, style) => {
   var html = [];
 
-  if (info.blended_ && info.standards_ ||
-      goog.editor.icontent.useStandardsModeIframes_) {
+  if ((info.blended_ && info.standards_) || goog.editor.icontent.useStandardsModeIframes_) {
     html.push('<!DOCTYPE HTML>');
   }
 
@@ -168,22 +160,23 @@ goog.editor.icontent.getInitialIframeContent_ = function(
     // CSS to make sure the clearing CSS overrides (e.g. if the body
     // has a 3px margin, we want to make sure to override it with 0px.
     html.push(
+      // margin should not be applied to blended mode because the margin is
+      // outside the iframe
+      // In whitebox mode, we want to leave the margin to the default so
+      // there is a nice margin around the text.
+      ';width:100%;border:0;margin:0;background:none transparent;',
 
-        // margin should not be applied to blended mode because the margin is
-        // outside the iframe
-        // In whitebox mode, we want to leave the margin to the default so
-        // there is a nice margin around the text.
-        ';width:100%;border:0;margin:0;background:none transparent;',
-
-        // In standards-mode, height 100% makes the body size to its
-        // parent html element, but in quirks mode, we want auto because
-        // 100% makes it size to the containing window even if the html
-        // element is smaller.
-        // TODO: Fixed height, standards mode, CSS_WRITING, with margins on the
-        // paragraphs has a scrollbar when it doesn't need it.  Putting the
-        // height to auto seems to fix it.  Figure out if we should always
-        // just use auto?
-        ';height:', info.standards_ ? '100%' : 'auto');
+      // In standards-mode, height 100% makes the body size to its
+      // parent html element, but in quirks mode, we want auto because
+      // 100% makes it size to the containing window even if the html
+      // element is smaller.
+      // TODO: Fixed height, standards mode, CSS_WRITING, with margins on the
+      // paragraphs has a scrollbar when it doesn't need it.  Putting the
+      // height to auto seems to fix it.  Figure out if we should always
+      // just use auto?
+      ';height:',
+      info.standards_ ? '100%' : 'auto'
+    );
 
     // Only do this for mozilla. IE6 standards mode has a rendering bug when
     // there are scrollbars and the body's overflow property is auto
@@ -203,7 +196,6 @@ goog.editor.icontent.getInitialIframeContent_ = function(
   return html.join('');
 };
 
-
 /**
  * Write the initial iframe content in normal mode.
  * @param {goog.editor.icontent.FieldFormatInfo} info Formatting info about
@@ -213,9 +205,7 @@ goog.editor.icontent.getInitialIframeContent_ = function(
  *     the field, if needed.
  * @param {HTMLIFrameElement} iframe The iframe.
  */
-goog.editor.icontent.writeNormalInitialBlendedIframe = function(
-    info, bodyHtml, style, iframe) {
-  'use strict';
+goog.editor.icontent.writeNormalInitialBlendedIframe = (info, bodyHtml, style, iframe) => {
   // Firefox blended needs to inherit all the css from the original page.
   // Firefox standards mode needs to set extra style for images.
   if (info.blended_) {
@@ -227,17 +217,24 @@ goog.editor.icontent.writeNormalInitialBlendedIframe = function(
     //
     // To compensate, we set the iframe margins to offset the padding.
     var paddingBox = goog.style.getPaddingBox(field);
-    if (paddingBox.top || paddingBox.left || paddingBox.right ||
-        paddingBox.bottom) {
+    if (paddingBox.top || paddingBox.left || paddingBox.right || paddingBox.bottom) {
       goog.style.setStyle(
-          iframe, 'margin', (-paddingBox.top) + 'px ' + (-paddingBox.right) +
-              'px ' + (-paddingBox.bottom) + 'px ' + (-paddingBox.left) + 'px');
+        iframe,
+        'margin',
+        -paddingBox.top +
+          'px ' +
+          -paddingBox.right +
+          'px ' +
+          -paddingBox.bottom +
+          'px ' +
+          -paddingBox.left +
+          'px'
+      );
     }
   }
 
   goog.editor.icontent.writeNormalInitialIframe(info, bodyHtml, style, iframe);
 };
-
 
 /**
  * Write the initial iframe content in normal mode.
@@ -248,19 +245,14 @@ goog.editor.icontent.writeNormalInitialBlendedIframe = function(
  *     the field, if needed.
  * @param {HTMLIFrameElement} iframe The iframe.
  */
-goog.editor.icontent.writeNormalInitialIframe = function(
-    info, bodyHtml, style, iframe) {
-  'use strict';
-  var html =
-      goog.editor.icontent.getInitialIframeContent_(info, bodyHtml, style);
+goog.editor.icontent.writeNormalInitialIframe = (info, bodyHtml, style, iframe) => {
+  var html = goog.editor.icontent.getInitialIframeContent_(info, bodyHtml, style);
 
   var doc = goog.dom.getFrameContentDocument(iframe);
   doc.open();
-  goog.dom.safe.documentWrite(
-      doc, goog.html.legacyconversions.safeHtmlFromString(html));
+  goog.dom.safe.documentWrite(doc, goog.html.legacyconversions.safeHtmlFromString(html));
   doc.close();
 };
-
 
 /**
  * Write the initial iframe content in IE/HTTPS mode.
@@ -269,8 +261,7 @@ goog.editor.icontent.writeNormalInitialIframe = function(
  * @param {Document} doc The iframe document.
  * @param {string} bodyHtml The HTML to insert as the iframe body.
  */
-goog.editor.icontent.writeHttpsInitialIframe = function(info, doc, bodyHtml) {
-  'use strict';
+goog.editor.icontent.writeHttpsInitialIframe = (info, doc, bodyHtml) => {
   var body = doc.body;
 
   // For HTTPS we already have a document with a doc type and a body element
@@ -285,6 +276,5 @@ goog.editor.icontent.writeHttpsInitialIframe = function(info, doc, bodyHtml) {
   body.id = info.fieldId_;
 
   goog.style.setStyle(body, info.extraStyles_);
-  goog.dom.safe.setInnerHtml(
-      body, goog.html.legacyconversions.safeHtmlFromString(bodyHtml));
+  goog.dom.safe.setInnerHtml(body, goog.html.legacyconversions.safeHtmlFromString(bodyHtml));
 };

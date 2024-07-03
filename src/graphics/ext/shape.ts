@@ -4,12 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview A thick wrapper around shapes with custom paths.
  */
-
-
 
 // TODO(user): We're trying to migrate all ES5 subclasses of Closure
 // Library to ES6. In ES6 this cannot be referenced before super is called. This
@@ -27,8 +24,6 @@ goog.requireType('goog.graphics.ext.Group');
 goog.requireType('goog.graphics.ext.Path');
 goog.requireType('goog.math.Rect');
 
-
-
 /**
  * Wrapper for a graphics shape element.
  * @param {goog.graphics.ext.Group} group Parent for this element.
@@ -39,8 +34,7 @@ goog.requireType('goog.math.Rect');
  * @extends {goog.graphics.ext.StrokeAndFillElement}
  * @final
  */
-goog.graphics.ext.Shape = function(group, path, opt_autoSize) {
-  'use strict';
+goog.graphics.ext.Shape = function (group, path, opt_autoSize) {
   this.autoSize_ = !!opt_autoSize;
 
   const graphics = group.getGraphicsImplementation();
@@ -50,7 +44,6 @@ goog.graphics.ext.Shape = function(group, path, opt_autoSize) {
 };
 goog.inherits(goog.graphics.ext.Shape, goog.graphics.ext.StrokeAndFillElement);
 
-
 /**
  * Whether or not to automatically resize the shape's path when the element
  * itself is resized.
@@ -59,14 +52,12 @@ goog.inherits(goog.graphics.ext.Shape, goog.graphics.ext.StrokeAndFillElement);
  */
 goog.graphics.ext.Shape.prototype.autoSize_ = false;
 
-
 /**
  * The original path, specified by the caller.
  * @type {goog.graphics.Path}
  * @private
  */
 goog.graphics.ext.Shape.prototype.path_;
-
 
 /**
  * The bounding box of the original path.
@@ -75,7 +66,6 @@ goog.graphics.ext.Shape.prototype.path_;
  */
 goog.graphics.ext.Shape.prototype.boundingBox_ = null;
 
-
 /**
  * The scaled path.
  * @type {goog.graphics.Path}
@@ -83,23 +73,19 @@ goog.graphics.ext.Shape.prototype.boundingBox_ = null;
  */
 goog.graphics.ext.Shape.prototype.scaledPath_;
 
-
 /**
  * Get the path drawn by this shape.
  * @return {goog.graphics.Path?} The path drawn by this shape.
  */
-goog.graphics.ext.Shape.prototype.getPath = function() {
-  'use strict';
+goog.graphics.ext.Shape.prototype.getPath = function () {
   return this.path_;
 };
-
 
 /**
  * Set the path to draw.
  * @param {goog.graphics.ext.Path} path The path to draw.
  */
-goog.graphics.ext.Shape.prototype.setPath = function(path) {
-  'use strict';
+goog.graphics.ext.Shape.prototype.setPath = function (path) {
   this.path_ = path;
 
   if (this.autoSize_) {
@@ -109,21 +95,23 @@ goog.graphics.ext.Shape.prototype.setPath = function(path) {
   this.scaleAndSetPath_();
 };
 
-
 /**
  * Scale the internal path to fit.
  * @private
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.ext.Shape.prototype.scaleAndSetPath_ = function() {
-  'use strict';
+goog.graphics.ext.Shape.prototype.scaleAndSetPath_ = function () {
   /** @suppress {strictMissingProperties} Added to tighten compiler checks */
-  this.scaledPath_ = this.boundingBox_ ?
-      this.path_.clone().modifyBounds(
-          -this.boundingBox_.left, -this.boundingBox_.top,
+  this.scaledPath_ = this.boundingBox_
+    ? this.path_
+        .clone()
+        .modifyBounds(
+          -this.boundingBox_.left,
+          -this.boundingBox_.top,
           this.getWidth() / (this.boundingBox_.width || 1),
-          this.getHeight() / (this.boundingBox_.height || 1)) :
-      this.path_;
+          this.getHeight() / (this.boundingBox_.height || 1)
+        )
+    : this.path_;
 
   const wrapper = this.getWrapper();
   if (wrapper) {
@@ -131,28 +119,23 @@ goog.graphics.ext.Shape.prototype.scaleAndSetPath_ = function() {
   }
 };
 
-
 /**
  * Redraw the ellipse.  Called when the coordinate system is changed.
  * @protected
  * @override
  */
-goog.graphics.ext.Shape.prototype.redraw = function() {
-  'use strict';
+goog.graphics.ext.Shape.prototype.redraw = function () {
   goog.graphics.ext.Shape.superClass_.redraw.call(this);
   if (this.autoSize_) {
     this.scaleAndSetPath_();
   }
 };
 
-
 /**
  * @return {boolean} Whether the shape is parent dependent.
  * @protected
  * @override
  */
-goog.graphics.ext.Shape.prototype.checkParentDependent = function() {
-  'use strict';
-  return this.autoSize_ ||
-      goog.graphics.ext.Shape.superClass_.checkParentDependent.call(this);
+goog.graphics.ext.Shape.prototype.checkParentDependent = function () {
+  return this.autoSize_ || goog.graphics.ext.Shape.superClass_.checkParentDependent.call(this);
 };

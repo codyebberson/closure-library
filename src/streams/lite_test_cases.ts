@@ -5,9 +5,9 @@
  */
 
 goog.module('goog.streams.liteTestCases');
-goog.setTestOnly();
 
-const {ReadableStream, ReadableStreamDefaultController, ReadableStreamUnderlyingSource} = goog.require('goog.streams.liteTypes');
+const { ReadableStream, ReadableStreamDefaultController, ReadableStreamUnderlyingSource } =
+  goog.require('goog.streams.liteTypes');
 /** @suppress {extraRequire} */
 goog.require('goog.testing.jsunit');
 
@@ -27,7 +27,8 @@ class TestCases {
    *     !ReadableStreamDefaultController<string>}}
    */
   newReadableStreamWithController(
-      underlyingSource = /** @type {!ReadableStreamUnderlyingSource} */ ({})) {
+    underlyingSource = /** @type {!ReadableStreamUnderlyingSource} */ {}
+  ) {
     let controller;
     const start = underlyingSource.start;
     underlyingSource = Object.assign({}, underlyingSource, {
@@ -37,11 +38,11 @@ class TestCases {
       },
     });
     const stream = this.newReadableStream(underlyingSource);
-    return {stream, controller};
+    return { stream, controller };
   }
 
   async testEnqueue_ThenRead() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     const chunk = 'foo';
     controller.enqueue(chunk);
     const reader = stream.getReader();
@@ -51,7 +52,7 @@ class TestCases {
   }
 
   testEnqueue_Closed() {
-    const {controller} = this.newReadableStreamWithController();
+    const { controller } = this.newReadableStreamWithController();
     controller.close();
     assertThrows(() => {
       controller.enqueue('foo');
@@ -59,7 +60,7 @@ class TestCases {
   }
 
   testEnqueue_Closing() {
-    const {controller} = this.newReadableStreamWithController();
+    const { controller } = this.newReadableStreamWithController();
     controller.enqueue('foo');
     controller.close();
     assertThrows(() => {
@@ -68,7 +69,7 @@ class TestCases {
   }
 
   testEnqueue_Errored() {
-    const {controller} = this.newReadableStreamWithController();
+    const { controller } = this.newReadableStreamWithController();
     controller.error(new Error('error'));
     assertThrows(() => {
       controller.enqueue('foo');
@@ -76,7 +77,7 @@ class TestCases {
   }
 
   async testRead_ThenEnqueue() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     const chunk = 'foo';
     const reader = stream.getReader();
     const read = reader.read();
@@ -87,7 +88,7 @@ class TestCases {
   }
 
   async testRead_Closed() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     controller.close();
     const reader = stream.getReader();
     const readResult = await reader.read();
@@ -96,7 +97,7 @@ class TestCases {
   }
 
   async testRead_Closing() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     const chunk = 'foo';
     controller.enqueue(chunk);
     controller.close();
@@ -110,7 +111,7 @@ class TestCases {
   }
 
   async testRead_Errored() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     const error = new Error('error');
     controller.error(error);
     const reader = stream.getReader();
@@ -119,7 +120,7 @@ class TestCases {
   }
 
   async testRead_ThenClosed() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     const reader = stream.getReader();
     const read = reader.read();
     controller.close();
@@ -129,7 +130,7 @@ class TestCases {
   }
 
   async testRead_ThenErrored() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     const error = new Error('error');
     const reader = stream.getReader();
     const read = reader.read();
@@ -139,7 +140,7 @@ class TestCases {
   }
 
   testClose_Closed() {
-    const {controller} = this.newReadableStreamWithController();
+    const { controller } = this.newReadableStreamWithController();
     controller.close();
     assertThrows(() => {
       controller.close();
@@ -147,7 +148,7 @@ class TestCases {
   }
 
   testClose_Closing() {
-    const {controller} = this.newReadableStreamWithController();
+    const { controller } = this.newReadableStreamWithController();
     controller.enqueue('foo');
     controller.close();
     assertThrows(() => {
@@ -156,7 +157,7 @@ class TestCases {
   }
 
   async testLocked() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     assertFalse(stream.locked);
     const reader = stream.getReader();
     assertTrue(stream.locked);
@@ -165,7 +166,7 @@ class TestCases {
   }
 
   testLocked_Closed() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     const reader = stream.getReader();
     assertTrue(stream.locked);
     controller.close();
@@ -175,7 +176,7 @@ class TestCases {
   }
 
   testLocked_Closing() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     const reader = stream.getReader();
     controller.enqueue('foo');
     assertTrue(stream.locked);
@@ -186,7 +187,7 @@ class TestCases {
   }
 
   testLocked_Errored() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     const reader = stream.getReader();
     assertTrue(stream.locked);
     controller.error(new Error('error'));
@@ -196,7 +197,7 @@ class TestCases {
   }
 
   async testClosed_Close() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     controller.close();
     const reader = stream.getReader();
     const closed = reader.closed;
@@ -205,7 +206,7 @@ class TestCases {
   }
 
   async testClosed_ThenClosed() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     const reader = stream.getReader();
     const closed = reader.closed;
     controller.close();
@@ -214,7 +215,7 @@ class TestCases {
   }
 
   async testClosed_Closing() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     controller.enqueue('foo');
     controller.close();
     const reader = stream.getReader();
@@ -225,7 +226,7 @@ class TestCases {
   }
 
   async testClosed_ThenClosing() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     const reader = stream.getReader();
     const closed = reader.closed;
     controller.enqueue('foo');
@@ -236,7 +237,7 @@ class TestCases {
   }
 
   async testClosed_Errored() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     const error = new Error('error');
     controller.error(error);
     const reader = stream.getReader();
@@ -245,7 +246,7 @@ class TestCases {
   }
 
   async testClosed_ThenErrored() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     const reader = stream.getReader();
     const closed = reader.closed;
     controller.error(new Error('error'));
@@ -253,7 +254,7 @@ class TestCases {
   }
 
   async testClosed_ThenReleaseLock() {
-    const {stream} = this.newReadableStreamWithController();
+    const { stream } = this.newReadableStreamWithController();
     const reader = stream.getReader();
     const closed = reader.closed;
     reader.releaseLock();
@@ -261,7 +262,7 @@ class TestCases {
   }
 
   testGetReader_WhileLocked() {
-    const {stream} = this.newReadableStreamWithController();
+    const { stream } = this.newReadableStreamWithController();
     stream.getReader();
     assertThrows(() => {
       stream.getReader();
@@ -269,7 +270,7 @@ class TestCases {
   }
 
   async testReleaseLock_WhileOutstandingReads() {
-    const {stream} = this.newReadableStreamWithController();
+    const { stream } = this.newReadableStreamWithController();
     const reader = stream.getReader();
     const readResult = reader.read();
     // NOTE: Older browsers (i.e. Chrome < 106, Safari, Firefox) used to have
@@ -277,20 +278,22 @@ class TestCases {
     // contrary to the spec.  The spec requires that instead the releaseLock()
     // call should succeed, but the promise returned from read() should
     // immediately reject.  The following structure checks for either behavior.
-    await assertRejects((async () => {
-      // Await a meaningless value to wait for a new microtask (ensuring
-      // synchronous throws are converted to a rejected promise instead).
-      await 0;
-      // In older browsers, this will throw synchronously.  Chrome >= 106 does
-      // not throw here, but instead causes readResult to immediately reject.
-      reader.releaseLock();
-      // This will only reject if readResult is already rejected.
-      await Promise.race([readResult, Promise.resolve()]);
-    })());
+    await assertRejects(
+      (async () => {
+        // Await a meaningless value to wait for a new microtask (ensuring
+        // synchronous throws are converted to a rejected promise instead).
+        await 0;
+        // In older browsers, this will throw synchronously.  Chrome >= 106 does
+        // not throw here, but instead causes readResult to immediately reject.
+        reader.releaseLock();
+        // This will only reject if readResult is already rejected.
+        await Promise.race([readResult, Promise.resolve()]);
+      })()
+    );
   }
 
   testReleaseLock_Released() {
-    const {stream} = this.newReadableStreamWithController();
+    const { stream } = this.newReadableStreamWithController();
     const reader = stream.getReader();
     reader.releaseLock();
     reader.releaseLock();
@@ -301,7 +304,7 @@ class TestCases {
     const stream = this.newReadableStream({
       start() {
         return Promise.reject(error);
-      }
+      },
     });
     const reader = stream.getReader();
     const rejectedError = await assertRejects(reader.read());

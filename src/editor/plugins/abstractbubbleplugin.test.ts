@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.plugins.AbstractBubblePluginTest');
-goog.setTestOnly();
 
 const AbstractBubblePlugin = goog.require('goog.editor.plugins.AbstractBubblePlugin');
 const BrowserEvent = goog.require('goog.events.BrowserEvent');
@@ -108,9 +107,7 @@ function simulateKeyDownOnBubble(keyCode, isCtrl) {
   // focus as a result of tab key.
   if (userAgent.GECKO) {
     /** @suppress {visibility} suppression added to enable type checking */
-    bubblePlugin.getSharedBubble_()
-        .getContentElement()
-        .ownerDocument.designMode = 'off';
+    bubblePlugin.getSharedBubble_().getContentElement().ownerDocument.designMode = 'off';
   }
 
   const event = new GoogTestingEvent(EventType.KEYDOWN, null);
@@ -150,8 +147,8 @@ testSuite({
      */
     bubblePlugin.fieldObject = fieldMock;
 
-    fieldDiv.innerHTML = '<a href="http://www.google.com">Google</a>' +
-        '<a href="http://www.google.com">Google2</a>';
+    fieldDiv.innerHTML =
+      '<a href="http://www.google.com">Google</a>' + '<a href="http://www.google.com">Google2</a>';
     link = fieldDiv.firstChild;
     link2 = fieldDiv.lastChild;
 
@@ -202,17 +199,14 @@ testSuite({
     // Don't use the default return values.
     fieldMock.$reset();
     fieldMock.getAppWindow().$anyTimes().$returns(window);
-    fieldMock.getEditableDomHelper().$anyTimes().$returns(
-        dom.getDomHelper(document));
+    fieldMock.getEditableDomHelper().$anyTimes().$returns(dom.getDomHelper(document));
     fieldMock.getBaseZindex().$returns(2);
     /** @suppress {visibility} suppression added to enable type checking */
     bubblePlugin.createBubbleContents = functions.UNDEFINED;
     fieldMock.$replay();
 
     bubblePlugin.createBubble(link);
-    assertEquals(
-        '2',
-        '' + bubblePlugin.getSharedBubble_().bubbleContainer_.style.zIndex);
+    assertEquals('2', '' + bubblePlugin.getSharedBubble_().bubbleContainer_.style.zIndex);
 
     fieldMock.$verify();
   },
@@ -248,15 +242,17 @@ testSuite({
   testHandleSelectionChangeWithEvent() {
     fieldMock.$replay();
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const fakeEvent = new BrowserEvent({type: 'mouseup', target: link});
+    const fakeEvent = new BrowserEvent({ type: 'mouseup', target: link });
     bubblePlugin.getBubbleTargetFromSelection = functions.identity;
     /** @suppress {visibility} suppression added to enable type checking */
     bubblePlugin.createBubbleContents = functions.UNDEFINED;
     bubblePlugin.handleSelectionChange(fakeEvent);
     assertTrue('Bubble should have been opened', bubblePlugin.isVisible());
     assertEquals(
-        'Bubble target should be provided event\'s target', link,
-        bubblePlugin.targetElement_);
+      "Bubble target should be provided event's target",
+      link,
+      bubblePlugin.targetElement_
+    );
   },
 
   /** @suppress {missingProperties} suppression added to enable type checking */
@@ -267,9 +263,7 @@ testSuite({
     bubblePlugin.createBubbleContents = functions.UNDEFINED;
     bubblePlugin.handleSelectionChange(undefined, link2);
     assertTrue('Bubble should have been opened', bubblePlugin.isVisible());
-    assertEquals(
-        'Bubble target should be provided target', link2,
-        bubblePlugin.targetElement_);
+    assertEquals('Bubble target should be provided target', link2, bubblePlugin.targetElement_);
   },
 
   /** Regression test for @bug 2945341 */
@@ -315,8 +309,7 @@ testSuite({
     assertTrue('Bubble should be visible', bubblePlugin.isVisible());
 
     const tabHandledByBubble = simulateTabKeyOnBubble();
-    assertTrue(
-        'The action should be handled by the plugin', tabHandledByBubble);
+    assertTrue('The action should be handled by the plugin', tabHandledByBubble);
     assertFocused(tabbable1);
 
     // Tab on the first tabbable. The test framework doesn't easily let us
@@ -364,8 +357,7 @@ testSuite({
     assertTrue('Bubble should be visible', bubblePlugin.isVisible());
 
     const tabHandledByBubble = simulateTabKeyOnBubble();
-    assertTrue(
-        'The action should be handled by the plugin', tabHandledByBubble);
+    assertTrue('The action should be handled by the plugin', tabHandledByBubble);
     assertFocused(tabbable1);
     fieldMock.$verify();
 
@@ -374,7 +366,7 @@ testSuite({
     resetFieldMock();
     fieldMock.focus();
     fieldMock.$replay();
-    events.fireKeySequence(tabbable1, KeyCodes.TAB, {shiftKey: true});
+    events.fireKeySequence(tabbable1, KeyCodes.TAB, { shiftKey: true });
     fieldMock.$verify();
   },
 
@@ -394,7 +386,7 @@ testSuite({
      * @suppress {visibility,duplicate} suppression added to enable type
      * checking
      */
-    bubblePlugin.createBubbleContents = function(container) {
+    bubblePlugin.createBubbleContents = function (container) {
       nonTabbable1 = dom.createDom(TagName.DIV);
       dom.appendChild(container, nonTabbable1);
       bubbleLink1 = this.createLink('linkInBubble1', 'Foo', false, container);
@@ -406,8 +398,7 @@ testSuite({
     assertTrue('Bubble should be visible', bubblePlugin.isVisible());
 
     const tabHandledByBubble = simulateTabKeyOnBubble();
-    assertTrue(
-        'The action should be handled by the plugin', tabHandledByBubble);
+    assertTrue('The action should be handled by the plugin', tabHandledByBubble);
     assertFocused(bubbleLink1);
 
     fieldMock.$verify();
@@ -429,7 +420,7 @@ testSuite({
      * @suppress {visibility,duplicate} suppression added to enable type
      * checking
      */
-    bubblePlugin.createBubbleContents = function(container) {
+    bubblePlugin.createBubbleContents = function (container) {
       bubbleLink = this.createLink('linkInBubble', 'Foo', false, container);
     };
     bubblePlugin.handleSelectionChangeInternal(link);
@@ -437,8 +428,7 @@ testSuite({
     assertTrue('Bubble should be visible', bubblePlugin.isVisible());
 
     const tabHandledByBubble = simulateTabKeyOnBubble();
-    assertFalse(
-        'The action should not be handled by the plugin', tabHandledByBubble);
+    assertFalse('The action should not be handled by the plugin', tabHandledByBubble);
     assertNotFocused(bubbleLink);
 
     // Verify that tabbing the link doesn't cause focus of the field.
@@ -457,7 +447,7 @@ testSuite({
      * @suppress {visibility,duplicate} suppression added to enable type
      * checking
      */
-    bubblePlugin.createBubbleContents = function(container) {
+    bubblePlugin.createBubbleContents = function (container) {
       bubbleLink = this.createLink('linkInBubble', 'Foo', false, container);
     };
     bubblePlugin.handleSelectionChangeInternal(link);
@@ -467,8 +457,7 @@ testSuite({
     // Test pressing CTRL + B: this should not have any effect.
     const keyHandledByBubble = simulateKeyDownOnBubble(KeyCodes.B, true);
 
-    assertFalse(
-        'The action should not be handled by the plugin', keyHandledByBubble);
+    assertFalse('The action should not be handled by the plugin', keyHandledByBubble);
     assertNotFocused(bubbleLink);
 
     fieldMock.$verify();

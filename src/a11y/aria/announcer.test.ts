@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.a11y.aria.AnnouncerTest');
-goog.setTestOnly();
 
 const Announcer = goog.require('goog.a11y.aria.Announcer');
 const LivePriority = goog.require('goog.a11y.aria.LivePriority');
@@ -47,8 +46,8 @@ function checkLiveRegionContains(text, priority, domHelper = undefined) {
 testSuite({
   setUp() {
     sandbox = asserts.assert(googDom.getElement('sandbox'));
-    someDiv = googDom.createDom(TagName.DIV, {id: 'someDiv'}, 'DIV');
-    someSpan = googDom.createDom(TagName.SPAN, {id: 'someSpan'}, 'SPAN');
+    someDiv = googDom.createDom(TagName.DIV, { id: 'someDiv' }, 'DIV');
+    someSpan = googDom.createDom(TagName.SPAN, { id: 'someSpan' }, 'SPAN');
     sandbox.appendChild(someDiv);
     someDiv.appendChild(someSpan);
 
@@ -137,10 +136,9 @@ testSuite({
   testAnnouncerInIframe() {
     const text = 'test content';
     const frame = iframe.createWithContent(sandbox);
-    const helper =
-        googDom.getDomHelper(googDom.getFrameContentDocument(frame).body);
+    const helper = googDom.getDomHelper(googDom.getFrameContentDocument(frame).body);
     const announcer = new Announcer(helper);
-    announcer.say(text, /** @type {?} */ ('polite'));
+    announcer.say(text, /** @type {?} */ 'polite');
     checkLiveRegionContains(text, 'polite', helper);
     googDispose(announcer);
   },
@@ -169,8 +167,7 @@ testSuite({
     // Read the dom to find the id
     const domLiveRegionId = getLiveRegion('polite').getAttribute('id');
 
-    assertEquals(
-        announcer.getLiveRegionId(LivePriority.POLITE), domLiveRegionId);
+    assertEquals(announcer.getLiveRegionId(LivePriority.POLITE), domLiveRegionId);
     googDispose(announcer);
   },
 });

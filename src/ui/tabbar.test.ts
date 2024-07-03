@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.TabBarTest');
-goog.setTestOnly();
 
 const Component = goog.require('goog.ui.Component');
 const Container = goog.require('goog.ui.Container');
@@ -46,16 +45,14 @@ function setHighlightedIndexFromKeyEvent() {
   let foo;
 
   // Create a tab bar with some tabs.
-  tabBar.addChild(foo = new UiTab('foo'));
-  tabBar.addChild(bar = new UiTab('bar'));
-  tabBar.addChild(baz = new UiTab('baz'));
+  tabBar.addChild((foo = new UiTab('foo')));
+  tabBar.addChild((bar = new UiTab('bar')));
+  tabBar.addChild((baz = new UiTab('baz')));
 
   // Verify baseline assumptions.
   assertNull('No tab must be highlighted', tabBar.getHighlighted());
   assertNull('No tab must be selected', tabBar.getSelectedTab());
-  assertTrue(
-      'Tab bar must auto-select tabs on keyboard highlight',
-      tabBar.isAutoSelectTabs());
+  assertTrue('Tab bar must auto-select tabs on keyboard highlight', tabBar.isAutoSelectTabs());
 
   // Highlight and selection must move together.
   tabBar.setHighlightedIndexFromKeyEvent(0);
@@ -94,32 +91,38 @@ testSuite({
   testConstructor() {
     assertNotNull('Tab bar must not be null', tabBar);
     assertEquals(
-        'Tab bar renderer must default to expected value',
-        TabBarRenderer.getInstance(), tabBar.getRenderer());
+      'Tab bar renderer must default to expected value',
+      TabBarRenderer.getInstance(),
+      tabBar.getRenderer()
+    );
     assertEquals(
-        'Tab bar location must default to expected value', TabBar.Location.TOP,
-        tabBar.getLocation());
+      'Tab bar location must default to expected value',
+      TabBar.Location.TOP,
+      tabBar.getLocation()
+    );
     assertEquals(
-        'Tab bar orientation must default to expected value',
-        Container.Orientation.HORIZONTAL, tabBar.getOrientation());
+      'Tab bar orientation must default to expected value',
+      Container.Orientation.HORIZONTAL,
+      tabBar.getOrientation()
+    );
 
     const fakeRenderer = {};
     const fakeDomHelper = {};
     /** @suppress {checkTypes} suppression added to enable type checking */
     const bar = new TabBar(TabBar.Location.START, fakeRenderer, fakeDomHelper);
     assertNotNull('Tab bar must not be null', bar);
+    assertEquals('Tab bar renderer must have expected value', fakeRenderer, bar.getRenderer());
+    assertEquals('Tab bar DOM helper must have expected value', fakeDomHelper, bar.getDomHelper());
     assertEquals(
-        'Tab bar renderer must have expected value', fakeRenderer,
-        bar.getRenderer());
+      'Tab bar location must have expected value',
+      TabBar.Location.START,
+      bar.getLocation()
+    );
     assertEquals(
-        'Tab bar DOM helper must have expected value', fakeDomHelper,
-        bar.getDomHelper());
-    assertEquals(
-        'Tab bar location must have expected value', TabBar.Location.START,
-        bar.getLocation());
-    assertEquals(
-        'Tab bar orientation must have expected value',
-        Container.Orientation.VERTICAL, bar.getOrientation());
+      'Tab bar orientation must have expected value',
+      Container.Orientation.VERTICAL,
+      bar.getOrientation()
+    );
     bar.dispose();
   },
 
@@ -143,69 +146,56 @@ testSuite({
     const first = new UiTab('First');
     tabBar.addChild(first);
     assertEquals(
-        'First tab must have been added at the expected index', 0,
-        tabBar.indexOfChild(first));
+      'First tab must have been added at the expected index',
+      0,
+      tabBar.indexOfChild(first)
+    );
     first.setSelected(true);
     assertEquals('First tab must be selected', 0, tabBar.getSelectedTabIndex());
 
     const second = new UiTab('Second');
     tabBar.addChild(second);
     assertEquals(
-        'Second tab must have been added at the expected index', 1,
-        tabBar.indexOfChild(second));
-    assertEquals(
-        'First tab must remain selected', 0, tabBar.getSelectedTabIndex());
+      'Second tab must have been added at the expected index',
+      1,
+      tabBar.indexOfChild(second)
+    );
+    assertEquals('First tab must remain selected', 0, tabBar.getSelectedTabIndex());
 
     const firstRemoved = tabBar.removeChild(first);
-    assertEquals(
-        'removeChild() must return the removed tab', first, firstRemoved);
-    assertEquals(
-        'First tab must no longer be in the tab bar', -1,
-        tabBar.indexOfChild(first));
-    assertEquals(
-        'Second tab must be at the expected index', 0,
-        tabBar.indexOfChild(second));
+    assertEquals('removeChild() must return the removed tab', first, firstRemoved);
+    assertEquals('First tab must no longer be in the tab bar', -1, tabBar.indexOfChild(first));
+    assertEquals('Second tab must be at the expected index', 0, tabBar.indexOfChild(second));
     assertFalse('First tab must no longer be selected', first.isSelected());
     assertTrue('Remaining tab must be selected', second.isSelected());
 
     const secondRemoved = tabBar.removeChild(second);
-    assertEquals(
-        'removeChild() must return the removed tab', second, secondRemoved);
+    assertEquals('removeChild() must return the removed tab', second, secondRemoved);
     assertFalse('Tab must no longer be selected', second.isSelected());
     assertNull('No tab must be selected', tabBar.getSelectedTab());
   },
 
   testGetSetLocation() {
-    assertEquals(
-        'Location must default to TOP', TabBar.Location.TOP,
-        tabBar.getLocation());
+    assertEquals('Location must default to TOP', TabBar.Location.TOP, tabBar.getLocation());
     tabBar.setLocation(TabBar.Location.START);
-    assertEquals(
-        'Location must have expected value', TabBar.Location.START,
-        tabBar.getLocation());
+    assertEquals('Location must have expected value', TabBar.Location.START, tabBar.getLocation());
     tabBar.createDom();
     assertThrows(
-        'Attempting to change the location after the tab bar has ' +
-            'been rendered must throw error',
-        () => {
-          tabBar.setLocation(TabBar.Location.BOTTOM);
-        });
+      'Attempting to change the location after the tab bar has ' + 'been rendered must throw error',
+      () => {
+        tabBar.setLocation(TabBar.Location.BOTTOM);
+      }
+    );
   },
 
   testIsSetAutoSelectTabs() {
-    assertTrue(
-        'Tab bar must auto-select tabs by default', tabBar.isAutoSelectTabs());
+    assertTrue('Tab bar must auto-select tabs by default', tabBar.isAutoSelectTabs());
     tabBar.setAutoSelectTabs(false);
-    assertFalse(
-        'Tab bar must no longer auto-select tabs by default',
-        tabBar.isAutoSelectTabs());
+    assertFalse('Tab bar must no longer auto-select tabs by default', tabBar.isAutoSelectTabs());
     tabBar.render(sandbox);
-    assertFalse(
-        'Rendering must not change auto-select setting',
-        tabBar.isAutoSelectTabs());
+    assertFalse('Rendering must not change auto-select setting', tabBar.isAutoSelectTabs());
     tabBar.setAutoSelectTabs(true);
-    assertTrue(
-        'Tab bar must once again auto-select tabs', tabBar.isAutoSelectTabs());
+    assertTrue('Tab bar must once again auto-select tabs', tabBar.isAutoSelectTabs());
   },
 
   testGetSetSelectedTab() {
@@ -214,9 +204,9 @@ testSuite({
     let foo;
 
     // Create a tab bar with some tabs.
-    tabBar.addChild(foo = new UiTab('foo'));
-    tabBar.addChild(bar = new UiTab('bar'));
-    tabBar.addChild(baz = new UiTab('baz'));
+    tabBar.addChild((foo = new UiTab('foo')));
+    tabBar.addChild((bar = new UiTab('bar')));
+    tabBar.addChild((baz = new UiTab('baz')));
 
     assertNull('No tab must be selected', tabBar.getSelectedTab());
 
@@ -231,8 +221,7 @@ testSuite({
 
     tabBar.setSelectedTab(foo);
     assertTrue('Foo must remain selected', foo.isSelected());
-    assertEquals(
-        'Foo must remain the selected tab', foo, tabBar.getSelectedTab());
+    assertEquals('Foo must remain the selected tab', foo, tabBar.getSelectedTab());
 
     tabBar.setSelectedTab(null);
     assertFalse('Foo must no longer be selected', foo.isSelected());
@@ -245,27 +234,24 @@ testSuite({
     let foo;
 
     // Create a tab bar with some tabs.
-    tabBar.addChildAt(foo = new UiTab('foo'), 0);
-    tabBar.addChildAt(bar = new UiTab('bar'), 1);
-    tabBar.addChildAt(baz = new UiTab('baz'), 2);
+    tabBar.addChildAt((foo = new UiTab('foo')), 0);
+    tabBar.addChildAt((bar = new UiTab('bar')), 1);
+    tabBar.addChildAt((baz = new UiTab('baz')), 2);
 
     assertEquals('No tab must be selected', -1, tabBar.getSelectedTabIndex());
 
     tabBar.setSelectedTabIndex(2);
     assertTrue('Baz must be selected', baz.isSelected());
-    assertEquals(
-        'Baz must be the selected tab', 2, tabBar.getSelectedTabIndex());
+    assertEquals('Baz must be the selected tab', 2, tabBar.getSelectedTabIndex());
 
     tabBar.setSelectedTabIndex(0);
     assertFalse('Baz must no longer be selected', baz.isSelected());
     assertTrue('Foo must be selected', foo.isSelected());
-    assertEquals(
-        'Foo must be the selected tab', 0, tabBar.getSelectedTabIndex());
+    assertEquals('Foo must be the selected tab', 0, tabBar.getSelectedTabIndex());
 
     tabBar.setSelectedTabIndex(0);
     assertTrue('Foo must remain selected', foo.isSelected());
-    assertEquals(
-        'Foo must remain the selected tab', 0, tabBar.getSelectedTabIndex());
+    assertEquals('Foo must remain the selected tab', 0, tabBar.getSelectedTabIndex());
 
     tabBar.setSelectedTabIndex(-1);
     assertFalse('Foo must no longer be selected', foo.isSelected());
@@ -279,9 +265,9 @@ testSuite({
     let foo;
 
     // Create a tab bar with some tabs.
-    tabBar.addChild(foo = new UiTab('foo'));
-    tabBar.addChild(bar = new UiTab('bar'));
-    tabBar.addChild(baz = new UiTab('baz'));
+    tabBar.addChild((foo = new UiTab('foo')));
+    tabBar.addChild((bar = new UiTab('bar')));
+    tabBar.addChild((baz = new UiTab('baz')));
 
     // Start with the middle tab selected.
     bar.setSelected(true);
@@ -291,14 +277,12 @@ testSuite({
     // Should be a no-op.
     tabBar.deselectIfSelected(null);
     assertTrue('Bar must remain selected', bar.isSelected());
-    assertEquals(
-        'Bar must remain the selected tab', bar, tabBar.getSelectedTab());
+    assertEquals('Bar must remain the selected tab', bar, tabBar.getSelectedTab());
 
     // Should be a no-op.
     tabBar.deselectIfSelected(foo);
     assertTrue('Bar must remain selected', bar.isSelected());
-    assertEquals(
-        'Bar must remain the selected tab', bar, tabBar.getSelectedTab());
+    assertEquals('Bar must remain the selected tab', bar, tabBar.getSelectedTab());
 
     // Should deselect bar and select the previous tab (foo).
     tabBar.deselectIfSelected(bar);
@@ -320,9 +304,9 @@ testSuite({
     let foo;
 
     // Create a tab bar with some tabs.
-    tabBar.addChild(foo = new UiTab('foo'));
-    tabBar.addChild(bar = new UiTab('bar'));
-    tabBar.addChild(baz = new UiTab('baz'));
+    tabBar.addChild((foo = new UiTab('foo')));
+    tabBar.addChild((bar = new UiTab('bar')));
+    tabBar.addChild((baz = new UiTab('baz')));
 
     assertNull('No tab must be selected', tabBar.getSelectedTab());
 
@@ -333,8 +317,7 @@ testSuite({
     assertEquals('Bar must remain selected tab', bar, tabBar.getSelectedTab());
 
     tabBar.handleTabSelect(new GoogEvent(Component.EventType.SELECT, foo));
-    assertEquals(
-        'Foo must now be the selected tab', foo, tabBar.getSelectedTab());
+    assertEquals('Foo must now be the selected tab', foo, tabBar.getSelectedTab());
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -344,16 +327,15 @@ testSuite({
     let foo;
 
     // Create a tab bar with some tabs.
-    tabBar.addChild(foo = new UiTab('foo'));
-    tabBar.addChild(bar = new UiTab('bar'));
-    tabBar.addChild(baz = new UiTab('baz'));
+    tabBar.addChild((foo = new UiTab('foo')));
+    tabBar.addChild((bar = new UiTab('bar')));
+    tabBar.addChild((baz = new UiTab('baz')));
 
     bar.setSelected(true);
     assertEquals('Bar must be the selected tab', bar, tabBar.getSelectedTab());
 
     tabBar.handleTabUnselect(new GoogEvent(Component.EventType.UNSELECT, foo));
-    assertEquals(
-        'Bar must remain the selected tab', bar, tabBar.getSelectedTab());
+    assertEquals('Bar must remain the selected tab', bar, tabBar.getSelectedTab());
 
     tabBar.handleTabUnselect(new GoogEvent(Component.EventType.SELECT, bar));
     assertNull('No tab must be selected', tabBar.getSelectedTab());
@@ -365,9 +347,9 @@ testSuite({
     let foo;
 
     // Create a tab bar with some tabs.
-    tabBar.addChild(foo = new UiTab('foo'));
-    tabBar.addChild(bar = new UiTab('bar'));
-    tabBar.addChild(baz = new UiTab('baz'));
+    tabBar.addChild((foo = new UiTab('foo')));
+    tabBar.addChild((bar = new UiTab('bar')));
+    tabBar.addChild((baz = new UiTab('baz')));
 
     // Start with the middle tab selected.
     bar.setSelected(true);
@@ -399,9 +381,9 @@ testSuite({
     let foo;
 
     // Create a tab bar with some tabs.
-    tabBar.addChild(foo = new UiTab('foo'));
-    tabBar.addChild(bar = new UiTab('bar'));
-    tabBar.addChild(baz = new UiTab('baz'));
+    tabBar.addChild((foo = new UiTab('foo')));
+    tabBar.addChild((bar = new UiTab('bar')));
+    tabBar.addChild((baz = new UiTab('baz')));
 
     // Start with the middle tab selected.
     bar.setSelected(true);
@@ -434,9 +416,9 @@ testSuite({
     let foo;
 
     // Create a tab bar with some tabs.
-    tabBar.addChild(foo = new UiTab('foo'), true);
-    tabBar.addChild(bar = new UiTab('bar'), true);
-    tabBar.addChild(baz = new UiTab('baz'), true);
+    tabBar.addChild((foo = new UiTab('foo')), true);
+    tabBar.addChild((bar = new UiTab('bar')), true);
+    tabBar.addChild((baz = new UiTab('baz')), true);
 
     // Render the tab bar into the document, so highlight handling works as
     // expected.
@@ -450,8 +432,7 @@ testSuite({
     assertNull('No tab must be highlighted', tabBar.getHighlighted());
     tabBar.handleFocus(new GoogEvent(EventType.FOCUS, tabBar.getElement()));
     assertTrue('Bar must be highlighted', bar.isHighlighted());
-    assertEquals(
-        'Bar must be the highlighted tab', bar, tabBar.getHighlighted());
+    assertEquals('Bar must be the highlighted tab', bar, tabBar.getHighlighted());
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -461,9 +442,9 @@ testSuite({
     let foo;
 
     // Create a tab bar with some tabs.
-    tabBar.addChild(foo = new UiTab('foo'), true);
-    tabBar.addChild(bar = new UiTab('bar'), true);
-    tabBar.addChild(baz = new UiTab('baz'), true);
+    tabBar.addChild((foo = new UiTab('foo')), true);
+    tabBar.addChild((bar = new UiTab('bar')), true);
+    tabBar.addChild((baz = new UiTab('baz')), true);
 
     // Render the tab bar into the document, so highlight handling works as
     // expected.
@@ -475,23 +456,26 @@ testSuite({
     assertNull('No tab must be highlighted', tabBar.getHighlighted());
     tabBar.handleFocus(new GoogEvent(EventType.FOCUS, tabBar.getElement()));
     assertTrue('Foo must be highlighted', foo.isHighlighted());
-    assertEquals(
-        'Foo must be the highlighted tab', foo, tabBar.getHighlighted());
+    assertEquals('Foo must be the highlighted tab', foo, tabBar.getHighlighted());
   },
 
   testGetOrientationFromLocation() {
     assertEquals(
-        Container.Orientation.HORIZONTAL,
-        TabBar.getOrientationFromLocation(TabBar.Location.TOP));
+      Container.Orientation.HORIZONTAL,
+      TabBar.getOrientationFromLocation(TabBar.Location.TOP)
+    );
     assertEquals(
-        Container.Orientation.HORIZONTAL,
-        TabBar.getOrientationFromLocation(TabBar.Location.BOTTOM));
+      Container.Orientation.HORIZONTAL,
+      TabBar.getOrientationFromLocation(TabBar.Location.BOTTOM)
+    );
     assertEquals(
-        Container.Orientation.VERTICAL,
-        TabBar.getOrientationFromLocation(TabBar.Location.START));
+      Container.Orientation.VERTICAL,
+      TabBar.getOrientationFromLocation(TabBar.Location.START)
+    );
     assertEquals(
-        Container.Orientation.VERTICAL,
-        TabBar.getOrientationFromLocation(TabBar.Location.END));
+      Container.Orientation.VERTICAL,
+      TabBar.getOrientationFromLocation(TabBar.Location.END)
+    );
   },
 
   testKeyboardNavigation() {
@@ -500,9 +484,9 @@ testSuite({
     let foo;
 
     // Create a tab bar with some tabs.
-    tabBar.addChild(foo = new UiTab('foo'), true);
-    tabBar.addChild(bar = new UiTab('bar'), true);
-    tabBar.addChild(baz = new UiTab('baz'), true);
+    tabBar.addChild((foo = new UiTab('foo')), true);
+    tabBar.addChild((bar = new UiTab('bar')), true);
+    tabBar.addChild((baz = new UiTab('baz')), true);
     tabBar.render(sandbox);
 
     // Highlight the selected tab (this happens automatically when the tab
@@ -512,9 +496,9 @@ testSuite({
 
     // Count events dispatched by each tab.
     const eventCount = {
-      'foo': {'select': 0, 'unselect': 0},
-      'bar': {'select': 0, 'unselect': 0},
-      'baz': {'select': 0, 'unselect': 0},
+      foo: { select: 0, unselect: 0 },
+      bar: { select: 0, unselect: 0 },
+      baz: { select: 0, unselect: 0 },
     };
 
     function countEvent(e) {
@@ -528,13 +512,7 @@ testSuite({
     }
 
     // Listen for SELECT and UNSELECT events on the tab bar.
-    events.listen(
-        tabBar,
-        [
-          Component.EventType.SELECT,
-          Component.EventType.UNSELECT,
-        ],
-        countEvent);
+    events.listen(tabBar, [Component.EventType.SELECT, Component.EventType.UNSELECT], countEvent);
 
     // Verify baseline assumptions.
     assertTrue('Tab bar must auto-select tabs', tabBar.isAutoSelectTabs());
@@ -542,38 +520,36 @@ testSuite({
 
     // Simulate a right arrow key event.
     const rightEvent = new FakeKeyEvent(KeyCodes.RIGHT);
-    assertTrue(
-        'Key event must have beeen handled', tabBar.handleKeyEvent(rightEvent));
-    assertTrue(
-        'Key event propagation must have been stopped',
-        rightEvent.propagationStopped);
-    assertTrue(
-        'Default key event must have been prevented',
-        rightEvent.defaultPrevented);
+    assertTrue('Key event must have beeen handled', tabBar.handleKeyEvent(rightEvent));
+    assertTrue('Key event propagation must have been stopped', rightEvent.propagationStopped);
+    assertTrue('Default key event must have been prevented', rightEvent.defaultPrevented);
     assertEquals(
-        'Foo must have dispatched UNSELECT', 1,
-        getEventCount('foo', Component.EventType.UNSELECT));
+      'Foo must have dispatched UNSELECT',
+      1,
+      getEventCount('foo', Component.EventType.UNSELECT)
+    );
     assertEquals(
-        'Bar must have dispatched SELECT', 1,
-        getEventCount('bar', Component.EventType.SELECT));
+      'Bar must have dispatched SELECT',
+      1,
+      getEventCount('bar', Component.EventType.SELECT)
+    );
     assertEquals('Bar must have been selected', bar, tabBar.getSelectedTab());
 
     // Simulate a left arrow key event.
     const leftEvent = new FakeKeyEvent(KeyCodes.LEFT);
-    assertTrue(
-        'Key event must have beeen handled', tabBar.handleKeyEvent(leftEvent));
-    assertTrue(
-        'Key event propagation must have been stopped',
-        leftEvent.propagationStopped);
-    assertTrue(
-        'Default key event must have been prevented',
-        leftEvent.defaultPrevented);
+    assertTrue('Key event must have beeen handled', tabBar.handleKeyEvent(leftEvent));
+    assertTrue('Key event propagation must have been stopped', leftEvent.propagationStopped);
+    assertTrue('Default key event must have been prevented', leftEvent.defaultPrevented);
     assertEquals(
-        'Bar must have dispatched UNSELECT', 1,
-        getEventCount('bar', Component.EventType.UNSELECT));
+      'Bar must have dispatched UNSELECT',
+      1,
+      getEventCount('bar', Component.EventType.UNSELECT)
+    );
     assertEquals(
-        'Foo must have dispatched SELECT', 1,
-        getEventCount('foo', Component.EventType.SELECT));
+      'Foo must have dispatched SELECT',
+      1,
+      getEventCount('foo', Component.EventType.SELECT)
+    );
     assertEquals('Foo must have been selected', foo, tabBar.getSelectedTab());
 
     // Disable tab auto-selection.
@@ -581,45 +557,32 @@ testSuite({
 
     // Simulate another left arrow key event.
     const anotherLeftEvent = new FakeKeyEvent(KeyCodes.LEFT);
-    assertTrue(
-        'Key event must have beeen handled',
-        tabBar.handleKeyEvent(anotherLeftEvent));
-    assertTrue(
-        'Key event propagation must have been stopped',
-        anotherLeftEvent.propagationStopped);
-    assertTrue(
-        'Default key event must have been prevented',
-        anotherLeftEvent.defaultPrevented);
+    assertTrue('Key event must have beeen handled', tabBar.handleKeyEvent(anotherLeftEvent));
+    assertTrue('Key event propagation must have been stopped', anotherLeftEvent.propagationStopped);
+    assertTrue('Default key event must have been prevented', anotherLeftEvent.defaultPrevented);
     assertEquals('Foo must remain selected', foo, tabBar.getSelectedTab());
     assertEquals(
-        'Foo must not have dispatched another UNSELECT event', 1,
-        getEventCount('foo', Component.EventType.UNSELECT));
+      'Foo must not have dispatched another UNSELECT event',
+      1,
+      getEventCount('foo', Component.EventType.UNSELECT)
+    );
     assertEquals(
-        'Baz must not have dispatched a SELECT event', 0,
-        getEventCount('baz', Component.EventType.SELECT));
+      'Baz must not have dispatched a SELECT event',
+      0,
+      getEventCount('baz', Component.EventType.SELECT)
+    );
     assertFalse('Baz must not be selected', baz.isSelected());
     assertTrue('Baz must be highlighted', baz.isHighlighted());
 
     // Simulate 'g' key event.
     const gEvent = new FakeKeyEvent(KeyCodes.G);
-    assertFalse(
-        'Key event must not have beeen handled', tabBar.handleKeyEvent(gEvent));
-    assertFalse(
-        'Key event propagation must not have been stopped',
-        gEvent.propagationStopped);
-    assertFalse(
-        'Default key event must not have been prevented',
-        gEvent.defaultPrevented);
+    assertFalse('Key event must not have beeen handled', tabBar.handleKeyEvent(gEvent));
+    assertFalse('Key event propagation must not have been stopped', gEvent.propagationStopped);
+    assertFalse('Default key event must not have been prevented', gEvent.defaultPrevented);
     assertEquals('Foo must remain selected', foo, tabBar.getSelectedTab());
 
     // Clean up.
-    events.unlisten(
-        tabBar,
-        [
-          Component.EventType.SELECT,
-          Component.EventType.UNSELECT,
-        ],
-        countEvent);
+    events.unlisten(tabBar, [Component.EventType.SELECT, Component.EventType.UNSELECT], countEvent);
   },
 
   testExitAndEnterDocument() {

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.BrowserFeatureTest');
-goog.setTestOnly();
 
 const BrowserFeature = goog.require('goog.editor.BrowserFeature');
 const ExpectedFailures = goog.require('goog.testing.ExpectedFailures');
@@ -40,9 +39,10 @@ testSuite({
     root.normalize();
 
     assertEquals(
-        'NORMALIZE_CORRUPTS_EMPTY_TEXT_NODES incorrect for ' +
-            navigator.userAgent,
-        true, textNode.parentNode == null);
+      'NORMALIZE_CORRUPTS_EMPTY_TEXT_NODES incorrect for ' + navigator.userAgent,
+      true,
+      textNode.parentNode == null
+    );
   },
 
   testLeavesPWhenRemovingLists() {
@@ -57,9 +57,10 @@ testSuite({
     document.execCommand('insertorderedlist', false, true);
 
     assertEquals(
-        'LEAVES_P_WHEN_REMOVING_LISTS incorrect for ' + navigator.userAgent,
-        BrowserFeature.LEAVES_P_WHEN_REMOVING_LISTS,
-        !!dom.getElementsByTagName(TagName.P, root).length);
+      'LEAVES_P_WHEN_REMOVING_LISTS incorrect for ' + navigator.userAgent,
+      BrowserFeature.LEAVES_P_WHEN_REMOVING_LISTS,
+      !!dom.getElementsByTagName(TagName.P, root).length
+    );
   },
 
   testActiveElement() {
@@ -71,9 +72,7 @@ testSuite({
 
     expectedFailures.expectFailureFor(!BrowserFeature.HAS_ACTIVE_ELEMENT);
     try {
-      assertEquals(
-          'document.activeElement should be the created div', div,
-          document.activeElement);
+      assertEquals('document.activeElement should be the created div', div, document.activeElement);
     } catch (e) {
       expectedFailures.handleException(e);
     }
@@ -93,17 +92,17 @@ testSuite({
 
     expectedFailures.expectFailureFor(true);
     try {
-      assertEquals(
-          'text node should not be corrupted', textNode, root.firstChild);
+      assertEquals('text node should not be corrupted', textNode, root.firstChild);
     } catch (e) {
       expectedFailures.handleException(e);
 
-      expectedFailures.expectFailureFor(
-          BrowserFeature.NORMALIZE_CORRUPTS_ALL_TEXT_NODES);
+      expectedFailures.expectFailureFor(BrowserFeature.NORMALIZE_CORRUPTS_ALL_TEXT_NODES);
       try {
         assertEquals(
-            'first text node should be corrupted and replaced by sibling',
-            secondTextNode, root.firstChild);
+          'first text node should be corrupted and replaced by sibling',
+          secondTextNode,
+          root.firstChild
+        );
       } catch (e) {
         expectedFailures.handleException(e);
       }

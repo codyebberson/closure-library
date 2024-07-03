@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.ClickToEditWrapperTest');
-goog.setTestOnly();
 
 const ClickToEditWrapper = goog.require('goog.editor.ClickToEditWrapper');
 const MockClock = goog.require('goog.testing.MockClock');
@@ -22,10 +21,9 @@ let HTML;
 
 /** @param {boolean=} isBlended */
 function setUpField(isBlended = undefined) {
-  FIELD = isBlended ? new SeamlessField('testField') :
-                      new SeamlessField('testField');
+  FIELD = isBlended ? new SeamlessField('testField') : new SeamlessField('testField');
 
-  (new ClickToEditWrapper(FIELD));
+  new ClickToEditWrapper(FIELD);
 
   Range.clearSelection();
 }
@@ -63,9 +61,7 @@ testSuite({
 
     events.fireClickSequence(text.parentNode);
 
-    assertFalse(
-        'Field should not be made editable immediately after clicking',
-        FIELD.isLoaded());
+    assertFalse('Field should not be made editable immediately after clicking', FIELD.isLoaded());
     CLOCK.tick(1);
     assertTrue('Field should be editable', FIELD.isLoaded());
 
@@ -104,8 +100,7 @@ testSuite({
     // the start of the next node.
     const body = FIELD.getElement();
     const text = body.firstChild;
-    const link =
-        dom.getElementsByTagNameAndClass(TagName.A, null, body)[0].firstChild;
+    const link = dom.getElementsByTagNameAndClass(TagName.A, null, body)[0].firstChild;
     if (selection.getStartNode() == text) {
       assertEquals('Wrong start node', text, selection.getStartNode());
       assertEquals('Wrong start offset', 17, selection.getStartOffset());

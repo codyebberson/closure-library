@@ -16,30 +16,26 @@ goog.require('goog.events.KeyCodes');
 goog.require('goog.userAgent');
 goog.requireType('goog.events.BrowserEvent');
 
-
-
 /**
  * Plugin to handle tab keys. Specific tab behavior defined by subclasses.
  *
  * @constructor
  * @extends {goog.editor.Plugin}
  */
-goog.editor.plugins.AbstractTabHandler = function() {
-  'use strict';
+goog.editor.plugins.AbstractTabHandler = function () {
   goog.editor.Plugin.call(this);
 };
 goog.inherits(goog.editor.plugins.AbstractTabHandler, goog.editor.Plugin);
 
+/** @override */
+goog.editor.plugins.AbstractTabHandler.prototype.getTrogClassId = goog.abstractMethod;
 
 /** @override */
-goog.editor.plugins.AbstractTabHandler.prototype.getTrogClassId =
-    goog.abstractMethod;
-
-
-/** @override */
-goog.editor.plugins.AbstractTabHandler.prototype.handleKeyboardShortcut =
-    function(e, key, isModifierPressed) {
-  'use strict';
+goog.editor.plugins.AbstractTabHandler.prototype.handleKeyboardShortcut = function (
+  e,
+  key,
+  isModifierPressed
+) {
   // If a dialog doesn't have selectable field, Moz grabs the event and
   // performs actions in editor window. This solves that problem and allows
   // the event to be passed on to proper handlers.
@@ -60,12 +56,10 @@ goog.editor.plugins.AbstractTabHandler.prototype.handleKeyboardShortcut =
   return false;
 };
 
-
 /**
  * Handle a tab key press.
  * @param {!goog.events.BrowserEvent} e The key event.
  * @return {boolean} Whether this event was handled by this plugin.
  * @protected
  */
-goog.editor.plugins.AbstractTabHandler.prototype.handleTabKey =
-    goog.abstractMethod;
+goog.editor.plugins.AbstractTabHandler.prototype.handleTabKey = goog.abstractMethod;

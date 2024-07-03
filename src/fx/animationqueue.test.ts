@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.fx.AnimationQueueTest');
-goog.setTestOnly();
 
 const Animation = goog.require('goog.fx.Animation');
 const AnimationParallelQueue = goog.require('goog.fx.AnimationParallelQueue');

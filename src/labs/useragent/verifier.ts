@@ -40,7 +40,7 @@ function detectIeVersionByBehavior() {
 
     return 10;
   }
-  if (!(window.ActiveXObject) && 'ActiveXObject' in window) {
+  if (!window.ActiveXObject && 'ActiveXObject' in window) {
     return 11;
   }
 
@@ -56,7 +56,7 @@ function detectIeVersionByBehavior() {
 function detectIeVersionByNavigator() {
   const ua = navigator.userAgent.toLowerCase();
   if (ua.indexOf('msie') != -1) {
-    const value = parseInt(ua.split('msie')[1], 10);
+    const value = Number.parseInt(ua.split('msie')[1], 10);
     if (typeof value == 'number' && !isNaN(value)) {
       return value;
     }

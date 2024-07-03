@@ -23,8 +23,7 @@ goog.require('goog.events.BrowserEvent');
  * @extends {goog.events.BrowserEvent}
  * @final
  */
-goog.events.KeyEvent = function(keyCode, charCode, repeat, browserEvent) {
-  'use strict';
+goog.events.KeyEvent = function (keyCode, charCode, repeat, browserEvent) {
   goog.events.BrowserEvent.call(this, browserEvent);
   this.type = goog.events.KeyEvent.EventType.KEY;
 
@@ -54,5 +53,5 @@ goog.inherits(goog.events.KeyEvent, goog.events.BrowserEvent);
  * @enum {string}
  */
 goog.events.KeyEvent.EventType = {
-  KEY: 'key'
+  KEY: 'key',
 };

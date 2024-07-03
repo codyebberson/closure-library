@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dateTest');
-goog.setTestOnly();
 
 const DateDate = goog.require('goog.date.Date');
 const DateTime = goog.require('goog.date.DateTime');
@@ -14,7 +13,6 @@ const googRequiredGoogDate = goog.require('goog.date');
 const month = goog.require('goog.date.month');
 const testSuite = goog.require('goog.testing.testSuite');
 const weekDay = goog.require('goog.date.weekDay');
-
 
 testSuite({
   /** Unit test for Closure's 'googRequiredGoogDate'. */
@@ -63,161 +61,186 @@ testSuite({
 
   testIsSameDay() {
     assertTrue(
-        'Dates are on the same day',
-        googRequiredGoogDate.isSameDay(
-            new Date('2009/02/01 12:45:12'), new Date('2009/02/01 01:15:49')));
+      'Dates are on the same day',
+      googRequiredGoogDate.isSameDay(
+        new Date('2009/02/01 12:45:12'),
+        new Date('2009/02/01 01:15:49')
+      )
+    );
 
     assertFalse(
-        'Days are different',
-        googRequiredGoogDate.isSameDay(
-            new Date('2009/02/01 12:45:12'), new Date('2009/02/02 01:15:49')));
+      'Days are different',
+      googRequiredGoogDate.isSameDay(
+        new Date('2009/02/01 12:45:12'),
+        new Date('2009/02/02 01:15:49')
+      )
+    );
 
     assertFalse(
-        'Months are different',
-        googRequiredGoogDate.isSameDay(
-            new Date('2009/02/01 12:45:12'), new Date('2009/03/01 01:15:49')));
+      'Months are different',
+      googRequiredGoogDate.isSameDay(
+        new Date('2009/02/01 12:45:12'),
+        new Date('2009/03/01 01:15:49')
+      )
+    );
 
     assertFalse(
-        'Years are different',
-        googRequiredGoogDate.isSameDay(
-            new Date('2009/02/01 12:45:12'), new Date('2010/02/01 01:15:49')));
+      'Years are different',
+      googRequiredGoogDate.isSameDay(
+        new Date('2009/02/01 12:45:12'),
+        new Date('2010/02/01 01:15:49')
+      )
+    );
 
     assertFalse(
-        'Wrong millennium',
-        googRequiredGoogDate.isSameDay(
-            new Date('2009/02/01 12:45:12'), new Date('1009/02/01 01:15:49')));
+      'Wrong millennium',
+      googRequiredGoogDate.isSameDay(
+        new Date('2009/02/01 12:45:12'),
+        new Date('1009/02/01 01:15:49')
+      )
+    );
   },
 
   testIsSameMonth() {
     assertTrue(
-        'Dates are on the same day',
-        googRequiredGoogDate.isSameMonth(
-            new Date('2009/02/01 12:45:12'), new Date('2009/02/01 01:15:49')));
+      'Dates are on the same day',
+      googRequiredGoogDate.isSameMonth(
+        new Date('2009/02/01 12:45:12'),
+        new Date('2009/02/01 01:15:49')
+      )
+    );
 
     assertTrue(
-        'Dates are in the same month',
-        googRequiredGoogDate.isSameMonth(
-            new Date('2009/02/01 12:45:12'), new Date('2009/02/10 01:15:49')));
+      'Dates are in the same month',
+      googRequiredGoogDate.isSameMonth(
+        new Date('2009/02/01 12:45:12'),
+        new Date('2009/02/10 01:15:49')
+      )
+    );
 
     assertFalse(
-        'Month is different',
-        googRequiredGoogDate.isSameMonth(
-            new Date('2009/02/01 12:45:12'), new Date('2009/03/01 01:15:49')));
+      'Month is different',
+      googRequiredGoogDate.isSameMonth(
+        new Date('2009/02/01 12:45:12'),
+        new Date('2009/03/01 01:15:49')
+      )
+    );
 
     assertFalse(
-        'Year is different',
-        googRequiredGoogDate.isSameMonth(
-            new Date('2008/02/01 12:45:12'), new Date('2009/02/01 01:15:49')));
+      'Year is different',
+      googRequiredGoogDate.isSameMonth(
+        new Date('2008/02/01 12:45:12'),
+        new Date('2009/02/01 01:15:49')
+      )
+    );
 
     assertFalse(
-        'Wrong millennium',
-        googRequiredGoogDate.isSameMonth(
-            new Date('2009/02/01 12:45:12'), new Date('1009/02/01 01:15:49')));
+      'Wrong millennium',
+      googRequiredGoogDate.isSameMonth(
+        new Date('2009/02/01 12:45:12'),
+        new Date('1009/02/01 01:15:49')
+      )
+    );
   },
 
   testIsSameYear() {
     assertTrue(
-        'Dates are on the same day',
-        googRequiredGoogDate.isSameYear(
-            new Date('2009/02/01 12:45:12'), new Date('2009/02/01 01:15:49')));
+      'Dates are on the same day',
+      googRequiredGoogDate.isSameYear(
+        new Date('2009/02/01 12:45:12'),
+        new Date('2009/02/01 01:15:49')
+      )
+    );
 
     assertTrue(
-        'Only days are different',
-        googRequiredGoogDate.isSameYear(
-            new Date('2009/02/01 12:45:12'), new Date('2009/02/11 01:15:49')));
+      'Only days are different',
+      googRequiredGoogDate.isSameYear(
+        new Date('2009/02/01 12:45:12'),
+        new Date('2009/02/11 01:15:49')
+      )
+    );
 
     assertTrue(
-        'Only months are different',
-        googRequiredGoogDate.isSameYear(
-            new Date('2009/02/01 12:45:12'), new Date('2009/02/01 01:15:49')));
+      'Only months are different',
+      googRequiredGoogDate.isSameYear(
+        new Date('2009/02/01 12:45:12'),
+        new Date('2009/02/01 01:15:49')
+      )
+    );
 
     assertFalse(
-        'Years are different',
-        googRequiredGoogDate.isSameYear(
-            new Date('2009/02/01 12:45:12'), new Date('2010/02/01 01:15:49')));
+      'Years are different',
+      googRequiredGoogDate.isSameYear(
+        new Date('2009/02/01 12:45:12'),
+        new Date('2010/02/01 01:15:49')
+      )
+    );
 
     assertFalse(
-        'Years are different',
-        googRequiredGoogDate.isSameYear(
-            new Date('2009/02/01 12:45:12'), new Date('2008/02/01 01:15:49')));
+      'Years are different',
+      googRequiredGoogDate.isSameYear(
+        new Date('2009/02/01 12:45:12'),
+        new Date('2008/02/01 01:15:49')
+      )
+    );
   },
 
   testGetWeekNumber() {
     const f = googRequiredGoogDate.getWeekNumber;
 
     // Test cases from http://en.wikipedia.org/wiki/ISO_week_date#Examples
-    assertEquals(
-        '2005-01-01 is the week 53 of the previous year', 53,
-        f(2005, month.JAN, 1));
-    assertEquals(
-        '2005-01-02 is the week 53 of the previous year', 53,
-        f(2005, month.JAN, 2));
+    assertEquals('2005-01-01 is the week 53 of the previous year', 53, f(2005, month.JAN, 1));
+    assertEquals('2005-01-02 is the week 53 of the previous year', 53, f(2005, month.JAN, 2));
     assertEquals('2005-12-31 is the week 52', 52, f(2005, month.DEC, 31));
     assertEquals('2007-01-01 is the week 1', 1, f(2007, month.JAN, 1));
     assertEquals('2007-12-30 is the week 52', 52, f(2007, month.DEC, 30));
-    assertEquals(
-        '2007-12-31 is the week 1 of the following year', 1,
-        f(2007, month.DEC, 31));
+    assertEquals('2007-12-31 is the week 1 of the following year', 1, f(2007, month.DEC, 31));
     assertEquals('2008-01-01 is the week 1', 1, f(2008, month.JAN, 1));
     assertEquals('2008-12-28 is the week 52', 52, f(2008, month.DEC, 28));
-    assertEquals(
-        '2008-12-29 is the week 1 of the following year', 1,
-        f(2008, month.DEC, 29));
-    assertEquals(
-        '2008-12-31 is the week 1 of the following year', 1,
-        f(2008, month.DEC, 31));
+    assertEquals('2008-12-29 is the week 1 of the following year', 1, f(2008, month.DEC, 29));
+    assertEquals('2008-12-31 is the week 1 of the following year', 1, f(2008, month.DEC, 31));
     assertEquals('2009-01-01 is the week 1', 1, f(2009, month.JAN, 1));
-    assertEquals(
-        '2009-12-31 is the week 53 of the previous year', 53,
-        f(2009, month.DEC, 31));
-    assertEquals(
-        '2010-01-01 is the week 53 of the previous year', 53,
-        f(2010, month.JAN, 1));
-    assertEquals(
-        '2010-01-03 is the week 53 of the previous year', 53,
-        f(2010, month.JAN, 3));
+    assertEquals('2009-12-31 is the week 53 of the previous year', 53, f(2009, month.DEC, 31));
+    assertEquals('2010-01-01 is the week 53 of the previous year', 53, f(2010, month.JAN, 1));
+    assertEquals('2010-01-03 is the week 53 of the previous year', 53, f(2010, month.JAN, 3));
     assertEquals('2010-01-04 is the week 1', 1, f(2010, month.JAN, 4));
 
-    assertEquals(
-        '2006-01-01 is in week 52 of the following year', 52,
-        f(2006, month.JAN, 1));
+    assertEquals('2006-01-01 is in week 52 of the following year', 52, f(2006, month.JAN, 1));
     assertEquals('2006-01-02 is in week 1', 1, f(2006, month.JAN, 2));
     assertEquals('2006-10-16 is in week 42', 42, f(2006, month.OCT, 16));
     assertEquals('2006-10-19 is in week 42', 42, f(2006, month.OCT, 19));
     assertEquals('2006-10-22 is in week 42', 42, f(2006, month.OCT, 22));
     assertEquals('2006-10-23 is in week 43', 43, f(2006, month.OCT, 23));
-    assertEquals(
-        '2008-12-29 is in week 1 of the following year', 1,
-        f(2008, month.DEC, 29));
-    assertEquals(
-        '2010-01-03 is in week 53 of the previous year', 53,
-        f(2010, month.JAN, 3));
+    assertEquals('2008-12-29 is in week 1 of the following year', 1, f(2008, month.DEC, 29));
+    assertEquals('2010-01-03 is in week 53 of the previous year', 53, f(2010, month.JAN, 3));
 
     assertEquals('2008-02-01 is in week 5', 5, f(2008, month.FEB, 1));
     assertEquals('2008-02-04 is in week 6', 6, f(2008, month.FEB, 4));
 
     // Tests for different cutoff days.
     assertEquals(
-        '2006-01-01 is in week 52 of the prev. year (cutoff=Monday)', 52,
-        f(2006, month.JAN, 1, weekDay.MON));
+      '2006-01-01 is in week 52 of the prev. year (cutoff=Monday)',
+      52,
+      f(2006, month.JAN, 1, weekDay.MON)
+    );
+    assertEquals('2006-01-01 is in week 1 (cutoff=Sunday)', 1, f(2006, month.JAN, 1, weekDay.SUN));
     assertEquals(
-        '2006-01-01 is in week 1 (cutoff=Sunday)', 1,
-        f(2006, month.JAN, 1, weekDay.SUN));
+      '2006-12-31 is in week 52 (cutoff=Monday)',
+      52,
+      f(2006, month.DEC, 31, weekDay.MON)
+    );
     assertEquals(
-        '2006-12-31 is in week 52 (cutoff=Monday)', 52,
-        f(2006, month.DEC, 31, weekDay.MON));
+      '2006-12-31 is in week 53 (cutoff=Sunday)',
+      53,
+      f(2006, month.DEC, 31, weekDay.SUN)
+    );
+    assertEquals('2007-01-01 is in week 1 (cutoff=Monday)', 1, f(2007, month.JAN, 1, weekDay.MON));
+    assertEquals('2007-01-01 is in week 1 (cutoff=Sunday)', 1, f(2007, month.JAN, 1, weekDay.SUN));
     assertEquals(
-        '2006-12-31 is in week 53 (cutoff=Sunday)', 53,
-        f(2006, month.DEC, 31, weekDay.SUN));
-    assertEquals(
-        '2007-01-01 is in week 1 (cutoff=Monday)', 1,
-        f(2007, month.JAN, 1, weekDay.MON));
-    assertEquals(
-        '2007-01-01 is in week 1 (cutoff=Sunday)', 1,
-        f(2007, month.JAN, 1, weekDay.SUN));
-    assertEquals(
-        '2015-01-01 is in week 52 of the previous year (cutoff=Monday)', 52,
-        f(2015, month.JAN, 1, weekDay.MON));
+      '2015-01-01 is in week 52 of the previous year (cutoff=Monday)',
+      52,
+      f(2015, month.JAN, 1, weekDay.MON)
+    );
 
     // Tests for leap year 2000.
     assertEquals('2000-02-27 is in week 8', 8, f(2000, month.FEB, 27));
@@ -232,8 +255,10 @@ testSuite({
     for (let i = 0; i < 52; ++i) {
       const expected_week = i + 1;
       assertEquals(
-          dt.toUTCIsoString(true) + ' is in week ' + expected_week,
-          expected_week, dt.getWeekNumber());
+        dt.toUTCIsoString(true) + ' is in week ' + expected_week,
+        expected_week,
+        dt.getWeekNumber()
+      );
       dt.add(new Interval(Interval.DAYS, 7));
     }
   },
@@ -242,74 +267,61 @@ testSuite({
     const f = googRequiredGoogDate.getYearOfWeek;
 
     // Test cases from http://en.wikipedia.org/wiki/ISO_week_date#Examples
-    assertEquals(
-        '2005-01-01 is the week 53 of the previous year', 2004,
-        f(2005, month.JAN, 1));
-    assertEquals(
-        '2005-01-02 is the week 53 of the previous year', 2004,
-        f(2005, month.JAN, 2));
-    assertEquals(
-        '2005-12-31 is the week 52 of current year', 2005,
-        f(2005, month.DEC, 31));
-    assertEquals(
-        '2007-01-01 is the week 1 of 2007', 2007, f(2007, month.JAN, 1));
-    assertEquals(
-        '2007-12-30 is the week 52 of 2007', 2007, f(2007, month.DEC, 30));
-    assertEquals(
-        '2007-12-31 is the week 1 of the following year', 2008,
-        f(2007, month.DEC, 31));
-    assertEquals(
-        '2008-01-01 is the week 1 of 2008', 2008, f(2008, month.JAN, 1));
-    assertEquals(
-        '2008-12-28 is the week 52 of 2008', 2008, f(2008, month.DEC, 28));
-    assertEquals(
-        '2008-12-29 is the week 1 of the following year', 2009,
-        f(2008, month.DEC, 29));
-    assertEquals(
-        '2008-12-31 is the week 1 of the following year', 2009,
-        f(2008, month.DEC, 31));
-    assertEquals(
-        '2009-01-01 is the week 1 of 2009', 2009, f(2009, month.JAN, 1));
-    assertEquals(
-        '2009-12-31 is the week 53 of the previous year', 2009,
-        f(2009, month.DEC, 31));
-    assertEquals(
-        '2010-01-01 is the week 53 of the previous year', 2009,
-        f(2010, month.JAN, 1));
-    assertEquals(
-        '2010-01-03 is the week 53 of the previous year', 2009,
-        f(2010, month.JAN, 3));
-    assertEquals(
-        '2010-01-04 is the week 1 of 2010', 2010, f(2010, month.JAN, 4));
+    assertEquals('2005-01-01 is the week 53 of the previous year', 2004, f(2005, month.JAN, 1));
+    assertEquals('2005-01-02 is the week 53 of the previous year', 2004, f(2005, month.JAN, 2));
+    assertEquals('2005-12-31 is the week 52 of current year', 2005, f(2005, month.DEC, 31));
+    assertEquals('2007-01-01 is the week 1 of 2007', 2007, f(2007, month.JAN, 1));
+    assertEquals('2007-12-30 is the week 52 of 2007', 2007, f(2007, month.DEC, 30));
+    assertEquals('2007-12-31 is the week 1 of the following year', 2008, f(2007, month.DEC, 31));
+    assertEquals('2008-01-01 is the week 1 of 2008', 2008, f(2008, month.JAN, 1));
+    assertEquals('2008-12-28 is the week 52 of 2008', 2008, f(2008, month.DEC, 28));
+    assertEquals('2008-12-29 is the week 1 of the following year', 2009, f(2008, month.DEC, 29));
+    assertEquals('2008-12-31 is the week 1 of the following year', 2009, f(2008, month.DEC, 31));
+    assertEquals('2009-01-01 is the week 1 of 2009', 2009, f(2009, month.JAN, 1));
+    assertEquals('2009-12-31 is the week 53 of the previous year', 2009, f(2009, month.DEC, 31));
+    assertEquals('2010-01-01 is the week 53 of the previous year', 2009, f(2010, month.JAN, 1));
+    assertEquals('2010-01-03 is the week 53 of the previous year', 2009, f(2010, month.JAN, 3));
+    assertEquals('2010-01-04 is the week 1 of 2010', 2010, f(2010, month.JAN, 4));
 
-    assertEquals(
-        '2006-01-01 is in week 52 of the perv. year', 2005,
-        f(2006, month.JAN, 1));
-    assertEquals(
-        '2006-01-02 is in week 1 of 2006', 2006, f(2006, month.JAN, 2));
+    assertEquals('2006-01-01 is in week 52 of the perv. year', 2005, f(2006, month.JAN, 1));
+    assertEquals('2006-01-02 is in week 1 of 2006', 2006, f(2006, month.JAN, 2));
 
     // Tests for different cutoff days.
     assertEquals(
-        '2006-01-01 is in week 52 of the prev. year (cutoff=Monday)', 2005,
-        f(2006, month.JAN, 1, weekDay.MON));
+      '2006-01-01 is in week 52 of the prev. year (cutoff=Monday)',
+      2005,
+      f(2006, month.JAN, 1, weekDay.MON)
+    );
     assertEquals(
-        '2006-01-01 is in week 1 (cutoff=Sunday)', 2006,
-        f(2006, month.JAN, 1, weekDay.SUN));
+      '2006-01-01 is in week 1 (cutoff=Sunday)',
+      2006,
+      f(2006, month.JAN, 1, weekDay.SUN)
+    );
     assertEquals(
-        '2006-12-31 is in 2006 year of week (cutoff=Monday)', 2006,
-        f(2006, month.DEC, 31, weekDay.MON));
+      '2006-12-31 is in 2006 year of week (cutoff=Monday)',
+      2006,
+      f(2006, month.DEC, 31, weekDay.MON)
+    );
     assertEquals(
-        '2006-12-31 is in 2006 year of week (cutoff=Sunday)', 2006,
-        f(2006, month.DEC, 31, weekDay.SUN));
+      '2006-12-31 is in 2006 year of week (cutoff=Sunday)',
+      2006,
+      f(2006, month.DEC, 31, weekDay.SUN)
+    );
     assertEquals(
-        '2007-01-01 is in 2007 year of week (cutoff=Monday)', 2007,
-        f(2007, month.JAN, 1, weekDay.MON));
+      '2007-01-01 is in 2007 year of week (cutoff=Monday)',
+      2007,
+      f(2007, month.JAN, 1, weekDay.MON)
+    );
     assertEquals(
-        '2007-01-01 is in 2007 year of week (cutoff=Sunday)', 2007,
-        f(2007, month.JAN, 1, weekDay.SUN));
+      '2007-01-01 is in 2007 year of week (cutoff=Sunday)',
+      2007,
+      f(2007, month.JAN, 1, weekDay.SUN)
+    );
     assertEquals(
-        '2015-01-01 is in the previous year of week (cutoff=Monday)', 2014,
-        f(2015, month.JAN, 1, weekDay.MON));
+      '2015-01-01 is in the previous year of week (cutoff=Monday)',
+      2014,
+      f(2015, month.JAN, 1, weekDay.MON)
+    );
   },
 
   testIsDateLikeWithGoogDate() {
@@ -325,8 +337,7 @@ testSuite({
     assertFalse('string should not be date-like', goog.isDateLike(string));
     assertFalse('number should not be date-like', goog.isDateLike(number));
     assertFalse('nullVar should not be date-like', goog.isDateLike(nullVar));
-    assertFalse(
-        'undefined should not be date-like', goog.isDateLike(notDefined));
+    assertFalse('undefined should not be date-like', goog.isDateLike(notDefined));
   },
 
   testDateConstructor() {
@@ -356,22 +367,19 @@ testSuite({
 
   testDateConstructor_yearBelow100() {
     const date = new DateDate(14, 7, 19);
-    assertEquals(
-        'Date constructor should respect passed in full year', 14,
-        date.getFullYear());
+    assertEquals('Date constructor should respect passed in full year', 14, date.getFullYear());
 
     const copied = new DateDate(date);
-    assertEquals(
-        'Copying a should return identical date', date.getTime(),
-        copied.getTime());
-    assertEquals(
-        'Full year should be left intact by copying', 14, copied.getFullYear());
+    assertEquals('Copying a should return identical date', date.getTime(), copied.getTime());
+    assertEquals('Full year should be left intact by copying', 14, copied.getFullYear());
 
     // Test boundaries.
     assertEquals(-1, new DateDate(-1, 0, 1).getFullYear());
     assertEquals(
-        'There is no year zero, but JS dates accept it', 0,
-        new DateDate(0, 0, 1).getFullYear());
+      'There is no year zero, but JS dates accept it',
+      0,
+      new DateDate(0, 0, 1).getFullYear()
+    );
     assertEquals(1, new DateDate(1, 0, 1).getFullYear());
     assertEquals(99, new DateDate(99, 0, 1).getFullYear());
     assertEquals(100, new DateDate(100, 0, 1).getFullYear());
@@ -667,62 +675,82 @@ testSuite({
     // +YYYYYY-MM-DD
     iso = '+102005-02-22';
     assertEquals(
-        `From ${iso}`, '+102005-02-22T00:00:00',
-        DateTime.fromIsoString(iso).toIsoString(true));
+      `From ${iso}`,
+      '+102005-02-22T00:00:00',
+      DateTime.fromIsoString(iso).toIsoString(true)
+    );
 
     // +YYYYYY-MM-DDTHH:MM:SS
     iso = '+102005-02-22T11:22:33';
     assertEquals(
-        `From ${iso}`, '+102005-02-22T11:22:33',
-        DateTime.fromIsoString(iso).toIsoString(true));
+      `From ${iso}`,
+      '+102005-02-22T11:22:33',
+      DateTime.fromIsoString(iso).toIsoString(true)
+    );
 
     // +YYYYYY-MM-DDTHH:MM:SS+03:00
     iso = '+102005-02-22T11:22:33+03:00';
     assertEquals(
-        `From ${iso}`, '+102005-02-22T08:22:33',
-        DateTime.fromIsoString(iso).toUTCIsoString(true));
+      `From ${iso}`,
+      '+102005-02-22T08:22:33',
+      DateTime.fromIsoString(iso).toUTCIsoString(true)
+    );
 
     // +YYYY-MM-DD
     iso = '+2005-02-22';
     assertEquals(
-        `From ${iso}`, '2005-02-22T00:00:00',
-        DateTime.fromIsoString(iso).toIsoString(true));
+      `From ${iso}`,
+      '2005-02-22T00:00:00',
+      DateTime.fromIsoString(iso).toIsoString(true)
+    );
 
     // +YYYYY-MM-DD
     iso = '+12005-02-22';
     assertEquals(
-        `From ${iso}`, '+012005-02-22T00:00:00',
-        DateTime.fromIsoString(iso).toIsoString(true));
+      `From ${iso}`,
+      '+012005-02-22T00:00:00',
+      DateTime.fromIsoString(iso).toIsoString(true)
+    );
 
     // -YYYYYY-MM-DD
     iso = '-000100-02-22';
     assertEquals(
-        `From ${iso}`, '-000100-02-22T00:00:00',
-        DateTime.fromIsoString(iso).toIsoString(true));
+      `From ${iso}`,
+      '-000100-02-22T00:00:00',
+      DateTime.fromIsoString(iso).toIsoString(true)
+    );
 
     // -YYYYYY-MM-DDTHH:MM:SS
     iso = '-000100-02-22T11:22:33';
     assertEquals(
-        `From ${iso}`, '-000100-02-22T11:22:33',
-        DateTime.fromIsoString(iso).toIsoString(true));
+      `From ${iso}`,
+      '-000100-02-22T11:22:33',
+      DateTime.fromIsoString(iso).toIsoString(true)
+    );
 
     // -YYYYYY-MM-DDTHH:MM:SS+03:00
     iso = '-000100-02-22T11:22:33+03:00';
     assertEquals(
-        `From ${iso}`, '-000100-02-22T08:22:33',
-        DateTime.fromIsoString(iso).toUTCIsoString(true));
+      `From ${iso}`,
+      '-000100-02-22T08:22:33',
+      DateTime.fromIsoString(iso).toUTCIsoString(true)
+    );
 
     // -YYYY-MM-DD
     iso = '-0100-02-22';
     assertEquals(
-        `From ${iso}`, '-000100-02-22T00:00:00',
-        DateTime.fromIsoString(iso).toIsoString(true));
+      `From ${iso}`,
+      '-000100-02-22T00:00:00',
+      DateTime.fromIsoString(iso).toIsoString(true)
+    );
 
     // -YYYYY-MM-DD
     iso = '-00100-02-22';
     assertEquals(
-        `From ${iso}`, '-000100-02-22T00:00:00',
-        DateTime.fromIsoString(iso).toIsoString(true));
+      `From ${iso}`,
+      '-000100-02-22T00:00:00',
+      DateTime.fromIsoString(iso).toIsoString(true)
+    );
 
     // On a DST boundary, using a UTC timestamp
     iso = '2019-03-10T11:22:33Z';
@@ -810,8 +838,7 @@ testSuite({
     // 23:59:59
     let d = new DateTime(0, 0);
     let iso = '18:46:39';
-    assertTrue(
-        `parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
+    assertTrue(`parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
     assertEquals(`Got 18 hours from ${iso}`, 18, d.getHours());
     assertEquals(`Got 46 minutes from ${iso}`, 46, d.getMinutes());
     assertEquals(`Got 39 seconds from ${iso}`, 39, d.getSeconds());
@@ -819,8 +846,7 @@ testSuite({
     // 235959
     d = new DateTime(0, 0);
     iso = '184639';
-    assertTrue(
-        `parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
+    assertTrue(`parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
     assertEquals(`Got 18 hours from ${iso}`, 18, d.getHours());
     assertEquals(`Got 46 minutes from ${iso}`, 46, d.getMinutes());
     assertEquals(`Got 39 seconds from ${iso}`, 39, d.getSeconds());
@@ -828,36 +854,30 @@ testSuite({
     // 23:59, 2359, or 23
     d = new DateTime(0, 0);
     iso = '18:46';
-    assertTrue(
-        `parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
+    assertTrue(`parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
     assertEquals(`Got 18 hours from ${iso}`, 18, d.getHours());
     assertEquals(`Got 46 minutes from ${iso}`, 46, d.getMinutes());
 
     d = new DateTime(0, 0);
     iso = '1846';
-    assertTrue(
-        `parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
+    assertTrue(`parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
     assertEquals(`Got 18 hours from ${iso}`, 18, d.getHours());
     assertEquals(`Got 46 minutes from ${iso}`, 46, d.getMinutes());
 
     d = new DateTime(0, 0);
     iso = '18';
-    assertTrue(
-        `parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
+    assertTrue(`parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
     assertEquals(`Got 18 hours from ${iso}`, 18, d.getHours());
 
     d = new DateTime(0, 0);
     iso = '18463';
-    assertFalse(
-        `failed to parse ${iso}`,
-        googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
+    assertFalse(`failed to parse ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
     assertTrue('date did not change', d.equals(new DateTime(0, 0)));
 
     // 23:59:59.9942 or 235959.9942
     d = new DateTime(0, 0);
     iso = '18:46:39.9942';
-    assertTrue(
-        `parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
+    assertTrue(`parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
     assertEquals(`Got 18 hours from ${iso}`, 18, d.getHours());
     assertEquals(`Got 46 minutes from ${iso}`, 46, d.getMinutes());
     assertEquals(`Got 39 seconds from ${iso}`, 39, d.getSeconds());
@@ -866,8 +886,7 @@ testSuite({
 
     d = new DateTime(0, 0);
     iso = '184639.9942';
-    assertTrue(
-        `parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
+    assertTrue(`parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
     assertEquals(`Got 18 hours from ${iso}`, 18, d.getHours());
     assertEquals(`Got 46 minutes from ${iso}`, 46, d.getMinutes());
     assertEquals(`Got 39 seconds from ${iso}`, 39, d.getSeconds());
@@ -879,20 +898,17 @@ testSuite({
     const offset = new Date().getTimezoneOffset() / 60;
     d = new DateTime(0, 0);
     iso = '18:46:39+07:00';
-    assertTrue(
-        `parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
+    assertTrue(`parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
     assertEquals(`Got an 11-hour GMT offset from ${iso}`, 11, d.getUTCHours());
 
     d = new DateTime(0, 0);
     iso = '18:46:39+00:00';
-    assertTrue(
-        `parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
+    assertTrue(`parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
     assertEquals(`Got an 18-hour GMT offset from ${iso}`, 18, d.getUTCHours());
 
     d = new DateTime(0, 0);
     iso = '16:46:39-07:00';
-    assertTrue(
-        `parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
+    assertTrue(`parsed ${iso}`, googRequiredGoogDate.setIso8601TimeOnly_(d, iso));
     assertEquals(`Got a 23-hour GMT offset from ${iso}`, 23, d.getUTCHours());
   },
 
@@ -905,14 +921,12 @@ testSuite({
     // +1y2m3d
     d = new DateDate(2006, month.JAN, 1);
     d.add(new Interval(1, 2, 3));
-    assertEquals(
-        '2006-01-01 + 1y2m3d = 2007-03-04', '20070304', d.toIsoString());
+    assertEquals('2006-01-01 + 1y2m3d = 2007-03-04', '20070304', d.toIsoString());
 
     // -1y2m3d (negative interval)
     d = new DateDate(2007, month.MAR, 4);
     d.add(new Interval(-1, -2, -3));
-    assertEquals(
-        '2007-03-04 - 1y2m3d = 2006-01-01', '20060101', d.toIsoString());
+    assertEquals('2007-03-04 - 1y2m3d = 2006-01-01', '20060101', d.toIsoString());
 
     // 2007-12-30 + 3d (roll over to next year)
     d = new DateDate(2007, month.DEC, 30);
@@ -1033,8 +1047,7 @@ testSuite({
     // outside that range.
     d = new DateDate(-1, month.JUN, 10);
     d.add(new Interval(Interval.DAYS, 1));
-    assertEquals(
-        '-0001-06-10 + 1d = -0001-06-11', '-0000010611', d.toIsoString());
+    assertEquals('-0001-06-10 + 1d = -0001-06-11', '-0000010611', d.toIsoString());
 
     // Javascript Date objects have special behavior for years 0-99; 100 is just
     // outside that range.
@@ -1061,8 +1074,7 @@ testSuite({
     // the bottom boundary.
     d = new DateDate(0, month.JAN, 2);
     d.add(new Interval(Interval.DAYS, -2));
-    assertEquals(
-        '0000-01-02 - 2d = -000001-12-31', '-0000011231', d.toIsoString());
+    assertEquals('0000-01-02 - 2d = -000001-12-31', '-0000011231', d.toIsoString());
 
     // Javascript Date objects have special behavior for years 0-99; add an
     // interval that pushes the original, special date outside the range across
@@ -1159,7 +1171,7 @@ testSuite({
     assertTrue('d2 == d1', d2.equals(d1));
 
     d1 = new DateTime(2007, month.JAN, 1);
-    d2 = new DateTime();  // today
+    d2 = new DateTime(); // today
     assertFalse('different date', d1.equals(d2));
 
     d1 = new DateTime(2004, month.MAR, 1);
@@ -1240,7 +1252,7 @@ testSuite({
     assertFalse('-1d != +1d, aka i1 == i2', i1.equals(i2));
     assertFalse('-1d != +1d, aka i2 == i1', i2.equals(i1));
 
-    i1 = new Interval(0, 3);  // Three months
+    i1 = new Interval(0, 3); // Three months
     i2 = new Interval(Interval.MONTHS, 3);
     assertTrue('3m == 3m, aka i1 == i2', i1.equals(i2));
     assertTrue('3m == 3m, aka i2 == i1', i2.equals(i1));
@@ -1277,74 +1289,64 @@ testSuite({
   testIsoDuration() {
     const interval1 = new Interval(123, 456, 678, 11, 12, 455.5);
     const duration1 = 'P123Y456M678DT11H12M455.5S';
-    assertTrue(
-        'parse full duration',
-        interval1.equals(Interval.fromIsoString(duration1)));
+    assertTrue('parse full duration', interval1.equals(Interval.fromIsoString(duration1)));
     assertEquals('create full duration', duration1, interval1.toIsoString());
 
     const interval2 = new Interval(123);
     const duration2 = 'P123Y';
     const duration2v = 'P123Y0M0DT0H0M0S';
-    assertTrue(
-        'parse year', interval2.equals(Interval.fromIsoString(duration2)));
+    assertTrue('parse year', interval2.equals(Interval.fromIsoString(duration2)));
     assertEquals('create year', duration2, interval2.toIsoString());
-    assertEquals(
-        'create year, verbose', duration2v, interval2.toIsoString(true));
+    assertEquals('create year, verbose', duration2v, interval2.toIsoString(true));
 
     const interval3 = new Interval(0, 0, 0, 11, 12, 40);
     const duration3 = 'PT11H12M40S';
     const duration3v = 'P0Y0M0DT11H12M40S';
-    assertTrue(
-        'parse time duration',
-        interval3.equals(Interval.fromIsoString(duration3)));
+    assertTrue('parse time duration', interval3.equals(Interval.fromIsoString(duration3)));
     assertEquals('create time duration', duration3, interval3.toIsoString());
-    assertEquals(
-        'create time duration, verbove', duration3v,
-        interval3.toIsoString(true));
+    assertEquals('create time duration, verbove', duration3v, interval3.toIsoString(true));
 
     const interval4 = new Interval(7, 8, 9, 1, 2, 4);
     const duration4 = 'P7Y8M9DT1H2M4S';
-    assertTrue(
-        'parse one-digit duration',
-        interval4.equals(Interval.fromIsoString(duration4)));
-    assertEquals(
-        'create one-digit duration', duration4, interval4.toIsoString());
+    assertTrue('parse one-digit duration', interval4.equals(Interval.fromIsoString(duration4)));
+    assertEquals('create one-digit duration', duration4, interval4.toIsoString());
 
     const interval5 = new Interval(-123, -456, -678, -11, -12, -455.5);
     const duration5 = '-P123Y456M678DT11H12M455.5S';
-    assertTrue(
-        'parse full negative duration',
-        interval5.equals(Interval.fromIsoString(duration5)));
-    assertEquals(
-        'create full negative duration', duration5, interval5.toIsoString());
+    assertTrue('parse full negative duration', interval5.equals(Interval.fromIsoString(duration5)));
+    assertEquals('create full negative duration', duration5, interval5.toIsoString());
 
     const interval6 = new Interval(0, 0, -1);
     const duration6 = '-P1D';
     const duration6v = '-P0Y0M1DT0H0M0S';
     assertTrue(
-        'parse partial negative duration',
-        interval6.equals(Interval.fromIsoString(duration6)));
+      'parse partial negative duration',
+      interval6.equals(Interval.fromIsoString(duration6))
+    );
+    assertEquals('create partial negative duration', duration6, interval6.toIsoString());
     assertEquals(
-        'create partial negative duration', duration6, interval6.toIsoString());
-    assertEquals(
-        'create partial negative duration, verbose', duration6v,
-        interval6.toIsoString(true));
+      'create partial negative duration, verbose',
+      duration6v,
+      interval6.toIsoString(true)
+    );
 
     const interval7 = new Interval(0, 0, 9, 0, 0, 4);
     const duration7 = 'P9DT4S';
     const duration7v = 'P0Y0M9DT0H0M4S';
     assertTrue(
-        'parse partial one-digit duration',
-        interval7.equals(Interval.fromIsoString(duration7)));
+      'parse partial one-digit duration',
+      interval7.equals(Interval.fromIsoString(duration7))
+    );
     assertTrue(
-        'parse partial one-digit duration, verbose',
-        interval7.equals(Interval.fromIsoString(duration7v)));
+      'parse partial one-digit duration, verbose',
+      interval7.equals(Interval.fromIsoString(duration7v))
+    );
+    assertEquals('create partial one-digit duration', duration7, interval7.toIsoString());
     assertEquals(
-        'create partial one-digit duration', duration7,
-        interval7.toIsoString());
-    assertEquals(
-        'create partial one-digit duration, verbose', duration7v,
-        interval7.toIsoString(true));
+      'create partial one-digit duration, verbose',
+      duration7v,
+      interval7.toIsoString(true)
+    );
 
     const interval8 = new Interval(1, -1, 1, -1, 1, -1);
     assertNull('create mixed sign duration', interval8.toIsoString());
@@ -1359,21 +1361,19 @@ testSuite({
     assertNull('extra T', Interval.fromIsoString(duration11));
 
     const duration12 = 'PT.5S';
-    assertNull(
-        'invalid seconds, missing integer part',
-        Interval.fromIsoString(duration12));
+    assertNull('invalid seconds, missing integer part', Interval.fromIsoString(duration12));
 
     const duration13 = 'PT1.S';
-    assertNull(
-        'invalid seconds, missing fractional part',
-        Interval.fromIsoString(duration13));
+    assertNull('invalid seconds, missing fractional part', Interval.fromIsoString(duration13));
   },
 
   testGetTotalSeconds() {
     const duration = new Interval(0, 0, 2, 3, 4, 5);
     assertEquals(
-        'seconds in 2d3h4m5s', 2 * 86400 + 3 * 3600 + 4 * 60 + 5,
-        duration.getTotalSeconds());
+      'seconds in 2d3h4m5s',
+      2 * 86400 + 3 * 3600 + 4 * 60 + 5,
+      duration.getTotalSeconds()
+    );
   },
 
   testIsDateLikeWithGoogDateTime() {
@@ -1389,8 +1389,7 @@ testSuite({
     assertFalse('string should not be date-like', goog.isDateLike(string));
     assertFalse('number should not be date-like', goog.isDateLike(number));
     assertFalse('nullVar should not be date-like', goog.isDateLike(nullVar));
-    assertFalse(
-        'undefined should not be date-like', goog.isDateLike(notDefined));
+    assertFalse('undefined should not be date-like', goog.isDateLike(notDefined));
   },
 
   testToUTCRfc3339String() {
@@ -1398,8 +1397,10 @@ testSuite({
     date.setUTCMilliseconds(52);
     assertEquals('1985-04-12T23:20:50.052Z', date.toUTCRfc3339String());
     assertNotEquals(
-        'Diverges from ISO 8601', date.toUTCRfc3339String(),
-        date.toUTCIsoString(true, true));
+      'Diverges from ISO 8601',
+      date.toUTCRfc3339String(),
+      date.toUTCIsoString(true, true)
+    );
 
     date = DateTime.fromIsoString('19901231T235959Z');
     assertEquals('1990-12-31T23:59:59Z', date.toUTCRfc3339String());
@@ -1414,8 +1415,10 @@ testSuite({
     d.add(new Interval(Interval.MINUTES, d.getTimezoneOffset()));
     const d2 = new DateTime(2006, 1, 1, 12, 0, 0);
     assertEquals(
-        'Compensate for timezone and compare with UTC date/time',
-        d.toIsoString(true), d2.toUTCIsoString(true));
+      'Compensate for timezone and compare with UTC date/time',
+      d.toIsoString(true),
+      d2.toUTCIsoString(true)
+    );
   },
 
   testToUsTimeString() {
@@ -1431,8 +1434,7 @@ testSuite({
     assertEquals('12am test 3', '12:00 AM', d.toUsTimeString(dontPad));
     assertEquals('12am test 4', '12:00 AM', d.toUsTimeString(doPad, doShowPm));
     assertEquals('12am test 5', '00:00', d.toUsTimeString(doPad, dontShowPm));
-    assertEquals(
-        '12am test 6', '12:00 AM', d.toUsTimeString(dontPad, doShowPm));
+    assertEquals('12am test 6', '12:00 AM', d.toUsTimeString(dontPad, doShowPm));
     assertEquals('12am test 7', '0:00', d.toUsTimeString(dontPad, dontShowPm));
 
     // 9am
@@ -1452,8 +1454,7 @@ testSuite({
     assertEquals('12pm test 3', '12:00 PM', d.toUsTimeString(dontPad));
     assertEquals('12pm test 4', '12:00 PM', d.toUsTimeString(doPad, doShowPm));
     assertEquals('12pm test 5', '12:00', d.toUsTimeString(doPad, dontShowPm));
-    assertEquals(
-        '12pm test 6', '12:00 PM', d.toUsTimeString(dontPad, doShowPm));
+    assertEquals('12pm test 6', '12:00 PM', d.toUsTimeString(dontPad, doShowPm));
     assertEquals('12pm test 7', '12:00', d.toUsTimeString(dontPad, dontShowPm));
 
     // 6 PM
@@ -1471,42 +1472,30 @@ testSuite({
     assertEquals('6:01 PM test 1', '6:01 PM', d.toUsTimeString());
     assertEquals('6:01 PM test 2', '06:01 PM', d.toUsTimeString(doPad));
     assertEquals('6:01 PM test 3', '6:01 PM', d.toUsTimeString(dontPad));
-    assertEquals(
-        '6:01 PM test 4', '06:01 PM', d.toUsTimeString(doPad, doShowPm));
-    assertEquals(
-        '6:01 PM test 5', '06:01', d.toUsTimeString(doPad, dontShowPm));
-    assertEquals(
-        '6:01 PM test 6', '6:01 PM', d.toUsTimeString(dontPad, doShowPm));
-    assertEquals(
-        '6:01 PM test 7', '6:01', d.toUsTimeString(dontPad, dontShowPm));
+    assertEquals('6:01 PM test 4', '06:01 PM', d.toUsTimeString(doPad, doShowPm));
+    assertEquals('6:01 PM test 5', '06:01', d.toUsTimeString(doPad, dontShowPm));
+    assertEquals('6:01 PM test 6', '6:01 PM', d.toUsTimeString(dontPad, doShowPm));
+    assertEquals('6:01 PM test 7', '6:01', d.toUsTimeString(dontPad, dontShowPm));
 
     // 6:35 PM
     d = new DateTime(2007, 1, 14, 18, 35);
     assertEquals('6:35 PM test 1', '6:35 PM', d.toUsTimeString());
     assertEquals('6:35 PM test 2', '06:35 PM', d.toUsTimeString(doPad));
     assertEquals('6:35 PM test 3', '6:35 PM', d.toUsTimeString(dontPad));
-    assertEquals(
-        '6:35 PM test 4', '06:35 PM', d.toUsTimeString(doPad, doShowPm));
-    assertEquals(
-        '6:35 PM test 5', '06:35', d.toUsTimeString(doPad, dontShowPm));
-    assertEquals(
-        '6:35 PM test 6', '6:35 PM', d.toUsTimeString(dontPad, doShowPm));
-    assertEquals(
-        '6:35 PM test 7', '6:35', d.toUsTimeString(dontPad, dontShowPm));
+    assertEquals('6:35 PM test 4', '06:35 PM', d.toUsTimeString(doPad, doShowPm));
+    assertEquals('6:35 PM test 5', '06:35', d.toUsTimeString(doPad, dontShowPm));
+    assertEquals('6:35 PM test 6', '6:35 PM', d.toUsTimeString(dontPad, doShowPm));
+    assertEquals('6:35 PM test 7', '6:35', d.toUsTimeString(dontPad, dontShowPm));
 
     // omit zero minutes
     d = new DateTime(2007, 1, 14, 18);
-    assertEquals(
-        'omit zero 1', '6:00 PM', d.toUsTimeString(dontPad, doShowPm, false));
-    assertEquals(
-        'omit zero 2', '6 PM', d.toUsTimeString(dontPad, doShowPm, true));
+    assertEquals('omit zero 1', '6:00 PM', d.toUsTimeString(dontPad, doShowPm, false));
+    assertEquals('omit zero 2', '6 PM', d.toUsTimeString(dontPad, doShowPm, true));
 
     // but don't omit zero minutes if not actually zero minutes
     d = new DateTime(2007, 1, 14, 18, 1);
-    assertEquals(
-        'omit zero 3', '6:01 PM', d.toUsTimeString(dontPad, doShowPm, false));
-    assertEquals(
-        'omit zero 4', '6:01 PM', d.toUsTimeString(dontPad, doShowPm, true));
+    assertEquals('omit zero 3', '6:01 PM', d.toUsTimeString(dontPad, doShowPm, false));
+    assertEquals('omit zero 4', '6:01 PM', d.toUsTimeString(dontPad, doShowPm, true));
   },
 
   testToIsoTimeString() {
@@ -1553,19 +1542,24 @@ testSuite({
 
     d = new DateTime(2007, 1, 14, 18, 35, 1);
     assertEquals(
-        '2007-02-14, 8:35:01, timezone==undefined', '2007-02-14T18:35:01',
-        d.toXmlDateTime());
+      '2007-02-14, 8:35:01, timezone==undefined',
+      '2007-02-14T18:35:01',
+      d.toXmlDateTime()
+    );
 
     d = new DateTime(2007, 1, 14, 18, 35, 1);
     assertEquals(
-        '2007-02-14, 8:35:01, timezone==false', '2007-02-14T18:35:01',
-        d.toXmlDateTime(false));
+      '2007-02-14, 8:35:01, timezone==false',
+      '2007-02-14T18:35:01',
+      d.toXmlDateTime(false)
+    );
 
     d = new DateTime(2007, 1, 14, 18, 35, 1);
     assertEquals(
-        '2007-02-14, 8:35:01, timezone==true',
-        '2007-02-14T18:35:01' + d.getTimezoneOffsetString(),
-        d.toXmlDateTime(true));
+      '2007-02-14, 8:35:01, timezone==true',
+      '2007-02-14T18:35:01' + d.getTimezoneOffsetString(),
+      d.toXmlDateTime(true)
+    );
   },
 
   testClone() {
@@ -1627,15 +1621,16 @@ testSuite({
 
     const dates = [date2, date3, date1];
     dates.sort(DateDate.compare);
-    assertArrayEquals(
-        'Dates should be sorted in time.', [date1, date2, date3], dates);
+    assertArrayEquals('Dates should be sorted in time.', [date1, date2, date3], dates);
 
     // Assert a known millisecond difference between two points in time.
     assertEquals(
-        -19129478,
-        DateDate.compare(
-            new DateTime(1982, month.MAR, 12, 6, 48, 32, 354),
-            new DateTime(1982, month.MAR, 12, 12, 7, 21, 832)));
+      -19129478,
+      DateDate.compare(
+        new DateTime(1982, month.MAR, 12, 6, 48, 32, 354),
+        new DateTime(1982, month.MAR, 12, 12, 7, 21, 832)
+      )
+    );
 
     // Test dates before the year 0.  Dates are Talk Like a Pirate Day, and
     // Towel Day, 300 B.C. (and before pirates).
@@ -1644,8 +1639,10 @@ testSuite({
     const towelDay = new DateDate(-300, month.MAY, 12);
 
     assertEquals(
-        'Dates should be 113 days apart.', 113 * 24 * 60 * 60 * 1000,
-        DateDate.compare(pirateDay, towelDay));
+      'Dates should be 113 days apart.',
+      113 * 24 * 60 * 60 * 1000,
+      DateDate.compare(pirateDay, towelDay)
+    );
   },
 
   testDateCompareDateLikes() {

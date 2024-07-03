@@ -4,21 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Defines an interface for serializing objects into strings.
  */
 
 goog.provide('goog.string.Stringifier');
 
-
-
 /**
  * An interface for serializing objects into strings.
  * @interface
  */
-goog.string.Stringifier = function() {};
-
+goog.string.Stringifier = () => {};
 
 /**
  * Serializes an object or a value to a string.

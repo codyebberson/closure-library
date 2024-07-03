@@ -9,7 +9,6 @@
  * @suppress {missingRequire} Swapping using fully qualified name
  */
 goog.module('goog.i18n.NumberFormatTest');
-goog.setTestOnly();
 
 // This tests in both polyfill and native ECMAScript mode for
 // browsers that support native Intl NumberFormat.
@@ -22,15 +21,15 @@ goog.setTestOnly();
 // Note also that all parsing functions are performed by polyfill code.
 
 // Sets up goog.USE_ECMASCRIPT_I18N_NUMF flag in each function.
-let testECMAScriptOptions = [false];
+const testECMAScriptOptions = [false];
 if (Intl.NumberFormat) {
   // Add test if the browser environment supports ECMAScript implementation.
 
   // Check if compact and formatToParts are implemented.
-  const probeOptions = {notation: 'compact', compactDisplay: 'short'};
+  const probeOptions = { notation: 'compact', compactDisplay: 'short' };
   try {
     const fmt = new Intl.NumberFormat('en', probeOptions);
-    let result = fmt.formatToParts(999999);
+    const result = fmt.formatToParts(999999);
     if (result && result[0].value == '1' && result[1].value == 'M') {
       testECMAScriptOptions.unshift(true);
     }
@@ -50,7 +49,9 @@ const NumberFormat = goog.require('goog.i18n.NumberFormat');
 const NumberFormatSymbols = goog.require('goog.i18n.NumberFormatSymbols');
 const NumberFormatSymbols_ar = goog.require('goog.i18n.NumberFormatSymbols_ar');
 const NumberFormatSymbols_ar_EG = goog.require('goog.i18n.NumberFormatSymbols_ar_EG');
-const NumberFormatSymbols_ar_EG_u_nu_latn = goog.require('goog.i18n.NumberFormatSymbols_ar_EG_u_nu_latn');
+const NumberFormatSymbols_ar_EG_u_nu_latn = goog.require(
+  'goog.i18n.NumberFormatSymbols_ar_EG_u_nu_latn'
+);
 const NumberFormatSymbols_bn = goog.require('goog.i18n.NumberFormatSymbols_bn');
 const NumberFormatSymbols_de = goog.require('goog.i18n.NumberFormatSymbols_de');
 const NumberFormatSymbols_en = goog.require('goog.i18n.NumberFormatSymbols_en');
@@ -101,7 +102,7 @@ function setNativeMode(new_setting) {
  */
 function assertVeryBigNumberEquals(str1, str2) {
   const digitsAnonymized = (s) => s.replace(/[0-9]/g, '#');
-  const valueOf = (s) => parseFloat(s.replace(/[^0-9.e+-]/g, ''));
+  const valueOf = (s) => Number.parseFloat(s.replace(/[^0-9.e+-]/g, ''));
 
   assertEquals(digitsAnonymized(str1), digitsAnonymized(str2));
 
@@ -116,14 +117,11 @@ function assertVeryBigNumberEquals(str1, str2) {
 
 /** @return {boolean} Whether we're on Linux Firefox 3.6.3. */
 function isFirefox363Linux() {
-  return product.FIREFOX && userAgent.LINUX && isVersion('3.6.3') &&
-      !isVersion('3.6.4');
+  return product.FIREFOX && userAgent.LINUX && isVersion('3.6.3') && !isVersion('3.6.4');
 }
 
 testSuite({
-  getTestName: function() {
-    return 'NumberFormat Tests';
-  },
+  getTestName: () => 'NumberFormat Tests',
 
   setUpPage() {
     expectedFailures = new ExpectedFailures();
@@ -135,10 +133,8 @@ testSuite({
   setUp() {
     // Always switch back to English on startup.
     stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_en);
-    stubs.set(
-        goog.i18n, 'NumberFormatSymbols_u_nu_latn', NumberFormatSymbols_en);
-    stubs.set(
-        goog.i18n, 'CompactNumberFormatSymbols', CompactNumberFormatSymbols_en);
+    stubs.set(goog.i18n, 'NumberFormatSymbols_u_nu_latn', NumberFormatSymbols_en);
+    stubs.set(goog.i18n, 'CompactNumberFormatSymbols', CompactNumberFormatSymbols_en);
 
     NumberFormat.setEnforceAsciiDigits(false);
   },
@@ -150,31 +146,29 @@ testSuite({
   },
 
   testVeryBigNumber() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       let str;
       let fmt = new NumberFormat(NumberFormat.Format.CURRENCY);
       str = fmt.format(1785599999999999888888888888888);
       // when comparing big number, various platform have small different in
       // precision. We have to tolerate that using assertVeryBigNumberEquals.
-      assertVeryBigNumberEquals(
-          '$1,785,599,999,999,999,888,888,888,888,888.00', str);
-      str = fmt.format(1.7856E30);
-      assertVeryBigNumberEquals(
-          '$1,785,600,000,000,000,000,000,000,000,000.00', str);
-      str = fmt.format(1.3456E20);
+      assertVeryBigNumberEquals('$1,785,599,999,999,999,888,888,888,888,888.00', str);
+      str = fmt.format(1.7856e30);
+      assertVeryBigNumberEquals('$1,785,600,000,000,000,000,000,000,000,000.00', str);
+      str = fmt.format(1.3456e20);
       assertVeryBigNumberEquals('$134,560,000,000,000,000,000.00', str);
 
       fmt = new NumberFormat(NumberFormat.Format.DECIMAL);
-      str = fmt.format(1.3456E20);
+      str = fmt.format(1.3456e20);
       assertVeryBigNumberEquals('134,560,000,000,000,000,000', str);
 
       fmt = new NumberFormat(NumberFormat.Format.PERCENT);
-      str = fmt.format(1.3456E20);
+      str = fmt.format(1.3456e20);
       assertVeryBigNumberEquals('13,456,000,000,000,000,000,000%', str);
 
       fmt = new NumberFormat(NumberFormat.Format.SCIENTIFIC);
-      str = fmt.format(1.3456E20);
+      str = fmt.format(1.3456e20);
       assertEquals('1E20', str);
 
       fmt = new NumberFormat(NumberFormat.Format.DECIMAL);
@@ -182,26 +176,26 @@ testSuite({
       assertEquals(1 + 1 + 306 + 306 / 3, str.length);
       assertEquals('-1,234,567,890,123,45', str.slice(0, 21));
 
-      str = fmt.format(Infinity);
+      str = fmt.format(Number.POSITIVE_INFINITY);
       assertEquals('\u221e', str);
-      str = fmt.format(-Infinity);
+      str = fmt.format(Number.NEGATIVE_INFINITY);
       assertEquals('-\u221e', str);
 
       fmt = new NumberFormat(NumberFormat.Format.COMPACT_SHORT);
-      str = fmt.format(Infinity);
+      str = fmt.format(Number.POSITIVE_INFINITY);
       assertEquals('\u221e', str);
-      str = fmt.format(-Infinity);
+      str = fmt.format(Number.NEGATIVE_INFINITY);
       assertEquals('-\u221e', str);
     }
   },
 
   testStandardFormat() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       let str;
       let fmt;
       try {
-        let fmt = new NumberFormat(NumberFormat.Format.CURRENCY);
+        const fmt = new NumberFormat(NumberFormat.Format.CURRENCY);
         str = fmt.format(1234.579);
         assertEquals('$1,234.58', str);
       } catch (err) {
@@ -224,7 +218,7 @@ testSuite({
   },
 
   testNegativePercentage() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       let str;
       let fmt = new NumberFormat('#,##0.00%');
@@ -238,7 +232,7 @@ testSuite({
   },
 
   testNegativePercentagePattern() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       let str;
       try {
@@ -255,7 +249,7 @@ testSuite({
   },
 
   testCustomPercentage() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       let str;
       try {
@@ -284,7 +278,7 @@ testSuite({
 
   testBasicParse() {
     let value;
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       const fmt = new NumberFormat('0.0000');
@@ -301,7 +295,7 @@ testSuite({
 
   testPrefixParse() {
     let value;
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       const fmt = new NumberFormat('0.0;(0.0)');
@@ -315,30 +309,30 @@ testSuite({
 
   testPercentParse() {
     let value;
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
-      let fmt = new NumberFormat('0.0;(0.0)');
+      const fmt = new NumberFormat('0.0;(0.0)');
       value = fmt.parse('123.4579%');
-      assertEquals((123.4579 / 100), value);
+      assertEquals(123.4579 / 100, value);
 
       value = fmt.parse('(%123.4579)');
-      assertEquals((-123.4579 / 100), value);
+      assertEquals(-123.4579 / 100, value);
 
       value = fmt.parse('123.4579\u2030');
-      assertEquals((123.4579 / 1000), value);
+      assertEquals(123.4579 / 1000, value);
 
       value = fmt.parse('(\u2030123.4579)');
-      assertEquals((-123.4579 / 1000), value);
+      assertEquals(-123.4579 / 1000, value);
     }
   },
 
   testPercentAndPerMillAdvance() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       let value;
-      let pos = [0];
-      let fmt = new NumberFormat('0');
+      const pos = [0];
+      const fmt = new NumberFormat('0');
       value = fmt.parse('120%', pos);
       assertEquals(1.2, value);
       assertEquals(4, pos[0]);
@@ -350,7 +344,7 @@ testSuite({
   },
 
   testPercentAndPerMillParsing() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       const implicitFmt = new NumberFormat('0;(0)');
@@ -370,7 +364,7 @@ testSuite({
   },
 
   testInfinityParse() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       let value;
@@ -386,18 +380,18 @@ testSuite({
   },
 
   testExponentParse() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       let value;
       let fmt;
 
       fmt = new NumberFormat('#E0');
       value = fmt.parse('1.234E3');
-      assertEquals(1.234E+3, value);
+      assertEquals(1.234e3, value);
 
       fmt = new NumberFormat('0.###E0');
       value = fmt.parse('1.234E3');
-      assertEquals(1.234E+3, value);
+      assertEquals(1.234e3, value);
 
       fmt = new NumberFormat('#E0');
       value = fmt.parse('1.2345E4');
@@ -412,7 +406,7 @@ testSuite({
   },
 
   testGroupingParse() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       let value;
 
@@ -429,7 +423,7 @@ testSuite({
   },
 
   testParsingStop() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const pos = [0];
       const fmt = new NumberFormat('###0.###E0');
@@ -464,7 +458,7 @@ testSuite({
   },
 
   testBasicFormat() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       const fmt = new NumberFormat('0.0000');
@@ -474,7 +468,7 @@ testSuite({
   },
 
   testGrouping() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       let str;
 
@@ -495,7 +489,7 @@ testSuite({
   testIndiaNumberGrouping() {
     stubs.replace(goog, 'LOCALE', 'hi-IN');
     let fmt;
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       // Test for a known grouping used and recognized in India
@@ -662,7 +656,7 @@ testSuite({
   },
 
   testPerMill() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       let str;
 
@@ -673,10 +667,10 @@ testSuite({
   },
 
   testCurrency() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
-      stubs.replace(goog, 'LOCALE', 'en-CA');  // Canadian English
+      stubs.replace(goog, 'LOCALE', 'en-CA'); // Canadian English
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_en_CA);
       let str;
       let matched;
@@ -689,24 +683,30 @@ testSuite({
       assertEquals('-$1,234.56', str);
 
       fmt = new NumberFormat(
-          '\u00a4#,##0.00;-\u00a4#,##0.00', 'USD',
-          NumberFormat.CurrencyStyle.LOCAL);
+        '\u00a4#,##0.00;-\u00a4#,##0.00',
+        'USD',
+        NumberFormat.CurrencyStyle.LOCAL
+      );
       str = fmt.format(1234.56);
       assertEquals('$1,234.56', str);
       str = fmt.format(-1234.56);
       assertEquals('-$1,234.56', str);
 
       fmt = new NumberFormat(
-          '\u00a4#,##0.00;-\u00a4#,##0.00', 'USD',
-          NumberFormat.CurrencyStyle.PORTABLE);
+        '\u00a4#,##0.00;-\u00a4#,##0.00',
+        'USD',
+        NumberFormat.CurrencyStyle.PORTABLE
+      );
       str = fmt.format(1234.56);
       assertEquals('US$1,234.56', str);
       str = fmt.format(-1234.56);
       assertEquals('-US$1,234.56', str);
 
       fmt = new NumberFormat(
-          '\u00a4#,##0.00;-\u00a4#,##0.00', 'USD',
-          NumberFormat.CurrencyStyle.GLOBAL);
+        '\u00a4#,##0.00;-\u00a4#,##0.00',
+        'USD',
+        NumberFormat.CurrencyStyle.GLOBAL
+      );
       str = fmt.format(1234.56);
       assertEquals('USD $1,234.56', str);
 
@@ -720,13 +720,11 @@ testSuite({
 
       // Note that custom patterns use JavaScript, not native ECMAScript.
       // Make
-      fmt = new NumberFormat(
-          '\u00a4\u00a4 #,##0.00;-\u00a4\u00a4 #,##0.00', 'USD');
+      fmt = new NumberFormat('\u00a4\u00a4 #,##0.00;-\u00a4\u00a4 #,##0.00', 'USD');
       str = fmt.format(1234.56);
 
       assertEquals('NativeMode = ' + nativeMode, 'USD 1,234.56', str);
-      fmt = new NumberFormat(
-          '\u00a4\u00a4 #,##0.00;\u00a4\u00a4 -#,##0.00', 'USD');
+      fmt = new NumberFormat('\u00a4\u00a4 #,##0.00;\u00a4\u00a4 -#,##0.00', 'USD');
       str = fmt.format(-1234.56);
       assertEquals('USD -1,234.56', str);
 
@@ -736,8 +734,7 @@ testSuite({
       str = fmt.format(-1234.56);
       assertEquals('-R$1,234.56', str);
 
-      fmt = new NumberFormat(
-          '\u00a4\u00a4 #,##0.00;(\u00a4\u00a4 #,##0.00)', 'BRL');
+      fmt = new NumberFormat('\u00a4\u00a4 #,##0.00;(\u00a4\u00a4 #,##0.00)', 'BRL');
       str = fmt.format(1234.56);
       assertEquals('BRL 1,234.56', str);
       str = fmt.format(-1234.56);
@@ -760,40 +757,40 @@ testSuite({
   },
 
   testLocaleCurrenciesLocal() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
-      stubs.replace(goog, 'LOCALE', 'en-CA');  // Canadian English
+      stubs.replace(goog, 'LOCALE', 'en-CA'); // Canadian English
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_en_CA);
       let fmt = new NumberFormat('\u00a4#,##0.00;-\u00a4#,##0.00');
       let str = fmt.format(1234.56);
       assertEquals('$1,234.56', str);
 
       fmt = new NumberFormat(
-          '\u00a4#,##0.00;-\u00a4#,##0.00', 'CAD',
-          NumberFormat.CurrencyStyle.LOCAL);
+        '\u00a4#,##0.00;-\u00a4#,##0.00',
+        'CAD',
+        NumberFormat.CurrencyStyle.LOCAL
+      );
       str = fmt.format(1234.56);
       assertEquals('$1,234.56', str);
 
       // Other currency
       fmt = new NumberFormat(
-          '\u00a4#,##0.00;-\u00a4#,##0.00', 'USD',
-          NumberFormat.CurrencyStyle.LOCAL);
+        '\u00a4#,##0.00;-\u00a4#,##0.00',
+        'USD',
+        NumberFormat.CurrencyStyle.LOCAL
+      );
       str = fmt.format(1234.56);
       assertEquals('Native=' + nativeMode, '$1,234.56', str);
 
-      fmt = new NumberFormat(
-          NumberFormat.Format.CURRENCY, 'CAD',
-          NumberFormat.CurrencyStyle.LOCAL);
+      fmt = new NumberFormat(NumberFormat.Format.CURRENCY, 'CAD', NumberFormat.CurrencyStyle.LOCAL);
       assertEquals('Native=' + nativeMode, '$1,234.56', str);
 
-      fmt = new NumberFormat(
-          NumberFormat.Format.CURRENCY, 'USD',
-          NumberFormat.CurrencyStyle.LOCAL);
+      fmt = new NumberFormat(NumberFormat.Format.CURRENCY, 'USD', NumberFormat.CurrencyStyle.LOCAL);
       assertEquals('Native=' + nativeMode, '$1,234.56', str);
 
       // US Locale
-      stubs.replace(goog, 'LOCALE', 'en-US');  // American English
+      stubs.replace(goog, 'LOCALE', 'en-US'); // American English
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_en_US);
 
       fmt = new NumberFormat('\u00a4#,##0.00;-\u00a4#,##0.00');
@@ -801,66 +798,74 @@ testSuite({
       assertEquals('$1,234.56', str);
 
       fmt = new NumberFormat(
-          '\u00a4#,##0.00;-\u00a4#,##0.00', 'CAD',
-          NumberFormat.CurrencyStyle.LOCAL);
+        '\u00a4#,##0.00;-\u00a4#,##0.00',
+        'CAD',
+        NumberFormat.CurrencyStyle.LOCAL
+      );
       str = fmt.format(1234.56);
       assertEquals('$1,234.56', str);
 
       // Other currency
       fmt = new NumberFormat(
-          '\u00a4#,##0.00;-\u00a4#,##0.00', 'CAD',
-          NumberFormat.CurrencyStyle.LOCAL);
+        '\u00a4#,##0.00;-\u00a4#,##0.00',
+        'CAD',
+        NumberFormat.CurrencyStyle.LOCAL
+      );
       str = fmt.format(1234.56);
       assertEquals('$1,234.56', str);
 
-      fmt = new NumberFormat(
-          NumberFormat.Format.CURRENCY, 'CAD',
-          NumberFormat.CurrencyStyle.LOCAL);
+      fmt = new NumberFormat(NumberFormat.Format.CURRENCY, 'CAD', NumberFormat.CurrencyStyle.LOCAL);
       assertEquals('Native=' + nativeMode, '$1,234.56', str);
 
-      fmt = new NumberFormat(
-          NumberFormat.Format.CURRENCY, 'USD',
-          NumberFormat.CurrencyStyle.LOCAL);
+      fmt = new NumberFormat(NumberFormat.Format.CURRENCY, 'USD', NumberFormat.CurrencyStyle.LOCAL);
       assertEquals('Native=' + nativeMode, '$1,234.56', str);
     }
   },
 
   testLocaleCurrenciesPortable() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
-      stubs.replace(goog, 'LOCALE', 'en-CA');  // Canadian English
+      stubs.replace(goog, 'LOCALE', 'en-CA'); // Canadian English
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_en_CA);
       let fmt = new NumberFormat('\u00a4#,##0.00;-\u00a4#,##0.00');
       let str = fmt.format(1234.56);
       assertEquals('$1,234.56', str);
 
       fmt = new NumberFormat(
-          '\u00a4#,##0.00;-\u00a4#,##0.00', 'CAD',
-          NumberFormat.CurrencyStyle.PORTABLE);
+        '\u00a4#,##0.00;-\u00a4#,##0.00',
+        'CAD',
+        NumberFormat.CurrencyStyle.PORTABLE
+      );
       // Is this smart enough to match properly?
       str = fmt.format(1234.56);
       assertEquals('Native=' + nativeMode, 'C$1,234.56', str);
 
       // Other currency - pattern mode does not understand how to handle this
       fmt = new NumberFormat(
-          '\u00a4#,##0.00;-\u00a4#,##0.00', 'USD',
-          NumberFormat.CurrencyStyle.PORTABLE);
+        '\u00a4#,##0.00;-\u00a4#,##0.00',
+        'USD',
+        NumberFormat.CurrencyStyle.PORTABLE
+      );
       str = fmt.format(1234.56);
       assertEquals('Native=' + nativeMode, 'US$1,234.56', str);
 
       fmt = new NumberFormat(
-          NumberFormat.Format.CURRENCY, 'CAD',
-          NumberFormat.CurrencyStyle.PORTABLE);
+        NumberFormat.Format.CURRENCY,
+        'CAD',
+        NumberFormat.CurrencyStyle.PORTABLE
+      );
       assertEquals('Native=' + nativeMode, 'US$1,234.56', str);
 
       fmt = new NumberFormat(
-          NumberFormat.Format.CURRENCY, 'USD',
-          NumberFormat.CurrencyStyle.PORTABLE);
+        NumberFormat.Format.CURRENCY,
+        'USD',
+        NumberFormat.CurrencyStyle.PORTABLE
+      );
       assertEquals('Native=' + nativeMode, 'US$1,234.56', str);
 
       // US Locale
-      stubs.replace(goog, 'LOCALE', 'en-US');  // American English
+      stubs.replace(goog, 'LOCALE', 'en-US'); // American English
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_en_US);
 
       fmt = new NumberFormat('\u00a4#,##0.00;-\u00a4#,##0.00');
@@ -868,123 +873,149 @@ testSuite({
       assertEquals('$1,234.56', str);
 
       fmt = new NumberFormat(
-          '\u00a4#,##0.00;-\u00a4#,##0.00', 'CAD',
-          NumberFormat.CurrencyStyle.PORTABLE);
+        '\u00a4#,##0.00;-\u00a4#,##0.00',
+        'CAD',
+        NumberFormat.CurrencyStyle.PORTABLE
+      );
       // Is this smart enough to match properly?
       str = fmt.format(1234.56);
       assertEquals('C$1,234.56', str);
 
       // Other currency
       fmt = new NumberFormat(
-          '\u00a4#,##0.00;-\u00a4#,##0.00', 'CAD',
-          NumberFormat.CurrencyStyle.PORTABLE);
+        '\u00a4#,##0.00;-\u00a4#,##0.00',
+        'CAD',
+        NumberFormat.CurrencyStyle.PORTABLE
+      );
       str = fmt.format(1234.56);
       assertEquals('C$1,234.56', str);
 
       fmt = new NumberFormat(
-          NumberFormat.Format.CURRENCY, 'CAD',
-          NumberFormat.CurrencyStyle.PORTABLE);
+        NumberFormat.Format.CURRENCY,
+        'CAD',
+        NumberFormat.CurrencyStyle.PORTABLE
+      );
       assertEquals('Native=' + nativeMode, 'C$1,234.56', str);
 
       fmt = new NumberFormat(
-          NumberFormat.Format.CURRENCY, 'USD',
-          NumberFormat.CurrencyStyle.PORTABLE);
+        NumberFormat.Format.CURRENCY,
+        'USD',
+        NumberFormat.CurrencyStyle.PORTABLE
+      );
       assertEquals('Native=' + nativeMode, 'C$1,234.56', str);
     }
   },
 
   testLocaleCurrenciesGlobal() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
-      stubs.replace(goog, 'LOCALE', 'en-CA');  // Canadian English
+      stubs.replace(goog, 'LOCALE', 'en-CA'); // Canadian English
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_en_CA);
 
       let fmt = new NumberFormat(
-          '\u00a4#,##0.00;-\u00a4#,##0.00', 'CAD',
-          NumberFormat.CurrencyStyle.GLOBAL);
+        '\u00a4#,##0.00;-\u00a4#,##0.00',
+        'CAD',
+        NumberFormat.CurrencyStyle.GLOBAL
+      );
       // Is this smart enough to match properly?
       let str = fmt.format(1234.56);
       assertEquals('Native=' + nativeMode, 'CAD $1,234.56', str);
 
       // Other currency - pattern mode does not understand how to handle this
       fmt = new NumberFormat(
-          '\u00a4#,##0.00;-\u00a4#,##0.00', 'USD',
-          NumberFormat.CurrencyStyle.GLOBAL);
+        '\u00a4#,##0.00;-\u00a4#,##0.00',
+        'USD',
+        NumberFormat.CurrencyStyle.GLOBAL
+      );
       str = fmt.format(1234.56);
       assertEquals('Native=' + nativeMode, 'USD $1,234.56', str);
 
       fmt = new NumberFormat(
-          NumberFormat.Format.CURRENCY, 'CAD',
-          NumberFormat.CurrencyStyle.GLOBAL);
+        NumberFormat.Format.CURRENCY,
+        'CAD',
+        NumberFormat.CurrencyStyle.GLOBAL
+      );
       assertEquals('Native=' + nativeMode, 'USD $1,234.56', str);
 
       fmt = new NumberFormat(
-          NumberFormat.Format.CURRENCY, 'USD',
-          NumberFormat.CurrencyStyle.GLOBAL);
+        NumberFormat.Format.CURRENCY,
+        'USD',
+        NumberFormat.CurrencyStyle.GLOBAL
+      );
       assertEquals('Native=' + nativeMode, 'USD $1,234.56', str);
 
       // US Locale
-      stubs.replace(goog, 'LOCALE', 'en-US');  // American English
+      stubs.replace(goog, 'LOCALE', 'en-US'); // American English
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_en_US);
 
       fmt = new NumberFormat(
-          '\u00a4#,##0.00;-\u00a4#,##0.00', 'USD',
-          NumberFormat.CurrencyStyle.GLOBAL);
+        '\u00a4#,##0.00;-\u00a4#,##0.00',
+        'USD',
+        NumberFormat.CurrencyStyle.GLOBAL
+      );
       str = fmt.format(1234.56);
       assertEquals('USD $1,234.56', str);
 
       fmt = new NumberFormat(
-          '\u00a4#,##0.00;-\u00a4#,##0.00', 'CAD',
-          NumberFormat.CurrencyStyle.GLOBAL);
+        '\u00a4#,##0.00;-\u00a4#,##0.00',
+        'CAD',
+        NumberFormat.CurrencyStyle.GLOBAL
+      );
       // Is this smart enough to match properly?
       str = fmt.format(1234.56);
       assertEquals('CAD $1,234.56', str);
 
       // Other currency
       fmt = new NumberFormat(
-          '\u00a4#,##0.00;-\u00a4#,##0.00', 'CAD',
-          NumberFormat.CurrencyStyle.GLOBAL);
+        '\u00a4#,##0.00;-\u00a4#,##0.00',
+        'CAD',
+        NumberFormat.CurrencyStyle.GLOBAL
+      );
       str = fmt.format(1234.56);
       assertEquals('CAD $1,234.56', str);
 
       fmt = new NumberFormat(
-          NumberFormat.Format.CURRENCY, 'CAD',
-          NumberFormat.CurrencyStyle.GLOBAL);
+        NumberFormat.Format.CURRENCY,
+        'CAD',
+        NumberFormat.CurrencyStyle.GLOBAL
+      );
       assertEquals('Native=' + nativeMode, 'CAD $1,234.56', str);
 
       fmt = new NumberFormat(
-          NumberFormat.Format.CURRENCY, 'USD',
-          NumberFormat.CurrencyStyle.GLOBAL);
+        NumberFormat.Format.CURRENCY,
+        'USD',
+        NumberFormat.CurrencyStyle.GLOBAL
+      );
       assertEquals('Native=' + nativeMode, 'CAD $1,234.56', str);
     }
   },
 
   testQuotes() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       let str;
 
-      let fmt = new NumberFormat('a\'fo\'\'o\'b#');
+      let fmt = new NumberFormat("a'fo''o'b#");
       str = fmt.format(123);
-      assertEquals('afo\'ob123', str);
+      assertEquals("afo'ob123", str);
 
-      fmt = new NumberFormat('a\'\'b#');
+      fmt = new NumberFormat("a''b#");
       str = fmt.format(123);
-      assertEquals('a\'b123', str);
+      assertEquals("a'b123", str);
 
-      fmt = new NumberFormat('a\'fo\'\'o\'b#');
+      fmt = new NumberFormat("a'fo''o'b#");
       str = fmt.format(-123);
-      assertEquals('-afo\'ob123', str);
+      assertEquals("-afo'ob123", str);
 
-      fmt = new NumberFormat('a\'\'b#');
+      fmt = new NumberFormat("a''b#");
       str = fmt.format(-123);
-      assertEquals('-a\'b123', str);
+      assertEquals("-a'b123", str);
     }
   },
 
   testZeros() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       let str;
       let fmt;
@@ -1021,7 +1052,7 @@ testSuite({
   },
 
   testExponential() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       let str;
       let fmt;
@@ -1144,7 +1175,7 @@ testSuite({
         expectedFailures.handleException(e);
       }
       fmt = new NumberFormat('##0.####E0');
-      str = fmt.format(780.e-9);
+      str = fmt.format(780e-9);
       assertEquals('780E-9', str);
       fmt = new NumberFormat('.###E0');
       str = fmt.format(45678.0);
@@ -1202,16 +1233,16 @@ testSuite({
   },
 
   testPlusSignInExponentPart() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
-      let fmt = new NumberFormat('0E+0');
-      let str = fmt.format(45678000);
+      const fmt = new NumberFormat('0E+0');
+      const str = fmt.format(45678000);
       assertEquals('5E+7', str);
     }
   },
 
   testGroupingParse2() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       let value;
       let fmt;
@@ -1230,7 +1261,7 @@ testSuite({
   },
 
   testApis() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       let fmt;
@@ -1257,24 +1288,20 @@ testSuite({
   },
 
   testLocaleSwitch() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       stubs.replace(goog, 'LOCALE', 'fr');
 
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_fr);
-      stubs.set(
-          goog.i18n, 'NumberFormatSymbols_u_nu_latn', NumberFormatSymbols_fr);
-      stubs.set(
-          goog.i18n, 'CompactNumberFormatSymbols',
-          CompactNumberFormatSymbols_fr);
+      stubs.set(goog.i18n, 'NumberFormatSymbols_u_nu_latn', NumberFormatSymbols_fr);
+      stubs.set(goog.i18n, 'CompactNumberFormatSymbols', CompactNumberFormatSymbols_fr);
 
       // When this test is performed in test cluster, 2 out of 60 machines have
       // problem getting the symbol. It is likely to be caused by size of
       // uncompiled symbol file. There will not be an issue after it is
       // compiled.
-      if (NumberFormatSymbols_fr.DECIMAL_SEP ==
-          NumberFormatSymbols_en.DECIMAL_SEP) {
+      if (NumberFormatSymbols_fr.DECIMAL_SEP == NumberFormatSymbols_en.DECIMAL_SEP) {
         // fails to load French symbols, skip the test.
         return;
       }
@@ -1300,34 +1327,30 @@ testSuite({
   },
 
   testFrenchParse() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       stubs.replace(goog, 'LOCALE', 'fr');
 
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_fr);
-      stubs.set(
-          goog.i18n, 'NumberFormatSymbols_u_nu_latn', NumberFormatSymbols_fr);
-      stubs.set(
-          goog.i18n, 'CompactNumberFormatSymbols',
-          CompactNumberFormatSymbols_fr);
+      stubs.set(goog.i18n, 'NumberFormatSymbols_u_nu_latn', NumberFormatSymbols_fr);
+      stubs.set(goog.i18n, 'CompactNumberFormatSymbols', CompactNumberFormatSymbols_fr);
 
       // When this test is performed in test cluster, 2 out of 60 machines have
       // problem getting the symbol. It is likely to be caused by size of
       // uncompiled symbol file. There will not be an issue after it is
       // compiled.
-      if (NumberFormatSymbols_fr.DECIMAL_SEP ==
-          NumberFormatSymbols_en.DECIMAL_SEP) {
+      if (NumberFormatSymbols_fr.DECIMAL_SEP == NumberFormatSymbols_en.DECIMAL_SEP) {
         // fails to load French symbols, skip the test.
         return;
       }
 
       let fmt = new NumberFormat('0.0000');
       let value = fmt.parse('0,30');
-      assertEquals(0.30, value);
+      assertEquals(0.3, value);
 
       fmt = new NumberFormat(NumberFormat.Format.CURRENCY);
       value = fmt.parse('0,30\u00A0\u20AC');
-      assertEquals(0.30, value);
+      assertEquals(0.3, value);
       fmt = new NumberFormat('#,##0.00');
       value = fmt.parse('123 456,99');
       assertEquals(123456.99, value);
@@ -1343,7 +1366,7 @@ testSuite({
   },
 
   testFailParseShouldThrow() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       let fmt = new NumberFormat('0.0000');
       let value = fmt.parse('x');
@@ -1361,14 +1384,12 @@ testSuite({
 
   testEnforceAscii() {
     stubs.replace(goog, 'LOCALE', 'ar-EG');
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_ar_EG);
 
-      stubs.set(
-          goog.i18n, 'NumberFormatSymbols_u_nu_latn',
-          NumberFormatSymbols_ar_EG_u_nu_latn);
+      stubs.set(goog.i18n, 'NumberFormatSymbols_u_nu_latn', NumberFormatSymbols_ar_EG_u_nu_latn);
 
       NumberFormat.setEnforceAsciiDigits(false);
       let fmt = new NumberFormat(NumberFormat.Format.PERCENT);
@@ -1392,7 +1413,7 @@ testSuite({
   },
 
   testFractionDigits() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const fmt = new NumberFormat(NumberFormat.Format.DECIMAL);
       fmt.setMinimumFractionDigits(4);
@@ -1406,16 +1427,15 @@ testSuite({
   testFractionDigits_possibleLossOfPrecision() {
     // See: https://github.com/google/closure-library/issues/916
 
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       // Given
       const fracDigits = 12;
       const mantissa = 1.1;
       const magnitude = 15;
-      const value = parseFloat(`${mantissa}e${magnitude}`);
-      const shiftedValue =
-          parseFloat(`${mantissa}e` + (fracDigits + magnitude));
+      const value = Number.parseFloat(`${mantissa}e${magnitude}`);
+      const shiftedValue = Number.parseFloat(`${mantissa}e` + (fracDigits + magnitude));
 
       // Confirm that this case risks loss of precision.
       assertNotEquals(shiftedValue / Math.pow(10, fracDigits), value);
@@ -1429,7 +1449,7 @@ testSuite({
   },
 
   testFractionDigitsSetOutOfOrder() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       const fmt = new NumberFormat(NumberFormat.Format.DECIMAL);
@@ -1446,7 +1466,7 @@ testSuite({
   },
 
   testFractionDigitsInvalid() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const fmt = new NumberFormat(NumberFormat.Format.DECIMAL);
       fmt.setMinimumFractionDigits(2);
@@ -1461,7 +1481,7 @@ testSuite({
   },
 
   testFractionDigitsTooHigh() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const fmt = new NumberFormat(NumberFormat.Format.DECIMAL);
       fmt.setMaximumFractionDigits(308);
@@ -1473,7 +1493,7 @@ testSuite({
   },
 
   testSignificantDigitsEqualToMax() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const fmt = new NumberFormat(NumberFormat.Format.DECIMAL);
       fmt.setMinimumFractionDigits(0);
@@ -1506,7 +1526,7 @@ testSuite({
   },
 
   testSignificantDigitsLessThanMax() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const fmt = new NumberFormat(NumberFormat.Format.DECIMAL);
       fmt.setMinimumFractionDigits(0);
@@ -1534,7 +1554,7 @@ testSuite({
   },
 
   testSignificantDigitsMoreThanMax() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       // Max fractional digits should be absolute
@@ -1554,7 +1574,7 @@ testSuite({
   },
 
   testNegativeDecimalFinnish() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       stubs.replace(goog, 'LOCALE', 'fi');
 
@@ -1570,16 +1590,13 @@ testSuite({
 
   testSimpleCompactFrench() {
     // Switch to French.
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       stubs.replace(goog, 'LOCALE', 'fr');
 
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_fr);
-      stubs.set(
-          goog.i18n, 'NumberFormatSymbols_u_nu_latn', NumberFormatSymbols_fr);
-      stubs.set(
-          goog.i18n, 'CompactNumberFormatSymbols',
-          CompactNumberFormatSymbols_fr);
+      stubs.set(goog.i18n, 'NumberFormatSymbols_u_nu_latn', NumberFormatSymbols_fr);
+      stubs.set(goog.i18n, 'CompactNumberFormatSymbols', CompactNumberFormatSymbols_fr);
 
       const fmt = new NumberFormat(NumberFormat.Format.COMPACT_SHORT);
 
@@ -1590,16 +1607,13 @@ testSuite({
 
   testSimpleCompactGerman() {
     stubs.replace(goog, 'LOCALE', 'de');
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       // Switch to German.
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_de);
-      stubs.set(
-          goog.i18n, 'NumberFormatSymbols_u_nu_latn', NumberFormatSymbols_de);
-      stubs.set(
-          goog.i18n, 'CompactNumberFormatSymbols',
-          CompactNumberFormatSymbols_de);
+      stubs.set(goog.i18n, 'NumberFormatSymbols_u_nu_latn', NumberFormatSymbols_de);
+      stubs.set(goog.i18n, 'CompactNumberFormatSymbols', CompactNumberFormatSymbols_de);
 
       const fmt = new NumberFormat(NumberFormat.Format.COMPACT_SHORT);
 
@@ -1616,7 +1630,7 @@ testSuite({
   },
 
   testSimpleCompact1() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const fmt = new NumberFormat(NumberFormat.Format.COMPACT_SHORT);
 
@@ -1626,7 +1640,7 @@ testSuite({
   },
 
   testSimpleCompact2() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       const fmt = new NumberFormat(NumberFormat.Format.COMPACT_SHORT);
@@ -1637,17 +1651,17 @@ testSuite({
   },
 
   testRoundingCompact() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const fmt = new NumberFormat(NumberFormat.Format.COMPACT_SHORT);
 
       const str = fmt.format(999999);
-      assertEquals('1M', str);  // as opposed to 1000k
+      assertEquals('1M', str); // as opposed to 1000k
     }
   },
 
   testRoundingCompactNegative() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const fmt = new NumberFormat(NumberFormat.Format.COMPACT_SHORT);
 
@@ -1657,7 +1671,7 @@ testSuite({
   },
 
   testCompactSmall() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const fmt = new NumberFormat(NumberFormat.Format.COMPACT_SHORT);
 
@@ -1667,7 +1681,7 @@ testSuite({
   },
 
   testCompactLong() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const fmt = new NumberFormat(NumberFormat.Format.COMPACT_LONG);
 
@@ -1677,7 +1691,7 @@ testSuite({
   },
 
   testCompactWithoutSignificant() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const fmt = new NumberFormat(NumberFormat.Format.COMPACT_SHORT);
       fmt.setSignificantDigits(0);
@@ -1693,7 +1707,7 @@ testSuite({
   },
 
   testCompactWithoutSignificant2() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const fmt = new NumberFormat(NumberFormat.Format.COMPACT_SHORT);
       fmt.setSignificantDigits(0);
@@ -1709,10 +1723,10 @@ testSuite({
   },
 
   testCompactFallbacks() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const cdfSymbols = {
-        COMPACT_DECIMAL_SHORT_PATTERN: {'1000': {'other': '0K'}}
+        COMPACT_DECIMAL_SHORT_PATTERN: { '1000': { other: '0K' } },
       };
 
       stubs.set(goog.i18n, 'CompactNumberFormatSymbols', cdfSymbols);
@@ -1723,7 +1737,7 @@ testSuite({
     }
   },
   testShowTrailingZerosWithSignificantDigits() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       const fmt = new NumberFormat(NumberFormat.Format.DECIMAL);
@@ -1750,7 +1764,7 @@ testSuite({
   },
 
   testShowTrailingZerosWithSignificantDigitsCompactShort() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const fmt = new NumberFormat(NumberFormat.Format.COMPACT_SHORT);
       fmt.setSignificantDigits(2);
@@ -1766,12 +1780,10 @@ testSuite({
   },
 
   testCurrencyCodeOrder() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_fr);
-      stubs.set(
-          goog.i18n, 'CompactNumberFormatSymbols',
-          CompactNumberFormatSymbols_fr);
+      stubs.set(goog.i18n, 'CompactNumberFormatSymbols', CompactNumberFormatSymbols_fr);
       stubs.replace(goog, 'LOCALE', 'fr');
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_fr);
 
@@ -1780,9 +1792,7 @@ testSuite({
 
       stubs.replace(goog, 'LOCALE', 'en');
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_en);
-      stubs.set(
-          goog.i18n, 'CompactNumberFormatSymbols',
-          CompactNumberFormatSymbols_en);
+      stubs.set(goog.i18n, 'CompactNumberFormatSymbols', CompactNumberFormatSymbols_en);
       const fmt1 = new NumberFormat(NumberFormat.Format.CURRENCY);
       assertTrue(fmt1.isCurrencyCodeBeforeValue());
 
@@ -1826,36 +1836,29 @@ testSuite({
       assertFalse(fmt.isCurrencyCodeBeforeValue());
 
       fmt = new NumberFormat('\u00A4');
-      assertTrue(
-          fmt.isCurrencyCodeBeforeValue());  // currency first, en_US style
+      assertTrue(fmt.isCurrencyCodeBeforeValue()); // currency first, en_US style
 
       fmt = new NumberFormat('0');
-      assertTrue(
-          fmt.isCurrencyCodeBeforeValue());  // currency first, en_US style
+      assertTrue(fmt.isCurrencyCodeBeforeValue()); // currency first, en_US style
 
       fmt = new NumberFormat('#');
-      assertTrue(
-          fmt.isCurrencyCodeBeforeValue());  // currency first, en_US style
+      assertTrue(fmt.isCurrencyCodeBeforeValue()); // currency first, en_US style
 
       fmt = new NumberFormat('#0');
-      assertTrue(
-          fmt.isCurrencyCodeBeforeValue());  // currency first, en_US style
+      assertTrue(fmt.isCurrencyCodeBeforeValue()); // currency first, en_US style
 
       fmt = new NumberFormat('0 and #');
-      assertTrue(
-          fmt.isCurrencyCodeBeforeValue());  // currency first, en_US style
+      assertTrue(fmt.isCurrencyCodeBeforeValue()); // currency first, en_US style
 
       fmt = new NumberFormat('nothing');
-      assertTrue(
-          fmt.isCurrencyCodeBeforeValue());  // currency first, en_US style
+      assertTrue(fmt.isCurrencyCodeBeforeValue()); // currency first, en_US style
     }
   },
 
   testCompactWithBaseFormattingNumber() {
     stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_en);
-    stubs.set(
-        goog.i18n, 'CompactNumberFormatSymbols', CompactNumberFormatSymbols_en);
-    for (let nativeMode of testECMAScriptOptions) {
+    stubs.set(goog.i18n, 'CompactNumberFormatSymbols', CompactNumberFormatSymbols_en);
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const fmt = new NumberFormat(NumberFormat.Format.COMPACT_SHORT);
 
@@ -1887,14 +1890,12 @@ testSuite({
     // Switch to French.
     stubs.replace(goog, 'LOCALE', 'fr');
     stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_fr);
-    stubs.set(
-        goog.i18n, 'CompactNumberFormatSymbols', CompactNumberFormatSymbols_fr);
-    for (let nativeMode of testECMAScriptOptions) {
+    stubs.set(goog.i18n, 'CompactNumberFormatSymbols', CompactNumberFormatSymbols_fr);
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const fmt = new NumberFormat(NumberFormat.Format.COMPACT_SHORT);
       let str = fmt.format(123400000);
-      let matched =
-          /^123(\u00A0)?M$/.test(str);  // Optional non-breaking space.
+      let matched = /^123(\u00A0)?M$/.test(str); // Optional non-breaking space.
       assertTrue(matched);
       fmt.setBaseFormatting(1000);
       str = fmt.format(123400000);
@@ -1906,7 +1907,7 @@ testSuite({
   },
 
   testGetBaseFormattingNumber() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const fmt = new NumberFormat(NumberFormat.Format.COMPACT_SHORT);
       assertEquals(null, fmt.getBaseFormatting());
@@ -1917,7 +1918,7 @@ testSuite({
 
   // Moved Polish, Romanian, other currencies to tier 2, check that it works now
   testPolish() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       stubs.replace(goog, 'LOCALE', 'pl');
@@ -1926,25 +1927,23 @@ testSuite({
       // Native mode formats LOCAL currencies differently from JavaScript.
       const fmPl = new NumberFormat(NumberFormat.Format.CURRENCY);
       let str = fmPl.format(100);
-      assertEquals(
-          'NativeMode = ' + nativeMode, '100,00\u00A0z\u0142',
-          str);  // 100.00 zł
+      assertEquals('NativeMode = ' + nativeMode, '100,00\u00A0z\u0142', str); // 100.00 zł
 
       stubs.replace(goog, 'LOCALE', 'ro');
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_ro);
       const fmRo = new NumberFormat(NumberFormat.Format.CURRENCY);
       str = fmRo.format(100);
-      assertEquals('100,00\u00A0RON', str);  // Same in native and polyfill
+      assertEquals('100,00\u00A0RON', str); // Same in native and polyfill
     }
   },
 
   testCurrencyWithReducedFractionSize() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       // Check overriding the number of fractional digits for currency
       stubs.replace(goog, 'LOCALE', 'en-US');
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
-      let fmt = new NumberFormat(NumberFormat.Format.CURRENCY, 'USD');
+      const fmt = new NumberFormat(NumberFormat.Format.CURRENCY, 'USD');
 
       let result = fmt.format(1234.567);
       assertEquals('$1,234.57', result);
@@ -1962,7 +1961,7 @@ testSuite({
   },
 
   testVerySmallNumberScientific() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       const f = new NumberFormat(NumberFormat.Format.SCIENTIFIC);
@@ -1973,7 +1972,7 @@ testSuite({
   },
 
   testVerySmallNumberDecimal() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const f = new NumberFormat(NumberFormat.Format.DECIMAL);
       f.setSignificantDigits(3);
@@ -2011,7 +2010,7 @@ testSuite({
   },
 
   testSigDigitVsMaxFractionDigits() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const f = new NumberFormat(NumberFormat.Format.DECIMAL);
       f.setSignificantDigits(4);
@@ -2023,22 +2022,28 @@ testSuite({
   },
 
   testSymbols_percent() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       stubs.replace(goog, 'LOCALE', 'en');
       /** @suppress {checkTypes} suppression added to enable type checking */
       const f = new NumberFormat(
-          NumberFormat.Format.PERCENT, undefined, undefined,
-          // Alternate percent symbol.
-          Object.create(NumberFormatSymbols, {PERCENT: {'value': 'Percent'}}));
+        NumberFormat.Format.PERCENT,
+        undefined,
+        undefined,
+        // Alternate percent symbol.
+        Object.create(NumberFormatSymbols, { PERCENT: { value: 'Percent' } })
+      );
       let str = f.format(-0.25);
       assertEquals('-25Percent', str);
       str = f.format(0.25);
       assertEquals('25Percent', str);
 
       const f2 = new NumberFormat(
-          NumberFormat.Format.PERCENT, undefined, undefined,
-          NumberFormatSymbols_en);
+        NumberFormat.Format.PERCENT,
+        undefined,
+        undefined,
+        NumberFormatSymbols_en
+      );
       str = f2.format(-0.25);
       assertEquals('-25%', str);
       str = f2.format(0.25);
@@ -2059,12 +2064,15 @@ testSuite({
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testSymbols_permill() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       const f = new NumberFormat(
-          '#,##0\u2030', undefined, undefined,
-          Object.create(NumberFormatSymbols, {PERMILL: {'value': 'Permill'}}));
+        '#,##0\u2030',
+        undefined,
+        undefined,
+        Object.create(NumberFormatSymbols, { PERMILL: { value: 'Permill' } })
+      );
       assertEquals('0Permill', f.format(0));
 
       assertEquals('0\u2030', new NumberFormat('#,##0\u2030').format(0));
@@ -2072,12 +2080,15 @@ testSuite({
   },
 
   testSymbols_expSymbol() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       stubs.replace(goog, 'LOCALE', 'en_AU');
       const f = new NumberFormat(
-          NumberFormat.Format.SCIENTIFIC, undefined, undefined,
-          NumberFormatSymbols_en_AU);
+        NumberFormat.Format.SCIENTIFIC,
+        undefined,
+        undefined,
+        NumberFormatSymbols_en_AU
+      );
       let str = f.format(1000);
       assertEquals('1e3', str);
 
@@ -2109,12 +2120,15 @@ testSuite({
 
   testScientific_ar_rtl() {
     stubs.replace(goog, 'LOCALE', 'ar-EG');
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       const scientific = new NumberFormat(
-          NumberFormat.Format.SCIENTIFIC, undefined, undefined,
-          NumberFormatSymbols_ar_EG);
+        NumberFormat.Format.SCIENTIFIC,
+        undefined,
+        undefined,
+        NumberFormatSymbols_ar_EG
+      );
       // TODO(user) Fix polyfill mode to output exponent in preferred
       // digits
       if (!nativeMode) {
@@ -2144,7 +2158,7 @@ testSuite({
       // Test lowercase currency code
       ['xxy', NumberFormat.CurrencyStyle.GLOBAL, 'XXY100.00'],
     ];
-    for (let [isoCode, style, expected] of cases) {
+    for (const [isoCode, style, expected] of cases) {
       const fmt = new NumberFormat('¤#,##0.00', isoCode, style);
       assertEquals(expected, fmt.format(100));
     }
@@ -2159,35 +2173,21 @@ testSuite({
     const cases = [
       // GMD is a known currency where the symbol is itself the ISO Code
       ['GMD', NumberFormat.CurrencyStyle.LOCAL, 'GMD 100.00', 'D100.00', ''],
-      [
-        'GMD', NumberFormat.CurrencyStyle.PORTABLE, 'GMD 100.00', 'GMD 100.00',
-        'D100.00'
-      ],
-      [
-        'GMD', NumberFormat.CurrencyStyle.GLOBAL, 'GMD 100.00', 'GMD 100.00', ''
-      ],
+      ['GMD', NumberFormat.CurrencyStyle.PORTABLE, 'GMD 100.00', 'GMD 100.00', 'D100.00'],
+      ['GMD', NumberFormat.CurrencyStyle.GLOBAL, 'GMD 100.00', 'GMD 100.00', ''],
       // XXY is an unknown currency
       ['XXY', NumberFormat.CurrencyStyle.LOCAL, 'XXY 100.00', 'XXY100.00', ''],
-      [
-        'XXY', NumberFormat.CurrencyStyle.PORTABLE, 'XXY 100.00', 'XXY 100.00',
-        'XXY100.00'
-      ],
-      [
-        'XXY', NumberFormat.CurrencyStyle.GLOBAL, 'XXY 100.00', 'XXY 100.00', ''
-      ],
+      ['XXY', NumberFormat.CurrencyStyle.PORTABLE, 'XXY 100.00', 'XXY 100.00', 'XXY100.00'],
+      ['XXY', NumberFormat.CurrencyStyle.GLOBAL, 'XXY 100.00', 'XXY 100.00', ''],
       // Test lowercase currency code
-      [
-        'xxy', NumberFormat.CurrencyStyle.GLOBAL, 'XXY 100.00', 'XXY 100.00', ''
-      ],
+      ['xxy', NumberFormat.CurrencyStyle.GLOBAL, 'XXY 100.00', 'XXY 100.00', ''],
     ];
-    for (let [isoCode, style, expected, alternate, alternative2] of cases) {
+    for (const [isoCode, style, expected, alternate, alternative2] of cases) {
       let fmt = null;
       try {
         fmt = new NumberFormat(NumberFormat.Format.CURRENCY, isoCode, style);
         const result = fmt.format(100);
-        assertTrue(
-            result === expected || result === alternate ||
-            result == alternative2);
+        assertTrue(result === expected || result === alternate || result == alternative2);
       } catch (err) {
         // This will fail with Internet Explorer for some cases.
         // Since native mode will not be used with IE, this is OK
@@ -2196,7 +2196,7 @@ testSuite({
   },
 
   testThrowsOnInvalidCurrency() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       assertThrows(() => {
         new google.i18n.NumberFormat('¤#,##0.00', 'invalid!');
@@ -2206,34 +2206,30 @@ testSuite({
 
   testCheckSwKeThousands() {
     stubs.replace(goog, 'LOCALE', 'sw');
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_sw_KE);
-      stubs.set(
-          goog.i18n, 'CompactNumberFormatSymbols',
-          CompactNumberFormatSymbols_sw_KE);
+      stubs.set(goog.i18n, 'CompactNumberFormatSymbols', CompactNumberFormatSymbols_sw_KE);
 
-      let fmt = new NumberFormat(NumberFormat.Format.COMPACT_LONG);
+      const fmt = new NumberFormat(NumberFormat.Format.COMPACT_LONG);
 
       // The Kenyan Swahili short compact decimal has two forms.
       // Check if it works.
       // (The number itself will still be formatted with the '.', but no
       // rounding)
-      let str = fmt.format(1234);
+      const str = fmt.format(1234);
       assertEquals('elfu 1.2', str);
-      let negstr = fmt.format(-1234);
+      const negstr = fmt.format(-1234);
       assertEquals('elfu -1.2', negstr);
     }
   },
 
   testCheckSwCompactDecimal() {
     stubs.replace(goog, 'LOCALE', 'sw');
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_sw);
-      stubs.set(
-          goog.i18n, 'CompactNumberFormatSymbols',
-          CompactNumberFormatSymbols_sw);
+      stubs.set(goog.i18n, 'CompactNumberFormatSymbols', CompactNumberFormatSymbols_sw);
 
       const fmt = new NumberFormat(NumberFormat.Format.COMPACT_SHORT);
       const fmt_long = new NumberFormat(NumberFormat.Format.COMPACT_LONG);
@@ -2264,7 +2260,7 @@ testSuite({
 
   testUnsetClosureLocale() {
     stubs.replace(goog, 'LOCALE', '');
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_sw);
       const fmt = new NumberFormat(NumberFormat.Format.DECIMAL);
@@ -2275,31 +2271,32 @@ testSuite({
   testAdlamDigits() {
     stubs.replace(goog, 'LOCALE', 'ff-Adlm');
     stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_ff_Adlm);
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
       const fmt = new NumberFormat(
-          NumberFormat.Format.DECIMAL, undefined, undefined,
-          NumberFormatSymbols_ff_Adlm);
+        NumberFormat.Format.DECIMAL,
+        undefined,
+        undefined,
+        NumberFormatSymbols_ff_Adlm
+      );
 
       // TODO: b/197251343
-      let str = fmt.format(123.45);
+      const str = fmt.format(123.45);
 
       // Expect Adlam digits when ff_Adlm data is set for Adlam digits.
       // Some browsers don't support all locales.
-      assertTrue(
-          str == '123.45' || str === '𞥑𞥒𞥓.𞥔𞥕' ||
-          str === '123,45');
+      assertTrue(str == '123.45' || str === '𞥑𞥒𞥓.𞥔𞥕' || str === '123,45');
     }
   },
 
   testNonAsciiDigitsNative() {
-    for (let nativeMode of testECMAScriptOptions) {
+    for (const nativeMode of testECMAScriptOptions) {
       stubs.replace(NumberFormat, 'USE_ECMASCRIPT_I18N_NUMFORMAT', nativeMode);
 
       // Arabic with ASCII
       stubs.replace(goog, 'LOCALE', 'ar');
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_ar);
-      let ar = new NumberFormat(NumberFormat.Format.DECIMAL);
+      const ar = new NumberFormat(NumberFormat.Format.DECIMAL);
       let expected = '123';
       let result = ar.format(123);
       assertEquals(expected, result);
@@ -2307,7 +2304,7 @@ testSuite({
       // Egyptian Arabic
       stubs.replace(goog, 'LOCALE', 'ar-EG');
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_ar_EG);
-      let ar_EG = new NumberFormat(NumberFormat.Format.DECIMAL);
+      const ar_EG = new NumberFormat(NumberFormat.Format.DECIMAL);
       expected = '١٢٣';
       result = ar_EG.format(123);
       assertEquals(expected, result);
@@ -2315,7 +2312,7 @@ testSuite({
       // Bengali
       stubs.replace(goog, 'LOCALE', 'bn');
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_bn);
-      let bn = new NumberFormat(NumberFormat.Format.DECIMAL);
+      const bn = new NumberFormat(NumberFormat.Format.DECIMAL);
       expected = '১২৩';
       result = bn.format(123);
       assertEquals(expected, result);
@@ -2323,15 +2320,15 @@ testSuite({
       // Persian / Farsi
       stubs.replace(goog, 'LOCALE', 'fa');
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_fa);
-      let fa = new NumberFormat(NumberFormat.Format.DECIMAL);
-      expected = '۱۲۳';  // Different from Arabic digits
+      const fa = new NumberFormat(NumberFormat.Format.DECIMAL);
+      expected = '۱۲۳'; // Different from Arabic digits
       result = fa.format(123);
       assertEquals(expected, result);
 
       // Malayalam
       stubs.replace(goog, 'LOCALE', 'ml');
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_ml);
-      let ml = new NumberFormat(NumberFormat.Format.DECIMAL);
+      const ml = new NumberFormat(NumberFormat.Format.DECIMAL);
       expected = '123';
       result = ml.format(123);
       assertEquals(expected, result);
@@ -2339,7 +2336,7 @@ testSuite({
       // Marathi
       stubs.replace(goog, 'LOCALE', 'mr');
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_mr);
-      let mr = new NumberFormat(NumberFormat.Format.DECIMAL);
+      const mr = new NumberFormat(NumberFormat.Format.DECIMAL);
       expected = '१२३';
       result = mr.format(123);
       assertEquals(expected, result);
@@ -2347,7 +2344,7 @@ testSuite({
       // Myanmar
       stubs.replace(goog, 'LOCALE', 'my');
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_my);
-      let my = new NumberFormat(NumberFormat.Format.DECIMAL);
+      const my = new NumberFormat(NumberFormat.Format.DECIMAL);
       result = my.format(123);
       expected = '၁၂၃';
       assertEquals(expected, result);
@@ -2355,10 +2352,10 @@ testSuite({
       // Nepali
       stubs.replace(goog, 'LOCALE', 'ne');
       stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_ne);
-      let ne = new NumberFormat(NumberFormat.Format.DECIMAL);
+      const ne = new NumberFormat(NumberFormat.Format.DECIMAL);
       result = ne.format(123);
       expected = '१२३';
       assertEquals(expected, result);
     }
-  }
+  },
 });

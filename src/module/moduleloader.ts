@@ -78,14 +78,12 @@ function ModuleLoader() {
 }
 goog.inherits(ModuleLoader, EventTarget);
 
-
 /**
  * A logger.
  * @type {?log.Logger}
  * @protected
  */
 ModuleLoader.prototype.logger = log.getLogger('goog.module.ModuleLoader');
-
 
 /**
  * Whether debug mode is enabled.
@@ -94,14 +92,12 @@ ModuleLoader.prototype.logger = log.getLogger('goog.module.ModuleLoader');
  */
 ModuleLoader.prototype.debugMode_ = false;
 
-
 /**
  * Whether source url injection is enabled.
  * @type {boolean}
  * @private
  */
 ModuleLoader.prototype.sourceUrlInjection_ = false;
-
 
 /**
  * Whether to load modules with non-async script tags.
@@ -110,23 +106,16 @@ ModuleLoader.prototype.sourceUrlInjection_ = false;
  */
 ModuleLoader.prototype.useScriptTags_ = false;
 
-
 /**
  * @return {boolean} Whether sourceURL affects stack traces.
  */
-ModuleLoader.supportsSourceUrlStackTraces = function() {
-  return product.CHROME ||
-      (browser.isFirefox() && browser.isVersionOrHigher('36'));
-};
-
+ModuleLoader.supportsSourceUrlStackTraces = () =>
+  product.CHROME || (browser.isFirefox() && browser.isVersionOrHigher('36'));
 
 /**
  * @return {boolean} Whether sourceURL affects the debugger.
  */
-ModuleLoader.supportsSourceUrlDebugger = function() {
-  return product.CHROME || userAgent.GECKO;
-};
-
+ModuleLoader.supportsSourceUrlDebugger = () => product.CHROME || userAgent.GECKO;
 
 /**
  * URLs have a browser-dependent max character limit. IE9-IE11 are the lowest
@@ -140,7 +129,6 @@ ModuleLoader.supportsSourceUrlDebugger = function() {
  */
 ModuleLoader.URL_MAX_LENGTH_ = 4043;
 
-
 /**
  * Error code for javascript syntax and network errors.
  * TODO(user): Detect more accurate error info.
@@ -149,14 +137,12 @@ ModuleLoader.URL_MAX_LENGTH_ = 4043;
  */
 ModuleLoader.SYNTAX_OR_NETWORK_ERROR_CODE_ = -1;
 
-
-
 /**
  * @param {!TrustedResourceUrl} url The url to be loaded.
  * @return {!HTMLScriptElement}
  * @private
  */
-ModuleLoader.createScriptElement_ = function(url) {
+ModuleLoader.createScriptElement_ = (url) => {
   const script = dom.createElement(TagName.SCRIPT);
   safe.setScriptSrc(script, url);
 
@@ -168,13 +154,12 @@ ModuleLoader.createScriptElement_ = function(url) {
   return script;
 };
 
-
 /**
  * @param {!TrustedResourceUrl} url The url to be pre-loaded.
  * @return {!HTMLLinkElement}
  * @private
  */
-ModuleLoader.createPreloadScriptElement_ = function(url) {
+ModuleLoader.createPreloadScriptElement_ = (url) => {
   const link = dom.createElement(TagName.LINK);
   safe.setLinkHrefAndRel(link, url, 'preload');
   link.as = 'script';
@@ -189,43 +174,38 @@ ModuleLoader.createPreloadScriptElement_ = function(url) {
   return link;
 };
 
-
 /**
  * Gets the debug mode for the loader.
  * @return {boolean} Whether the debug mode is enabled.
  */
-ModuleLoader.prototype.getDebugMode = function() {
+ModuleLoader.prototype.getDebugMode = function () {
   return this.debugMode_;
 };
-
 
 /**
  * @param {boolean} useScriptTags Whether or not to use script tags
  *     (with async=false) for loading.
  */
-ModuleLoader.prototype.setUseScriptTags = function(useScriptTags) {
+ModuleLoader.prototype.setUseScriptTags = function (useScriptTags) {
   this.useScriptTags_ = useScriptTags;
 };
-
 
 /**
  * Gets whether we're using non-async script tags for loading.
  * @return {boolean} Whether or not we're using non-async script tags for
  *     loading.
  */
-ModuleLoader.prototype.getUseScriptTags = function() {
+ModuleLoader.prototype.getUseScriptTags = function () {
   return this.useScriptTags_;
 };
-
 
 /**
  * Sets whether we're using non-async script tags for loading.
  * @param {boolean} debugMode Whether the debug mode is enabled.
  */
-ModuleLoader.prototype.setDebugMode = function(debugMode) {
+ModuleLoader.prototype.setDebugMode = function (debugMode) {
   this.debugMode_ = debugMode;
 };
-
 
 /**
  * When enabled, we will add a sourceURL comment to the end of all scripts
@@ -247,31 +227,33 @@ ModuleLoader.prototype.setDebugMode = function(debugMode) {
  *
  * @param {boolean} enabled Whether source url injection is enabled.
  */
-ModuleLoader.prototype.setSourceUrlInjection = function(enabled) {
+ModuleLoader.prototype.setSourceUrlInjection = function (enabled) {
   this.sourceUrlInjection_ = enabled;
 };
-
 
 /**
  * @return {boolean} Whether we're using source url injection.
  * @private
  */
-ModuleLoader.prototype.usingSourceUrlInjection_ = function() {
-  return this.sourceUrlInjection_ ||
-      (this.getDebugMode() && ModuleLoader.supportsSourceUrlStackTraces());
+ModuleLoader.prototype.usingSourceUrlInjection_ = function () {
+  return (
+    this.sourceUrlInjection_ || (this.getDebugMode() && ModuleLoader.supportsSourceUrlStackTraces())
+  );
 };
 
-
 /** @override */
-ModuleLoader.prototype.loadModules = function(
-    ids, moduleInfoMap, {forceReload, onError, onSuccess, onTimeout} = {}) {
+ModuleLoader.prototype.loadModules = function (
+  ids,
+  moduleInfoMap,
+  { forceReload, onError, onSuccess, onTimeout } = {}
+) {
   if (this.hasPrefetched_ && !this.getUseScriptTags() && ids.length > 1) {
     throw new Error(
-        'Modules prefetching is only supported in batch mode when using ' +
-        'script tags.');
+      'Modules prefetching is only supported in batch mode when using ' + 'script tags.'
+    );
   }
-  const loadStatus = this.loadingModulesStatus_[ids] ||
-      ModuleLoader.LoadStatus.createForIds_(ids, moduleInfoMap);
+  const loadStatus =
+    this.loadingModulesStatus_[ids] || ModuleLoader.LoadStatus.createForIds_(ids, moduleInfoMap);
   loadStatus.loadRequested = true;
   if (loadStatus.successFn && onSuccess) {
     // If there already exists a success function, chain it before the passed
@@ -311,8 +293,7 @@ ModuleLoader.prototype.loadModules = function(
       const currentId = ids[i];
       // A module will have a load status if the module was prefetched. Modules
       // are always prefetched individually (not batched).
-      const prefetchedModuleLoadStatus =
-          this.loadingModulesStatus_[[currentId]];
+      const prefetchedModuleLoadStatus = this.loadingModulesStatus_[[currentId]];
       if (!prefetchedModuleLoadStatus) {
         // Module was not prefetched, there is no success function to collect.
         continue;
@@ -345,13 +326,12 @@ ModuleLoader.prototype.loadModules = function(
   // TODO(user): Need to handle timeouts in the module loading code.
 };
 
-
 /**
  * Evaluate the JS code.
  * @param {!Array<string>} moduleIds The module ids.
  * @private
  */
-ModuleLoader.prototype.evaluateCode_ = function(moduleIds) {
+ModuleLoader.prototype.evaluateCode_ = function (moduleIds) {
   this.dispatchEvent(new ModuleLoader.RequestSuccessEvent(moduleIds));
 
   log.info(this.logger, 'evaluateCode ids:' + moduleIds);
@@ -363,7 +343,8 @@ ModuleLoader.prototype.evaluateCode_ = function(moduleIds) {
     if (this.usingSourceUrlInjection_()) {
       for (let i = 0; i < uris.length; i++) {
         const script = legacyconversions.safeScriptFromString(
-            texts[i] + ' //# sourceURL=' + uris[i]);
+          texts[i] + ' //# sourceURL=' + uris[i]
+        );
         goog.globalEval(SafeScript.unwrapTrustedScript(script));
       }
     } else {
@@ -373,21 +354,18 @@ ModuleLoader.prototype.evaluateCode_ = function(moduleIds) {
   } catch (e) {
     error = e;
     // TODO(user): Consider throwing an exception here.
-    log.warning(
-        this.logger, 'Loaded incomplete code for module(s): ' + moduleIds, e);
+    log.warning(this.logger, 'Loaded incomplete code for module(s): ' + moduleIds, e);
   }
 
   this.dispatchEvent(new ModuleLoader.EvaluateCodeEvent(moduleIds));
 
   if (error) {
-    this.handleErrorHelper_(
-        moduleIds, loadStatus.errorFn, null /* status */, error);
+    this.handleErrorHelper_(moduleIds, loadStatus.errorFn, null /* status */, error);
   } else if (loadStatus.successFn) {
     loadStatus.successFn();
   }
   delete this.loadingModulesStatus_[moduleIds];
 };
-
 
 /**
  * Handles a successful response to a request for prefetch or load one or more
@@ -397,7 +375,7 @@ ModuleLoader.prototype.evaluateCode_ = function(moduleIds) {
  * @param {!Array<string>} moduleIds The ids of the modules requested.
  * @private
  */
-ModuleLoader.prototype.handleSuccess_ = function(bulkLoader, moduleIds) {
+ModuleLoader.prototype.handleSuccess_ = function (bulkLoader, moduleIds) {
   log.info(this.logger, 'Code loaded for module(s): ' + moduleIds);
 
   const loadStatus = this.loadingModulesStatus_[moduleIds];
@@ -416,9 +394,8 @@ ModuleLoader.prototype.handleSuccess_ = function(bulkLoader, moduleIds) {
   Timer.callOnce(bulkLoader.dispose, 5, bulkLoader);
 };
 
-
 /** @override */
-ModuleLoader.prototype.prefetchModule = function(id, moduleInfo) {
+ModuleLoader.prototype.prefetchModule = function (id, moduleInfo) {
   this.hasPrefetched_ = true;
   // Do not prefetch in debug mode
   if (this.getDebugMode()) {
@@ -437,8 +414,7 @@ ModuleLoader.prototype.prefetchModule = function(id, moduleInfo) {
     const links = [];
     const insertPos = document.head || document.documentElement;
     for (let i = 0; i < loadStatus.trustedRequestUris.length; i++) {
-      const link = ModuleLoader.createPreloadScriptElement_(
-          loadStatus.trustedRequestUris[i]);
+      const link = ModuleLoader.createPreloadScriptElement_(loadStatus.trustedRequestUris[i]);
       links.push(link);
       insertPos.insertBefore(link, insertPos.firstChild);
     }
@@ -453,28 +429,30 @@ ModuleLoader.prototype.prefetchModule = function(id, moduleInfo) {
   }
 };
 
-
 /**
  * Downloads a list of JavaScript modules.
  *
  * @param {!Array<string>} ids The module ids in dependency order.
  * @private
  */
-ModuleLoader.prototype.downloadModules_ = function(ids) {
+ModuleLoader.prototype.downloadModules_ = function (ids) {
   const debugMode = this.getDebugMode();
   const sourceUrlInjection = this.usingSourceUrlInjection_();
   const useScriptTags = this.getUseScriptTags();
-  if ((debugMode + sourceUrlInjection + useScriptTags) > 1) {
-    const effectiveFlag = useScriptTags ?
-        'useScriptTags' :
-        (debugMode && !sourceUrlInjection) ? 'debug' : 'sourceUrlInjection';
+  if (debugMode + sourceUrlInjection + useScriptTags > 1) {
+    const effectiveFlag = useScriptTags
+      ? 'useScriptTags'
+      : debugMode && !sourceUrlInjection
+        ? 'debug'
+        : 'sourceUrlInjection';
     log.warning(
-        this.logger,
-        `More than one of debugMode (set to ${debugMode}), ` +
-            `useScriptTags (set to ${useScriptTags}), ` +
-            `and sourceUrlInjection (set to ${sourceUrlInjection}) ` +
-            `is enabled. Proceeding with download as if ` +
-            `${effectiveFlag} is set to true and the rest to false.`);
+      this.logger,
+      `More than one of debugMode (set to ${debugMode}), ` +
+        `useScriptTags (set to ${useScriptTags}), ` +
+        `and sourceUrlInjection (set to ${sourceUrlInjection}) ` +
+        `is enabled. Proceeding with download as if ` +
+        `${effectiveFlag} is set to true and the rest to false.`
+    );
   }
   const loadStatus = asserts.assert(this.loadingModulesStatus_[ids]);
 
@@ -489,23 +467,24 @@ ModuleLoader.prototype.downloadModules_ = function(ids) {
     // script loads with source url injection.
     jsloader.safeLoadMany(loadStatus.trustedRequestUris);
   } else {
-    log.info(
-        this.logger,
-        'downloadModules ids:' + ids + ' uris:' + loadStatus.requestUris);
+    log.info(this.logger, 'downloadModules ids:' + ids + ' uris:' + loadStatus.requestUris);
 
     const bulkLoader = new BulkLoader(loadStatus.requestUris);
 
     const eventHandler = this.eventHandler_;
     eventHandler.listen(
-        bulkLoader, EventType.SUCCESS,
-        goog.bind(this.handleSuccess_, this, bulkLoader, ids));
+      bulkLoader,
+      EventType.SUCCESS,
+      goog.bind(this.handleSuccess_, this, bulkLoader, ids)
+    );
     eventHandler.listen(
-        bulkLoader, EventType.ERROR,
-        goog.bind(this.handleError_, this, bulkLoader, ids));
+      bulkLoader,
+      EventType.ERROR,
+      goog.bind(this.handleError_, this, bulkLoader, ids)
+    );
     bulkLoader.load();
   }
 };
-
 
 /**
  * Downloads a list of script URIS using <script async=false.../>, which
@@ -515,7 +494,7 @@ ModuleLoader.prototype.downloadModules_ = function(ids) {
  *  @param {!Array<string>} ids The module ids in dependency order.
  * @private
  */
-ModuleLoader.prototype.loadWithNonAsyncScriptTag_ = function(loadStatus, ids) {
+ModuleLoader.prototype.loadWithNonAsyncScriptTag_ = function (loadStatus, ids) {
   log.info(this.logger, `Loading initiated for: ${ids}`);
   if (loadStatus.trustedRequestUris.length == 0) {
     if (loadStatus.successFn) {
@@ -533,10 +512,11 @@ ModuleLoader.prototype.loadWithNonAsyncScriptTag_ = function(loadStatus, ids) {
     const url = loadStatus.trustedRequestUris[i];
     const urlLength = loadStatus.requestUris[i].length;
     asserts.assert(
-        urlLength <= ModuleLoader.URL_MAX_LENGTH_,
-        `Module url length is ${urlLength}, which is greater than limit of ` +
-            `${ModuleLoader.URL_MAX_LENGTH_}. This should never ` +
-            `happen.`);
+      urlLength <= ModuleLoader.URL_MAX_LENGTH_,
+      `Module url length is ${urlLength}, which is greater than limit of ` +
+        `${ModuleLoader.URL_MAX_LENGTH_}. This should never ` +
+        `happen.`
+    );
 
     const scriptElement = ModuleLoader.createScriptElement_(url);
 
@@ -558,23 +538,22 @@ ModuleLoader.prototype.loadWithNonAsyncScriptTag_ = function(loadStatus, ids) {
       scriptElement.onload = null;
       scriptElement.onerror = null;
       dom.removeNode(scriptElement);
-      this.handleErrorHelper_(
-          ids, loadStatus.errorFn, ModuleLoader.SYNTAX_OR_NETWORK_ERROR_CODE_);
+      this.handleErrorHelper_(ids, loadStatus.errorFn, ModuleLoader.SYNTAX_OR_NETWORK_ERROR_CODE_);
       if (lastScript == scriptElement) {
         lastScript = null;
       } else {
         log.error(
-            this.logger,
-            `Dependent requests were made in parallel with failed request ` +
-                `for module(s) "${ids}". Non-recoverable out-of-order ` +
-                `execution may occur.`);
+          this.logger,
+          `Dependent requests were made in parallel with failed request ` +
+            `for module(s) "${ids}". Non-recoverable out-of-order ` +
+            `execution may occur.`
+        );
       }
     };
     lastScript = scriptElement;
     insertPos.insertBefore(scriptElement, insertPos.firstChild);
   }
 };
-
 
 /**
  * Handles an error during a request for one or more modules.
@@ -583,7 +562,7 @@ ModuleLoader.prototype.loadWithNonAsyncScriptTag_ = function(loadStatus, ids) {
  * @param {!BulkLoader.LoadErrorEvent} event The load error event.
  * @private
  */
-ModuleLoader.prototype.handleError_ = function(bulkLoader, moduleIds, event) {
+ModuleLoader.prototype.handleError_ = function (bulkLoader, moduleIds, event) {
   const loadStatus = this.loadingModulesStatus_[moduleIds];
   // The bulk loader doesn't cancel other requests when a request fails. We will
   // delete the loadStatus in the first failure, so it will be undefined in
@@ -602,7 +581,6 @@ ModuleLoader.prototype.handleError_ = function(bulkLoader, moduleIds, event) {
   Timer.callOnce(bulkLoader.dispose, 5, bulkLoader);
 };
 
-
 /**
  * Handles an error during a request for one or more modules.
  * @param {!Array<string>} moduleIds The ids of the modules requested.
@@ -611,10 +589,8 @@ ModuleLoader.prototype.handleError_ = function(bulkLoader, moduleIds, event) {
  * @param {!Error=} opt_error The error encountered, if available.
  * @private
  */
-ModuleLoader.prototype.handleErrorHelper_ = function(
-    moduleIds, errorFn, status, opt_error) {
-  this.dispatchEvent(
-      new ModuleLoader.RequestErrorEvent(moduleIds, status, opt_error));
+ModuleLoader.prototype.handleErrorHelper_ = function (moduleIds, errorFn, status, opt_error) {
+  this.dispatchEvent(new ModuleLoader.RequestErrorEvent(moduleIds, status, opt_error));
 
   log.warning(this.logger, 'Request failed for module(s): ' + moduleIds);
 
@@ -622,7 +598,6 @@ ModuleLoader.prototype.handleErrorHelper_ = function(
     errorFn(status);
   }
 };
-
 
 /**
  * Events dispatched by the ModuleLoader.
@@ -648,10 +623,8 @@ ModuleLoader.EventType = {
    *     !ModuleLoader.RequestErrorEvent>} Called when the
    *     BulkLoader fails, or code loading fails.
    */
-  REQUEST_ERROR: new EventId(events.getUniqueId('requestError'))
+  REQUEST_ERROR: new EventId(events.getUniqueId('requestError')),
 };
-
-
 
 /**
  * @param {!Array<string>} moduleIds The ids of the modules being evaluated.
@@ -660,9 +633,8 @@ ModuleLoader.EventType = {
  * @final
  * @protected
  */
-ModuleLoader.EvaluateCodeEvent = function(moduleIds) {
-  ModuleLoader.EvaluateCodeEvent.base(
-      this, 'constructor', ModuleLoader.EventType.EVALUATE_CODE);
+ModuleLoader.EvaluateCodeEvent = function (moduleIds) {
+  ModuleLoader.EvaluateCodeEvent.base(this, 'constructor', ModuleLoader.EventType.EVALUATE_CODE);
 
   /**
    * @type {!Array<string>}
@@ -671,8 +643,6 @@ ModuleLoader.EvaluateCodeEvent = function(moduleIds) {
 };
 goog.inherits(ModuleLoader.EvaluateCodeEvent, GoogEvent);
 
-
-
 /**
  * @param {!Array<string>} moduleIds The ids of the modules being evaluated.
  * @constructor
@@ -680,9 +650,12 @@ goog.inherits(ModuleLoader.EvaluateCodeEvent, GoogEvent);
  * @final
  * @protected
  */
-ModuleLoader.RequestSuccessEvent = function(moduleIds) {
+ModuleLoader.RequestSuccessEvent = function (moduleIds) {
   ModuleLoader.RequestSuccessEvent.base(
-      this, 'constructor', ModuleLoader.EventType.REQUEST_SUCCESS);
+    this,
+    'constructor',
+    ModuleLoader.EventType.REQUEST_SUCCESS
+  );
 
   /**
    * @type {!Array<string>}
@@ -690,8 +663,6 @@ ModuleLoader.RequestSuccessEvent = function(moduleIds) {
   this.moduleIds = moduleIds;
 };
 goog.inherits(ModuleLoader.RequestSuccessEvent, GoogEvent);
-
-
 
 /**
  * @param {!Array<string>} moduleIds The ids of the modules being evaluated.
@@ -702,9 +673,8 @@ goog.inherits(ModuleLoader.RequestSuccessEvent, GoogEvent);
  * @final
  * @protected
  */
-ModuleLoader.RequestErrorEvent = function(moduleIds, status, opt_error) {
-  ModuleLoader.RequestErrorEvent.base(
-      this, 'constructor', ModuleLoader.EventType.REQUEST_ERROR);
+ModuleLoader.RequestErrorEvent = function (moduleIds, status, opt_error) {
+  ModuleLoader.RequestErrorEvent.base(this, 'constructor', ModuleLoader.EventType.REQUEST_ERROR);
 
   /**
    * @type {?Array<string>}
@@ -719,8 +689,6 @@ ModuleLoader.RequestErrorEvent = function(moduleIds, status, opt_error) {
 };
 goog.inherits(ModuleLoader.RequestErrorEvent, GoogEvent);
 
-
-
 /**
  * A class that keeps the state of the module during the loading process. It is
  * used to save loading information between modules download and evaluation.
@@ -730,7 +698,7 @@ goog.inherits(ModuleLoader.RequestErrorEvent, GoogEvent);
  * @constructor
  * @final
  */
-ModuleLoader.LoadStatus = function(trustedRequestUris) {
+ModuleLoader.LoadStatus = function (trustedRequestUris) {
   /**
    * The request uris.
    * @final {!Array<string>}
@@ -769,7 +737,6 @@ ModuleLoader.LoadStatus = function(trustedRequestUris) {
   this.errorFn = null;
 };
 
-
 /**
  * Creates a `LoadStatus` object for tracking state during the loading of the
  * modules indexed in `ids`.
@@ -781,7 +748,7 @@ ModuleLoader.LoadStatus = function(trustedRequestUris) {
  * @return {!ModuleLoader.LoadStatus}
  * @private
  */
-ModuleLoader.LoadStatus.createForIds_ = function(ids, moduleInfoMap) {
+ModuleLoader.LoadStatus.createForIds_ = (ids, moduleInfoMap) => {
   if (!ids) {
     return new ModuleLoader.LoadStatus([]);
   }
@@ -791,6 +758,5 @@ ModuleLoader.LoadStatus.createForIds_ = function(ids, moduleInfoMap) {
   }
   return new ModuleLoader.LoadStatus(trustedRequestUris);
 };
-
 
 exports = ModuleLoader;

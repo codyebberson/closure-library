@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.net.streams.Base64StreamDecoderTest');
-goog.setTestOnly();
 
 const Base64StreamDecoder = goog.require('goog.net.streams.Base64StreamDecoder');
 const asserts = goog.require('goog.testing.asserts');
@@ -14,21 +13,31 @@ const testSuite = goog.require('goog.testing.testSuite');
 // Static test data
 // clang-format off
 const tests = [
-  '', '',
-  'f', 'Zg==',
-  'fo', 'Zm8=',
-  'foo', 'Zm9v',
-  'foob', 'Zm9vYg==',
-  'fooba', 'Zm9vYmE=',
-  'foobar', 'Zm9vYmFy',
-  'foobar', '  Zm  9v \t Ym \n Fy  ',  // whitespaces will be ignored
+  '',
+  '',
+  'f',
+  'Zg==',
+  'fo',
+  'Zm8=',
+  'foo',
+  'Zm9v',
+  'foob',
+  'Zm9vYg==',
+  'fooba',
+  'Zm9vYmE=',
+  'foobar',
+  'Zm9vYmFy',
+  'foobar',
+  '  Zm  9v \t Ym \n Fy  ', // whitespaces will be ignored
 
-  '\xfb\xff\xbf\x4d', '+/+/TQ==',
-  '\xfb\xff\xbf\x4d', '-_-_TQ..',  // websafe
+  '\xfb\xff\xbf\x4d',
+  '+/+/TQ==',
+  '\xfb\xff\xbf\x4d',
+  '-_-_TQ..', // websafe
 
   // non-ascii characters
   '\xe4\xb8\x80\xe4\xba\x8c\xe4\xb8\x89\xe5\x9b\x9b\xe4\xba\x94\xe5' +
-      '\x85\xad\xe4\xb8\x83\xe5\x85\xab\xe4\xb9\x9d\xe5\x8d\x81',
+    '\x85\xad\xe4\xb8\x83\xe5\x85\xab\xe4\xb9\x9d\xe5\x8d\x81',
   '5LiA5LqM5LiJ5Zub5LqU5YWt5LiD5YWr5Lmd5Y2B',
 ];
 // clang-format on
@@ -38,7 +47,7 @@ const tests = [
  * @return {!Array<number>} The UTF-16 codes of the characters of the string.
  */
 function stringCodes(s) {
-  let codes = [];
+  const codes = [];
   for (let i = 0; i < s.length; i++) {
     codes.push(s.charCodeAt(i));
   }

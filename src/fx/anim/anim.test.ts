@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.fx.animTest');
-goog.setTestOnly();
 
 const Animation = goog.require('goog.fx.Animation');
 const AnimationDelay = goog.require('goog.async.AnimationDelay');
@@ -39,8 +38,7 @@ function registerAndUnregisterAnimationWithMocks(delayType) {
   });
   replacer.set(delayType.prototype, 'isActive', () => timerCount > 0);
 
-  const forbiddenDelayType =
-      delayType == AnimationDelay ? Delay : AnimationDelay;
+  const forbiddenDelayType = delayType == AnimationDelay ? Delay : AnimationDelay;
   replacer.set(forbiddenDelayType.prototype, 'start', functions.error());
   replacer.set(forbiddenDelayType.prototype, 'stop', functions.error());
   replacer.set(forbiddenDelayType.prototype, 'isActive', functions.error());
@@ -51,8 +49,9 @@ function registerAndUnregisterAnimationWithMocks(delayType) {
   fxAnim.registerAnimation(anim);
 
   assertTrue(
-      'Should contain the animation',
-      googObject.containsValue(fxAnim.activeAnimations_, anim));
+    'Should contain the animation',
+    googObject.containsValue(fxAnim.activeAnimations_, anim)
+  );
   assertEquals('Should have called start once', 1, timerCount);
 
   fxAnim.registerAnimation(anim2);
@@ -62,14 +61,16 @@ function registerAndUnregisterAnimationWithMocks(delayType) {
   // Add anim again.
   fxAnim.registerAnimation(anim);
   assertTrue(
-      'Should contain the animation',
-      googObject.containsValue(fxAnim.activeAnimations_, anim));
+    'Should contain the animation',
+    googObject.containsValue(fxAnim.activeAnimations_, anim)
+  );
   assertEquals('Should not have called start again', 1, timerCount);
 
   fxAnim.unregisterAnimation(anim);
   assertFalse(
-      'Should not contain the animation',
-      googObject.containsValue(fxAnim.activeAnimations_, anim));
+    'Should not contain the animation',
+    googObject.containsValue(fxAnim.activeAnimations_, anim)
+  );
   assertEquals('clearTimeout should not have been called', 1, timerCount);
 
   fxAnim.unregisterAnimation(anim2);
@@ -128,40 +129,53 @@ testSuite({
     fxAnim.registerAnimation(anim);
 
     assertTrue(
-        'Should contain the animation',
-        googObject.containsValue(fxAnim.activeAnimations_, anim));
+      'Should contain the animation',
+      googObject.containsValue(fxAnim.activeAnimations_, anim)
+    );
 
     assertEquals(
-        'Should have listen to MozBeforePaint once', 1,
-        events.getListeners(window, 'MozBeforePaint', false).length);
+      'Should have listen to MozBeforePaint once',
+      1,
+      events.getListeners(window, 'MozBeforePaint', false).length
+    );
 
     fxAnim.registerAnimation(anim2);
 
     assertEquals(
-        'Should not add more listener for MozBeforePaint', 1,
-        events.getListeners(window, 'MozBeforePaint', false).length);
+      'Should not add more listener for MozBeforePaint',
+      1,
+      events.getListeners(window, 'MozBeforePaint', false).length
+    );
 
     // Add anim again.
     fxAnim.registerAnimation(anim);
     assertTrue(
-        'Should contain the animation',
-        googObject.containsValue(fxAnim.activeAnimations_, anim));
+      'Should contain the animation',
+      googObject.containsValue(fxAnim.activeAnimations_, anim)
+    );
     assertEquals(
-        'Should not add more listener for MozBeforePaint', 1,
-        events.getListeners(window, 'MozBeforePaint', false).length);
+      'Should not add more listener for MozBeforePaint',
+      1,
+      events.getListeners(window, 'MozBeforePaint', false).length
+    );
 
     fxAnim.unregisterAnimation(anim);
     assertFalse(
-        'Should not contain the animation',
-        googObject.containsValue(fxAnim.activeAnimations_, anim));
+      'Should not contain the animation',
+      googObject.containsValue(fxAnim.activeAnimations_, anim)
+    );
     assertEquals(
-        'Should not clear listener for MozBeforePaint yet', 1,
-        events.getListeners(window, 'MozBeforePaint', false).length);
+      'Should not clear listener for MozBeforePaint yet',
+      1,
+      events.getListeners(window, 'MozBeforePaint', false).length
+    );
 
     fxAnim.unregisterAnimation(anim2);
     assertEquals(
-        'There should be no more listener for MozBeforePaint', 0,
-        events.getListeners(window, 'MozBeforePaint', false).length);
+      'There should be no more listener for MozBeforePaint',
+      0,
+      events.getListeners(window, 'MozBeforePaint', false).length
+    );
 
     anim.dispose();
     anim2.dispose();
@@ -176,20 +190,25 @@ testSuite({
     fxAnim.registerAnimation(anim);
 
     assertTrue(
-        'There should be an active timer',
-        fxAnim.animationDelay_ && fxAnim.animationDelay_.isActive());
+      'There should be an active timer',
+      fxAnim.animationDelay_ && fxAnim.animationDelay_.isActive()
+    );
     assertEquals(
-        'There should be an active animations', 1,
-        googObject.getCount(fxAnim.activeAnimations_));
+      'There should be an active animations',
+      1,
+      googObject.getCount(fxAnim.activeAnimations_)
+    );
 
     fxAnim.unregisterAnimation(anim);
 
     assertTrue(
-        'There should be no active animations',
-        googObject.isEmpty(fxAnim.activeAnimations_));
+      'There should be no active animations',
+      googObject.isEmpty(fxAnim.activeAnimations_)
+    );
     assertFalse(
-        'There should be no active timer',
-        fxAnim.animationDelay_ && fxAnim.animationDelay_.isActive());
+      'There should be no active timer',
+      fxAnim.animationDelay_ && fxAnim.animationDelay_.isActive()
+    );
 
     anim.dispose();
   },

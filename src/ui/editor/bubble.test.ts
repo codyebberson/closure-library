@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.editor.BubbleTest');
-goog.setTestOnly();
 
 const Bubble = goog.require('goog.ui.editor.Bubble');
 const Component = goog.require('goog.ui.Component');
@@ -43,9 +42,15 @@ function prepareTargetWithGivenDirection(dir, preferTopPosition = undefined) {
   fieldDiv.innerHTML = '<a href="http://www.google.com">Google</a>';
   link = fieldDiv.firstChild;
 
-  panelId = bubble.addPanel('A', 'Link', link, (el) => {
-    el.innerHTML = '<div style="border:1px solid blue;">B</div>';
-  }, preferTopPosition);
+  panelId = bubble.addPanel(
+    'A',
+    'Link',
+    link,
+    (el) => {
+      el.innerHTML = '<div style="border:1px solid blue;">B</div>';
+    },
+    preferTopPosition
+  );
 }
 
 /**
@@ -60,14 +65,13 @@ function getExpectedBubblePositionWithGivenAlignment(alignRight = undefined) {
   const targetWidth = link.offsetWidth;
   /** @suppress {visibility} suppression added to enable type checking */
   const bubbleSize = style.getSize(bubble.bubbleContainer_);
-  const expectedBubbleX = alignRight ?
-      targetPosition.x + targetWidth - bubbleSize.width :
-      targetPosition.x;
+  const expectedBubbleX = alignRight
+    ? targetPosition.x + targetWidth - bubbleSize.width
+    : targetPosition.x;
   /** @suppress {visibility} suppression added to enable type checking */
-  const expectedBubbleY =
-      link.offsetHeight + targetPosition.y + Bubble.VERTICAL_CLEARANCE_;
+  const expectedBubbleY = link.offsetHeight + targetPosition.y + Bubble.VERTICAL_CLEARANCE_;
 
-  return {x: expectedBubbleX, y: expectedBubbleY};
+  return { x: expectedBubbleX, y: expectedBubbleY };
 }
 
 testSuite({
@@ -87,8 +91,8 @@ testSuite({
 
     bubble = new Bubble(document.body, 999);
 
-    fieldDiv.innerHTML = '<a href="http://www.google.com">Google</a>' +
-        '<a href="http://www.google.com">Google2</a>';
+    fieldDiv.innerHTML =
+      '<a href="http://www.google.com">Google</a>' + '<a href="http://www.google.com">Google2</a>';
     link = fieldDiv.firstChild;
     link2 = fieldDiv.lastChild;
 
@@ -141,7 +145,10 @@ testSuite({
 
     /** @suppress {visibility} suppression added to enable type checking */
     const closeBox = dom.getElementsByTagNameAndClass(
-        TagName.DIV, 'tr_bubble_closebox', bubble.bubbleContainer_)[0];
+      TagName.DIV,
+      'tr_bubble_closebox',
+      bubble.bubbleContainer_
+    )[0];
     testingEvents.fireClickSequence(closeBox);
     panelId = null;
 
@@ -158,9 +165,7 @@ testSuite({
       numCalled++;
     };
 
-    assertNotUndefined(
-        'viewPortSizeMonitor_ should not be undefined',
-        bubble.viewPortSizeMonitor_);
+    assertNotUndefined('viewPortSizeMonitor_ should not be undefined', bubble.viewPortSizeMonitor_);
     bubble.viewPortSizeMonitor_.dispatchEvent(EventType.RESIZE);
 
     assertEquals('reposition not called', 1, numCalled);
@@ -202,8 +207,7 @@ testSuite({
     const field = document.getElementById('field');
     const fieldPos = style.getFramedPageOffset(field, window);
     /** @suppress {visibility} suppression added to enable type checking */
-    fieldPos.y += bubble.dom_.getViewportSize().height -
-        (targetPos.y + targetSize.height);
+    fieldPos.y += bubble.dom_.getViewportSize().height - (targetPos.y + targetSize.height);
     style.setStyle(field, 'position', 'absolute');
     style.setPosition(field, fieldPos);
     bubble.reposition();

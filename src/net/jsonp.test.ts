@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.net.JsonpTest');
-goog.setTestOnly();
 
 const Const = goog.require('goog.string.Const');
 const Jsonp = goog.require('goog.net.Jsonp');
@@ -33,8 +32,7 @@ const originalOnError = window.onerror;
 window.onerror = (msg, url, line) => {
   // TODO(user): Safari 3 on the farm returns an object instead of the typical
   // params.  Pass through errors for safari for now.
-  if (userAgent.WEBKIT ||
-      msg == 'Error loading script' && url.indexOf('fake-site') != -1) {
+  if (userAgent.WEBKIT || (msg == 'Error loading script' && url.indexOf('fake-site') != -1)) {
     return true;
   } else {
     return originalOnError && originalOnError(msg, url, line);
@@ -48,40 +46,37 @@ function newCleanupGuard() {
 
   return () => {
     // let any timeout queues finish before we check these:
-    window.setTimeout(/**
+    window.setTimeout(
+      /**
                          @suppress {checkTypes} suppression added to enable type
                          checking
                        */
-                      () => {
-                        let propCounter = 0;
+      () => {
+        let propCounter = 0;
 
-                        // All callbacks should have been deleted or be the null
-                        // function.
-                        for (const key in globalThis) {
-                          // NOTES: callbacks are stored on globalThis with
-                          // property name prefixed with
-                          // goog.net.Jsonp.CALLBACKS.
-                          if (key.indexOf(Jsonp.CALLBACKS) == 0) {
-                            /**
-                             * @suppress {visibility} suppression added to
-                             * enable type checking
-                             */
-                            const callbackId = Jsonp.getCallbackId_(key);
-                            if (globalThis[callbackId] &&
-                                globalThis[callbackId] !=
-                                    googFunctions.UNDEFINED) {
-                              propCounter++;
-                            }
-                          }
-                        }
+        // All callbacks should have been deleted or be the null
+        // function.
+        for (const key in globalThis) {
+          // NOTES: callbacks are stored on globalThis with
+          // property name prefixed with
+          // goog.net.Jsonp.CALLBACKS.
+          if (key.indexOf(Jsonp.CALLBACKS) == 0) {
+            /**
+             * @suppress {visibility} suppression added to
+             * enable type checking
+             */
+            const callbackId = Jsonp.getCallbackId_(key);
+            if (globalThis[callbackId] && globalThis[callbackId] != googFunctions.UNDEFINED) {
+              propCounter++;
+            }
+          }
+        }
 
-                        assertEquals(
-                            'script cleanup', bodyChildCount,
-                            document.body.childNodes.length);
-                        assertEquals(
-                            'window jsonp array empty', 0, propCounter);
-                      },
-                      0);
+        assertEquals('script cleanup', bodyChildCount, document.body.childNodes.length);
+        assertEquals('window jsonp array empty', 0, propCounter);
+      },
+      0
+    );
   };
 }
 
@@ -118,7 +113,7 @@ testSuite({
       replyReceived = data;
     };
 
-    const payload = {atisket: 'atasket', basket: 'yellow'};
+    const payload = { atisket: 'atasket', basket: 'yellow' };
     const result = jsonp.send(payload, userCallback);
 
     const script = getScriptElement(result);
@@ -135,8 +130,7 @@ testSuite({
     // function does not break if it receives a second unexpected parameter.
     const callbackName = /callback=([^&]+)/.exec(script.src)[1];
     const callbackFunc = eval(callbackName);
-    callbackFunc(
-        {some: 'data', another: ['data', 'right', 'here']}, 'unexpected');
+    callbackFunc({ some: 'data', another: ['data', 'right', 'here'] }, 'unexpected');
     assertEquals('input was received', 'right', replyReceived.another[1]);
 
     // Because the callbackFunc calls cleanUp_ and that calls setTimeout which
@@ -162,17 +156,19 @@ testSuite({
       replyReceived2 = opt_data2;
     };
 
-    const payload = {atisket: 'atasket', basket: 'yellow'};
+    const payload = { atisket: 'atasket', basket: 'yellow' };
     const result = jsonp.send(payload, userCallback);
     const script = getScriptElement(result);
 
     // Test a callback function that receives two parameters.
     const callbackName = /callback=([^&]+)/.exec(script.src)[1];
     const callbackFunc = eval(callbackName);
-    callbackFunc('param1', {some: 'data', another: ['data', 'right', 'here']});
+    callbackFunc('param1', {
+      some: 'data',
+      another: ['data', 'right', 'here'],
+    });
     assertEquals('input was received', 'param1', replyReceived);
-    assertEquals(
-        'second input was received', 'right', replyReceived2.another[1]);
+    assertEquals('second input was received', 'right', replyReceived2.another[1]);
 
     // Because the callbackFunc calls cleanUp_ and that calls setTimeout which
     // we have overwritten, we have to call the timeoutHandler to actually do
@@ -199,7 +195,7 @@ testSuite({
       replyReceived = data;
     };
 
-    const payload = {atisket: 'atasket', basket: 'yellow'};
+    const payload = { atisket: 'atasket', basket: 'yellow' };
     const result = jsonp.send(payload, userCallback, undefined, 'dummyId');
 
     const script = getScriptElement(result);
@@ -210,16 +206,16 @@ testSuite({
     // Check that the URL matches our payload.
     assertTrue('payload in url', script.src.indexOf('basket=yellow') > -1);
     assertTrue(
-        'dummyId in url',
-        script.src.indexOf('callback=' + Jsonp.getCallbackId_('dummyId')) > -1);
+      'dummyId in url',
+      script.src.indexOf('callback=' + Jsonp.getCallbackId_('dummyId')) > -1
+    );
     assertTrue('server url', script.src.indexOf(fakeUrl) == 0);
 
     // Now, we simulate a returned request using the known callback function
     // name.
     /** @suppress {visibility} suppression added to enable type checking */
-    const callbackFunc =
-        eval('window.callback=' + Jsonp.getCallbackId_('dummyId'));
-    callbackFunc({some: 'data', another: ['data', 'right', 'here']});
+    const callbackFunc = eval('window.callback=' + Jsonp.getCallbackId_('dummyId'));
+    callbackFunc({ some: 'data', another: ['data', 'right', 'here'] });
     assertEquals('input was received', 'right', replyReceived.another[1]);
 
     // Because the callbackFunc calls cleanUp_ and that calls setTimeout which
@@ -248,7 +244,7 @@ testSuite({
       errorReplyReceived = data;
     };
 
-    const payload = {justa: 'test'};
+    const payload = { justa: 'test' };
 
     jsonp.send(payload, userCallback, userErrorCallback);
 
@@ -288,7 +284,7 @@ testSuite({
 
     // Send and cancel a request, then make sure it was cleaned up.
     const jsonp = new Jsonp(fakeTrustedUrl);
-    const requestObject = jsonp.send({test: 'foo'}, successCallback);
+    const requestObject = jsonp.send({ test: 'foo' }, successCallback);
     jsonp.cancel(requestObject);
 
     for (const key in globalThis[Jsonp.CALLBACKS]) {
@@ -298,8 +294,10 @@ testSuite({
         /** @suppress {visibility} suppression added to enable type checking */
         const callbackId = Jsonp.getCallbackId_(key);
         assertNotEquals(
-            'The success callback should have been removed',
-            globalThis[callbackId], successCallback);
+          'The success callback should have been removed',
+          globalThis[callbackId],
+          successCallback
+        );
       }
     }
 
@@ -313,12 +311,14 @@ testSuite({
     const checkCleanup = newCleanupGuard();
 
     const jsonp = new Jsonp(fakeTrustedUrl);
-    const result = jsonp.send({'foo': 3, 'bar': 'baz'});
+    const result = jsonp.send({ foo: 3, bar: 'baz' });
 
     const script = getScriptElement(result);
     assertEquals(
-        'Payload parameters should have been added to url.',
-        `${fakeUrl}?foo=3&bar=baz`, script.src);
+      'Payload parameters should have been added to url.',
+      `${fakeUrl}?foo=3&bar=baz`,
+      script.src
+    );
 
     checkCleanup();
     timeoutHandler();
@@ -338,8 +338,10 @@ testSuite({
 
     const script = getScriptElement(result);
     assertEquals(
-        'Nonce attribute should have been added to script element.', nonce,
-        (script['nonce'] || script.getAttribute('nonce')));
+      'Nonce attribute should have been added to script element.',
+      nonce,
+      script['nonce'] || script.getAttribute('nonce')
+    );
 
     checkCleanup();
     timeoutHandler();
@@ -359,8 +361,7 @@ testSuite({
     const result = jsonp.send(null, null, errorCallback);
 
     const script = getScriptElement(result);
-    assertEquals(
-        'Parameters should not have been added to url.', fakeUrl, script.src);
+    assertEquals('Parameters should not have been added to url.', fakeUrl, script.src);
 
     // Clear the script hooks because we triggered the error manually.
     script.onload = () => {};

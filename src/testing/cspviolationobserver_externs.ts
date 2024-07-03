@@ -22,11 +22,11 @@
  */
 function ReportingObserver2(callback, opts) {}
 /** @return {void} */
-ReportingObserver2.prototype.observe = function() {};
+ReportingObserver2.prototype.observe = () => {};
 /** @return {void} */
-ReportingObserver2.prototype.disconnect = function() {};
+ReportingObserver2.prototype.disconnect = () => {};
 /** @return {!Array<!Report>} */
-ReportingObserver2.prototype.takeRecords = function() {};
+ReportingObserver2.prototype.takeRecords = () => {};
 
 /**
  * @typedef {ReportingObserver2|ReportingObserver}
@@ -34,13 +34,11 @@ ReportingObserver2.prototype.takeRecords = function() {};
  */
 var ReportingObserver;
 
-
 /**
  * @typedef {!function(!Array<Report>, !ReportingObserver): void}
  * @suppress {duplicate}
  */
 var ReportingObserverCallback;
-
 
 /**
  * @constructor
@@ -57,7 +55,6 @@ ReportingObserverOptions2.prototype.buffered;
  */
 var ReportingObserverOptions;
 
-
 /**
  * @constructor
  * @suppress {duplicate}
@@ -72,7 +69,6 @@ function Report2() {}
  * @suppress {duplicate}
  */
 var Report;
-
 
 /**
  * @constructor

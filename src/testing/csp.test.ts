@@ -4,17 +4,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-goog.setTestOnly();
-
 goog.require('goog.testing.TestCase');
 goog.require('goog.testing.asserts');
 goog.require('goog.testing.jsunit');
 
-const meta = /**@type {!HTMLMetaElement} */ (document.createElement('meta'));
+const meta = /**@type {!HTMLMetaElement} */ document.createElement('meta');
 meta.httpEquiv = 'Content-Security-Policy';
-meta.content = 'object-src \'none\'; ' +
-    'script-src \'nonce-CSP+Nonce+For+Tests+Only\' \'unsafe-inline\' ' +
-    '\'unsafe-eval\' \'strict-dynamic\' https: http:; base-uri \'none\'';
+meta.content =
+  "object-src 'none'; " +
+  "script-src 'nonce-CSP+Nonce+For+Tests+Only' 'unsafe-inline' " +
+  "'unsafe-eval' 'strict-dynamic' https: http:; base-uri 'none'";
 document.head.appendChild(meta);
 
 function shouldRunTests() {
@@ -25,7 +24,7 @@ function testCspViolationCausesTestCaseToFail() {
   goog.testing.TestCase.getActiveTestCase().observeCspViolations(false);
 
   const testCase = new goog.testing.TestCase();
-  testCase.addNewTest('test', function() {
+  testCase.addNewTest('test', () => {
     doCspViolation1();
   });
   testCase.runTests();
@@ -37,7 +36,7 @@ function testCspViolationReportedForFailingTest() {
   goog.testing.TestCase.getActiveTestCase().observeCspViolations(false);
 
   const testCase = new goog.testing.TestCase();
-  testCase.addNewTest('test', function() {
+  testCase.addNewTest('test', () => {
     doCspViolation2();
     assertTrue(false);
   });
@@ -50,16 +49,18 @@ function testCspViolationCausesTestCaseToFail_lifeCycle() {
   goog.testing.TestCase.getActiveTestCase().observeCspViolations(false);
 
   const tests = [
-    ['setUp', doCspViolation3], ['tearDown', doCspViolation4],
-    ['setUpPage', doCspViolation5], ['runTests', doCspViolation6],
-    ['shouldRunTests', doCspViolation7]
+    ['setUp', doCspViolation3],
+    ['tearDown', doCspViolation4],
+    ['setUpPage', doCspViolation5],
+    ['runTests', doCspViolation6],
+    ['shouldRunTests', doCspViolation7],
   ];
   for (const [name, doCspViolation] of tests) {
     const testCase = new goog.testing.TestCase();
     testCase.ignoreStartupCspViolations();
     let didRun = false;
     testCase.setLifecycleObj({
-      [name]: function() {
+      [name]: () => {
         didRun = true;
         doCspViolation();
         if (name == 'shouldRunTests') {
@@ -67,10 +68,10 @@ function testCspViolationCausesTestCaseToFail_lifeCycle() {
         }
       },
     });
-    testCase.addNewTest('test1', function() {
+    testCase.addNewTest('test1', () => {
       // do nothing
     });
-    testCase.addNewTest('test2', function() {
+    testCase.addNewTest('test2', () => {
       // do nothing
     });
     testCase.runTests();
@@ -79,7 +80,6 @@ function testCspViolationCausesTestCaseToFail_lifeCycle() {
   }
 }
 
-
 async function testCspViolationCausesTestCaseToFail_lifeCycleAsync() {
   goog.testing.TestCase.getActiveTestCase().observeCspViolations(false);
 
@@ -87,25 +87,23 @@ async function testCspViolationCausesTestCaseToFail_lifeCycleAsync() {
     ['setUp', doCspViolation8],
     ['tearDown', doCspViolation9],
     ['setUpPage', doCspViolation10],
-
   ];
   for (const [name, doCspViolation] of tests) {
     const testCase = new goog.testing.TestCase();
     testCase.ignoreStartupCspViolations();
     let didRun = false;
     testCase.setLifecycleObj({
-      [name]: function() {
-        return new Promise((resolve, reject) => {
+      [name]: () =>
+        new Promise((resolve, reject) => {
           didRun = true;
           doCspViolation();
           resolve();
-        });
-      },
+        }),
     });
-    testCase.addNewTest('test1', function() {
+    testCase.addNewTest('test1', () => {
       // do nothing
     });
-    testCase.addNewTest('test2', function() {
+    testCase.addNewTest('test2', () => {
       // do nothing
     });
     await testCase.runTestsReturningPromise();

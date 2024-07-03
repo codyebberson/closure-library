@@ -21,19 +21,15 @@ goog.provide('goog.ui.RangeModel');
 goog.require('goog.events.EventTarget');
 goog.require('goog.ui.Component');
 
-
-
 /**
  * Creates a range model
  * @extends {goog.events.EventTarget}
  * @constructor
  */
-goog.ui.RangeModel = function() {
-  'use strict';
+goog.ui.RangeModel = function () {
   goog.events.EventTarget.call(this);
 };
 goog.inherits(goog.ui.RangeModel, goog.events.EventTarget);
-
 
 /**
  * @type {number}
@@ -41,13 +37,11 @@ goog.inherits(goog.ui.RangeModel, goog.events.EventTarget);
  */
 goog.ui.RangeModel.prototype.value_ = 0;
 
-
 /**
  * @type {number}
  * @private
  */
 goog.ui.RangeModel.prototype.minimum_ = 0;
-
 
 /**
  * @type {number}
@@ -55,20 +49,17 @@ goog.ui.RangeModel.prototype.minimum_ = 0;
  */
 goog.ui.RangeModel.prototype.maximum_ = 100;
 
-
 /**
  * @type {number}
  * @private
  */
 goog.ui.RangeModel.prototype.extent_ = 0;
 
-
 /**
  * @type {?number}
  * @private
  */
 goog.ui.RangeModel.prototype.step_ = 1;
-
 
 /**
  * This is true if something is changed as a side effect. This happens when for
@@ -78,7 +69,6 @@ goog.ui.RangeModel.prototype.step_ = 1;
  */
 goog.ui.RangeModel.prototype.isChanging_ = false;
 
-
 /**
  * If set to true, we do not fire any change events.
  * @type {boolean}
@@ -86,24 +76,20 @@ goog.ui.RangeModel.prototype.isChanging_ = false;
  */
 goog.ui.RangeModel.prototype.mute_ = false;
 
-
 /**
  * Sets the model to mute / unmute.
  * @param {boolean} muteValue Whether or not to mute the range, i.e.,
  *     suppress any CHANGE events.
  */
-goog.ui.RangeModel.prototype.setMute = function(muteValue) {
-  'use strict';
+goog.ui.RangeModel.prototype.setMute = function (muteValue) {
   this.mute_ = muteValue;
 };
-
 
 /**
  * Sets the value.
  * @param {number} value The new value.
  */
-goog.ui.RangeModel.prototype.setValue = function(value) {
-  'use strict';
+goog.ui.RangeModel.prototype.setValue = function (value) {
   value = this.roundToStepWithMin(value);
   if (this.value_ != value) {
     if (value + this.extent_ > this.maximum_) {
@@ -119,22 +105,18 @@ goog.ui.RangeModel.prototype.setValue = function(value) {
   }
 };
 
-
 /**
  * @return {number} the current value.
  */
-goog.ui.RangeModel.prototype.getValue = function() {
-  'use strict';
+goog.ui.RangeModel.prototype.getValue = function () {
   return this.roundToStepWithMin(this.value_);
 };
-
 
 /**
  * Sets the extent. The extent is the 'size' of the value.
  * @param {number} extent The new extent.
  */
-goog.ui.RangeModel.prototype.setExtent = function(extent) {
-  'use strict';
+goog.ui.RangeModel.prototype.setExtent = function (extent) {
   extent = this.roundToStepWithMin(extent);
   if (this.extent_ != extent) {
     if (extent < 0) {
@@ -150,22 +132,18 @@ goog.ui.RangeModel.prototype.setExtent = function(extent) {
   }
 };
 
-
 /**
  * @return {number} The extent for the range model.
  */
-goog.ui.RangeModel.prototype.getExtent = function() {
-  'use strict';
+goog.ui.RangeModel.prototype.getExtent = function () {
   return this.roundToStep(this.extent_);
 };
-
 
 /**
  * Sets the minimum
  * @param {number} minimum The new minimum.
  */
-goog.ui.RangeModel.prototype.setMinimum = function(minimum) {
-  'use strict';
+goog.ui.RangeModel.prototype.setMinimum = function (minimum) {
   // Don't round minimum because it is the base
   if (this.minimum_ != minimum) {
     var oldIsChanging = this.isChanging_;
@@ -185,7 +163,6 @@ goog.ui.RangeModel.prototype.setMinimum = function(minimum) {
       this.setValue(minimum);
     }
 
-
     this.isChanging_ = oldIsChanging;
     if (!this.isChanging_ && !this.mute_) {
       this.dispatchEvent(goog.ui.Component.EventType.CHANGE);
@@ -193,22 +170,18 @@ goog.ui.RangeModel.prototype.setMinimum = function(minimum) {
   }
 };
 
-
 /**
  * @return {number} The minimum value for the range model.
  */
-goog.ui.RangeModel.prototype.getMinimum = function() {
-  'use strict';
+goog.ui.RangeModel.prototype.getMinimum = function () {
   return this.roundToStepWithMin(this.minimum_);
 };
-
 
 /**
  * Sets the maximum
  * @param {number} maximum The new maximum.
  */
-goog.ui.RangeModel.prototype.setMaximum = function(maximum) {
-  'use strict';
+goog.ui.RangeModel.prototype.setMaximum = function (maximum) {
   maximum = this.roundToStepWithMin(maximum);
   if (this.maximum_ != maximum) {
     var oldIsChanging = this.isChanging_;
@@ -235,33 +208,27 @@ goog.ui.RangeModel.prototype.setMaximum = function(maximum) {
   }
 };
 
-
 /**
  * @return {number} The maximimum value for the range model.
  */
-goog.ui.RangeModel.prototype.getMaximum = function() {
-  'use strict';
+goog.ui.RangeModel.prototype.getMaximum = function () {
   return this.roundToStepWithMin(this.maximum_);
 };
-
 
 /**
  * Returns the step value. The step value is used to determine how to round the
  * value.
  * @return {?number} The maximimum value for the range model.
  */
-goog.ui.RangeModel.prototype.getStep = function() {
-  'use strict';
+goog.ui.RangeModel.prototype.getStep = function () {
   return this.step_;
 };
-
 
 /**
  * Sets the step. The step value is used to determine how to round the value.
  * @param {?number} step  The step size.
  */
-goog.ui.RangeModel.prototype.setStep = function(step) {
-  'use strict';
+goog.ui.RangeModel.prototype.setStep = function (step) {
   if (this.step_ != step) {
     this.step_ = step;
 
@@ -280,27 +247,22 @@ goog.ui.RangeModel.prototype.setStep = function(step) {
   }
 };
 
-
 /**
  * Rounds to the closest step using the minimum value as the base.
  * @param {number} value  The number to round.
  * @return {number} The number rounded to the closest step.
  */
-goog.ui.RangeModel.prototype.roundToStepWithMin = function(value) {
-  'use strict';
+goog.ui.RangeModel.prototype.roundToStepWithMin = function (value) {
   if (this.step_ == null) return value;
-  return this.minimum_ +
-      Math.round((value - this.minimum_) / this.step_) * this.step_;
+  return this.minimum_ + Math.round((value - this.minimum_) / this.step_) * this.step_;
 };
-
 
 /**
  * Rounds to the closest step.
  * @param {number} value  The number to round.
  * @return {number} The number rounded to the closest step.
  */
-goog.ui.RangeModel.prototype.roundToStep = function(value) {
-  'use strict';
+goog.ui.RangeModel.prototype.roundToStep = function (value) {
   if (this.step_ == null) return value;
   return Math.round(value / this.step_) * this.step_;
 };

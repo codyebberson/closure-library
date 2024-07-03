@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.MenuButtonRendererTest');
-goog.setTestOnly();
 
 const Button = goog.require('goog.ui.Button');
 const MenuButton = goog.require('goog.ui.MenuButton');
@@ -25,9 +24,10 @@ let savedRootTree;
 
 function assertButtonsEqual() {
   assertHTMLEquals(
-      'Rendered button and decorated button produced different HTML!',
-      renderedButton.getElement().innerHTML,
-      decoratedButton.getElement().innerHTML);
+    'Rendered button and decorated button produced different HTML!',
+    renderedButton.getElement().innerHTML,
+    decoratedButton.getElement().innerHTML
+  );
 }
 
 /**
@@ -71,13 +71,16 @@ function checkButtonCaption(button) {
  */
 function checkAriaState(button) {
   assertEquals(
-      'menu buttons should have default aria-expanded == false', 'false',
-      aria.getState(button.getElement(), State.EXPANDED));
+    'menu buttons should have default aria-expanded == false',
+    'false',
+    aria.getState(button.getElement(), State.EXPANDED)
+  );
   button.setOpen(true);
   assertEquals(
-      'menu buttons should not aria-expanded == true after ' +
-          'opening',
-      'true', aria.getState(button.getElement(), State.EXPANDED));
+    'menu buttons should not aria-expanded == true after ' + 'opening',
+    'true',
+    aria.getState(button.getElement(), State.EXPANDED)
+  );
 }
 
 function hasInlineBlock(el) {

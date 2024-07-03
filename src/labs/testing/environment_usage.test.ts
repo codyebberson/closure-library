@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.labs.testing.environmentUsageTest');
-goog.setTestOnly();
 
 const Environment = goog.require('goog.labs.testing.Environment');
 const testSuite = goog.require('goog.testing.testSuite');

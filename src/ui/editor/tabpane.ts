@@ -25,8 +25,6 @@ goog.require('goog.ui.Tab');
 goog.require('goog.ui.TabBar');
 goog.requireType('goog.events.Event');
 
-
-
 /**
  * Creates a new Editor-style tab pane.
  * @param {goog.dom.DomHelper} dom The dom helper for the window to create this
@@ -36,8 +34,7 @@ goog.requireType('goog.events.Event');
  * @extends {goog.ui.Component}
  * @final
  */
-goog.ui.editor.TabPane = function(dom, opt_caption) {
-  'use strict';
+goog.ui.editor.TabPane = function (dom, opt_caption) {
   goog.ui.editor.TabPane.base(this, 'constructor', dom);
 
   /**
@@ -53,16 +50,16 @@ goog.ui.editor.TabPane = function(dom, opt_caption) {
    * @type {goog.ui.TabBar}
    * @private
    */
-  this.tabBar_ =
-      new goog.ui.TabBar(goog.ui.TabBar.Location.START, undefined, this.dom_);
+  this.tabBar_ = new goog.ui.TabBar(goog.ui.TabBar.Location.START, undefined, this.dom_);
   this.tabBar_.setFocusable(false);
 
   /**
    * The content element.
    * @private
    */
-  this.tabContent_ = this.dom_.createDom(
-      goog.dom.TagName.DIV, {className: goog.getCssName('goog-tab-content')});
+  this.tabContent_ = this.dom_.createDom(goog.dom.TagName.DIV, {
+    className: goog.getCssName('goog-tab-content'),
+  });
 
   /**
    * The currently selected radio button.
@@ -78,11 +75,9 @@ goog.ui.editor.TabPane = function(dom, opt_caption) {
    */
   this.visibleContent_ = null;
 
-
   // Add the caption as the first element in the tab bar.
   if (opt_caption) {
-    const captionControl =
-        new goog.ui.Control(opt_caption, undefined, this.dom_);
+    const captionControl = new goog.ui.Control(opt_caption, undefined, this.dom_);
     captionControl.addClassName(goog.getCssName('tr-tabpane-caption'));
     captionControl.setEnabled(false);
     this.tabBar_.addChild(captionControl, true);
@@ -90,25 +85,20 @@ goog.ui.editor.TabPane = function(dom, opt_caption) {
 };
 goog.inherits(goog.ui.editor.TabPane, goog.ui.Component);
 
-
 /**
  * @return {string} The ID of the content element for the current tab.
  */
-goog.ui.editor.TabPane.prototype.getCurrentTabId = function() {
-  'use strict';
+goog.ui.editor.TabPane.prototype.getCurrentTabId = function () {
   return this.tabBar_.getSelectedTab().getId();
 };
-
 
 /**
  * Selects the tab with the given id.
  * @param {string} id Id of the tab to select.
  */
-goog.ui.editor.TabPane.prototype.setSelectedTabId = function(id) {
-  'use strict';
+goog.ui.editor.TabPane.prototype.setSelectedTabId = function (id) {
   this.tabBar_.setSelectedTab(this.tabBar_.getChild(id));
 };
-
 
 /**
  * Adds a tab to the tab pane.
@@ -119,15 +109,13 @@ goog.ui.editor.TabPane.prototype.setSelectedTabId = function(id) {
  * @param {Element} content The content element to show when this tab is
  *     selected.
  */
-goog.ui.editor.TabPane.prototype.addTab = function(
-    id, caption, tooltip, groupName, content) {
-  'use strict';
-  const radio = this.dom_.createDom(
-      goog.dom.TagName.INPUT,
-      {name: groupName, type: goog.dom.InputType.RADIO});
+goog.ui.editor.TabPane.prototype.addTab = function (id, caption, tooltip, groupName, content) {
+  const radio = this.dom_.createDom(goog.dom.TagName.INPUT, {
+    name: groupName,
+    type: goog.dom.InputType.RADIO,
+  });
 
-  const tab = new goog.ui.Tab(
-      [radio, this.dom_.createTextNode(caption)], undefined, this.dom_);
+  const tab = new goog.ui.Tab([radio, this.dom_.createTextNode(caption)], undefined, this.dom_);
   tab.setId(id);
   tab.setTooltip(tooltip);
   this.tabBar_.addChild(tab, true);
@@ -138,18 +126,18 @@ goog.ui.editor.TabPane.prototype.addTab = function(
   // nonetheless because it's possible that some browser will issue only
   // SELECT.
   this.eventHandler_.listen(
-      radio, [goog.events.EventType.SELECT, goog.events.EventType.CLICK],
-      goog.bind(this.tabBar_.setSelectedTab, this.tabBar_, tab));
+    radio,
+    [goog.events.EventType.SELECT, goog.events.EventType.CLICK],
+    goog.bind(this.tabBar_.setSelectedTab, this.tabBar_, tab)
+  );
 
   content.id = id + '-tab';
   this.tabContent_.appendChild(content);
   goog.style.setElementShown(content, false);
 };
 
-
 /** @override */
-goog.ui.editor.TabPane.prototype.enterDocument = function() {
-  'use strict';
+goog.ui.editor.TabPane.prototype.enterDocument = function () {
   goog.ui.editor.TabPane.base(this, 'enterDocument');
 
   // Get the root element and add a class name to it.
@@ -160,17 +148,21 @@ goog.ui.editor.TabPane.prototype.enterDocument = function() {
   // Add the tabs.
   this.addChild(this.tabBar_, true);
   this.eventHandler_.listen(
-      this.tabBar_, goog.ui.Component.EventType.SELECT, this.handleTabSelect_);
+    this.tabBar_,
+    goog.ui.Component.EventType.SELECT,
+    this.handleTabSelect_
+  );
 
   // Add the tab content.
   root.appendChild(this.tabContent_);
 
   // Add an element to clear the tab float.
-  root.appendChild(this.dom_.createDom(goog.dom.TagName.DIV, {
-    className: goog.getCssName('goog-tab-bar-clear')
-  }));
+  root.appendChild(
+    this.dom_.createDom(goog.dom.TagName.DIV, {
+      className: goog.getCssName('goog-tab-bar-clear'),
+    })
+  );
 };
-
 
 /**
  * Handles a tab change.
@@ -178,8 +170,7 @@ goog.ui.editor.TabPane.prototype.enterDocument = function() {
  * @private
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.ui.editor.TabPane.prototype.handleTabSelect_ = function(e) {
-  'use strict';
+goog.ui.editor.TabPane.prototype.handleTabSelect_ = function (e) {
   const tab = /** @type {goog.ui.Tab} */ (e.target);
 
   // Show the tab content.
@@ -194,6 +185,8 @@ goog.ui.editor.TabPane.prototype.handleTabSelect_ = function(e) {
     this.selectedRadio_.checked = false;
   }
   this.selectedRadio_ = goog.dom.getElementsByTagName(
-      goog.dom.TagName.INPUT, tab.getElementStrict())[0];
+    goog.dom.TagName.INPUT,
+    tab.getElementStrict()
+  )[0];
   this.selectedRadio_.checked = true;
 };

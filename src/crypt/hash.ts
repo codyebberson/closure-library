@@ -12,16 +12,13 @@
 
 goog.provide('goog.crypt.Hash');
 
-
-
 /**
  * Create a cryptographic hash instance.
  *
  * @constructor
  * @struct
  */
-goog.crypt.Hash = function() {
-  'use strict';
+goog.crypt.Hash = function () {
   /**
    * The block size for the hasher.
    * @type {number}
@@ -29,12 +26,10 @@ goog.crypt.Hash = function() {
   this.blockSize = -1;
 };
 
-
 /**
  * Resets the internal accumulator.
  */
 goog.crypt.Hash.prototype.reset = goog.abstractMethod;
-
 
 /**
  * Adds a byte array (array with values in [0-255] range) or a string (must
@@ -52,7 +47,6 @@ goog.crypt.Hash.prototype.reset = goog.abstractMethod;
  * @param {number=} opt_length Number of bytes to use.
  */
 goog.crypt.Hash.prototype.update = goog.abstractMethod;
-
 
 /**
  * @return {!Array<number>} The finalized hash computed

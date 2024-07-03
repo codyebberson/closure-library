@@ -4,14 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview The file contains generated enumerations for ARIA roles
  * as defined by W3C ARIA standard: http://www.w3.org/TR/wai-aria/.
  */
 
 goog.provide('goog.a11y.aria.Role');
-
 
 /**
  * ARIA role values.
@@ -220,5 +218,5 @@ goog.a11y.aria.Role = {
   TREEGRID: 'treegrid',
 
   // ARIA role for a tree item that sometimes may be expanded or collapsed.
-  TREEITEM: 'treeitem'
+  TREEITEM: 'treeitem',
 };

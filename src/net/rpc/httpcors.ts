@@ -19,7 +19,6 @@ const googObject = goog.require('goog.object');
 const googString = goog.require('goog.string');
 const googUriUtils = goog.require('goog.uri.utils');
 
-
 /**
  * The default URL parameter name to overwrite http headers with a URL param
  * to avoid CORS preflight.
@@ -29,7 +28,6 @@ const googUriUtils = goog.require('goog.uri.utils');
  * @type {string}
  */
 exports.HTTP_HEADERS_PARAM_NAME = '$httpHeaders';
-
 
 /**
  * The default URL parameter name to overwrite http method with a URL param
@@ -41,7 +39,6 @@ exports.HTTP_HEADERS_PARAM_NAME = '$httpHeaders';
  */
 exports.HTTP_METHOD_PARAM_NAME = '$httpMethod';
 
-
 /**
  * Generates the URL parameter value with custom headers encoded as
  * HTTP/1.1 headers block.
@@ -49,9 +46,9 @@ exports.HTTP_METHOD_PARAM_NAME = '$httpMethod';
  * @param {!Object<string, string>} headers The custom headers.
  * @return {string} The URL param to overwrite custom HTTP headers.
  */
-exports.generateHttpHeadersOverwriteParam = function(headers) {
+exports.generateHttpHeadersOverwriteParam = (headers) => {
   let result = '';
-  googObject.forEach(headers, function(value, key) {
+  googObject.forEach(headers, (value, key) => {
     result += key;
     result += ':';
     result += value;
@@ -60,7 +57,6 @@ exports.generateHttpHeadersOverwriteParam = function(headers) {
   return result;
 };
 
-
 /**
  * Generates the URL-encoded URL parameter value with custom headers encoded as
  * HTTP/1.1 headers block.
@@ -68,11 +64,8 @@ exports.generateHttpHeadersOverwriteParam = function(headers) {
  * @param {!Object<string, string>} headers The custom headers.
  * @return {string} The URL param to overwrite custom HTTP headers.
  */
-exports.generateEncodedHttpHeadersOverwriteParam = function(headers) {
-  return googString.urlEncode(
-      exports.generateHttpHeadersOverwriteParam(headers));
-};
-
+exports.generateEncodedHttpHeadersOverwriteParam = (headers) =>
+  googString.urlEncode(exports.generateHttpHeadersOverwriteParam(headers));
 
 /**
  * Sets custom HTTP headers via an overwrite URL param.
@@ -83,17 +76,15 @@ exports.generateEncodedHttpHeadersOverwriteParam = function(headers) {
  * @return {!GoogUri|string} The URI object or a string path with headers
  * encoded as a url param.
  */
-exports.setHttpHeadersWithOverwriteParam = function(
-    url, urlParam, extraHeaders) {
+exports.setHttpHeadersWithOverwriteParam = (url, urlParam, extraHeaders) => {
   if (googObject.isEmpty(extraHeaders)) {
     return url;
   }
   const httpHeaders = exports.generateHttpHeadersOverwriteParam(extraHeaders);
   if (typeof url === 'string') {
-    return googUriUtils.appendParam(
-        url, googString.urlEncode(urlParam), httpHeaders);
+    return googUriUtils.appendParam(url, googString.urlEncode(urlParam), httpHeaders);
   } else {
-    url.setParameterValue(urlParam, httpHeaders);  // duplicate removed!
+    url.setParameterValue(urlParam, httpHeaders); // duplicate removed!
     return url;
   }
 };

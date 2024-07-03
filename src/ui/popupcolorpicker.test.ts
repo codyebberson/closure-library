@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.PopupColorPickerTest');
-goog.setTestOnly();
 
 const ColorPicker = goog.require('goog.ui.ColorPicker');
 const PopupColorPicker = goog.require('goog.ui.PopupColorPicker');
@@ -54,8 +53,7 @@ testSuite({
 
     // Select the first color.
     testingEvents.fireClickSequence(button1);
-    testingEvents.fireClickSequence(
-        document.getElementById('goog-palette-cell-0').firstChild);
+    testingEvents.fireClickSequence(document.getElementById('goog-palette-cell-0').firstChild);
     assertEquals('#ffffff', picker.getSelectedColor());
     assertEquals(1, changeEvents);
   },

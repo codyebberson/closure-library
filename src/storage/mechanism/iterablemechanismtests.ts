@@ -16,9 +16,9 @@ goog.setTestOnly('goog.storage.mechanism.iterableMechanismTests');
 
 const IterableMechanism = goog.require('goog.storage.mechanism.IterableMechanism');
 const googIter = goog.require('goog.iter');
-const {assertEquals, assertNull, assertObjectEquals, assertSameElements, fail} = goog.require('goog.testing.asserts');
-const {bindTests} = goog.require('goog.storage.mechanism.testhelpers');
-
+const { assertEquals, assertNull, assertObjectEquals, assertSameElements, fail } =
+  goog.require('goog.testing.asserts');
+const { bindTests } = goog.require('goog.storage.mechanism.testhelpers');
 
 /**
  * @param {?IterableMechanism} mechanism
@@ -36,7 +36,6 @@ function testCount(mechanism) {
   assertEquals(2, mechanism.getCount());
 }
 
-
 /**
  * @param {?IterableMechanism} mechanism
  */
@@ -50,9 +49,9 @@ function testIteratorBasics(mechanism) {
 
   const es6Iterator = mechanism[Symbol.iterator]();
   const it = es6Iterator.next();
-  assertObjectEquals({value: 'first', done: false}, it);
+  assertObjectEquals({ value: 'first', done: false }, it);
   assertEquals(mechanism.get(it.value), 'one');
-  assertObjectEquals({value: undefined, done: true}, es6Iterator.next());
+  assertObjectEquals({ value: undefined, done: true }, es6Iterator.next());
 
   for (const key of mechanism) {
     // Cast the key to the expected type to ensure that the types on
@@ -62,7 +61,6 @@ function testIteratorBasics(mechanism) {
     assertEquals('first', keyRedefined);
   }
 }
-
 
 /**
  * @param {?IterableMechanism} mechanism
@@ -76,10 +74,8 @@ function testIteratorWithTwoValues(mechanism) {
   assertSameElements(['one', 'two'], googIter.toArray(mechanism));
   // ES6 Iteration should only return keys
   assertSameElements(['first', 'second'], Array.from(mechanism));
-  assertSameElements(
-      ['first', 'second'], googIter.toArray(mechanism.__iterator__(true)));
+  assertSameElements(['first', 'second'], googIter.toArray(mechanism.__iterator__(true)));
 }
-
 
 /**
  * @param {?IterableMechanism} mechanism
@@ -102,7 +98,6 @@ function testClear(mechanism) {
   assertEquals(valIt.value, undefined);
 }
 
-
 /**
  * @param {?IterableMechanism} mechanism
  */
@@ -115,7 +110,6 @@ function testClearClear(mechanism) {
   assertEquals(0, mechanism.getCount());
 }
 
-
 /**
  * @param {?IterableMechanism} mechanism
  */
@@ -125,15 +119,16 @@ function testIteratorWithWeirdKeys(mechanism) {
   }
   mechanism.set(' ', 'space');
   mechanism.set('=+!@#$%^&*()-_\\|;:\'",./<>?[]{}~`', 'control');
-  mechanism.set(
-      '\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\u5341', 'ten');
+  mechanism.set('\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\u5341', 'ten');
   assertEquals(3, mechanism.getCount());
   assertSameElements(
-      [
-        ' ', '=+!@#$%^&*()-_\\|;:\'",./<>?[]{}~`',
-        '\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\u5341'
-      ],
-      googIter.toArray(mechanism.__iterator__(true)));
+    [
+      ' ',
+      '=+!@#$%^&*()-_\\|;:\'",./<>?[]{}~`',
+      '\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\u5341',
+    ],
+    googIter.toArray(mechanism.__iterator__(true))
+  );
   mechanism.clear();
   assertEquals(0, mechanism.getCount());
 }
@@ -144,13 +139,17 @@ function testIteratorWithWeirdKeys(mechanism) {
  * }} state
  * @return {!Object}
  */
-exports.register = function(state) {
-  return bindTests(
-      [
-        testCount, testIteratorBasics, testIteratorWithTwoValues, testClear,
-        testClearClear, testIteratorWithWeirdKeys
-      ],
-      (testCase) => {
-        testCase(state.getMechanism());
-      });
-};
+exports.register = (state) =>
+  bindTests(
+    [
+      testCount,
+      testIteratorBasics,
+      testIteratorWithTwoValues,
+      testClear,
+      testClearClear,
+      testIteratorWithWeirdKeys,
+    ],
+    (testCase) => {
+      testCase(state.getMechanism());
+    }
+  );

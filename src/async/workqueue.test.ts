@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.async.WorkQueueTest');
-goog.setTestOnly();
 
 const WorkQueue = goog.require('goog.async.WorkQueue');
 const testSuite = goog.require('goog.testing.testSuite');

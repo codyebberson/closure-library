@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.MockClockTest');
-goog.setTestOnly();
 
 const GoogPromise = goog.require('goog.Promise');
 const MockClock = goog.require('goog.testing.MockClock');
@@ -28,7 +27,7 @@ const stubs = new PropertyReplacer();
  * @return {!Promise<void>} Resolves after ms
  */
 function waitFor(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 testSuite({
@@ -57,9 +56,9 @@ testSuite({
       result.push(4);
 
       const promise = GoogPromise.resolve(null)
-                          .then(() => Timer.promise(5))
-                          .then(() => result.push(5))
-                          .then(() => Timer.promise(5));
+        .then(() => Timer.promise(5))
+        .then(() => result.push(5))
+        .then(() => Timer.promise(5));
 
       await this.clock.tickAsync(11);
       await promise;
@@ -71,20 +70,20 @@ testSuite({
     async testTimerInNativePromise() {
       const result = [];
       const promise = Promise.resolve()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then(() => Timer.promise(5))
-                          .then(() => result.push(1))
-                          .then(() => waitFor(5));
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then(() => Timer.promise(5))
+        .then(() => result.push(1))
+        .then(() => waitFor(5));
 
       await this.clock.tickAsync(11);
       await promise;
@@ -95,7 +94,7 @@ testSuite({
 
     async testInterleavedNativePromiseCallbacks() {
       function waitFor(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+        return new Promise((resolve) => setTimeout(resolve, ms));
       }
       const result = [];
 
@@ -108,39 +107,39 @@ testSuite({
       result.push(4);
 
       const promise = Timer.promise(5)
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then(() => result.push(5))
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then(() => waitFor(5))
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then()
-                          .then(() => result.push(6));
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then(() => result.push(5))
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then(() => waitFor(5))
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then()
+        .then(() => result.push(6));
 
       await this.clock.tickAsync(11);
       await promise;
@@ -185,12 +184,13 @@ testSuite({
     },
 
     async testTickAsyncMustSettlePromiseThrows() {
-      const error = /** @type {!Error} */ (await assertRejects(
-          this.clock.tickAsyncMustSettlePromise(0, Promise.resolve())));
+      const error = /** @type {!Error} */ await assertRejects(
+        this.clock.tickAsyncMustSettlePromise(0, Promise.resolve())
+      );
       assertEquals(
-          error.message,
-          'Assertion failed: Synchronous MockClock does not support ' +
-              'tickAsyncMustSettlePromise.');
+        error.message,
+        'Assertion failed: Synchronous MockClock does not support ' + 'tickAsyncMustSettlePromise.'
+      );
     },
   },
 
@@ -220,8 +220,9 @@ testSuite({
       const promise = Timer.promise(100).then(() => {
         throw new Error('reject');
       });
-      const error = /** @type {!Error} */ (await assertRejects(
-          this.clock.tickAsyncMustSettlePromise(100, promise)));
+      const error = /** @type {!Error} */ await assertRejects(
+        this.clock.tickAsyncMustSettlePromise(100, promise)
+      );
       assertEquals(error.message, 'reject');
     },
 
@@ -230,35 +231,34 @@ testSuite({
         throw new Error('reject');
       });
 
-      const error =
-          /** @type {!Error} */ (await this.clock.tickAsyncMustSettlePromise(
-              100, assertRejects(promise)));
+      const error = /** @type {!Error} */ await this.clock.tickAsyncMustSettlePromise(
+        100,
+        assertRejects(promise)
+      );
       assertEquals(error.message, 'reject');
     },
 
     async testTickAsyncMustSettlePromiseResolvesGoogPromise() {
       const promise = Timer.promise(100).then(() => 'value');
-      assertEquals(
-          await this.clock.tickAsyncMustSettlePromise(100, promise), 'value');
+      assertEquals(await this.clock.tickAsyncMustSettlePromise(100, promise), 'value');
     },
 
     async testTickAsyncMustSettlePromiseResolvesPromise() {
       const promise = waitFor(100).then(() => 'value');
-      assertEquals(
-          await this.clock.tickAsyncMustSettlePromise(100, promise), 'value');
+      assertEquals(await this.clock.tickAsyncMustSettlePromise(100, promise), 'value');
     },
 
     async testTickThrows() {
-      assertThrows(
-          'Async MockClock does not support tick. Use tickAsync() instead.',
-          () => this.clock.tick());
+      assertThrows('Async MockClock does not support tick. Use tickAsync() instead.', () =>
+        this.clock.tick()
+      );
     },
 
     async testTickPromiseThrows() {
-      assertThrows(
-          'Async MockClock does not support tickPromise.',
-          () => this.clock.tickPromise(waitFor(100), 100));
-    }
+      assertThrows('Async MockClock does not support tickPromise.', () =>
+        this.clock.tickPromise(waitFor(100), 100)
+      );
+    },
   },
 
   testTimeWarp: {
@@ -682,8 +682,10 @@ testSuite({
     clock.tick(4);
 
     assertEquals(
-        'Each timer should fire in sequence at the correct time.',
-        'timer1 at T=1, timer2 at T=2, timer3 at T=3', sequence.join(', '));
+      'Each timer should fire in sequence at the correct time.',
+      'timer1 at T=1, timer2 at T=2, timer3 at T=3',
+      sequence.join(', ')
+    );
 
     clock.uninstall();
   },
@@ -693,10 +695,9 @@ testSuite({
     let timeoutId;
     let timeoutExecuted = false;
 
-    timeoutId = setTimeout(function(arg) {
+    timeoutId = setTimeout(function (arg) {
       assertEquals('"this" must be globalThis', globalThis, this);
-      assertEquals(
-          'The timeout ID must be the first parameter', timeoutId, arg);
+      assertEquals('The timeout ID must be the first parameter', timeoutId, arg);
       assertEquals('Exactly one argument must be passed', 1, arguments.length);
       timeoutExecuted = true;
     }, 1);
@@ -754,9 +755,7 @@ testSuite({
     }, 10);
     clearTimeout(id);
     clock.tick(100);
-    assertEquals(
-        'New timeout should still run after clearing from before reset', 1,
-        calls);
+    assertEquals('New timeout should still run after clearing from before reset', 1, calls);
 
     clock.uninstall();
   },
@@ -777,8 +776,7 @@ testSuite({
     }, 10);
     clearTimeout(id);
     clock.tick(100);
-    assertEquals(
-        'Timeout should still run after cancelling from old clock', 1, calls);
+    assertEquals('Timeout should still run after cancelling from old clock', 1, calls);
     clock.uninstall();
   },
 
@@ -797,24 +795,24 @@ testSuite({
       return buffer.join(',');
     }
 
-    MockClock.insert_({runAtMillis: 2}, queue);
+    MockClock.insert_({ runAtMillis: 2 }, queue);
     assertEquals('Only item', '2', queueToString());
 
-    MockClock.insert_({runAtMillis: 4}, queue);
+    MockClock.insert_({ runAtMillis: 4 }, queue);
     assertEquals('Biggest item', '4,2', queueToString());
 
-    MockClock.insert_({runAtMillis: 5}, queue);
+    MockClock.insert_({ runAtMillis: 5 }, queue);
     assertEquals('An even bigger item', '5,4,2', queueToString());
 
-    MockClock.insert_({runAtMillis: 1}, queue);
+    MockClock.insert_({ runAtMillis: 1 }, queue);
     assertEquals('Smallest item', '5,4,2,1', queueToString());
 
-    MockClock.insert_({runAtMillis: 1, dup: true}, queue);
+    MockClock.insert_({ runAtMillis: 1, dup: true }, queue);
     assertEquals('Duplicate smallest item', '5,4,2,1,1', queueToString());
     assertTrue('Duplicate item comes at a smaller index', queue[3].dup);
 
-    MockClock.insert_({runAtMillis: 3}, queue);
-    MockClock.insert_({runAtMillis: 3, dup: true}, queue);
+    MockClock.insert_({ runAtMillis: 3 }, queue);
+    MockClock.insert_({ runAtMillis: 3, dup: true }, queue);
     assertEquals('Duplicate a middle item', '5,4,3,3,2,1,1', queueToString());
     assertTrue('Duplicate item comes at a smaller index', queue[2].dup);
   },
@@ -822,24 +820,15 @@ testSuite({
   testIsTimeoutSet() {
     const clock = new MockClock(true);
     const timeoutKey = setTimeout(() => {}, 1);
-    assertTrue(
-        `Timeout ${timeoutKey} should be set`, clock.isTimeoutSet(timeoutKey));
+    assertTrue(`Timeout ${timeoutKey} should be set`, clock.isTimeoutSet(timeoutKey));
     const nextTimeoutKey = timeoutKey + 1;
-    assertFalse(
-        `Timeout ${nextTimeoutKey} should not be set`,
-        clock.isTimeoutSet(nextTimeoutKey));
+    assertFalse(`Timeout ${nextTimeoutKey} should not be set`, clock.isTimeoutSet(nextTimeoutKey));
     clearTimeout(timeoutKey);
-    assertFalse(
-        `Timeout ${timeoutKey} should no longer be set`,
-        clock.isTimeoutSet(timeoutKey));
+    assertFalse(`Timeout ${timeoutKey} should no longer be set`, clock.isTimeoutSet(timeoutKey));
     const newTimeoutKey = setTimeout(() => {}, 1);
     clock.tick(5);
-    assertFalse(
-        `Timeout ${timeoutKey} should not be set`,
-        clock.isTimeoutSet(timeoutKey));
-    assertTrue(
-        `Timeout ${newTimeoutKey} should be set`,
-        clock.isTimeoutSet(newTimeoutKey));
+    assertFalse(`Timeout ${timeoutKey} should not be set`, clock.isTimeoutSet(timeoutKey));
+    assertTrue(`Timeout ${newTimeoutKey} should be set`, clock.isTimeoutSet(newTimeoutKey));
     clock.uninstall();
   },
 
@@ -897,8 +886,10 @@ testSuite({
     const fn = recordFunction();
     const actualId = window.setTimeout(fn, 0);
     assertEquals(
-        'In order for this test to work, we have to guess the ids in advance',
-        expectedId, actualId);
+      'In order for this test to work, we have to guess the ids in advance',
+      expectedId,
+      actualId
+    );
     clock.tick(1);
     assertEquals(1, fn.getCallCount());
     clock.dispose();
@@ -912,15 +903,16 @@ testSuite({
     // fail early rather than on the next .tick() operation.
 
     assertThrows(
-        'setTimeout with a non-function value should fail', /**
+      'setTimeout with a non-function value should fail' /**
                                                                @suppress {checkTypes}
                                                                suppression added
                                                                to enable type
                                                                checking
-                                                             */
-        () => {
-          window.setTimeout(undefined, 0);
-        });
+                                                             */,
+      () => {
+        window.setTimeout(undefined, 0);
+      }
+    );
     clock.tick(1);
 
     assertThrows('setTimeout with a string should fail', () => {
@@ -990,9 +982,12 @@ testSuite({
     clock.uninstall();
 
     let executorRan = false;
-    promise.then(() => new Promise(() => {
-                   executorRan = true;
-                 }));
+    promise.then(
+      () =>
+        new Promise(() => {
+          executorRan = true;
+        })
+    );
     // GoogPromise.then will be stuck waiting for executeCallbacks_ to run.
     await Promise.resolve();
     assertFalse(executorRan);
@@ -1009,9 +1004,12 @@ testSuite({
     clock.uninstall(true);
 
     let executorRan = false;
-    promise.then(() => new Promise(() => {
-                   executorRan = true;
-                 }));
+    promise.then(
+      () =>
+        new Promise(() => {
+          executorRan = true;
+        })
+    );
     // goog.async.run queue is flushed when returning to the event queue.
     await Promise.resolve();
     assertTrue(executorRan);
@@ -1048,9 +1046,7 @@ testSuite({
     e = assertThrows(() => {
       clock.tickPromise(delayed);
     });
-    assertEquals(
-        'Promise was expected to be resolved after mock clock tick.',
-        e.message);
+    assertEquals('Promise was expected to be resolved after mock clock tick.', e.message);
     assertEquals('delayed', clock.tickPromise(delayed, 500));
 
     clock.dispose();

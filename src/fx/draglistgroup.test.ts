@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.fx.DragListGroupTest');
-goog.setTestOnly();
 
 const BrowserEvent = goog.require('goog.events.BrowserEvent');
 const Coordinate = goog.require('goog.math.Coordinate');
@@ -61,8 +60,10 @@ function assertIdle(dlg) {
   assertNull('dragger element has been cleaned up', dlg.draggerEl_);
   assertNull('dragger has been cleaned up', dlg.dragger_);
   assertEquals(
-      'the additional event listeners have been removed', initialListenerCount,
-      googObject.getCount(dlg.eventHandler_.keys_));
+    'the additional event listeners have been removed',
+    initialListenerCount,
+    googObject.getCount(dlg.eventHandler_.keys_)
+  );
 }
 
 /**
@@ -74,13 +75,13 @@ function setUpWithDragListPermission(dragListPermission) {
   const sandbox = dom.getElement('sandbox');
   dom.removeChildren(sandbox);
 
-  list = dom.createDom(TagName.DIV, {'id': 'horiz_div'});
+  list = dom.createDom(TagName.DIV, { id: 'horiz_div' });
   list.appendChild(dom.createDom(TagName.DIV, null, dom.createTextNode('1')));
   list.appendChild(dom.createDom(TagName.DIV, null, dom.createTextNode('2')));
   list.appendChild(dom.createDom(TagName.DIV, null, dom.createTextNode('3')));
   sandbox.appendChild(list);
 
-  list2 = dom.createDom(TagName.DIV, {'id': 'horiz_div2'});
+  list2 = dom.createDom(TagName.DIV, { id: 'horiz_div2' });
   list2.appendChild(dom.createDom(TagName.DIV, null, dom.createTextNode('A')));
   list2.appendChild(dom.createDom(TagName.DIV, null, dom.createTextNode('B')));
   list2.appendChild(dom.createDom(TagName.DIV, null, dom.createTextNode('C')));
@@ -88,8 +89,12 @@ function setUpWithDragListPermission(dragListPermission) {
 
   dlg = new DragListGroup();
   dlg.addDragList(
-      list, DragListDirection.RIGHT, null /** opt_unused */, 'test_hover_class',
-      dragListPermission);
+    list,
+    DragListDirection.RIGHT,
+    null /** opt_unused */,
+    'test_hover_class',
+    dragListPermission
+  );
   dlg.addDragList(list2, DragListDirection.RIGHT);
   dlg.init();
 
@@ -121,13 +126,14 @@ function startDrag(dlg, correctPosition) {
   // element (which is only 50px wide), but still on an element of the dragged
   // list group (which takes up the whole page width).
   const firstChildClickPositionX = 450;
-  const firstChildClickPositionY =
-      fistChildBoundingRect.top + fistChildBoundingRect.height / 2;
+  const firstChildClickPositionY = fistChildBoundingRect.top + fistChildBoundingRect.height / 2;
 
-  const dragStartPosition =
-      new Coordinate(firstChildClickPositionX, firstChildClickPositionY);
+  const dragStartPosition = new Coordinate(firstChildClickPositionX, firstChildClickPositionY);
   testingEvents.fireMouseDownEvent(
-      list.firstChild, BrowserEvent.MouseButton.LEFT, dragStartPosition);
+    list.firstChild,
+    BrowserEvent.MouseButton.LEFT,
+    dragStartPosition
+  );
 
   // Firing an additional DragStart event (on top of the one triggered by
   // the mousedown above) is necessary as the test framework interrupts the
@@ -142,11 +148,15 @@ function startDrag(dlg, correctPosition) {
 
   const draggedElement = dom.getElementByTagNameAndClass('div', 'cursor_move');
   const firstMovedMousePosition = new Coordinate(
-      firstChildClickPositionX + 2, firstChildClickPositionY + 2);
+    firstChildClickPositionX + 2,
+    firstChildClickPositionY + 2
+  );
   testingEvents.fireMouseMoveEvent(draggedElement, firstMovedMousePosition);
 
   const newMovedMousePosition = new Coordinate(
-      firstMovedMousePosition.x + 2, firstMovedMousePosition.y + 2);
+    firstMovedMousePosition.x + 2,
+    firstMovedMousePosition.y + 2
+  );
   testingEvents.fireMouseMoveEvent(draggedElement, newMovedMousePosition);
 
   return newMovedMousePosition;
@@ -161,10 +171,10 @@ function startDrag(dlg, correctPosition) {
  */
 function isCursorOverDragger(dlg, newMousePosition) {
   const draggedElRect = dlg.draggerEl_.getBoundingClientRect();
-  const isContainedInWidth = draggedElRect.left <= newMousePosition.x &&
-      draggedElRect.right >= newMousePosition.x;
-  const isContainedInHeight = draggedElRect.top <= newMousePosition.y &&
-      draggedElRect.bottom >= newMousePosition.y;
+  const isContainedInWidth =
+    draggedElRect.left <= newMousePosition.x && draggedElRect.right >= newMousePosition.x;
+  const isContainedInHeight =
+    draggedElRect.top <= newMousePosition.y && draggedElRect.bottom >= newMousePosition.y;
 
   return isContainedInWidth && isContainedInHeight;
 }
@@ -173,7 +183,7 @@ testSuite({
   /** @suppress {checkTypes} suppression added to enable type checking */
   setUp() {
     const sandbox = dom.getElement('sandbox');
-    list = dom.createDom(TagName.DIV, {'id': 'horiz_div'});
+    list = dom.createDom(TagName.DIV, { id: 'horiz_div' });
     list.appendChild(dom.createDom(TagName.DIV, null, dom.createTextNode('1')));
     list.appendChild(dom.createDom(TagName.DIV, null, dom.createTextNode('2')));
     list.appendChild(dom.createDom(TagName.DIV, null, dom.createTextNode('3')));
@@ -216,25 +226,26 @@ testSuite({
    * @suppress {visibility,checkTypes} suppression added to enable type checking
    */
   testSettersAfterInit() {
-    assertTrue(googArray.equals(
-        dlg.dragItemHoverClasses_, ['opacity_40', 'cursor_move']));
-    assertTrue(googArray.equals(
-        dlg.dragItemHandleHoverClasses_, ['opacity_40', 'cursor_pointer']));
-    assertTrue(
-        googArray.equals(dlg.currDragItemClasses_, ['blue_bg', 'opacity_40']));
+    assertTrue(googArray.equals(dlg.dragItemHoverClasses_, ['opacity_40', 'cursor_move']));
+    assertTrue(googArray.equals(dlg.dragItemHandleHoverClasses_, ['opacity_40', 'cursor_pointer']));
+    assertTrue(googArray.equals(dlg.currDragItemClasses_, ['blue_bg', 'opacity_40']));
 
     assertFalse(
-        'Should have no cursor_move class after init',
-        classlist.contains(event.currentTarget, 'cursor_move'));
+      'Should have no cursor_move class after init',
+      classlist.contains(event.currentTarget, 'cursor_move')
+    );
     assertFalse(
-        'Should have no cursor_pointer class after init',
-        classlist.contains(event.currentTarget, 'cursor_pointer'));
+      'Should have no cursor_pointer class after init',
+      classlist.contains(event.currentTarget, 'cursor_pointer')
+    );
     assertFalse(
-        'Should have no opacity_40 class after init',
-        classlist.contains(event.currentTarget, 'opacity_40'));
+      'Should have no opacity_40 class after init',
+      classlist.contains(event.currentTarget, 'opacity_40')
+    );
     assertFalse(
-        'Should not have blue_bg class after init',
-        classlist.contains(event.currentTarget, 'blue_bg'));
+      'Should not have blue_bg class after init',
+      classlist.contains(event.currentTarget, 'blue_bg')
+    );
   },
 
   /**
@@ -247,17 +258,21 @@ testSuite({
     dlg.handleDragItemMouseover_(event);
 
     assertTrue(
-        'Should have cursor_move class after MOUSEOVER',
-        classlist.contains(event.currentTarget, 'cursor_move'));
+      'Should have cursor_move class after MOUSEOVER',
+      classlist.contains(event.currentTarget, 'cursor_move')
+    );
     assertTrue(
-        'Should have opacity_40 class after MOUSEOVER',
-        classlist.contains(event.currentTarget, 'opacity_40'));
+      'Should have opacity_40 class after MOUSEOVER',
+      classlist.contains(event.currentTarget, 'opacity_40')
+    );
     assertFalse(
-        'Should not have cursor_pointer class after MOUSEOVER',
-        classlist.contains(event.currentTarget, 'cursor_pointer'));
+      'Should not have cursor_pointer class after MOUSEOVER',
+      classlist.contains(event.currentTarget, 'cursor_pointer')
+    );
     assertFalse(
-        'Should not have blue_bg class after MOUSEOVER',
-        classlist.contains(event.currentTarget, 'blue_bg'));
+      'Should not have blue_bg class after MOUSEOVER',
+      classlist.contains(event.currentTarget, 'blue_bg')
+    );
   },
 
   /**
@@ -268,17 +283,21 @@ testSuite({
     dlg.handleDragItemHandleMouseover_(event);
 
     assertFalse(
-        'Should not have cursor_move class after MOUSEOVER',
-        classlist.contains(event.currentTarget, 'cursor_move'));
+      'Should not have cursor_move class after MOUSEOVER',
+      classlist.contains(event.currentTarget, 'cursor_move')
+    );
     assertTrue(
-        'Should have opacity_40 class after MOUSEOVER',
-        classlist.contains(event.currentTarget, 'opacity_40'));
+      'Should have opacity_40 class after MOUSEOVER',
+      classlist.contains(event.currentTarget, 'opacity_40')
+    );
     assertTrue(
-        'Should have cursor_pointer class after MOUSEOVER',
-        classlist.contains(event.currentTarget, 'cursor_pointer'));
+      'Should have cursor_pointer class after MOUSEOVER',
+      classlist.contains(event.currentTarget, 'cursor_pointer')
+    );
     assertFalse(
-        'Should not have blue_bg class after MOUSEOVER',
-        classlist.contains(event.currentTarget, 'blue_bg'));
+      'Should not have blue_bg class after MOUSEOVER',
+      classlist.contains(event.currentTarget, 'blue_bg')
+    );
   },
 
   /**
@@ -292,17 +311,21 @@ testSuite({
     dlg.handleDragItemMouseout_(event);
 
     assertFalse(
-        'Should have no cursor_move class after MOUSEOUT',
-        classlist.contains(event.currentTarget, 'cursor_move'));
+      'Should have no cursor_move class after MOUSEOUT',
+      classlist.contains(event.currentTarget, 'cursor_move')
+    );
     assertFalse(
-        'Should have no cursor_pointer class after MOUSEOUT',
-        classlist.contains(event.currentTarget, 'cursor_pointer'));
+      'Should have no cursor_pointer class after MOUSEOUT',
+      classlist.contains(event.currentTarget, 'cursor_pointer')
+    );
     assertFalse(
-        'Should have no opacity_40 class after MOUSEOUT',
-        classlist.contains(event.currentTarget, 'opacity_40'));
+      'Should have no opacity_40 class after MOUSEOUT',
+      classlist.contains(event.currentTarget, 'opacity_40')
+    );
     assertFalse(
-        'Should have no blue_bg class after MOUSEOUT',
-        classlist.contains(event.currentTarget, 'blue_bg'));
+      'Should have no blue_bg class after MOUSEOUT',
+      classlist.contains(event.currentTarget, 'blue_bg')
+    );
   },
 
   /**
@@ -314,17 +337,21 @@ testSuite({
     dlg.handleDragItemHandleMouseout_(event);
 
     assertFalse(
-        'Should have no cursor_move class after MOUSEOUT',
-        classlist.contains(event.currentTarget, 'cursor_move'));
+      'Should have no cursor_move class after MOUSEOUT',
+      classlist.contains(event.currentTarget, 'cursor_move')
+    );
     assertFalse(
-        'Should have no cursor_pointer class after MOUSEOUT',
-        classlist.contains(event.currentTarget, 'cursor_pointer'));
+      'Should have no cursor_pointer class after MOUSEOUT',
+      classlist.contains(event.currentTarget, 'cursor_pointer')
+    );
     assertFalse(
-        'Should have no opacity_40 class after MOUSEOUT',
-        classlist.contains(event.currentTarget, 'opacity_40'));
+      'Should have no opacity_40 class after MOUSEOUT',
+      classlist.contains(event.currentTarget, 'opacity_40')
+    );
     assertFalse(
-        'Should have no blue_bg class after MOUSEOUT',
-        classlist.contains(event.currentTarget, 'blue_bg'));
+      'Should have no blue_bg class after MOUSEOUT',
+      classlist.contains(event.currentTarget, 'blue_bg')
+    );
   },
 
   /**
@@ -349,17 +376,21 @@ testSuite({
     dlg.handlePotentialDragStart_(event);
 
     assertFalse(
-        'Should have no cursor_move class after MOUSEDOWN',
-        classlist.contains(dlg.currDragItem_, 'cursor_move'));
+      'Should have no cursor_move class after MOUSEDOWN',
+      classlist.contains(dlg.currDragItem_, 'cursor_move')
+    );
     assertFalse(
-        'Should have no cursor_pointer class after MOUSEDOWN',
-        classlist.contains(dlg.currDragItem_, 'cursor_pointer'));
+      'Should have no cursor_pointer class after MOUSEDOWN',
+      classlist.contains(dlg.currDragItem_, 'cursor_pointer')
+    );
     assertTrue(
-        'Should have opacity_40 class after MOUSEDOWN',
-        classlist.contains(dlg.currDragItem_, 'opacity_40'));
+      'Should have opacity_40 class after MOUSEDOWN',
+      classlist.contains(dlg.currDragItem_, 'opacity_40')
+    );
     assertTrue(
-        'Should have blue_bg class after MOUSEDOWN',
-        classlist.contains(dlg.currDragItem_, 'blue_bg'));
+      'Should have blue_bg class after MOUSEDOWN',
+      classlist.contains(dlg.currDragItem_, 'blue_bg')
+    );
   },
 
   /**
@@ -384,7 +415,10 @@ testSuite({
     // Need to catch the dispatched event because the temporary fields
     // including dlg.currentDragItem_ are cleared after the dragging has ended.
     let currDragItem = dom.createDom(
-        TagName.DIV, ['cursor_move', 'blue_bg'], dom.createTextNode('4'));
+      TagName.DIV,
+      ['cursor_move', 'blue_bg'],
+      dom.createTextNode('4')
+    );
     events.listen(dlg, DragListGroup.EventType.DRAGEND, (e) => {
       /** @suppress {visibility} suppression added to enable type checking */
       currDragItem = dlg.currDragItem_;
@@ -395,39 +429,43 @@ testSuite({
     be.type = EventType.MOUSEUP;
     be.clientX = 1;
     be.clientY = 2;
-    const dragEvent = new FxDragEvent(
-        Dragger.EventType.END, dragger, be.clientX, be.clientY, be);
-    dlg.handleDragEnd_(dragEvent);  // this method dispatches the DRAGEND event
+    const dragEvent = new FxDragEvent(Dragger.EventType.END, dragger, be.clientX, be.clientY, be);
+    dlg.handleDragEnd_(dragEvent); // this method dispatches the DRAGEND event
     dragger.dispose();
 
     assertFalse(
-        'Should have no cursor_move class after MOUSEUP',
-        classlist.contains(currDragItem, 'cursor_move'));
+      'Should have no cursor_move class after MOUSEUP',
+      classlist.contains(currDragItem, 'cursor_move')
+    );
     assertFalse(
-        'Should have no cursor_pointer class after MOUSEUP',
-        classlist.contains(currDragItem, 'cursor_pointer'));
+      'Should have no cursor_pointer class after MOUSEUP',
+      classlist.contains(currDragItem, 'cursor_pointer')
+    );
     assertFalse(
-        'Should have no opacity_40 class after MOUSEUP',
-        classlist.contains(currDragItem, 'opacity_40'));
+      'Should have no opacity_40 class after MOUSEUP',
+      classlist.contains(currDragItem, 'opacity_40')
+    );
     assertFalse(
-        'Should have no blue_bg class after MOUSEUP',
-        classlist.contains(currDragItem, 'blue_bg'));
+      'Should have no blue_bg class after MOUSEUP',
+      classlist.contains(currDragItem, 'blue_bg')
+    );
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testFiredEvents() {
     testingEvents.fireClickSequence(list.firstChild);
     assertArrayEquals(
-        'event types in case of zero distance dragging',
-        [
-          DragListGroup.EventType.DRAGGERCREATED.toString(),
-          DragListGroup.EventType.BEFOREDRAGSTART.toString(),
-          DragListGroup.EventType.DRAGSTART.toString(),
-          DragListGroup.EventType.BEFOREDRAGEND.toString(),
-          DragListGroup.EventType.DRAGGERREMOVED.toString(),
-          DragListGroup.EventType.DRAGEND.toString(),
-        ],
-        firedEventTypes);
+      'event types in case of zero distance dragging',
+      [
+        DragListGroup.EventType.DRAGGERCREATED.toString(),
+        DragListGroup.EventType.BEFOREDRAGSTART.toString(),
+        DragListGroup.EventType.DRAGSTART.toString(),
+        DragListGroup.EventType.BEFOREDRAGEND.toString(),
+        DragListGroup.EventType.DRAGGERREMOVED.toString(),
+        DragListGroup.EventType.DRAGEND.toString(),
+      ],
+      firedEventTypes
+    );
     assertIdle(dlg);
   },
 
@@ -437,82 +475,85 @@ testSuite({
 
     testingEvents.fireClickSequence(list.firstChild);
     assertArrayEquals(
-        'only clone events are fired on click if hysteresis is enabled',
-        [
-          DragListGroup.EventType.DRAGGERCREATED.toString(),
-          DragListGroup.EventType.DRAGGERREMOVED.toString(),
-        ],
-        firedEventTypes);
+      'only clone events are fired on click if hysteresis is enabled',
+      [
+        DragListGroup.EventType.DRAGGERCREATED.toString(),
+        DragListGroup.EventType.DRAGGERREMOVED.toString(),
+      ],
+      firedEventTypes
+    );
     firedEventTypes.length = 0;
     assertIdle(dlg);
 
-    testingEvents.fireMouseDownEvent(
-        list.firstChild, null, new Coordinate(0, 0));
+    testingEvents.fireMouseDownEvent(list.firstChild, null, new Coordinate(0, 0));
     testingEvents.fireMouseMoveEvent(list.firstChild, new Coordinate(1, 0));
     assertArrayEquals(
-        'only potential-start event is fired on click if hysteresis is enabled',
-        [DragListGroup.EventType.DRAGGERCREATED.toString()], firedEventTypes);
+      'only potential-start event is fired on click if hysteresis is enabled',
+      [DragListGroup.EventType.DRAGGERCREATED.toString()],
+      firedEventTypes
+    );
     firedEventTypes.length = 0;
 
     testingEvents.fireMouseMoveEvent(list.firstChild, new Coordinate(3, 0));
     assertArrayEquals(
-        'start+move events are fired over hysteresis distance',
-        [
-          DragListGroup.EventType.BEFOREDRAGSTART.toString(),
-          DragListGroup.EventType.DRAGSTART.toString(),
-          DragListGroup.EventType.BEFOREDRAGMOVE.toString(),
-          DragListGroup.EventType.DRAGMOVE.toString(),
-        ],
-        firedEventTypes);
+      'start+move events are fired over hysteresis distance',
+      [
+        DragListGroup.EventType.BEFOREDRAGSTART.toString(),
+        DragListGroup.EventType.DRAGSTART.toString(),
+        DragListGroup.EventType.BEFOREDRAGMOVE.toString(),
+        DragListGroup.EventType.DRAGMOVE.toString(),
+      ],
+      firedEventTypes
+    );
     assertTrue(dlg.isDragging());
 
     firedEventTypes.length = 0;
     testingEvents.fireMouseUpEvent(list.firstChild, null, new Coordinate(3, 0));
     assertArrayEquals(
-        'end events are fired on mouseup',
-        [
-          DragListGroup.EventType.BEFOREDRAGEND.toString(),
-          DragListGroup.EventType.DRAGGERREMOVED.toString(),
-          DragListGroup.EventType.DRAGEND.toString(),
-        ],
-        firedEventTypes);
+      'end events are fired on mouseup',
+      [
+        DragListGroup.EventType.BEFOREDRAGEND.toString(),
+        DragListGroup.EventType.DRAGGERREMOVED.toString(),
+        DragListGroup.EventType.DRAGEND.toString(),
+      ],
+      firedEventTypes
+    );
     assertIdle(dlg);
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testPreventDefaultBeforeDragStart() {
-    events.listen(
-        dlg, DragListGroup.EventType.BEFOREDRAGSTART, GoogEvent.preventDefault);
+    events.listen(dlg, DragListGroup.EventType.BEFOREDRAGSTART, GoogEvent.preventDefault);
 
     testingEvents.fireMouseDownEvent(list.firstChild);
     assertArrayEquals(
-        'event types if dragging is prevented',
-        [
-          DragListGroup.EventType.DRAGGERCREATED.toString(),
-          DragListGroup.EventType.BEFOREDRAGSTART.toString(),
-          DragListGroup.EventType.DRAGGERREMOVED.toString(),
-        ],
-        firedEventTypes);
+      'event types if dragging is prevented',
+      [
+        DragListGroup.EventType.DRAGGERCREATED.toString(),
+        DragListGroup.EventType.BEFOREDRAGSTART.toString(),
+        DragListGroup.EventType.DRAGGERREMOVED.toString(),
+      ],
+      firedEventTypes
+    );
     assertIdle(dlg);
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testPreventDefaultBeforeDragStartWithHysteresis() {
     dlg.setHysteresis(5);
-    events.listen(
-        dlg, DragListGroup.EventType.BEFOREDRAGSTART, GoogEvent.preventDefault);
+    events.listen(dlg, DragListGroup.EventType.BEFOREDRAGSTART, GoogEvent.preventDefault);
 
-    testingEvents.fireMouseDownEvent(
-        list.firstChild, null, new Coordinate(0, 0));
+    testingEvents.fireMouseDownEvent(list.firstChild, null, new Coordinate(0, 0));
     testingEvents.fireMouseMoveEvent(list.firstChild, new Coordinate(10, 0));
     assertArrayEquals(
-        'event types if dragging is prevented',
-        [
-          DragListGroup.EventType.DRAGGERCREATED.toString(),
-          DragListGroup.EventType.BEFOREDRAGSTART.toString(),
-          DragListGroup.EventType.DRAGGERREMOVED.toString(),
-        ],
-        firedEventTypes);
+      'event types if dragging is prevented',
+      [
+        DragListGroup.EventType.DRAGGERCREATED.toString(),
+        DragListGroup.EventType.BEFOREDRAGSTART.toString(),
+        DragListGroup.EventType.DRAGGERREMOVED.toString(),
+      ],
+      firedEventTypes
+    );
     assertIdle(dlg);
   },
 
@@ -540,26 +581,25 @@ testSuite({
    * @suppress {checkTypes} suppression added to enable type checking
    */
   testAddItemToDragList() {
-    const item =
-        dom.createDom(TagName.DIV, null, dom.createTextNode('newItem'));
+    const item = dom.createDom(TagName.DIV, null, dom.createTextNode('newItem'));
 
     dlg.addItemToDragList(list, item);
 
     assertEquals(item, list.lastChild);
     assertEquals(4, dom.getChildren(list).length);
 
-    events.listen(
-        dlg, DragListGroup.EventType.BEFOREDRAGSTART, GoogEvent.preventDefault);
+    events.listen(dlg, DragListGroup.EventType.BEFOREDRAGSTART, GoogEvent.preventDefault);
 
     testingEvents.fireMouseDownEvent(item);
     assertArrayEquals(
-        'Should fire beforedragstart event when clicked',
-        [
-          DragListGroup.EventType.DRAGGERCREATED.toString(),
-          DragListGroup.EventType.BEFOREDRAGSTART.toString(),
-          DragListGroup.EventType.DRAGGERREMOVED.toString(),
-        ],
-        firedEventTypes);
+      'Should fire beforedragstart event when clicked',
+      [
+        DragListGroup.EventType.DRAGGERCREATED.toString(),
+        DragListGroup.EventType.BEFOREDRAGSTART.toString(),
+        DragListGroup.EventType.DRAGGERREMOVED.toString(),
+      ],
+      firedEventTypes
+    );
   },
 
   /**
@@ -568,26 +608,25 @@ testSuite({
    * @suppress {checkTypes} suppression added to enable type checking
    */
   testInsertItemInDragList() {
-    const item =
-        dom.createDom(TagName.DIV, null, dom.createTextNode('newItem'));
+    const item = dom.createDom(TagName.DIV, null, dom.createTextNode('newItem'));
 
     dlg.addItemToDragList(list, item, 0);
 
     assertEquals(item, list.firstChild);
     assertEquals(4, dom.getChildren(list).length);
 
-    events.listen(
-        dlg, DragListGroup.EventType.BEFOREDRAGSTART, GoogEvent.preventDefault);
+    events.listen(dlg, DragListGroup.EventType.BEFOREDRAGSTART, GoogEvent.preventDefault);
 
     testingEvents.fireMouseDownEvent(item);
     assertArrayEquals(
-        'Should fire beforedragstart event when clicked',
-        [
-          DragListGroup.EventType.DRAGGERCREATED.toString(),
-          DragListGroup.EventType.BEFOREDRAGSTART.toString(),
-          DragListGroup.EventType.DRAGGERREMOVED.toString(),
-        ],
-        firedEventTypes);
+      'Should fire beforedragstart event when clicked',
+      [
+        DragListGroup.EventType.DRAGGERCREATED.toString(),
+        DragListGroup.EventType.BEFOREDRAGSTART.toString(),
+        DragListGroup.EventType.DRAGGERREMOVED.toString(),
+      ],
+      firedEventTypes
+    );
   },
 
   testOnlyDropDragPermission_noItemDragEvents() {
@@ -595,19 +634,22 @@ testSuite({
 
     testingEvents.fireMouseDownEvent(list.firstChild);
     assertArrayEquals(
-        'Expect no events to be fired on a list with only drop permission.', [],
-        firedEventTypes);
+      'Expect no events to be fired on a list with only drop permission.',
+      [],
+      firedEventTypes
+    );
     firedEventTypes.length = 0;
 
     testingEvents.fireMouseDownEvent(list2.firstChild);
     assertArrayEquals(
-        'Expect normal events to be fired on a list with the default permission.',
-        [
-          DragListGroup.EventType.DRAGGERCREATED.toString(),
-          DragListGroup.EventType.BEFOREDRAGSTART.toString(),
-          DragListGroup.EventType.DRAGSTART.toString(),
-        ],
-        firedEventTypes);
+      'Expect normal events to be fired on a list with the default permission.',
+      [
+        DragListGroup.EventType.DRAGGERCREATED.toString(),
+        DragListGroup.EventType.BEFOREDRAGSTART.toString(),
+        DragListGroup.EventType.DRAGSTART.toString(),
+      ],
+      firedEventTypes
+    );
     firedEventTypes.length = 0;
   },
 
@@ -618,8 +660,10 @@ testSuite({
     // When the user starts a drag on the first item of the second list.
     testingEvents.fireMouseDownEvent(list2.firstChild);
     assertEquals(
-        'Expect the current drag item to be the first child of the second list.',
-        dlg.currDragItem_, list2.firstChild);
+      'Expect the current drag item to be the first child of the second list.',
+      dlg.currDragItem_,
+      list2.firstChild
+    );
     firedEventTypes.length = 0;
 
     /** @suppress {checkTypes} suppression added to enable type checking */
@@ -639,21 +683,29 @@ testSuite({
 
     /** @suppress {visibility} suppression added to enable type checking */
     let dragEvent = new FxDragEvent(
-        Dragger.EventType.DRAG, dlg.dragger_, be.clientX, be.clientY, be);
+      Dragger.EventType.DRAG,
+      dlg.dragger_,
+      be.clientX,
+      be.clientY,
+      be
+    );
     dlg.handleDragMove_(dragEvent);
 
     assertArrayEquals(
-        'Expect drag events to be fired.',
-        [
-          DragListGroup.EventType.BEFOREDRAGMOVE.toString(),
-          DragListGroup.EventType.DRAGMOVE.toString(),
-        ],
-        firedEventTypes);
+      'Expect drag events to be fired.',
+      [
+        DragListGroup.EventType.BEFOREDRAGMOVE.toString(),
+        DragListGroup.EventType.DRAGMOVE.toString(),
+      ],
+      firedEventTypes
+    );
     firedEventTypes.length = 0;
 
     assertNotEquals(
-        'Expect the current drag item to not start display: none.', 'none',
-        dlg.currDragItem_.style.display);
+      'Expect the current drag item to not start display: none.',
+      'none',
+      dlg.currDragItem_.style.display
+    );
 
     // When the user drags the item over the first list.
     const posList = style.getPosition(list.children[1]);
@@ -665,27 +717,30 @@ testSuite({
     dlg.draggerEl_.style.top = be.clientY + 'px';
 
     /** @suppress {visibility} suppression added to enable type checking */
-    dragEvent = new FxDragEvent(
-        Dragger.EventType.DRAG, dlg.dragger_, be.clientX, be.clientY, be);
+    dragEvent = new FxDragEvent(Dragger.EventType.DRAG, dlg.dragger_, be.clientX, be.clientY, be);
 
     dlg.handleDragMove_(dragEvent);
     assertArrayEquals(
-        'Expect drag events to be fired.',
-        [
-          DragListGroup.EventType.BEFOREDRAGMOVE.toString(),
-          DragListGroup.EventType.DRAGMOVE.toString(),
-        ],
-        firedEventTypes);
+      'Expect drag events to be fired.',
+      [
+        DragListGroup.EventType.BEFOREDRAGMOVE.toString(),
+        DragListGroup.EventType.DRAGMOVE.toString(),
+      ],
+      firedEventTypes
+    );
     firedEventTypes.length = 0;
     assertTrue(dlg.isDragging());
 
     assertNotEquals(
-        'Expect the current drag item to still not be shown.', 'none',
-        dlg.currDragItem_.style.display);
+      'Expect the current drag item to still not be shown.',
+      'none',
+      dlg.currDragItem_.style.display
+    );
 
     assertTrue(
-        'Expect the first list to have the list hover class.',
-        classlist.contains(list, 'test_hover_class'));
+      'Expect the first list to have the list hover class.',
+      classlist.contains(list, 'test_hover_class')
+    );
   },
 
   testOnlyDragOutDragPermission_hasItemDragEvents() {
@@ -693,14 +748,14 @@ testSuite({
 
     testingEvents.fireMouseDownEvent(list.firstChild);
     assertArrayEquals(
-        'Expect normal events to be fired on a list with the only drag out ' +
-            'permission.',
-        [
-          DragListGroup.EventType.DRAGGERCREATED.toString(),
-          DragListGroup.EventType.BEFOREDRAGSTART.toString(),
-          DragListGroup.EventType.DRAGSTART.toString(),
-        ],
-        firedEventTypes);
+      'Expect normal events to be fired on a list with the only drag out ' + 'permission.',
+      [
+        DragListGroup.EventType.DRAGGERCREATED.toString(),
+        DragListGroup.EventType.BEFOREDRAGSTART.toString(),
+        DragListGroup.EventType.DRAGSTART.toString(),
+      ],
+      firedEventTypes
+    );
     firedEventTypes.length = 0;
   },
 
@@ -711,8 +766,10 @@ testSuite({
     // When the user starts a drag on the first item of the second list.
     testingEvents.fireMouseDownEvent(list2.firstChild);
     assertEquals(
-        'Expect the current drag item to be the first child of the second list.',
-        dlg.currDragItem_, list2.firstChild);
+      'Expect the current drag item to be the first child of the second list.',
+      dlg.currDragItem_,
+      list2.firstChild
+    );
     firedEventTypes.length = 0;
 
     /** @suppress {checkTypes} suppression added to enable type checking */
@@ -732,21 +789,29 @@ testSuite({
 
     /** @suppress {visibility} suppression added to enable type checking */
     let dragEvent = new FxDragEvent(
-        Dragger.EventType.DRAG, dlg.dragger_, be.clientX, be.clientY, be);
+      Dragger.EventType.DRAG,
+      dlg.dragger_,
+      be.clientX,
+      be.clientY,
+      be
+    );
     dlg.handleDragMove_(dragEvent);
 
     assertArrayEquals(
-        'Expect drag events to be fired.',
-        [
-          DragListGroup.EventType.BEFOREDRAGMOVE.toString(),
-          DragListGroup.EventType.DRAGMOVE.toString(),
-        ],
-        firedEventTypes);
+      'Expect drag events to be fired.',
+      [
+        DragListGroup.EventType.BEFOREDRAGMOVE.toString(),
+        DragListGroup.EventType.DRAGMOVE.toString(),
+      ],
+      firedEventTypes
+    );
     firedEventTypes.length = 0;
 
     assertNotEquals(
-        'Expect the current drag item to not start display: none.', 'none',
-        dlg.currDragItem_.style.display);
+      'Expect the current drag item to not start display: none.',
+      'none',
+      dlg.currDragItem_.style.display
+    );
 
     // When the user drags the item over the first list.
     const posList = style.getPosition(list.children[1]);
@@ -758,26 +823,29 @@ testSuite({
     dlg.draggerEl_.style.top = be.clientY + 'px';
 
     /** @suppress {visibility} suppression added to enable type checking */
-    dragEvent = new FxDragEvent(
-        Dragger.EventType.DRAG, dlg.dragger_, be.clientX, be.clientY, be);
+    dragEvent = new FxDragEvent(Dragger.EventType.DRAG, dlg.dragger_, be.clientX, be.clientY, be);
 
     dlg.handleDragMove_(dragEvent);
     assertArrayEquals(
-        'Expect drag events to be fired.',
-        [
-          DragListGroup.EventType.BEFOREDRAGMOVE.toString(),
-          DragListGroup.EventType.DRAGMOVE.toString(),
-        ],
-        firedEventTypes);
+      'Expect drag events to be fired.',
+      [
+        DragListGroup.EventType.BEFOREDRAGMOVE.toString(),
+        DragListGroup.EventType.DRAGMOVE.toString(),
+      ],
+      firedEventTypes
+    );
     firedEventTypes.length = 0;
     assertTrue(dlg.isDragging());
 
     assertEquals(
-        'Expect the current drag item to now be display: none.', 'none',
-        dlg.currDragItem_.style.display);
+      'Expect the current drag item to now be display: none.',
+      'none',
+      dlg.currDragItem_.style.display
+    );
 
     assertFalse(
-        'Expect the first list to not have the list hover class.',
-        classlist.contains(list, 'test_hover_class'));
+      'Expect the first list to not have the list hover class.',
+      classlist.contains(list, 'test_hover_class')
+    );
   },
 });

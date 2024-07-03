@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.module.ModuleInfoTest');
-goog.setTestOnly();
 
 const BaseModule = goog.require('goog.module.BaseModule');
 const MockClock = goog.require('goog.testing.MockClock');
@@ -33,7 +32,7 @@ testSuite({
   testNotLoadedAtStart() {
     /** @suppress {checkTypes} suppression added to enable type checking */
     const m = new ModuleInfo();
-    assertFalse('Shouldn\'t be loaded', m.isLoaded());
+    assertFalse("Shouldn't be loaded", m.isLoaded());
   },
 
   /**
@@ -45,7 +44,7 @@ testSuite({
     const m = new ModuleInfo();
 
     m.setModuleConstructor(TestModule);
-    m.onLoad(/** @type {?} */ (() => {}));
+    m.onLoad(/** @type {?} */ () => {});
     assertTrue(m.isLoaded());
 
     const module = m.getModule();
@@ -54,9 +53,7 @@ testSuite({
 
     m.dispose();
     assertTrue(m.isDisposed());
-    assertTrue(
-        'Disposing of ModuleInfo should dispose of its module',
-        module.isDisposed());
+    assertTrue('Disposing of ModuleInfo should dispose of its module', module.isDisposed());
   },
 
   /**
@@ -86,7 +83,7 @@ testSuite({
       d = index++;
     });
     cb.abort();
-    m.onLoad(/** @type {?} */ (() => {}));
+    m.onLoad(/** @type {?} */ () => {});
 
     assertTrue('callback A should have fired', a >= 0);
     assertFalse('callback B should have been aborted', b >= 0);
@@ -142,7 +139,7 @@ testSuite({
     const cc = m.registerErrback(() => {
       c = index++;
     });
-    m.onError(/** @type {?} */ ('foo'));
+    m.onError(/** @type {?} */ 'foo');
 
     assertTrue('callback A should have fired', a >= 0);
     assertTrue('callback B should have fired', b >= 0);

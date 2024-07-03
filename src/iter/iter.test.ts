@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.iterTest');
-goog.setTestOnly();
 
 const IterIterator = goog.require('goog.iter.Iterator');
 const googIter = goog.require('goog.iter');
@@ -33,7 +32,6 @@ function productAsArray(var_args) {
 }
 
 testSuite({
-
   testEs6Next() {
     const iter = new IterIterator();
     const nextVal = iter.next();
@@ -54,9 +52,9 @@ testSuite({
 
   testForEachEs6() {
     let result = '';
-    const iterable = /** @type {!Iterable<string>} */ ({
+    const iterable = /** @type {!Iterable<string>} */ {
       [Symbol.iterator]: () => new ArrayIterator(['a', 'b', 'c', 'd']),
-    });
+    };
     for (const val of iterable) {
       // Unlike forEach, ES6 for-of iteration only provides value references.
       result += val;
@@ -195,15 +193,17 @@ testSuite({
   testReduce() {
     const iter = googIter.range(1, 5);
     assertEquals(
-        10,  // 1 + 2 + 3 + 4
-        googIter.reduce(iter, (val, el) => val + el, 0));
+      10, // 1 + 2 + 3 + 4
+      googIter.reduce(iter, (val, el) => val + el, 0)
+    );
   },
 
   testReduce2() {
     const iter = googIter.range(1, 5);
     assertEquals(
-        24,  // 4!
-        googIter.reduce(iter, (val, el) => val * el, 1));
+      24, // 4!
+      googIter.reduce(iter, (val, el) => val * el, 1)
+    );
   },
 
   testSome() {
@@ -249,7 +249,7 @@ testSuite({
     assertEquals('012345', googIter.join(iter4, ''));
 
     // empty iter
-    iter = new IterIterator;
+    iter = new IterIterator();
     iter2 = googIter.chain(iter);
     assertEquals('', googIter.join(iter2, ''));
 
@@ -339,7 +339,7 @@ testSuite({
     assertEquals('01234', array.join(''));
 
     // Empty
-    iter = new IterIterator;
+    iter = new IterIterator();
     array = googIter.toArray(iter);
     assertEquals('Empty iterator to array', '', array.join(''));
   },
@@ -369,8 +369,8 @@ testSuite({
     assertFalse('First one is longer', googIter.equals(iter, iter2));
 
     // 2 empty iterators
-    iter = new IterIterator;
-    iter2 = new IterIterator;
+    iter = new IterIterator();
+    iter2 = new IterIterator();
     assertTrue('Two empty iterators are equal', googIter.equals(iter, iter2));
 
     iter = googIter.range(4);
@@ -380,34 +380,30 @@ testSuite({
     iter = googIter.toIterator(['A', 'B', 'C']);
     iter2 = googIter.toIterator(['a', 'b', 'c']);
     const equalsFn = (a, b) => a.toLowerCase() == b.toLowerCase();
-    assertTrue(
-        'Case-insensitive equal', googIter.equals(iter, iter2, equalsFn));
+    assertTrue('Case-insensitive equal', googIter.equals(iter, iter2, equalsFn));
   },
 
   testToIterator() {
     /** @suppress {checkTypes} suppression added to enable type checking */
     let iter = new googIter.range(5);
     let iter2 = googIter.toIterator(iter);
-    assertEquals(
-        'toIterator on an iterator should return the same obejct', iter, iter2);
+    assertEquals('toIterator on an iterator should return the same obejct', iter, iter2);
 
     const iterLikeObject = {
-      next: function() {
-        return googIter.ES6_ITERATOR_DONE;
-      },
+      next: () => googIter.ES6_ITERATOR_DONE,
     };
     const obj = {
-      __iterator__: function(opt_keys) {
-        assertFalse(
-            '__iterator__ should always be called with false in toIterator',
-            opt_keys);
+      __iterator__: (opt_keys) => {
+        assertFalse('__iterator__ should always be called with false in toIterator', opt_keys);
         return iterLikeObject;
       },
     };
 
     assertEquals(
-        'Should return the return value of __iterator_(false)', iterLikeObject,
-        googIter.toIterator(obj));
+      'Should return the return value of __iterator_(false)',
+      iterLikeObject,
+      googIter.toIterator(obj)
+    );
 
     // Array
     const array = [0, 1, 2, 3, 4];
@@ -415,7 +411,7 @@ testSuite({
     assertEquals('01234', googIter.join(iter, ''));
 
     // Array like
-    const arrayLike = {'0': 0, '1': 1, '2': 2, length: 3};
+    const arrayLike = { '0': 0, '1': 1, '2': 2, length: 3 };
     iter = googIter.toIterator(arrayLike);
     assertEquals('012', googIter.join(iter, ''));
 
@@ -430,32 +426,45 @@ testSuite({
     const iter = googIter.toIterator([1]);
 
     assertEquals(
-        'Should return value when iterator is non-empty', 1,
-        googIter.nextOrValue(iter, null));
+      'Should return value when iterator is non-empty',
+      1,
+      googIter.nextOrValue(iter, null)
+    );
     assertNull(
-        'Should return given default when iterator is empty',
-        googIter.nextOrValue(iter, null));
+      'Should return given default when iterator is empty',
+      googIter.nextOrValue(iter, null)
+    );
     assertEquals(
-        'Should return given default when iterator is (still) empty', -1,
-        googIter.nextOrValue(iter, -1));
+      'Should return given default when iterator is (still) empty',
+      -1,
+      googIter.nextOrValue(iter, -1)
+    );
   },
 
   testProduct() {
     assertArrayEquals(
-        [[1, 3], [1, 4], [2, 3], [2, 4]], productAsArray([1, 2], [3, 4]));
+      [
+        [1, 3],
+        [1, 4],
+        [2, 3],
+        [2, 4],
+      ],
+      productAsArray([1, 2], [3, 4])
+    );
 
     assertArrayEquals(
-        [
-          [1, 3, 5],
-          [1, 3, 6],
-          [1, 4, 5],
-          [1, 4, 6],
-          [2, 3, 5],
-          [2, 3, 6],
-          [2, 4, 5],
-          [2, 4, 6],
-        ],
-        productAsArray([1, 2], [3, 4], [5, 6]));
+      [
+        [1, 3, 5],
+        [1, 3, 6],
+        [1, 4, 5],
+        [1, 4, 6],
+        [2, 3, 5],
+        [2, 3, 6],
+        [2, 4, 5],
+        [2, 4, 6],
+      ],
+      productAsArray([1, 2], [3, 4], [5, 6])
+    );
 
     assertArrayEquals([[1]], productAsArray([1]));
     assertArrayEquals([], productAsArray([1], []));
@@ -591,7 +600,7 @@ testSuite({
   },
 
   testRepeat() {
-    const obj = {foo: 'bar'};
+    const obj = { foo: 'bar' };
     const iter = googIter.repeat(obj);
     assertEquals(obj, iter.next().value);
     assertEquals(obj, iter.next().value);
@@ -687,8 +696,7 @@ testSuite({
   },
 
   testZipLongestIterators() {
-    const iter =
-        googIter.zipLongest(null, googIter.range(3), googIter.range(5));
+    const iter = googIter.zipLongest(null, googIter.range(3), googIter.range(5));
     assertArrayEquals([0, 0], iter.next().value);
     assertArrayEquals([1, 1], iter.next().value);
     assertArrayEquals([2, 2], iter.next().value);
@@ -739,7 +747,14 @@ testSuite({
 
   testStarMap() {
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const iter = googIter.starMap([[2, 5], [3, 2], [10, 3]], Math.pow);
+    const iter = googIter.starMap(
+      [
+        [2, 5],
+        [3, 2],
+        [10, 3],
+      ],
+      Math.pow
+    );
     assertEquals(32, iter.next().value);
     assertEquals(9, iter.next().value);
     assertEquals(1000, iter.next().value);
@@ -752,10 +767,17 @@ testSuite({
     const func = (string, radix, undef, iterator) => {
       assertEquals('undef should be undefined', 'undefined', typeof undef);
       assertTrue(iterator instanceof IterIterator);
-      return parseInt(string, radix);
+      return Number.parseInt(string, radix);
     };
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const iter = googIter.starMap([['42', 10], ['0xFF', 16], ['101', 2]], func);
+    const iter = googIter.starMap(
+      [
+        ['42', 10],
+        ['0xFF', 16],
+        ['101', 2],
+      ],
+      func
+    );
     assertEquals(42, iter.next().value);
     assertEquals(255, iter.next().value);
     assertEquals(5, iter.next().value);

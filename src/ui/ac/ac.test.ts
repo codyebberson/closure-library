@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.acTest');
-goog.setTestOnly();
 
 const BrowserEvent = goog.require('goog.events.BrowserEvent');
 const EventType = goog.require('goog.events.EventType');
@@ -60,11 +59,15 @@ function findNodeByInnerText(text) {
   return dom.findNode(document.body, (node) => {
     try {
       /** @suppress {checkTypes} suppression added to enable type checking */
-      const display = userAgent.IE ? style.getCascadedStyle(node, 'display') :
-                                     style.getComputedStyle(node, 'display');
+      const display = userAgent.IE
+        ? style.getCascadedStyle(node, 'display')
+        : style.getComputedStyle(node, 'display');
 
-      return dom.getRawTextContent(node) == text && 'none' != display &&
-          node.nodeType == NodeType.ELEMENT;
+      return (
+        dom.getRawTextContent(node) == text &&
+        'none' != display &&
+        node.nodeType == NodeType.ELEMENT
+      );
     } catch (e) {
       return false;
     }
@@ -153,18 +156,14 @@ testSuite({
     assert(!!findNodeByInnerText(data[2]));
 
     const selected = asserts.assertElement(findNodeByInnerText(data[0]));
-    assertTrue(
-        'Should have new standard active class',
-        classlist.contains(selected, 'ac-active'));
-    assertTrue(
-        'Should have legacy active class',
-        classlist.contains(selected, 'active'));
+    assertTrue('Should have new standard active class', classlist.contains(selected, 'ac-active'));
+    assertTrue('Should have legacy active class', classlist.contains(selected, 'active'));
 
     simulateAllKeyEventsOnInput(KeyCodes.DOWN);
-    assertFalse(classlist.contains(
-        asserts.assertElement(findNodeByInnerText(data[0])), 'ac-active'));
-    assert(classlist.contains(
-        asserts.assertElement(findNodeByInnerText(data[1])), 'ac-active'));
+    assertFalse(
+      classlist.contains(asserts.assertElement(findNodeByInnerText(data[0])), 'ac-active')
+    );
+    assert(classlist.contains(asserts.assertElement(findNodeByInnerText(data[1])), 'ac-active'));
 
     simulateAllKeyEventsOnInput(KeyCodes.ENTER);
     assertEquals('c, aab, ', input.value);

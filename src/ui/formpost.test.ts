@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.FormPostTest');
-goog.setTestOnly();
 
 const FormPost = goog.require('goog.ui.FormPost');
 const TagName = goog.require('goog.dom.TagName');
@@ -42,7 +41,7 @@ function expectUrlAndParameters(url, target, parameters) {
   assertEquals('target attribute', target, form.target);
   const inputs = dom.getElementsByTagNameAndClass(TagName.INPUT, null, form);
   const formValues = {};
-  for (let i = 0, input = inputs[i]; input = inputs[i]; i++) {
+  for (let i = 0, input = inputs[i]; (input = inputs[i]); i++) {
     if (Array.isArray(formValues[input.name])) {
       formValues[input.name].push(input.value);
     } else if (input.name in formValues) {
@@ -67,7 +66,7 @@ testSuite({
     submits = 0;
 
     // Replace the form's submit method with a fake.
-    FormPost.prototype.createDom = function() {
+    FormPost.prototype.createDom = function () {
       originalCreateDom.apply(this, arguments);
 
       /**
@@ -78,7 +77,7 @@ testSuite({
         submits++;
       };
     };
-    parameters = {'foo': 'bar', 'baz': 1, 'array': [0, 'yes']};
+    parameters = { foo: 'bar', baz: 1, array: [0, 'yes'] };
   },
 
   tearDown() {

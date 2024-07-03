@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.net.XhrIoTest');
-goog.setTestOnly();
 
 const ErrorCode = goog.require('goog.net.ErrorCode');
 const EventType = goog.require('goog.net.EventType');
@@ -38,22 +37,18 @@ testSuite({
     const xhr = sendInstances[sendInstances.length - 1];
     assertTrue('isActive after request', xhr.isActive());
     assertEquals(returnedXhr, xhr);
-    assertEquals(
-        'readyState after request', XmlHttp.ReadyState.LOADING,
-        xhr.getReadyState());
+    assertEquals('readyState after request', XmlHttp.ReadyState.LOADING, xhr.getReadyState());
 
     xhr.simulateResponse(200, '');
     assertFalse('isActive after response', xhr.isActive());
-    assertEquals(
-        'readyState after response', XmlHttp.ReadyState.COMPLETE,
-        xhr.getReadyState());
+    assertEquals('readyState after response', XmlHttp.ReadyState.COMPLETE, xhr.getReadyState());
 
     xhr.simulateReady();
     assertEquals('sendInstances_ after READY', 0, sendInstances.length);
   },
 
   testStaticSendWithException() {
-    XhrIo.send('url', function() {
+    XhrIo.send('url', function () {
       if (!this.isSuccess()) {
         throw new Error('The xhr did not complete successfully!');
       }
@@ -67,35 +62,37 @@ testSuite({
       // the class cleans itself up properly when an exception is
       // thrown.
     }
-    assertEquals(
-        'Send instance array not cleaned up properly!', 0,
-        sendInstances.length);
+    assertEquals('Send instance array not cleaned up properly!', 0, sendInstances.length);
   },
 
   testMultipleSend() {
     const xhr = new XhrIo();
     assertFalse('isActive before first request', xhr.isActive());
     assertEquals(
-        'readyState before first request', XmlHttp.ReadyState.UNINITIALIZED,
-        xhr.getReadyState());
+      'readyState before first request',
+      XmlHttp.ReadyState.UNINITIALIZED,
+      xhr.getReadyState()
+    );
 
     xhr.send('url');
     assertTrue('isActive after first request', xhr.isActive());
-    assertEquals(
-        'readyState after first request', XmlHttp.ReadyState.LOADING,
-        xhr.getReadyState());
+    assertEquals('readyState after first request', XmlHttp.ReadyState.LOADING, xhr.getReadyState());
 
     xhr.simulateResponse(200, '');
     assertFalse('isActive after first response', xhr.isActive());
     assertEquals(
-        'readyState after first response', XmlHttp.ReadyState.COMPLETE,
-        xhr.getReadyState());
+      'readyState after first response',
+      XmlHttp.ReadyState.COMPLETE,
+      xhr.getReadyState()
+    );
 
     xhr.send('url');
     assertTrue('isActive after second request', xhr.isActive());
     assertEquals(
-        'readyState after second request', XmlHttp.ReadyState.LOADING,
-        xhr.getReadyState());
+      'readyState after second request',
+      XmlHttp.ReadyState.LOADING,
+      xhr.getReadyState()
+    );
   },
 
   testGetLastUri() {
@@ -126,8 +123,7 @@ testSuite({
 
     const postContent = 'var=value&var2=value2';
     xhr.send('http://www.example.com/', undefined, postContent);
-    assertEquals(
-        'POST message sent, content saved', postContent, xhr.getLastContent());
+    assertEquals('POST message sent, content saved', postContent, xhr.getLastContent());
     xhr.simulateResponse(200, '');
 
     xhr.send('http://www.example.com/');
@@ -136,29 +132,33 @@ testSuite({
 
   testGetLastRequestHeaders() {
     const xhr = new XhrIo();
-    assertUndefined(
-        'nothing sent yet, empty headers', xhr.getLastRequestHeaders());
+    assertUndefined('nothing sent yet, empty headers', xhr.getLastRequestHeaders());
 
-    xhr.send(
-        'http://www.example.com/', undefined, undefined,
-        {'From': 'page@google.com'});
+    xhr.send('http://www.example.com/', undefined, undefined, {
+      From: 'page@google.com',
+    });
     assertObjectEquals(
-        'Request sent with extra headers, headers saved',
-        {'From': 'page@google.com'}, xhr.getLastRequestHeaders());
+      'Request sent with extra headers, headers saved',
+      { From: 'page@google.com' },
+      xhr.getLastRequestHeaders()
+    );
     xhr.simulateResponse(200, '');
 
     xhr.send('http://www.example.com');
-    assertUndefined(
-        'New request sent without extra headers', xhr.getLastRequestHeaders());
+    assertUndefined('New request sent without extra headers', xhr.getLastRequestHeaders());
     xhr.simulateResponse(200, '');
 
     xhr.headers.set('X', 'A');
     xhr.headers.set('Y', 'B');
-    xhr.send(
-        'http://www.example.com/', undefined, undefined, {'Y': 'P', 'Z': 'Q'});
+    xhr.send('http://www.example.com/', undefined, undefined, {
+      Y: 'P',
+      Z: 'Q',
+    });
     assertObjectEquals(
-        'Default headers combined with call headers',
-        {'X': 'A', 'Y': 'P', 'Z': 'Q'}, xhr.getLastRequestHeaders());
+      'Default headers combined with call headers',
+      { X: 'A', Y: 'P', Z: 'Q' },
+      xhr.getLastRequestHeaders()
+    );
     xhr.simulateResponse(200, '');
   },
 
@@ -206,9 +206,9 @@ testSuite({
     xhr = new XhrIo();
     events.listen(xhr, EventType.SUCCESS, (e) => {
       called = true;
-      assertArrayEquals([0, 1], e.target.getResponseJson(')]}\', \n'));
+      assertArrayEquals([0, 1], e.target.getResponseJson(")]}', \n"));
     });
-    xhr.simulateResponse(200, ')]}\', \n[0, 1]');
+    xhr.simulateResponse(200, ")]}', \n[0, 1]");
     assertTrue(called);
 
     // Outside the callback, getResponseJson returns undefined.
@@ -281,7 +281,7 @@ testSuite({
     xhr.simulateResponse(200, xml);
     assertEquals(xml, xhr.getResponseXml());
 
-    const headers = {'test1': 'foo', 'test2': 'bar'};
+    const headers = { test1: 'foo', test2: 'bar' };
     xhr.simulateResponse(200, '', headers);
     assertObjectEquals(headers, xhr.getResponseHeaders());
     assertEquals('test1: foo\r\ntest2: bar', xhr.getAllResponseHeaders());
@@ -315,7 +315,7 @@ testSuite({
     });
     mockControl.$replayAll();
     events.listen(xhr, EventType.SUCCESS, mockListener);
-    xhr.simulateResponse(200, '', {'Pragma': 'no-cache'});
+    xhr.simulateResponse(200, '', { Pragma: 'no-cache' });
 
     mockControl.$verifyAll();
     mockControl.$resetAll();
@@ -430,7 +430,7 @@ testSuite({
     events.listen(xhr, EventType.SUCCESS, mockListener);
 
     // Simulate an XHR with 2 headers.
-    xhr.simulateResponse(200, '', {'test1': 'foo', 'test2': 'bar'});
+    xhr.simulateResponse(200, '', { test1: 'foo', test2: 'bar' });
 
     // Outside the callback, getResponseHeaders returns an empty object.
     assertObjectEquals({}, xhr.getResponseHeaders());
@@ -452,7 +452,7 @@ testSuite({
     events.listen(xhr, EventType.SUCCESS, mockListener);
 
     // Simulate an XHR with a colon in the http header value.
-    xhr.simulateResponse(200, '', {'test1': 'f:o:o'});
+    xhr.simulateResponse(200, '', { test1: 'f:o:o' });
 
     mockControl.$verifyAll();
     mockControl.$resetAll();

@@ -7,7 +7,6 @@
 /** @fileoverview Unit tests for functions. */
 
 goog.module('goog.functionsTest');
-goog.setTestOnly();
 
 const MockClock = goog.require('goog.testing.MockClock');
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
@@ -24,12 +23,12 @@ let callOrder = null;
 
 const foo = 'global';
 const obj = {
-  foo: 'obj'
+  foo: 'obj',
 };
 
 /** @suppress {globalThis} suppression added to enable type checking */
 function getFoo(arg1, arg2) {
-  return {foo: this.foo, arg1: arg1, arg2: arg2};
+  return { foo: this.foo, arg1: arg1, arg2: arg2 };
 }
 
 function makeCallOrderLogger(name, returnValue) {
@@ -55,12 +54,11 @@ function assertCallOrderAndReset(expectedArray) {
  *     the execution of those commands.
  * @suppress {checkTypes} suppression added to enable type checking
  */
-function assertAsyncDecoratorCommandSequenceCalls(
-    decorator, expectedCommandSequenceCalls) {
+function assertAsyncDecoratorCommandSequenceCalls(decorator, expectedCommandSequenceCalls) {
   const interval = 500;
 
   const mockClock = new MockClock(true);
-  for (let commandSequence in expectedCommandSequenceCalls) {
+  for (const commandSequence in expectedCommandSequenceCalls) {
     const recordedFunction = recordFunction();
     /** @suppress {checkTypes} suppression added to enable type checking */
     const f = decorator(recordedFunction, interval);
@@ -78,22 +76,23 @@ function assertAsyncDecoratorCommandSequenceCalls(
 
     const expectedCalls = expectedCommandSequenceCalls[commandSequence];
     assertEquals(
-        `Expected ${expectedCalls} calls for command sequence "` +
-            commandSequence + '" (' +
-            Array.prototype.map
-                .call(
-                    commandSequence,
-                    command => {
-                      switch (command) {
-                        case 'f':
-                          return 'fire';
-                        case 'w':
-                          return 'wait';
-                      }
-                    })
-                .join(' -> ') +
-            ')',
-        expectedCalls, recordedFunction.getCallCount());
+      `Expected ${expectedCalls} calls for command sequence "` +
+        commandSequence +
+        '" (' +
+        Array.prototype.map
+          .call(commandSequence, (command) => {
+            switch (command) {
+              case 'f':
+                return 'fire';
+              case 'w':
+                return 'wait';
+            }
+          })
+          .join(' -> ') +
+        ')',
+      expectedCalls,
+      recordedFunction.getCallCount()
+    );
   }
   mockClock.uninstall();
 }
@@ -153,7 +152,7 @@ testSuite({
   },
 
   testPartialRightFreeFunction() {
-    const f = function(x, y) {
+    const f = function (x, y) {
       assertUndefined(this);
       return x / y;
     };
@@ -164,7 +163,7 @@ testSuite({
 
   testPartialRightWithCall() {
     const obj = {};
-    const f = function(x, y) {
+    const f = function (x, y) {
       assertEquals(obj, this);
       return x / y;
     };
@@ -224,7 +223,7 @@ testSuite({
 
     const arr = [1, 'b', null];
     assertEquals(arr, functions.identity(arr));
-    const obj = {a: 'ay', b: 'bee', c: 'see'};
+    const obj = { a: 'ay', b: 'bee', c: 'see' };
     assertEquals(obj, functions.identity(obj));
   },
 
@@ -236,16 +235,14 @@ testSuite({
 
   testError() {
     const f = functions.error('x');
-    const e = assertThrows(
-        'A function created by goog.functions.error must throw an error', f);
+    const e = assertThrows('A function created by goog.functions.error must throw an error', f);
     assertEquals('x', e.message);
   },
 
   testFail() {
     const obj = {};
     const f = functions.fail(obj);
-    const e = assertThrows(
-        'A function created by goog.functions.raise must throw its input', f);
+    const e = assertThrows('A function created by goog.functions.raise must throw its input', f);
     assertEquals(obj, e);
   },
 
@@ -258,8 +255,7 @@ testSuite({
     assertEquals(6, functions.compose(doubleValue, add2)(1));
     assertEquals(4, functions.compose(add2, doubleValue)(1));
     assertEquals(6, functions.compose(add2, add2, doubleValue)(1));
-    assertEquals(
-        12, functions.compose(doubleValue, add2, add2, doubleValue)(1));
+    assertEquals(12, functions.compose(doubleValue, add2, add2, doubleValue)(1));
     assertUndefined(functions.compose()(1));
     assertEquals(3, functions.compose(add2)(1));
 
@@ -338,7 +334,7 @@ testSuite({
   },
 
   testCreate(expectedArray) {
-    const tempConstructor = function(a, b) {
+    const tempConstructor = function (a, b) {
       this.foo = a;
       this.bar = b;
     };
@@ -353,7 +349,7 @@ testSuite({
 
   testWithReturnValue() {
     const obj = {};
-    const f = function(a, b) {
+    const f = function (a, b) {
       assertEquals(obj, this);
       assertEquals(1, a);
       assertEquals(2, b);
@@ -383,8 +379,7 @@ testSuite({
     const returnFive = () => 5;
 
     const recordedReturnFive = recordFunction(returnFive);
-    const cachedRecordedReturnFive =
-        functions.cacheReturnValue(recordedReturnFive);
+    const cachedRecordedReturnFive = functions.cacheReturnValue(recordedReturnFive);
 
     assertEquals(0, recordedReturnFive.getCallCount());
     assertEquals(5, cachedRecordedReturnFive());
@@ -448,14 +443,14 @@ testSuite({
     //   f: fire
     //   w: wait (for the timer to elapse)
     assertAsyncDecoratorCommandSequenceCalls(functions.debounce, {
-      'f': 0,
-      'ff': 0,
-      'fff': 0,
-      'fw': 1,
-      'ffw': 1,
-      'fffw': 1,
-      'fwffwf': 2,
-      'ffwwwffwwfwf': 3,
+      f: 0,
+      ff: 0,
+      fff: 0,
+      fw: 1,
+      ffw: 1,
+      fffw: 1,
+      fwffwf: 2,
+      ffwwwffwwfwf: 3,
     });
   },
 
@@ -463,10 +458,14 @@ testSuite({
     const interval = 500;
     const mockClock = new MockClock(true);
 
-    const x = {'y': 0};
-    functions.debounce(function() {
-      ++this['y'];
-    }, interval, x)();
+    const x = { y: 0 };
+    functions.debounce(
+      function () {
+        ++this['y'];
+      },
+      interval,
+      x
+    )();
     assertEquals(0, x['y']);
 
     mockClock.tick(interval);
@@ -507,13 +506,17 @@ testSuite({
     const interval = 500;
     const mockClock = new MockClock(true);
 
-    const x = {'calls': 0};
-    const debouncedFn = functions.debounce(function(a, b, c) {
-      ++this['calls'];
-      assertEquals(3, a);
-      assertEquals('string', b);
-      assertEquals(false, c);
-    }, interval, x);
+    const x = { calls: 0 };
+    const debouncedFn = functions.debounce(
+      function (a, b, c) {
+        ++this['calls'];
+        assertEquals(3, a);
+        assertEquals('string', b);
+        assertEquals(false, c);
+      },
+      interval,
+      x
+    );
 
     debouncedFn(3, 'string', false);
     mockClock.tick(interval);
@@ -537,24 +540,24 @@ testSuite({
     //   f: fire
     //   w: wait (for the timer to elapse)
     assertAsyncDecoratorCommandSequenceCalls(functions.throttle, {
-      'f': 1,
-      'ff': 1,
-      'fff': 1,
-      'fw': 1,
-      'ffw': 2,
-      'fwf': 2,
-      'fffw': 2,
-      'fwfff': 2,
-      'fwfffw': 3,
-      'fwffwf': 3,
-      'ffwf': 2,
-      'ffwff': 2,
-      'ffwfw': 3,
-      'ffwffwf': 3,
-      'ffwffwff': 3,
-      'ffwffwffw': 4,
-      'ffwwwffwwfw': 5,
-      'ffwwwffwwfwf': 6,
+      f: 1,
+      ff: 1,
+      fff: 1,
+      fw: 1,
+      ffw: 2,
+      fwf: 2,
+      fffw: 2,
+      fwfff: 2,
+      fwfffw: 3,
+      fwffwf: 3,
+      ffwf: 2,
+      ffwff: 2,
+      ffwfw: 3,
+      ffwffwf: 3,
+      ffwffwff: 3,
+      ffwffwffw: 4,
+      ffwwwffwwfw: 5,
+      ffwwwffwwfwf: 6,
     });
   },
 
@@ -562,10 +565,14 @@ testSuite({
     const interval = 500;
     const mockClock = new MockClock(true);
 
-    const x = {'y': 0};
-    functions.throttle(function() {
-      ++this['y'];
-    }, interval, x)();
+    const x = { y: 0 };
+    functions.throttle(
+      function () {
+        ++this['y'];
+      },
+      interval,
+      x
+    )();
     assertEquals(1, x['y']);
 
     mockClock.uninstall();
@@ -602,13 +609,17 @@ testSuite({
     const interval = 500;
     const mockClock = new MockClock(true);
 
-    const x = {'calls': 0};
-    const throttledFn = functions.throttle(function(a, b, c) {
-      ++this['calls'];
-      assertEquals(3, a);
-      assertEquals('string', b);
-      assertEquals(false, c);
-    }, interval, x);
+    const x = { calls: 0 };
+    const throttledFn = functions.throttle(
+      function (a, b, c) {
+        ++this['calls'];
+        assertEquals(3, a);
+        assertEquals('string', b);
+        assertEquals(false, c);
+      },
+      interval,
+      x
+    );
 
     throttledFn(3, 'string', false);
     assertEquals(1, x['calls']);
@@ -631,24 +642,24 @@ testSuite({
     //   f: fire
     //   w: wait (for the timer to elapse)
     assertAsyncDecoratorCommandSequenceCalls(functions.rateLimit, {
-      'f': 1,
-      'ff': 1,
-      'fff': 1,
-      'fw': 1,
-      'ffw': 1,
-      'fwf': 2,
-      'fffw': 1,
-      'fwfff': 2,
-      'fwfffw': 2,
-      'fwffwf': 3,
-      'ffwf': 2,
-      'ffwff': 2,
-      'ffwfw': 2,
-      'ffwffwf': 3,
-      'ffwffwff': 3,
-      'ffwffwffw': 3,
-      'ffwwwffwwfw': 3,
-      'ffwwwffwwfwf': 4,
+      f: 1,
+      ff: 1,
+      fff: 1,
+      fw: 1,
+      ffw: 1,
+      fwf: 2,
+      fffw: 1,
+      fwfff: 2,
+      fwfffw: 2,
+      fwffwf: 3,
+      ffwf: 2,
+      ffwff: 2,
+      ffwfw: 2,
+      ffwffwf: 3,
+      ffwffwff: 3,
+      ffwffwffw: 3,
+      ffwwwffwwfw: 3,
+      ffwwwffwwfwf: 4,
     });
   },
 
@@ -656,10 +667,14 @@ testSuite({
     const interval = 500;
     const mockClock = new MockClock(true);
 
-    const x = {'y': 0};
-    functions.rateLimit(function() {
-      ++this['y'];
-    }, interval, x)();
+    const x = { y: 0 };
+    functions.rateLimit(
+      function () {
+        ++this['y'];
+      },
+      interval,
+      x
+    )();
     assertEquals(1, x['y']);
 
     mockClock.uninstall();
@@ -697,13 +712,17 @@ testSuite({
     const interval = 500;
     const mockClock = new MockClock(true);
 
-    const x = {'calls': 0};
-    const rateLimitedFn = functions.rateLimit(function(a, b, c) {
-      ++this['calls'];
-      assertEquals(3, a);
-      assertEquals('string', b);
-      assertEquals(false, c);
-    }, interval, x);
+    const x = { calls: 0 };
+    const rateLimitedFn = functions.rateLimit(
+      function (a, b, c) {
+        ++this['calls'];
+        assertEquals(3, a);
+        assertEquals('string', b);
+        assertEquals(false, c);
+      },
+      interval,
+      x
+    );
 
     rateLimitedFn(3, 'string', false);
     assertEquals(1, x['calls']);
@@ -723,14 +742,14 @@ testSuite({
 
   testIsFunction() {
     assertTrue(functions.isFunction(() => {}));
-    assertTrue(functions.isFunction(function() {}));
+    assertTrue(functions.isFunction(() => {}));
     assertTrue(functions.isFunction(class {}));
-    assertTrue(functions.isFunction(function*() {}));
-    assertTrue(functions.isFunction(async function() {}));
+    assertTrue(functions.isFunction(function* () {}));
+    assertTrue(functions.isFunction(async () => {}));
     assertFalse(functions.isFunction(0));
     assertFalse(functions.isFunction(false));
     assertFalse(functions.isFunction(''));
     assertFalse(functions.isFunction({}));
     assertFalse(functions.isFunction([]));
-  }
+  },
 });

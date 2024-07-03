@@ -4,13 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview A thin wrapper around the DOM element returned from
  * the different draw methods of the graphics implementation, and
  * all interfaces that the various element types support.
  */
-
 
 goog.provide('goog.graphics.Element');
 
@@ -21,8 +19,6 @@ goog.require('goog.events.Listenable');
 goog.require('goog.graphics.AffineTransform');
 goog.require('goog.math');
 goog.requireType('goog.graphics.AbstractGraphics');
-
-
 
 /**
  * Base class for a thin wrapper around the DOM element returned from
@@ -38,8 +34,7 @@ goog.requireType('goog.graphics.AbstractGraphics');
  *     differences before the canvas tag was widely supported.  See
  *     http://en.wikipedia.org/wiki/Canvas_element for details.
  */
-goog.graphics.Element = function(element, graphics) {
-  'use strict';
+goog.graphics.Element = function (element, graphics) {
   goog.events.EventTarget.call(this);
   this.element_ = element;
   this.graphics_ = graphics;
@@ -49,14 +44,12 @@ goog.graphics.Element = function(element, graphics) {
 };
 goog.inherits(goog.graphics.Element, goog.events.EventTarget);
 
-
 /**
  * The graphics object that contains this element.
  * @type {goog.graphics.AbstractGraphics?}
  * @private
  */
 goog.graphics.Element.prototype.graphics_ = null;
-
 
 /**
  * The native browser element this class wraps.
@@ -65,7 +58,6 @@ goog.graphics.Element.prototype.graphics_ = null;
  */
 goog.graphics.Element.prototype.element_ = null;
 
-
 /**
  * The transformation applied to this element.
  * @type {goog.graphics.AffineTransform?}
@@ -73,27 +65,22 @@ goog.graphics.Element.prototype.element_ = null;
  */
 goog.graphics.Element.prototype.transform_ = null;
 
-
 /**
  * Returns the underlying object.
  * @return {Element} The underlying element.
  */
-goog.graphics.Element.prototype.getElement = function() {
-  'use strict';
+goog.graphics.Element.prototype.getElement = function () {
   return this.element_;
 };
-
 
 /**
  * Returns the graphics.
  * @return {goog.graphics.AbstractGraphics} The graphics that created the
  *     element.
  */
-goog.graphics.Element.prototype.getGraphics = function() {
-  'use strict';
+goog.graphics.Element.prototype.getGraphics = function () {
   return this.graphics_;
 };
-
 
 /**
  * Set the translation and rotation of the element.
@@ -106,61 +93,55 @@ goog.graphics.Element.prototype.getGraphics = function() {
  * @param {number} centerX The horizontal center of the rotation transform.
  * @param {number} centerY The vertical center of the rotation transform.
  */
-goog.graphics.Element.prototype.setTransformation = function(
-    x, y, rotate, centerX, centerY) {
-  'use strict';
-  this.transform_ =
-      goog.graphics.AffineTransform
-          .getRotateInstance(goog.math.toRadians(rotate), centerX, centerY)
-          .translate(x, y);
+goog.graphics.Element.prototype.setTransformation = function (x, y, rotate, centerX, centerY) {
+  this.transform_ = goog.graphics.AffineTransform.getRotateInstance(
+    goog.math.toRadians(rotate),
+    centerX,
+    centerY
+  ).translate(x, y);
   this.getGraphics().setElementTransform(this, x, y, rotate, centerX, centerY);
 };
-
 
 /**
  * @return {!goog.graphics.AffineTransform} The transformation applied to
  *     this element.
  */
-goog.graphics.Element.prototype.getTransform = function() {
-  'use strict';
-  return this.transform_ ? this.transform_.clone() :
-                           new goog.graphics.AffineTransform();
+goog.graphics.Element.prototype.getTransform = function () {
+  return this.transform_ ? this.transform_.clone() : new goog.graphics.AffineTransform();
 };
-
 
 /**
  * Set the affine transform of the element.
  * @param {!goog.graphics.AffineTransform} affineTransform The
  *     transformation applied to this element.
  */
-goog.graphics.Element.prototype.setTransform = function(affineTransform) {
-  'use strict';
+goog.graphics.Element.prototype.setTransform = function (affineTransform) {
   this.transform_ = affineTransform.clone();
   this.getGraphics().setElementAffineTransform(this, affineTransform);
 };
 
-
 /** @override */
-goog.graphics.Element.prototype.addEventListener = function(
-    type, handler, opt_capture, opt_handlerScope) {
-  'use strict';
-  goog.events.listen(
-      this.element_, type, handler, opt_capture, opt_handlerScope);
+goog.graphics.Element.prototype.addEventListener = function (
+  type,
+  handler,
+  opt_capture,
+  opt_handlerScope
+) {
+  goog.events.listen(this.element_, type, handler, opt_capture, opt_handlerScope);
 };
 
-
 /** @override */
-goog.graphics.Element.prototype.removeEventListener = function(
-    type, handler, opt_capture, opt_handlerScope) {
-  'use strict';
-  goog.events.unlisten(
-      this.element_, type, handler, opt_capture, opt_handlerScope);
+goog.graphics.Element.prototype.removeEventListener = function (
+  type,
+  handler,
+  opt_capture,
+  opt_handlerScope
+) {
+  goog.events.unlisten(this.element_, type, handler, opt_capture, opt_handlerScope);
 };
 
-
 /** @override */
-goog.graphics.Element.prototype.disposeInternal = function() {
-  'use strict';
+goog.graphics.Element.prototype.disposeInternal = function () {
   goog.graphics.Element.superClass_.disposeInternal.call(this);
   goog.asserts.assert(this.element_);
   goog.events.removeAll(this.element_);

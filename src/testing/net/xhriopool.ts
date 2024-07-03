@@ -24,8 +24,6 @@ goog.require('goog.net.XhrIoPool');
 goog.require('goog.testing.net.XhrIo');
 goog.requireType('goog.net.XhrIo');
 
-
-
 /**
  * A pool containing a single mock XhrIo object.
  *
@@ -34,8 +32,7 @@ goog.requireType('goog.net.XhrIo');
  * @extends {goog.net.XhrIoPool}
  * @final
  */
-goog.testing.net.XhrIoPool = function(opt_xhr) {
-  'use strict';
+goog.testing.net.XhrIoPool = function (opt_xhr) {
   /**
    * The mock XhrIo object.
    * @type {!goog.testing.net.XhrIo}
@@ -48,16 +45,13 @@ goog.testing.net.XhrIoPool = function(opt_xhr) {
 };
 goog.inherits(goog.testing.net.XhrIoPool, goog.net.XhrIoPool);
 
-
 /**
  * @override
  * @suppress {invalidCasts}
  */
-goog.testing.net.XhrIoPool.prototype.createObject = function() {
-  'use strict';
-  return (/** @type {!goog.net.XhrIo} */ (this.xhr_));
+goog.testing.net.XhrIoPool.prototype.createObject = function () {
+  return /** @type {!goog.net.XhrIo} */ (this.xhr_);
 };
-
 
 /**
  * Override adjustForMinMax to not call handleRequests because that causes
@@ -65,15 +59,13 @@ goog.testing.net.XhrIoPool.prototype.createObject = function() {
  *
  * @override
  */
-goog.testing.net.XhrIoPool.prototype.adjustForMinMax = function() {};
-
+goog.testing.net.XhrIoPool.prototype.adjustForMinMax = () => {};
 
 /**
  * Get the mock XhrIo used by this pool.
  *
  * @return {!goog.testing.net.XhrIo} The mock XhrIo.
  */
-goog.testing.net.XhrIoPool.prototype.getXhr = function() {
-  'use strict';
+goog.testing.net.XhrIoPool.prototype.getXhr = function () {
   return this.xhr_;
 };

@@ -5,24 +5,24 @@
  */
 
 goog.module('goog.cssomTest');
-goog.setTestOnly();
 
 const CssRuleType = goog.require('goog.cssom.CssRuleType');
 const DomHelper = goog.require('goog.dom.DomHelper');
 const cssom = goog.require('goog.cssom');
 const testSuite = goog.require('goog.testing.testSuite');
 const userAgent = goog.require('goog.userAgent');
-const {assertIsHtmlIFrameElement} = goog.require('goog.asserts.dom');
-const {getStyleNonce} = goog.require('goog.dom.safe');
+const { assertIsHtmlIFrameElement } = goog.require('goog.asserts.dom');
+const { getStyleNonce } = goog.require('goog.dom.safe');
 
 // Since sheet cssom_test1.css's first line is to import
 // cssom_test2.css, we should get 2 before one in the string.
-let cssText = '.css-link-1 { display: block; } ' +
-    '.css-import-2 { display: block; } ' +
-    '.css-import-1 { display: block; } ' +
-    '.css-style-1 { display: block; } ' +
-    '.css-style-2 { display: block; } ' +
-    '.css-style-3 { display: block; }';
+const cssText =
+  '.css-link-1 { display: block; } ' +
+  '.css-import-2 { display: block; } ' +
+  '.css-import-1 { display: block; } ' +
+  '.css-style-1 { display: block; } ' +
+  '.css-style-2 { display: block; } ' +
+  '.css-style-3 { display: block; }';
 
 const replacementCssText = '.css-repl-1 { display: block; }';
 
@@ -45,40 +45,37 @@ function fixCssTextForIe(cssText) {
 testSuite({
   testGetFileNameFromStyleSheet() {
     // cast to create mock object.
-    let styleSheet =
-        /** @type {?} */ ({'href': 'http://foo.com/something/filename.css'});
+    let styleSheet = /** @type {?} */ {
+      href: 'http://foo.com/something/filename.css',
+    };
     assertEquals('filename.css', cssom.getFileNameFromStyleSheet(styleSheet));
 
-    styleSheet = /** @type {?} */ (
-        {'href': 'https://foo.com:123/something/filename.css'});
+    styleSheet = /** @type {?} */ {
+      href: 'https://foo.com:123/something/filename.css',
+    };
     assertEquals('filename.css', cssom.getFileNameFromStyleSheet(styleSheet));
 
-    styleSheet = /** @type {?} */ (
-        {'href': 'http://foo.com/something/filename.css?bar=bas'});
+    styleSheet = /** @type {?} */ {
+      href: 'http://foo.com/something/filename.css?bar=bas',
+    };
     assertEquals('filename.css', cssom.getFileNameFromStyleSheet(styleSheet));
 
-    styleSheet = /** @type {?} */ ({'href': 'filename.css?bar=bas'});
+    styleSheet = /** @type {?} */ { href: 'filename.css?bar=bas' };
     assertEquals('filename.css', cssom.getFileNameFromStyleSheet(styleSheet));
 
-    styleSheet = /** @type {?} */ ({'href': 'filename.css'});
+    styleSheet = /** @type {?} */ { href: 'filename.css' };
     assertEquals('filename.css', cssom.getFileNameFromStyleSheet(styleSheet));
   },
 
   testGetAllCssStyleSheets() {
     // NOTE: getAllCssStyleSheets return type is wrong, it should be
     // !Array<!Stylesheet> rather than nullable array entries
-    const styleSheets = /** @type {?} */ (cssom.getAllCssStyleSheets());
+    const styleSheets = /** @type {?} */ cssom.getAllCssStyleSheets();
     assertEquals(4, styleSheets.length);
     // Makes sure they're in the right cascade order.
-    assertEquals(
-        'cssom_test_link_1.css',
-        cssom.getFileNameFromStyleSheet(styleSheets[0]));
-    assertEquals(
-        'cssom_test_import_2.css',
-        cssom.getFileNameFromStyleSheet(styleSheets[1]));
-    assertEquals(
-        'cssom_test_import_1.css',
-        cssom.getFileNameFromStyleSheet(styleSheets[2]));
+    assertEquals('cssom_test_link_1.css', cssom.getFileNameFromStyleSheet(styleSheets[0]));
+    assertEquals('cssom_test_import_2.css', cssom.getFileNameFromStyleSheet(styleSheets[1]));
+    assertEquals('cssom_test_import_1.css', cssom.getFileNameFromStyleSheet(styleSheets[2]));
     // Not an external styleSheet
     assertNull(cssom.getFileNameFromStyleSheet(styleSheets[3]));
   },
@@ -115,18 +112,19 @@ testSuite({
   },
 
   testAddCssTextUsesIframeNonce() {
-    const iframeWindow =
-        assertIsHtmlIFrameElement(document.getElementById('frame'))
-            .contentWindow;
+    const iframeWindow = assertIsHtmlIFrameElement(document.getElementById('frame')).contentWindow;
     assert(iframeWindow.document !== document);
 
     const newCssNode = cssom.addCssText(
-        '.css-add-1 { display: block; }', new DomHelper(iframeWindow.document));
+      '.css-add-1 { display: block; }',
+      new DomHelper(iframeWindow.document)
+    );
     // Cannot assert on a string literal because IE11 doesn't support nonces
     // whatsoever. getStyleNonce returns an empty string if nonce isn't present.
     assertEquals(
-        getStyleNonce(iframeWindow),
-        newCssNode['nonce'] || newCssNode.getAttribute('nonce') || '');
+      getStyleNonce(iframeWindow),
+      newCssNode['nonce'] || newCssNode.getAttribute('nonce') || ''
+    );
   },
 
   /** @suppress {missingProperties} cssRules not defined on StyleSheet */
@@ -171,8 +169,7 @@ testSuite({
     // references to anything but CSSStyleRules.
     let pos = 0;
     if (styleSheet.cssRules) {
-      pos = Array.prototype.findIndex.call(
-          rules, rule => rule.type == CssRuleType.STYLE);
+      pos = Array.prototype.findIndex.call(rules, (rule) => rule.type == CssRuleType.STYLE);
     }
     cssom.addCssRule(styleSheet, newCssRule, pos);
 
@@ -230,7 +227,7 @@ testSuite({
     // include anything that inherits from the CSSRule interface.
     // See http://dev.w3.org/csswg/cssom/#cssrule.
     const parentStyleSheet = cssom.getParentStyleSheet(cssRule);
-    const ruleIndex = (parentStyleSheet.cssRules != null) ? 2 : 1;
+    const ruleIndex = parentStyleSheet.cssRules != null ? 2 : 1;
     assertEquals(ruleIndex, cssom.getCssRuleIndexInParentStyleSheet(cssRule));
   },
 
@@ -258,8 +255,7 @@ testSuite({
     const rules = cssom.getCssRulesFromStyleSheet(styleSheet);
     const index = 2;
     const origCssRule = rules[index];
-    const origCssText =
-        fixCssTextForIe(cssom.getCssTextFromCssRule(origCssRule));
+    const origCssText = fixCssTextForIe(cssom.getCssTextFromCssRule(origCssRule));
 
     cssom.replaceCssRule(origCssRule, replacementCssText, styleSheet, index);
 
@@ -281,15 +277,14 @@ testSuite({
   testReplaceCssRuleUsingGetAllCssStyleRules() {
     const cssRules = cssom.getAllCssStyleRules();
     const origCssRule = cssRules[4];
-    const origCssText =
-        fixCssTextForIe(cssom.getCssTextFromCssRule(origCssRule));
+    const origCssText = fixCssTextForIe(cssom.getCssTextFromCssRule(origCssRule));
     // notice we don't pass in the stylesheet or index.
     cssom.replaceCssRule(origCssRule, replacementCssText);
 
     const styleSheets = cssom.getAllCssStyleSheets();
     const styleSheet = styleSheets[3];
     const rules = cssom.getCssRulesFromStyleSheet(styleSheet);
-    const index = (styleSheet.cssRules != null) ? 2 : 1;
+    const index = styleSheet.cssRules != null ? 2 : 1;
     const cssRule = rules[index];
     const cssText = fixCssTextForIe(cssom.getCssTextFromCssRule(cssRule));
     assertEquals(replacementCssText, cssText);

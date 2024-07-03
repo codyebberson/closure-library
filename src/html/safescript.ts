@@ -16,7 +16,7 @@ goog.module.declareLegacyNamespace();
 const Const = goog.require('goog.string.Const');
 const TypedString = goog.require('goog.string.TypedString');
 const trustedtypes = goog.require('goog.html.trustedtypes');
-const {fail} = goog.require('goog.asserts');
+const { fail } = goog.require('goog.asserts');
 
 /**
  * Token used to ensure that object is created only from this file. No code
@@ -119,8 +119,7 @@ class SafeScript {
     if (scriptString.length === 0) {
       return SafeScript.EMPTY;
     }
-    return SafeScript.createSafeScriptSecurityPrivateDoNotAccessOrElse(
-        scriptString);
+    return SafeScript.createSafeScriptSecurityPrivateDoNotAccessOrElse(scriptString);
   }
 
   /**
@@ -131,8 +130,7 @@ class SafeScript {
    * @deprecated Use `safevalues.valueAsScript` instead.
    */
   static fromJson(val) {
-    return SafeScript.createSafeScriptSecurityPrivateDoNotAccessOrElse(
-        SafeScript.stringify_(val));
+    return SafeScript.createSafeScriptSecurityPrivateDoNotAccessOrElse(SafeScript.stringify_(val));
   }
 
   /**
@@ -192,13 +190,15 @@ class SafeScript {
     // Specifically, the following checks are performed:
     // 1. The object is an instance of the expected type.
     // 2. The object is not an instance of a subclass.
-    if (safeScript instanceof SafeScript &&
-        safeScript.constructor === SafeScript) {
+    if (safeScript instanceof SafeScript && safeScript.constructor === SafeScript) {
       return safeScript.privateDoNotAccessOrElseSafeScriptWrappedValue_;
     } else {
       fail(
-          'expected object of type SafeScript, got \'' + safeScript +
-          '\' of type ' + goog.typeOf(safeScript));
+        "expected object of type SafeScript, got '" +
+          safeScript +
+          "' of type " +
+          goog.typeOf(safeScript)
+      );
       return 'type_error:SafeScript';
     }
   }
@@ -228,8 +228,7 @@ class SafeScript {
     /** @noinline */
     const noinlineScript = script;
     const policy = trustedtypes.getPolicyPrivateDoNotAccessOrElse();
-    const trustedScript =
-        policy ? policy.createScript(noinlineScript) : noinlineScript;
+    const trustedScript = policy ? policy.createScript(noinlineScript) : noinlineScript;
     return new SafeScript(trustedScript, CONSTRUCTOR_TOKEN_PRIVATE);
   }
 }
@@ -239,14 +238,13 @@ class SafeScript {
  * @const {!SafeScript}
  * @deprecated Use `safevalues.EMPTY_SCRIPT` instead.
  */
-SafeScript.EMPTY = /** @type {!SafeScript} */ ({
-  // NOTE: this compiles to nothing, but hides the possible side effect of
-  // SafeScript creation (due to calling trustedTypes.createPolicy) from the
-  // compiler so that the entire call can be removed if the result is not used.
-  valueOf: function() {
-    return SafeScript.createSafeScriptSecurityPrivateDoNotAccessOrElse('');
-  },
-}.valueOf());
-
+SafeScript.EMPTY = /** @type {!SafeScript} */ (
+  {
+    // NOTE: this compiles to nothing, but hides the possible side effect of
+    // SafeScript creation (due to calling trustedTypes.createPolicy) from the
+    // compiler so that the entire call can be removed if the result is not used.
+    valueOf: () => SafeScript.createSafeScriptSecurityPrivateDoNotAccessOrElse(''),
+  }.valueOf()
+);
 
 exports = SafeScript;

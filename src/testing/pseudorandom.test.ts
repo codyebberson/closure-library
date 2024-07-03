@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.PseudoRandomTest');
-goog.setTestOnly();
 
 const PseudoRandom = goog.require('goog.testing.PseudoRandom');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -25,11 +24,9 @@ function runFairnessTest(sides, rolls, chiSquareLimit) {
   // Pearson's chi-square test for a distribution fit.
   let chiSquare = 0;
   for (let i = 0; i < sides; ++i) {
-    chiSquare += (counts[i] - expected) * (counts[i] - expected) / expected;
+    chiSquare += ((counts[i] - expected) * (counts[i] - expected)) / expected;
   }
-  assert(
-      'Chi-square test for a distribution fit failed',
-      chiSquare < chiSquareLimit);
+  assert('Chi-square test for a distribution fit failed', chiSquare < chiSquareLimit);
 }
 
 testSuite({

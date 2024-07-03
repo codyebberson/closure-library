@@ -7,12 +7,7 @@
     "url": "https://github.com/google/closure-library.git"
   },
   "main": "closure/goog/bootstrap/nodejs.js",
-  "keywords": [
-    "javascript",
-    "library",
-    "goog",
-    "closure"
-  ],
+  "keywords": ["javascript", "library", "goog", "closure"],
   "author": "The Closure Library Authors",
   "license": "Apache-2.0",
   "bugs": {
@@ -20,12 +15,15 @@
   },
   "homepage": "https://developers.google.com/closure/library/",
   "devDependencies": {
+    "@biomejs/biome": "1.8.3",
     "typescript": "5.5.3",
     "vite": "5.3.2",
     "vitest": "1.6.0"
   },
   "scripts": {
     "build": "vite build",
-    "dev": "vite"
+    "dev": "vite",
+    "fix": "biome check --apply .",
+    "lint": "biome check ."
   }
 }

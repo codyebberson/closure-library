@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.CharCounterTest');
-goog.setTestOnly();
 
 const CharCounter = goog.require('goog.ui.CharCounter');
 const dom = goog.require('goog.dom');
@@ -89,8 +88,12 @@ testSuite({
     assertEquals(remaining, charCounter.getDisplayMode());
 
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const incrementalCharCounter =
-        new CharCounter(inputElement, countElement, maxLength, incremental);
+    const incrementalCharCounter = new CharCounter(
+      inputElement,
+      countElement,
+      maxLength,
+      incremental
+    );
     assertEquals(incremental, incrementalCharCounter.getDisplayMode());
   },
 
@@ -117,17 +120,14 @@ testSuite({
     setupCheckLength(limitedContent, remaining);
 
     assertEquals(limitedContent, inputElement.value);
-    assertEquals(
-        remainingLimitedContentLength.toString(),
-        dom.getTextContent(countElement));
+    assertEquals(remainingLimitedContentLength.toString(), dom.getTextContent(countElement));
 
     // Test the characters incremented in DOM with limited content
     charCounter.setDisplayMode(incremental);
     charCounter.checkLength();
 
     assertEquals(limitedContent, inputElement.value);
-    assertEquals(
-        limitedContentLength.toString(), dom.getTextContent(countElement));
+    assertEquals(limitedContentLength.toString(), dom.getTextContent(countElement));
   },
 
   /**
@@ -167,17 +167,14 @@ testSuite({
     setupCheckLength(newLineContent, remaining);
 
     assertEquals(newLineContent, inputElement.value);
-    assertEquals(
-        remainingNewLineContentLength.toString(),
-        dom.getTextContent(countElement));
+    assertEquals(remainingNewLineContentLength.toString(), dom.getTextContent(countElement));
 
     // Set some content with new line characters and test the characters
     // incremental in DOM
     setupCheckLength(newLineContent, incremental);
 
     assertEquals(newLineContent, inputElement.value);
-    assertEquals(
-        newLineContentLength.toString(), dom.getTextContent(countElement));
+    assertEquals(newLineContentLength.toString(), dom.getTextContent(countElement));
   },
 
   /**
@@ -197,9 +194,7 @@ testSuite({
 
     // Others replace \r\n with \n
     assertEquals(newLineContent, inputElement.value);
-    assertEquals(
-        remainingNewLineContentLength.toString(),
-        dom.getTextContent(countElement));
+    assertEquals(remainingNewLineContentLength.toString(), dom.getTextContent(countElement));
 
     // Set some content with carriage return characters and test the
     // characters incremental in DOM
@@ -207,7 +202,6 @@ testSuite({
 
     // Others replace \r\n with \n
     assertEquals(newLineContent, inputElement.value);
-    assertEquals(
-        newLineContentLength.toString(), dom.getTextContent(countElement));
+    assertEquals(newLineContentLength.toString(), dom.getTextContent(countElement));
   },
 });

@@ -31,19 +31,16 @@ goog.require('goog.style');
 goog.require('goog.testing.asserts');
 goog.require('goog.userAgent');
 
-
 /**
  * @return {!Node} A DIV node with a unique ID identifying the
  *     `END_TAG_MARKER_`.
  * @private
  */
-goog.testing.dom.createEndTagMarker_ = function() {
-  'use strict';
+goog.testing.dom.createEndTagMarker_ = () => {
   var marker = goog.dom.createElement(goog.dom.TagName.DIV);
   marker.id = goog.getUid(marker);
   return marker;
 };
-
 
 /**
  * A unique object to use as an end tag marker.
@@ -51,7 +48,6 @@ goog.testing.dom.createEndTagMarker_ = function() {
  * @const
  */
 goog.testing.dom.END_TAG_MARKER_ = goog.testing.dom.createEndTagMarker_();
-
 
 /**
  * Tests if the given iterator over nodes matches the given Array of node
@@ -66,36 +62,25 @@ goog.testing.dom.END_TAG_MARKER_ = goog.testing.dom.createEndTagMarker_();
  *         other string: Match the text node's contents.
  * @suppress {strictMissingProperties} charAt on union type
  */
-goog.testing.dom.assertNodesMatch = function(it, array) {
+goog.testing.dom.assertNodesMatch = (it, array) => {
   let i = 0;
   function checkNode(node) {
-    'use strict';
     if (array.length <= i) {
-      fail(
-          'Got more nodes than expected: ' +
-          goog.testing.dom.describeNode_(node));
+      fail('Got more nodes than expected: ' + goog.testing.dom.describeNode_(node));
     }
     const expected = array[i];
 
     if (goog.dom.isNodeLike(expected)) {
       assertEquals('Nodes should match at position ' + i, expected, node);
     } else if (typeof expected === 'number') {
-      assertEquals(
-          'Node types should match at position ' + i, expected, node.nodeType);
+      assertEquals('Node types should match at position ' + i, expected, node.nodeType);
     } else if (expected.charAt(0) == '#') {
-      assertEquals(
-          'Expected element at position ' + i, goog.dom.NodeType.ELEMENT,
-          node.nodeType);
+      assertEquals('Expected element at position ' + i, goog.dom.NodeType.ELEMENT, node.nodeType);
       const expectedId = expected.slice(1);
       assertEquals('IDs should match at position ' + i, expectedId, node.id);
-
     } else {
-      assertEquals(
-          'Expected text node at position ' + i, goog.dom.NodeType.TEXT,
-          node.nodeType);
-      assertEquals(
-          'Node contents should match at position ' + i, expected,
-          node.nodeValue);
+      assertEquals('Expected text node at position ' + i, goog.dom.NodeType.TEXT, node.nodeType);
+      assertEquals('Node contents should match at position ' + i, expected, node.nodeValue);
     }
 
     i++;
@@ -110,14 +95,12 @@ goog.testing.dom.assertNodesMatch = function(it, array) {
   assertEquals('Used entire match array', array.length, i);
 };
 
-
 /**
  * Exposes a node as a string.
  * @param {Node} node A node.
  * @return {string} A string representation of the node.
  */
-goog.testing.dom.exposeNode = function(node) {
-  'use strict';
+goog.testing.dom.exposeNode = (node) => {
   node = /** @type {!Element} */ (node);
   var result = node.nodeName || node.nodeValue;
   if (node.id) {
@@ -127,14 +110,12 @@ goog.testing.dom.exposeNode = function(node) {
   return result;
 };
 
-
 /**
  * Exposes the nodes of a range wrapper as a string.
  * @param {goog.dom.AbstractRange} range A range.
  * @return {string} A string representation of the range.
  */
-goog.testing.dom.exposeRange = function(range) {
-  'use strict';
+goog.testing.dom.exposeRange = (range) => {
   // This is deliberately not implemented as
   // goog.dom.AbstractRange.prototype.toString, because it is non-authoritative.
   // Two equivalent ranges may have very different exposeRange values, and
@@ -143,12 +124,16 @@ goog.testing.dom.exposeRange = function(range) {
   if (!range) {
     return 'null';
   }
-  return goog.testing.dom.exposeNode(range.getStartNode()) + ':' +
-      range.getStartOffset() + ' to ' +
-      goog.testing.dom.exposeNode(range.getEndNode()) + ':' +
-      range.getEndOffset();
+  return (
+    goog.testing.dom.exposeNode(range.getStartNode()) +
+    ':' +
+    range.getStartOffset() +
+    ' to ' +
+    goog.testing.dom.exposeNode(range.getEndNode()) +
+    ':' +
+    range.getEndOffset()
+  );
 };
-
 
 /**
  * Determines if the current user agent matches the specified string.  Returns
@@ -159,8 +144,7 @@ goog.testing.dom.exposeRange = function(range) {
  *     agent was listed in the expectation string.
  * @private
  */
-goog.testing.dom.checkUserAgents_ = function(userAgents) {
-  'use strict';
+goog.testing.dom.checkUserAgents_ = (userAgents) => {
   if (goog.string.startsWith(userAgents, '!')) {
     if (goog.string.contains(userAgents, ' ')) {
       throw new Error('Only a single negative user agent may be specified');
@@ -183,7 +167,6 @@ goog.testing.dom.checkUserAgents_ = function(userAgents) {
   return !hasUserAgent;
 };
 
-
 /**
  * Map function that converts end tags to a specific object.
  * @param {Node} node The node to map.
@@ -192,12 +175,10 @@ goog.testing.dom.checkUserAgents_ = function(userAgents) {
  * @return {Node} The resulting iteration item.
  * @private
  */
-goog.testing.dom.endTagMap_ = function(node, ignore, iterator) {
-  'use strict';
+goog.testing.dom.endTagMap_ = (node, ignore, iterator) => {
   goog.asserts.assertInstanceof(iterator, goog.dom.TagIterator);
   return iterator.isEndTag() ? goog.testing.dom.END_TAG_MARKER_ : node;
 };
-
 
 /**
  * Check if the given node is important.
@@ -211,16 +192,15 @@ goog.testing.dom.endTagMap_ = function(node, ignore, iterator) {
  * @return {boolean} Whether this node should be included for iteration.
  * @private
  */
-goog.testing.dom.nodeFilter_ = function(node) {
-  'use strict';
+goog.testing.dom.nodeFilter_ = (node) => {
   if (node.nodeType == goog.dom.NodeType.TEXT) {
     // If a node is part of a string of text nodes and it has spaces in it,
     // we allow it since it's going to affect the merging of nodes done below.
-    if (goog.string.isBreakingWhitespace(node.nodeValue) &&
-        (!node.previousSibling ||
-         node.previousSibling.nodeType != goog.dom.NodeType.TEXT) &&
-        (!node.nextSibling ||
-         node.nextSibling.nodeType != goog.dom.NodeType.TEXT)) {
+    if (
+      goog.string.isBreakingWhitespace(node.nodeValue) &&
+      (!node.previousSibling || node.previousSibling.nodeType != goog.dom.NodeType.TEXT) &&
+      (!node.nextSibling || node.nextSibling.nodeType != goog.dom.NodeType.TEXT)
+    ) {
       return false;
     }
     // Allow optional text to be specified as [[BROWSER1 BROWSER2]]Text
@@ -242,7 +222,6 @@ goog.testing.dom.nodeFilter_ = function(node) {
   return true;
 };
 
-
 /**
  * Determines the text to match from the given node, removing browser
  * specification strings.
@@ -250,12 +229,10 @@ goog.testing.dom.nodeFilter_ = function(node) {
  * @return {string} The text, stripped of browser specification strings.
  * @private
  */
-goog.testing.dom.getExpectedText_ = function(node) {
-  'use strict';
+goog.testing.dom.getExpectedText_ = (node) => {
   // Strip off the browser specifications.
   return node.nodeValue.match(/^(\[\[.+\]\])?([\s\S]*)/)[2];
 };
-
 
 /**
  * Describes the given node.
@@ -263,8 +240,7 @@ goog.testing.dom.getExpectedText_ = function(node) {
  * @return {string} A description of the node.
  * @private
  */
-goog.testing.dom.describeNode_ = function(node) {
-  'use strict';
+goog.testing.dom.describeNode_ = (node) => {
   if (node.nodeType == goog.dom.NodeType.TEXT) {
     return '[Text: ' + node.nodeValue + ']';
   } else {
@@ -274,7 +250,6 @@ goog.testing.dom.describeNode_ = function(node) {
     return '<' + node.tagName + (node.id ? ' #' + node.id : '') + ' .../>';
   }
 };
-
 
 /**
  * Assert that the html in `actual` is substantially similar to
@@ -292,33 +267,29 @@ goog.testing.dom.describeNode_ = function(node) {
  *     present in htmlPattern.  If true, htmlPattern and actual must have the
  *     same set of attributes.  Default is false.
  */
-goog.testing.dom.assertHtmlContentsMatch = function(
-    htmlPattern, actual, opt_strictAttributes) {
-  'use strict';
+goog.testing.dom.assertHtmlContentsMatch = (htmlPattern, actual, opt_strictAttributes) => {
   var div = goog.dom.createDom(goog.dom.TagName.DIV);
 
   goog.dom.safe.setInnerHtml(
-      div,
-      goog.html.uncheckedconversions
-          .safeHtmlFromStringKnownToSatisfyTypeContract(
-              goog.string.Const.from('HTML is never attached to DOM'),
-              htmlPattern));
+    div,
+    goog.html.uncheckedconversions.safeHtmlFromStringKnownToSatisfyTypeContract(
+      goog.string.Const.from('HTML is never attached to DOM'),
+      htmlPattern
+    )
+  );
 
-  var errorSuffix =
-      '\nExpected\n' + div.innerHTML + '\nActual\n' + actual.innerHTML;
+  var errorSuffix = '\nExpected\n' + div.innerHTML + '\nActual\n' + actual.innerHTML;
 
   var actualIt = goog.iter.filter(
-      goog.iter.map(
-          new goog.dom.TagIterator(actual), goog.testing.dom.endTagMap_),
-      goog.testing.dom.nodeFilter_);
+    goog.iter.map(new goog.dom.TagIterator(actual), goog.testing.dom.endTagMap_),
+    goog.testing.dom.nodeFilter_
+  );
 
-  var expectedIt = goog.iter.filter(
-      new goog.dom.NodeIterator(div), goog.testing.dom.nodeFilter_);
+  var expectedIt = goog.iter.filter(new goog.dom.NodeIterator(div), goog.testing.dom.nodeFilter_);
 
   var actualNode;
   var preIterated = false;
-  var advanceActualNode = function() {
-    'use strict';
+  var advanceActualNode = () => {
     // If the iterator has already been advanced, don't advance it again.
     if (!preIterated) {
       actualNode = goog.iter.nextOrValue(actualIt, null);
@@ -331,16 +302,18 @@ goog.testing.dom.assertHtmlContentsMatch = function(
     }
   };
 
-
   var number = 0;
-  goog.iter.forEach(expectedIt, function(expectedNode) {
-    'use strict';
+  goog.iter.forEach(expectedIt, (expectedNode) => {
     advanceActualNode();
     assertNotNull(
-        'Finished actual HTML before finishing expected HTML at ' +
-            'node number ' + number + ': ' +
-            goog.testing.dom.describeNode_(expectedNode) + errorSuffix,
-        actualNode);
+      'Finished actual HTML before finishing expected HTML at ' +
+        'node number ' +
+        number +
+        ': ' +
+        goog.testing.dom.describeNode_(expectedNode) +
+        errorSuffix,
+      actualNode
+    );
 
     // Do no processing for expectedNode == div.
     if (expectedNode == div) {
@@ -348,27 +321,41 @@ goog.testing.dom.assertHtmlContentsMatch = function(
     }
 
     assertEquals(
-        'Should have the same node type, got ' +
-            goog.testing.dom.describeNode_(actualNode) + ' but expected ' +
-            goog.testing.dom.describeNode_(expectedNode) + '.' + errorSuffix,
-        expectedNode.nodeType, actualNode.nodeType);
+      'Should have the same node type, got ' +
+        goog.testing.dom.describeNode_(actualNode) +
+        ' but expected ' +
+        goog.testing.dom.describeNode_(expectedNode) +
+        '.' +
+        errorSuffix,
+      expectedNode.nodeType,
+      actualNode.nodeType
+    );
 
     if (expectedNode.nodeType == goog.dom.NodeType.ELEMENT) {
       var expectedElem = goog.asserts.assertElement(expectedNode);
       var actualElem = goog.asserts.assertElement(actualNode);
 
       assertEquals(
-          'Tag names should match' + errorSuffix, expectedElem.tagName,
-          actualElem.tagName);
+        'Tag names should match' + errorSuffix,
+        expectedElem.tagName,
+        actualElem.tagName
+      );
       assertEquals(
-          'Namespaces should match' + errorSuffix, expectedElem.namespaceURI,
-          actualElem.namespaceURI);
+        'Namespaces should match' + errorSuffix,
+        expectedElem.namespaceURI,
+        actualElem.namespaceURI
+      );
       assertObjectEquals(
-          'Should have same styles' + errorSuffix,
-          goog.style.parseStyleAttribute(expectedElem.style.cssText),
-          goog.style.parseStyleAttribute(actualElem.style.cssText));
+        'Should have same styles' + errorSuffix,
+        goog.style.parseStyleAttribute(expectedElem.style.cssText),
+        goog.style.parseStyleAttribute(actualElem.style.cssText)
+      );
       goog.testing.dom.assertAttributesEqual_(
-          errorSuffix, expectedElem, actualElem, !!opt_strictAttributes);
+        errorSuffix,
+        expectedElem,
+        actualElem,
+        !!opt_strictAttributes
+      );
 
       // Contents of template tags belong to a separate document and are not
       // iterated on by the current iterator, unless the browser is too old to
@@ -379,28 +366,32 @@ goog.testing.dom.assertHtmlContentsMatch = function(
         actualElem = /** @type {HTMLTemplateElement} */ (actualElem);
         if (actualElem.content) {
           goog.testing.dom.assertHtmlMatches(
-              expectedElem.innerHTML, actualElem.innerHTML,
-              opt_strictAttributes);
+            expectedElem.innerHTML,
+            actualElem.innerHTML,
+            opt_strictAttributes
+          );
         }
       }
     } else {
       // Concatenate text nodes until we reach a non text node.
       var actualText = actualNode.nodeValue;
       preIterated = true;
-      while ((actualNode = goog.iter.nextOrValue(actualIt, null)) &&
-             actualNode.nodeType == goog.dom.NodeType.TEXT) {
+      while (
+        (actualNode = goog.iter.nextOrValue(actualIt, null)) &&
+        actualNode.nodeType == goog.dom.NodeType.TEXT
+      ) {
         actualText += actualNode.nodeValue;
       }
 
       var expectedText = goog.testing.dom.getExpectedText_(expectedNode);
-      if ((actualText && !goog.string.isBreakingWhitespace(actualText)) ||
-          (expectedText && !goog.string.isBreakingWhitespace(expectedText))) {
+      if (
+        (actualText && !goog.string.isBreakingWhitespace(actualText)) ||
+        (expectedText && !goog.string.isBreakingWhitespace(expectedText))
+      ) {
         var normalizedActual = actualText.replace(/\s+/g, ' ');
         var normalizedExpected = expectedText.replace(/\s+/g, ' ');
 
-        assertEquals(
-            'Text should match' + errorSuffix, normalizedExpected,
-            normalizedActual);
+        assertEquals('Text should match' + errorSuffix, normalizedExpected, normalizedActual);
       }
     }
 
@@ -409,10 +400,10 @@ goog.testing.dom.assertHtmlContentsMatch = function(
 
   advanceActualNode();
   assertNull(
-      'Finished expected HTML before finishing actual HTML' + errorSuffix,
-      goog.iter.nextOrValue(actualIt, null));
+    'Finished expected HTML before finishing actual HTML' + errorSuffix,
+    goog.iter.nextOrValue(actualIt, null)
+  );
 };
-
 
 /**
  * Assert that the html in `actual` is substantially similar to
@@ -428,21 +419,19 @@ goog.testing.dom.assertHtmlContentsMatch = function(
  *     present in htmlPattern. If true, htmlPattern and actual must have the
  *     same set of attributes. Default is false.
  */
-goog.testing.dom.assertHtmlMatches = function(
-    htmlPattern, actual, opt_strictAttributes) {
-  'use strict';
+goog.testing.dom.assertHtmlMatches = (htmlPattern, actual, opt_strictAttributes) => {
   var div = goog.dom.createDom(goog.dom.TagName.DIV);
 
   goog.dom.safe.setInnerHtml(
-      div,
-      goog.html.uncheckedconversions
-          .safeHtmlFromStringKnownToSatisfyTypeContract(
-              goog.string.Const.from('HTML is never attached to DOM'), actual));
+    div,
+    goog.html.uncheckedconversions.safeHtmlFromStringKnownToSatisfyTypeContract(
+      goog.string.Const.from('HTML is never attached to DOM'),
+      actual
+    )
+  );
 
-  goog.testing.dom.assertHtmlContentsMatch(
-      htmlPattern, div, opt_strictAttributes);
+  goog.testing.dom.assertHtmlContentsMatch(htmlPattern, div, opt_strictAttributes);
 };
-
 
 /**
  * Finds the first text node descendant of root with the given content.  Note
@@ -453,24 +442,24 @@ goog.testing.dom.assertHtmlMatches = function(
  * @param {Element} root The element to search in.
  * @return {?Node} The first text node that matches, or null if none is found.
  */
-goog.testing.dom.findTextNode = function(textOrRegexp, root) {
-  'use strict';
+goog.testing.dom.findTextNode = (textOrRegexp, root) => {
   var it = new goog.dom.NodeIterator(root);
-  var ret = goog.iter.nextOrValue(goog.iter.filter(it, function(node) {
-    'use strict';
-    if (node.nodeType == goog.dom.NodeType.TEXT) {
-      if (typeof textOrRegexp === 'string') {
-        return node.nodeValue == textOrRegexp;
+  var ret = goog.iter.nextOrValue(
+    goog.iter.filter(it, (node) => {
+      if (node.nodeType == goog.dom.NodeType.TEXT) {
+        if (typeof textOrRegexp === 'string') {
+          return node.nodeValue == textOrRegexp;
+        } else {
+          return !!node.nodeValue.match(textOrRegexp);
+        }
       } else {
-        return !!node.nodeValue.match(textOrRegexp);
+        return false;
       }
-    } else {
-      return false;
-    }
-  }), null);
+    }),
+    null
+  );
   return ret;
 };
-
 
 /**
  * Assert the end points of a range.
@@ -486,15 +475,12 @@ goog.testing.dom.findTextNode = function(textOrRegexp, root) {
  * @param {number} endOffset The expected end offset.
  * @param {goog.dom.AbstractRange} range The actual range.
  */
-goog.testing.dom.assertRangeEquals = function(
-    start, startOffset, end, endOffset, range) {
-  'use strict';
+goog.testing.dom.assertRangeEquals = (start, startOffset, end, endOffset, range) => {
   assertEquals('Unexpected start node', start, range.getStartNode());
   assertEquals('Unexpected end node', end, range.getEndNode());
   assertEquals('Unexpected start offset', startOffset, range.getStartOffset());
   assertEquals('Unexpected end offset', endOffset, range.getEndOffset());
 };
-
 
 /**
  * Gets the value of a DOM attribute in deterministic way.
@@ -503,13 +489,16 @@ goog.testing.dom.assertRangeEquals = function(
  * @return {*} Attribute value.
  * @private
  */
-goog.testing.dom.getAttributeValue_ = function(node, name) {
-  'use strict';
+goog.testing.dom.getAttributeValue_ = (node, name) => {
   // These hacks avoid nondetermistic results in the following cases:
   // WebKit: Two radio buttons with the same name can't be checked at the same
   //      time, even if only one of them is in the document.
-  if (goog.userAgent.WEBKIT && node.tagName == goog.dom.TagName.INPUT &&
-      node['type'] == goog.dom.InputType.RADIO && name == 'checked') {
+  if (
+    goog.userAgent.WEBKIT &&
+    node.tagName == goog.dom.TagName.INPUT &&
+    node['type'] == goog.dom.InputType.RADIO &&
+    name == 'checked'
+  ) {
     return false;
   }
 
@@ -523,12 +512,10 @@ goog.testing.dom.getAttributeValue_ = function(node, name) {
   // if the values are semantically equivalent. E.g. <div disabled=""> and
   // <div disabled="disabled"> should register as equal. We use node[name]
   // if it's available.
-  return node[name] !== undefined &&
-          typeof node.getAttribute(name) != typeof node[name] ?
-      node[name] :
-      node.getAttribute(name);
+  return node[name] !== undefined && typeof node.getAttribute(name) != typeof node[name]
+    ? node[name]
+    : node.getAttribute(name);
 };
-
 
 /**
  * Assert that the attributes of two Nodes are the same (ignoring any
@@ -542,9 +529,12 @@ goog.testing.dom.getAttributeValue_ = function(node, name) {
  *     actualNode must have the same set of attributes.
  * @private
  */
-goog.testing.dom.assertAttributesEqual_ = function(
-    errorSuffix, expectedElem, actualElem, strictAttributes) {
-  'use strict';
+goog.testing.dom.assertAttributesEqual_ = (
+  errorSuffix,
+  expectedElem,
+  actualElem,
+  strictAttributes
+) => {
   if (strictAttributes) {
     goog.testing.dom.compareClassAttribute_(expectedElem, actualElem);
   }
@@ -554,12 +544,10 @@ goog.testing.dom.assertAttributesEqual_ = function(
 
   for (var i = 0, len = expectedAttributes.length; i < len; i++) {
     var expectedName = expectedAttributes[i].name;
-    var expectedValue =
-        goog.testing.dom.getAttributeValue_(expectedElem, expectedName);
+    var expectedValue = goog.testing.dom.getAttributeValue_(expectedElem, expectedName);
 
     var actualAttribute = actualAttributes[expectedName];
-    var actualValue =
-        goog.testing.dom.getAttributeValue_(actualElem, expectedName);
+    var actualValue = goog.testing.dom.getAttributeValue_(actualElem, expectedName);
 
     // IE enumerates attribute names in the expected node that are not present,
     // causing an undefined actualAttribute.
@@ -569,8 +557,11 @@ goog.testing.dom.assertAttributesEqual_ = function(
 
     if (expectedName == 'id' && goog.userAgent.IE) {
       goog.testing.dom.compareIdAttributeForIe_(
-          /** @type {string} */ (expectedValue), actualAttribute,
-          strictAttributes, errorSuffix);
+        /** @type {string} */ (expectedValue),
+        actualAttribute,
+        strictAttributes,
+        errorSuffix
+      );
       continue;
     }
 
@@ -579,16 +570,18 @@ goog.testing.dom.assertAttributesEqual_ = function(
     }
 
     assertNotUndefined(
-        'Expected to find attribute with name ' + expectedName +
-            ', in element ' + goog.testing.dom.describeNode_(actualElem) +
-            errorSuffix,
-        actualAttribute);
+      'Expected to find attribute with name ' +
+        expectedName +
+        ', in element ' +
+        goog.testing.dom.describeNode_(actualElem) +
+        errorSuffix,
+      actualAttribute
+    );
     assertEquals(
-        'Expected attribute ' + expectedName + ' has a different value ' +
-            errorSuffix,
-        String(expectedValue), String(
-                                   goog.testing.dom.getAttributeValue_(
-                                       actualElem, actualAttribute.name)));
+      'Expected attribute ' + expectedName + ' has a different value ' + errorSuffix,
+      String(expectedValue),
+      String(goog.testing.dom.getAttributeValue_(actualElem, actualAttribute.name))
+    );
   }
 
   if (strictAttributes) {
@@ -601,13 +594,16 @@ goog.testing.dom.assertAttributesEqual_ = function(
       }
 
       assertNotUndefined(
-          'Unexpected attribute with name ' + actualName + ' in element ' +
-              goog.testing.dom.describeNode_(actualElem) + errorSuffix,
-          expectedAttributes[actualName]);
+        'Unexpected attribute with name ' +
+          actualName +
+          ' in element ' +
+          goog.testing.dom.describeNode_(actualElem) +
+          errorSuffix,
+        expectedAttributes[actualName]
+      );
     }
   }
 };
-
 
 /**
  * Assert the class attribute of actualElem is the same as the one in
@@ -616,8 +612,7 @@ goog.testing.dom.assertAttributesEqual_ = function(
  * @param {!Element} actualElem The DOM element with the actual class.
  * @private
  */
-goog.testing.dom.compareClassAttribute_ = function(expectedElem, actualElem) {
-  'use strict';
+goog.testing.dom.compareClassAttribute_ = (expectedElem, actualElem) => {
   var classes = goog.dom.classlist.get(expectedElem);
 
   var expectedClasses = [];
@@ -632,12 +627,16 @@ goog.testing.dom.compareClassAttribute_ = function(expectedElem, actualElem) {
   actualClasses.sort();
 
   assertArrayEquals(
-      'Expected class was: ' + expectedClasses.join(' ') +
-          ', but actual class was: ' + actualElem.className + ' in node ' +
-          goog.testing.dom.describeNode_(actualElem),
-      expectedClasses, actualClasses);
+    'Expected class was: ' +
+      expectedClasses.join(' ') +
+      ', but actual class was: ' +
+      actualElem.className +
+      ' in node ' +
+      goog.testing.dom.describeNode_(actualElem),
+    expectedClasses,
+    actualClasses
+  );
 };
-
 
 /**
  * Set of attributes IE adds to elements randomly.
@@ -645,8 +644,12 @@ goog.testing.dom.compareClassAttribute_ = function(expectedElem, actualElem) {
  * @private
  */
 goog.testing.dom.BAD_IE_ATTRIBUTES_ = goog.object.createSet(
-    'methods', 'CHECKED', 'dataFld', 'dataFormatAs', 'dataSrc');
-
+  'methods',
+  'CHECKED',
+  'dataFld',
+  'dataFormatAs',
+  'dataSrc'
+);
 
 /**
  * Whether to ignore the attribute.
@@ -654,14 +657,12 @@ goog.testing.dom.BAD_IE_ATTRIBUTES_ = goog.object.createSet(
  * @return {boolean} True if the attribute should be ignored.
  * @private
  */
-goog.testing.dom.ignoreAttribute_ = function(name) {
-  'use strict';
+goog.testing.dom.ignoreAttribute_ = (name) => {
   if (name == 'style' || name == 'class' || name == 'xmlns') {
     return true;
   }
   return goog.userAgent.IE && goog.testing.dom.BAD_IE_ATTRIBUTES_[name];
 };
-
 
 /**
  * Compare id attributes for IE.  In IE, if an element lacks an id attribute
@@ -674,24 +675,33 @@ goog.testing.dom.ignoreAttribute_ = function(name) {
  * @param {string} errorSuffix String to append to error messages.
  * @private
  */
-goog.testing.dom.compareIdAttributeForIe_ = function(
-    expectedValue, actualAttribute, strictAttributes, errorSuffix) {
-  'use strict';
+goog.testing.dom.compareIdAttributeForIe_ = (
+  expectedValue,
+  actualAttribute,
+  strictAttributes,
+  errorSuffix
+) => {
   if (expectedValue === '') {
     if (strictAttributes) {
       assertTrue(
-          'Unexpected attribute with name id in element ' + errorSuffix,
-          actualAttribute.value == '');
+        'Unexpected attribute with name id in element ' + errorSuffix,
+        actualAttribute.value == ''
+      );
     }
   } else {
     assertNotUndefined(
-        'Expected to find attribute with name id, in element ' + errorSuffix,
-        actualAttribute);
+      'Expected to find attribute with name id, in element ' + errorSuffix,
+      actualAttribute
+    );
     assertNotEquals(
-        'Expected to find attribute with name id, in element ' + errorSuffix,
-        '', actualAttribute.value);
+      'Expected to find attribute with name id, in element ' + errorSuffix,
+      '',
+      actualAttribute.value
+    );
     assertEquals(
-        'Expected attribute has a different value ' + errorSuffix,
-        expectedValue, actualAttribute.value);
+      'Expected attribute has a different value ' + errorSuffix,
+      expectedValue,
+      actualAttribute.value
+    );
   }
 };

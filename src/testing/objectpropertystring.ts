@@ -12,8 +12,6 @@
 goog.setTestOnly('goog.testing.ObjectPropertyString');
 goog.provide('goog.testing.ObjectPropertyString');
 
-
-
 /**
  * Object to pass a property name as a string literal and its containing object
  * when the JSCompiler is rewriting these names. This should only be used in
@@ -25,12 +23,10 @@ goog.provide('goog.testing.ObjectPropertyString');
  * @final
  * @deprecated Use goog.reflect.objectProperty instead.
  */
-goog.testing.ObjectPropertyString = function(object, propertyString) {
-  'use strict';
+goog.testing.ObjectPropertyString = function (object, propertyString) {
   this.object_ = object;
   this.propertyString_ = /** @type {string} */ (propertyString);
 };
-
 
 /**
  * @type {Object}
@@ -38,27 +34,22 @@ goog.testing.ObjectPropertyString = function(object, propertyString) {
  */
 goog.testing.ObjectPropertyString.prototype.object_;
 
-
 /**
  * @type {string}
  * @private
  */
 goog.testing.ObjectPropertyString.prototype.propertyString_;
 
-
 /**
  * @return {Object} The object.
  */
-goog.testing.ObjectPropertyString.prototype.getObject = function() {
-  'use strict';
+goog.testing.ObjectPropertyString.prototype.getObject = function () {
   return this.object_;
 };
-
 
 /**
  * @return {string} The property string.
  */
-goog.testing.ObjectPropertyString.prototype.getPropertyString = function() {
-  'use strict';
+goog.testing.ObjectPropertyString.prototype.getPropertyString = function () {
   return this.propertyString_;
 };

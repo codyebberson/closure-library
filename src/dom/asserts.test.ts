@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dom.assertsTest');
-goog.setTestOnly();
 
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
 const StrictMock = goog.require('goog.testing.StrictMock');
@@ -29,7 +28,7 @@ testSuite({
     });
 
     // Ad-hoc mock objects are allowed.
-    const o = {foo: 'bar'};
+    const o = { foo: 'bar' };
     assertNotThrows(() => {
       asserts.assertIsLocation(o);
     });

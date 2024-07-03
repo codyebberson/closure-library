@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.ModalAriaVisibilityHelperTest');
-goog.setTestOnly();
 
 const ModalAriaVisibilityHelper = goog.require('goog.ui.ModalAriaVisibilityHelper');
 const State = goog.require('goog.a11y.aria.State');
@@ -40,8 +39,9 @@ function clearAriaState(id) {
  */
 function assertEmptyAriaHiddenState(id) {
   const element = dom.getElement(id);
-  assertTrue(googString.isEmptyOrWhitespace(
-      googString.makeSafe(aria.getState(element, State.HIDDEN))));
+  assertTrue(
+    googString.isEmptyOrWhitespace(googString.makeSafe(aria.getState(element, State.HIDDEN)))
+  );
 }
 
 /**

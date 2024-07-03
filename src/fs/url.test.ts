@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.urlTest');
-goog.setTestOnly();
 
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -25,8 +24,7 @@ testSuite({
       url.createObjectUrl();
       fail();
     } catch (e) {
-      assertEquals(
-          'This browser doesn\'t seem to support blob URLs', e.message);
+      assertEquals("This browser doesn't seem to support blob URLs", e.message);
     }
 
     const objectUrl = {};

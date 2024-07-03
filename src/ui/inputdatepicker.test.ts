@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.InputDatePickerTest');
-goog.setTestOnly();
 
 const DateTimeFormat = goog.require('goog.i18n.DateTimeFormat');
 const DateTimeParse = goog.require('goog.i18n.DateTimeParse');
@@ -59,8 +58,10 @@ testSuite({
   test_setPopupParentElementDefault() {
     setPopupParentElement(null);
     assertEquals(
-        'PopupDatePicker should be parented to the body element', document.body,
-        popupDatePicker.getElement().parentNode);
+      'PopupDatePicker should be parented to the body element',
+      document.body,
+      popupDatePicker.getElement().parentNode
+    );
   },
 
   /**
@@ -71,8 +72,10 @@ testSuite({
     const popupParentElement = dom.getElement('popupParent');
     setPopupParentElement(popupParentElement);
     assertEquals(
-        'PopupDatePicker should be parented to the popupParent DIV',
-        popupParentElement, popupDatePicker.getElement().parentNode);
+      'PopupDatePicker should be parented to the popupParent DIV',
+      popupParentElement,
+      popupDatePicker.getElement().parentNode
+    );
   },
 
   test_ItParsesDataCorrectly() {
@@ -85,7 +88,7 @@ testSuite({
     /** @suppress {visibility} suppression added to enable type checking */
     const parsedDate = inputDatePicker.getInputValueAsDate_();
     assertEquals(2009, parsedDate.getYear());
-    assertEquals(7, parsedDate.getMonth());  // Months start from 0
+    assertEquals(7, parsedDate.getMonth()); // Months start from 0
     assertEquals(9, parsedDate.getDate());
   },
 

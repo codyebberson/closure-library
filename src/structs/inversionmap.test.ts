@@ -5,41 +5,44 @@
  */
 
 goog.module('goog.structs.InversionMapTest');
-goog.setTestOnly();
 
 const InversionMap = goog.require('goog.structs.InversionMap');
 const testSuite = goog.require('goog.testing.testSuite');
 
 function newAsciiMap() {
-  return new InversionMap([0, 97, 98, 99, 100, 101, 120, 121, 122, 123], [
-    null,
-    'LATIN SMALL LETTER A',
-    'LATIN SMALL LETTER B',
-    'LATIN SMALL LETTER C',
-    'LATIN SMALL LETTER D',
-    null,
-    'LATIN SMALL LETTER X',
-    'LATIN SMALL LETTER Y',
-    'LATIN SMALL LETTER Z',
-    null,
-  ]);
+  return new InversionMap(
+    [0, 97, 98, 99, 100, 101, 120, 121, 122, 123],
+    [
+      null,
+      'LATIN SMALL LETTER A',
+      'LATIN SMALL LETTER B',
+      'LATIN SMALL LETTER C',
+      'LATIN SMALL LETTER D',
+      null,
+      'LATIN SMALL LETTER X',
+      'LATIN SMALL LETTER Y',
+      'LATIN SMALL LETTER Z',
+      null,
+    ]
+  );
 }
 testSuite({
   testInversionWithDelta() {
     const alphabetNames = new InversionMap(
-        [0, 97, 1, 1, 1, 20, 1, 1, 1],
-        [
-          null,
-          'LATIN SMALL LETTER A',
-          'LATIN SMALL LETTER B',
-          'LATIN SMALL LETTER C',
-          null,
-          'LATIN SMALL LETTER X',
-          'LATIN SMALL LETTER Y',
-          'LATIN SMALL LETTER Z',
-          null,
-        ],
-        true);
+      [0, 97, 1, 1, 1, 20, 1, 1, 1],
+      [
+        null,
+        'LATIN SMALL LETTER A',
+        'LATIN SMALL LETTER B',
+        'LATIN SMALL LETTER C',
+        null,
+        'LATIN SMALL LETTER X',
+        'LATIN SMALL LETTER Y',
+        'LATIN SMALL LETTER Z',
+        null,
+      ],
+      true
+    );
 
     assertEquals('LATIN SMALL LETTER A', alphabetNames.at(97));
     assertEquals('LATIN SMALL LETTER Y', alphabetNames.at(121));
@@ -49,19 +52,20 @@ testSuite({
 
   testInversionWithoutDelta() {
     const alphabetNames = new InversionMap(
-        [0, 97, 98, 99, 100, 120, 121, 122, 123],
-        [
-          null,
-          'LATIN SMALL LETTER A',
-          'LATIN SMALL LETTER B',
-          'LATIN SMALL LETTER C',
-          null,
-          'LATIN SMALL LETTER X',
-          'LATIN SMALL LETTER Y',
-          'LATIN SMALL LETTER Z',
-          null,
-        ],
-        false);
+      [0, 97, 98, 99, 100, 120, 121, 122, 123],
+      [
+        null,
+        'LATIN SMALL LETTER A',
+        'LATIN SMALL LETTER B',
+        'LATIN SMALL LETTER C',
+        null,
+        'LATIN SMALL LETTER X',
+        'LATIN SMALL LETTER Y',
+        'LATIN SMALL LETTER Z',
+        null,
+      ],
+      false
+    );
 
     assertEquals('LATIN SMALL LETTER A', alphabetNames.at(97));
     assertEquals('LATIN SMALL LETTER Y', alphabetNames.at(121));
@@ -70,18 +74,20 @@ testSuite({
   },
 
   testInversionWithoutDeltaNoOpt() {
-    const alphabetNames =
-        new InversionMap([0, 97, 98, 99, 100, 120, 121, 122, 123], [
-          null,
-          'LATIN SMALL LETTER A',
-          'LATIN SMALL LETTER B',
-          'LATIN SMALL LETTER C',
-          null,
-          'LATIN SMALL LETTER X',
-          'LATIN SMALL LETTER Y',
-          'LATIN SMALL LETTER Z',
-          null,
-        ]);
+    const alphabetNames = new InversionMap(
+      [0, 97, 98, 99, 100, 120, 121, 122, 123],
+      [
+        null,
+        'LATIN SMALL LETTER A',
+        'LATIN SMALL LETTER B',
+        'LATIN SMALL LETTER C',
+        null,
+        'LATIN SMALL LETTER X',
+        'LATIN SMALL LETTER Y',
+        'LATIN SMALL LETTER Z',
+        null,
+      ]
+    );
 
     assertEquals('LATIN SMALL LETTER A', alphabetNames.at(97));
     assertEquals('LATIN SMALL LETTER Y', alphabetNames.at(121));
@@ -111,8 +117,7 @@ testSuite({
 
   testInversionMapSplice3() {
     const alphabetNames = newAsciiMap();
-    alphabetNames.spliceInversion(
-        [98, 99], ['CHANGED LETTER B', 'CHANGED LETTER C']);
+    alphabetNames.spliceInversion([98, 99], ['CHANGED LETTER B', 'CHANGED LETTER C']);
     assertEquals('LATIN SMALL LETTER A', alphabetNames.at(97));
     assertEquals('CHANGED LETTER B', alphabetNames.at(98));
     assertEquals('CHANGED LETTER C', alphabetNames.at(99));
@@ -123,8 +128,10 @@ testSuite({
   testInversionMapSplice4() {
     const alphabetNames = newAsciiMap();
     alphabetNames.spliceInversion(
-        [98, 1], ['CHANGED LETTER B', 'CHANGED LETTER C'],
-        true /* delta mode */);
+      [98, 1],
+      ['CHANGED LETTER B', 'CHANGED LETTER C'],
+      true /* delta mode */
+    );
     assertEquals('LATIN SMALL LETTER A', alphabetNames.at(97));
     assertEquals('CHANGED LETTER B', alphabetNames.at(98));
     assertEquals('CHANGED LETTER C', alphabetNames.at(99));
@@ -134,12 +141,10 @@ testSuite({
 
   /** @suppress {visibility} suppression added to enable type checking */
   testInversionMapSplice5() {
-    const map = new InversionMap([0, 97, 98, 99], [
-      null,
-      'LATIN SMALL LETTER A',
-      'LATIN SMALL LETTER B',
-      'LATIN SMALL LETTER C',
-    ]);
+    const map = new InversionMap(
+      [0, 97, 98, 99],
+      [null, 'LATIN SMALL LETTER A', 'LATIN SMALL LETTER B', 'LATIN SMALL LETTER C']
+    );
     map.spliceInversion([98], ['CHANGED LETTER B']);
     assertEquals('LATIN SMALL LETTER A', map.at(97));
     assertEquals('CHANGED LETTER B', map.at(98));

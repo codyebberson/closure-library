@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.ComponentTest');
-goog.setTestOnly();
 
 const Component = goog.require('goog.ui.Component');
 const DomHelper = goog.require('goog.dom.DomHelper');
@@ -36,18 +35,18 @@ testSuite({
   /** @suppress {visibility} suppression added to enable type checking */
   testConstructor() {
     assertTrue(
-        'Instance must be non-null and have the expected class',
-        component instanceof Component);
+      'Instance must be non-null and have the expected class',
+      component instanceof Component
+    );
     assertTrue(
-        'DOM helper must be non-null and have the expected class',
-        component.dom_ instanceof DomHelper);
+      'DOM helper must be non-null and have the expected class',
+      component.dom_ instanceof DomHelper
+    );
 
     const fakeDom = {};
     /** @suppress {checkTypes} suppression added to enable type checking */
     const otherComponent = new Component(fakeDom);
-    assertEquals(
-        'DOM helper must refer to expected object', fakeDom,
-        otherComponent.dom_);
+    assertEquals('DOM helper must refer to expected object', fakeDom, otherComponent.dom_);
 
     otherComponent.dispose();
   },
@@ -57,27 +56,24 @@ testSuite({
     assertNull('Component ID should be initialized to null', component.id_);
     const id = component.getId();
     assertNotNull('Component ID should be generated on demand', id);
-    assertEquals(
-        'Subsequent calls to getId() must return same value', id,
-        component.getId());
+    assertEquals('Subsequent calls to getId() must return same value', id, component.getId());
   },
 
   testSetId() {
     component.setId('myId');
-    assertEquals(
-        'getId() must return explicitly set ID', 'myId', component.getId());
+    assertEquals('getId() must return explicitly set ID', 'myId', component.getId());
 
     const child = new Component();
     const childId = child.getId();
     component.addChild(child);
-    assertEquals(
-        'Parent component must find child by ID', child,
-        component.getChild(childId));
+    assertEquals('Parent component must find child by ID', child, component.getChild(childId));
 
     child.setId('someNewId');
     assertEquals(
-        'Parent component must find child by new ID', child,
-        component.getChild('someNewId'));
+      'Parent component must find child by new ID',
+      child,
+      component.getChild('someNewId')
+    );
 
     child.dispose();
   },
@@ -86,9 +82,7 @@ testSuite({
     assertNull('Element must be null by default', component.getElement());
     const element = dom.createElement(TagName.DIV);
     component.setElementInternal(element);
-    assertEquals(
-        'getElement() must return expected element', element,
-        component.getElement());
+    assertEquals('getElement() must return expected element', element, component.getElement());
   },
 
   testGetSetParent() {
@@ -96,47 +90,42 @@ testSuite({
 
     const parent = new Component();
     component.setParent(parent);
-    assertEquals(
-        'getParent() must return expected component', parent,
-        component.getParent());
+    assertEquals('getParent() must return expected component', parent, component.getParent());
 
     component.setParent(null);
     assertNull('Parent must be null', component.getParent());
 
-    assertThrows(
-        'Setting a component\'s parent to itself must throw error', () => {
-          component.setParent(component);
-        });
+    assertThrows("Setting a component's parent to itself must throw error", () => {
+      component.setParent(component);
+    });
 
     parent.addChild(component);
-    assertEquals(
-        'getParent() must return expected component', parent,
-        component.getParent());
-    assertThrows(
-        'Changing a child component\'s parent must throw error', () => {
-          component.setParent(new Component());
-        });
+    assertEquals('getParent() must return expected component', parent, component.getParent());
+    assertThrows("Changing a child component's parent must throw error", () => {
+      component.setParent(new Component());
+    });
 
     parent.dispose();
   },
 
   testGetParentEventTarget() {
-    assertNull(
-        'Parent event target must be null by default',
-        component.getParentEventTarget());
+    assertNull('Parent event target must be null by default', component.getParentEventTarget());
 
     const parent = new Component();
     component.setParent(parent);
     assertEquals(
-        'Parent event target must be the parent component', parent,
-        component.getParentEventTarget());
+      'Parent event target must be the parent component',
+      parent,
+      component.getParentEventTarget()
+    );
     assertThrows(
-        'Directly setting the parent event target to other than ' +
-            'the parent component when the parent component is set must throw ' +
-            'error',
-        () => {
-          component.setParentEventTarget(new Component());
-        });
+      'Directly setting the parent event target to other than ' +
+        'the parent component when the parent component is set must throw ' +
+        'error',
+      () => {
+        component.setParentEventTarget(new Component());
+      }
+    );
 
     parent.dispose();
   },
@@ -153,46 +142,47 @@ testSuite({
     const domHelper = new DomHelper();
     const component = new Component(domHelper);
     assertEquals(
-        'Component must return the same DomHelper passed', domHelper,
-        component.getDomHelper());
+      'Component must return the same DomHelper passed',
+      domHelper,
+      component.getDomHelper()
+    );
   },
 
   testIsInDocument() {
-    assertFalse(
-        'Component must not be in the document by default',
-        component.isInDocument());
+    assertFalse('Component must not be in the document by default', component.isInDocument());
     component.enterDocument();
     assertTrue('Component must be in the document', component.isInDocument());
   },
 
   testCreateDom() {
-    assertNull(
-        'Component must not have DOM by default', component.getElement());
+    assertNull('Component must not have DOM by default', component.getElement());
     component.createDom();
     assertEquals(
-        'Component\'s DOM must be an element node', NodeType.ELEMENT,
-        component.getElement().nodeType);
+      "Component's DOM must be an element node",
+      NodeType.ELEMENT,
+      component.getElement().nodeType
+    );
   },
 
   testRender() {
+    assertFalse('Component must not be in the document by default', component.isInDocument());
+    assertNull('Component must not have DOM by default', component.getElement());
     assertFalse(
-        'Component must not be in the document by default',
-        component.isInDocument());
-    assertNull(
-        'Component must not have DOM by default', component.getElement());
-    assertFalse(
-        'wasDecorated() must be false before component is rendered',
-        component.wasDecorated());
+      'wasDecorated() must be false before component is rendered',
+      component.wasDecorated()
+    );
 
     component.render(sandbox);
-    assertTrue(
-        'Rendered component must be in the document', component.isInDocument());
+    assertTrue('Rendered component must be in the document', component.isInDocument());
     assertEquals(
-        'Component\'s element must be a child of the parent element', sandbox,
-        component.getElement().parentNode);
+      "Component's element must be a child of the parent element",
+      sandbox,
+      component.getElement().parentNode
+    );
     assertFalse(
-        'wasDecorated() must still be false for rendered component',
-        component.wasDecorated());
+      'wasDecorated() must still be false for rendered component',
+      component.wasDecorated()
+    );
 
     assertThrows('Trying to re-render component must throw error', () => {
       component.render();
@@ -201,30 +191,25 @@ testSuite({
 
   testRender_NoParent() {
     component.render();
-    assertTrue(
-        'Rendered component must be in the document', component.isInDocument());
+    assertTrue('Rendered component must be in the document', component.isInDocument());
     assertEquals(
-        'Component\'s element must be a child of the document body',
-        document.body, component.getElement().parentNode);
+      "Component's element must be a child of the document body",
+      document.body,
+      component.getElement().parentNode
+    );
   },
 
   testRender_ParentNotInDocument() {
     const parent = new Component();
     component.setParent(parent);
 
-    assertFalse(
-        'Parent component must not be in the document', parent.isInDocument());
-    assertFalse(
-        'Child component must not be in the document',
-        component.isInDocument());
+    assertFalse('Parent component must not be in the document', parent.isInDocument());
+    assertFalse('Child component must not be in the document', component.isInDocument());
     assertNull('Child component must not have DOM', component.getElement());
 
     component.render();
-    assertFalse(
-        'Parent component must not be in the document', parent.isInDocument());
-    assertFalse(
-        'Child component must not be in the document',
-        component.isInDocument());
+    assertFalse('Parent component must not be in the document', parent.isInDocument());
+    assertFalse('Child component must not be in the document', component.isInDocument());
     assertNotNull('Child component must have DOM', component.getElement());
 
     parent.dispose();
@@ -235,14 +220,17 @@ testSuite({
     sandbox.appendChild(sibling);
 
     component.renderBefore(sibling);
-    assertTrue(
-        'Rendered component must be in the document', component.isInDocument());
+    assertTrue('Rendered component must be in the document', component.isInDocument());
     assertEquals(
-        'Component\'s element must be a child of the parent element', sandbox,
-        component.getElement().parentNode);
+      "Component's element must be a child of the parent element",
+      sandbox,
+      component.getElement().parentNode
+    );
     assertEquals(
-        'Component\'s element must have expected nextSibling', sibling,
-        component.getElement().nextSibling);
+      "Component's element must have expected nextSibling",
+      sibling,
+      component.getElement().nextSibling
+    );
   },
 
   testRenderChild() {
@@ -258,13 +246,13 @@ testSuite({
 
     component.render(parent.getElement());
     assertFalse('Parent must not be in the document', parent.isInDocument());
-    assertFalse(
-        'Child must not be in the document if the parent isn\'t',
-        component.isInDocument());
+    assertFalse("Child must not be in the document if the parent isn't", component.isInDocument());
     assertNotNull('Child must have a DOM', component.getElement());
     assertEquals(
-        'Child\'s element must be a child of the parent\'s element',
-        parent.getElement(), component.getElement().parentNode);
+      "Child's element must be a child of the parent's element",
+      parent.getElement(),
+      component.getElement().parentNode
+    );
 
     parent.render(sandbox);
     assertTrue('Parent must be in the document', parent.isInDocument());
@@ -277,24 +265,19 @@ testSuite({
     sandbox.innerHTML = '<div id="foo">Foo</div>';
     const foo = dom.getElement('foo');
 
-    assertFalse(
-        'wasDecorated() must be false by default', component.wasDecorated());
+    assertFalse('wasDecorated() must be false by default', component.wasDecorated());
 
     component.decorate(foo);
     assertTrue('Component must be in the document', component.isInDocument());
-    assertEquals(
-        'Component\'s element must be the decorated element', foo,
-        component.getElement());
-    assertTrue(
-        'wasDecorated() must be true for decorated component',
-        component.wasDecorated());
+    assertEquals("Component's element must be the decorated element", foo, component.getElement());
+    assertTrue('wasDecorated() must be true for decorated component', component.wasDecorated());
 
     assertThrows(
-        'Trying to decorate with a control already in the document' +
-            ' must throw error',
-        () => {
-          component.decorate(foo);
-        });
+      'Trying to decorate with a control already in the document' + ' must throw error',
+      () => {
+        component.decorate(foo);
+      }
+    );
   },
 
   testDecorate_AllowDetached_NotInDocument() {
@@ -303,9 +286,10 @@ testSuite({
     const element = dom.createElement(TagName.DIV);
     component.decorate(element);
     assertFalse(
-        'Component should not call enterDocument when decorated ' +
-            'with an element that is not in the document.',
-        component.isInDocument());
+      'Component should not call enterDocument when decorated ' +
+        'with an element that is not in the document.',
+      component.isInDocument()
+    );
     /** Computed properties to avoid compiler checks of the define value. */
     Component['ALLOW_DETACHED_DECORATION'] = false;
   },
@@ -317,9 +301,10 @@ testSuite({
     sandbox.appendChild(element);
     component.decorate(element);
     assertTrue(
-        'Component should call enterDocument when decorated ' +
-            'with an element that is in the document.',
-        component.isInDocument());
+      'Component should call enterDocument when decorated ' +
+        'with an element that is in the document.',
+      component.isInDocument()
+    );
     /** Computed properties to avoid compiler checks of the define value. */
     Component['ALLOW_DETACHED_DECORATION'] = false;
   },
@@ -332,23 +317,19 @@ testSuite({
     propertyReplacer.set(component, 'canDecorate', () => false);
 
     assertThrows(
-        'Trying to decorate an element for which canDecorate()' +
-            ' returns false must throw error',
-        () => {
-          component.decorate(foo);
-        });
+      'Trying to decorate an element for which canDecorate()' + ' returns false must throw error',
+      () => {
+        component.decorate(foo);
+      }
+    );
   },
 
   testCanDecorate() {
-    assertTrue(
-        'canDecorate() must return true by default',
-        component.canDecorate(sandbox));
+    assertTrue('canDecorate() must return true by default', component.canDecorate(sandbox));
   },
 
   testWasDecorated() {
-    assertFalse(
-        'wasDecorated() must return false by default',
-        component.wasDecorated());
+    assertFalse('wasDecorated() must return false by default', component.wasDecorated());
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -356,53 +337,64 @@ testSuite({
     assertNull('Element must be null by default', component.getElement());
     const element = dom.createElement(TagName.DIV);
     component.decorateInternal(element);
-    assertEquals(
-        'Element must have expected value', element, component.getElement());
+    assertEquals('Element must have expected value', element, component.getElement());
   },
 
   testGetElementAndGetElementsByClass() {
-    sandbox.innerHTML = '<ul id="task-list">' +
-        '<li class="task">Unclog drain' +
-        '</ul>' +
-        '<ul id="completed-tasks">' +
-        '<li id="groceries" class="task">Buy groceries' +
-        '<li class="task">Rotate tires' +
-        '<li class="task">Clean kitchen' +
-        '</ul>' +
-        assertNull('Should be nothing to return before the component has a DOM',
-                   component.getElementByClass('task'));
+    sandbox.innerHTML =
+      '<ul id="task-list">' +
+      '<li class="task">Unclog drain' +
+      '</ul>' +
+      '<ul id="completed-tasks">' +
+      '<li id="groceries" class="task">Buy groceries' +
+      '<li class="task">Rotate tires' +
+      '<li class="task">Clean kitchen' +
+      '</ul>' +
+      assertNull(
+        'Should be nothing to return before the component has a DOM',
+        component.getElementByClass('task')
+      );
     assertEquals(
-        'Should return an empty list before the component has a DOM', 0,
-        component.getElementsByClass('task').length);
+      'Should return an empty list before the component has a DOM',
+      0,
+      component.getElementsByClass('task').length
+    );
 
     component.decorate(dom.getElement('completed-tasks'));
     assertEquals(
-        'getElementByClass() should return the first completed task',
-        'groceries', component.getElementByClass('task').id);
+      'getElementByClass() should return the first completed task',
+      'groceries',
+      component.getElementByClass('task').id
+    );
     assertEquals(
-        'getElementsByClass() should return only the completed tasks', 3,
-        component.getElementsByClass('task').length);
+      'getElementsByClass() should return only the completed tasks',
+      3,
+      component.getElementsByClass('task').length
+    );
   },
 
   testGetRequiredElementByClass() {
-    sandbox.innerHTML = '<ul id="task-list">' +
-        '<li class="task">Unclog drain' +
-        '</ul>' +
-        '<ul id="completed-tasks">' +
-        '<li id="groceries" class="task">Buy groceries' +
-        '<li class="task">Rotate tires' +
-        '<li class="task">Clean kitchen' +
-        '</ul>';
+    sandbox.innerHTML =
+      '<ul id="task-list">' +
+      '<li class="task">Unclog drain' +
+      '</ul>' +
+      '<ul id="completed-tasks">' +
+      '<li id="groceries" class="task">Buy groceries' +
+      '<li class="task">Rotate tires' +
+      '<li class="task">Clean kitchen' +
+      '</ul>';
     component.decorate(dom.getElement('completed-tasks'));
     assertEquals(
-        'getRequiredElementByClass() should return the first completed task',
-        'groceries', component.getRequiredElementByClass('task').id);
+      'getRequiredElementByClass() should return the first completed task',
+      'groceries',
+      component.getRequiredElementByClass('task').id
+    );
     assertThrows(
-        'Attempting to retrieve a required element that does not' +
-            'exist should fail',
-        () => {
-          component.getRequiredElementByClass('undefinedClass');
-        });
+      'Attempting to retrieve a required element that does not' + 'exist should fail',
+      () => {
+        component.getRequiredElementByClass('undefinedClass');
+      }
+    );
   },
 
   testEnterExitDocument() {
@@ -417,21 +409,15 @@ testSuite({
     c2.createDom();
 
     assertFalse('Parent must not be in the document', component.isInDocument());
-    assertFalse(
-        'Neither child must be in the document',
-        c1.isInDocument() || c2.isInDocument());
+    assertFalse('Neither child must be in the document', c1.isInDocument() || c2.isInDocument());
 
     component.enterDocument();
     assertTrue('Parent must be in the document', component.isInDocument());
-    assertTrue(
-        'Both children must be in the document',
-        c1.isInDocument() && c2.isInDocument());
+    assertTrue('Both children must be in the document', c1.isInDocument() && c2.isInDocument());
 
     component.exitDocument();
     assertFalse('Parent must not be in the document', component.isInDocument());
-    assertFalse(
-        'Neither child must be in the document',
-        c1.isInDocument() || c2.isInDocument());
+    assertFalse('Neither child must be in the document', c1.isInDocument() || c2.isInDocument());
 
     c1.dispose();
     c2.dispose();
@@ -452,47 +438,45 @@ testSuite({
     component.render(sandbox);
     assertTrue('Parent must be in the document', component.isInDocument());
     assertEquals(
-        'Parent\'s element must be a child of the sandbox element', sandbox,
-        element.parentNode);
-    assertTrue(
-        'Both children must be in the document',
-        c1.isInDocument() && c2.isInDocument());
+      "Parent's element must be a child of the sandbox element",
+      sandbox,
+      element.parentNode
+    );
+    assertTrue('Both children must be in the document', c1.isInDocument() && c2.isInDocument());
     assertEquals(
-        'First child\'s element must be a child of the parent\'s' +
-            ' element',
-        element, c1Element.parentNode);
+      "First child's element must be a child of the parent's" + ' element',
+      element,
+      c1Element.parentNode
+    );
     assertEquals(
-        'Second child\'s element must be a child of the parent\'s' +
-            ' element',
-        element, c2Element.parentNode);
+      "Second child's element must be a child of the parent's" + ' element',
+      element,
+      c2Element.parentNode
+    );
 
-    assertFalse(
-        'Parent must not have been disposed of', component.isDisposed());
-    assertFalse(
-        'Neither child must have been disposed of',
-        c1.isDisposed() || c2.isDisposed());
+    assertFalse('Parent must not have been disposed of', component.isDisposed());
+    assertFalse('Neither child must have been disposed of', c1.isDisposed() || c2.isDisposed());
 
     component.dispose();
     assertTrue('Parent must have been disposed of', component.isDisposed());
     assertFalse('Parent must not be in the document', component.isInDocument());
     assertNotEquals(
-        'Parent\'s element must no longer be a child of the' +
-            ' sandbox element',
-        sandbox, element.parentNode);
-    assertTrue(
-        'Both children must have been disposed of',
-        c1.isDisposed() && c2.isDisposed());
-    assertFalse(
-        'Neither child must be in the document',
-        c1.isInDocument() || c2.isInDocument());
+      "Parent's element must no longer be a child of the" + ' sandbox element',
+      sandbox,
+      element.parentNode
+    );
+    assertTrue('Both children must have been disposed of', c1.isDisposed() && c2.isDisposed());
+    assertFalse('Neither child must be in the document', c1.isInDocument() || c2.isInDocument());
     assertNotEquals(
-        'First child\'s element must no longer be a child of' +
-            ' the parent\'s element',
-        element, c1Element.parentNode);
+      "First child's element must no longer be a child of" + " the parent's element",
+      element,
+      c1Element.parentNode
+    );
     assertNotEquals(
-        'Second child\'s element must no longer be a child of' +
-            ' the parent\'s element',
-        element, c2Element.parentNode);
+      "Second child's element must no longer be a child of" + " the parent's element",
+      element,
+      c2Element.parentNode
+    );
   },
 
   testDispose_Decorated() {
@@ -501,37 +485,36 @@ testSuite({
 
     component.decorate(foo);
     assertTrue('Component must be in the document', component.isInDocument());
-    assertFalse(
-        'Component must not have been disposed of', component.isDisposed());
-    assertEquals(
-        'Component\'s element must have expected value', foo,
-        component.getElement());
-    assertEquals(
-        'Decorated element must be a child of the sandbox', sandbox,
-        foo.parentNode);
+    assertFalse('Component must not have been disposed of', component.isDisposed());
+    assertEquals("Component's element must have expected value", foo, component.getElement());
+    assertEquals('Decorated element must be a child of the sandbox', sandbox, foo.parentNode);
 
     component.dispose();
-    assertFalse(
-        'Component must not be in the document', component.isInDocument());
+    assertFalse('Component must not be in the document', component.isInDocument());
     assertTrue('Component must have been disposed of', component.isDisposed());
-    assertNull('Component\'s element must be null', component.getElement());
+    assertNull("Component's element must be null", component.getElement());
     assertEquals(
-        'Previously decorated element must still be a child of the' +
-            ' sandbox',
-        sandbox, foo.parentNode);
+      'Previously decorated element must still be a child of the' + ' sandbox',
+      sandbox,
+      foo.parentNode
+    );
   },
 
   testMakeIdAndGetFragmentFromId() {
     assertEquals(
-        'Unique id must have expected value', component.getId() + '.foo',
-        component.makeId('foo'));
+      'Unique id must have expected value',
+      component.getId() + '.foo',
+      component.makeId('foo')
+    );
     assertEquals(
-        'Fragment must have expected value', 'foo',
-        component.getFragmentFromId(component.makeId('foo')));
+      'Fragment must have expected value',
+      'foo',
+      component.getFragmentFromId(component.makeId('foo'))
+    );
   },
 
   testMakeIdsWithObject() {
-    const EnumDef = {ENUM_1: 'enum 1', ENUM_2: 'enum 2', ENUM_3: 'enum 3'};
+    const EnumDef = { ENUM_1: 'enum 1', ENUM_2: 'enum 2', ENUM_3: 'enum 3' };
     const ids = component.makeIds(EnumDef);
     assertEquals(component.makeId(EnumDef.ENUM_1), ids.ENUM_1);
     assertEquals(component.makeId(EnumDef.ENUM_2), ids.ENUM_2);
@@ -542,13 +525,14 @@ testSuite({
     component.render(sandbox);
 
     /** @suppress {visibility} suppression added to enable type checking */
-    const element = component.dom_.createDom(
-        TagName.DIV, {id: component.makeId('foo')}, 'Hello');
+    const element = component.dom_.createDom(TagName.DIV, { id: component.makeId('foo') }, 'Hello');
     sandbox.appendChild(element);
 
     assertEquals(
-        'Element must have expected value', element,
-        component.getElementByFragment('foo'));
+      'Element must have expected value',
+      element,
+      component.getElementByFragment('foo')
+    );
   },
 
   testGetSetModel() {
@@ -570,10 +554,8 @@ testSuite({
 
     component.addChild(child);
     assertTrue('Parent must have children.', component.hasChildren());
-    assertEquals(
-        'Child must have expected parent', component, child.getParent());
-    assertEquals(
-        'Parent must find child by ID', child, component.getChild('child'));
+    assertEquals('Child must have expected parent', component, child.getParent());
+    assertEquals('Parent must find child by ID', child, component.getChild('child'));
   },
 
   testAddChild_Render() {
@@ -581,15 +563,15 @@ testSuite({
 
     component.render(sandbox);
     assertTrue('Parent must be in the document', component.isInDocument());
-    assertEquals(
-        'Parent must be in the sandbox', sandbox,
-        component.getElement().parentNode);
+    assertEquals('Parent must be in the sandbox', sandbox, component.getElement().parentNode);
 
     component.addChild(child, true);
     assertTrue('Child must be in the document', child.isInDocument());
     assertEquals(
-        'Child element must be a child of the parent element',
-        component.getElement(), child.getElement().parentNode);
+      'Child element must be a child of the parent element',
+      component.getElement(),
+      child.getElement().parentNode
+    );
   },
 
   testAddChild_DomOnly() {
@@ -602,8 +584,10 @@ testSuite({
     component.addChild(child, true);
     assertNotNull('Child must have a DOM', child.getElement());
     assertEquals(
-        'Child element must be a child of the parent element',
-        component.getElement(), child.getElement().parentNode);
+      'Child element must be a child of the parent element',
+      component.getElement(),
+      child.getElement().parentNode
+    );
     assertFalse('Child must not be in the document', child.isInDocument());
   },
 
@@ -654,22 +638,19 @@ testSuite({
   },
 
   testGetChildCount() {
-    assertEquals(
-        'Component must have 0 children', 0, component.getChildCount());
+    assertEquals('Component must have 0 children', 0, component.getChildCount());
 
     component.addChild(new Component());
     assertEquals('Component must have 1 child', 1, component.getChildCount());
 
     component.addChild(new Component());
-    assertEquals(
-        'Component must have 2 children', 2, component.getChildCount());
+    assertEquals('Component must have 2 children', 2, component.getChildCount());
 
     component.removeChildAt(1);
     assertEquals('Component must have 1 child', 1, component.getChildCount());
 
     component.removeChildAt(0);
-    assertEquals(
-        'Component must have 0 children', 0, component.getChildCount());
+    assertEquals('Component must have 0 children', 0, component.getChildCount());
   },
 
   testGetChildIds() {
@@ -688,9 +669,10 @@ testSuite({
     const ids = component.getChildIds();
     ids.push('c');
     assertEquals(
-        'Changes to the array returned by getChildIds() must not' +
-            ' affect the component',
-        'ab', component.getChildIds().join(''));
+      'Changes to the array returned by getChildIds() must not' + ' affect the component',
+      'ab',
+      component.getChildIds().join('')
+    );
   },
 
   testGetChild() {
@@ -702,10 +684,8 @@ testSuite({
     assertEquals('Parent must find child by ID', c, component.getChild('myId'));
 
     c.setId('newId');
-    assertNull(
-        'Parent must not find child by old ID', component.getChild('myId'));
-    assertEquals(
-        'Parent must find child by new ID', c, component.getChild('newId'));
+    assertNull('Parent must not find child by old ID', component.getChild('myId'));
+    assertEquals('Parent must find child by new ID', c, component.getChild('newId'));
   },
 
   testGetChildAt() {
@@ -721,9 +701,7 @@ testSuite({
     component.addChildAt(b, 1);
     assertEquals('Parent must find child by index', b, component.getChildAt(1));
 
-    assertNull(
-        'Parent must return null for out-of-bounds index',
-        component.getChildAt(3));
+    assertNull('Parent must return null for out-of-bounds index', component.getChildAt(3));
   },
 
   testForEachChild() {
@@ -733,15 +711,15 @@ testSuite({
       invoked = true;
     });
     assertFalse(
-        'forEachChild must not call its argument if the parent has ' +
-            'no children',
-        invoked);
+      'forEachChild must not call its argument if the parent has ' + 'no children',
+      invoked
+    );
 
     component.addChild(new Component());
     component.addChild(new Component());
     component.addChild(new Component());
     let callCount = 0;
-    component.forEachChild(function(child, index) {
+    component.forEachChild(function (child, index) {
       assertEquals(component, this);
       callCount++;
     }, component);
@@ -767,8 +745,10 @@ testSuite({
     assertEquals(2, component.indexOfChild(c));
 
     assertEquals(
-        'indexOfChild must return -1 for nonexistent child', -1,
-        component.indexOfChild(new Component()));
+      'indexOfChild must return -1 for nonexistent child',
+      -1,
+      component.indexOfChild(new Component())
+    );
   },
 
   testRemoveChild() {
@@ -784,22 +764,14 @@ testSuite({
     component.addChild(b);
     component.addChild(c);
 
-    assertEquals(
-        'Parent must remove and return child', c, component.removeChild(c));
-    assertNull(
-        'Parent must no longer contain this child', component.getChild('c'));
+    assertEquals('Parent must remove and return child', c, component.removeChild(c));
+    assertNull('Parent must no longer contain this child', component.getChild('c'));
 
-    assertEquals(
-        'Parent must remove and return child by ID', b,
-        component.removeChild('b'));
-    assertNull(
-        'Parent must no longer contain this child', component.getChild('b'));
+    assertEquals('Parent must remove and return child by ID', b, component.removeChild('b'));
+    assertNull('Parent must no longer contain this child', component.getChild('b'));
 
-    assertEquals(
-        'Parent must remove and return child by index', a,
-        component.removeChildAt(0));
-    assertNull(
-        'Parent must no longer contain this child', component.getChild('a'));
+    assertEquals('Parent must remove and return child by index', a, component.removeChildAt(0));
+    assertNull('Parent must no longer contain this child', component.getChild('a'));
   },
 
   /** @suppress {missingProperties} suppression added to enable type checking */
@@ -886,8 +858,10 @@ testSuite({
     child.render(nestedDiv);
     assertTrue(child.isInDocument());
     assertEquals(
-        'Child should be rendered in the expected div', nestedDiv,
-        child.getElement().parentNode);
+      'Child should be rendered in the expected div',
+      nestedDiv,
+      child.getElement().parentNode
+    );
   },
 
   testAddChildAfterDomManuallyInserted() {
@@ -907,8 +881,10 @@ testSuite({
 
     assertTrue(child.isInDocument());
     assertEquals(
-        'Child should be rendered in the expected div', nestedDiv,
-        child.getElement().parentNode);
+      'Child should be rendered in the expected div',
+      nestedDiv,
+      child.getElement().parentNode
+    );
   },
 
   testRemoveChildren() {
@@ -925,14 +901,13 @@ testSuite({
     c.setId('c');
 
     assertArrayEquals(
-        'Parent must remove and return children.', [a, b, c],
-        component.removeChildren());
-    assertNull(
-        'Parent must no longer contain this child', component.getChild('a'));
-    assertNull(
-        'Parent must no longer contain this child', component.getChild('b'));
-    assertNull(
-        'Parent must no longer contain this child', component.getChild('c'));
+      'Parent must remove and return children.',
+      [a, b, c],
+      component.removeChildren()
+    );
+    assertNull('Parent must no longer contain this child', component.getChild('a'));
+    assertNull('Parent must no longer contain this child', component.getChild('b'));
+    assertNull('Parent must no longer contain this child', component.getChild('c'));
   },
 
   testRemoveChildren_Unrender() {
@@ -944,45 +919,41 @@ testSuite({
     component.addChild(b);
 
     assertArrayEquals(
-        'Parent must remove and return children.', [a, b],
-        component.removeChildren(true));
-    assertNull(
-        'Parent must no longer contain this child', component.getChild('a'));
+      'Parent must remove and return children.',
+      [a, b],
+      component.removeChildren(true)
+    );
+    assertNull('Parent must no longer contain this child', component.getChild('a'));
     assertFalse('Child must no longer be in the document.', a.isInDocument());
-    assertNull(
-        'Parent must no longer contain this child', component.getChild('b'));
+    assertNull('Parent must no longer contain this child', component.getChild('b'));
     assertFalse('Child must no longer be in the document.', b.isInDocument());
   },
 
   testSetPointerEventsEnabled() {
-    assertFalse(
-        'Component must default to mouse events.',
-        component.pointerEventsEnabled());
+    assertFalse('Component must default to mouse events.', component.pointerEventsEnabled());
 
     component.setPointerEventsEnabled(true);
     assertTrue(
-        'Component must use pointer events when specified.',
-        component.pointerEventsEnabled());
+      'Component must use pointer events when specified.',
+      component.pointerEventsEnabled()
+    );
 
     component.setPointerEventsEnabled(false);
     assertFalse(
-        'Component must use mouse events when specified.',
-        component.pointerEventsEnabled());
+      'Component must use mouse events when specified.',
+      component.pointerEventsEnabled()
+    );
   },
 
   testSetPointerEventsEnabledAfterEnterDocument() {
     component.render(sandbox);
 
-    assertThrows(
-        'setPointerEventsEnabled(true) after enterDocument must throw error.',
-        () => {
-          component.setPointerEventsEnabled(true);
-        });
+    assertThrows('setPointerEventsEnabled(true) after enterDocument must throw error.', () => {
+      component.setPointerEventsEnabled(true);
+    });
 
-    assertThrows(
-        'setPointerEventsEnabled(false) after enterDocument must throw error.',
-        () => {
-          component.setPointerEventsEnabled(false);
-        });
+    assertThrows('setPointerEventsEnabled(false) after enterDocument must throw error.', () => {
+      component.setPointerEventsEnabled(false);
+    });
   },
 });

@@ -16,12 +16,10 @@
 // TODO(user): Should this rely on natural ordering via some Comparable
 //     interface?
 
-
 goog.module('goog.structs.PriorityQueue');
 goog.module.declareLegacyNamespace();
 
 const Heap = goog.require('goog.structs.Heap');
-
 
 /**
  * Class for Priority Queue datastructure.

@@ -21,7 +21,6 @@ goog.require('goog.ui.MenuBarRenderer');
 goog.requireType('goog.dom.DomHelper');
 goog.requireType('goog.ui.ContainerRenderer');
 
-
 /**
  * The menuBar factory creates a new menu bar.
  * @param {goog.ui.ContainerRenderer=} opt_renderer Renderer used to render or
@@ -30,9 +29,9 @@ goog.requireType('goog.ui.ContainerRenderer');
  *     interaction.
  * @return {!goog.ui.Container} The created menu bar.
  */
-goog.ui.menuBar.create = function(opt_renderer, opt_domHelper) {
-  'use strict';
-  return new goog.ui.Container(
-      null, opt_renderer ? opt_renderer : goog.ui.MenuBarRenderer.getInstance(),
-      opt_domHelper);
-};
+goog.ui.menuBar.create = (opt_renderer, opt_domHelper) =>
+  new goog.ui.Container(
+    null,
+    opt_renderer ? opt_renderer : goog.ui.MenuBarRenderer.getInstance(),
+    opt_domHelper
+  );

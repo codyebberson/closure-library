@@ -5,11 +5,15 @@
  */
 
 goog.module('goog.streams.fullTestCases');
-goog.setTestOnly();
 
 const recordFunction = goog.require('goog.testing.recordFunction');
-const {ReadableStream, ReadableStreamDefaultController, ReadableStreamStrategy, ReadableStreamUnderlyingSource} = goog.require('goog.streams.fullTypes');
-const {TestCases: LiteTestCases} = goog.require('goog.streams.liteTestCases');
+const {
+  ReadableStream,
+  ReadableStreamDefaultController,
+  ReadableStreamStrategy,
+  ReadableStreamUnderlyingSource,
+} = goog.require('goog.streams.fullTypes');
+const { TestCases: LiteTestCases } = goog.require('goog.streams.liteTestCases');
 
 /**
  * @return {number}
@@ -40,8 +44,9 @@ class TestCases extends LiteTestCases {
    * @override
    */
   newReadableStreamWithController(
-      underlyingSource = /** @type {!ReadableStreamUnderlyingSource} */ ({}),
-      strategy = /** @type {!ReadableStreamStrategy} */ ({})) {
+    underlyingSource = /** @type {!ReadableStreamUnderlyingSource} */ {},
+    strategy = /** @type {!ReadableStreamStrategy} */ {}
+  ) {
     let controller;
     const start = underlyingSource.start;
     underlyingSource = Object.assign({}, underlyingSource, {
@@ -51,32 +56,31 @@ class TestCases extends LiteTestCases {
       },
     });
     const stream = this.newReadableStream(underlyingSource, strategy);
-    return {stream, controller};
+    return { stream, controller };
   }
 
   async testCancel() {
     const stream = this.newReadableStream();
     const cancelResult = await stream.cancel(new Error('error'));
     assertUndefined(cancelResult);
-    const {done} = await stream.getReader().read();
+    const { done } = await stream.getReader().read();
     assertTrue(done);
   }
 
   async testCancel_Closed() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     controller.close();
     const cancelResult = await stream.cancel(new Error('error'));
     assertUndefined(cancelResult);
-    const {done} = await stream.getReader().read();
+    const { done } = await stream.getReader().read();
     assertTrue(done);
   }
 
   async testCancel_Errored() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     const error = new Error('error');
     controller.error(error);
-    const cancelError =
-        await assertRejects(stream.cancel(new Error('other-error')));
+    const cancelError = await assertRejects(stream.cancel(new Error('other-error')));
     assertEquals(error, cancelError);
   }
 
@@ -88,7 +92,7 @@ class TestCases extends LiteTestCases {
 
   async testCancel_Source() {
     const cancel = recordFunction();
-    const stream = this.newReadableStream({cancel});
+    const stream = this.newReadableStream({ cancel });
     const reason = new Error('error');
 
     await stream.cancel(reason);
@@ -102,18 +106,16 @@ class TestCases extends LiteTestCases {
     const cancel = recordFunction(() => {
       throw thrownError;
     });
-    const stream = this.newReadableStream({cancel});
-    const cancelError =
-        await assertRejects(stream.cancel(new Error('other-error')));
+    const stream = this.newReadableStream({ cancel });
+    const cancelError = await assertRejects(stream.cancel(new Error('other-error')));
     assertEquals(thrownError, cancelError);
   }
 
   async testCancel_RejectingSource() {
     const rejectedError = new Error('error');
     const cancel = recordFunction(() => Promise.reject(rejectedError));
-    const stream = this.newReadableStream({cancel});
-    const cancelError =
-        await assertRejects(stream.cancel(new Error('other-error')));
+    const stream = this.newReadableStream({ cancel });
+    const cancelError = await assertRejects(stream.cancel(new Error('other-error')));
     assertEquals(rejectedError, cancelError);
   }
 
@@ -122,32 +124,31 @@ class TestCases extends LiteTestCases {
     const reader = stream.getReader();
     const cancelResult = await reader.cancel(new Error('error'));
     assertUndefined(cancelResult);
-    const {done} = await reader.read();
+    const { done } = await reader.read();
     assertTrue(done);
   }
 
   async testReaderCancel_Closed() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     const reader = stream.getReader();
     controller.close();
     const cancelResult = await reader.cancel(new Error('error'));
     assertUndefined(cancelResult);
-    const {done} = await reader.read();
+    const { done } = await reader.read();
     assertTrue(done);
   }
 
   async testReaderCancel_Errored() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     const error = new Error('error');
     controller.error(error);
-    const cancelError = await assertRejects(
-        stream.getReader().cancel(new Error('other-error')));
+    const cancelError = await assertRejects(stream.getReader().cancel(new Error('other-error')));
     assertEquals(error, cancelError);
   }
 
   async testReaderCancel_Source() {
     const cancel = recordFunction();
-    const stream = this.newReadableStream({cancel});
+    const stream = this.newReadableStream({ cancel });
     const reason = new Error('error');
 
     await stream.getReader().cancel(reason);
@@ -161,18 +162,16 @@ class TestCases extends LiteTestCases {
     const cancel = recordFunction(() => {
       throw thrownError;
     });
-    const stream = this.newReadableStream({cancel});
-    const cancelError = await assertRejects(
-        stream.getReader().cancel(new Error('other-error')));
+    const stream = this.newReadableStream({ cancel });
+    const cancelError = await assertRejects(stream.getReader().cancel(new Error('other-error')));
     assertEquals(thrownError, cancelError);
   }
 
   async testReaderCancel_RejectingSource() {
     const rejectedError = new Error('error');
     const cancel = recordFunction(() => Promise.reject(rejectedError));
-    const stream = this.newReadableStream({cancel});
-    const cancelError = await assertRejects(
-        stream.getReader().cancel(new Error('other-error')));
+    const stream = this.newReadableStream({ cancel });
+    const cancelError = await assertRejects(stream.getReader().cancel(new Error('other-error')));
     assertEquals(rejectedError, cancelError);
   }
 
@@ -184,7 +183,7 @@ class TestCases extends LiteTestCases {
   }
 
   testDesiredSize_Default_Decreases() {
-    const {controller} = this.newReadableStreamWithController();
+    const { controller } = this.newReadableStreamWithController();
     assertEquals(1, controller.desiredSize);
     controller.enqueue('foo');
     assertEquals(0, controller.desiredSize);
@@ -193,7 +192,7 @@ class TestCases extends LiteTestCases {
   }
 
   async testDesiredSize_Default_Increases() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     controller.enqueue('foo');
     controller.enqueue('bar');
     controller.enqueue('baz');
@@ -208,22 +207,21 @@ class TestCases extends LiteTestCases {
   }
 
   testDesiredSize_Default_Errored() {
-    const {controller} = this.newReadableStreamWithController();
+    const { controller } = this.newReadableStreamWithController();
     controller.error(new Error('error'));
     assertNull(controller.desiredSize);
   }
 
   testDesiredSize_Default_Closed() {
-    const {controller} = this.newReadableStreamWithController();
+    const { controller } = this.newReadableStreamWithController();
     controller.close();
     assertEquals(0, controller.desiredSize);
   }
 
   testDesiredSize_CustomSize_Decreases() {
-    const {controller} =
-        this.newReadableStreamWithController(/* underlyingSource */ undefined, {
-          size: chunkSizeTwo,
-        });
+    const { controller } = this.newReadableStreamWithController(/* underlyingSource */ undefined, {
+      size: chunkSizeTwo,
+    });
     assertEquals(1, controller.desiredSize);
     controller.enqueue('foo');
     assertEquals(-1, controller.desiredSize);
@@ -232,10 +230,12 @@ class TestCases extends LiteTestCases {
   }
 
   async testDesiredSize_CustomSize_Increases() {
-    const {stream, controller} =
-        this.newReadableStreamWithController(/* underlyingSource */ undefined, {
-          size: chunkSizeTwo,
-        });
+    const { stream, controller } = this.newReadableStreamWithController(
+      /* underlyingSource */ undefined,
+      {
+        size: chunkSizeTwo,
+      }
+    );
     controller.enqueue('foo');
     controller.enqueue('bar');
     controller.enqueue('baz');
@@ -250,28 +250,25 @@ class TestCases extends LiteTestCases {
   }
 
   testDesiredSize_CustomSize_Errored() {
-    const {controller} =
-        this.newReadableStreamWithController(/* underlyingSource */ undefined, {
-          size: chunkSizeTwo,
-        });
+    const { controller } = this.newReadableStreamWithController(/* underlyingSource */ undefined, {
+      size: chunkSizeTwo,
+    });
     controller.error(new Error('error'));
     assertNull(controller.desiredSize);
   }
 
   testDesiredSize_CustomSize_Closed() {
-    const {controller} =
-        this.newReadableStreamWithController(/* underlyingSource */ undefined, {
-          size: chunkSizeTwo,
-        });
+    const { controller } = this.newReadableStreamWithController(/* underlyingSource */ undefined, {
+      size: chunkSizeTwo,
+    });
     controller.close();
     assertEquals(0, controller.desiredSize);
   }
 
   testDesiredSize_CustomHighWaterMark_Decreases() {
-    const {controller} =
-        this.newReadableStreamWithController(/* underlyingSource */ undefined, {
-          highWaterMark: 4,
-        });
+    const { controller } = this.newReadableStreamWithController(/* underlyingSource */ undefined, {
+      highWaterMark: 4,
+    });
     assertEquals(4, controller.desiredSize);
     controller.enqueue('foo');
     assertEquals(3, controller.desiredSize);
@@ -280,10 +277,12 @@ class TestCases extends LiteTestCases {
   }
 
   async testDesiredSize_CustomHighWaterMark_Increases() {
-    const {stream, controller} =
-        this.newReadableStreamWithController(/* underlyingSource */ undefined, {
-          highWaterMark: 4,
-        });
+    const { stream, controller } = this.newReadableStreamWithController(
+      /* underlyingSource */ undefined,
+      {
+        highWaterMark: 4,
+      }
+    );
     controller.enqueue('foo');
     controller.enqueue('bar');
     controller.enqueue('baz');
@@ -298,75 +297,69 @@ class TestCases extends LiteTestCases {
   }
 
   testDesiredSize_CustomHighWaterMark_Errored() {
-    const {controller} =
-        this.newReadableStreamWithController(/* underlyingSource */ undefined, {
-          highWaterMark: 4,
-        });
+    const { controller } = this.newReadableStreamWithController(/* underlyingSource */ undefined, {
+      highWaterMark: 4,
+    });
     controller.error(new Error('error'));
     assertNull(controller.desiredSize);
   }
 
   testDesiredSize_CustomHighWaterMark_Closed() {
-    const {controller} =
-        this.newReadableStreamWithController(/* underlyingSource */ undefined, {
-          highWaterMark: 4,
-        });
+    const { controller } = this.newReadableStreamWithController(/* underlyingSource */ undefined, {
+      highWaterMark: 4,
+    });
     controller.close();
     assertEquals(0, controller.desiredSize);
   }
 
   testSize_Chunks() {
     const size = recordFunction(() => 1);
-    const {controller} =
-        this.newReadableStreamWithController(/* underlyingSource */ undefined, {
-          size,
-        });
+    const { controller } = this.newReadableStreamWithController(/* underlyingSource */ undefined, {
+      size,
+    });
     controller.enqueue('foo');
     controller.enqueue('bar');
     controller.enqueue('baz');
     size.assertCallCount(3);
     assertObjectEquals(
-        [['foo'], ['bar'], ['baz']],
-        size.getCalls().map((call) => call.getArguments()));
+      [['foo'], ['bar'], ['baz']],
+      size.getCalls().map((call) => call.getArguments())
+    );
   }
 
   testSize_Negative() {
-    const {controller} =
-        this.newReadableStreamWithController(/* underlyingSource */ undefined, {
-          size: () => -1,
-        });
+    const { controller } = this.newReadableStreamWithController(/* underlyingSource */ undefined, {
+      size: () => -1,
+    });
     assertThrows(() => {
       controller.enqueue('foo');
     });
   }
 
   testSize_Infinity() {
-    const {controller} =
-        this.newReadableStreamWithController(/* underlyingSource */ undefined, {
-          size: () => Infinity,
-        });
+    const { controller } = this.newReadableStreamWithController(/* underlyingSource */ undefined, {
+      size: () => Number.POSITIVE_INFINITY,
+    });
     assertThrows(() => {
       controller.enqueue('foo');
     });
   }
 
   testSize_NonNumber() {
-    const {controller} =
-        this.newReadableStreamWithController(/* underlyingSource */ undefined, {
-          size: () => 'bar',
-        });
+    const { controller } = this.newReadableStreamWithController(/* underlyingSource */ undefined, {
+      size: () => 'bar',
+    });
     assertThrows(() => {
       controller.enqueue('foo');
     });
   }
 
   testSize_Throws() {
-    const {controller} =
-        this.newReadableStreamWithController(/* underlyingSource */ undefined, {
-          size: () => {
-            throw new Error('error');
-          }
-        });
+    const { controller } = this.newReadableStreamWithController(/* underlyingSource */ undefined, {
+      size: () => {
+        throw new Error('error');
+      },
+    });
     assertThrows(() => {
       controller.enqueue('foo');
     });
@@ -374,7 +367,7 @@ class TestCases extends LiteTestCases {
 
   async testPull() {
     const pull = recordFunction();
-    this.newReadableStreamWithController({pull});
+    this.newReadableStreamWithController({ pull });
     // Pull is called once after start is resolved.
     await undefined;
     pull.assertCallCount(1);
@@ -402,7 +395,7 @@ class TestCases extends LiteTestCases {
       resolveStart = resolve;
     });
     const start = recordFunction(() => startPromise);
-    this.newReadableStreamWithController({start, pull});
+    this.newReadableStreamWithController({ start, pull });
     await undefined;
     pull.assertCallCount(0);
     resolveStart();
@@ -418,7 +411,7 @@ class TestCases extends LiteTestCases {
       resolveStart = resolve;
     });
     const start = recordFunction(() => startPromise);
-    const {stream} = this.newReadableStreamWithController({start, pull});
+    const { stream } = this.newReadableStreamWithController({ start, pull });
     pull.assertCallCount(0);
     stream.getReader().read();
     pull.assertCallCount(0);
@@ -430,7 +423,7 @@ class TestCases extends LiteTestCases {
 
   async testPull_AfterRead() {
     const pull = recordFunction();
-    const {stream} = this.newReadableStreamWithController({pull});
+    const { stream } = this.newReadableStreamWithController({ pull });
     // Wait for start to finish.
     await pull.waitForCalls(1);
     pull.reset();
@@ -441,7 +434,7 @@ class TestCases extends LiteTestCases {
 
   async testPull_AfterReadOnEmptyStream() {
     const pull = recordFunction();
-    const {stream} = this.newReadableStreamWithController({pull});
+    const { stream } = this.newReadableStreamWithController({ pull });
     // Wait for start to finish.
     await pull.waitForCalls(1);
     pull.reset();
@@ -452,7 +445,7 @@ class TestCases extends LiteTestCases {
 
   async testPull_AfterTwoReadsOnEmptyStream() {
     const pull = recordFunction();
-    const {stream} = this.newReadableStreamWithController({pull});
+    const { stream } = this.newReadableStreamWithController({ pull });
     // Wait for start to finish.
     await pull.waitForCalls(1);
     pull.reset();
@@ -469,7 +462,7 @@ class TestCases extends LiteTestCases {
 
   async testPull_AfterManyReadsOnEmptyStream() {
     const pull = recordFunction();
-    const {stream} = this.newReadableStreamWithController({pull});
+    const { stream } = this.newReadableStreamWithController({ pull });
     // Wait for start to finish.
     await pull.waitForCalls(1);
     pull.reset();
@@ -490,7 +483,7 @@ class TestCases extends LiteTestCases {
       pullResolve = resolve;
     });
     const pull = recordFunction(() => pullPromise);
-    const {stream} = this.newReadableStreamWithController({pull});
+    const { stream } = this.newReadableStreamWithController({ pull });
     // Called by start.
     await pull.waitForCalls(1);
     const reader = stream.getReader();
@@ -509,20 +502,20 @@ class TestCases extends LiteTestCases {
     const pull = recordFunction(() => {
       throw new Error('error');
     });
-    const {stream} = this.newReadableStreamWithController({pull});
+    const { stream } = this.newReadableStreamWithController({ pull });
     const reader = stream.getReader();
     await assertRejects(reader.read());
   }
 
   async testPull_Rejects() {
     const pull = recordFunction(() => Promise.reject(new Error('error')));
-    const {stream} = this.newReadableStreamWithController({pull});
+    const { stream } = this.newReadableStreamWithController({ pull });
     const reader = stream.getReader();
     await assertRejects(reader.read());
   }
 
   async testTee() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     controller.enqueue('1');
     controller.enqueue('2');
     controller.enqueue('3');
@@ -548,18 +541,17 @@ class TestCases extends LiteTestCases {
 
   async testTee_Cancel() {
     const cancel = recordFunction();
-    const {stream, controller} = this.newReadableStreamWithController({
+    const { stream, controller } = this.newReadableStreamWithController({
       cancel,
     });
     const [stream1, stream2] = stream.tee();
     const cancel1Result = stream1.cancel('reason1');
     cancel.assertCallCount(0);
-    await 0;  // Just in case the cancel resolves on the next tick.
+    await 0; // Just in case the cancel resolves on the next tick.
     cancel.assertCallCount(0);
     const cancel2Result = stream2.cancel('reason2');
     cancel.assertCallCount(1);
-    assertArrayEquals(
-        ['reason1', 'reason2'], cancel.getLastCall().getArguments()[0]);
+    assertArrayEquals(['reason1', 'reason2'], cancel.getLastCall().getArguments()[0]);
     const cancel1Value = await cancel1Result;
     const cancel2Value = await cancel2Result;
     assertUndefined(cancel1Value);
@@ -568,18 +560,17 @@ class TestCases extends LiteTestCases {
 
   async testTee_Cancel_ReverseOrder() {
     const cancel = recordFunction();
-    const {stream, controller} = this.newReadableStreamWithController({
+    const { stream, controller } = this.newReadableStreamWithController({
       cancel,
     });
     const [stream1, stream2] = stream.tee();
     const cancel2Result = stream2.cancel('reason2');
     cancel.assertCallCount(0);
-    await 0;  // Just in case the cancel resolves on the next tick.
+    await 0; // Just in case the cancel resolves on the next tick.
     cancel.assertCallCount(0);
     const cancel1Result = stream1.cancel('reason1');
     cancel.assertCallCount(1);
-    assertArrayEquals(
-        ['reason1', 'reason2'], cancel.getLastCall().getArguments()[0]);
+    assertArrayEquals(['reason1', 'reason2'], cancel.getLastCall().getArguments()[0]);
     const cancel1Value = await cancel1Result;
     const cancel2Value = await cancel2Result;
     assertUndefined(cancel1Value);
@@ -587,7 +578,7 @@ class TestCases extends LiteTestCases {
   }
 
   async testTee_Cancel_NoCancelOnSource() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     const [stream1, stream2] = stream.tee();
     const cancel1Result = stream1.cancel('reason1');
     const cancel2Result = stream2.cancel('reason2');
@@ -602,7 +593,7 @@ class TestCases extends LiteTestCases {
     const cancel = recordFunction(() => {
       throw error;
     });
-    const {stream, controller} = this.newReadableStreamWithController({
+    const { stream, controller } = this.newReadableStreamWithController({
       cancel,
     });
     const [stream1, stream2] = stream.tee();
@@ -625,7 +616,7 @@ class TestCases extends LiteTestCases {
 
 class TestCasesWithIterator extends TestCases {
   async testAsyncIterator() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     controller.enqueue('foo');
     controller.enqueue('bar');
     controller.close();
@@ -637,7 +628,7 @@ class TestCasesWithIterator extends TestCases {
   }
 
   async testAsyncIterator_Closed() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     controller.close();
     const chunks = [];
     for await (const chunk of stream) {
@@ -647,7 +638,7 @@ class TestCasesWithIterator extends TestCases {
   }
 
   async testAsyncIterator_Error() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     controller.error(new Error('error'));
     const itr = stream[Symbol.asyncIterator]();
     assertRejects(itr.next());
@@ -662,7 +653,7 @@ class TestCasesWithIterator extends TestCases {
   }
 
   async testAsyncIterator_Partial() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     controller.enqueue('foo');
     controller.enqueue('bar');
     controller.close();
@@ -677,17 +668,17 @@ class TestCasesWithIterator extends TestCases {
   }
 
   async testAsyncIterator_Released() {
-    const {stream, controller} = this.newReadableStreamWithController();
+    const { stream, controller } = this.newReadableStreamWithController();
     controller.close();
     const itr = stream[Symbol.asyncIterator]();
-    const {done} = await itr.next();
+    const { done } = await itr.next();
     assertTrue(done);
     assertRejects(itr.next());
   }
 
   async testAsyncIterator_Return() {
     const cancel = recordFunction();
-    const {stream, controller} = this.newReadableStreamWithController({
+    const { stream, controller } = this.newReadableStreamWithController({
       cancel,
     });
     const itr = stream[Symbol.asyncIterator]();
@@ -705,10 +696,10 @@ class TestCasesWithIterator extends TestCases {
 
   async testAsyncIterator_PreventCancel_Return() {
     const cancel = recordFunction();
-    const {stream, controller} = this.newReadableStreamWithController({
+    const { stream, controller } = this.newReadableStreamWithController({
       cancel,
     });
-    const itr = stream[Symbol.asyncIterator]({preventCancel: true});
+    const itr = stream[Symbol.asyncIterator]({ preventCancel: true });
     const error = new Error('error');
     const returnResult = await itr.return(error);
     cancel.assertCallCount(0);

@@ -17,29 +17,23 @@ goog.require('goog.ui.INLINE_BLOCK_CLASSNAME');
 goog.require('goog.ui.MenuSeparatorRenderer');
 goog.requireType('goog.ui.Control');
 
-
-
 /**
  * Renderer for toolbar separators.
  * @constructor
  * @extends {goog.ui.MenuSeparatorRenderer}
  */
-goog.ui.ToolbarSeparatorRenderer = function() {
-  'use strict';
+goog.ui.ToolbarSeparatorRenderer = function () {
   goog.ui.MenuSeparatorRenderer.call(this);
 };
 goog.inherits(goog.ui.ToolbarSeparatorRenderer, goog.ui.MenuSeparatorRenderer);
 goog.addSingletonGetter(goog.ui.ToolbarSeparatorRenderer);
-
 
 /**
  * Default CSS class to be applied to the root element of components rendered
  * by this renderer.
  * @type {string}
  */
-goog.ui.ToolbarSeparatorRenderer.CSS_CLASS =
-    goog.getCssName('goog-toolbar-separator');
-
+goog.ui.ToolbarSeparatorRenderer.CSS_CLASS = goog.getCssName('goog-toolbar-separator');
 
 /**
  * Returns a styled toolbar separator implemented by the following DOM:
@@ -51,15 +45,16 @@ goog.ui.ToolbarSeparatorRenderer.CSS_CLASS =
  * @return {!Element} Root element for the separator.
  * @override
  */
-goog.ui.ToolbarSeparatorRenderer.prototype.createDom = function(separator) {
-  'use strict';
+goog.ui.ToolbarSeparatorRenderer.prototype.createDom = function (separator) {
   // 00A0 is &nbsp;
-  return separator.getDomHelper().createDom(
-      goog.dom.TagName.DIV, this.getClassNames(separator).join(' ') + ' ' +
-          goog.ui.INLINE_BLOCK_CLASSNAME,
-      '\u00A0');
+  return separator
+    .getDomHelper()
+    .createDom(
+      goog.dom.TagName.DIV,
+      this.getClassNames(separator).join(' ') + ' ' + goog.ui.INLINE_BLOCK_CLASSNAME,
+      '\u00A0'
+    );
 };
-
 
 /**
  * Takes an existing element, and decorates it with the separator.  Overrides
@@ -69,16 +64,12 @@ goog.ui.ToolbarSeparatorRenderer.prototype.createDom = function(separator) {
  * @return {!Element} Decorated element.
  * @override
  */
-goog.ui.ToolbarSeparatorRenderer.prototype.decorate = function(
-    separator, element) {
-  'use strict';
-  element = goog.ui.ToolbarSeparatorRenderer.superClass_.decorate.call(
-      this, separator, element);
+goog.ui.ToolbarSeparatorRenderer.prototype.decorate = function (separator, element) {
+  element = goog.ui.ToolbarSeparatorRenderer.superClass_.decorate.call(this, separator, element);
   goog.asserts.assert(element);
   goog.dom.classlist.add(element, goog.ui.INLINE_BLOCK_CLASSNAME);
   return element;
 };
-
 
 /**
  * Returns the CSS class to be applied to the root element of components
@@ -86,7 +77,5 @@ goog.ui.ToolbarSeparatorRenderer.prototype.decorate = function(
  * @return {string} Renderer-specific CSS class.
  * @override
  */
-goog.ui.ToolbarSeparatorRenderer.prototype.getCssClass = function() {
-  'use strict';
-  return goog.ui.ToolbarSeparatorRenderer.CSS_CLASS;
-};
+goog.ui.ToolbarSeparatorRenderer.prototype.getCssClass = () =>
+  goog.ui.ToolbarSeparatorRenderer.CSS_CLASS;

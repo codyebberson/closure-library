@@ -16,8 +16,6 @@ goog.require('goog.math.Coordinate3');
 goog.require('goog.style');
 goog.require('goog.userAgent');
 
-
-
 /**
  * Returns the x,y translation component of any CSS transforms applied to the
  * element, in pixels.
@@ -25,8 +23,7 @@ goog.require('goog.userAgent');
  * @param {!Element} element The element to get the translation of.
  * @return {!goog.math.Coordinate} The CSS translation of the element in px.
  */
-goog.style.transform.getTranslation = function(element) {
-  'use strict';
+goog.style.transform.getTranslation = (element) => {
   var transform = goog.style.getComputedTransform(element);
   var matrixConstructor = goog.style.transform.matrixConstructor_();
   if (transform && matrixConstructor) {
@@ -38,7 +35,6 @@ goog.style.transform.getTranslation = function(element) {
   return new goog.math.Coordinate(0, 0);
 };
 
-
 /**
  * Translates an element's position using the CSS3 transform property.
  * NOTE: This replaces all other transforms already defined on the element.
@@ -47,17 +43,13 @@ goog.style.transform.getTranslation = function(element) {
  * @param {number} y The vertical translation.
  * @return {boolean} Whether the CSS translation was set.
  */
-goog.style.transform.setTranslation = function(element, x, y) {
-  'use strict';
+goog.style.transform.setTranslation = (element, x, y) => {
   // TODO(user): After http://crbug.com/324107 is fixed, it will be faster to
   // use something like: translation = new CSSMatrix().translate(x, y, 0);
-  var translation = 'translate3d(' + x + 'px,' + y + 'px,' +
-      '0px)';
-  goog.style.setStyle(
-      element, goog.style.transform.getTransformProperty_(), translation);
+  var translation = 'translate3d(' + x + 'px,' + y + 'px,' + '0px)';
+  goog.style.setStyle(element, goog.style.transform.getTransformProperty_(), translation);
   return true;
 };
-
 
 /**
  * Returns the scale of the x, y and z dimensions of CSS transforms applied to
@@ -66,8 +58,7 @@ goog.style.transform.setTranslation = function(element, x, y) {
  * @param {!Element} element The element to get the scale of.
  * @return {!goog.math.Coordinate3} The scale of the element.
  */
-goog.style.transform.getScale = function(element) {
-  'use strict';
+goog.style.transform.getScale = (element) => {
   var transform = goog.style.getComputedTransform(element);
   var matrixConstructor = goog.style.transform.matrixConstructor_();
   if (transform && matrixConstructor) {
@@ -79,7 +70,6 @@ goog.style.transform.getScale = function(element) {
   return new goog.math.Coordinate3(0, 0, 0);
 };
 
-
 /**
  * Scales an element using the CSS3 transform property.
  * NOTE: This replaces all other transforms already defined on the element.
@@ -89,22 +79,18 @@ goog.style.transform.getScale = function(element) {
  * @param {number} z The depth scale.
  * @return {boolean} Whether the CSS scale was set.
  */
-goog.style.transform.setScale = function(element, x, y, z) {
-  'use strict';
+goog.style.transform.setScale = (element, x, y, z) => {
   var scale = 'scale3d(' + x + ',' + y + ',' + z + ')';
-  goog.style.setStyle(
-      element, goog.style.transform.getTransformProperty_(), scale);
+  goog.style.setStyle(element, goog.style.transform.getTransformProperty_(), scale);
   return true;
 };
-
 
 /**
  * Returns the rotation CSS transform applied to the element.
  * @param {!Element} element The element to get the rotation of.
  * @return {number} The rotation of the element in degrees.
  */
-goog.style.transform.getRotation = function(element) {
-  'use strict';
+goog.style.transform.getRotation = (element) => {
   var transform = goog.style.getComputedTransform(element);
   var matrixConstructor = goog.style.transform.matrixConstructor_();
   if (transform && matrixConstructor) {
@@ -118,7 +104,6 @@ goog.style.transform.getRotation = function(element) {
   return 0;
 };
 
-
 /**
  * Rotates an element using the CSS3 transform property.
  * NOTE: This replaces all other transforms already defined on the element.
@@ -126,14 +111,11 @@ goog.style.transform.getRotation = function(element) {
  * @param {number} degrees The number of degrees to rotate by.
  * @return {boolean} Whether the CSS rotation was set.
  */
-goog.style.transform.setRotation = function(element, degrees) {
-  'use strict';
+goog.style.transform.setRotation = (element, degrees) => {
   var rotation = 'rotate3d(0,0,1,' + degrees + 'deg)';
-  goog.style.setStyle(
-      element, goog.style.transform.getTransformProperty_(), rotation);
+  goog.style.setStyle(element, goog.style.transform.getTransformProperty_(), rotation);
   return true;
 };
-
 
 /**
  * A cached value of the transform property depending on whether the useragent
@@ -142,14 +124,9 @@ goog.style.transform.setRotation = function(element, degrees) {
  *     is IE9.
  * @private
  */
-goog.style.transform.getTransformProperty_ =
-    goog.functions.cacheReturnValue(function() {
-      'use strict';
-      return goog.userAgent.IE && goog.userAgent.DOCUMENT_MODE == 9 ?
-          '-ms-transform' :
-          'transform';
-    });
-
+goog.style.transform.getTransformProperty_ = goog.functions.cacheReturnValue(() =>
+  goog.userAgent.IE && goog.userAgent.DOCUMENT_MODE == 9 ? '-ms-transform' : 'transform'
+);
 
 /**
  * Gets the constructor for a CSSMatrix object.
@@ -157,17 +134,15 @@ goog.style.transform.getTransformProperty_ =
  *     object (or null).
  * @private
  */
-goog.style.transform.matrixConstructor_ =
-    goog.functions.cacheReturnValue(function() {
-      'use strict';
-      if (goog.global['WebKitCSSMatrix'] !== undefined) {
-        return goog.global['WebKitCSSMatrix'];
-      }
-      if (goog.global['MSCSSMatrix'] !== undefined) {
-        return goog.global['MSCSSMatrix'];
-      }
-      if (goog.global['CSSMatrix'] !== undefined) {
-        return goog.global['CSSMatrix'];
-      }
-      return null;
-    });
+goog.style.transform.matrixConstructor_ = goog.functions.cacheReturnValue(() => {
+  if (goog.global['WebKitCSSMatrix'] !== undefined) {
+    return goog.global['WebKitCSSMatrix'];
+  }
+  if (goog.global['MSCSSMatrix'] !== undefined) {
+    return goog.global['MSCSSMatrix'];
+  }
+  if (goog.global['CSSMatrix'] !== undefined) {
+    return goog.global['CSSMatrix'];
+  }
+  return null;
+});

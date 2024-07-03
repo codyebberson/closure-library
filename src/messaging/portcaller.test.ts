@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.messaging.PortCallerTest');
-goog.setTestOnly();
 
 const GoogEventTarget = goog.require('goog.events.EventTarget');
 const MockControl = goog.require('goog.testing.MockControl');

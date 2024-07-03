@@ -13,8 +13,7 @@
  * @nocompile
  */
 
-self.CLOSURE_BASE_PATH =
-self.CLOSURE_BASE_PATH = '../../';
+self.CLOSURE_BASE_PATH = self.CLOSURE_BASE_PATH = '../../';
 importScripts('../../bootstrap/webworkers.js');
 self.CLOSURE_DEFINES = self.CLOSURE_DEFINES || {};
 self.CLOSURE_DEFINES['goog.ENABLE_DEBUG_LOADER'] = true;
@@ -26,21 +25,27 @@ goog.provide('goog.messaging.testdata.portchannel_worker');
 goog.require('goog.messaging.PortChannel');
 
 function registerPing(channel) {
-  channel.registerService('ping', function(msg) {
-    'use strict';
-    channel.send('pong', msg);
-  }, true);
+  channel.registerService(
+    'ping',
+    (msg) => {
+      channel.send('pong', msg);
+    },
+    true
+  );
 }
 
 function startListening() {
   const channel = new goog.messaging.PortChannel(self);
   registerPing(channel);
 
-  channel.registerService('addPort', function(port) {
-    'use strict';
-    port.start();
-    registerPing(new goog.messaging.PortChannel(port));
-  }, true);
+  channel.registerService(
+    'addPort',
+    (port) => {
+      port.start();
+      registerPing(new goog.messaging.PortChannel(port));
+    },
+    true
+  );
 }
 
 startListening();

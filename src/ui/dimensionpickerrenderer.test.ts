@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.DimensionPickerRendererTest');
-goog.setTestOnly();
 
 const DimensionPicker = goog.require('goog.ui.DimensionPicker');
 const DimensionPickerRenderer = goog.require('goog.ui.DimensionPickerRenderer');
@@ -41,8 +40,8 @@ testSuite({
 
     assertEquals(1, sayFunction.getCallCount());
 
-    assertTrue(googArray.equals(
-        ['3 by 7', LivePriority.ASSERTIVE],
-        sayFunction.getLastCall().getArguments()));
+    assertTrue(
+      googArray.equals(['3 by 7', LivePriority.ASSERTIVE], sayFunction.getLastCall().getArguments())
+    );
   },
 });

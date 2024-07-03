@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.net.ImageLoaderTest');
-goog.setTestOnly();
 
 const EventHandler = goog.require('goog.events.EventHandler');
 const EventType = goog.require('goog.events.EventType');
@@ -24,11 +23,7 @@ const googString = goog.require('goog.string');
 const recordFunction = goog.require('goog.testing.recordFunction');
 const testSuite = goog.require('goog.testing.testSuite');
 
-const TEST_EVENT_TYPES = [
-  EventType.LOAD,
-  NetEventType.COMPLETE,
-  NetEventType.ERROR,
-];
+const TEST_EVENT_TYPES = [EventType.LOAD, NetEventType.COMPLETE, NetEventType.ERROR];
 
 /**
  * Mapping from test image file name to:
@@ -70,7 +65,7 @@ function assertImagesAreCorrect(results) {
  */
 function makeLoaderSynchronous(loader) {
   const originalLoadImage = loader.loadImage_;
-  loader.loadImage_ = function(request, id) {
+  loader.loadImage_ = function (request, id) {
     originalLoadImage.call(this, request, id);
 
     const event = new GoogEvent(EventType.LOAD);
@@ -111,9 +106,7 @@ testSuite({
     const resolver = GoogPromise.withResolver();
 
     events.listen(loader, TEST_EVENT_TYPES, (e) => {
-      assertFalse(
-          'Handler is still invoked after loader is disposed.',
-          loader.isDisposed());
+      assertFalse('Handler is still invoked after loader is disposed.', loader.isDisposed());
 
       switch (e.type) {
         case NetEventType.COMPLETE:
@@ -146,14 +139,20 @@ testSuite({
       switch (e.type) {
         case EventType.LOAD:
           image = e.target;
-          results[image.src.substring(image.src.lastIndexOf('/') + 1)] =
-              [image.naturalWidth, image.naturalHeight, e.type];
+          results[image.src.substring(image.src.lastIndexOf('/') + 1)] = [
+            image.naturalWidth,
+            image.naturalHeight,
+            e.type,
+          ];
           return;
 
         case NetEventType.ERROR:
           image = e.target;
-          results[image.src.substring(image.src.lastIndexOf('/') + 1)] =
-              [image.naturalWidth, image.naturalHeight, e.type];
+          results[image.src.substring(image.src.lastIndexOf('/') + 1)] = [
+            image.naturalWidth,
+            image.naturalHeight,
+            e.type,
+          ];
           return;
 
         case NetEventType.COMPLETE:
@@ -198,20 +197,24 @@ testSuite({
     // Start testing.
     loader.start();
     assertEquals(
-        'COMPLETE event should not have been dispatched yet: An image was ' +
-            'added after the initial batch was started.',
-        0, completeRecordFn.getCallCount());
+      'COMPLETE event should not have been dispatched yet: An image was ' +
+        'added after the initial batch was started.',
+      0,
+      completeRecordFn.getCallCount()
+    );
     assertEquals(
-        'Just the test images should have loaded',
-        googObject.getCount(TEST_IMAGES), loadRecordFn.getCallCount());
+      'Just the test images should have loaded',
+      googObject.getCount(TEST_IMAGES),
+      loadRecordFn.getCallCount()
+    );
 
     loader.start();
+    assertEquals('COMPLETE should have been dispatched once.', 1, completeRecordFn.getCallCount());
     assertEquals(
-        'COMPLETE should have been dispatched once.', 1,
-        completeRecordFn.getCallCount());
-    assertEquals(
-        'All images should have been loaded',
-        googObject.getCount(TEST_IMAGES) + 1, loadRecordFn.getCallCount());
+      'All images should have been loaded',
+      googObject.getCount(TEST_IMAGES) + 1,
+      loadRecordFn.getCallCount()
+    );
   },
 
   /**
@@ -241,12 +244,12 @@ testSuite({
 
     // Start testing.  Make sure all 7 images loaded.
     loader.start();
+    assertEquals('COMPLETE should have been dispatched once.', 1, completeRecordFn.getCallCount());
     assertEquals(
-        'COMPLETE should have been dispatched once.', 1,
-        completeRecordFn.getCallCount());
-    assertEquals(
-        'All images should have been loaded',
-        googObject.getCount(TEST_IMAGES) + 2, loadRecordFn.getCallCount());
+      'All images should have been loaded',
+      googObject.getCount(TEST_IMAGES) + 2,
+      loadRecordFn.getCallCount()
+    );
   },
 
   /**
@@ -258,11 +261,9 @@ testSuite({
     makeLoaderSynchronous(loader);
 
     // Remove 2 images once the first image finishes loading.
-    events.listenOnce(loader, EventType.LOAD, function(e) {
-      loader.removeImage(
-          googArray.peek(googObject.getKeys(this.imageIdToRequestMap_)));
-      loader.removeImage(
-          googArray.peek(googObject.getKeys(this.imageIdToRequestMap_)));
+    events.listenOnce(loader, EventType.LOAD, function (e) {
+      loader.removeImage(googArray.peek(googObject.getKeys(this.imageIdToRequestMap_)));
+      loader.removeImage(googArray.peek(googObject.getKeys(this.imageIdToRequestMap_)));
     });
 
     // Keep track of the total # of image loads.
@@ -275,12 +276,12 @@ testSuite({
 
     // Start testing.  Make sure only the 3 images remaining loaded.
     loader.start();
+    assertEquals('COMPLETE should have been dispatched once.', 1, completeRecordFn.getCallCount());
     assertEquals(
-        'COMPLETE should have been dispatched once.', 1,
-        completeRecordFn.getCallCount());
-    assertEquals(
-        'All images should have been loaded',
-        googObject.getCount(TEST_IMAGES) - 2, loadRecordFn.getCallCount());
+      'All images should have been loaded',
+      googObject.getCount(TEST_IMAGES) - 2,
+      loadRecordFn.getCallCount()
+    );
   },
 
   /**
@@ -313,14 +314,20 @@ testSuite({
     testingClientImageLoader.start();
 
     assertEquals(
-        'All images should have dispatched a LOAD call before disposing.',
-        googObject.getCount(TEST_IMAGES), testingClientImageLoader.loadCount);
+      'All images should have dispatched a LOAD call before disposing.',
+      googObject.getCount(TEST_IMAGES),
+      testingClientImageLoader.loadCount
+    );
     assertEquals(
-        'COMPLETE should never be dispatched if we dispose the instance on image removal.',
-        0, testingClientImageLoader.completeCount);
+      'COMPLETE should never be dispatched if we dispose the instance on image removal.',
+      0,
+      testingClientImageLoader.completeCount
+    );
     assertEquals(
-        'There should be no references to images in the image loader at time of dispose.',
-        testingClientImageLoader.imageLoaderRemainingSize, 0);
+      'There should be no references to images in the image loader at time of dispose.',
+      testingClientImageLoader.imageLoaderRemainingSize,
+      0
+    );
   },
 
   /**
@@ -335,20 +342,21 @@ testSuite({
       const image = e.target;
       if (image.id == 'cors_request') {
         assertEquals(
-            'CORS requested image should have a crossOrigin attribute set',
-            'anonymous', image.crossOrigin);
+          'CORS requested image should have a crossOrigin attribute set',
+          'anonymous',
+          image.crossOrigin
+        );
       } else {
         assertTrue(
-            'Non-CORS requested images should not have a crossOrigin attribute',
-            googString.isEmptyOrWhitespace(
-                googString.makeSafe(image.crossOrigin)));
+          'Non-CORS requested images should not have a crossOrigin attribute',
+          googString.isEmptyOrWhitespace(googString.makeSafe(image.crossOrigin))
+        );
       }
     });
 
     // Make a new request for one of the images, this time using CORS.
     const srcs = googObject.getKeys(TEST_IMAGES);
-    loader.addImage(
-        'cors_request', srcs[0], ImageLoader.CorsRequestType.ANONYMOUS);
+    loader.addImage('cors_request', srcs[0], ImageLoader.CorsRequestType.ANONYMOUS);
     loader.start();
   },
 });
@@ -372,8 +380,10 @@ class TestingClientImageLoader extends GoogEventTarget {
 
     // Handles events dispatched from ImageLoad
     this.eventHandler_.listen(
-        this.imageLoader_, [EventType.LOAD, NetEventType.COMPLETE],
-        this.handleImageLoaderEvent_);
+      this.imageLoader_,
+      [EventType.LOAD, NetEventType.COMPLETE],
+      this.handleImageLoaderEvent_
+    );
   }
 
   addImage(id, url) {
@@ -403,8 +413,9 @@ class TestingClientImageLoader extends GoogEventTarget {
     }
 
     /** @suppress {visibility} suppression added to enable type checking */
-    this.imageLoaderRemainingSize =
-        googObject.getKeys(this.imageLoader_.imageIdToRequestMap_).length;
+    this.imageLoaderRemainingSize = googObject.getKeys(
+      this.imageLoader_.imageIdToRequestMap_
+    ).length;
 
     if (this.imagesRemaining == 0) {
       this.imageLoader_.disposeInternal();

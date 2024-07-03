@@ -8,15 +8,12 @@
  * @fileoverview A generic interface for saving and restoring ranges.
  */
 
-
 goog.provide('goog.dom.AbstractSavedCaretRange');
 goog.provide('goog.dom.SavedRange');
 
 goog.require('goog.Disposable');
 goog.require('goog.log');
 goog.requireType('goog.dom.AbstractRange');
-
-
 
 /**
  * Abstract interface for a saved range.
@@ -25,12 +22,10 @@ goog.requireType('goog.dom.AbstractRange');
  * @extends {goog.Disposable}
  * @abstract
  */
-goog.dom.SavedRange = function() {
-  'use strict';
+goog.dom.SavedRange = function () {
   goog.Disposable.call(this);
 };
 goog.inherits(goog.dom.SavedRange, goog.Disposable);
-
 
 /**
  * Logging object.
@@ -39,7 +34,6 @@ goog.inherits(goog.dom.SavedRange, goog.Disposable);
  */
 goog.dom.SavedRange.logger_ = goog.log.getLogger('goog.dom.SavedRange');
 
-
 /**
  * Restores the range and by default disposes of the saved copy.  Take note:
  * this means the by default SavedRange objects are single use objects.
@@ -47,12 +41,9 @@ goog.dom.SavedRange.logger_ = goog.log.getLogger('goog.dom.SavedRange');
  *     (not be disposed) after restoring the range. Defaults to false (dispose).
  * @return {goog.dom.AbstractRange} The restored range.
  */
-goog.dom.SavedRange.prototype.restore = function(opt_stayAlive) {
-  'use strict';
+goog.dom.SavedRange.prototype.restore = function (opt_stayAlive) {
   if (this.isDisposed()) {
-    goog.log.error(
-        goog.dom.SavedRange.logger_,
-        'Disposed SavedRange objects cannot be restored.');
+    goog.log.error(goog.dom.SavedRange.logger_, 'Disposed SavedRange objects cannot be restored.');
   }
 
   var range = this.restoreInternal();
@@ -75,8 +66,7 @@ goog.dom.SavedRange.prototype.restoreInternal = goog.abstractMethod;
  * @extends {goog.dom.SavedRange}
  * @abstract
  */
-goog.dom.AbstractSavedCaretRange = function() {
-  'use strict';
+goog.dom.AbstractSavedCaretRange = function () {
   goog.dom.SavedRange.call(this);
 };
 goog.inherits(goog.dom.AbstractSavedCaretRange, goog.dom.SavedRange);
@@ -86,8 +76,7 @@ goog.inherits(goog.dom.AbstractSavedCaretRange, goog.dom.SavedRange);
  * or removing the carets from the DOM.
  * @return {goog.dom.AbstractRange?} An abstract range.
  */
-goog.dom.AbstractSavedCaretRange.prototype.toAbstractRange =
-    goog.abstractMethod;
+goog.dom.AbstractSavedCaretRange.prototype.toAbstractRange = goog.abstractMethod;
 
 /**
  * Gets carets.
@@ -96,7 +85,7 @@ goog.dom.AbstractSavedCaretRange.prototype.toAbstractRange =
  * @return {?Element} The start or end caret in the given document.
  * @abstract
  */
-goog.dom.AbstractSavedCaretRange.prototype.getCaret = function(start) {};
+goog.dom.AbstractSavedCaretRange.prototype.getCaret = (start) => {};
 
 /**
  * Removes the carets from the current restoration document.
@@ -108,14 +97,11 @@ goog.dom.AbstractSavedCaretRange.prototype.getCaret = function(start) {};
  *     was provided.
  * @abstract
  */
-goog.dom.AbstractSavedCaretRange.prototype.removeCarets = function(
-    opt_range) {};
-
+goog.dom.AbstractSavedCaretRange.prototype.removeCarets = (opt_range) => {};
 
 /**
  * Sets the document where the range will be restored.
  * @param {!Document} doc An HTML document.
  * @abstract
  */
-goog.dom.AbstractSavedCaretRange.prototype.setRestorationDocument = function(
-    doc) {};
+goog.dom.AbstractSavedCaretRange.prototype.setRestorationDocument = (doc) => {};

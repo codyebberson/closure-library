@@ -18,8 +18,6 @@ goog.require('goog.testing.dom');
 goog.require('goog.ui.Control');
 goog.require('goog.ui.ControlRenderer');
 
-
-
 /**
  * A driver for testing renderers.
  *
@@ -32,9 +30,7 @@ goog.require('goog.ui.ControlRenderer');
  * @extends {goog.Disposable}
  * @final
  */
-goog.testing.ui.RendererHarness = function(
-    renderer, renderParent, decorateParent) {
-  'use strict';
+goog.testing.ui.RendererHarness = function (renderer, renderParent, decorateParent) {
   goog.Disposable.call(this);
 
   /**
@@ -74,14 +70,12 @@ goog.testing.ui.RendererHarness = function(
 };
 goog.inherits(goog.testing.ui.RendererHarness, goog.Disposable);
 
-
 /**
  * A control to create by decoration.
  * @type {goog.ui.Control}
  * @private
  */
 goog.testing.ui.RendererHarness.prototype.decorateControl_;
-
 
 /**
  * A control to create by rendering.
@@ -90,7 +84,6 @@ goog.testing.ui.RendererHarness.prototype.decorateControl_;
  */
 goog.testing.ui.RendererHarness.prototype.renderControl_;
 
-
 /**
  * Whether all the necessary assert methods have been called.
  * @type {boolean}
@@ -98,15 +91,12 @@ goog.testing.ui.RendererHarness.prototype.renderControl_;
  */
 goog.testing.ui.RendererHarness.prototype.verified_ = false;
 
-
 /**
  * Attach a control and render its DOM.
  * @param {goog.ui.Control} control A control.
  * @return {Element} The element created.
  */
-goog.testing.ui.RendererHarness.prototype.attachControlAndRender = function(
-    control) {
-  'use strict';
+goog.testing.ui.RendererHarness.prototype.attachControlAndRender = function (control) {
   this.renderControl_ = control;
 
   control.setRenderer(this.renderer_);
@@ -114,54 +104,45 @@ goog.testing.ui.RendererHarness.prototype.attachControlAndRender = function(
   return control.getElement();
 };
 
-
 /**
  * Attach a control and decorate the element given in the constructor.
  * @param {goog.ui.Control} control A control.
  * @return {Element} The element created.
  */
-goog.testing.ui.RendererHarness.prototype.attachControlAndDecorate = function(
-    control) {
-  'use strict';
+goog.testing.ui.RendererHarness.prototype.attachControlAndDecorate = function (control) {
   this.decorateControl_ = control;
 
   control.setRenderer(this.renderer_);
 
   const child = this.decorateParent_.firstChild;
-  assertEquals(
-      'The decorated node must be an element', goog.dom.NodeType.ELEMENT,
-      child.nodeType);
+  assertEquals('The decorated node must be an element', goog.dom.NodeType.ELEMENT, child.nodeType);
   control.decorate(/** @type {!Element} */ (child));
   return control.getElement();
 };
 
-
 /**
  * Assert that the rendered element and the decorated element match.
  */
-goog.testing.ui.RendererHarness.prototype.assertDomMatches = function() {
-  'use strict';
-  assert(
-      'Both elements were not generated',
-      !!(this.renderControl_ && this.decorateControl_));
+goog.testing.ui.RendererHarness.prototype.assertDomMatches = function () {
+  assert('Both elements were not generated', !!(this.renderControl_ && this.decorateControl_));
   goog.testing.dom.assertHtmlMatches(
-      this.renderControl_.getElement().innerHTML,
-      this.decorateControl_.getElement().innerHTML);
+    this.renderControl_.getElement().innerHTML,
+    this.decorateControl_.getElement().innerHTML
+  );
   this.verified_ = true;
 };
-
 
 /**
  * Destroy the harness, verifying that all assertions had been checked.
  * @override
  * @protected
  */
-goog.testing.ui.RendererHarness.prototype.disposeInternal = function() {
-  'use strict';
+goog.testing.ui.RendererHarness.prototype.disposeInternal = function () {
   // If the harness was not verified appropriately, throw an exception.
   assert(
-      'Expected assertDomMatches to be called',
-      this.verified_ || !this.renderControl_ || !this.decorateControl_);
+    'Expected assertDomMatches to be called',
+    this.verified_ || !this.renderControl_ || !this.decorateControl_
+  );
 
   if (this.decorateControl_) {
     this.decorateControl_.dispose();

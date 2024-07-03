@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.userAgent.keyboardTest');
-goog.setTestOnly();
 
 const MockUserAgent = goog.require('goog.testing.MockUserAgent');
 const keyboard = goog.require('goog.userAgent.keyboard');
@@ -34,7 +33,7 @@ testSuite({
   },
 
   testAndroid() {
-    mockAgent.setNavigator({platform: 'Linux'});
+    mockAgent.setNavigator({ platform: 'Linux' });
 
     setUserAgent(testAgents.ANDROID_BROWSER_235);
     assertFalse(keyboard.MAC_KEYBOARD);
@@ -53,7 +52,7 @@ testSuite({
   },
 
   testIe() {
-    mockAgent.setNavigator({platform: 'Windows'});
+    mockAgent.setNavigator({ platform: 'Windows' });
 
     setUserAgent(testAgents.IE_6);
     assertFalse(keyboard.MAC_KEYBOARD);
@@ -87,30 +86,30 @@ testSuite({
   },
 
   testFirefoxMac() {
-    mockAgent.setNavigator({platform: 'Macintosh'});
+    mockAgent.setNavigator({ platform: 'Macintosh' });
     setUserAgent(testAgents.FIREFOX_MAC);
     assertTrue(keyboard.MAC_KEYBOARD);
   },
 
   testFirefoxNotMac() {
-    mockAgent.setNavigator({platform: 'X11'});
+    mockAgent.setNavigator({ platform: 'X11' });
     setUserAgent(testAgents.FIREFOX_LINUX);
     assertFalse(keyboard.MAC_KEYBOARD);
 
-    mockAgent.setNavigator({platform: 'Windows'});
+    mockAgent.setNavigator({ platform: 'Windows' });
     setUserAgent(testAgents.FIREFOX_WINDOWS);
     assertFalse(keyboard.MAC_KEYBOARD);
   },
 
   testSafari() {
-    mockAgent.setNavigator({platform: 'Macintosh'});
+    mockAgent.setNavigator({ platform: 'Macintosh' });
     setUserAgent(testAgents.SAFARI_6);
     assertTrue(keyboard.MAC_KEYBOARD);
 
     setUserAgent(testAgents.SAFARI_MAC);
     assertTrue(keyboard.MAC_KEYBOARD);
 
-    mockAgent.setNavigator({platform: 'iPhone'});
+    mockAgent.setNavigator({ platform: 'iPhone' });
     setUserAgent(testAgents.SAFARI_IPHONE_32);
     assertTrue(keyboard.MAC_KEYBOARD);
 
@@ -123,35 +122,35 @@ testSuite({
     setUserAgent(testAgents.SAFARI_IPHONE_6);
     assertTrue(keyboard.MAC_KEYBOARD);
 
-    mockAgent.setNavigator({platform: 'iPod'});
+    mockAgent.setNavigator({ platform: 'iPod' });
     setUserAgent(testAgents.SAFARI_IPOD);
     assertTrue(keyboard.MAC_KEYBOARD);
   },
 
   testSafariWndows() {
-    mockAgent.setNavigator({platform: 'Macintosh'});
+    mockAgent.setNavigator({ platform: 'Macintosh' });
     setUserAgent(testAgents.SAFARI_WINDOWS);
     assertFalse(keyboard.MAC_KEYBOARD);
   },
 
   testOperaMac() {
-    mockAgent.setNavigator({platform: 'Macintosh'});
+    mockAgent.setNavigator({ platform: 'Macintosh' });
     setUserAgent(testAgents.OPERA_MAC);
     assertTrue(keyboard.MAC_KEYBOARD);
   },
 
   testOperaNonMac() {
-    mockAgent.setNavigator({platform: 'X11'});
+    mockAgent.setNavigator({ platform: 'X11' });
     setUserAgent(testAgents.OPERA_LINUX);
     assertFalse(keyboard.MAC_KEYBOARD);
 
-    mockAgent.setNavigator({platform: 'Windows'});
+    mockAgent.setNavigator({ platform: 'Windows' });
     setUserAgent(testAgents.OPERA_15);
     assertFalse(keyboard.MAC_KEYBOARD);
   },
 
   testIPad() {
-    mockAgent.setNavigator({platform: 'iPad'});
+    mockAgent.setNavigator({ platform: 'iPad' });
     setUserAgent(testAgents.IPAD_4);
     assertTrue(keyboard.MAC_KEYBOARD);
 
@@ -163,29 +162,29 @@ testSuite({
   },
 
   testChromeMac() {
-    mockAgent.setNavigator({platform: 'Macintosh'});
+    mockAgent.setNavigator({ platform: 'Macintosh' });
     setUserAgent(testAgents.CHROME_MAC);
     assertTrue(keyboard.MAC_KEYBOARD);
 
-    mockAgent.setNavigator({platform: 'iPhone'});
+    mockAgent.setNavigator({ platform: 'iPhone' });
     setUserAgent(testAgents.CHROME_IPHONE);
     assertTrue(keyboard.MAC_KEYBOARD);
   },
 
   testChromeNonMac() {
-    mockAgent.setNavigator({platform: 'Linux'});
+    mockAgent.setNavigator({ platform: 'Linux' });
     setUserAgent(testAgents.CHROME_ANDROID);
     assertFalse(keyboard.MAC_KEYBOARD);
 
-    mockAgent.setNavigator({platform: 'X11'});
+    mockAgent.setNavigator({ platform: 'X11' });
     setUserAgent(testAgents.CHROME_OS);
     assertFalse(keyboard.MAC_KEYBOARD);
 
-    mockAgent.setNavigator({platform: 'X11'});
+    mockAgent.setNavigator({ platform: 'X11' });
     setUserAgent(testAgents.CHROME_LINUX);
     assertFalse(keyboard.MAC_KEYBOARD);
 
-    mockAgent.setNavigator({platform: 'Windows'});
+    mockAgent.setNavigator({ platform: 'Windows' });
     setUserAgent(testAgents.CHROME_25);
 
     assertFalse(keyboard.MAC_KEYBOARD);

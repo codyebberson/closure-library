@@ -17,8 +17,6 @@ goog.require('goog.labs.userAgent.util');
 goog.require('goog.testing.PropertyReplacer');
 goog.require('goog.userAgent');
 
-
-
 /**
  * Class for unit testing code that uses goog.userAgent.
  *
@@ -26,8 +24,7 @@ goog.require('goog.userAgent');
  * @constructor
  * @final
  */
-goog.testing.MockUserAgent = function() {
-  'use strict';
+goog.testing.MockUserAgent = function () {
   goog.Disposable.call(this);
 
   /**
@@ -60,7 +57,6 @@ goog.testing.MockUserAgent = function() {
 };
 goog.inherits(goog.testing.MockUserAgent, goog.Disposable);
 
-
 /**
  * Whether this MockUserAgent has been installed.
  * @type {boolean}
@@ -68,99 +64,94 @@ goog.inherits(goog.testing.MockUserAgent, goog.Disposable);
  */
 goog.testing.MockUserAgent.prototype.installed_;
 
-
 /**
  * Installs this MockUserAgent.
  */
-goog.testing.MockUserAgent.prototype.install = function() {
-  'use strict';
+goog.testing.MockUserAgent.prototype.install = function () {
   if (!this.installed_) {
     // Stub out user agent functions.
     this.propertyReplacer_.replace(
-        goog.userAgent, 'getUserAgentString',
-        goog.bind(this.getUserAgentString, this));
+      goog.userAgent,
+      'getUserAgentString',
+      goog.bind(this.getUserAgentString, this)
+    );
 
     // Stub out navigator functions.
     this.propertyReplacer_.replace(
-        goog.userAgent, 'getNavigator', goog.bind(this.getNavigator, this));
+      goog.userAgent,
+      'getNavigator',
+      goog.bind(this.getNavigator, this)
+    );
 
     // Stub out navigator functions.
     this.propertyReplacer_.replace(
-        goog.userAgent, 'getNavigatorTyped',
-        goog.bind(this.getNavigator, this));
+      goog.userAgent,
+      'getNavigatorTyped',
+      goog.bind(this.getNavigator, this)
+    );
 
     // Stub out documentMode functions.
     this.propertyReplacer_.replace(
-        goog.userAgent, 'getDocumentMode_',
-        goog.bind(this.getDocumentMode, this));
+      goog.userAgent,
+      'getDocumentMode_',
+      goog.bind(this.getDocumentMode, this)
+    );
 
-    this.propertyReplacer_.replace(
-        goog.userAgent, 'DOCUMENT_MODE', this.getDocumentMode());
+    this.propertyReplacer_.replace(goog.userAgent, 'DOCUMENT_MODE', this.getDocumentMode());
 
     this.installed_ = true;
   }
 };
 
-
 /**
  * @return {?string} The userAgent set in this class.
  */
-goog.testing.MockUserAgent.prototype.getUserAgentString = function() {
-  'use strict';
+goog.testing.MockUserAgent.prototype.getUserAgentString = function () {
   return this.userAgent_;
 };
-
 
 /**
  * @param {string} userAgent The desired userAgent string to use.
  */
-goog.testing.MockUserAgent.prototype.setUserAgentString = function(userAgent) {
-  'use strict';
+goog.testing.MockUserAgent.prototype.setUserAgentString = function (userAgent) {
   this.userAgent_ = userAgent;
   // goog.labs.userAgent.util is a goog.module, so its properties can't be
   // stubbed. Use setUserAgent instead.
   goog.labs.userAgent.util.setUserAgent(userAgent);
 };
 
-
 /**
  * @return {?Object} The Navigator set in this class.
  */
-goog.testing.MockUserAgent.prototype.getNavigator = function() {
-  'use strict';
+goog.testing.MockUserAgent.prototype.getNavigator = function () {
   return this.navigator_;
 };
-
 
 /**
  * @return {?Navigator} The Navigator set in this class.
  */
-goog.testing.MockUserAgent.prototype.getNavigatorTyped = function() {
-  'use strict';
+goog.testing.MockUserAgent.prototype.getNavigatorTyped = function () {
   return this.navigator_;
 };
 
 /**
  * @param {Object} navigator The desired Navigator object to use.
  */
-goog.testing.MockUserAgent.prototype.setNavigator = function(navigator) {
-  'use strict';
+goog.testing.MockUserAgent.prototype.setNavigator = function (navigator) {
   this.navigator_ = /** @type {?Navigator} */ (navigator);
 };
 
 /**
  * @return {number|undefined} The documentMode set in this class.
  */
-goog.testing.MockUserAgent.prototype.getDocumentMode = function() {
-  'use strict';
+goog.testing.MockUserAgent.prototype.getDocumentMode = function () {
   return this.documentMode_;
 };
 
 /**
  * @param {number} documentMode The desired documentMode to use.
  */
-goog.testing.MockUserAgent.prototype.setDocumentMode = function(documentMode) {
-  'use strict';
+goog.testing.MockUserAgent.prototype.setDocumentMode = function (documentMode) {
   this.documentMode_ = documentMode;
   this.propertyReplacer_.set(goog.userAgent, 'DOCUMENT_MODE', documentMode);
 };
@@ -168,8 +159,7 @@ goog.testing.MockUserAgent.prototype.setDocumentMode = function(documentMode) {
 /**
  * Uninstalls the MockUserAgent.
  */
-goog.testing.MockUserAgent.prototype.uninstall = function() {
-  'use strict';
+goog.testing.MockUserAgent.prototype.uninstall = function () {
   if (this.installed_) {
     this.propertyReplacer_.reset();
     goog.labs.userAgent.util.setUserAgent(null);
@@ -177,10 +167,8 @@ goog.testing.MockUserAgent.prototype.uninstall = function() {
   }
 };
 
-
 /** @override */
-goog.testing.MockUserAgent.prototype.disposeInternal = function() {
-  'use strict';
+goog.testing.MockUserAgent.prototype.disposeInternal = function () {
   this.uninstall();
   delete this.propertyReplacer_;
   delete this.navigator_;

@@ -23,9 +23,9 @@ const asserts = goog.require('goog.asserts');
  * @enum {string} ListFormatType
  */
 const ListFormatType = {
-  AND: 'conjunction',  // The default type
+  AND: 'conjunction', // The default type
   OR: 'disjunction',
-  UNIT: 'unit'
+  UNIT: 'unit',
 };
 exports.ListFormatType = ListFormatType;
 
@@ -35,9 +35,9 @@ exports.ListFormatType = ListFormatType;
  * @enum {string} ListFormatStyle
  */
 const ListFormatStyle = {
-  LONG: 'long',  // The default style
+  LONG: 'long', // The default style
   SHORT: 'short',
-  NARROW: 'narrow'
+  NARROW: 'narrow',
 };
 exports.ListFormatStyle = ListFormatStyle;
 
@@ -71,17 +71,15 @@ class ListFormat {
     this.intlFormatter_ = null;
 
     /** @const @private @type {string} */
-    this.listType_ = (listOptions && listOptions.type) ? listOptions.type :
-                                                         ListFormatType.AND;
+    this.listType_ = listOptions && listOptions.type ? listOptions.type : ListFormatType.AND;
 
     // TODO(user): Investigate why ?. syntax fails on some targets.
     /** @const @private @type {string} */
-    this.listStyle_ = (listOptions && listOptions.style) ? listOptions.style :
-                                                           ListFormatStyle.LONG;
+    this.listStyle_ = listOptions && listOptions.style ? listOptions.style : ListFormatStyle.LONG;
 
     if (LocaleFeature.USE_ECMASCRIPT_I18N_LISTFORMAT) {
       // Implement using ECMAScript Intl object.
-      let options = {type: this.listType_, style: this.listStyle_};
+      const options = { type: this.listType_, style: this.listStyle_ };
 
       this.intlFormatter_ = new Intl.ListFormat(goog.LOCALE, options);
     } else {
@@ -90,7 +88,7 @@ class ListFormat {
       /** @const @private @type {!ListSymbols.ListFormatSymbols} */
       this.listSymbols_ = ListSymbols.getListFormatSymbols();
 
-      let styleIndex = 0;  // LONG
+      let styleIndex = 0; // LONG
       switch (this.listStyle_) {
         case ListFormatStyle.SHORT:
           styleIndex = 1;
@@ -148,38 +146,36 @@ class ListFormat {
       switch (this.listType_) {
         case ListFormatType.AND:
           this.listStartPattern_ = this.listSymbols_.AND_START[styleIndex];
-          this.listTwoPattern_ =
-              (this.listSymbols_.AND_TWO ||
-               this.listSymbols_.AND_END)[styleIndex];
-          this.listMiddlePattern_ =
-              (this.listSymbols_.AND_MIDDLE ||
-               this.listSymbols_.AND_START)[styleIndex];
+          this.listTwoPattern_ = (this.listSymbols_.AND_TWO || this.listSymbols_.AND_END)[
+            styleIndex
+          ];
+          this.listMiddlePattern_ = (this.listSymbols_.AND_MIDDLE || this.listSymbols_.AND_START)[
+            styleIndex
+          ];
           this.listEndPattern_ = this.listSymbols_.AND_END[styleIndex];
           break;
 
         case ListFormatType.OR:
-          this.listStartPattern_ =
-              (this.listSymbols_.OR_START ||
-               this.listSymbols_.AND_START)[styleIndex];
-          this.listTwoPattern_ =
-              (this.listSymbols_.OR_TWO ||
-               this.listSymbols_.OR_END)[styleIndex];
-          this.listMiddlePattern_ =
-              (this.listSymbols_.OR_MIDDLE ||
-               this.listSymbols_.AND_START)[styleIndex];
+          this.listStartPattern_ = (this.listSymbols_.OR_START || this.listSymbols_.AND_START)[
+            styleIndex
+          ];
+          this.listTwoPattern_ = (this.listSymbols_.OR_TWO || this.listSymbols_.OR_END)[styleIndex];
+          this.listMiddlePattern_ = (this.listSymbols_.OR_MIDDLE || this.listSymbols_.AND_START)[
+            styleIndex
+          ];
           this.listEndPattern_ = this.listSymbols_.OR_END[styleIndex];
           break;
 
         case ListFormatType.UNIT:
-          this.listStartPattern_ =
-              (this.listSymbols_.UNIT_START ||
-               this.listSymbols_.AND_START)[styleIndex];
-          this.listTwoPattern_ =
-              (this.listSymbols_.UNIT_TWO ||
-               this.listSymbols_.UNIT_END)[styleIndex];
-          this.listMiddlePattern_ =
-              (this.listSymbols_.UNIT_MIDDLE ||
-               this.listSymbols_.AND_START)[styleIndex];
+          this.listStartPattern_ = (this.listSymbols_.UNIT_START || this.listSymbols_.AND_START)[
+            styleIndex
+          ];
+          this.listTwoPattern_ = (this.listSymbols_.UNIT_TWO || this.listSymbols_.UNIT_END)[
+            styleIndex
+          ];
+          this.listMiddlePattern_ = (this.listSymbols_.UNIT_MIDDLE || this.listSymbols_.AND_START)[
+            styleIndex
+          ];
           this.listEndPattern_ = this.listSymbols_.UNIT_END[styleIndex];
           break;
       }
@@ -235,20 +231,24 @@ class ListFormat {
         return String(items[0]);
       case 2:
         return this.patternBasedJoinTwoStrings_(
-            this.listTwoPattern_, String(items[0]), String(items[1]));
+          this.listTwoPattern_,
+          String(items[0]),
+          String(items[1])
+        );
     }
 
     // More than two items
     let result = this.patternBasedJoinTwoStrings_(
-        this.listStartPattern_, String(items[0]), String(items[1]));
+      this.listStartPattern_,
+      String(items[0]),
+      String(items[1])
+    );
 
     for (let i = 2; i < count - 1; ++i) {
-      result = this.patternBasedJoinTwoStrings_(
-          this.listMiddlePattern_, result, String(items[i]));
+      result = this.patternBasedJoinTwoStrings_(this.listMiddlePattern_, result, String(items[i]));
     }
 
-    return this.patternBasedJoinTwoStrings_(
-        this.listEndPattern_, result, String(items[count - 1]));
+    return this.patternBasedJoinTwoStrings_(this.listEndPattern_, result, String(items[count - 1]));
   }
 }
 

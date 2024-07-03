@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 goog.module('goog.color.alphaTest');
-goog.setTestOnly();
 
 const alpha = goog.require('goog.color.alpha');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -23,17 +22,12 @@ testSuite({
       '#abcdefab',
       '#3CAB',
     ];
-    const badAlphaHexColors =
-        ['#xxxxxxxx', '88990077', 'not_color', '#123456789', 'fffffgfg'];
+    const badAlphaHexColors = ['#xxxxxxxx', '88990077', 'not_color', '#123456789', 'fffffgfg'];
     for (let i = 0; i < goodAlphaHexColors.length; i++) {
-      assertTrue(
-          goodAlphaHexColors[i],
-          alpha.isValidAlphaHexColor_(goodAlphaHexColors[i]));
+      assertTrue(goodAlphaHexColors[i], alpha.isValidAlphaHexColor_(goodAlphaHexColors[i]));
     }
     for (let i = 0; i < badAlphaHexColors.length; i++) {
-      assertFalse(
-          badAlphaHexColors[i],
-          alpha.isValidAlphaHexColor_(badAlphaHexColors[i]));
+      assertFalse(badAlphaHexColors[i], alpha.isValidAlphaHexColor_(badAlphaHexColors[i]));
     }
   },
 
@@ -65,14 +59,10 @@ testSuite({
       'rgba(01, 0, 0, 1)',
     ];
     for (let i = 0; i < goodRgbaColors.length; i++) {
-      assertEquals(
-          goodRgbaColors[i], 4,
-          alpha.isValidRgbaColor_(goodRgbaColors[i]).length);
+      assertEquals(goodRgbaColors[i], 4, alpha.isValidRgbaColor_(goodRgbaColors[i]).length);
     }
     for (let i = 0; i < badRgbaColors.length; i++) {
-      assertEquals(
-          badRgbaColors[i], 0,
-          alpha.isValidRgbaColor_(badRgbaColors[i]).length);
+      assertEquals(badRgbaColors[i], 0, alpha.isValidRgbaColor_(badRgbaColors[i]).length);
     }
   },
 
@@ -101,14 +91,10 @@ testSuite({
       'hsla(255, 0, 0, 1.)',
     ];
     for (let i = 0; i < goodHslaColors.length; i++) {
-      assertEquals(
-          goodHslaColors[i], 4,
-          alpha.isValidHslaColor_(goodHslaColors[i]).length);
+      assertEquals(goodHslaColors[i], 4, alpha.isValidHslaColor_(goodHslaColors[i]).length);
     }
     for (let i = 0; i < badHslaColors.length; i++) {
-      assertEquals(
-          badHslaColors[i], 0,
-          alpha.isValidHslaColor_(badHslaColors[i]).length);
+      assertEquals(badHslaColors[i], 0, alpha.isValidHslaColor_(badHslaColors[i]).length);
     }
   },
 
@@ -133,10 +119,10 @@ testSuite({
     assertEquals('#d9f2ea33', parsed[4].hex);
 
     const e = assertThrows(
-        'not_color is not a valid color string',
-        goog.partial(alpha.parse, 'not_color'));
-    assertContains(
-        'Error processing not_color', 'is not a valid color string', e.message);
+      'not_color is not a valid color string',
+      goog.partial(alpha.parse, 'not_color')
+    );
+    assertContains('Error processing not_color', 'is not a valid color string', e.message);
   },
 
   testHexToRgba() {
@@ -159,8 +145,7 @@ testSuite({
     const badColors = ['', '#g00', 'some words'];
     for (let i = 0; i < badColors.length; i++) {
       const e = assertThrows(goog.partial(alpha.hexToRgba, badColors[i]));
-      assertEquals(
-          '\'' + badColors[i] + '\' is not a valid alpha hex color', e.message);
+      assertEquals("'" + badColors[i] + "' is not a valid alpha hex color", e.message);
     }
   },
 
@@ -174,11 +159,10 @@ testSuite({
     const badHexColors = ['#12345', null, undefined, '#.1234567890'];
     for (let i = 0; i < badHexColors.length; ++i) {
       const e = assertThrows(
-          badHexColors[i] + ' is an invalid hex color',
-          goog.partial(alpha.hexToRgbaStyle, badHexColors[i]));
-      assertEquals(
-          '\'' + badHexColors[i] + '\' is not a valid alpha hex color',
-          e.message);
+        badHexColors[i] + ' is an invalid hex color',
+        goog.partial(alpha.hexToRgbaStyle, badHexColors[i])
+      );
+      assertEquals("'" + badHexColors[i] + "' is not a valid alpha hex color", e.message);
     }
   },
 
@@ -193,8 +177,9 @@ testSuite({
     ];
     for (let i = 0; i < badRgba.length; ++i) {
       const e = assertThrows(
-          badRgba[i] + ' is not a valid rgba color',
-          goog.partial(alpha.rgbaArrayToHex, badRgba[i]));
+        badRgba[i] + ' is not a valid rgba color',
+        goog.partial(alpha.rgbaArrayToHex, badRgba[i])
+      );
       assertContains('is not a valid RGBA color', e.message);
     }
   },
@@ -202,36 +187,46 @@ testSuite({
   testRgbaToRgbaStyle() {
     const testColors = [
       [[175, 19, 255, 1], 'rgba(175,19,255,1)'],
-      [[53, 124, 240, .6], 'rgba(53,124,240,0.6)'],
-      [[10, 20, 30, .1234567], 'rgba(10,20,30,0.123)'],
+      [[53, 124, 240, 0.6], 'rgba(53,124,240,0.6)'],
+      [[10, 20, 30, 0.1234567], 'rgba(10,20,30,0.123)'],
       [[20, 30, 40, 1 / 3], 'rgba(20,30,40,0.333)'],
     ];
 
     for (let i = 0; i < testColors.length; ++i) {
       const r = alpha.rgbaToRgbaStyle(
-          testColors[i][0][0], testColors[i][0][1], testColors[i][0][2],
-          testColors[i][0][3]);
+        testColors[i][0][0],
+        testColors[i][0][1],
+        testColors[i][0][2],
+        testColors[i][0][3]
+      );
       assertEquals(testColors[i][1], r);
     }
 
     const badColors = [[0, 0, 0, 2]];
     for (let i = 0; i < badColors.length; ++i) {
-      const e = assertThrows(goog.partial(
-          alpha.rgbaToRgbaStyle, badColors[i][0], badColors[i][1],
-          badColors[i][2], badColors[i][3]));
+      const e = assertThrows(
+        goog.partial(
+          alpha.rgbaToRgbaStyle,
+          badColors[i][0],
+          badColors[i][1],
+          badColors[i][2],
+          badColors[i][3]
+        )
+      );
 
       assertContains('is not a valid RGBA color', e.message);
     }
 
     // Loop through all bad color values and ensure they fail in each channel.
-    const badValues = [-1, 300, 'a', undefined, null, NaN];
+    const badValues = [-1, 300, 'a', undefined, null, Number.NaN];
     const color = [0, 0, 0, 0];
     for (let i = 0; i < badValues.length; ++i) {
       for (let channel = 0; channel < color.length; ++channel) {
         color[channel] = badValues[i];
         const e = assertThrows(
-            `${color} is not a valid rgba color`,
-            goog.partial(alpha.rgbaToRgbaStyle, color));
+          `${color} is not a valid rgba color`,
+          goog.partial(alpha.rgbaToRgbaStyle, color)
+        );
         assertContains('is not a valid RGBA color', e.message);
 
         color[channel] = 0;
@@ -242,7 +237,7 @@ testSuite({
   testRgbaArrayToRgbaStyle() {
     const testColors = [
       [[175, 19, 255, 1], 'rgba(175,19,255,1)'],
-      [[53, 124, 240, .6], 'rgba(53,124,240,0.6)'],
+      [[53, 124, 240, 0.6], 'rgba(53,124,240,0.6)'],
     ];
 
     for (let i = 0; i < testColors.length; ++i) {
@@ -252,21 +247,21 @@ testSuite({
 
     const badColors = [[0, 0, 0, 2]];
     for (let i = 0; i < badColors.length; ++i) {
-      const e =
-          assertThrows(goog.partial(alpha.rgbaArrayToRgbaStyle, badColors[i]));
+      const e = assertThrows(goog.partial(alpha.rgbaArrayToRgbaStyle, badColors[i]));
 
       assertContains('is not a valid RGBA color', e.message);
     }
 
     // Loop through all bad color values and ensure they fail in each channel.
-    const badValues = [-1, 300, 'a', undefined, null, NaN];
+    const badValues = [-1, 300, 'a', undefined, null, Number.NaN];
     const color = [0, 0, 0, 0];
     for (let i = 0; i < badValues.length; ++i) {
       for (let channel = 0; channel < color.length; ++channel) {
         color[channel] = badValues[i];
         const e = assertThrows(
-            `${color} is not a valid rgba color`,
-            goog.partial(alpha.rgbaToRgbaStyle, color));
+          `${color} is not a valid rgba color`,
+          goog.partial(alpha.rgbaToRgbaStyle, color)
+        );
         assertContains('is not a valid RGBA color', e.message);
 
         color[channel] = 0;
@@ -278,20 +273,26 @@ testSuite({
     const opaqueBlueRgb = [0, 0, 255, 1];
     const opaqueBlueHsl = alpha.rgbaArrayToHsla(opaqueBlueRgb);
     assertArrayEquals(
-        'Conversion from RGBA to HSLA should be as expected', [240, 1, 0.5, 1],
-        opaqueBlueHsl);
+      'Conversion from RGBA to HSLA should be as expected',
+      [240, 1, 0.5, 1],
+      opaqueBlueHsl
+    );
 
     const nearlyOpaqueYellowRgb = [255, 190, 0, 0.7];
     const nearlyOpaqueYellowHsl = alpha.rgbaArrayToHsla(nearlyOpaqueYellowRgb);
     assertArrayEquals(
-        'Conversion from RGBA to HSLA should be as expected', [45, 1, 0.5, 0.7],
-        nearlyOpaqueYellowHsl);
+      'Conversion from RGBA to HSLA should be as expected',
+      [45, 1, 0.5, 0.7],
+      nearlyOpaqueYellowHsl
+    );
 
     const transparentPurpleRgb = [180, 0, 255, 0];
     const transparentPurpleHsl = alpha.rgbaArrayToHsla(transparentPurpleRgb);
     assertArrayEquals(
-        'Conversion from RGBA to HSLA should be as expected', [282, 1, 0.5, 0],
-        transparentPurpleHsl);
+      'Conversion from RGBA to HSLA should be as expected',
+      [282, 1, 0.5, 0],
+      transparentPurpleHsl
+    );
   },
 
   /**
@@ -301,49 +302,58 @@ testSuite({
     const compactColor = '#abcd';
     const normalizedCompactColor = alpha.normalizeAlphaHex_(compactColor);
     assertEquals(
-        'The color should have been normalized to the right length',
-        '#aabbccdd', normalizedCompactColor);
+      'The color should have been normalized to the right length',
+      '#aabbccdd',
+      normalizedCompactColor
+    );
 
     const uppercaseColor = '#ABCDEF01';
     const normalizedUppercaseColor = alpha.normalizeAlphaHex_(uppercaseColor);
     assertEquals(
-        'The color should have been normalized to lowercase', '#abcdef01',
-        normalizedUppercaseColor);
+      'The color should have been normalized to lowercase',
+      '#abcdef01',
+      normalizedUppercaseColor
+    );
   },
 
   testHsvaArrayToHex() {
     const opaqueSkyBlueHsv = [190, 1, 255, 1];
     const opaqueSkyBlueHex = alpha.hsvaArrayToHex(opaqueSkyBlueHsv);
     assertEquals(
-        'The HSVA array should have been properly converted to hex',
-        '#00d5ffff', opaqueSkyBlueHex);
+      'The HSVA array should have been properly converted to hex',
+      '#00d5ffff',
+      opaqueSkyBlueHex
+    );
 
     const halfTransparentPinkHsv = [300, 1, 255, 0.5];
     const halfTransparentPinkHex = alpha.hsvaArrayToHex(halfTransparentPinkHsv);
     assertEquals(
-        'The HSVA array should have been properly converted to hex',
-        '#ff00ff7f', halfTransparentPinkHex);
+      'The HSVA array should have been properly converted to hex',
+      '#ff00ff7f',
+      halfTransparentPinkHex
+    );
 
     const transparentDarkTurquoiseHsv = [175, 1, 127, 0.5];
-    const transparentDarkTurquoiseHex =
-        alpha.hsvaArrayToHex(transparentDarkTurquoiseHsv);
+    const transparentDarkTurquoiseHex = alpha.hsvaArrayToHex(transparentDarkTurquoiseHsv);
     assertEquals(
-        'The HSVA array should have been properly converted to hex',
-        '#007f747f', transparentDarkTurquoiseHex);
+      'The HSVA array should have been properly converted to hex',
+      '#007f747f',
+      transparentDarkTurquoiseHex
+    );
   },
 
   testExtractHexColor() {
     const opaqueRed = '#ff0000ff';
     const red = alpha.extractHexColor(opaqueRed);
-    assertEquals(
-        'The hex part of the color should have been extracted correctly',
-        '#ff0000', red);
+    assertEquals('The hex part of the color should have been extracted correctly', '#ff0000', red);
 
     const halfOpaqueDarkGreenCompact = '#0507';
     const darkGreen = alpha.extractHexColor(halfOpaqueDarkGreenCompact);
     assertEquals(
-        'The hex part of the color should have been extracted correctly',
-        '#005500', darkGreen);
+      'The hex part of the color should have been extracted correctly',
+      '#005500',
+      darkGreen
+    );
   },
 
   testExtractAlpha() {
@@ -353,17 +363,16 @@ testSuite({
     for (let i = 0; i < colors.length; i++) {
       const opacity = alpha.extractAlpha(colors[i]);
       assertEquals(
-          'The alpha transparency should have been extracted correctly',
-          expectedOpacities[i], opacity);
+        'The alpha transparency should have been extracted correctly',
+        expectedOpacities[i],
+        opacity
+      );
     }
   },
 
   testHslaArrayToRgbaStyle() {
-    assertEquals(
-        'rgba(102,255,102,0.5)',
-        alpha.hslaArrayToRgbaStyle([120, 100, 70, 0.5]));
-    assertEquals(
-        'rgba(28,23,23,0.9)', alpha.hslaArrayToRgbaStyle([0, 10, 10, 0.9]));
+    assertEquals('rgba(102,255,102,0.5)', alpha.hslaArrayToRgbaStyle([120, 100, 70, 0.5]));
+    assertEquals('rgba(28,23,23,0.9)', alpha.hslaArrayToRgbaStyle([0, 10, 10, 0.9]));
   },
 
   /**
@@ -372,12 +381,12 @@ testSuite({
   testRgbaStyleParsableResult() {
     const testColors = [
       [175, 19, 255, 1],
-      [53, 124, 240, .6],
+      [53, 124, 240, 0.6],
       [20, 30, 40, 0.3333333],
       [255, 255, 255, 0.7071067811865476],
     ];
 
-    for (let i = 0, testColor; testColor = testColors[i]; i++) {
+    for (let i = 0, testColor; (testColor = testColors[i]); i++) {
       const rgbaStyle = alpha.rgbaStyle_(testColor);
       const parsedColor = alpha.hexToRgba(alpha.parse(rgbaStyle).hex);
       assertEquals(testColor[0], parsedColor[0]);

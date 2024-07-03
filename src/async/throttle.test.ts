@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 goog.module('goog.async.ThrottleTest');
-goog.setTestOnly();
 
 const MockClock = goog.require('goog.testing.MockClock');
 const Throttle = goog.require('goog.async.Throttle');
 const testSuite = goog.require('goog.testing.testSuite');
-const {assertDoesNotRetainReference, assertRetainsReference} = goog.require('goog.testing.objects');
+const { assertDoesNotRetainReference, assertRetainsReference } =
+  goog.require('goog.testing.objects');
 
 testSuite({
   testThrottle() {
@@ -92,10 +92,14 @@ testSuite({
     const interval = 500;
     const mockClock = new MockClock(true);
 
-    const x = {'y': 0};
-    new Throttle(function() {
-      ++this['y'];
-    }, interval, x).fire();
+    const x = { y: 0 };
+    new Throttle(
+      function () {
+        ++this['y'];
+      },
+      interval,
+      x
+    ).fire();
     assertEquals(1, x['y']);
 
     mockClock.uninstall();
@@ -132,13 +136,17 @@ testSuite({
     const interval = 500;
     const mockClock = new MockClock(true);
 
-    const x = {'calls': 0};
-    const throttle = new Throttle(function(a, b, c) {
-      ++this['calls'];
-      assertEquals(3, a);
-      assertEquals('string', b);
-      assertEquals(false, c);
-    }, interval, x);
+    const x = { calls: 0 };
+    const throttle = new Throttle(
+      function (a, b, c) {
+        ++this['calls'];
+        assertEquals(3, a);
+        assertEquals('string', b);
+        assertEquals(false, c);
+      },
+      interval,
+      x
+    );
 
     throttle.fire(3, 'string', false);
     assertEquals(1, x['calls']);
@@ -157,8 +165,8 @@ testSuite({
 
   // Ensure that after the listener is invoked, the arguments are released.
   testThrottleArgumentsAreReleased() {
-    const x = {calls: 0};
-    const arg = {someProperty: 'foo'};
+    const x = { calls: 0 };
+    const arg = { someProperty: 'foo' };
     const throttle = new Throttle((obj) => {
       assertEquals('foo', obj.someProperty);
       x.calls++;
@@ -176,5 +184,4 @@ testSuite({
     // now make sure that throttle doesn't retain a reference to 'arg'
     assertDoesNotRetainReference(throttle, arg);
   },
-
 });

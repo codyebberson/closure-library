@@ -16,61 +16,61 @@ const never = verification.never;
 const times = verification.times;
 
 testSuite({
-  getTestName: function() { return 'goog.labs.mock.VerificationModeTest'; },
+  getTestName: () => 'goog.labs.mock.VerificationModeTest',
 
-  testTimesVerify_expectedEqualsActual_shouldReturnTrue: function() {
+  testTimesVerify_expectedEqualsActual_shouldReturnTrue: () => {
     assertTrue(times(4).verify(4));
   },
 
-  testTimesVerify_expectedGreaterThanActual_shouldReturnFalse: function() {
+  testTimesVerify_expectedGreaterThanActual_shouldReturnFalse: () => {
     assertFalse(times(4).verify(3));
   },
 
-  testTimesVerify_expectedLessThanActual_shouldReturnFalse: function() {
+  testTimesVerify_expectedLessThanActual_shouldReturnFalse: () => {
     assertFalse(times(4).verify(5));
   },
 
-  testTimesDescribe_shouldReturnCorrectMessage: function() {
+  testTimesDescribe_shouldReturnCorrectMessage: () => {
     assertEquals(4 + ' times', times(4).describe());
   },
 
-  testNeverVerify_shouldEqualTimesZeroVerify: function() {
+  testNeverVerify_shouldEqualTimesZeroVerify: () => {
     assertEquals(times(0).verify(0), never().verify(0));
   },
 
-  testNeverDescribe_shouldReturnTimesZeroMessage: function() {
+  testNeverDescribe_shouldReturnTimesZeroMessage: () => {
     assertEquals(times(0).describe(), never().describe());
   },
 
-  testAtLeastVerify_expectedEqualsActual_shouldReturnTrue: function() {
+  testAtLeastVerify_expectedEqualsActual_shouldReturnTrue: () => {
     assertTrue(atLeast(4).verify(4));
   },
 
-  testAtLeastVerify_expectedLessThanActual_shouldReturnTrue: function() {
+  testAtLeastVerify_expectedLessThanActual_shouldReturnTrue: () => {
     assertTrue(atLeast(1).verify(3));
   },
 
-  testAtLeastVerify_expectedGreaterThanActual_shouldReturnFalse: function() {
+  testAtLeastVerify_expectedGreaterThanActual_shouldReturnFalse: () => {
     assertFalse(atLeast(4).verify(3));
   },
 
-  testAtLeastDescribe_shouldReturnCorrectMessage: function() {
+  testAtLeastDescribe_shouldReturnCorrectMessage: () => {
     assertEquals('at least ' + 4 + ' times', atLeast(4).describe());
   },
 
-  testAtMostVerify_expectedEqualsActual_shouldReturnTrue: function() {
+  testAtMostVerify_expectedEqualsActual_shouldReturnTrue: () => {
     assertTrue(atMost(4).verify(4));
   },
 
-  testAtMostVerify_expectedGreaterThanActual_shouldReturnTrue: function() {
+  testAtMostVerify_expectedGreaterThanActual_shouldReturnTrue: () => {
     assertTrue(atMost(4).verify(3));
   },
 
-  testAtMostVerify_expectedLessThanActual_shouldReturnFalse: function() {
+  testAtMostVerify_expectedLessThanActual_shouldReturnFalse: () => {
     assertFalse(atMost(1).verify(3));
   },
 
-  testAtMostDescribe_shouldReturnCorrectMessage: function() {
+  testAtMostDescribe_shouldReturnCorrectMessage: () => {
     assertEquals('at most ' + 4 + ' times', atMost(4).describe());
-  }
+  },
 });

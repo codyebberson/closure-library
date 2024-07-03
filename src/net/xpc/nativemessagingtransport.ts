@@ -9,7 +9,6 @@
  * facilities for cross domain communication.
  */
 
-
 goog.provide('goog.net.xpc.NativeMessagingTransport');
 
 goog.require('goog.Timer');
@@ -26,8 +25,6 @@ goog.require('goog.net.xpc.TransportTypes');
 goog.requireType('goog.dom.DomHelper');
 goog.requireType('goog.events.BrowserEvent');
 goog.requireType('goog.net.xpc.CrossPageChannel');
-
-
 
 /**
  * The native messaging transport
@@ -50,12 +47,14 @@ goog.requireType('goog.net.xpc.CrossPageChannel');
  * @extends {goog.net.xpc.Transport}
  * @final
  */
-goog.net.xpc.NativeMessagingTransport = function(
-    channel, peerHostname, opt_domHelper, opt_oneSidedHandshake,
-    opt_protocolVersion) {
-  'use strict';
-  goog.net.xpc.NativeMessagingTransport.base(
-      this, 'constructor', opt_domHelper);
+goog.net.xpc.NativeMessagingTransport = function (
+  channel,
+  peerHostname,
+  opt_domHelper,
+  opt_oneSidedHandshake,
+  opt_protocolVersion
+) {
+  goog.net.xpc.NativeMessagingTransport.base(this, 'constructor', opt_domHelper);
 
   /**
    * The channel this transport belongs to.
@@ -165,16 +164,23 @@ goog.net.xpc.NativeMessagingTransport = function(
   this.connected_.callback(true);
 
   this.eventHandler_.listen(
-      this.maybeAttemptToConnectTimer_, goog.Timer.TICK,
-      this.maybeAttemptToConnect_);
+    this.maybeAttemptToConnectTimer_,
+    goog.Timer.TICK,
+    this.maybeAttemptToConnect_
+  );
 
   goog.log.info(
-      goog.net.xpc.logger, 'NativeMessagingTransport created.  ' +
-          'protocolVersion=' + this.protocolVersion_ + ', oneSidedHandshake=' +
-          this.oneSidedHandshake_ + ', role=' + this.channel_.getRole());
+    goog.net.xpc.logger,
+    'NativeMessagingTransport created.  ' +
+      'protocolVersion=' +
+      this.protocolVersion_ +
+      ', oneSidedHandshake=' +
+      this.oneSidedHandshake_ +
+      ', role=' +
+      this.channel_.getRole()
+  );
 };
 goog.inherits(goog.net.xpc.NativeMessagingTransport, goog.net.xpc.Transport);
-
 
 /**
  * Length of the delay in milliseconds between the channel being connected and
@@ -185,14 +191,12 @@ goog.inherits(goog.net.xpc.NativeMessagingTransport, goog.net.xpc.Transport);
  */
 goog.net.xpc.NativeMessagingTransport.CONNECTION_DELAY_MS_ = 200;
 
-
 /**
  * Current determination of peer's protocol version, or null for unknown.
  * @type {?number}
  * @private
  */
 goog.net.xpc.NativeMessagingTransport.prototype.peerProtocolVersion_ = null;
-
 
 /**
  * Flag indicating if this instance of the transport has been initialized.
@@ -201,15 +205,13 @@ goog.net.xpc.NativeMessagingTransport.prototype.peerProtocolVersion_ = null;
  */
 goog.net.xpc.NativeMessagingTransport.prototype.initialized_ = false;
 
-
 /**
  * The transport type.
  * @type {number}
  * @override
  */
 goog.net.xpc.NativeMessagingTransport.prototype.transportType =
-    goog.net.xpc.TransportTypes.NATIVE_MESSAGING;
-
+  goog.net.xpc.TransportTypes.NATIVE_MESSAGING;
 
 /**
  * The delimiter used for transport service messages.
@@ -217,7 +219,6 @@ goog.net.xpc.NativeMessagingTransport.prototype.transportType =
  * @private
  */
 goog.net.xpc.NativeMessagingTransport.MESSAGE_DELIMITER_ = ',';
-
 
 /**
  * Tracks the number of NativeMessagingTransport channels that have been
@@ -229,14 +230,12 @@ goog.net.xpc.NativeMessagingTransport.MESSAGE_DELIMITER_ = ',';
  */
 goog.net.xpc.NativeMessagingTransport.activeCount_ = {};
 
-
 /**
  * Id of a timer user during postMessage sends.
  * @type {number}
  * @private
  */
 goog.net.xpc.NativeMessagingTransport.prototype.sendTimerId_ = 0;
-
 
 /**
  * Checks whether the peer transport protocol version could be as indicated.
@@ -245,13 +244,9 @@ goog.net.xpc.NativeMessagingTransport.prototype.sendTimerId_ = 0;
  *     indicated, or null.
  * @private
  */
-goog.net.xpc.NativeMessagingTransport.prototype.couldPeerVersionBe_ = function(
-    version) {
-  'use strict';
-  return this.peerProtocolVersion_ == null ||
-      this.peerProtocolVersion_ == version;
+goog.net.xpc.NativeMessagingTransport.prototype.couldPeerVersionBe_ = function (version) {
+  return this.peerProtocolVersion_ == null || this.peerProtocolVersion_ == version;
 };
-
 
 /**
  * Initializes this transport. Registers a listener for 'message'-events
@@ -259,8 +254,7 @@ goog.net.xpc.NativeMessagingTransport.prototype.couldPeerVersionBe_ = function(
  * @param {Window} listenWindow The window to listen to events on.
  * @private
  */
-goog.net.xpc.NativeMessagingTransport.initialize_ = function(listenWindow) {
-  'use strict';
+goog.net.xpc.NativeMessagingTransport.initialize_ = (listenWindow) => {
   const uid = goog.getUid(listenWindow);
   let value = goog.net.xpc.NativeMessagingTransport.activeCount_[uid];
   if (typeof value !== 'number') {
@@ -270,13 +264,15 @@ goog.net.xpc.NativeMessagingTransport.initialize_ = function(listenWindow) {
     // Listen for message-events. These are fired on window in FF3 and on
     // document in Opera.
     goog.events.listen(
-        listenWindow.postMessage ? listenWindow : listenWindow.document,
-        'message', goog.net.xpc.NativeMessagingTransport.messageReceived_,
-        false, goog.net.xpc.NativeMessagingTransport);
+      listenWindow.postMessage ? listenWindow : listenWindow.document,
+      'message',
+      goog.net.xpc.NativeMessagingTransport.messageReceived_,
+      false,
+      goog.net.xpc.NativeMessagingTransport
+    );
   }
   goog.net.xpc.NativeMessagingTransport.activeCount_[uid] = value + 1;
 };
-
 
 /**
  * Processes an incoming message-event.
@@ -285,8 +281,7 @@ goog.net.xpc.NativeMessagingTransport.initialize_ = function(listenWindow) {
  * @private
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.net.xpc.NativeMessagingTransport.messageReceived_ = function(msgEvt) {
-  'use strict';
+goog.net.xpc.NativeMessagingTransport.messageReceived_ = (msgEvt) => {
   /** @suppress {strictMissingProperties} Added to tighten compiler checks */
   const data = msgEvt.getBrowserEvent().data;
 
@@ -307,8 +302,9 @@ goog.net.xpc.NativeMessagingTransport.messageReceived_ = function(msgEvt) {
   const payload = data.substring(serviceDelim + 1);
 
   goog.log.fine(
-      goog.net.xpc.logger, 'messageReceived: channel=' + channelName +
-          ', service=' + service + ', payload=' + payload);
+    goog.net.xpc.logger,
+    'messageReceived: channel=' + channelName + ', service=' + service + ', payload=' + payload
+  );
 
   // Attempt to deliver message to the channel. Keep in mind that it may not
   // exist for several reasons, including but not limited to:
@@ -321,24 +317,27 @@ goog.net.xpc.NativeMessagingTransport.messageReceived_ = function(msgEvt) {
   const channel = allChannels[channelName];
   if (channel) {
     channel.xpcDeliver(
-        service, payload,
-        /** @type {!MessageEvent} */ (msgEvt.getBrowserEvent()).origin);
+      service,
+      payload,
+      /** @type {!MessageEvent} */ (msgEvt.getBrowserEvent()).origin
+    );
     return true;
   }
 
   const transportMessageType =
-      goog.net.xpc.NativeMessagingTransport.parseTransportPayload_(payload)[0];
+    goog.net.xpc.NativeMessagingTransport.parseTransportPayload_(payload)[0];
 
   // Check if there are any stale channel names that can be updated.
-  for (let staleChannelName in allChannels) {
+  for (const staleChannelName in allChannels) {
     const staleChannel = allChannels[staleChannelName];
-    if (staleChannel.getRole() == goog.net.xpc.CrossPageChannelRole.INNER &&
-        !staleChannel.isConnected() &&
-        service == goog.net.xpc.TRANSPORT_SERVICE &&
-        (transportMessageType == goog.net.xpc.SETUP ||
-         transportMessageType == goog.net.xpc.SETUP_NTPV2) &&
-        staleChannel.isMessageOriginAcceptable(
-            msgEvt.getBrowserEvent().origin)) {
+    if (
+      staleChannel.getRole() == goog.net.xpc.CrossPageChannelRole.INNER &&
+      !staleChannel.isConnected() &&
+      service == goog.net.xpc.TRANSPORT_SERVICE &&
+      (transportMessageType == goog.net.xpc.SETUP ||
+        transportMessageType == goog.net.xpc.SETUP_NTPV2) &&
+      staleChannel.isMessageOriginAcceptable(msgEvt.getBrowserEvent().origin)
+    ) {
       // Inner peer received SETUP message but channel names did not match.
       // Start using the channel name sent from outer peer. The channel name
       // of the inner peer can easily become out of date, as iframe's and their
@@ -357,17 +356,13 @@ goog.net.xpc.NativeMessagingTransport.messageReceived_ = function(msgEvt) {
   return false;
 };
 
-
 /**
  * Handles transport service messages.
  * @param {string} payload The message content.
  * @override
  */
-goog.net.xpc.NativeMessagingTransport.prototype.transportServiceHandler =
-    function(payload) {
-  'use strict';
-  const transportParts =
-      goog.net.xpc.NativeMessagingTransport.parseTransportPayload_(payload);
+goog.net.xpc.NativeMessagingTransport.prototype.transportServiceHandler = function (payload) {
+  const transportParts = goog.net.xpc.NativeMessagingTransport.parseTransportPayload_(payload);
   const transportMessageType = transportParts[0];
   const peerEndpointId = transportParts[1];
   switch (transportMessageType) {
@@ -394,12 +389,15 @@ goog.net.xpc.NativeMessagingTransport.prototype.transportServiceHandler =
         const prevPeerProtocolVersion = this.peerProtocolVersion_;
         this.setPeerProtocolVersion_(2);
         this.sendSetupAckMessage_(2);
-        if ((prevPeerProtocolVersion == 1 || this.peerEndpointId_ != null) &&
-            this.peerEndpointId_ != peerEndpointId) {
+        if (
+          (prevPeerProtocolVersion == 1 || this.peerEndpointId_ != null) &&
+          this.peerEndpointId_ != peerEndpointId
+        ) {
           // Send a new SETUP message since the peer has been replaced.
           goog.log.info(
-              goog.net.xpc.logger,
-              'Sending SETUP and changing peer ID to: ' + peerEndpointId);
+            goog.net.xpc.logger,
+            'Sending SETUP and changing peer ID to: ' + peerEndpointId
+          );
           this.sendSetupMessage_();
         }
         this.peerEndpointId_ = peerEndpointId;
@@ -408,18 +406,15 @@ goog.net.xpc.NativeMessagingTransport.prototype.transportServiceHandler =
   }
 };
 
-
 /**
  * Sends a SETUP transport service message of the correct protocol number for
  * our current situation.
  * @private
  */
-goog.net.xpc.NativeMessagingTransport.prototype.sendSetupMessage_ = function() {
-  'use strict';
+goog.net.xpc.NativeMessagingTransport.prototype.sendSetupMessage_ = function () {
   // 'real' (legacy) v1 transports don't know about there being v2 ones out
   // there, and we shouldn't either.
-  goog.asserts.assert(
-      !(this.protocolVersion_ == 1 && this.peerProtocolVersion_ == 2));
+  goog.asserts.assert(!(this.protocolVersion_ == 1 && this.peerProtocolVersion_ == 2));
 
   if (this.protocolVersion_ == 2 && this.couldPeerVersionBe_(2)) {
     let payload = goog.net.xpc.SETUP_NTPV2;
@@ -437,7 +432,6 @@ goog.net.xpc.NativeMessagingTransport.prototype.sendSetupMessage_ = function() {
   }
 };
 
-
 /**
  * Sends a SETUP_ACK transport service message of the correct protocol number
  * for our current situation.
@@ -445,14 +439,12 @@ goog.net.xpc.NativeMessagingTransport.prototype.sendSetupMessage_ = function() {
  *     which gave rise to this ack message.
  * @private
  */
-goog.net.xpc.NativeMessagingTransport.prototype.sendSetupAckMessage_ = function(
-    protocolVersion) {
-  'use strict';
+goog.net.xpc.NativeMessagingTransport.prototype.sendSetupAckMessage_ = function (protocolVersion) {
   goog.asserts.assert(
-      this.protocolVersion_ != 1 || protocolVersion != 2,
-      'Shouldn\'t try to send a v2 setup ack in v1 mode.');
-  if (this.protocolVersion_ == 2 && this.couldPeerVersionBe_(2) &&
-      protocolVersion == 2) {
+    this.protocolVersion_ != 1 || protocolVersion != 2,
+    "Shouldn't try to send a v2 setup ack in v1 mode."
+  );
+  if (this.protocolVersion_ == 2 && this.couldPeerVersionBe_(2) && protocolVersion == 2) {
     this.send(goog.net.xpc.TRANSPORT_SERVICE, goog.net.xpc.SETUP_ACK_NTPV2);
   } else if (this.couldPeerVersionBe_(1) && protocolVersion == 1) {
     this.send(goog.net.xpc.TRANSPORT_SERVICE, goog.net.xpc.SETUP_ACK);
@@ -465,7 +457,6 @@ goog.net.xpc.NativeMessagingTransport.prototype.sendSetupAckMessage_ = function(
   }
 };
 
-
 /**
  * Attempts to set the peer protocol number.  Downgrades from 2 to 1 are not
  * permitted.
@@ -473,9 +464,7 @@ goog.net.xpc.NativeMessagingTransport.prototype.sendSetupAckMessage_ = function(
  * @private
  * @suppress {strictPrimitiveOperators}
  */
-goog.net.xpc.NativeMessagingTransport.prototype.setPeerProtocolVersion_ =
-    function(version) {
-  'use strict';
+goog.net.xpc.NativeMessagingTransport.prototype.setPeerProtocolVersion_ = function (version) {
   if (version > this.peerProtocolVersion_) {
     this.peerProtocolVersion_ = version;
   }
@@ -487,18 +476,15 @@ goog.net.xpc.NativeMessagingTransport.prototype.setPeerProtocolVersion_ =
   }
 };
 
-
 /**
  * Connects this transport.
  * @override
  */
-goog.net.xpc.NativeMessagingTransport.prototype.connect = function() {
-  'use strict';
+goog.net.xpc.NativeMessagingTransport.prototype.connect = function () {
   goog.net.xpc.NativeMessagingTransport.initialize_(this.getWindow());
   this.initialized_ = true;
   this.maybeAttemptToConnect_();
 };
-
 
 /**
  * Connects to other peer. In the case of the outer peer, the setup messages are
@@ -509,22 +495,17 @@ goog.net.xpc.NativeMessagingTransport.prototype.connect = function() {
  * soft-reloads and history navigations.
  * @private
  */
-goog.net.xpc.NativeMessagingTransport.prototype.maybeAttemptToConnect_ =
-    function() {
-  'use strict';
+goog.net.xpc.NativeMessagingTransport.prototype.maybeAttemptToConnect_ = function () {
   // In a one-sided handshake, the outer frame does not send a SETUP message,
   // but the inner frame does.
-  const outerFrame =
-      this.channel_.getRole() == goog.net.xpc.CrossPageChannelRole.OUTER;
-  if ((this.oneSidedHandshake_ && outerFrame) || this.channel_.isConnected() ||
-      this.isDisposed()) {
+  const outerFrame = this.channel_.getRole() == goog.net.xpc.CrossPageChannelRole.OUTER;
+  if ((this.oneSidedHandshake_ && outerFrame) || this.channel_.isConnected() || this.isDisposed()) {
     this.maybeAttemptToConnectTimer_.stop();
     return;
   }
   this.maybeAttemptToConnectTimer_.start();
   this.sendSetupMessage_();
 };
-
 
 /**
  * Sends a message.
@@ -533,28 +514,17 @@ goog.net.xpc.NativeMessagingTransport.prototype.maybeAttemptToConnect_ =
  * @param {string} payload The message content.
  * @override
  */
-goog.net.xpc.NativeMessagingTransport.prototype.send = function(
-    service, payload) {
-  'use strict';
+goog.net.xpc.NativeMessagingTransport.prototype.send = function (service, payload) {
   const win = this.channel_.getPeerWindowObject();
   if (!win) {
     goog.log.fine(goog.net.xpc.logger, 'send(): window not ready');
     return;
   }
 
-  this.send = function(service, payload) {
-    'use strict';
-    // In IE8 (and perhaps elsewhere), it seems like postMessage is sometimes
-    // implemented as a synchronous call.  That is, calling it synchronously
-    // calls whatever listeners it has, and control is not returned to the
-    // calling thread until those listeners are run.  This produces different
-    // ordering to all other browsers, and breaks this protocol.  This timer
-    // callback is introduced to produce standard behavior across all browsers.
-    const transport = this;
+  this.send = function (service, payload) {
     const channelName = this.channel_.name;
-    const sendFunctor = function() {
-      'use strict';
-      transport.sendTimerId_ = 0;
+    const sendFunctor = () => {
+      this.sendTimerId_ = 0;
 
       try {
         // postMessage is a method of the window object, except in some
@@ -566,24 +536,25 @@ goog.net.xpc.NativeMessagingTransport.prototype.send = function(
          */
         const obj = win.postMessage ? win : win.document;
         if (!obj.postMessage) {
-          goog.log.warning(
-              goog.net.xpc.logger, 'Peer window had no postMessage function.');
+          goog.log.warning(goog.net.xpc.logger, 'Peer window had no postMessage function.');
           return;
         }
 
-        obj.postMessage(
-            channelName + '|' + service + ':' + payload,
-            transport.peerHostname_);
+        obj.postMessage(channelName + '|' + service + ':' + payload, this.peerHostname_);
         goog.log.fine(
-            goog.net.xpc.logger, 'send(): service=' + service + ' payload=' +
-                payload + ' to hostname=' + transport.peerHostname_);
+          goog.net.xpc.logger,
+          'send(): service=' +
+            service +
+            ' payload=' +
+            payload +
+            ' to hostname=' +
+            this.peerHostname_
+        );
       } catch (error) {
         // There is some evidence (not totally convincing) that postMessage can
         // be missing or throw errors during a narrow timing window during
         // startup.  This protects against that.
-        goog.log.warning(
-            goog.net.xpc.logger, 'Error performing postMessage, ignoring.',
-            error);
+        goog.log.warning(goog.net.xpc.logger, 'Error performing postMessage, ignoring.', error);
       }
     };
     this.sendTimerId_ = goog.Timer.callOnce(sendFunctor, 0);
@@ -591,25 +562,22 @@ goog.net.xpc.NativeMessagingTransport.prototype.send = function(
   this.send(service, payload);
 };
 
-
 /**
  * Notify the channel that this transport is connected.  If either transport is
  * protocol v1, a short delay is required to paper over timing vulnerabilities
  * in that protocol version.
  * @private
  */
-goog.net.xpc.NativeMessagingTransport.prototype.notifyConnected_ = function() {
-  'use strict';
-  const delay = (this.protocolVersion_ == 1 || this.peerProtocolVersion_ == 1) ?
-      goog.net.xpc.NativeMessagingTransport.CONNECTION_DELAY_MS_ :
-      undefined;
+goog.net.xpc.NativeMessagingTransport.prototype.notifyConnected_ = function () {
+  const delay =
+    this.protocolVersion_ == 1 || this.peerProtocolVersion_ == 1
+      ? goog.net.xpc.NativeMessagingTransport.CONNECTION_DELAY_MS_
+      : undefined;
   this.channel_.notifyConnected(delay);
 };
 
-
 /** @override */
-goog.net.xpc.NativeMessagingTransport.prototype.disposeInternal = function() {
-  'use strict';
+goog.net.xpc.NativeMessagingTransport.prototype.disposeInternal = function () {
   if (this.initialized_) {
     const listenWindow = this.getWindow();
     const uid = goog.getUid(listenWindow);
@@ -617,9 +585,12 @@ goog.net.xpc.NativeMessagingTransport.prototype.disposeInternal = function() {
     goog.net.xpc.NativeMessagingTransport.activeCount_[uid] = value - 1;
     if (value == 1) {
       goog.events.unlisten(
-          listenWindow.postMessage ? listenWindow : listenWindow.document,
-          'message', goog.net.xpc.NativeMessagingTransport.messageReceived_,
-          false, goog.net.xpc.NativeMessagingTransport);
+        listenWindow.postMessage ? listenWindow : listenWindow.document,
+        'message',
+        goog.net.xpc.NativeMessagingTransport.messageReceived_,
+        false,
+        goog.net.xpc.NativeMessagingTransport
+      );
     }
   }
 
@@ -649,7 +620,6 @@ goog.net.xpc.NativeMessagingTransport.prototype.disposeInternal = function() {
   goog.net.xpc.NativeMessagingTransport.base(this, 'disposeInternal');
 };
 
-
 /**
  * Parse a transport service payload message.  For v1, it is simply expected to
  * be 'SETUP' or 'SETUP_ACK'.  For v2, an example setup message is
@@ -660,11 +630,10 @@ goog.net.xpc.NativeMessagingTransport.prototype.disposeInternal = function() {
  *     and the endpoint id as the second, if one was sent, or null otherwise.
  * @private
  */
-goog.net.xpc.NativeMessagingTransport.parseTransportPayload_ = function(
-    payload) {
-  'use strict';
+goog.net.xpc.NativeMessagingTransport.parseTransportPayload_ = (payload) => {
   const transportParts = /** @type {!Array<?string>} */ (
-      payload.split(goog.net.xpc.NativeMessagingTransport.MESSAGE_DELIMITER_));
+    payload.split(goog.net.xpc.NativeMessagingTransport.MESSAGE_DELIMITER_)
+  );
   transportParts[1] = transportParts[1] || null;
   return transportParts;
 };

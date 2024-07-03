@@ -16,11 +16,9 @@ goog.require('goog.async.Deferred');
 goog.require('goog.dispose');
 goog.require('goog.messaging.DeferredChannel');
 goog.require('goog.messaging.PortChannel');
-goog.require('goog.messaging.PortNetwork');  // interface
+goog.require('goog.messaging.PortNetwork'); // interface
 goog.require('goog.object');
 goog.requireType('goog.messaging.MessageChannel');
-
-
 
 /**
  * The leaf node of a network.
@@ -35,8 +33,7 @@ goog.requireType('goog.messaging.MessageChannel');
  * @implements {goog.messaging.PortNetwork}
  * @final
  */
-goog.messaging.PortCaller = function(operatorPort) {
-  'use strict';
+goog.messaging.PortCaller = function (operatorPort) {
   goog.messaging.PortCaller.base(this, 'constructor');
 
   /**
@@ -74,27 +71,25 @@ goog.messaging.PortCaller = function(operatorPort) {
   this.connections_ = {};
 
   this.operatorPort_.registerService(
-      goog.messaging.PortNetwork.GRANT_CONNECTION_SERVICE,
-      goog.bind(this.connectionGranted_, this), true /* opt_json */);
+    goog.messaging.PortNetwork.GRANT_CONNECTION_SERVICE,
+    goog.bind(this.connectionGranted_, this),
+    true /* opt_json */
+  );
 };
 goog.inherits(goog.messaging.PortCaller, goog.Disposable);
 
-
 /** @override */
-goog.messaging.PortCaller.prototype.dial = function(name) {
-  'use strict';
+goog.messaging.PortCaller.prototype.dial = function (name) {
   if (name in this.connections_) {
     return this.connections_[name].channel;
   }
 
-  this.operatorPort_.send(
-      goog.messaging.PortNetwork.REQUEST_CONNECTION_SERVICE, name);
+  this.operatorPort_.send(goog.messaging.PortNetwork.REQUEST_CONNECTION_SERVICE, name);
   const deferred = new goog.async.Deferred();
   const channel = new goog.messaging.DeferredChannel(deferred);
-  this.connections_[name] = {deferred: deferred, channel: channel};
+  this.connections_[name] = { deferred: deferred, channel: channel };
   return channel;
 };
-
 
 /**
  * Registers a connection to another context in the network. This is called when
@@ -112,8 +107,7 @@ goog.messaging.PortCaller.prototype.dial = function(name) {
  *     being connected and the port connecting the context.
  * @private
  */
-goog.messaging.PortCaller.prototype.connectionGranted_ = function(message) {
-  'use strict';
+goog.messaging.PortCaller.prototype.connectionGranted_ = function (message) {
   const args = /** @type {{name: string, port: MessagePort}} */ (message);
   const port = args['port'];
   const entry = this.connections_[args['name']];
@@ -131,15 +125,13 @@ goog.messaging.PortCaller.prototype.connectionGranted_ = function(message) {
     if (entry) {
       entry.deferred.callback(channel);
     } else {
-      this.connections_[args['name']] = {channel: channel, deferred: null};
+      this.connections_[args['name']] = { channel: channel, deferred: null };
     }
   }
 };
 
-
 /** @override */
-goog.messaging.PortCaller.prototype.disposeInternal = function() {
-  'use strict';
+goog.messaging.PortCaller.prototype.disposeInternal = function () {
   goog.dispose(this.operatorPort_);
   goog.object.forEach(this.connections_, goog.dispose);
   delete this.operatorPort_;

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.math.BezierTest');
-goog.setTestOnly();
 
 const Bezier = goog.require('goog.math.Bezier');
 const Coordinate = goog.require('goog.math.Coordinate');
@@ -79,8 +78,7 @@ testSuite({
     const pt = bezier.getPoint(0.5);
     assertRoughlyEquals(0.3125, pt.x, eps);
     assertRoughlyEquals(0.5375, pt.y, eps);
-    assertRoughlyEquals(
-        0.321, bezier.solvePositionFromXValue(bezier.getPoint(0.321).x), eps);
+    assertRoughlyEquals(0.321, bezier.solvePositionFromXValue(bezier.getPoint(0.321).x), eps);
   },
 
   testSolveYValueFromXValue() {

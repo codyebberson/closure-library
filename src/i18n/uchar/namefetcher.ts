@@ -11,16 +11,13 @@
 
 goog.provide('goog.i18n.uChar.NameFetcher');
 
-
-
 /**
  * NameFetcher interface. Implementations of this interface are used to retrieve
  * Unicode character names.
  *
  * @interface
  */
-goog.i18n.uChar.NameFetcher = function() {};
-
+goog.i18n.uChar.NameFetcher = () => {};
 
 /**
  * Retrieves the names of a given set of characters and stores them in a cache
@@ -31,8 +28,7 @@ goog.i18n.uChar.NameFetcher = function() {};
  *     lists are stored by category and subcategory in the
  *     goog.i18n.charpickerdata class.
  */
-goog.i18n.uChar.NameFetcher.prototype.prefetch = function(characters) {};
-
+goog.i18n.uChar.NameFetcher.prototype.prefetch = (characters) => {};
 
 /**
  * Retrieves the name of a particular character.
@@ -43,9 +39,7 @@ goog.i18n.uChar.NameFetcher.prototype.prefetch = function(characters) {};
  *     codepoint name, this parameter will be null if the character name is not
  *     defined.
  */
-goog.i18n.uChar.NameFetcher.prototype.getName = function(character, callback) {
-};
-
+goog.i18n.uChar.NameFetcher.prototype.getName = (character, callback) => {};
 
 /**
  * Tests whether the name of a given character is available to be retrieved by
@@ -55,4 +49,4 @@ goog.i18n.uChar.NameFetcher.prototype.getName = function(character, callback) {
  * @return {boolean} True if the fetcher can retrieve or has a name available
  *     for the given character.
  */
-goog.i18n.uChar.NameFetcher.prototype.isNameAvailable = function(character) {};
+goog.i18n.uChar.NameFetcher.prototype.isNameAvailable = (character) => {};

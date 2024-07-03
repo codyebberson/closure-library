@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.PlainTextSpellCheckerTest');
-goog.setTestOnly();
 
 const AbstractSpellChecker = goog.require('goog.ui.AbstractSpellChecker');
 const KeyCodes = goog.require('goog.events.KeyCodes');
@@ -132,9 +131,7 @@ testSuite({
 
     Timer.callOnce = timerSav;
 
-    assertEquals(
-        'Spell checker run should not change the underlying element.', text,
-        el.value);
+    assertEquals('Spell checker run should not change the underlying element.', text, el.value);
     s.dispose();
   },
 
@@ -162,7 +159,7 @@ testSuite({
     /** @suppress {checkTypes} suppression added to enable type checking */
     Timer.callOnce = localTimer;
 
-    s.setExcludeMarker(new RegExp('\nOn .* wrote:\n(> .*\n)+|\n(> .*\n)', 'g'));
+    s.setExcludeMarker(/\nOn .* wrote:\n(> .*\n)+|\n(> .*\n)/g);
     s.check();
     processTimerQueue();
     s.ignoreWord(iggnore);
@@ -174,9 +171,7 @@ testSuite({
 
     Timer.callOnce = timerSav;
 
-    assertEquals(
-        'Spell checker run should not change the underlying element.', text,
-        el.value);
+    assertEquals('Spell checker run should not change the underlying element.', text, el.value);
     s.dispose();
   },
 
@@ -220,9 +215,9 @@ testSuite({
 
     if (!wordEl) {
       assertTrue(
-          'Cannot find the world that should have been here.' +
-              'Please revise the test',
-          false);
+        'Cannot find the world that should have been here.' + 'Please revise the test',
+        false
+      );
       return;
     }
 
@@ -237,8 +232,10 @@ testSuite({
     const suggestions = s.getSuggestions_();
     s.replaceWord(wordEl, missspelling, 'foo');
     assertEquals(
-        'Should have set the original word attribute!',
-        wordEl.getAttribute(AbstractSpellChecker.ORIGINAL_), missspelling);
+      'Should have set the original word attribute!',
+      wordEl.getAttribute(AbstractSpellChecker.ORIGINAL_),
+      missspelling
+    );
 
     /** @suppress {visibility} suppression added to enable type checking */
     s.activeWord_ = dom.getTextContent(wordEl);
@@ -250,9 +247,10 @@ testSuite({
     /** @suppress {visibility} suppression added to enable type checking */
     const newSuggestions = s.getSuggestions_();
     assertEquals(
-        'Suggestion list should still be present even if the word ' +
-            'is now correct!',
-        suggestions, newSuggestions);
+      'Suggestion list should still be present even if the word ' + 'is now correct!',
+      suggestions,
+      newSuggestions
+    );
 
     s.resume();
     processTimerQueue();
@@ -290,15 +288,14 @@ testSuite({
     events.fireKeySequence(container, KeyCodes.RIGHT, keyEventProperties);
 
     // Test moving from first to second misspelled word.
-    const defaultExecuted =
-        events.fireKeySequence(container, KeyCodes.RIGHT, keyEventProperties);
+    const defaultExecuted = events.fireKeySequence(container, KeyCodes.RIGHT, keyEventProperties);
 
-    assertFalse(
-        'The default action should be prevented for the key event',
-        defaultExecuted);
+    assertFalse('The default action should be prevented for the key event', defaultExecuted);
     assertEquals(
-        'The second misspelled word should have focus.', document.activeElement,
-        container.children[1]);
+      'The second misspelled word should have focus.',
+      document.activeElement,
+      container.children[1]
+    );
 
     s.resume();
     processTimerQueue();
@@ -338,15 +335,14 @@ testSuite({
     events.fireKeySequence(container, KeyCodes.RIGHT, keyEventProperties);
 
     // Test moving to the next invalid word.
-    const defaultExecuted =
-        events.fireKeySequence(container, KeyCodes.RIGHT, keyEventProperties);
+    const defaultExecuted = events.fireKeySequence(container, KeyCodes.RIGHT, keyEventProperties);
 
-    assertFalse(
-        'The default action should be prevented for the key event',
-        defaultExecuted);
+    assertFalse('The default action should be prevented for the key event', defaultExecuted);
     assertEquals(
-        'The third/last misspelled word should have focus.',
-        document.activeElement, container.children[2]);
+      'The third/last misspelled word should have focus.',
+      document.activeElement,
+      container.children[2]
+    );
 
     s.resume();
     processTimerQueue();
@@ -384,20 +380,16 @@ testSuite({
 
     events.fireKeySequence(container, KeyCodes.RIGHT, keyEventProperties);
 
-    assertFalse(
-        'The suggestion menu should not be visible yet.',
-        suggestionMenu.isVisible());
+    assertFalse('The suggestion menu should not be visible yet.', suggestionMenu.isVisible());
 
     keyEventProperties.ctrlKey = false;
-    const defaultExecuted =
-        events.fireKeySequence(container, KeyCodes.DOWN, keyEventProperties);
+    const defaultExecuted = events.fireKeySequence(container, KeyCodes.DOWN, keyEventProperties);
 
-    assertFalse(
-        'The default action should be prevented for the key event',
-        defaultExecuted);
+    assertFalse('The default action should be prevented for the key event', defaultExecuted);
     assertTrue(
-        'The suggestion menu should be visible after the key event.',
-        suggestionMenu.isVisible());
+      'The suggestion menu should be visible after the key event.',
+      suggestionMenu.isVisible()
+    );
 
     s.resume();
     processTimerQueue();
@@ -437,15 +429,14 @@ testSuite({
     events.fireKeySequence(container, KeyCodes.RIGHT, keyEventProperties);
 
     // Test moving from third to second misspelled word.
-    const defaultExecuted =
-        events.fireKeySequence(container, KeyCodes.LEFT, keyEventProperties);
+    const defaultExecuted = events.fireKeySequence(container, KeyCodes.LEFT, keyEventProperties);
 
-    assertFalse(
-        'The default action should be prevented for the key event',
-        defaultExecuted);
+    assertFalse('The default action should be prevented for the key event', defaultExecuted);
     assertEquals(
-        'The second misspelled word should have focus.', document.activeElement,
-        container.children[1]);
+      'The second misspelled word should have focus.',
+      document.activeElement,
+      container.children[1]
+    );
 
     s.resume();
     processTimerQueue();
@@ -483,15 +474,14 @@ testSuite({
     events.fireKeySequence(container, KeyCodes.RIGHT, keyEventProperties);
 
     // Test moving to the previous invalid word.
-    const defaultExecuted =
-        events.fireKeySequence(container, KeyCodes.LEFT, keyEventProperties);
+    const defaultExecuted = events.fireKeySequence(container, KeyCodes.LEFT, keyEventProperties);
 
-    assertFalse(
-        'The default action should be prevented for the key event',
-        defaultExecuted);
+    assertFalse('The default action should be prevented for the key event', defaultExecuted);
     assertEquals(
-        'The first misspelled word should have focus.', document.activeElement,
-        container.children[0]);
+      'The first misspelled word should have focus.',
+      document.activeElement,
+      container.children[0]
+    );
 
     s.resume();
     processTimerQueue();

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.module.activeModuleManagerTest');
-goog.setTestOnly();
 
 const ModuleManager = goog.require('goog.module.ModuleManager');
 const activeModuleManager = goog.require('goog.loader.activeModuleManager');
@@ -19,7 +18,7 @@ testSuite({
   testConfigure_shouldApplyConfigFunctionsOnSettingModuleManager() {
     const mm = new ModuleManager();
     let configurationFnCalled = false;
-    const configurationFn = function(moduleManager) {
+    const configurationFn = (moduleManager) => {
       assertEquals(mm, moduleManager);
       configurationFnCalled = true;
     };
@@ -35,7 +34,7 @@ testSuite({
     activeModuleManager.set(mm);
 
     let configurationFnCalled = false;
-    const configurationFn = function(moduleManager) {
+    const configurationFn = (moduleManager) => {
       assertEquals(mm, moduleManager);
       configurationFnCalled = true;
     };
@@ -51,11 +50,11 @@ testSuite({
 
     let configurationFn1Called = false;
     let configurationFn2Called = false;
-    const configurationFn1 = function(moduleManager) {
+    const configurationFn1 = (moduleManager) => {
       assertEquals(mm, moduleManager);
       configurationFn1Called = true;
     };
-    const configurationFn2 = function(moduleManager) {
+    const configurationFn2 = (moduleManager) => {
       assertEquals(mm, moduleManager);
       configurationFn2Called = true;
     };
@@ -79,7 +78,7 @@ testSuite({
     });
 
     let configurationFnCalled = false;
-    const configurationFn = function(moduleManager) {
+    const configurationFn = (moduleManager) => {
       assertEquals(defaultModuleManager, moduleManager);
       configurationFnCalled = true;
     };

@@ -4,16 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Represents a font to be used with a Renderer.
  * @see ../demos/graphics/basicelements.html
  */
 
-
 goog.provide('goog.graphics.Font');
-
-
 
 /**
  * This class represents a font to be used with a renderer.
@@ -25,8 +21,7 @@ goog.provide('goog.graphics.Font');
  *     http://en.wikipedia.org/wiki/Canvas_element for details.
  * @final
  */
-goog.graphics.Font = function(size, family) {
-  'use strict';
+goog.graphics.Font = function (size, family) {
   /**
    * Font size.
    * @type {number}
@@ -41,13 +36,11 @@ goog.graphics.Font = function(size, family) {
   this.family = family;
 };
 
-
 /**
  * Indication if text should be bolded
  * @type {boolean}
  */
 goog.graphics.Font.prototype.bold = false;
-
 
 /**
  * Indication if text should be in italics

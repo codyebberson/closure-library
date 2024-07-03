@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.positioning.AnchoredViewportPositionTest');
-goog.setTestOnly();
 
 const AnchoredViewportPosition = goog.require('goog.positioning.AnchoredViewportPosition');
 const Box = goog.require('goog.math.Box');
@@ -56,8 +55,7 @@ testSuite({
 
     avp.reposition(popup, Corner.TOP_LEFT);
     const anchorRect = style.getBounds(anchor);
-    assertEquals(
-        anchorRect.top + anchorRect.height, style.getPageOffset(popup).y);
+    assertEquals(anchorRect.top + anchorRect.height, style.getPageOffset(popup).y);
   },
 
   testRepositionTop() {
@@ -74,11 +72,9 @@ testSuite({
   },
 
   testRepositionBottomRight() {
-    const avp =
-        new AnchoredViewportPosition(anchor, Corner.BOTTOM_RIGHT, false);
+    const avp = new AnchoredViewportPosition(anchor, Corner.BOTTOM_RIGHT, false);
     style.setSize(anchor, 100, 100);
-    style.setPosition(
-        anchor, viewportSize.width - 110, viewportSize.height - 110);
+    style.setPosition(anchor, viewportSize.width - 110, viewportSize.height - 110);
 
     avp.reposition(popup, Corner.TOP_LEFT);
     const anchorRect = style.getBounds(anchor);
@@ -116,22 +112,25 @@ testSuite({
     const avp = new AnchoredViewportPosition(anchor, Corner.BOTTOM_LEFT);
     assertEquals(Corner.BOTTOM_LEFT, avp.adjustCorner(0, Corner.BOTTOM_LEFT));
     assertEquals(
-        Corner.BOTTOM_RIGHT,
-        avp.adjustCorner(OverflowStatus.FAILED_HORIZONTAL, Corner.BOTTOM_LEFT));
+      Corner.BOTTOM_RIGHT,
+      avp.adjustCorner(OverflowStatus.FAILED_HORIZONTAL, Corner.BOTTOM_LEFT)
+    );
     assertEquals(
-        Corner.TOP_LEFT,
-        avp.adjustCorner(OverflowStatus.FAILED_VERTICAL, Corner.BOTTOM_LEFT));
+      Corner.TOP_LEFT,
+      avp.adjustCorner(OverflowStatus.FAILED_VERTICAL, Corner.BOTTOM_LEFT)
+    );
     assertEquals(
-        Corner.TOP_RIGHT,
-        avp.adjustCorner(
-            OverflowStatus.FAILED_VERTICAL | OverflowStatus.FAILED_HORIZONTAL,
-            Corner.BOTTOM_LEFT));
+      Corner.TOP_RIGHT,
+      avp.adjustCorner(
+        OverflowStatus.FAILED_VERTICAL | OverflowStatus.FAILED_HORIZONTAL,
+        Corner.BOTTOM_LEFT
+      )
+    );
   },
 
   testOverflowConstraint() {
     const tinyBox = new Box(0, 0, 0, 0);
-    const avp = new AnchoredViewportPosition(
-        anchor, Corner.BOTTOM_LEFT, false, tinyBox);
+    const avp = new AnchoredViewportPosition(anchor, Corner.BOTTOM_LEFT, false, tinyBox);
     assertEquals(tinyBox, avp.getOverflowConstraint());
 
     style.setSize(anchor, 50, 50);
@@ -146,8 +145,7 @@ testSuite({
 
   testChangeOverflowConstraint() {
     const tinyBox = new Box(0, 0, 0, 0);
-    const avp = new AnchoredViewportPosition(
-        anchor, Corner.BOTTOM_LEFT, false, tinyBox);
+    const avp = new AnchoredViewportPosition(anchor, Corner.BOTTOM_LEFT, false, tinyBox);
     assertEquals(tinyBox, avp.getOverflowConstraint());
 
     style.setSize(anchor, 50, 50);

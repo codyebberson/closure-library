@@ -14,8 +14,6 @@ goog.provide('goog.testing.fs.FileSystem');
 goog.require('goog.fs.FileSystem');
 goog.require('goog.testing.fs.DirectoryEntry');
 
-
-
 /**
  * A mock filesystem object.
  *
@@ -24,8 +22,7 @@ goog.require('goog.testing.fs.DirectoryEntry');
  * @implements {goog.fs.FileSystem}
  * @final
  */
-goog.testing.fs.FileSystem = function(opt_name) {
-  'use strict';
+goog.testing.fs.FileSystem = function (opt_name) {
   /**
    * The name of the filesystem.
    * @type {string}
@@ -41,19 +38,15 @@ goog.testing.fs.FileSystem = function(opt_name) {
   this.root_ = new goog.testing.fs.DirectoryEntry(this, null, '', {});
 };
 
-
 /** @override */
-goog.testing.fs.FileSystem.prototype.getName = function() {
-  'use strict';
+goog.testing.fs.FileSystem.prototype.getName = function () {
   return this.name_;
 };
-
 
 /**
  * @override
  * @return {!goog.testing.fs.DirectoryEntry}
  */
-goog.testing.fs.FileSystem.prototype.getRoot = function() {
-  'use strict';
+goog.testing.fs.FileSystem.prototype.getRoot = function () {
   return this.root_;
 };

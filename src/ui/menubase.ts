@@ -17,8 +17,6 @@ goog.require('goog.ui.Popup');
 goog.requireType('goog.events.Event');
 goog.requireType('goog.events.KeyEvent');
 
-
-
 /**
  * The MenuBase class provides an abstract base class for different
  * implementations of menu controls.
@@ -28,8 +26,7 @@ goog.requireType('goog.events.KeyEvent');
  * @constructor
  * @extends {goog.ui.Popup}
  */
-goog.ui.MenuBase = function(opt_element) {
-  'use strict';
+goog.ui.MenuBase = function (opt_element) {
   goog.ui.Popup.call(this, opt_element);
 
   /**
@@ -48,13 +45,11 @@ goog.ui.MenuBase = function(opt_element) {
 };
 goog.inherits(goog.ui.MenuBase, goog.ui.Popup);
 
-
 /**
  * Events fired by the Menu
  * @const
  */
 goog.ui.MenuBase.Events = {};
-
 
 /**
  * Event fired by the Menu when an item is "clicked".
@@ -62,15 +57,12 @@ goog.ui.MenuBase.Events = {};
  */
 goog.ui.MenuBase.Events.ITEM_ACTION = 'itemaction';
 
-
 /** @override */
-goog.ui.MenuBase.prototype.disposeInternal = function() {
-  'use strict';
+goog.ui.MenuBase.prototype.disposeInternal = function () {
   goog.ui.MenuBase.superClass_.disposeInternal.call(this);
   this.eventHandler_.dispose();
   this.keyHandler_.dispose();
 };
-
 
 /**
  * Called after the menu is shown. Derived classes can override to hook this
@@ -79,24 +71,18 @@ goog.ui.MenuBase.prototype.disposeInternal = function() {
  * @protected
  * @override
  */
-goog.ui.MenuBase.prototype.onShow = function() {
-  'use strict';
+goog.ui.MenuBase.prototype.onShow = function () {
   goog.ui.MenuBase.superClass_.onShow.call(this);
 
   // register common event handlers for derived classes
   var el = this.getElement();
-  this.eventHandler_.listen(
-      el, goog.events.EventType.MOUSEOVER, this.onMouseOver);
-  this.eventHandler_.listen(
-      el, goog.events.EventType.MOUSEOUT, this.onMouseOut);
-  this.eventHandler_.listen(
-      el, goog.events.EventType.MOUSEDOWN, this.onMouseDown);
+  this.eventHandler_.listen(el, goog.events.EventType.MOUSEOVER, this.onMouseOver);
+  this.eventHandler_.listen(el, goog.events.EventType.MOUSEOUT, this.onMouseOut);
+  this.eventHandler_.listen(el, goog.events.EventType.MOUSEDOWN, this.onMouseDown);
   this.eventHandler_.listen(el, goog.events.EventType.MOUSEUP, this.onMouseUp);
 
-  this.eventHandler_.listen(
-      this.keyHandler_, goog.events.KeyHandler.EventType.KEY, this.onKeyDown);
+  this.eventHandler_.listen(this.keyHandler_, goog.events.KeyHandler.EventType.KEY, this.onKeyDown);
 };
-
 
 /**
  * Called after the menu is hidden. Derived classes can override to hook this
@@ -105,25 +91,19 @@ goog.ui.MenuBase.prototype.onShow = function() {
  * @protected
  * @override
  */
-goog.ui.MenuBase.prototype.onHide = function(opt_target) {
-  'use strict';
+goog.ui.MenuBase.prototype.onHide = function (opt_target) {
   goog.ui.MenuBase.superClass_.onHide.call(this, opt_target);
 
   // remove listeners when hidden
   this.eventHandler_.removeAll();
 };
 
-
 /**
  * Returns the selected item
  *
  * @return {Object} The item selected or null if no item is selected.
  */
-goog.ui.MenuBase.prototype.getSelectedItem = function() {
-  'use strict';
-  return null;
-};
-
+goog.ui.MenuBase.prototype.getSelectedItem = () => null;
 
 /**
  * Sets the selected item
@@ -131,8 +111,7 @@ goog.ui.MenuBase.prototype.getSelectedItem = function() {
  * @param {Object} item The item to select. The type of this item is specific
  *     to the menu class.
  */
-goog.ui.MenuBase.prototype.setSelectedItem = function(item) {};
-
+goog.ui.MenuBase.prototype.setSelectedItem = (item) => {};
 
 /**
  * Mouse over handler for the menu. Derived classes should override.
@@ -140,8 +119,7 @@ goog.ui.MenuBase.prototype.setSelectedItem = function(item) {};
  * @param {goog.events.Event} e The event object.
  * @protected
  */
-goog.ui.MenuBase.prototype.onMouseOver = function(e) {};
-
+goog.ui.MenuBase.prototype.onMouseOver = (e) => {};
 
 /**
  * Mouse out handler for the menu. Derived classes should override.
@@ -149,8 +127,7 @@ goog.ui.MenuBase.prototype.onMouseOver = function(e) {};
  * @param {goog.events.Event} e The event object.
  * @protected
  */
-goog.ui.MenuBase.prototype.onMouseOut = function(e) {};
-
+goog.ui.MenuBase.prototype.onMouseOut = (e) => {};
 
 /**
  * Mouse down handler for the menu. Derived classes should override.
@@ -158,8 +135,7 @@ goog.ui.MenuBase.prototype.onMouseOut = function(e) {};
  * @param {!goog.events.Event} e The event object.
  * @protected
  */
-goog.ui.MenuBase.prototype.onMouseDown = function(e) {};
-
+goog.ui.MenuBase.prototype.onMouseDown = (e) => {};
 
 /**
  * Mouse up handler for the menu. Derived classes should override.
@@ -167,8 +143,7 @@ goog.ui.MenuBase.prototype.onMouseDown = function(e) {};
  * @param {goog.events.Event} e The event object.
  * @protected
  */
-goog.ui.MenuBase.prototype.onMouseUp = function(e) {};
-
+goog.ui.MenuBase.prototype.onMouseUp = (e) => {};
 
 /**
  * Key down handler for the menu. Derived classes should override.
@@ -176,4 +151,4 @@ goog.ui.MenuBase.prototype.onMouseUp = function(e) {};
  * @param {goog.events.KeyEvent} e The event object.
  * @protected
  */
-goog.ui.MenuBase.prototype.onKeyDown = function(e) {};
+goog.ui.MenuBase.prototype.onKeyDown = (e) => {};

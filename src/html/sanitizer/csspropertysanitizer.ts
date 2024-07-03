@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview A sanitizer for CSS property values. It is intended
  * to be used on the result of {@code CSSStyleDeclaration.getPropertyValue},
@@ -22,18 +21,43 @@ var googAsserts = goog.require('goog.asserts');
 var googObject = goog.require('goog.object');
 var googString = goog.require('goog.string');
 
-
 /**
  * Allowed CSS functions
  * @const {!Object<string,boolean>}
  */
 var ALLOWED_FUNCTIONS = googObject.createSet(
-    'rgb', 'rgba', 'alpha', 'rect', 'image', 'linear-gradient',
-    'radial-gradient', 'repeating-linear-gradient', 'repeating-radial-gradient',
-    'cubic-bezier', 'matrix', 'perspective', 'rotate', 'rotate3d', 'rotatex',
-    'rotatey', 'steps', 'rotatez', 'scale', 'scale3d', 'scalex', 'scaley',
-    'scalez', 'skew', 'skewx', 'skewy', 'translate', 'translate3d',
-    'translatex', 'translatey', 'translatez');
+  'rgb',
+  'rgba',
+  'alpha',
+  'rect',
+  'image',
+  'linear-gradient',
+  'radial-gradient',
+  'repeating-linear-gradient',
+  'repeating-radial-gradient',
+  'cubic-bezier',
+  'matrix',
+  'perspective',
+  'rotate',
+  'rotate3d',
+  'rotatex',
+  'rotatey',
+  'steps',
+  'rotatez',
+  'scale',
+  'scale3d',
+  'scalex',
+  'scaley',
+  'scalez',
+  'skew',
+  'skewx',
+  'skewy',
+  'translate',
+  'translate3d',
+  'translatex',
+  'translatey',
+  'translatez'
+);
 
 /**
  * The set of characters that need to be normalized inside url("...").
@@ -55,12 +79,12 @@ var NORM_URL_REPLACEMENTS = {
   '\f': '%0c',
   '\r': '%0d',
   '"': '%22',
-  '\'': '%27',
+  "'": '%27',
   '(': '%28',
   ')': '%29',
   '*': '%2a',
   '<': '%3c',
-  '>': '%3e'
+  '>': '%3e',
 };
 
 /**
@@ -87,9 +111,7 @@ function getSafeUri(uri, propName, uriRewriter) {
   }
   var safeUri = uriRewriter(uri, propName);
   if (safeUri && SafeUrl.unwrap(safeUri) != SafeUrl.INNOCUOUS_STRING) {
-    return 'url("' +
-        SafeUrl.unwrap(safeUri).replace(NORM_URL_REGEXP, normalizeUrlChar) +
-        '")';
+    return 'url("' + SafeUrl.unwrap(safeUri).replace(NORM_URL_REGEXP, normalizeUrlChar) + '")';
   }
   return null;
 }
@@ -103,7 +125,7 @@ function getSafeUri(uri, propName, uriRewriter) {
  * @return {?string} Sanitized property value or null if the property should be
  *     rejected altogether.
  */
-exports.sanitizeProperty = function(propName, propValue, opt_uriRewriter) {
+exports.sanitizeProperty = (propName, propValue, opt_uriRewriter) => {
   propValue = googString.trim(propValue);
   if (propValue == '') {
     return null;
@@ -112,8 +134,11 @@ exports.sanitizeProperty = function(propName, propValue, opt_uriRewriter) {
   if (googString.caseInsensitiveStartsWith(propValue, 'url(')) {
     // Urls can only appear as the only function call in the property value, and
     // are rewritten according to the policy implemented in opt_uriRewriter.
-    if (!propValue.endsWith(')') || googString.countOf(propValue, '(') > 1 ||
-        googString.countOf(propValue, ')') > 1) {
+    if (
+      !propValue.endsWith(')') ||
+      googString.countOf(propValue, '(') > 1 ||
+      googString.countOf(propValue, ')') > 1
+    ) {
       // This is a little stricter than it needs to be (e.g. it will refuse
       // url("http://foo.com/a(b"), but it's better to err on the side of
       // caution (even though getSafeUri is guaranteed to yield a single,
@@ -125,8 +150,7 @@ exports.sanitizeProperty = function(propName, propValue, opt_uriRewriter) {
       return null;
     }
     // TODO(danesh): Check if we need to resolve this URI.
-    var uri = googString.stripQuotes(
-        propValue.substring(4, propValue.length - 1), '"\'');
+    var uri = googString.stripQuotes(propValue.substring(4, propValue.length - 1), '"\'');
 
     return getSafeUri(uri, propName, opt_uriRewriter);
   } else if (propValue.indexOf('(') > 0) {
@@ -139,7 +163,7 @@ exports.sanitizeProperty = function(propName, propValue, opt_uriRewriter) {
     }
     var regex = /([\-\w]+)\(/g;
     var match;
-    while (match = regex.exec(propValue)) {
+    while ((match = regex.exec(propValue))) {
       if (!(match[1].toLowerCase() in ALLOWED_FUNCTIONS)) {
         return null;
       }

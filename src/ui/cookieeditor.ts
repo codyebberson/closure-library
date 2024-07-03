@@ -20,8 +20,6 @@ goog.require('goog.style');
 goog.require('goog.ui.Component');
 goog.requireType('goog.events.Event');
 
-
-
 /**
  * Displays and edits the value of a cookie.
  * @final
@@ -32,7 +30,6 @@ goog.ui.CookieEditor = class extends goog.ui.Component {
    * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
    */
   constructor(opt_domHelper) {
-    'use strict';
     super(opt_domHelper);
   }
 
@@ -41,54 +38,65 @@ goog.ui.CookieEditor = class extends goog.ui.Component {
    * @param {string} cookieKey Cookie key.
    */
   selectCookie(cookieKey) {
-    'use strict';
     goog.asserts.assert(goog.net.Cookies.getInstance().isValidName(cookieKey));
     this.cookieKey_ = cookieKey;
     if (this.textAreaElem_) {
-      this.textAreaElem_.value =
-          goog.net.Cookies.getInstance().get(cookieKey) || '';
+      this.textAreaElem_.value = goog.net.Cookies.getInstance().get(cookieKey) || '';
     }
   }
 
   /** @override */
   canDecorate() {
-    'use strict';
     return false;
   }
 
   /** @override */
   createDom() {
-    'use strict';
     // Debug-only, so we don't need i18n.
     this.clearButtonElem_ = goog.dom.createDom(
-        goog.dom.TagName.BUTTON, /* attributes */ null, 'Clear');
+      goog.dom.TagName.BUTTON,
+      /* attributes */ null,
+      'Clear'
+    );
     this.updateButtonElem_ = goog.dom.createDom(
-        goog.dom.TagName.BUTTON, /* attributes */ null, 'Update');
-    var value =
-        this.cookieKey_ && goog.net.Cookies.getInstance().get(this.cookieKey_);
+      goog.dom.TagName.BUTTON,
+      /* attributes */ null,
+      'Update'
+    );
+    var value = this.cookieKey_ && goog.net.Cookies.getInstance().get(this.cookieKey_);
     this.textAreaElem_ = goog.dom.createDom(
-        goog.dom.TagName.TEXTAREA, /* attibutes */ null, value || '');
+      goog.dom.TagName.TEXTAREA,
+      /* attibutes */ null,
+      value || ''
+    );
     this.valueWarningElem_ = goog.dom.createDom(
-        goog.dom.TagName.SPAN,
-        /* attibutes */ {'style': 'display:none;color:red'},
-        'Invalid cookie value.');
-    this.setElementInternal(goog.dom.createDom(
+      goog.dom.TagName.SPAN,
+      /* attibutes */ { style: 'display:none;color:red' },
+      'Invalid cookie value.'
+    );
+    this.setElementInternal(
+      goog.dom.createDom(
         goog.dom.TagName.DIV,
-        /* attibutes */ null, this.valueWarningElem_,
-        goog.dom.createDom(goog.dom.TagName.BR), this.textAreaElem_,
-        goog.dom.createDom(goog.dom.TagName.BR), this.clearButtonElem_,
-        this.updateButtonElem_));
+        /* attibutes */ null,
+        this.valueWarningElem_,
+        goog.dom.createDom(goog.dom.TagName.BR),
+        this.textAreaElem_,
+        goog.dom.createDom(goog.dom.TagName.BR),
+        this.clearButtonElem_,
+        this.updateButtonElem_
+      )
+    );
   }
 
   /** @override */
   enterDocument() {
-    'use strict';
     super.enterDocument();
+    this.getHandler().listen(this.clearButtonElem_, goog.events.EventType.CLICK, this.handleClear_);
     this.getHandler().listen(
-        this.clearButtonElem_, goog.events.EventType.CLICK, this.handleClear_);
-    this.getHandler().listen(
-        this.updateButtonElem_, goog.events.EventType.CLICK,
-        this.handleUpdate_);
+      this.updateButtonElem_,
+      goog.events.EventType.CLICK,
+      this.handleUpdate_
+    );
   }
 
   /**
@@ -97,7 +105,6 @@ goog.ui.CookieEditor = class extends goog.ui.Component {
    * @private
    */
   handleClear_(e) {
-    'use strict';
     if (this.cookieKey_) {
       goog.net.Cookies.getInstance().remove(this.cookieKey_);
     }
@@ -110,7 +117,6 @@ goog.ui.CookieEditor = class extends goog.ui.Component {
    * @private
    */
   handleUpdate_(e) {
-    'use strict';
     if (this.cookieKey_) {
       var value = this.textAreaElem_.value;
       if (value) {
@@ -128,7 +134,6 @@ goog.ui.CookieEditor = class extends goog.ui.Component {
 
   /** @override */
   disposeInternal() {
-    'use strict';
     this.clearButtonElem_ = null;
     this.cookieKey_ = null;
     this.textAreaElem_ = null;
@@ -137,15 +142,12 @@ goog.ui.CookieEditor = class extends goog.ui.Component {
   }
 };
 
-
-
 /**
  * Cookie key.
  * @type {?string}
  * @private
  */
 goog.ui.CookieEditor.prototype.cookieKey_;
-
 
 /**
  * Text area.
@@ -154,14 +156,12 @@ goog.ui.CookieEditor.prototype.cookieKey_;
  */
 goog.ui.CookieEditor.prototype.textAreaElem_;
 
-
 /**
  * Clear button.
  * @type {HTMLButtonElement}
  * @private
  */
 goog.ui.CookieEditor.prototype.clearButtonElem_;
-
 
 /**
  * Invalid value warning text.
@@ -170,13 +170,11 @@ goog.ui.CookieEditor.prototype.clearButtonElem_;
  */
 goog.ui.CookieEditor.prototype.valueWarningElem_;
 
-
 /**
  * Update button.
  * @type {HTMLButtonElement}
  * @private
  */
 goog.ui.CookieEditor.prototype.updateButtonElem_;
-
 
 // TODO(user): add combobox for user to select different cookies

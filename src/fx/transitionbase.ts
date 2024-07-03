@@ -12,9 +12,7 @@
 goog.provide('goog.fx.TransitionBase');
 
 goog.require('goog.events.EventTarget');
-goog.require('goog.fx.Transition');  // Unreferenced: interface
-
-
+goog.require('goog.fx.Transition'); // Unreferenced: interface
 
 /**
  * Constructor for a transition object.
@@ -24,8 +22,7 @@ goog.require('goog.fx.Transition');  // Unreferenced: interface
  * @implements {goog.fx.Transition}
  * @extends {goog.events.EventTarget}
  */
-goog.fx.TransitionBase = function() {
-  'use strict';
+goog.fx.TransitionBase = function () {
   goog.fx.TransitionBase.base(this, 'constructor');
 
   /**
@@ -51,7 +48,6 @@ goog.fx.TransitionBase = function() {
 };
 goog.inherits(goog.fx.TransitionBase, goog.events.EventTarget);
 
-
 /**
  * Enum for the possible states of an animation.
  * @enum {number}
@@ -59,9 +55,8 @@ goog.inherits(goog.fx.TransitionBase, goog.events.EventTarget);
 goog.fx.TransitionBase.State = {
   STOPPED: 0,
   PAUSED: -1,
-  PLAYING: 1
+  PLAYING: 1,
 };
-
 
 /**
  * Plays the animation.
@@ -72,7 +67,6 @@ goog.fx.TransitionBase.State = {
  */
 goog.fx.TransitionBase.prototype.play = goog.abstractMethod;
 
-
 /**
  * Stops the animation.
  *
@@ -82,163 +76,132 @@ goog.fx.TransitionBase.prototype.play = goog.abstractMethod;
  */
 goog.fx.TransitionBase.prototype.stop = goog.abstractMethod;
 
-
 /**
  * Pauses the animation.
  */
 goog.fx.TransitionBase.prototype.pause = goog.abstractMethod;
 
-
 /**
  * Returns the current state of the animation.
  * @return {goog.fx.TransitionBase.State} State of the animation.
  */
-goog.fx.TransitionBase.prototype.getStateInternal = function() {
-  'use strict';
+goog.fx.TransitionBase.prototype.getStateInternal = function () {
   return this.state_;
 };
-
 
 /**
  * Sets the current state of the animation to playing.
  * @protected
  */
-goog.fx.TransitionBase.prototype.setStatePlaying = function() {
-  'use strict';
+goog.fx.TransitionBase.prototype.setStatePlaying = function () {
   this.state_ = goog.fx.TransitionBase.State.PLAYING;
 };
-
 
 /**
  * Sets the current state of the animation to paused.
  * @protected
  */
-goog.fx.TransitionBase.prototype.setStatePaused = function() {
-  'use strict';
+goog.fx.TransitionBase.prototype.setStatePaused = function () {
   this.state_ = goog.fx.TransitionBase.State.PAUSED;
 };
-
 
 /**
  * Sets the current state of the animation to stopped.
  * @protected
  */
-goog.fx.TransitionBase.prototype.setStateStopped = function() {
-  'use strict';
+goog.fx.TransitionBase.prototype.setStateStopped = function () {
   this.state_ = goog.fx.TransitionBase.State.STOPPED;
 };
-
 
 /**
  * @return {boolean} True iff the current state of the animation is playing.
  */
-goog.fx.TransitionBase.prototype.isPlaying = function() {
-  'use strict';
+goog.fx.TransitionBase.prototype.isPlaying = function () {
   return this.state_ == goog.fx.TransitionBase.State.PLAYING;
 };
-
 
 /**
  * @return {boolean} True iff the current state of the animation is paused.
  */
-goog.fx.TransitionBase.prototype.isPaused = function() {
-  'use strict';
+goog.fx.TransitionBase.prototype.isPaused = function () {
   return this.state_ == goog.fx.TransitionBase.State.PAUSED;
 };
-
 
 /**
  * @return {boolean} True iff the current state of the animation is stopped.
  */
-goog.fx.TransitionBase.prototype.isStopped = function() {
-  'use strict';
+goog.fx.TransitionBase.prototype.isStopped = function () {
   return this.state_ == goog.fx.TransitionBase.State.STOPPED;
 };
-
 
 /**
  * Dispatches the BEGIN event. Sub classes should override this instead
  * of listening to the event, and call this instead of dispatching the event.
  * @protected
  */
-goog.fx.TransitionBase.prototype.onBegin = function() {
-  'use strict';
+goog.fx.TransitionBase.prototype.onBegin = function () {
   this.dispatchAnimationEvent(goog.fx.Transition.EventType.BEGIN);
 };
-
 
 /**
  * Dispatches the END event. Sub classes should override this instead
  * of listening to the event, and call this instead of dispatching the event.
  * @protected
  */
-goog.fx.TransitionBase.prototype.onEnd = function() {
-  'use strict';
+goog.fx.TransitionBase.prototype.onEnd = function () {
   this.dispatchAnimationEvent(goog.fx.Transition.EventType.END);
 };
-
 
 /**
  * Dispatches the FINISH event. Sub classes should override this instead
  * of listening to the event, and call this instead of dispatching the event.
  * @protected
  */
-goog.fx.TransitionBase.prototype.onFinish = function() {
-  'use strict';
+goog.fx.TransitionBase.prototype.onFinish = function () {
   this.dispatchAnimationEvent(goog.fx.Transition.EventType.FINISH);
 };
-
 
 /**
  * Dispatches the PAUSE event. Sub classes should override this instead
  * of listening to the event, and call this instead of dispatching the event.
  * @protected
  */
-goog.fx.TransitionBase.prototype.onPause = function() {
-  'use strict';
+goog.fx.TransitionBase.prototype.onPause = function () {
   this.dispatchAnimationEvent(goog.fx.Transition.EventType.PAUSE);
 };
-
 
 /**
  * Dispatches the PLAY event. Sub classes should override this instead
  * of listening to the event, and call this instead of dispatching the event.
  * @protected
  */
-goog.fx.TransitionBase.prototype.onPlay = function() {
-  'use strict';
+goog.fx.TransitionBase.prototype.onPlay = function () {
   this.dispatchAnimationEvent(goog.fx.Transition.EventType.PLAY);
 };
-
 
 /**
  * Dispatches the RESUME event. Sub classes should override this instead
  * of listening to the event, and call this instead of dispatching the event.
  * @protected
  */
-goog.fx.TransitionBase.prototype.onResume = function() {
-  'use strict';
+goog.fx.TransitionBase.prototype.onResume = function () {
   this.dispatchAnimationEvent(goog.fx.Transition.EventType.RESUME);
 };
-
 
 /**
  * Dispatches the STOP event. Sub classes should override this instead
  * of listening to the event, and call this instead of dispatching the event.
  * @protected
  */
-goog.fx.TransitionBase.prototype.onStop = function() {
-  'use strict';
+goog.fx.TransitionBase.prototype.onStop = function () {
   this.dispatchAnimationEvent(goog.fx.Transition.EventType.STOP);
 };
-
 
 /**
  * Dispatches an event object for the current animation.
  * @param {string} type Event type that will be dispatched.
  * @protected
  */
-goog.fx.TransitionBase.prototype.dispatchAnimationEvent = function(type) {
-  'use strict';
+goog.fx.TransitionBase.prototype.dispatchAnimationEvent = function (type) {
   this.dispatchEvent(type);
 };

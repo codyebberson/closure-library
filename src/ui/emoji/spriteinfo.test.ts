@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.emoji.SpriteInfoTest');
-goog.setTestOnly();
 
 const SpriteInfo = goog.require('goog.ui.emoji.SpriteInfo');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -20,22 +19,19 @@ testSuite({
   },
 
   testIncompletelySpecifiedSpriteInfoFails() {
-    assertThrows(
-        'CSS class can\'t be null if the rest of the metadata ' +
-            'isn\'t specified',
-        () => {
-          new SpriteInfo(null);
-        });
+    assertThrows("CSS class can't be null if the rest of the metadata " + "isn't specified", () => {
+      new SpriteInfo(null);
+    });
 
-    assertThrows('Can\'t create an incompletely specified sprite info', () => {
+    assertThrows("Can't create an incompletely specified sprite info", () => {
       new SpriteInfo(null, 's.png', 10);
     });
 
-    assertThrows('Can\'t create an incompletely specified sprite info', () => {
+    assertThrows("Can't create an incompletely specified sprite info", () => {
       new SpriteInfo(null, 's.png', 10, 10);
     });
 
-    assertThrows('Can\'t create an incompletely specified sprite info', () => {
+    assertThrows("Can't create an incompletely specified sprite info", () => {
       new SpriteInfo(null, 's.png', 10, 10, 0);
     });
   },

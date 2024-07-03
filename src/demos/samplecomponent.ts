@@ -18,8 +18,6 @@ goog.require('goog.events.KeyHandler');
 goog.require('goog.ui.Component');
 goog.requireType('goog.events.Event');
 
-
-
 /**
  * A simple box that changes colour when clicked. This class demonstrates the
  * goog.ui.Component API, and is keyboard accessible, as per
@@ -103,8 +101,7 @@ goog.demos.SampleComponent = class extends goog.ui.Component {
     elem.tabIndex = 0;
 
     this.kh_ = new goog.events.KeyHandler(elem);
-    this.getHandler().listen(
-        this.kh_, goog.events.KeyHandler.EventType.KEY, this.onKey_);
+    this.getHandler().listen(this.kh_, goog.events.KeyHandler.EventType.KEY, this.onKey_);
   }
 
   /** @override */
@@ -121,8 +118,7 @@ goog.demos.SampleComponent = class extends goog.ui.Component {
    */
   enterDocument() {
     super.enterDocument();
-    this.getHandler().listen(
-        this.getElement(), goog.events.EventType.CLICK, this.onDivClicked_);
+    this.getHandler().listen(this.getElement(), goog.events.EventType.CLICK, this.onDivClicked_);
   }
 
   /**

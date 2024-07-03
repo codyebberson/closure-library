@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.crypt.Sha224Test');
-goog.setTestOnly();
 
 const Sha224 = goog.require('goog.crypt.Sha224');
 const crypt = goog.require('goog.crypt');
@@ -28,43 +27,50 @@ testSuite({
     // NIST one block test vector.
     sha224.update(crypt.stringToByteArray('abc'));
     assertEquals(
-        '23097d223405d8228642a477bda255b32aadbce4bda0b3f7e36c9da7',
-        crypt.byteArrayToHex(sha224.digest()));
+      '23097d223405d8228642a477bda255b32aadbce4bda0b3f7e36c9da7',
+      crypt.byteArrayToHex(sha224.digest())
+    );
 
     // NIST multi-block test vector.
     sha224.reset();
-    sha224.update(crypt.stringToByteArray(
-        'abcdbcdecdefdefgefghfghighij' +
-        'hijkijkljklmklmnlmnomnopnopq'));
+    sha224.update(
+      crypt.stringToByteArray('abcdbcdecdefdefgefghfghighij' + 'hijkijkljklmklmnlmnomnopnopq')
+    );
     assertEquals(
-        '75388b16512776cc5dba5da1fd890150b0c6455cb4f58b1952522525',
-        crypt.byteArrayToHex(sha224.digest()));
+      '75388b16512776cc5dba5da1fd890150b0c6455cb4f58b1952522525',
+      crypt.byteArrayToHex(sha224.digest())
+    );
 
     // Message larger than one block (but less than two).
     sha224.reset();
-    const biggerThanOneBlock = 'abcdbcdecdefdefgefghfghighij' +
-        'hijkijkljklmklmnlmnomnopnopq' +
-        'asdfljhr78yasdfljh45opa78sdf' +
-        '120839414104897aavnasdfafasd';
+    const biggerThanOneBlock =
+      'abcdbcdecdefdefgefghfghighij' +
+      'hijkijkljklmklmnlmnomnopnopq' +
+      'asdfljhr78yasdfljh45opa78sdf' +
+      '120839414104897aavnasdfafasd';
     assertTrue(
-        biggerThanOneBlock.length > crypt.Sha2.BLOCKSIZE_ &&
-        biggerThanOneBlock.length < 2 * crypt.Sha2.BLOCKSIZE_);
+      biggerThanOneBlock.length > crypt.Sha2.BLOCKSIZE_ &&
+        biggerThanOneBlock.length < 2 * crypt.Sha2.BLOCKSIZE_
+    );
     sha224.update(crypt.stringToByteArray(biggerThanOneBlock));
     assertEquals(
-        '27c9b678012becd6891bac653f355b2d26f63132e840644d565f5dac',
-        crypt.byteArrayToHex(sha224.digest()));
+      '27c9b678012becd6891bac653f355b2d26f63132e840644d565f5dac',
+      crypt.byteArrayToHex(sha224.digest())
+    );
 
     // Message larger than two blocks.
     sha224.reset();
-    const biggerThanTwoBlocks = 'abcdbcdecdefdefgefghfghighij' +
-        'hijkijkljklmklmnlmnomnopnopq' +
-        'asdfljhr78yasdfljh45opa78sdf' +
-        '120839414104897aavnasdfafasd' +
-        'laasdouvhalacbnalalseryalcla';
+    const biggerThanTwoBlocks =
+      'abcdbcdecdefdefgefghfghighij' +
+      'hijkijkljklmklmnlmnomnopnopq' +
+      'asdfljhr78yasdfljh45opa78sdf' +
+      '120839414104897aavnasdfafasd' +
+      'laasdouvhalacbnalalseryalcla';
     assertTrue(biggerThanTwoBlocks.length > 2 * crypt.Sha2.BLOCKSIZE_);
     sha224.update(crypt.stringToByteArray(biggerThanTwoBlocks));
     assertEquals(
-        '1c2c1455cc984eef6f25ec9d79b1c661b3794887c3d0b24111ed9803',
-        crypt.byteArrayToHex(sha224.digest()));
+      '1c2c1455cc984eef6f25ec9d79b1c661b3794887c3d0b24111ed9803',
+      crypt.byteArrayToHex(sha224.digest())
+    );
   },
 });

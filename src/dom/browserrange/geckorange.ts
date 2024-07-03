@@ -11,12 +11,9 @@
  * DO NOT USE THIS FILE DIRECTLY.  Use goog.dom.Range instead.
  */
 
-
 goog.provide('goog.dom.browserrange.GeckoRange');
 
 goog.require('goog.dom.browserrange.W3cRange');
-
-
 
 /**
  * The constructor for Gecko specific browser ranges.
@@ -25,24 +22,18 @@ goog.require('goog.dom.browserrange.W3cRange');
  * @extends {goog.dom.browserrange.W3cRange}
  * @final
  */
-goog.dom.browserrange.GeckoRange = function(range) {
-  'use strict';
+goog.dom.browserrange.GeckoRange = function (range) {
   goog.dom.browserrange.W3cRange.call(this, range);
 };
 goog.inherits(goog.dom.browserrange.GeckoRange, goog.dom.browserrange.W3cRange);
-
 
 /**
  * Creates a range object that selects the given node's text.
  * @param {Node} node The node to select.
  * @return {!goog.dom.browserrange.GeckoRange} A Gecko range wrapper object.
  */
-goog.dom.browserrange.GeckoRange.createFromNodeContents = function(node) {
-  'use strict';
-  return new goog.dom.browserrange.GeckoRange(
-      goog.dom.browserrange.W3cRange.getBrowserRangeForNode(node));
-};
-
+goog.dom.browserrange.GeckoRange.createFromNodeContents = (node) =>
+  new goog.dom.browserrange.GeckoRange(goog.dom.browserrange.W3cRange.getBrowserRangeForNode(node));
 
 /**
  * Creates a range object that selects between the given nodes.
@@ -52,26 +43,24 @@ goog.dom.browserrange.GeckoRange.createFromNodeContents = function(node) {
  * @param {number} endOffset The offset within the node to end.
  * @return {!goog.dom.browserrange.GeckoRange} A wrapper object.
  */
-goog.dom.browserrange.GeckoRange.createFromNodes = function(
-    startNode, startOffset, endNode, endOffset) {
-  'use strict';
-  return new goog.dom.browserrange.GeckoRange(
-      goog.dom.browserrange.W3cRange.getBrowserRangeForNodes(
-          startNode, startOffset, endNode, endOffset));
-};
-
+goog.dom.browserrange.GeckoRange.createFromNodes = (startNode, startOffset, endNode, endOffset) =>
+  new goog.dom.browserrange.GeckoRange(
+    goog.dom.browserrange.W3cRange.getBrowserRangeForNodes(
+      startNode,
+      startOffset,
+      endNode,
+      endOffset
+    )
+  );
 
 /** @override */
-goog.dom.browserrange.GeckoRange.prototype.selectInternal = function(
-    selection, reversed) {
-  'use strict';
+goog.dom.browserrange.GeckoRange.prototype.selectInternal = function (selection, reversed) {
   if (!reversed || this.isCollapsed()) {
     // The base implementation for select() is more robust, and works fine for
     // collapsed and forward ranges.  This works around
     // https://bugzilla.mozilla.org/show_bug.cgi?id=773137, and is tested by
     // range_test.html's testFocusedElementDisappears.
-    goog.dom.browserrange.GeckoRange.base(
-        this, 'selectInternal', selection, reversed);
+    goog.dom.browserrange.GeckoRange.base(this, 'selectInternal', selection, reversed);
   } else {
     // Reversed selection -- start with a caret on the end node, and extend it
     // back to the start.  Unfortunately, collapse() fails when focus is

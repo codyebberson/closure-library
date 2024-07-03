@@ -9,7 +9,6 @@
  */
 
 goog.module('goog.testing.i18n.assertsTest');
-goog.setTestOnly();
 
 const asserts = goog.require('goog.testing.i18n.asserts');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -54,28 +53,22 @@ testSuite({
 
     // Fail
     assertThrowsJsUnitException(() => {
-      asserts.assertI18nEquals(
-          'Expect null and empty values to not match.', null, '');
+      asserts.assertI18nEquals('Expect null and empty values to not match.', null, '');
     });
     assertThrowsJsUnitException(() => {
-      asserts.assertI18nEquals(
-          'Expect null and non-empty values to not match.', null, 'test');
+      asserts.assertI18nEquals('Expect null and non-empty values to not match.', null, 'test');
     });
     assertThrowsJsUnitException(() => {
-      asserts.assertI18nEquals(
-          'Expect empty and null values to not match.', '', null);
+      asserts.assertI18nEquals('Expect empty and null values to not match.', '', null);
     });
     assertThrowsJsUnitException(() => {
-      asserts.assertI18nEquals(
-          'Expect empty and non-empty values to not match.', '', 'test');
+      asserts.assertI18nEquals('Expect empty and non-empty values to not match.', '', 'test');
     });
     assertThrowsJsUnitException(() => {
-      asserts.assertI18nEquals(
-          'Expect non-empty and null values to not match.', 'test', null);
+      asserts.assertI18nEquals('Expect non-empty and null values to not match.', 'test', null);
     });
     assertThrowsJsUnitException(() => {
-      asserts.assertI18nEquals(
-          'Expect non-empty and empty values to not match.', 'test', '');
+      asserts.assertI18nEquals('Expect non-empty and empty values to not match.', 'test', '');
     });
   },
 
@@ -97,7 +90,6 @@ testSuite({
     asserts.assertI18nContains('abc', '\u202fabc \u3000');
     asserts.assertI18nContains('a b c', '\u202fabc \u3000');
     asserts.assertI18nContains('a\u202fb\t\xA0c', '\u202fabc \u3000');
-
   },
 
   testMappingWorks() {
@@ -139,6 +131,5 @@ testSuite({
     asserts.assertI18nEquals(expectedValue, 'A\u00a0B');
     asserts.assertI18nEquals(expectedValue, 'AB\u2000\t');
     asserts.assertI18nEquals(expectedValue, '\u0020\u2002AB\u3000\t');
-  }
-
+  },
 });

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dom.TextRangeTest');
-goog.setTestOnly();
 
 const Coordinate = goog.require('goog.math.Coordinate');
 const DomControlRange = goog.require('goog.dom.ControlRange');
@@ -43,8 +42,9 @@ function getTest3ElementTopLeft() {
 function getTest3ElementBottomRight() {
   const pageOffset = style.getPageOffset(test3.lastChild);
   const bottomRight = new Coordinate(
-      pageOffset.x + test3.lastChild.offsetWidth,
-      pageOffset.y + test3.lastChild.offsetHeight);
+    pageOffset.x + test3.lastChild.offsetWidth,
+    pageOffset.y + test3.lastChild.offsetHeight
+  );
 
   return bottomRight;
 }
@@ -69,20 +69,20 @@ testSuite({
 
   testCreateFromNodeContents() {
     assertNotNull(
-        'Text range object can be created for element node',
-        DomTextRange.createFromNodeContents(logo));
+      'Text range object can be created for element node',
+      DomTextRange.createFromNodeContents(logo)
+    );
     assertNotNull(
-        'Text range object can be created for text node',
-        DomTextRange.createFromNodeContents(logo2.previousSibling));
+      'Text range object can be created for text node',
+      DomTextRange.createFromNodeContents(logo2.previousSibling)
+    );
   },
 
   testMoveToNodes() {
     const range = DomTextRange.createFromNodeContents(table2);
     range.moveToNodes(table2div, 0, table2div, 1, false);
-    assertEquals(
-        'Range should start in table2div', table2div, range.getStartNode());
-    assertEquals(
-        'Range should end in table2div', table2div, range.getEndNode());
+    assertEquals('Range should start in table2div', table2div, range.getStartNode());
+    assertEquals('Range should end in table2div', table2div, range.getEndNode());
     assertEquals('Range start offset should be 0', 0, range.getStartOffset());
     assertEquals('Range end offset should be 0', 1, range.getEndOffset());
     assertFalse('Range should not be reversed', range.isReversed());
@@ -94,42 +94,32 @@ testSuite({
   testContainsTextRange() {
     let range = DomTextRange.createFromNodeContents(table2);
     let range2 = DomTextRange.createFromNodeContents(table2div);
-    assertTrue(
-        'TextRange contains other TextRange', range.containsRange(range2));
-    assertFalse(
-        'TextRange does not contain other TextRange',
-        range2.containsRange(range));
+    assertTrue('TextRange contains other TextRange', range.containsRange(range2));
+    assertFalse('TextRange does not contain other TextRange', range2.containsRange(range));
 
-    range =
-        Range.createFromNodes(table2div.firstChild, 1, table2div.lastChild, 1);
-    range2 = DomTextRange.createFromNodes(
-        table2div.firstChild, 0, table2div.lastChild, 0);
-    assertTrue(
-        'TextRange partially contains other TextRange',
-        range2.containsRange(range, true));
+    range = Range.createFromNodes(table2div.firstChild, 1, table2div.lastChild, 1);
+    range2 = DomTextRange.createFromNodes(table2div.firstChild, 0, table2div.lastChild, 0);
+    assertTrue('TextRange partially contains other TextRange', range2.containsRange(range, true));
     assertFalse(
-        'TextRange does not fully contain other TextRange',
-        range2.containsRange(range, false));
+      'TextRange does not fully contain other TextRange',
+      range2.containsRange(range, false)
+    );
   },
 
   testContainsControlRange() {
     if (userAgent.IE) {
       let range = DomControlRange.createFromElements(table2);
       let range2 = DomTextRange.createFromNodeContents(table2div);
-      assertFalse(
-          'TextRange does not contain ControlRange',
-          range2.containsRange(range));
+      assertFalse('TextRange does not contain ControlRange', range2.containsRange(range));
       range = DomControlRange.createFromElements(logo2);
-      assertTrue(
-          'TextRange contains ControlRange', range2.containsRange(range));
+      assertTrue('TextRange contains ControlRange', range2.containsRange(range));
       range = DomTextRange.createFromNodeContents(table2);
       range2 = DomControlRange.createFromElements(logo, logo2);
-      assertTrue(
-          'TextRange partially contains ControlRange',
-          range2.containsRange(range, true));
+      assertTrue('TextRange partially contains ControlRange', range2.containsRange(range, true));
       assertFalse(
-          'TextRange does not fully contain ControlRange',
-          range2.containsRange(range, false));
+        'TextRange does not fully contain ControlRange',
+        range2.containsRange(range, false)
+      );
     }
   },
 
@@ -164,8 +154,7 @@ testSuite({
     // The start node is now in the bottom right.
     const firstNode = test3.firstChild.firstChild;
     const lastNode = test3.lastChild.lastChild;
-    const range = DomTextRange.createFromNodes(
-        lastNode, lastNode.nodeValue.length, firstNode, 0);
+    const range = DomTextRange.createFromNodes(lastNode, lastNode.nodeValue.length, firstNode, 0);
 
     try {
       const result = assertNotThrows(goog.bind(range.getStartPosition, range));
@@ -249,10 +238,9 @@ testSuite({
     const range = DomTextRange.createFromNodeContents(test3Rtl);
     const pageOffset = style.getPageOffset(test3Rtl.lastChild);
     const bottomRight = new Coordinate(
-        pageOffset.x + test3Rtl.lastChild.offsetWidth,
-        pageOffset.y + test3Rtl.lastChild.offsetHeight);
-
-
+      pageOffset.x + test3Rtl.lastChild.offsetWidth,
+      pageOffset.y + test3Rtl.lastChild.offsetHeight
+    );
 
     try {
       const result = assertNotThrows(goog.bind(range.getEndPosition, range));

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.fs.FileEntryTest');
-goog.setTestOnly();
 
 const FsFileEntry = goog.require('goog.testing.fs.FileEntry');
 const FsFileSystem = goog.require('goog.testing.fs.FileSystem');
@@ -52,15 +51,15 @@ testSuite({
     // Advance the clock to a known time.
     mockClock.install();
     mockClock.tick(53);
-    const testFile =
-        new FsFileEntry(fs, fs.getRoot(), 'timeTest', 'hello world');
-    const promise = testFile.getLastModified()
-                        .then((date) => {
-                          assertEquals(53, date.getTime());
-                        })
-                        .thenAlways(() => {
-                          mockClock.uninstall();
-                        });
+    const testFile = new FsFileEntry(fs, fs.getRoot(), 'timeTest', 'hello world');
+    const promise = testFile
+      .getLastModified()
+      .then((date) => {
+        assertEquals(53, date.getTime());
+      })
+      .thenAlways(() => {
+        mockClock.uninstall();
+      });
     mockClock.tick();
     return promise;
   },
@@ -69,15 +68,15 @@ testSuite({
     // Advance the clock to a known time.
     mockClock.install();
     mockClock.tick(54);
-    const testFile =
-        new FsFileEntry(fs, fs.getRoot(), 'timeTest', 'hello world');
-    const promise = testFile.getMetadata()
-                        .then((metadata) => {
-                          assertEquals(54, metadata.modificationTime.getTime());
-                        })
-                        .thenAlways(() => {
-                          mockClock.uninstall();
-                        });
+    const testFile = new FsFileEntry(fs, fs.getRoot(), 'timeTest', 'hello world');
+    const promise = testFile
+      .getMetadata()
+      .then((metadata) => {
+        assertEquals(54, metadata.modificationTime.getTime());
+      })
+      .thenAlways(() => {
+        mockClock.uninstall();
+      });
     mockClock.tick();
     return promise;
   },

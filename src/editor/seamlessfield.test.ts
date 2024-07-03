@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.seamlessfield_test');
-goog.setTestOnly();
 
 const BrowserFeature = goog.require('goog.editor.BrowserFeature');
 const DomHelper = goog.require('goog.dom.DomHelper');
@@ -29,8 +28,10 @@ function createSeamlessIframe() {
   // NOTE(nicksantos): This is a reimplementation of
   // TR_EditableUtil.getIframeAttributes, but untangled for tests, and
   // specifically with what we need for blended mode.
-  return dom.createDom(
-      TagName.IFRAME, {'frameBorder': '0', 'style': 'padding:0;'});
+  return dom.createDom(TagName.IFRAME, {
+    frameBorder: '0',
+    style: 'padding:0;',
+  });
 }
 
 /**
@@ -80,38 +81,45 @@ testSuite({
   testBlankField() {
     if (!BrowserFeature.HAS_CONTENT_EDITABLE) {
       assertAttachSeamlessIframeSizesCorrectly(
-          initSeamlessField('&nbsp;', {}), createSeamlessIframe());
+        initSeamlessField('&nbsp;', {}),
+        createSeamlessIframe()
+      );
     }
   },
 
   testFieldWithContent() {
     if (!BrowserFeature.HAS_CONTENT_EDITABLE) {
       assertAttachSeamlessIframeSizesCorrectly(
-          initSeamlessField('Hi!', {}), createSeamlessIframe());
+        initSeamlessField('Hi!', {}),
+        createSeamlessIframe()
+      );
     }
   },
 
   testFieldWithPadding() {
     if (!BrowserFeature.HAS_CONTENT_EDITABLE) {
       assertAttachSeamlessIframeSizesCorrectly(
-          initSeamlessField('Hi!', {'padding': '2px 5px'}),
-          createSeamlessIframe());
+        initSeamlessField('Hi!', { padding: '2px 5px' }),
+        createSeamlessIframe()
+      );
     }
   },
 
   testFieldWithMargin() {
     if (!BrowserFeature.HAS_CONTENT_EDITABLE) {
       assertAttachSeamlessIframeSizesCorrectly(
-          initSeamlessField('Hi!', {'margin': '2px 5px'}),
-          createSeamlessIframe());
+        initSeamlessField('Hi!', { margin: '2px 5px' }),
+        createSeamlessIframe()
+      );
     }
   },
 
   testFieldWithBorder() {
     if (!BrowserFeature.HAS_CONTENT_EDITABLE) {
       assertAttachSeamlessIframeSizesCorrectly(
-          initSeamlessField('Hi!', {'border': '2px 5px'}),
-          createSeamlessIframe());
+        initSeamlessField('Hi!', { border: '2px 5px' }),
+        createSeamlessIframe()
+      );
     }
   },
 
@@ -122,10 +130,13 @@ testSuite({
   testFieldWithOverflow() {
     if (!BrowserFeature.HAS_CONTENT_EDITABLE) {
       assertAttachSeamlessIframeSizesCorrectly(
-          initSeamlessField(
-              ['1', '2', '3', '4', '5', '6', '7'].join('<p/>'),
-              {'overflow': 'auto', 'position': 'relative', 'height': '20px'}),
-          createSeamlessIframe());
+        initSeamlessField(['1', '2', '3', '4', '5', '6', '7'].join('<p/>'), {
+          overflow: 'auto',
+          position: 'relative',
+          height: '20px',
+        }),
+        createSeamlessIframe()
+      );
       assertEquals(20, fieldElem.offsetHeight);
     }
   },
@@ -136,13 +147,12 @@ testSuite({
    */
   testFieldWithOverflowAndPadding() {
     if (!BrowserFeature.HAS_CONTENT_EDITABLE) {
-      const blendedField =
-          initSeamlessField(['1', '2', '3', '4', '5', '6', '7'].join('<p/>'), {
-            'overflow': 'auto',
-            'position': 'relative',
-            'height': '20px',
-            'padding': '2px 3px',
-          });
+      const blendedField = initSeamlessField(['1', '2', '3', '4', '5', '6', '7'].join('<p/>'), {
+        overflow: 'auto',
+        position: 'relative',
+        height: '20px',
+        padding: '2px 3px',
+      });
       const blendedIframe = createSeamlessIframe();
       assertAttachSeamlessIframeSizesCorrectly(blendedField, blendedIframe);
       assertEquals(24, fieldElem.offsetHeight);
@@ -154,20 +164,22 @@ testSuite({
       const clock = new MockClock(true);
       let blendedField;
       try {
-        blendedField = initSeamlessField(
-            '', {'border': '1px solid black', 'height': '20px'});
+        blendedField = initSeamlessField('', {
+          border: '1px solid black',
+          height: '20px',
+        });
         blendedField.makeEditable();
         blendedField.setSafeHtml(
-            false,
-            SafeHtml.htmlEscape('Content that should wrap after resize.'));
+          false,
+          SafeHtml.htmlEscape('Content that should wrap after resize.')
+        );
 
         // Ensure that the field was fully loaded and sized before measuring.
         clock.tick(1);
 
         // Capture starting heights.
         /** @suppress {visibility} suppression added to enable type checking */
-        const unwrappedIframeHeight =
-            blendedField.getEditableIframe().offsetHeight;
+        const unwrappedIframeHeight = blendedField.getEditableIframe().offsetHeight;
 
         // Resize the field such that the text should wrap.
         fieldElem.style.width = '200px';
@@ -175,13 +187,14 @@ testSuite({
 
         // Iframe should grow as a result.
         /** @suppress {visibility} suppression added to enable type checking */
-        const wrappedIframeHeight =
-            blendedField.getEditableIframe().offsetHeight;
+        const wrappedIframeHeight = blendedField.getEditableIframe().offsetHeight;
         assertTrue(
-            'Wrapped text should cause iframe to grow - initial height: ' +
-                unwrappedIframeHeight +
-                ', wrapped height: ' + wrappedIframeHeight,
-            wrappedIframeHeight > unwrappedIframeHeight);
+          'Wrapped text should cause iframe to grow - initial height: ' +
+            unwrappedIframeHeight +
+            ', wrapped height: ' +
+            wrappedIframeHeight,
+          wrappedIframeHeight > unwrappedIframeHeight
+        );
       } finally {
         blendedField.dispose();
         clock.dispose();
@@ -193,7 +206,7 @@ testSuite({
   testDispatchIframeResizedForWrapperHeight() {
     if (!BrowserFeature.HAS_CONTENT_EDITABLE) {
       const clock = new MockClock(true);
-      const blendedField = initSeamlessField('Hi!', {'border': '2px 5px'});
+      const blendedField = initSeamlessField('Hi!', { border: '2px 5px' });
       const iframe = createSeamlessIframe();
       blendedField.attachIframe(iframe);
 
@@ -205,8 +218,9 @@ testSuite({
       try {
         blendedField.makeEditable();
         blendedField.setSafeHtml(
-            false,
-            SafeHtml.htmlEscape('Content that should wrap after resize.'));
+          false,
+          SafeHtml.htmlEscape('Content that should wrap after resize.')
+        );
 
         // Ensure that the field was fully loaded and sized before measuring.
         clock.tick(1);
@@ -216,8 +230,7 @@ testSuite({
         // Resize the field such that the text should wrap.
         fieldElem.style.width = '200px';
         blendedField.sizeIframeToWrapperGecko_();
-        assertTrue(
-            'Iframe resize must be dispatched for Wrapper', resizeCalled);
+        assertTrue('Iframe resize must be dispatched for Wrapper', resizeCalled);
       } finally {
         blendedField.dispose();
         clock.dispose();
@@ -229,7 +242,7 @@ testSuite({
   testDispatchIframeResizedForBodyHeight() {
     if (!BrowserFeature.HAS_CONTENT_EDITABLE) {
       const clock = new MockClock(true);
-      const blendedField = initSeamlessField('Hi!', {'border': '2px 5px'});
+      const blendedField = initSeamlessField('Hi!', { border: '2px 5px' });
       const iframe = createSeamlessIframe();
       blendedField.attachIframe(iframe);
 
@@ -241,8 +254,9 @@ testSuite({
       try {
         blendedField.makeEditable();
         blendedField.setSafeHtml(
-            false,
-            SafeHtml.htmlEscape('Content that should wrap after resize.'));
+          false,
+          SafeHtml.htmlEscape('Content that should wrap after resize.')
+        );
 
         // Ensure that the field was fully loaded and sized before measuring.
         clock.tick(1);
@@ -268,9 +282,11 @@ testSuite({
      checking
    */
   testDispatchBlur() {
-    if (!BrowserFeature.HAS_CONTENT_EDITABLE &&
-        !BrowserFeature.CLEARS_SELECTION_WHEN_FOCUS_LEAVES) {
-      const blendedField = initSeamlessField('Hi!', {'border': '2px 5px'});
+    if (
+      !BrowserFeature.HAS_CONTENT_EDITABLE &&
+      !BrowserFeature.CLEARS_SELECTION_WHEN_FOCUS_LEAVES
+    ) {
+      const blendedField = initSeamlessField('Hi!', { border: '2px 5px' });
       const iframe = createSeamlessIframe();
       blendedField.attachIframe(iframe);
 
@@ -285,8 +301,7 @@ testSuite({
       /** @suppress {visibility} suppression added to enable type checking */
       blendedField.editableDomHelper = new DomHelper();
       /** @suppress {visibility} suppression added to enable type checking */
-      blendedField.editableDomHelper.getWindow =
-          functions.constant(iframe.contentWindow);
+      blendedField.editableDomHelper.getWindow = functions.constant(iframe.contentWindow);
       const mockRange = new MockRange();
       blendedField.getRange = () => mockRange;
       Range.clearSelection = (opt_window) => {
@@ -304,9 +319,7 @@ testSuite({
 
       assertTrue('Blur must be dispatched.', blurCalled);
       assertTrue('Selection must be cleared.', cleared);
-      assertEquals(
-          'Selection must be cleared in iframe', iframe.contentWindow,
-          clearedWindow);
+      assertEquals('Selection must be cleared in iframe', iframe.contentWindow, clearedWindow);
       mockRange.$verify();
       clock.dispose();
     }
@@ -318,9 +331,10 @@ testSuite({
       const clock = new MockClock(true);
       let field;
       try {
-        field = initSeamlessField(
-            ['1', '2', '3', '4', '5', '6', '7'].join('<p/>'),
-            {'position': 'relative', 'height': '60px'});
+        field = initSeamlessField(['1', '2', '3', '4', '5', '6', '7'].join('<p/>'), {
+          position: 'relative',
+          height: '60px',
+        });
 
         // Initially create and size iframe.
         const iframe = createSeamlessIframe();
@@ -339,20 +353,14 @@ testSuite({
         // Test that min height is obeyed.
         field.setMinHeight(30);
         clock.tick(1000);
-        assertEquals(
-            'Iframe height must match min height.', 30,
-            style.getSize(iframe).height);
-        assertFalse(
-            'Setting min height must not cause delayed change event.',
-            delayedChangeCalled);
+        assertEquals('Iframe height must match min height.', 30, style.getSize(iframe).height);
+        assertFalse('Setting min height must not cause delayed change event.', delayedChangeCalled);
 
         // Test that min height doesn't shrink field.
         field.setMinHeight(0);
         clock.tick(1000);
         assertEquals(normalHeight, style.getSize(iframe).height);
-        assertFalse(
-            'Setting min height must not cause delayed change event.',
-            delayedChangeCalled);
+        assertFalse('Setting min height must not cause delayed change event.', delayedChangeCalled);
       } finally {
         field.dispose();
         clock.dispose();
@@ -388,35 +396,40 @@ testSuite({
     editableField.manipulateDom(() => {});
     clock.tick(1000);
     assertEquals(
-        'Must not fire delayed change events if field is not loaded.', 0,
-        delayedChangeCalled);
+      'Must not fire delayed change events if field is not loaded.',
+      0,
+      delayedChangeCalled
+    );
 
     editableField.makeEditable();
     const usesIframe = editableField.usesIframe();
 
     try {
       editableField.manipulateDom(() => {});
-      clock.tick(1000);  // Wait for delayed change to fire.
-      assertEquals(
-          'By default must fire a single delayed change event.', 1,
-          delayedChangeCalled);
+      clock.tick(1000); // Wait for delayed change to fire.
+      assertEquals('By default must fire a single delayed change event.', 1, delayedChangeCalled);
 
       editableField.manipulateDom(() => {}, true);
-      clock.tick(1000);  // Wait for delayed change to fire.
-      assertEquals(
-          'Must prevent all delayed change events.', 1, delayedChangeCalled);
+      clock.tick(1000); // Wait for delayed change to fire.
+      assertEquals('Must prevent all delayed change events.', 1, delayedChangeCalled);
 
-      editableField.manipulateDom(function() {
-        this.handleChange();
-        this.handleChange();
+      editableField.manipulateDom(
+        function () {
+          this.handleChange();
+          this.handleChange();
 
-        this.dispatchDelayedChange_();
-        this.delayedChangeTimer_.fire();
-      }, false, editableField);
-      clock.tick(1000);  // Wait for delayed change to fire.
+          this.dispatchDelayedChange_();
+          this.delayedChangeTimer_.fire();
+        },
+        false,
+        editableField
+      );
+      clock.tick(1000); // Wait for delayed change to fire.
       assertEquals(
-          'Must ignore dispatch delayed change called within func.', 2,
-          delayedChangeCalled);
+        'Must ignore dispatch delayed change called within func.',
+        2,
+        delayedChangeCalled
+      );
     } finally {
       // Ensure we always uninstall the mock clock and dispose of everything.
       editableField.dispose();

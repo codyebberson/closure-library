@@ -14,9 +14,7 @@ goog.setTestOnly('goog.testing.storage.FakeMechanism');
 
 const IterableMechanism = goog.require('goog.storage.mechanism.IterableMechanism');
 const Iterator = goog.require('goog.iter.Iterator');
-const {ShimIterable} = goog.require('goog.iter.es6');
-
-
+const { ShimIterable } = goog.require('goog.iter.es6');
 
 /**
  * Creates a fake iterable mechanism.
@@ -25,7 +23,7 @@ const {ShimIterable} = goog.require('goog.iter.es6');
  * @extends {IterableMechanism}
  * @final
  */
-const FakeMechanism = function() {
+const FakeMechanism = function () {
   /**
    * @type {!Map}
    * @private
@@ -34,7 +32,6 @@ const FakeMechanism = function() {
 };
 goog.inherits(FakeMechanism, IterableMechanism);
 
-
 /**
  * Set a value for a key.
  *
@@ -42,10 +39,9 @@ goog.inherits(FakeMechanism, IterableMechanism);
  * @param {string} value The string to save.
  * @override
  */
-FakeMechanism.prototype.set = function(key, value) {
+FakeMechanism.prototype.set = function (key, value) {
   this.storage_.set(key, value);
 };
-
 
 /**
  * Get the value stored under a key.
@@ -54,13 +50,12 @@ FakeMechanism.prototype.set = function(key, value) {
  * @return {?string} The corresponding value, null if not found.
  * @override
  */
-FakeMechanism.prototype.get = function(key) {
+FakeMechanism.prototype.get = function (key) {
   if (this.storage_.has(key)) {
     return this.storage_.get(key);
   }
   return null;
 };
-
 
 /**
  * Remove a key and its value.
@@ -68,10 +63,9 @@ FakeMechanism.prototype.get = function(key) {
  * @param {string} key The key to remove.
  * @override
  */
-FakeMechanism.prototype.remove = function(key) {
+FakeMechanism.prototype.remove = function (key) {
   this.storage_.delete(key);
 };
-
 
 /**
  * Returns an iterator that iterates over the elements in the storage. Will
@@ -82,9 +76,10 @@ FakeMechanism.prototype.remove = function(key) {
  * @return {!Iterator} The iterator.
  * @override
  */
-FakeMechanism.prototype.__iterator__ = function(opt_keys) {
-  return opt_keys ? ShimIterable.of(this.storage_.keys()).toGoog() :
-                    ShimIterable.of(this.storage_.values()).toGoog();
+FakeMechanism.prototype.__iterator__ = function (opt_keys) {
+  return opt_keys
+    ? ShimIterable.of(this.storage_.keys()).toGoog()
+    : ShimIterable.of(this.storage_.values()).toGoog();
 };
 
 exports = FakeMechanism;

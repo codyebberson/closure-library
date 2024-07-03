@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.events.KeyEventTest');
-goog.setTestOnly();
 
 const BrowserEvent = goog.require('goog.events.BrowserEvent');
 const EventType = goog.require('goog.events.EventType');
@@ -29,133 +28,159 @@ function assertIe8StyleKeyHandling() {
   fireKeyDown(keyHandler, KeyCodes.ENTER);
   fireKeyPress(keyHandler, KeyCodes.ENTER);
   assertEquals(
-      'Enter should fire a key event with the keycode 13', KeyCodes.ENTER,
-      keyEvent.keyCode);
-  assertEquals(
-      'Enter should fire a key event with the charcode 0', 0,
-      keyEvent.charCode);
+    'Enter should fire a key event with the keycode 13',
+    KeyCodes.ENTER,
+    keyEvent.keyCode
+  );
+  assertEquals('Enter should fire a key event with the charcode 0', 0, keyEvent.charCode);
 
   fireKeyDown(keyHandler, KeyCodes.ESC);
   fireKeyPress(keyHandler, KeyCodes.ESC);
-  assertEquals(
-      'Esc should fire a key event with the keycode 27', KeyCodes.ESC,
-      keyEvent.keyCode);
-  assertEquals(
-      'Esc should fire a key event with the charcode 0', 0, keyEvent.charCode);
+  assertEquals('Esc should fire a key event with the keycode 27', KeyCodes.ESC, keyEvent.keyCode);
+  assertEquals('Esc should fire a key event with the charcode 0', 0, keyEvent.charCode);
 
   fireKeyDown(keyHandler, KeyCodes.UP);
-  assertEquals(
-      'Up should fire a key event with the keycode 38', KeyCodes.UP,
-      keyEvent.keyCode);
-  assertEquals(
-      'Up should fire a key event with the charcode 0', 0, keyEvent.charCode);
+  assertEquals('Up should fire a key event with the keycode 38', KeyCodes.UP, keyEvent.keyCode);
+  assertEquals('Up should fire a key event with the charcode 0', 0, keyEvent.charCode);
 
-  fireKeyDown(
-      keyHandler, KeyCodes.SEVEN, undefined, undefined, undefined, undefined,
-      true);
-  fireKeyPress(
-      keyHandler, 38, undefined, undefined, undefined, undefined, true);
+  fireKeyDown(keyHandler, KeyCodes.SEVEN, undefined, undefined, undefined, undefined, true);
+  fireKeyPress(keyHandler, 38, undefined, undefined, undefined, undefined, true);
   assertEquals(
-      'Shift+7 should fire a key event with the keycode 55', KeyCodes.SEVEN,
-      keyEvent.keyCode);
-  assertEquals(
-      'Shift+7 should fire a key event with the charcode 38', 38,
-      keyEvent.charCode);
+    'Shift+7 should fire a key event with the keycode 55',
+    KeyCodes.SEVEN,
+    keyEvent.keyCode
+  );
+  assertEquals('Shift+7 should fire a key event with the charcode 38', 38, keyEvent.charCode);
 
   fireKeyDown(keyHandler, KeyCodes.A);
   fireKeyPress(keyHandler, 97);
   assertEquals(
-      'Lower case a should fire a key event with the keycode 65', KeyCodes.A,
-      keyEvent.keyCode);
-  assertEquals(
-      'Lower case a should fire a key event with the charcode 97', 97,
-      keyEvent.charCode);
+    'Lower case a should fire a key event with the keycode 65',
+    KeyCodes.A,
+    keyEvent.keyCode
+  );
+  assertEquals('Lower case a should fire a key event with the charcode 97', 97, keyEvent.charCode);
 
   fireKeyDown(keyHandler, KeyCodes.A);
   fireKeyPress(keyHandler, 65);
   assertEquals(
-      'Upper case A should fire a key event with the keycode 65', KeyCodes.A,
-      keyEvent.keyCode);
-  assertEquals(
-      'Upper case A should fire a key event with the charcode 65', 65,
-      keyEvent.charCode);
+    'Upper case A should fire a key event with the keycode 65',
+    KeyCodes.A,
+    keyEvent.keyCode
+  );
+  assertEquals('Upper case A should fire a key event with the charcode 65', 65, keyEvent.charCode);
 
   fireKeyDown(keyHandler, KeyCodes.DELETE);
   assertEquals(
-      'Delete should fire a key event with the keycode 46', KeyCodes.DELETE,
-      keyEvent.keyCode);
-  assertEquals(
-      'Delete should fire a key event with the charcode 0', 0,
-      keyEvent.charCode);
+    'Delete should fire a key event with the keycode 46',
+    KeyCodes.DELETE,
+    keyEvent.keyCode
+  );
+  assertEquals('Delete should fire a key event with the charcode 0', 0, keyEvent.charCode);
 
   fireKeyDown(keyHandler, KeyCodes.PERIOD);
   fireKeyPress(keyHandler, 46);
   assertEquals(
-      'Period should fire a key event with the keycode 190', KeyCodes.PERIOD,
-      keyEvent.keyCode);
-  assertEquals(
-      'Period should fire a key event with the charcode 46', 46,
-      keyEvent.charCode);
+    'Period should fire a key event with the keycode 190',
+    KeyCodes.PERIOD,
+    keyEvent.keyCode
+  );
+  assertEquals('Period should fire a key event with the charcode 46', 46, keyEvent.charCode);
 
   fireKeyDown(keyHandler, KeyCodes.CTRL);
   fireKeyDown(keyHandler, KeyCodes.A);
-  assertEquals(
-      'A with control down should fire a key event', KeyCodes.A,
-      keyEvent.keyCode);
+  assertEquals('A with control down should fire a key event', KeyCodes.A, keyEvent.keyCode);
 
   // On IE, when Ctrl+<key> is held down, there is a KEYDOWN, a KEYPRESS, and
   // then a series of KEYDOWN events for each repeat.
   fireKeyDown(keyHandler, KeyCodes.B, undefined, undefined, true);
   fireKeyPress(keyHandler, KeyCodes.B, undefined, undefined, true);
-  assertEquals(
-      'B with control down should fire a key event', KeyCodes.B,
-      keyEvent.keyCode);
+  assertEquals('B with control down should fire a key event', KeyCodes.B, keyEvent.keyCode);
   assertTrue('Ctrl should be down.', keyEvent.ctrlKey);
-  assertFalse(
-      'Should not have repeat=true on the first key press.', keyEvent.repeat);
+  assertFalse('Should not have repeat=true on the first key press.', keyEvent.repeat);
   // Fire one repeated keydown event.
   fireKeyDown(keyHandler, KeyCodes.B, undefined, undefined, true);
-  assertEquals(
-      'A with control down should fire a key event', KeyCodes.B,
-      keyEvent.keyCode);
+  assertEquals('A with control down should fire a key event', KeyCodes.B, keyEvent.keyCode);
   assertTrue('Should have repeat=true on key repeat.', keyEvent.repeat);
   assertTrue('Ctrl should be down.', keyEvent.ctrlKey);
 }
 
 function fireKeyDown(
-    keyHandler, keyCode, charCode = undefined, keyIdentifier = undefined,
-    ctrlKey = undefined, altKey = undefined, shiftKey = undefined) {
+  keyHandler,
+  keyCode,
+  charCode = undefined,
+  keyIdentifier = undefined,
+  ctrlKey = undefined,
+  altKey = undefined,
+  shiftKey = undefined
+) {
   const fakeEvent = createFakeKeyEvent(
-      EventType.KEYDOWN, keyCode, charCode, keyIdentifier, ctrlKey, altKey,
-      shiftKey);
+    EventType.KEYDOWN,
+    keyCode,
+    charCode,
+    keyIdentifier,
+    ctrlKey,
+    altKey,
+    shiftKey
+  );
   keyHandler.handleKeyDown_(fakeEvent);
   return fakeEvent.returnValue_;
 }
 
 function fireKeyPress(
-    keyHandler, keyCode, charCode = undefined, keyIdentifier = undefined,
-    ctrlKey = undefined, altKey = undefined, shiftKey = undefined) {
+  keyHandler,
+  keyCode,
+  charCode = undefined,
+  keyIdentifier = undefined,
+  ctrlKey = undefined,
+  altKey = undefined,
+  shiftKey = undefined
+) {
   const fakeEvent = createFakeKeyEvent(
-      EventType.KEYPRESS, keyCode, charCode, keyIdentifier, ctrlKey, altKey,
-      shiftKey);
+    EventType.KEYPRESS,
+    keyCode,
+    charCode,
+    keyIdentifier,
+    ctrlKey,
+    altKey,
+    shiftKey
+  );
   keyHandler.handleEvent(fakeEvent);
   return fakeEvent.returnValue_;
 }
 
 function fireKeyUp(
-    keyHandler, keyCode, charCode = undefined, keyIdentifier = undefined,
-    ctrlKey = undefined, altKey = undefined, shiftKey = undefined) {
+  keyHandler,
+  keyCode,
+  charCode = undefined,
+  keyIdentifier = undefined,
+  ctrlKey = undefined,
+  altKey = undefined,
+  shiftKey = undefined
+) {
   const fakeEvent = createFakeKeyEvent(
-      EventType.KEYUP, keyCode, charCode, keyIdentifier, ctrlKey, altKey,
-      shiftKey);
+    EventType.KEYUP,
+    keyCode,
+    charCode,
+    keyIdentifier,
+    ctrlKey,
+    altKey,
+    shiftKey
+  );
   keyHandler.handleKeyup_(fakeEvent);
   return fakeEvent.returnValue_;
 }
 
 /** @suppress {checkTypes} suppression added to enable type checking */
 function createFakeKeyEvent(
-    type, keyCode, opt_charCode, opt_keyIdentifier, opt_ctrlKey, opt_altKey,
-    opt_shiftKey) {
+  type,
+  keyCode,
+  opt_charCode,
+  opt_keyIdentifier,
+  opt_ctrlKey,
+  opt_altKey,
+  opt_shiftKey
+) {
   const event = {
     type: type,
     keyCode: keyCode,
@@ -205,7 +230,7 @@ testSuite({
     userAgent.WINDOWS = true;
     userAgent.LINUX = false;
     /** @suppress {checkTypes} suppression added to enable type checking */
-    userAgent.VERSION = 9;  // Try IE9 in IE8 document mode.
+    userAgent.VERSION = 9; // Try IE9 in IE8 document mode.
     /**
      * @suppress {constantProperty} suppression added to enable type checking
      */
@@ -239,11 +264,11 @@ testSuite({
     fireKeyDown(keyHandler, KeyCodes.ENTER);
     fireKeyPress(keyHandler, KeyCodes.ENTER);
     assertEquals(
-        'Enter should fire a key event with the keycode 13', KeyCodes.ENTER,
-        keyEvent.keyCode);
-    assertEquals(
-        'Enter should fire a key event with the charcode 0', 0,
-        keyEvent.charCode);
+      'Enter should fire a key event with the keycode 13',
+      KeyCodes.ENTER,
+      keyEvent.keyCode
+    );
+    assertEquals('Enter should fire a key event with the charcode 0', 0, keyEvent.charCode);
   },
 
   /**
@@ -274,90 +299,88 @@ testSuite({
     fireKeyDown(keyHandler, KeyCodes.ENTER);
     fireKeyPress(keyHandler, KeyCodes.ENTER);
     assertEquals(
-        'Enter should fire a key event with the keycode 13', KeyCodes.ENTER,
-        keyEvent.keyCode);
-    assertEquals(
-        'Enter should fire a key event with the charcode 0', 0,
-        keyEvent.charCode);
+      'Enter should fire a key event with the keycode 13',
+      KeyCodes.ENTER,
+      keyEvent.keyCode
+    );
+    assertEquals('Enter should fire a key event with the charcode 0', 0, keyEvent.charCode);
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
     fireKeyDown(keyHandler, KeyCodes.ESC);
     fireKeyPress(keyHandler, KeyCodes.ESC);
-    assertEquals(
-        'Esc should fire a key event with the keycode 27', KeyCodes.ESC,
-        keyEvent.keyCode);
-    assertEquals(
-        'Esc should fire a key event with the charcode 0', 0,
-        keyEvent.charCode);
+    assertEquals('Esc should fire a key event with the keycode 27', KeyCodes.ESC, keyEvent.keyCode);
+    assertEquals('Esc should fire a key event with the charcode 0', 0, keyEvent.charCode);
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
     fireKeyDown(keyHandler, KeyCodes.UP);
     fireKeyPress(keyHandler, KeyCodes.UP);
-    assertEquals(
-        'Up should fire a key event with the keycode 38', KeyCodes.UP,
-        keyEvent.keyCode);
-    assertEquals(
-        'Up should fire a key event with the charcode 0', 0, keyEvent.charCode);
+    assertEquals('Up should fire a key event with the keycode 38', KeyCodes.UP, keyEvent.keyCode);
+    assertEquals('Up should fire a key event with the charcode 0', 0, keyEvent.charCode);
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
-    fireKeyDown(
-        keyHandler, KeyCodes.SEVEN, undefined, undefined, undefined, undefined,
-        true);
-    fireKeyPress(
-        keyHandler, undefined, 38, undefined, undefined, undefined, true);
+    fireKeyDown(keyHandler, KeyCodes.SEVEN, undefined, undefined, undefined, undefined, true);
+    fireKeyPress(keyHandler, undefined, 38, undefined, undefined, undefined, true);
     assertEquals(
-        'Shift+7 should fire a key event with the keycode 55', KeyCodes.SEVEN,
-        keyEvent.keyCode);
-    assertEquals(
-        'Shift+7 should fire a key event with the charcode 38', 38,
-        keyEvent.charCode);
+      'Shift+7 should fire a key event with the keycode 55',
+      KeyCodes.SEVEN,
+      keyEvent.keyCode
+    );
+    assertEquals('Shift+7 should fire a key event with the charcode 38', 38, keyEvent.charCode);
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
     fireKeyDown(keyHandler, KeyCodes.A);
     fireKeyPress(keyHandler, undefined, 97);
     assertEquals(
-        'Lower case a should fire a key event with the keycode 65', KeyCodes.A,
-        keyEvent.keyCode);
+      'Lower case a should fire a key event with the keycode 65',
+      KeyCodes.A,
+      keyEvent.keyCode
+    );
     assertEquals(
-        'Lower case a should fire a key event with the charcode 97', 97,
-        keyEvent.charCode);
+      'Lower case a should fire a key event with the charcode 97',
+      97,
+      keyEvent.charCode
+    );
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
     fireKeyDown(keyHandler, KeyCodes.A);
     fireKeyPress(keyHandler, undefined, 65);
     assertEquals(
-        'Upper case A should fire a key event with the keycode 65', KeyCodes.A,
-        keyEvent.keyCode);
+      'Upper case A should fire a key event with the keycode 65',
+      KeyCodes.A,
+      keyEvent.keyCode
+    );
     assertEquals(
-        'Upper case A should fire a key event with the charcode 65', 65,
-        keyEvent.charCode);
+      'Upper case A should fire a key event with the charcode 65',
+      65,
+      keyEvent.charCode
+    );
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
     fireKeyDown(keyHandler, KeyCodes.DELETE);
     fireKeyPress(keyHandler, KeyCodes.DELETE);
     assertEquals(
-        'Delete should fire a key event with the keycode 46', KeyCodes.DELETE,
-        keyEvent.keyCode);
-    assertEquals(
-        'Delete should fire a key event with the charcode 0', 0,
-        keyEvent.charCode);
+      'Delete should fire a key event with the keycode 46',
+      KeyCodes.DELETE,
+      keyEvent.keyCode
+    );
+    assertEquals('Delete should fire a key event with the charcode 0', 0, keyEvent.charCode);
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
     fireKeyDown(keyHandler, KeyCodes.PERIOD);
     fireKeyPress(keyHandler, undefined, 46);
     assertEquals(
-        'Period should fire a key event with the keycode 190', KeyCodes.PERIOD,
-        keyEvent.keyCode);
-    assertEquals(
-        'Period should fire a key event with the charcode 46', 46,
-        keyEvent.charCode);
+      'Period should fire a key event with the keycode 190',
+      KeyCodes.PERIOD,
+      keyEvent.keyCode
+    );
+    assertEquals('Period should fire a key event with the charcode 46', 46, keyEvent.charCode);
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
   },
 
@@ -387,87 +410,85 @@ testSuite({
     fireKeyDown(keyHandler, KeyCodes.ENTER);
     fireKeyPress(keyHandler, KeyCodes.ENTER);
     assertEquals(
-        'Enter should fire a key event with the keycode 13', KeyCodes.ENTER,
-        keyEvent.keyCode);
-    assertEquals(
-        'Enter should fire a key event with the charcode 0', 0,
-        keyEvent.charCode);
+      'Enter should fire a key event with the keycode 13',
+      KeyCodes.ENTER,
+      keyEvent.keyCode
+    );
+    assertEquals('Enter should fire a key event with the charcode 0', 0, keyEvent.charCode);
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
     fireKeyDown(keyHandler, KeyCodes.ESC);
-    assertEquals(
-        'Esc should fire a key event with the keycode 27', KeyCodes.ESC,
-        keyEvent.keyCode);
-    assertEquals(
-        'Esc should fire a key event with the charcode 0', 0,
-        keyEvent.charCode);
+    assertEquals('Esc should fire a key event with the keycode 27', KeyCodes.ESC, keyEvent.keyCode);
+    assertEquals('Esc should fire a key event with the charcode 0', 0, keyEvent.charCode);
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
     fireKeyDown(keyHandler, KeyCodes.UP);
-    assertEquals(
-        'Up should fire a key event with the keycode 38', KeyCodes.UP,
-        keyEvent.keyCode);
-    assertEquals(
-        'Up should fire a key event with the charcode 0', 0, keyEvent.charCode);
+    assertEquals('Up should fire a key event with the keycode 38', KeyCodes.UP, keyEvent.keyCode);
+    assertEquals('Up should fire a key event with the charcode 0', 0, keyEvent.charCode);
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
-    fireKeyDown(
-        keyHandler, KeyCodes.SEVEN, undefined, undefined, undefined, undefined,
-        true);
-    fireKeyPress(
-        keyHandler, undefined, 38, undefined, undefined, undefined, true);
+    fireKeyDown(keyHandler, KeyCodes.SEVEN, undefined, undefined, undefined, undefined, true);
+    fireKeyPress(keyHandler, undefined, 38, undefined, undefined, undefined, true);
     assertEquals(
-        'Shift+7 should fire a key event with the keycode 55', KeyCodes.SEVEN,
-        keyEvent.keyCode);
-    assertEquals(
-        'Shift+7 should fire a key event with the charcode 38', 38,
-        keyEvent.charCode);
+      'Shift+7 should fire a key event with the keycode 55',
+      KeyCodes.SEVEN,
+      keyEvent.keyCode
+    );
+    assertEquals('Shift+7 should fire a key event with the charcode 38', 38, keyEvent.charCode);
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
     fireKeyDown(keyHandler, KeyCodes.A);
     fireKeyPress(keyHandler, undefined, 97);
     assertEquals(
-        'Lower case a should fire a key event with the keycode 65', KeyCodes.A,
-        keyEvent.keyCode);
+      'Lower case a should fire a key event with the keycode 65',
+      KeyCodes.A,
+      keyEvent.keyCode
+    );
     assertEquals(
-        'Lower case a should fire a key event with the charcode 97', 97,
-        keyEvent.charCode);
+      'Lower case a should fire a key event with the charcode 97',
+      97,
+      keyEvent.charCode
+    );
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
     fireKeyDown(keyHandler, KeyCodes.A);
     fireKeyPress(keyHandler, undefined, 65);
     assertEquals(
-        'Upper case A should fire a key event with the keycode 65', KeyCodes.A,
-        keyEvent.keyCode);
+      'Upper case A should fire a key event with the keycode 65',
+      KeyCodes.A,
+      keyEvent.keyCode
+    );
     assertEquals(
-        'Upper case A should fire a key event with the charcode 65', 65,
-        keyEvent.charCode);
+      'Upper case A should fire a key event with the charcode 65',
+      65,
+      keyEvent.charCode
+    );
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
     fireKeyDown(keyHandler, KeyCodes.DELETE);
     assertEquals(
-        'Delete should fire a key event with the keycode 46', KeyCodes.DELETE,
-        keyEvent.keyCode);
-    assertEquals(
-        'Delete should fire a key event with the charcode 0', 0,
-        keyEvent.charCode);
+      'Delete should fire a key event with the keycode 46',
+      KeyCodes.DELETE,
+      keyEvent.keyCode
+    );
+    assertEquals('Delete should fire a key event with the charcode 0', 0, keyEvent.charCode);
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
     fireKeyDown(keyHandler, KeyCodes.PERIOD);
     fireKeyPress(keyHandler, undefined, 46);
     assertEquals(
-        'Period should fire a key event with the keycode 190', KeyCodes.PERIOD,
-        keyEvent.keyCode);
-    assertEquals(
-        'Period should fire a key event with the charcode 46', 46,
-        keyEvent.charCode);
+      'Period should fire a key event with the keycode 190',
+      KeyCodes.PERIOD,
+      keyEvent.keyCode
+    );
+    assertEquals('Period should fire a key event with the charcode 46', 46, keyEvent.charCode);
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
   },
 
@@ -499,86 +520,85 @@ testSuite({
     fireKeyDown(keyHandler, KeyCodes.ENTER);
     fireKeyPress(keyHandler, KeyCodes.ENTER, KeyCodes.ENTER);
     assertEquals(
-        'Enter should fire a key event with the keycode 13', KeyCodes.ENTER,
-        keyEvent.keyCode);
-    assertEquals(
-        'Enter should fire a key event with the charcode 0', 0,
-        keyEvent.charCode);
+      'Enter should fire a key event with the keycode 13',
+      KeyCodes.ENTER,
+      keyEvent.keyCode
+    );
+    assertEquals('Enter should fire a key event with the charcode 0', 0, keyEvent.charCode);
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
     fireKeyDown(keyHandler, KeyCodes.ESC);
-    assertEquals(
-        'Esc should fire a key event with the keycode 27', KeyCodes.ESC,
-        keyEvent.keyCode);
-    assertEquals(
-        'Esc should fire a key event with the charcode 0', 0,
-        keyEvent.charCode);
+    assertEquals('Esc should fire a key event with the keycode 27', KeyCodes.ESC, keyEvent.keyCode);
+    assertEquals('Esc should fire a key event with the charcode 0', 0, keyEvent.charCode);
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
     fireKeyDown(keyHandler, KeyCodes.UP);
-    assertEquals(
-        'Up should fire a key event with the keycode 38', KeyCodes.UP,
-        keyEvent.keyCode);
-    assertEquals(
-        'Up should fire a key event with the charcode 0', 0, keyEvent.charCode);
+    assertEquals('Up should fire a key event with the keycode 38', KeyCodes.UP, keyEvent.keyCode);
+    assertEquals('Up should fire a key event with the charcode 0', 0, keyEvent.charCode);
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
-    fireKeyDown(
-        keyHandler, KeyCodes.SEVEN, undefined, undefined, undefined, undefined,
-        true);
+    fireKeyDown(keyHandler, KeyCodes.SEVEN, undefined, undefined, undefined, undefined, true);
     fireKeyPress(keyHandler, 38, 38, undefined, undefined, undefined, true);
     assertEquals(
-        'Shift+7 should fire a key event with the keycode 55', KeyCodes.SEVEN,
-        keyEvent.keyCode);
-    assertEquals(
-        'Shift+7 should fire a key event with the charcode 38', 38,
-        keyEvent.charCode);
+      'Shift+7 should fire a key event with the keycode 55',
+      KeyCodes.SEVEN,
+      keyEvent.keyCode
+    );
+    assertEquals('Shift+7 should fire a key event with the charcode 38', 38, keyEvent.charCode);
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
     fireKeyDown(keyHandler, KeyCodes.A);
     fireKeyPress(keyHandler, 97, 97);
     assertEquals(
-        'Lower case a should fire a key event with the keycode 65', KeyCodes.A,
-        keyEvent.keyCode);
+      'Lower case a should fire a key event with the keycode 65',
+      KeyCodes.A,
+      keyEvent.keyCode
+    );
     assertEquals(
-        'Lower case a should fire a key event with the charcode 97', 97,
-        keyEvent.charCode);
+      'Lower case a should fire a key event with the charcode 97',
+      97,
+      keyEvent.charCode
+    );
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
     fireKeyDown(keyHandler, KeyCodes.A);
     fireKeyPress(keyHandler, 65, 65);
     assertEquals(
-        'Upper case A should fire a key event with the keycode 65', KeyCodes.A,
-        keyEvent.keyCode);
+      'Upper case A should fire a key event with the keycode 65',
+      KeyCodes.A,
+      keyEvent.keyCode
+    );
     assertEquals(
-        'Upper case A should fire a key event with the charcode 65', 65,
-        keyEvent.charCode);
+      'Upper case A should fire a key event with the charcode 65',
+      65,
+      keyEvent.charCode
+    );
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
     fireKeyDown(keyHandler, KeyCodes.DELETE);
     assertEquals(
-        'Delete should fire a key event with the keycode 46', KeyCodes.DELETE,
-        keyEvent.keyCode);
-    assertEquals(
-        'Delete should fire a key event with the charcode 0', 0,
-        keyEvent.charCode);
+      'Delete should fire a key event with the keycode 46',
+      KeyCodes.DELETE,
+      keyEvent.keyCode
+    );
+    assertEquals('Delete should fire a key event with the charcode 0', 0, keyEvent.charCode);
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
 
     eventsFired = 0;
     fireKeyDown(keyHandler, KeyCodes.PERIOD);
     fireKeyPress(keyHandler, 46, 46);
     assertEquals(
-        'Period should fire a key event with the keycode 190', KeyCodes.PERIOD,
-        keyEvent.keyCode);
-    assertEquals(
-        'Period should fire a key event with the charcode 46', 46,
-        keyEvent.charCode);
+      'Period should fire a key event with the keycode 190',
+      KeyCodes.PERIOD,
+      keyEvent.keyCode
+    );
+    assertEquals('Period should fire a key event with the charcode 46', 46, keyEvent.charCode);
     assertEquals('Only one key event should have been fired.', 1, eventsFired);
   },
 
@@ -604,112 +624,110 @@ testSuite({
     fireKeyDown(keyHandler, KeyCodes.ENTER);
     fireKeyPress(keyHandler, KeyCodes.ENTER);
     assertEquals(
-        'Enter should fire a key event with the keycode 13', KeyCodes.ENTER,
-        keyEvent.keyCode);
-    assertEquals(
-        'Enter should fire a key event with the charcode 0', 0,
-        keyEvent.charCode);
+      'Enter should fire a key event with the keycode 13',
+      KeyCodes.ENTER,
+      keyEvent.keyCode
+    );
+    assertEquals('Enter should fire a key event with the charcode 0', 0, keyEvent.charCode);
     fireKeyUp(keyHandler, KeyCodes.ENTER);
 
     // Add a listener to ensure that an extra ENTER event is not dispatched
     // by a subsequent keypress.
-    const enterCheck =
-        events.listen(keyHandler, KeyHandler.EventType.KEY, (e) => {
-          assertNotEquals(
-              'Unexpected ENTER keypress dispatched', e.keyCode,
-              KeyCodes.ENTER);
-        });
+    const enterCheck = events.listen(keyHandler, KeyHandler.EventType.KEY, (e) => {
+      assertNotEquals('Unexpected ENTER keypress dispatched', e.keyCode, KeyCodes.ENTER);
+    });
 
     fireKeyDown(keyHandler, KeyCodes.ESC);
-    assertEquals(
-        'Esc should fire a key event with the keycode 27', KeyCodes.ESC,
-        keyEvent.keyCode);
-    assertEquals(
-        'Esc should fire a key event with the charcode 0', 0,
-        keyEvent.charCode);
+    assertEquals('Esc should fire a key event with the keycode 27', KeyCodes.ESC, keyEvent.keyCode);
+    assertEquals('Esc should fire a key event with the charcode 0', 0, keyEvent.charCode);
     fireKeyPress(keyHandler, KeyCodes.ESC);
     events.unlistenByKey(enterCheck);
 
     fireKeyDown(keyHandler, KeyCodes.UP);
-    assertEquals(
-        'Up should fire a key event with the keycode 38', KeyCodes.UP,
-        keyEvent.keyCode);
-    assertEquals(
-        'Up should fire a key event with the charcode 0', 0, keyEvent.charCode);
+    assertEquals('Up should fire a key event with the keycode 38', KeyCodes.UP, keyEvent.keyCode);
+    assertEquals('Up should fire a key event with the charcode 0', 0, keyEvent.charCode);
 
-    fireKeyDown(
-        keyHandler, KeyCodes.SEVEN, undefined, undefined, undefined, undefined,
-        true);
+    fireKeyDown(keyHandler, KeyCodes.SEVEN, undefined, undefined, undefined, undefined, true);
     fireKeyPress(keyHandler, 38, 38, undefined, undefined, undefined, true);
     assertEquals(
-        'Shift+7 should fire a key event with the keycode 55', KeyCodes.SEVEN,
-        keyEvent.keyCode);
-    assertEquals(
-        'Shift+7 should fire a key event with the charcode 38', 38,
-        keyEvent.charCode);
+      'Shift+7 should fire a key event with the keycode 55',
+      KeyCodes.SEVEN,
+      keyEvent.keyCode
+    );
+    assertEquals('Shift+7 should fire a key event with the charcode 38', 38, keyEvent.charCode);
 
     fireKeyDown(keyHandler, KeyCodes.A);
     fireKeyPress(keyHandler, 97, 97);
     assertEquals(
-        'Lower case a should fire a key event with the keycode 65', KeyCodes.A,
-        keyEvent.keyCode);
+      'Lower case a should fire a key event with the keycode 65',
+      KeyCodes.A,
+      keyEvent.keyCode
+    );
     assertEquals(
-        'Lower case a should fire a key event with the charcode 97', 97,
-        keyEvent.charCode);
+      'Lower case a should fire a key event with the charcode 97',
+      97,
+      keyEvent.charCode
+    );
 
     fireKeyDown(keyHandler, KeyCodes.A);
     fireKeyPress(keyHandler, 65, 65);
     assertEquals(
-        'Upper case A should fire a key event with the keycode 65', KeyCodes.A,
-        keyEvent.keyCode);
+      'Upper case A should fire a key event with the keycode 65',
+      KeyCodes.A,
+      keyEvent.keyCode
+    );
     assertEquals(
-        'Upper case A should fire a key event with the charcode 65', 65,
-        keyEvent.charCode);
+      'Upper case A should fire a key event with the charcode 65',
+      65,
+      keyEvent.charCode
+    );
 
     fireKeyDown(keyHandler, KeyCodes.CTRL);
     fireKeyDown(keyHandler, KeyCodes.A, null, null, true /*ctrl*/);
-    assertEquals(
-        'A with control down should fire a key event', KeyCodes.A,
-        keyEvent.keyCode);
+    assertEquals('A with control down should fire a key event', KeyCodes.A, keyEvent.keyCode);
 
     // Test that Alt-Tab outside the window doesn't break things.
     fireKeyDown(keyHandler, KeyCodes.ALT);
-    keyEvent.keyCode = -1;  // Reset the event.
+    keyEvent.keyCode = -1; // Reset the event.
     fireKeyDown(keyHandler, KeyCodes.A);
     assertEquals('Should not have dispatched an Alt-A', -1, keyEvent.keyCode);
     fireKeyPress(keyHandler, 65, 65);
     assertEquals(
-        'Alt should be ignored since it isn\'t currently depressed', KeyCodes.A,
-        keyEvent.keyCode);
+      "Alt should be ignored since it isn't currently depressed",
+      KeyCodes.A,
+      keyEvent.keyCode
+    );
 
     fireKeyDown(keyHandler, KeyCodes.DELETE);
     assertEquals(
-        'Delete should fire a key event with the keycode 46', KeyCodes.DELETE,
-        keyEvent.keyCode);
-    assertEquals(
-        'Delete should fire a key event with the charcode 0', 0,
-        keyEvent.charCode);
+      'Delete should fire a key event with the keycode 46',
+      KeyCodes.DELETE,
+      keyEvent.keyCode
+    );
+    assertEquals('Delete should fire a key event with the charcode 0', 0, keyEvent.charCode);
 
     fireKeyDown(keyHandler, KeyCodes.PERIOD);
     fireKeyPress(keyHandler, 46, 46);
     assertEquals(
-        'Period should fire a key event with the keycode 190', KeyCodes.PERIOD,
-        keyEvent.keyCode);
-    assertEquals(
-        'Period should fire a key event with the charcode 46', 46,
-        keyEvent.charCode);
+      'Period should fire a key event with the keycode 190',
+      KeyCodes.PERIOD,
+      keyEvent.keyCode
+    );
+    assertEquals('Period should fire a key event with the charcode 46', 46, keyEvent.charCode);
 
     // Safari sends zero key code for non-latin characters.
     fireKeyDown(keyHandler, 0, 0);
     fireKeyPress(keyHandler, 1092, 1092);
     assertEquals(
-        'Cyrillic small letter "Ef" should fire a key event with ' +
-            'the keycode 0',
-        0, keyEvent.keyCode);
+      'Cyrillic small letter "Ef" should fire a key event with ' + 'the keycode 0',
+      0,
+      keyEvent.keyCode
+    );
     assertEquals(
-        'Cyrillic small letter "Ef" should fire a key event with ' +
-            'the charcode 1092',
-        1092, keyEvent.charCode);
+      'Cyrillic small letter "Ef" should fire a key event with ' + 'the charcode 1092',
+      1092,
+      keyEvent.charCode
+    );
   },
 
   testGeckoOnMacAltHandling() {
@@ -732,10 +750,8 @@ testSuite({
 
     fireKeyDown(keyHandler, KeyCodes.COMMA, 0, null, false, true, false);
     fireKeyPress(keyHandler, 0, 8804, null, false, false, false);
-    assertEquals(
-        'should fire a key event with COMMA', KeyCodes.COMMA, keyEvent.keyCode);
-    assertEquals(
-        'should fire a key event with alt key set', true, keyEvent.altKey);
+    assertEquals('should fire a key event with COMMA', KeyCodes.COMMA, keyEvent.keyCode);
+    assertEquals('should fire a key event with alt key set', true, keyEvent.altKey);
 
     // Scenario: alt down, a down, a press, a up (should say alt is true),
     // alt up.
@@ -743,8 +759,7 @@ testSuite({
     fireKeyDown(keyHandler, 18, 0, null, false, true, false);
     fireKeyDown(keyHandler, KeyCodes.A, 0, null, false, true, false);
     fireKeyPress(keyHandler, 0, 229, null, false, false, false);
-    assertEquals(
-        'should fire a key event with alt key set', true, keyEvent.altKey);
+    assertEquals('should fire a key event with alt key set', true, keyEvent.altKey);
     fireKeyUp(keyHandler, 0, 229, null, false, true, false);
     assertEquals('alt key should still be set', true, keyEvent.altKey);
     fireKeyUp(keyHandler, 18, 0, null, false, false, false);
@@ -768,11 +783,15 @@ testSuite({
     fireKeyDown(keyHandler, 61, 0);
     fireKeyPress(keyHandler, 0, 61);
     assertEquals(
-        '= should fire should fire a key event with the keyCode 187',
-        KeyCodes.EQUALS, keyEvent.keyCode);
+      '= should fire should fire a key event with the keyCode 187',
+      KeyCodes.EQUALS,
+      keyEvent.keyCode
+    );
     assertEquals(
-        '= should fire a key event with the charCode 61', KeyCodes.FF_EQUALS,
-        keyEvent.charCode);
+      '= should fire a key event with the charCode 61',
+      KeyCodes.FF_EQUALS,
+      keyEvent.charCode
+    );
   },
 
   testGeckoDash() {
@@ -794,11 +813,15 @@ testSuite({
 
     assertEquals('expected one key event to be fired', 1, keyEvents.length);
     assertEquals(
-        '= should fire a key event with the keyCode 189', KeyCodes.DASH,
-        keyEvents[0].keyCode);
+      '= should fire a key event with the keyCode 189',
+      KeyCodes.DASH,
+      keyEvents[0].keyCode
+    );
     assertEquals(
-        '= should fire a key event with the charCode 173', KeyCodes.FF_DASH,
-        keyEvents[0].charCode);
+      '= should fire a key event with the charCode 173',
+      KeyCodes.FF_DASH,
+      keyEvents[0].charCode
+    );
   },
 
   testMacGeckoSlash() {
@@ -822,11 +845,15 @@ testSuite({
     fireKeyDown(keyHandler, 191, 0, null, false, false, true);
     fireKeyPress(keyHandler, 0, 63, null, false, false, true);
     assertEquals(
-        '/ should fire a key event with the keyCode 191', KeyCodes.SLASH,
-        keyEvent.keyCode);
+      '/ should fire a key event with the keyCode 191',
+      KeyCodes.SLASH,
+      keyEvent.keyCode
+    );
     assertEquals(
-        '? should fire a key event with the charCode 63',
-        KeyCodes.QUESTION_MARK, keyEvent.charCode);
+      '? should fire a key event with the charCode 63',
+      KeyCodes.QUESTION_MARK,
+      keyEvent.charCode
+    );
   },
 
   testGetElement() {
@@ -878,17 +905,13 @@ testSuite({
     let gotInBubblePhase;
 
     const target = dom.createDom(TagName.DIV);
-    events.listen(
-        new KeyHandler(target, false /* bubble */), KeyHandler.EventType.KEY,
-        () => {
-          gotInBubblePhase = true;
-          assertTrue(gotInCapturePhase);
-        });
-    events.listen(
-        new KeyHandler(target, true /* capture */), KeyHandler.EventType.KEY,
-        () => {
-          gotInCapturePhase = true;
-        });
+    events.listen(new KeyHandler(target, false /* bubble */), KeyHandler.EventType.KEY, () => {
+      gotInBubblePhase = true;
+      assertTrue(gotInCapturePhase);
+    });
+    events.listen(new KeyHandler(target, true /* capture */), KeyHandler.EventType.KEY, () => {
+      gotInCapturePhase = true;
+    });
 
     testingEvents.fireKeySequence(target, KeyCodes.ESC);
     assertTrue(gotInBubblePhase);

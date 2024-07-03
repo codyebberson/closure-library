@@ -5,28 +5,24 @@
  */
 
 goog.module('goog.spell.SpellCheckTest');
-goog.setTestOnly();
 
 const SpellCheck = goog.require('goog.spell.SpellCheck');
 const testSuite = goog.require('goog.testing.testSuite');
 
 const TEST_DATA = {
-  'Test': [SpellCheck.WordStatus.VALID, []],
-  'strnig': [SpellCheck.WordStatus.INVALID, []],
-  'wtih': [SpellCheck.WordStatus.INVALID, []],
-  'a': [SpellCheck.WordStatus.VALID, []],
-  'few': [SpellCheck.WordStatus.VALID, []],
-  'misspeled': [
-    SpellCheck.WordStatus.INVALID,
-    ['misspelled', 'misapplied', 'misspell'],
-  ],
-  'words': [SpellCheck.WordStatus.VALID, []],
-  'Testing': [SpellCheck.WordStatus.VALID, []],
-  'set': [SpellCheck.WordStatus.VALID, []],
-  'status': [SpellCheck.WordStatus.VALID, []],
-  'vaild': [SpellCheck.WordStatus.INVALID, []],
-  'invalid': [SpellCheck.WordStatus.VALID, []],
-  'ignoerd': [SpellCheck.WordStatus.INVALID, []],
+  Test: [SpellCheck.WordStatus.VALID, []],
+  strnig: [SpellCheck.WordStatus.INVALID, []],
+  wtih: [SpellCheck.WordStatus.INVALID, []],
+  a: [SpellCheck.WordStatus.VALID, []],
+  few: [SpellCheck.WordStatus.VALID, []],
+  misspeled: [SpellCheck.WordStatus.INVALID, ['misspelled', 'misapplied', 'misspell']],
+  words: [SpellCheck.WordStatus.VALID, []],
+  Testing: [SpellCheck.WordStatus.VALID, []],
+  set: [SpellCheck.WordStatus.VALID, []],
+  status: [SpellCheck.WordStatus.VALID, []],
+  vaild: [SpellCheck.WordStatus.INVALID, []],
+  invalid: [SpellCheck.WordStatus.VALID, []],
+  ignoerd: [SpellCheck.WordStatus.INVALID, []],
 };
 
 /**

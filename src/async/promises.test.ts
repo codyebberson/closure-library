@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 goog.module('goog.async.promisesTest');
-goog.setTestOnly();
 
 const promises = goog.require('goog.async.promises');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -12,10 +11,10 @@ const testSuite = goog.require('goog.testing.testSuite');
 testSuite({
   async testAllMapValues_resolve() {
     const /** !Map<string, !Promise<number>> */ promiseMap = new Map([
-      ['a', Promise.resolve(1)],
-      ['b', Promise.resolve(2)],
-      ['c', Promise.resolve(3)],
-    ]);
+        ['a', Promise.resolve(1)],
+        ['b', Promise.resolve(2)],
+        ['c', Promise.resolve(3)],
+      ]);
 
     const expectedEntries = [
       ['a', 1],
@@ -23,8 +22,7 @@ testSuite({
       ['c', 3],
     ];
 
-    const /** !Map<string, number> */ resultMap =
-        await promises.allMapValues(promiseMap);
+    const /** !Map<string, number> */ resultMap = await promises.allMapValues(promiseMap);
     assertArrayEquals(expectedEntries, Array.from(resultMap.entries()));
   },
 
@@ -45,8 +43,7 @@ testSuite({
 
     const expectedEntries = [];
 
-    const /** !Map<string, number> */ resultMap =
-        await promises.allMapValues(promiseMap);
+    const /** !Map<string, number> */ resultMap = await promises.allMapValues(promiseMap);
     assertArrayEquals(expectedEntries, Array.from(resultMap.entries()));
   },
 
@@ -63,8 +60,7 @@ testSuite({
       ['c', 3],
     ];
 
-    const /** !Map<string, number> */ resultMap =
-        await promises.allMapValues(promiseMap);
+    const /** !Map<string, number> */ resultMap = await promises.allMapValues(promiseMap);
     assertArrayEquals(expectedEntries, Array.from(resultMap.entries()));
   },
 
@@ -78,16 +74,11 @@ testSuite({
       }
     }
 
-    const /** !Map<string, !TestIThenable> */ promiseMap = new Map([
-      ['a', new TestIThenable()],
-    ]);
+    const /** !Map<string, !TestIThenable> */ promiseMap = new Map([['a', new TestIThenable()]]);
 
-    const expectedEntries = [
-      ['a', undefined],
-    ];
+    const expectedEntries = [['a', undefined]];
 
-    const /** !Map<string, undefined> */ resultMap =
-        await promises.allMapValues(promiseMap);
+    const /** !Map<string, undefined> */ resultMap = await promises.allMapValues(promiseMap);
     assertArrayEquals(expectedEntries, Array.from(resultMap.entries()));
   },
 });

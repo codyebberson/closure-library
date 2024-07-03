@@ -33,7 +33,6 @@ goog.provide('goog.net.xpc.UriCfgFields');
 
 goog.require('goog.log');
 
-
 /**
  * Enum used to identify transport types.
  * @enum {number}
@@ -42,7 +41,6 @@ goog.net.xpc.TransportTypes = {
   UNDEFINED: 0,
   NATIVE_MESSAGING: 1,
 };
-
 
 /**
  * Enum containing transport names. These need to correspond to the
@@ -53,9 +51,7 @@ goog.net.xpc.TransportNames = {
   '1': 'NativeMessagingTransport',
 };
 
-
 // TODO(user): Add auth token support to other methods.
-
 
 /**
  * Field names used on configuration object.
@@ -180,7 +176,6 @@ goog.net.xpc.CfgFields = {
   NATIVE_TRANSPORT_PROTOCOL_VERSION: 'nativeProtocolVersion',
 };
 
-
 /**
  * Config properties that need to be URL sanitized.
  * @type {Array<string>}
@@ -193,7 +188,6 @@ goog.net.xpc.UriCfgFields = [
   goog.net.xpc.CfgFields.PEER_POLL_URI,
 ];
 
-
 /**
  * @enum {number}
  */
@@ -203,13 +197,11 @@ goog.net.xpc.ChannelStates = {
   CLOSED: 3,
 };
 
-
 /**
  * The name of the transport service (used for internal signalling).
  * @package @const {string}
  */
 goog.net.xpc.TRANSPORT_SERVICE = 'tp';
-
 
 /**
  * Transport signaling message: setup.
@@ -217,13 +209,11 @@ goog.net.xpc.TRANSPORT_SERVICE = 'tp';
  */
 goog.net.xpc.SETUP = 'SETUP';
 
-
 /**
  * Transport signaling message: setup for native transport protocol v2.
  * @const {string}
  */
 goog.net.xpc.SETUP_NTPV2 = 'SETUP_NTPV2';
-
 
 /**
  * Transport signaling message: setup acknowledgement.
@@ -231,13 +221,11 @@ goog.net.xpc.SETUP_NTPV2 = 'SETUP_NTPV2';
  */
 goog.net.xpc.SETUP_ACK = 'SETUP_ACK';
 
-
 /**
  * Transport signaling message: setup acknowledgement.
  * @const {string}
  */
 goog.net.xpc.SETUP_ACK_NTPV2 = 'SETUP_ACK_NTPV2';
-
 
 /**
  * Returns a random string.
@@ -245,8 +233,7 @@ goog.net.xpc.SETUP_ACK_NTPV2 = 'SETUP_ACK_NTPV2';
  * @param {string=} opt_characters The characters used.
  * @return {string} The random string.
  */
-goog.net.xpc.getRandomString = function(length, opt_characters) {
-  'use strict';
+goog.net.xpc.getRandomString = (length, opt_characters) => {
   const chars = opt_characters || goog.net.xpc.randomStringCharacters_;
   const charsLength = chars.length;
   let s = '';
@@ -256,15 +243,13 @@ goog.net.xpc.getRandomString = function(length, opt_characters) {
   return s;
 };
 
-
 /**
  * The default characters used for random string generation.
  * @type {string}
  * @private
  */
 goog.net.xpc.randomStringCharacters_ =
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-
+  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
 /**
  * The logger.

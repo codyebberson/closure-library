@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.proto2.MessageTest');
-goog.setTestOnly();
 
 const NestedEnum = goog.require('proto2.TestAllTypes.NestedEnum');
 const NestedMessage = goog.require('proto2.TestAllTypes.NestedMessage');
@@ -72,17 +71,17 @@ testSuite({
     message1.setOptionalInt64('1');
 
     assertEquals(
-        'message1.getOptionalInt64OrDefault should return 1', '1',
-        message1.getOptionalInt64OrDefault());
+      'message1.getOptionalInt64OrDefault should return 1',
+      '1',
+      message1.getOptionalInt64OrDefault()
+    );
     assertEquals(
-        'message2.getOptionalInt64OrDefault should return 1 too', '1',
-        message2.getOptionalInt64OrDefault());
-    assertTrue(
-        'message1.hasOptionalInt64() should be true',
-        message1.hasOptionalInt64());
-    assertFalse(
-        'message2.hasOptionalInt64() should be false',
-        message2.hasOptionalInt64());
+      'message2.getOptionalInt64OrDefault should return 1 too',
+      '1',
+      message2.getOptionalInt64OrDefault()
+    );
+    assertTrue('message1.hasOptionalInt64() should be true', message1.hasOptionalInt64());
+    assertFalse('message2.hasOptionalInt64() should be false', message2.hasOptionalInt64());
     assertFalse('as a result they are not equal', message1.equals(message2));
   },
 
@@ -93,21 +92,17 @@ testSuite({
     const group2 = new OptionalGroup();
 
     message1.setOptionalgroup(group1);
-    assertFalse(
-        'only message1 has OptionalGroup field', message1.equals(message2));
+    assertFalse('only message1 has OptionalGroup field', message1.equals(message2));
 
     message2.setOptionalgroup(group2);
-    assertTrue(
-        'both messages have OptionalGroup field', message1.equals(message2));
+    assertTrue('both messages have OptionalGroup field', message1.equals(message2));
 
     group1.setA(0);
     group2.setA(1);
-    assertFalse(
-        'different value in the optional group', message1.equals(message2));
+    assertFalse('different value in the optional group', message1.equals(message2));
 
     message1.clearOptionalgroup();
-    assertFalse(
-        'only message2 has OptionalGroup field', message1.equals(message2));
+    assertFalse('only message2 has OptionalGroup field', message1.equals(message2));
   },
 
   testEqualsWithRepeatedGroup() {
@@ -120,23 +115,17 @@ testSuite({
     assertFalse('message1 has more RepeatedGroups', message1.equals(message2));
 
     message2.addRepeatedgroup(group2);
-    assertTrue(
-        'both messages have one RepeatedGroup', message1.equals(message2));
+    assertTrue('both messages have one RepeatedGroup', message1.equals(message2));
 
     group1.addA(1);
-    assertFalse(
-        'message1 has more int32s in RepeatedGroup', message1.equals(message2));
+    assertFalse('message1 has more int32s in RepeatedGroup', message1.equals(message2));
 
     group2.addA(1);
-    assertTrue(
-        'both messages have one int32 in RepeatedGroup',
-        message1.equals(message2));
+    assertTrue('both messages have one int32 in RepeatedGroup', message1.equals(message2));
 
     group1.addA(1);
     group2.addA(2);
-    assertFalse(
-        'the messages have different int32s in RepeatedGroup',
-        message1.equals(message2));
+    assertFalse('the messages have different int32s in RepeatedGroup', message1.equals(message2));
   },
 
   testEqualsWithNestedMessage() {
@@ -152,8 +141,7 @@ testSuite({
     assertTrue('both messages have nested message', message1.equals(message2));
 
     nested1.setB(1);
-    assertFalse(
-        'different int32 in the nested messages', message1.equals(message2));
+    assertFalse('different int32 in the nested messages', message1.equals(message2));
 
     message1.clearOptionalNestedMessage();
     assertFalse('only message2 has nested message', message1.equals(message2));
@@ -208,17 +196,25 @@ testSuite({
 
     const clone = message.clone();
     assertNotEquals(
-        'different OptionalGroup instance', message.getOptionalgroup(),
-        clone.getOptionalgroup());
+      'different OptionalGroup instance',
+      message.getOptionalgroup(),
+      clone.getOptionalgroup()
+    );
     assertNotEquals(
-        'different RepeatedGroup array instance', message.repeatedgroupArray(),
-        clone.repeatedgroupArray());
+      'different RepeatedGroup array instance',
+      message.repeatedgroupArray(),
+      clone.repeatedgroupArray()
+    );
     assertNotEquals(
-        'different RepeatedGroup array item instance',
-        message.getRepeatedgroup(0), clone.getRepeatedgroup(0));
+      'different RepeatedGroup array item instance',
+      message.getRepeatedgroup(0),
+      clone.getRepeatedgroup(0)
+    );
     assertNotEquals(
-        'different NestedMessage instance', message.getOptionalNestedMessage(),
-        clone.getOptionalNestedMessage());
+      'different NestedMessage instance',
+      message.getOptionalNestedMessage(),
+      clone.getOptionalNestedMessage()
+    );
   },
 
   testCloneWithUnknownFields() {
@@ -233,9 +229,10 @@ testSuite({
 
     clone.setUnknown(999, 'foo');
     assertObjectEquals(
-        'the original and the cloned message are equal except ' +
-            'for the unknown fields',
-        message, clone);
+      'the original and the cloned message are equal except ' + 'for the unknown fields',
+      message,
+      clone
+    );
   },
 
   testCopyFromSameMessage() {
@@ -259,8 +256,7 @@ testSuite({
     target.addRepeatedInt32(33);
 
     target.copyFrom(source);
-    assertObjectEquals(
-        'source and target are equal after copyFrom', source, target);
+    assertObjectEquals('source and target are equal after copyFrom', source, target);
 
     target.copyFrom(source);
     assertObjectEquals('second copyFrom call has no effect', source, target);
@@ -282,8 +278,7 @@ testSuite({
 
     const target = new TestAllTypes();
     target.mergeFrom(source);
-    assertObjectEquals(
-        'source and target are equal after mergeFrom', source, target);
+    assertObjectEquals('source and target are equal after mergeFrom', source, target);
   },
 
   testMergeFromFlatMessage() {
@@ -304,8 +299,7 @@ testSuite({
     expected.setOptionalNestedEnum(NestedEnum.FOO);
 
     target.mergeFrom(source);
-    assertObjectEquals(
-        'expected and target are equal after mergeFrom', expected, target);
+    assertObjectEquals('expected and target are equal after mergeFrom', expected, target);
   },
 
   testMergeFromNestedMessage() {
@@ -326,8 +320,7 @@ testSuite({
     expected.setOptionalNestedMessage(nested);
 
     target.mergeFrom(source);
-    assertObjectEquals(
-        'expected and target are equal after mergeFrom', expected, target);
+    assertObjectEquals('expected and target are equal after mergeFrom', expected, target);
   },
 
   testMergeFromRepeatedMessage() {
@@ -340,8 +333,10 @@ testSuite({
 
     target.mergeFrom(source);
     assertArrayEquals(
-        'repeated_int32 array has elements from both messages', [1, 2, 3],
-        target.repeatedInt32Array());
+      'repeated_int32 array has elements from both messages',
+      [1, 2, 3],
+      target.repeatedInt32Array()
+    );
   },
 
   testInitDefaultsWithEmptyMessage() {
@@ -349,23 +344,23 @@ testSuite({
     message.initDefaults(false);
 
     assertFalse('int32 field is not set', message.hasOptionalInt32());
-    assertFalse(
-        'int64 [default=1] field is not set', message.hasOptionalInt64());
+    assertFalse('int64 [default=1] field is not set', message.hasOptionalInt64());
     assertTrue('optional group field is set', message.hasOptionalgroup());
-    assertFalse(
-        'int32 inside the group is not set', message.getOptionalgroup().hasA());
+    assertFalse('int32 inside the group is not set', message.getOptionalgroup().hasA());
     assertObjectEquals(
-        'value of the optional group', new OptionalGroup(),
-        message.getOptionalgroup());
+      'value of the optional group',
+      new OptionalGroup(),
+      message.getOptionalgroup()
+    );
     assertTrue('nested message is set', message.hasOptionalNestedMessage());
     assertObjectEquals(
-        'value of the nested message', new NestedMessage(),
-        message.getOptionalNestedMessage());
+      'value of the nested message',
+      new NestedMessage(),
+      message.getOptionalNestedMessage()
+    );
     assertFalse('nested enum is not set', message.hasOptionalNestedEnum());
     assertFalse('repeated int32 is not set', message.hasRepeatedInt32());
-    assertFalse(
-        'repeated nested message is not set',
-        message.hasRepeatedNestedMessage());
+    assertFalse('repeated nested message is not set', message.hasRepeatedNestedMessage());
 
     message = new TestAllTypes();
     message.initDefaults(true);
@@ -374,12 +369,12 @@ testSuite({
     assertEquals('value of the int32 field', 0, message.getOptionalInt32());
     assertTrue('int64 [default=1] field is set', message.hasOptionalInt64());
     assertEquals('value of the int64 field', '1', message.getOptionalInt64());
-    assertTrue(
-        'int32 inside nested message is set',
-        message.getOptionalNestedMessage().hasB());
+    assertTrue('int32 inside nested message is set', message.getOptionalNestedMessage().hasB());
     assertEquals(
-        'value of the int32 field inside the nested message', 0,
-        message.getOptionalNestedMessage().getB());
+      'value of the int32 field inside the nested message',
+      0,
+      message.getOptionalNestedMessage().getB()
+    );
   },
 
   testInitDefaultsWithNonEmptyMessage() {
@@ -398,29 +393,34 @@ testSuite({
 
     message.initDefaults(true);
     assertEquals('int32 field is unchanged', 32, message.getOptionalInt32());
-    assertEquals(
-        'int64 [default=1] field is unchanged', '64',
-        message.getOptionalInt64());
+    assertEquals('int64 [default=1] field is unchanged', '64', message.getOptionalInt64());
     assertTrue('bool field is initialized', message.hasOptionalBool());
     assertFalse('value of the bool field', message.getOptionalBool());
+    assertTrue('int32 inside the optional group is initialized', message.getOptionalgroup().hasA());
+    assertEquals(
+      'value of the int32 inside the optional group',
+      0,
+      message.getOptionalgroup().getA()
+    );
+    assertEquals(
+      'int32 inside nested message is unchanged',
+      66,
+      message.getOptionalNestedMessage().getB()
+    );
     assertTrue(
-        'int32 inside the optional group is initialized',
-        message.getOptionalgroup().hasA());
+      'int32 at index 0 of the repeated nested message is initialized',
+      message.getRepeatedNestedMessage(0).hasB()
+    );
     assertEquals(
-        'value of the int32 inside the optional group', 0,
-        message.getOptionalgroup().getA());
+      'value of int32 at index 0 of the repeated nested message',
+      0,
+      message.getRepeatedNestedMessage(0).getB()
+    );
     assertEquals(
-        'int32 inside nested message is unchanged', 66,
-        message.getOptionalNestedMessage().getB());
-    assertTrue(
-        'int32 at index 0 of the repeated nested message is initialized',
-        message.getRepeatedNestedMessage(0).hasB());
-    assertEquals(
-        'value of int32 at index 0 of the repeated nested message', 0,
-        message.getRepeatedNestedMessage(0).getB());
-    assertEquals(
-        'int32 at index 1 of the repeated nested message is unchanged', 66,
-        message.getRepeatedNestedMessage(1).getB());
+      'int32 at index 1 of the repeated nested message is unchanged',
+      66,
+      message.getRepeatedNestedMessage(1).getB()
+    );
   },
 
   testInitDefaultsTwice() {
@@ -428,15 +428,13 @@ testSuite({
     message.initDefaults(false);
     let clone = message.clone();
     clone.initDefaults(false);
-    assertObjectEquals(
-        'second call of initDefaults(false) has no effect', message, clone);
+    assertObjectEquals('second call of initDefaults(false) has no effect', message, clone);
 
     message = new TestAllTypes();
     message.initDefaults(true);
     clone = message.clone();
     clone.initDefaults(true);
-    assertObjectEquals(
-        'second call of initDefaults(true) has no effect', message, clone);
+    assertObjectEquals('second call of initDefaults(true) has no effect', message, clone);
   },
 
   testInitDefaultsThenClone() {
@@ -458,7 +456,7 @@ testSuite({
     // erroneously called when get$Value is called after set$Value.
     const message = new TestAllTypes();
 
-    const fakeDeserializer = {};  // stub with no methods defined; fails hard
+    const fakeDeserializer = {}; // stub with no methods defined; fails hard
     message.initializeForLazyDeserializer(fakeDeserializer, {} /* data */);
     message.setOptionalBool(true);
     assertEquals(true, message.getOptionalBool());
@@ -470,9 +468,8 @@ testSuite({
     // deserializer.
     const message = new TestAllTypes();
 
-    const fakeDeserializer = {};  // stub with no methods defined; fails hard
-    message.initializeForLazyDeserializer(
-        fakeDeserializer, {13: false} /* data */);
+    const fakeDeserializer = {}; // stub with no methods defined; fails hard
+    message.initializeForLazyDeserializer(fakeDeserializer, { 13: false } /* data */);
     assertEquals(true, message.hasOptionalBool());
   },
 
@@ -482,9 +479,8 @@ testSuite({
     // deserializer.
     const message = new TestAllTypes();
 
-    const fakeDeserializer = {};  // stub with no methods defined; fails hard
-    message.initializeForLazyDeserializer(
-        fakeDeserializer, {13: null} /* data */);
+    const fakeDeserializer = {}; // stub with no methods defined; fails hard
+    message.initializeForLazyDeserializer(fakeDeserializer, { 13: null } /* data */);
     assertEquals(false, message.hasOptionalBool());
   },
 });

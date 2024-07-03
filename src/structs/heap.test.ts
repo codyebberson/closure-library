@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.structs.HeapTest');
-goog.setTestOnly();
 
 const Heap = goog.require('goog.structs.Heap');
 const structs = goog.require('goog.structs');

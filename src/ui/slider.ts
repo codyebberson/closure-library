@@ -44,8 +44,6 @@ goog.require('goog.dom');
 goog.require('goog.dom.TagName');
 goog.require('goog.ui.SliderBase');
 
-
-
 /**
  * This creates a slider object.
  * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
@@ -54,13 +52,11 @@ goog.require('goog.ui.SliderBase');
  * @constructor
  * @extends {goog.ui.SliderBase}
  */
-goog.ui.Slider = function(opt_domHelper, opt_labelFn) {
-  'use strict';
+goog.ui.Slider = function (opt_domHelper, opt_labelFn) {
   goog.ui.SliderBase.call(this, opt_domHelper, opt_labelFn);
   this.rangeModel.setExtent(0);
 };
 goog.inherits(goog.ui.Slider, goog.ui.SliderBase);
-
 
 /**
  * Expose Enum of superclass (representing the orientation of the slider) within
@@ -70,21 +66,17 @@ goog.inherits(goog.ui.Slider, goog.ui.SliderBase);
  */
 goog.ui.Slider.Orientation = goog.ui.SliderBase.Orientation;
 
-
 /**
  * The prefix we use for the CSS class names for the slider and its elements.
  * @type {string}
  */
 goog.ui.Slider.CSS_CLASS_PREFIX = goog.getCssName('goog-slider');
 
-
 /**
  * CSS class name for the single thumb element.
  * @type {string}
  */
-goog.ui.Slider.THUMB_CSS_CLASS =
-    goog.getCssName(goog.ui.Slider.CSS_CLASS_PREFIX, 'thumb');
-
+goog.ui.Slider.THUMB_CSS_CLASS = goog.getCssName(goog.ui.Slider.CSS_CLASS_PREFIX, 'thumb');
 
 /**
  * Returns CSS class applied to the slider element.
@@ -93,32 +85,23 @@ goog.ui.Slider.THUMB_CSS_CLASS =
  * @protected
  * @override
  */
-goog.ui.Slider.prototype.getCssClass = function(orient) {
-  'use strict';
-  return orient == goog.ui.SliderBase.Orientation.VERTICAL ?
-      goog.getCssName(goog.ui.Slider.CSS_CLASS_PREFIX, 'vertical') :
-      goog.getCssName(goog.ui.Slider.CSS_CLASS_PREFIX, 'horizontal');
-};
-
+goog.ui.Slider.prototype.getCssClass = (orient) =>
+  orient == goog.ui.SliderBase.Orientation.VERTICAL
+    ? goog.getCssName(goog.ui.Slider.CSS_CLASS_PREFIX, 'vertical')
+    : goog.getCssName(goog.ui.Slider.CSS_CLASS_PREFIX, 'horizontal');
 
 /**
  * Returns CSS class applied to the slider's thumb element.
  * @return {string} The CSS class applied to the slider's thumb element.
  * @protected
  */
-goog.ui.Slider.prototype.getThumbCssClass = function() {
-  'use strict';
-  return goog.ui.Slider.THUMB_CSS_CLASS;
-};
-
+goog.ui.Slider.prototype.getThumbCssClass = () => goog.ui.Slider.THUMB_CSS_CLASS;
 
 /** @override */
-goog.ui.Slider.prototype.createThumbs = function() {
-  'use strict';
+goog.ui.Slider.prototype.createThumbs = function () {
   // find thumb
   var element = this.getElement();
-  var thumb = goog.dom.getElementsByTagNameAndClass(
-      null, this.getThumbCssClass(), element)[0];
+  var thumb = goog.dom.getElementsByTagNameAndClass(null, this.getThumbCssClass(), element)[0];
   if (!thumb) {
     thumb = this.createThumb_();
     element.appendChild(thumb);
@@ -126,16 +109,13 @@ goog.ui.Slider.prototype.createThumbs = function() {
   this.valueThumb = this.extentThumb = /** @type {!HTMLDivElement} */ (thumb);
 };
 
-
 /**
  * Creates the thumb element.
  * @return {!HTMLDivElement} The created thumb element.
  * @private
  */
-goog.ui.Slider.prototype.createThumb_ = function() {
-  'use strict';
-  var thumb = this.getDomHelper().createDom(
-      goog.dom.TagName.DIV, this.getThumbCssClass());
+goog.ui.Slider.prototype.createThumb_ = function () {
+  var thumb = this.getDomHelper().createDom(goog.dom.TagName.DIV, this.getThumbCssClass());
   goog.a11y.aria.setRole(thumb, goog.a11y.aria.Role.BUTTON);
   return /** @type {!HTMLDivElement} */ (thumb);
 };

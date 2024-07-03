@@ -17,8 +17,6 @@ goog.require('goog.i18n.uChar.NameFetcher');
 goog.require('goog.i18n.uCharNames');
 goog.require('goog.log');
 
-
-
 /**
  * Builds the NameFetcherLocal object. This is a simple object which retrieves
  * character names from a local bundled database. This database only covers
@@ -28,8 +26,7 @@ goog.require('goog.log');
  * @implements {goog.i18n.uChar.NameFetcher}
  * @final
  */
-goog.i18n.uChar.LocalNameFetcher = function() {};
-
+goog.i18n.uChar.LocalNameFetcher = () => {};
 
 /**
  * A reference to the LocalNameFetcher logger.
@@ -37,31 +34,23 @@ goog.i18n.uChar.LocalNameFetcher = function() {};
  * @type {goog.log.Logger}
  * @private
  */
-goog.i18n.uChar.LocalNameFetcher.logger_ =
-    goog.log.getLogger('goog.i18n.uChar.LocalNameFetcher');
-
+goog.i18n.uChar.LocalNameFetcher.logger_ = goog.log.getLogger('goog.i18n.uChar.LocalNameFetcher');
 
 /** @override */
-goog.i18n.uChar.LocalNameFetcher.prototype.prefetch = function(character) {};
-
+goog.i18n.uChar.LocalNameFetcher.prototype.prefetch = (character) => {};
 
 /** @override */
-goog.i18n.uChar.LocalNameFetcher.prototype.getName = function(
-    character, callback) {
-  'use strict';
+goog.i18n.uChar.LocalNameFetcher.prototype.getName = (character, callback) => {
   const localName = goog.i18n.uCharNames.toName(character);
   if (!localName) {
     goog.log.warning(
-        goog.i18n.uChar.LocalNameFetcher.logger_,
-        'No local name defined for character ' + character);
+      goog.i18n.uChar.LocalNameFetcher.logger_,
+      'No local name defined for character ' + character
+    );
   }
   callback(localName);
 };
 
-
 /** @override */
-goog.i18n.uChar.LocalNameFetcher.prototype.isNameAvailable = function(
-    character) {
-  'use strict';
-  return !!goog.i18n.uCharNames.toName(character);
-};
+goog.i18n.uChar.LocalNameFetcher.prototype.isNameAvailable = (character) =>
+  !!goog.i18n.uCharNames.toName(character);

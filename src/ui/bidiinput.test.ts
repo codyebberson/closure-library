@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.BidiInputTest');
-goog.setTestOnly();
 
 const BidiInput = goog.require('goog.ui.BidiInput');
 const dom = goog.require('goog.dom');
@@ -41,7 +40,7 @@ testSuite({
   testSetDirection() {
     const shalomInHebrew = '\u05e9\u05dc\u05d5\u05dd';
     const isAGoodLanguageInHebrew =
-        '\u05d4\u05d9\u05d0 \u05e9\u05e4\u05d4 \u05d8\u05d5\u05d1\u05d4';
+      '\u05d4\u05d9\u05d0 \u05e9\u05e4\u05d4 \u05d8\u05d5\u05d1\u05d4';
     const learnInHebrew = '\u05dc\u05de\u05d3';
 
     const bidiInput = new BidiInput();
@@ -83,7 +82,7 @@ testSuite({
   testSetDirection_inContenteditableDiv() {
     const shalomInHebrew = '\u05e9\u05dc\u05d5\u05dd';
     const isAGoodLanguageInHebrew =
-        '\u05d4\u05d9\u05d0 \u05e9\u05e4\u05d4 \u05d8\u05d5\u05d1\u05d4';
+      '\u05d4\u05d9\u05d0 \u05e9\u05e4\u05d4 \u05d8\u05d5\u05d1\u05d4';
     const learnInHebrew = '\u05dc\u05de\u05d3';
 
     const bidiInput = new BidiInput();

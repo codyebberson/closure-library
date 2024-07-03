@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.emoji.PopupEmojiPickerTest');
-goog.setTestOnly();
 
 const PopupEmojiPicker = goog.require('goog.ui.emoji.PopupEmojiPicker');
 const dom = goog.require('goog.dom');

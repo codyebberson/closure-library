@@ -32,7 +32,7 @@ const FunctionCall = goog.require('goog.testing.FunctionCall');
 const GoogPromise = goog.require('goog.Promise');
 const Resolver = goog.require('goog.promise.Resolver');
 const functions = goog.require('goog.functions');
-const {assertEquals} = goog.require('goog.testing.asserts');
+const { assertEquals } = goog.require('goog.testing.asserts');
 
 /**
  * A function that represents the return type of recordFunction.
@@ -44,7 +44,7 @@ function recordedFunctionType(var_args) {}
 /**
  * @return {number} Total number of calls.
  */
-recordedFunctionType.getCallCount = function() {};
+recordedFunctionType.getCallCount = () => {};
 
 /**
  * Asserts that the function was called a certain number of times.
@@ -52,26 +52,26 @@ recordedFunctionType.getCallCount = function() {};
  *     message (2 args).
  * @param {number=} opt_b The expected number of calls (2 args only).
  */
-recordedFunctionType.assertCallCount = function(a, opt_b) {};
+recordedFunctionType.assertCallCount = (a, opt_b) => {};
 
 /**
  * @return {!Array<!FunctionCall>} All calls of the recorded
  *     function.
  */
-recordedFunctionType.getCalls = function() {};
+recordedFunctionType.getCalls = () => {};
 
 /**
  * @return {?FunctionCall} Last call of the recorded function or
  *     null if it hasn't been called.
  */
-recordedFunctionType.getLastCall = function() {};
+recordedFunctionType.getLastCall = () => {};
 
 /**
  * Returns and removes the last call of the recorded function.
  * @return {?FunctionCall} Last call of the recorded function or
  *     null if it hasn't been called.
  */
-recordedFunctionType.popLastCall = function() {};
+recordedFunctionType.popLastCall = () => {};
 
 /**
  * Returns a GoogPromise that resolves when the recorded function has equal
@@ -79,13 +79,13 @@ recordedFunctionType.popLastCall = function() {};
  * @param {number} num
  * @return {!GoogPromise<undefined>}
  */
-recordedFunctionType.waitForCalls = function(num) {};
+recordedFunctionType.waitForCalls = (num) => {};
 
 /**
  * Resets the recorded function and removes all calls.
  * @return {void}
  */
-recordedFunctionType.reset = function() {};
+recordedFunctionType.reset = () => {};
 
 /**
  * Wraps the function into another one which calls the inner function and
@@ -115,14 +115,13 @@ function recordFunction(opt_f) {
 
   /** @type {!recordFunction.Type} */
   function recordedFunction() {
-    const owner = /** @type {?} */ (this);
     try {
-      const ret = f.apply(owner, arguments);
-      calls.push(new FunctionCall(f, owner, arguments, ret, null));
+      const ret = f.apply(this, arguments);
+      calls.push(new FunctionCall(f, this, arguments, ret, null));
       maybeResolveWaitForCalls();
       return ret;
     } catch (err) {
-      calls.push(new FunctionCall(f, owner, arguments, undefined, err));
+      calls.push(new FunctionCall(f, this, arguments, undefined, err));
       maybeResolveWaitForCalls();
       throw err;
     }
@@ -131,9 +130,7 @@ function recordFunction(opt_f) {
   /**
    * @return {number} Total number of calls.
    */
-  recordedFunction.getCallCount = function() {
-    return calls.length;
-  };
+  recordedFunction.getCallCount = () => calls.length;
 
   /**
    * Asserts that the function was called a certain number of times.
@@ -141,40 +138,35 @@ function recordFunction(opt_f) {
    *     message (2 args).
    * @param {number=} opt_b The expected number of calls (2 args only).
    */
-  recordedFunction.assertCallCount = function(a, opt_b) {
+  recordedFunction.assertCallCount = (a, opt_b) => {
     const actual = calls.length;
     const expected = arguments.length == 1 ? a : opt_b;
     const message = arguments.length == 1 ? '' : ' ' + a;
     assertEquals(
-        'Expected ' + expected + ' call(s), but was ' + actual + '.' + message,
-        expected, actual);
+      'Expected ' + expected + ' call(s), but was ' + actual + '.' + message,
+      expected,
+      actual
+    );
   };
 
   /**
    * @return {!Array<!FunctionCall>} All calls of the recorded
    *     function.
    */
-  recordedFunction.getCalls = function() {
-    return calls;
-  };
-
+  recordedFunction.getCalls = () => calls;
 
   /**
    * @return {?FunctionCall} Last call of the recorded function or
    *     null if it hasn't been called.
    */
-  recordedFunction.getLastCall = function() {
-    return calls[calls.length - 1] || null;
-  };
+  recordedFunction.getLastCall = () => calls[calls.length - 1] || null;
 
   /**
    * Returns and removes the last call of the recorded function.
    * @return {?FunctionCall} Last call of the recorded function or
    *     null if it hasn't been called.
    */
-  recordedFunction.popLastCall = function() {
-    return calls.pop() || null;
-  };
+  recordedFunction.popLastCall = () => calls.pop() || null;
 
   /**
    * Returns a GoogPromise that resolves when the recorded function has equal
@@ -182,7 +174,7 @@ function recordFunction(opt_f) {
    * @param {number} num
    * @return {!GoogPromise<undefined>}
    */
-  recordedFunction.waitForCalls = function(num) {
+  recordedFunction.waitForCalls = (num) => {
     waitForCallsCount = num;
     waitForCallsResolver = GoogPromise.withResolver();
     const promise = waitForCallsResolver.promise;
@@ -193,7 +185,7 @@ function recordFunction(opt_f) {
   /**
    * Resets the recorded function and removes all calls.
    */
-  recordedFunction.reset = function() {
+  recordedFunction.reset = () => {
     calls.length = 0;
     waitForCallsResolver = null;
     waitForCallsCount = 0;

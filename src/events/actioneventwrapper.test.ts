@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.events.actionEventWrapperTest');
-goog.setTestOnly();
 
 const EventHandler = goog.require('goog.events.EventHandler');
 const KeyCodes = goog.require('goog.events.KeyCodes');
@@ -31,9 +30,7 @@ function assertListenersExist(el, listenerCount, capt) {
   /** @suppress {visibility} suppression added to enable type checking */
   const EVENT_TYPES = googEvents.ActionEventWrapper_.EVENT_TYPES_;
   for (let i = 0; i < EVENT_TYPES.length; ++i) {
-    assertEquals(
-        listenerCount,
-        googEvents.getListeners(el, EVENT_TYPES[i], capt).length);
+    assertEquals(listenerCount, googEvents.getListeners(el, EVENT_TYPES[i], capt).length);
   }
 }
 
@@ -48,8 +45,7 @@ testSuite({
     events = [];
     eh = new EventHandler();
 
-    assertEquals(
-        'No listeners registered yet', 0, googEvents.getListeners(a).length);
+    assertEquals('No listeners registered yet', 0, googEvents.getListeners(a).length);
   },
 
   tearDown() {
@@ -72,13 +68,12 @@ testSuite({
     assertEquals('2 events should have been dispatched', 2, events.length);
     assertEquals('Should be a keypress event', 'keypress', events[1].type);
 
-    aria.setRole(
-        /** @type {!Element} */ (a), Role.BUTTON);
+    aria.setRole(/** @type {!Element} */ a, Role.BUTTON);
     testingEvents.fireKeySequence(a, KeyCodes.SPACE);
     assertEquals('3 events should have been dispatched', 3, events.length);
     assertEquals('Should be a keyup event', 'keyup', events[2].type);
     assertTrue('Should be default prevented.', events[2].defaultPrevented);
-    aria.removeRole(/** @type {!Element} */ (a));
+    aria.removeRole(/** @type {!Element} */ a);
 
     testingEvents.fireKeySequence(a, KeyCodes.SPACE);
     assertEquals('3 events should have been dispatched', 3, events.length);
@@ -86,13 +81,12 @@ testSuite({
     testingEvents.fireKeySequence(a, KeyCodes.ESC);
     assertEquals('3 events should have been dispatched', 3, events.length);
 
-    aria.setRole(
-        /** @type {!Element} */ (a), Role.TAB);
+    aria.setRole(/** @type {!Element} */ a, Role.TAB);
     testingEvents.fireKeySequence(a, KeyCodes.SPACE);
     assertEquals('4 events should have been dispatched', 4, events.length);
     assertEquals('Should be a keyup event', 'keyup', events[2].type);
     assertTrue('Should be default prevented.', events[2].defaultPrevented);
-    aria.removeRole(/** @type {!Element} */ (a));
+    aria.removeRole(/** @type {!Element} */ a);
 
     testingEvents.fireKeySequence(a, KeyCodes.SPACE);
     assertEquals('4 events should have been dispatched', 4, events.length);
@@ -106,7 +100,7 @@ testSuite({
 
   testAddActionListenerForHandleEvent() {
     const listener = {
-      handleEvent: function(e) {
+      handleEvent: (e) => {
         events.push(e);
       },
     };
@@ -122,13 +116,12 @@ testSuite({
     assertEquals('2 events should have been dispatched', 2, events.length);
     assertEquals('Should be a keypress event', 'keypress', events[1].type);
 
-    aria.setRole(
-        /** @type {!Element} */ (a), Role.BUTTON);
+    aria.setRole(/** @type {!Element} */ a, Role.BUTTON);
     testingEvents.fireKeySequence(a, KeyCodes.SPACE);
     assertEquals('3 events should have been dispatched', 3, events.length);
     assertEquals('Should be a keyup event', 'keyup', events[2].type);
     assertTrue('Should be default prevented.', events[2].defaultPrevented);
-    aria.removeRole(/** @type {!Element} */ (a));
+    aria.removeRole(/** @type {!Element} */ a);
 
     testingEvents.fireKeySequence(a, KeyCodes.SPACE);
     assertEquals('3 events should have been dispatched', 3, events.length);
@@ -187,7 +180,7 @@ testSuite({
       events.push(e);
     };
     const listener2 = (e) => {
-      events.push({type: 'err'});
+      events.push({ type: 'err' });
     };
 
     googEvents.listenWithWrapper(a, actionEventWrapper, listener1);
@@ -269,44 +262,31 @@ testSuite({
     const listener = (e) => {
       events.push(e);
     };
-    eh.listenWithWrapper(buttonEl, actionEventWrapper, e => {});
-    eh.listen(
-        buttonEl,
-        [
-          googEvents.EventType.KEYDOWN,
-          googEvents.EventType.KEYUP,
-        ],
-        listener);
+    eh.listenWithWrapper(buttonEl, actionEventWrapper, (e) => {});
+    eh.listen(buttonEl, [googEvents.EventType.KEYDOWN, googEvents.EventType.KEYUP], listener);
 
     testingEvents.fireKeySequence(buttonEl, KeyCodes.SPACE);
 
-    assertEquals(
-        'KEYUP and KEYDOWN events should have been fired.', 2, events.length);
+    assertEquals('KEYUP and KEYDOWN events should have been fired.', 2, events.length);
     assertTrue(
-        'SPACE key events should have been default prevented.',
-        events.every(e => e.defaultPrevented));
+      'SPACE key events should have been default prevented.',
+      events.every((e) => e.defaultPrevented)
+    );
   },
 
   testDontPreventDefaultUnknownRole() {
     const listener = (e) => {
       events.push(e);
     };
-    eh.listenWithWrapper(a, actionEventWrapper, e => {});
-    eh.listen(
-        a,
-        [
-          googEvents.EventType.KEYDOWN,
-          googEvents.EventType.KEYUP,
-        ],
-        listener);
+    eh.listenWithWrapper(a, actionEventWrapper, (e) => {});
+    eh.listen(a, [googEvents.EventType.KEYDOWN, googEvents.EventType.KEYUP], listener);
 
     testingEvents.fireKeySequence(a, KeyCodes.SPACE);
 
-    assertEquals(
-        'KEYUP and KEYDOWN events should have been fired.', 2, events.length);
+    assertEquals('KEYUP and KEYDOWN events should have been fired.', 2, events.length);
     assertTrue(
-        'SPACE key events should not have been default prevented on ' +
-            'non-interactable elements.',
-        events.every(e => !e.defaultPrevented));
+      'SPACE key events should not have been default prevented on ' + 'non-interactable elements.',
+      events.every((e) => !e.defaultPrevented)
+    );
   },
 });

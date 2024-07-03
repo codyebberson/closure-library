@@ -24,7 +24,6 @@ goog.require('goog.crypt');
 goog.require('goog.crypt.Hmac');
 goog.require('goog.crypt.Sha1');
 
-
 /**
  * Derives key from password using PBKDF2-SHA1
  * @param {!Array<number>} password Byte array representation of the password
@@ -35,9 +34,7 @@ goog.require('goog.crypt.Sha1');
  *     Must be multiple of 8.
  * @return {!Array<number>} Byte array representation of the output key.
  */
-goog.crypt.pbkdf2.deriveKeySha1 = function(
-    password, initialSalt, iterations, keyLength) {
-  'use strict';
+goog.crypt.pbkdf2.deriveKeySha1 = (password, initialSalt, iterations, keyLength) => {
   // Length of the HMAC-SHA1 output in bits.
   var HASH_LENGTH = 160;
 
@@ -47,11 +44,10 @@ goog.crypt.pbkdf2.deriveKeySha1 = function(
    *     the block to be computed.
    * @return {!Array<number>} Byte array representation of the output block.
    */
-  var computeBlock = function(index) {
-    'use strict';
+  var computeBlock = (index) => {
     // Initialize the result to be array of 0 such that its xor with the first
     // block would be the first block.
-    var result = (new Array(HASH_LENGTH / 8)).fill(0);
+    var result = new Array(HASH_LENGTH / 8).fill(0);
     // Initialize the salt of the first iteration to initialSalt || i.
     var salt = initialSalt.concat(index);
     var hmac = new goog.crypt.Hmac(new goog.crypt.Sha1(), password, 64);
@@ -64,10 +60,8 @@ goog.crypt.pbkdf2.deriveKeySha1 = function(
     return result;
   };
 
-  return goog.crypt.pbkdf2.deriveKeyFromPassword_(
-      computeBlock, HASH_LENGTH, keyLength);
+  return goog.crypt.pbkdf2.deriveKeyFromPassword_(computeBlock, HASH_LENGTH, keyLength);
 };
-
 
 /**
  * Compute each block of the key using PBKDF2.
@@ -80,9 +74,7 @@ goog.crypt.pbkdf2.deriveKeySha1 = function(
  * @return {!Array<number>} Byte array representation of the output key.
  * @private
  */
-goog.crypt.pbkdf2.deriveKeyFromPassword_ = function(
-    computeBlock, hashLength, keyLength) {
-  'use strict';
+goog.crypt.pbkdf2.deriveKeyFromPassword_ = (computeBlock, hashLength, keyLength) => {
   goog.asserts.assert(keyLength % 8 == 0, 'invalid output key length');
 
   // Compute and concactate each block of the output key.
@@ -103,7 +95,6 @@ goog.crypt.pbkdf2.deriveKeyFromPassword_ = function(
   return result;
 };
 
-
 /**
  * Converts an integer number to a 32-bit big endian byte array.
  * @param {number} n Integer number to be converted.
@@ -111,12 +102,11 @@ goog.crypt.pbkdf2.deriveKeyFromPassword_ = function(
  *     encoding of n.
  * @private
  */
-goog.crypt.pbkdf2.integerToByteArray_ = function(n) {
-  'use strict';
+goog.crypt.pbkdf2.integerToByteArray_ = (n) => {
   var result = new Array(4);
-  result[0] = n >> 24 & 0xFF;
-  result[1] = n >> 16 & 0xFF;
-  result[2] = n >> 8 & 0xFF;
-  result[3] = n & 0xFF;
+  result[0] = (n >> 24) & 0xff;
+  result[1] = (n >> 16) & 0xff;
+  result[2] = (n >> 8) & 0xff;
+  result[3] = n & 0xff;
   return result;
 };

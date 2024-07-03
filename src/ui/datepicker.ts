@@ -38,8 +38,6 @@ goog.requireType('goog.events.BrowserEvent');
 goog.requireType('goog.i18n.DateTimeSymbolsType');
 goog.requireType('goog.ui.DatePickerRenderer');
 
-
-
 /**
  * DatePicker widget. Allows a single date to be selected from a calendar like
  * view.
@@ -54,9 +52,7 @@ goog.requireType('goog.ui.DatePickerRenderer');
  * @constructor
  * @extends {goog.ui.Component}
  */
-goog.ui.DatePicker = function(
-    opt_date, opt_dateTimeSymbols, opt_domHelper, opt_renderer) {
-  'use strict';
+goog.ui.DatePicker = function (opt_date, opt_dateTimeSymbols, opt_domHelper, opt_renderer) {
   goog.ui.Component.call(this, opt_domHelper);
 
   /**
@@ -65,40 +61,36 @@ goog.ui.DatePicker = function(
    * @private
    */
   this.symbols_ = /** @type {!goog.i18n.DateTimeSymbolsType} */ (
-      opt_dateTimeSymbols || goog.i18n.DateTimeSymbols);
+    opt_dateTimeSymbols || goog.i18n.DateTimeSymbols
+  );
 
   this.wdayNames_ = this.symbols_.STANDALONESHORTWEEKDAYS;
 
   // Formatters for the various areas of the picker
   this.i18nDateFormatterDay_ = new goog.i18n.DateTimeFormat('d', this.symbols_);
-  this.i18nDateFormatterDay2_ =
-      new goog.i18n.DateTimeFormat('dd', this.symbols_);
-  this.i18nDateFormatterWeek_ =
-      new goog.i18n.DateTimeFormat('w', this.symbols_);
+  this.i18nDateFormatterDay2_ = new goog.i18n.DateTimeFormat('dd', this.symbols_);
+  this.i18nDateFormatterWeek_ = new goog.i18n.DateTimeFormat('w', this.symbols_);
   // Formatter for day grid aria label. This should always have the day first so
   // that a screenreader user can rapidly navigate within a month without always
   // hearing the month. It should read the month name instead of number to avoid
   // confusing people who are used to different orders.
-  this.i18nDateFormatterDayAriaLabel_ =
-      new goog.i18n.DateTimeFormat('d MMM', this.symbols_);
+  this.i18nDateFormatterDayAriaLabel_ = new goog.i18n.DateTimeFormat('d MMM', this.symbols_);
 
   // Previous implementation did not use goog.i18n.DateTimePatterns,
   // so it is likely most developers did not set it.
   // This is why the fallback to a hard-coded string (just in case).
   var patYear = goog.i18n.DateTimePatterns.YEAR_FULL || 'y';
-  this.i18nDateFormatterYear_ =
-      new goog.i18n.DateTimeFormat(patYear, this.symbols_);
+  this.i18nDateFormatterYear_ = new goog.i18n.DateTimeFormat(patYear, this.symbols_);
   var patMMMMy = goog.i18n.DateTimePatterns.YEAR_MONTH_FULL || 'MMMM y';
-  this.i18nDateFormatterMonthYear_ =
-      new goog.i18n.DateTimeFormat(patMMMMy, this.symbols_);
+  this.i18nDateFormatterMonthYear_ = new goog.i18n.DateTimeFormat(patMMMMy, this.symbols_);
 
   /**
    * @type {!goog.ui.DatePickerRenderer}
    * @private
    */
-  this.renderer_ = opt_renderer ||
-      new goog.ui.DefaultDatePickerRenderer(
-          this.getBaseCssClass(), this.getDomHelper());
+  this.renderer_ =
+    opt_renderer ||
+    new goog.ui.DefaultDatePickerRenderer(this.getBaseCssClass(), this.getDomHelper());
 
   /**
    * Selected date.
@@ -123,10 +115,14 @@ goog.ui.DatePicker = function(
    * @private
    */
   this.wdayStyles_ = ['', '', '', '', '', '', ''];
-  this.wdayStyles_[this.symbols_.WEEKENDRANGE[0]] =
-      goog.getCssName(this.getBaseCssClass(), 'wkend-start');
-  this.wdayStyles_[this.symbols_.WEEKENDRANGE[1]] =
-      goog.getCssName(this.getBaseCssClass(), 'wkend-end');
+  this.wdayStyles_[this.symbols_.WEEKENDRANGE[0]] = goog.getCssName(
+    this.getBaseCssClass(),
+    'wkend-start'
+  );
+  this.wdayStyles_[this.symbols_.WEEKENDRANGE[1]] = goog.getCssName(
+    this.getBaseCssClass(),
+    'wkend-end'
+  );
 
   /**
    * Object that is being used to cache key handlers.
@@ -186,14 +182,12 @@ goog.ui.DatePicker = function(
 };
 goog.inherits(goog.ui.DatePicker, goog.ui.Component);
 
-
 /**
  * Flag indicating if the number of weeks shown should be fixed.
  * @type {boolean}
  * @private
  */
 goog.ui.DatePicker.prototype.showFixedNumWeeks_ = true;
-
 
 /**
  * Flag indicating if days from other months should be shown.
@@ -202,15 +196,12 @@ goog.ui.DatePicker.prototype.showFixedNumWeeks_ = true;
  */
 goog.ui.DatePicker.prototype.showOtherMonths_ = true;
 
-
 /**
  * Range of dates which are selectable by the user.
  * @type {!goog.date.DateRange}
  * @private
  */
-goog.ui.DatePicker.prototype.userSelectableDateRange_ =
-    goog.date.DateRange.allTime();
-
+goog.ui.DatePicker.prototype.userSelectableDateRange_ = goog.date.DateRange.allTime();
 
 /**
  * Flag indicating if extra week(s) always should be added at the end. If not
@@ -221,7 +212,6 @@ goog.ui.DatePicker.prototype.userSelectableDateRange_ =
  */
 goog.ui.DatePicker.prototype.extraWeekAtEnd_ = true;
 
-
 /**
  * Flag indicating if week numbers should be shown.
  * @type {boolean}
@@ -229,14 +219,12 @@ goog.ui.DatePicker.prototype.extraWeekAtEnd_ = true;
  */
 goog.ui.DatePicker.prototype.showWeekNum_ = true;
 
-
 /**
  * Flag indicating if weekday names should be shown.
  * @type {boolean}
  * @private
  */
 goog.ui.DatePicker.prototype.showWeekdays_ = true;
-
 
 /**
  * Flag indicating if none is a valid selection. Also controls if the none
@@ -246,14 +234,12 @@ goog.ui.DatePicker.prototype.showWeekdays_ = true;
  */
 goog.ui.DatePicker.prototype.allowNone_ = true;
 
-
 /**
  * Flag indicating if the today button should be shown.
  * @type {boolean}
  * @private
  */
 goog.ui.DatePicker.prototype.showToday_ = true;
-
 
 /**
  * Flag indicating if the picker should use a simple navigation menu that only
@@ -265,7 +251,6 @@ goog.ui.DatePicker.prototype.showToday_ = true;
  */
 goog.ui.DatePicker.prototype.simpleNavigation_ = false;
 
-
 /**
  * Custom decorator function. Takes a goog.date.Date object, returns a String
  * representing a CSS class or null if no special styling applies
@@ -274,14 +259,12 @@ goog.ui.DatePicker.prototype.simpleNavigation_ = false;
  */
 goog.ui.DatePicker.prototype.decoratorFunction_ = null;
 
-
 /**
  * Flag indicating if the dates should be printed as a two charater date.
  * @type {boolean}
  * @private
  */
 goog.ui.DatePicker.prototype.longDateFormat_ = false;
-
 
 /**
  * Element for navigation row on a datepicker.
@@ -290,14 +273,12 @@ goog.ui.DatePicker.prototype.longDateFormat_ = false;
  */
 goog.ui.DatePicker.prototype.elNavRow_ = null;
 
-
 /**
  * Element for the month/year in the navigation row.
  * @type {?Element}
  * @private
  */
 goog.ui.DatePicker.prototype.elMonthYear_ = null;
-
 
 /**
  * Element for footer row on a datepicker.
@@ -306,15 +287,12 @@ goog.ui.DatePicker.prototype.elMonthYear_ = null;
  */
 goog.ui.DatePicker.prototype.elFootRow_ = null;
 
-
 /**
  * Generator for unique table cell IDs.
  * @type {goog.ui.IdGenerator}
  * @private
  */
-goog.ui.DatePicker.prototype.cellIdGenerator_ =
-    goog.ui.IdGenerator.getInstance();
-
+goog.ui.DatePicker.prototype.cellIdGenerator_ = goog.ui.IdGenerator.getInstance();
 
 /**
  * Name of base CSS class of datepicker.
@@ -322,7 +300,6 @@ goog.ui.DatePicker.prototype.cellIdGenerator_ =
  * @private
  */
 goog.ui.DatePicker.BASE_CSS_CLASS_ = goog.getCssName('goog-date-picker');
-
 
 /**
  * The numbers of years to show before and after the current one in the
@@ -333,14 +310,12 @@ goog.ui.DatePicker.BASE_CSS_CLASS_ = goog.getCssName('goog-date-picker');
  */
 goog.ui.DatePicker.YEAR_MENU_RANGE_ = 5;
 
-
 /**
  * The maximum number of rendered weeks a month can have.
  * @const {number}
  * @private
  */
 goog.ui.DatePicker.MAX_NUM_WEEKS_ = 6;
-
 
 /**
  * Constants for event names
@@ -351,102 +326,81 @@ goog.ui.DatePicker.Events = {
   CHANGE: 'change',
   CHANGE_ACTIVE_MONTH: 'changeActiveMonth',
   GRID_SIZE_INCREASE: 'gridSizeIncrease',
-  SELECT: 'select'
+  SELECT: 'select',
 };
-
 
 /**
  * @deprecated Use isInDocument.
  */
-goog.ui.DatePicker.prototype.isCreated =
-    goog.ui.DatePicker.prototype.isInDocument;
-
+goog.ui.DatePicker.prototype.isCreated = goog.ui.DatePicker.prototype.isInDocument;
 
 /**
  * @return {number} The first day of week, 0 = Monday, 6 = Sunday.
  */
-goog.ui.DatePicker.prototype.getFirstWeekday = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.getFirstWeekday = function () {
   return this.activeMonth_.getFirstDayOfWeek();
 };
-
 
 /**
  * Returns the class name associated with specified weekday.
  * @param {number} wday The week day number to get the class name for.
  * @return {string} The class name associated with specified weekday.
  */
-goog.ui.DatePicker.prototype.getWeekdayClass = function(wday) {
-  'use strict';
+goog.ui.DatePicker.prototype.getWeekdayClass = function (wday) {
   return this.wdayStyles_[wday];
 };
-
 
 /**
  * @return {boolean} Whether a fixed number of weeks should be showed. If not
  *     only weeks for the current month will be shown.
  */
-goog.ui.DatePicker.prototype.getShowFixedNumWeeks = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.getShowFixedNumWeeks = function () {
   return this.showFixedNumWeeks_;
 };
-
 
 /**
  * @return {boolean} Whether a days from the previous and/or next month should
  *     be shown.
  */
-goog.ui.DatePicker.prototype.getShowOtherMonths = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.getShowOtherMonths = function () {
   return this.showOtherMonths_;
 };
-
 
 /**
  * @return {boolean} Whether a the extra week(s) added always should be at the
  *     end. Only applicable if a fixed number of weeks are shown.
  */
-goog.ui.DatePicker.prototype.getExtraWeekAtEnd = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.getExtraWeekAtEnd = function () {
   return this.extraWeekAtEnd_;
 };
-
 
 /**
  * @return {boolean} Whether week numbers should be shown.
  */
-goog.ui.DatePicker.prototype.getShowWeekNum = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.getShowWeekNum = function () {
   return this.showWeekNum_;
 };
-
 
 /**
  * @return {boolean} Whether weekday names should be shown.
  */
-goog.ui.DatePicker.prototype.getShowWeekdayNames = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.getShowWeekdayNames = function () {
   return this.showWeekdays_;
 };
-
 
 /**
  * @return {boolean} Whether none is a valid selection.
  */
-goog.ui.DatePicker.prototype.getAllowNone = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.getAllowNone = function () {
   return this.allowNone_;
 };
-
 
 /**
  * @return {boolean} Whether the today button should be shown.
  */
-goog.ui.DatePicker.prototype.getShowToday = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.getShowToday = function () {
   return this.showToday_;
 };
-
 
 /**
  * Returns base CSS class. This getter is used to get base CSS class part.
@@ -454,24 +408,18 @@ goog.ui.DatePicker.prototype.getShowToday = function() {
  *   goog.getCssName(this.getBaseCssClass(), 'CLASS_NAME')
  * @return {string} Base CSS class.
  */
-goog.ui.DatePicker.prototype.getBaseCssClass = function() {
-  'use strict';
-  return goog.ui.DatePicker.BASE_CSS_CLASS_;
-};
-
+goog.ui.DatePicker.prototype.getBaseCssClass = () => goog.ui.DatePicker.BASE_CSS_CLASS_;
 
 /**
  * Sets the first day of week
  *
  * @param {number} wday Week day, 0 = Monday, 6 = Sunday.
  */
-goog.ui.DatePicker.prototype.setFirstWeekday = function(wday) {
-  'use strict';
+goog.ui.DatePicker.prototype.setFirstWeekday = function (wday) {
   this.activeMonth_.setFirstDayOfWeek(wday);
   this.updateCalendarGrid_();
   this.redrawWeekdays_();
 };
-
 
 /**
  * Sets class name associated with specified weekday.
@@ -479,12 +427,10 @@ goog.ui.DatePicker.prototype.setFirstWeekday = function(wday) {
  * @param {number} wday Week day, 0 = Monday, 6 = Sunday.
  * @param {string} className Class name.
  */
-goog.ui.DatePicker.prototype.setWeekdayClass = function(wday, className) {
-  'use strict';
+goog.ui.DatePicker.prototype.setWeekdayClass = function (wday, className) {
   this.wdayStyles_[wday] = className;
   this.redrawCalendarGrid_();
 };
-
 
 /**
  * Sets whether a fixed number of weeks should be showed. If not only weeks
@@ -492,12 +438,10 @@ goog.ui.DatePicker.prototype.setWeekdayClass = function(wday, className) {
  *
  * @param {boolean} b Whether a fixed number of weeks should be showed.
  */
-goog.ui.DatePicker.prototype.setShowFixedNumWeeks = function(b) {
-  'use strict';
+goog.ui.DatePicker.prototype.setShowFixedNumWeeks = function (b) {
   this.showFixedNumWeeks_ = b;
   this.updateCalendarGrid_();
 };
-
 
 /**
  * Sets whether a days from the previous and/or next month should be shown.
@@ -505,34 +449,28 @@ goog.ui.DatePicker.prototype.setShowFixedNumWeeks = function(b) {
  * @param {boolean} b Whether a days from the previous and/or next month should
  *     be shown.
  */
-goog.ui.DatePicker.prototype.setShowOtherMonths = function(b) {
-  'use strict';
+goog.ui.DatePicker.prototype.setShowOtherMonths = function (b) {
   this.showOtherMonths_ = b;
   this.redrawCalendarGrid_();
 };
-
 
 /**
  * Sets the range of dates which may be selected by the user.
  *
  * @param {!goog.date.DateRange} dateRange The range of selectable dates.
  */
-goog.ui.DatePicker.prototype.setUserSelectableDateRange = function(dateRange) {
-  'use strict';
+goog.ui.DatePicker.prototype.setUserSelectableDateRange = function (dateRange) {
   this.userSelectableDateRange_ = dateRange;
 };
-
 
 /**
  * Gets the range of dates which may be selected by the user.
  *
  * @return {!goog.date.DateRange} The range of selectable dates.
  */
-goog.ui.DatePicker.prototype.getUserSelectableDateRange = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.getUserSelectableDateRange = function () {
   return this.userSelectableDateRange_;
 };
-
 
 /**
  * Determine if a date may be selected by the user.
@@ -541,11 +479,9 @@ goog.ui.DatePicker.prototype.getUserSelectableDateRange = function() {
  * @return {boolean} Whether the user may select this date.
  * @private
  */
-goog.ui.DatePicker.prototype.isUserSelectableDate_ = function(date) {
-  'use strict';
+goog.ui.DatePicker.prototype.isUserSelectableDate_ = function (date) {
   return this.userSelectableDateRange_.contains(date);
 };
-
 
 /**
  * Sets whether the picker should use a simple navigation menu that only
@@ -555,13 +491,11 @@ goog.ui.DatePicker.prototype.isUserSelectableDate_ = function(date) {
  *
  * @param {boolean} b Whether to use a simple navigation menu.
  */
-goog.ui.DatePicker.prototype.setUseSimpleNavigationMenu = function(b) {
-  'use strict';
+goog.ui.DatePicker.prototype.setUseSimpleNavigationMenu = function (b) {
   this.simpleNavigation_ = b;
   this.updateNavigationRow_();
   this.updateCalendarGrid_();
 };
-
 
 /**
  * Sets whether a the extra week(s) added always should be at the end. Only
@@ -570,20 +504,17 @@ goog.ui.DatePicker.prototype.setUseSimpleNavigationMenu = function(b) {
  * @param {boolean} b Whether a the extra week(s) added always should be at the
  *     end.
  */
-goog.ui.DatePicker.prototype.setExtraWeekAtEnd = function(b) {
-  'use strict';
+goog.ui.DatePicker.prototype.setExtraWeekAtEnd = function (b) {
   this.extraWeekAtEnd_ = b;
   this.updateCalendarGrid_();
 };
-
 
 /**
  * Sets whether week numbers should be shown.
  *
  * @param {boolean} b Whether week numbers should be shown.
  */
-goog.ui.DatePicker.prototype.setShowWeekNum = function(b) {
-  'use strict';
+goog.ui.DatePicker.prototype.setShowWeekNum = function (b) {
   this.showWeekNum_ = b;
   // The navigation and footer rows may rely on the number of visible columns,
   // so we update them when adding/removing the weeknum column.
@@ -592,19 +523,16 @@ goog.ui.DatePicker.prototype.setShowWeekNum = function(b) {
   this.updateCalendarGrid_();
 };
 
-
 /**
  * Sets whether weekday names should be shown.
  *
  * @param {boolean} b Whether weekday names should be shown.
  */
-goog.ui.DatePicker.prototype.setShowWeekdayNames = function(b) {
-  'use strict';
+goog.ui.DatePicker.prototype.setShowWeekdayNames = function (b) {
   this.showWeekdays_ = b;
   this.redrawWeekdays_();
   this.redrawCalendarGrid_();
 };
-
 
 /**
  * Sets whether the picker uses narrow weekday names ('M', 'T', 'W', ...).
@@ -613,55 +541,47 @@ goog.ui.DatePicker.prototype.setShowWeekdayNames = function(b) {
  *
  * @param {boolean} b Whether to use narrow weekday names.
  */
-goog.ui.DatePicker.prototype.setUseNarrowWeekdayNames = function(b) {
-  'use strict';
-  this.wdayNames_ = b ? this.symbols_.STANDALONENARROWWEEKDAYS :
-                        this.symbols_.STANDALONESHORTWEEKDAYS;
+goog.ui.DatePicker.prototype.setUseNarrowWeekdayNames = function (b) {
+  this.wdayNames_ = b
+    ? this.symbols_.STANDALONENARROWWEEKDAYS
+    : this.symbols_.STANDALONESHORTWEEKDAYS;
   this.redrawWeekdays_();
 };
-
 
 /**
  * Sets whether none is a valid selection.
  *
  * @param {boolean} b Whether none is a valid selection.
  */
-goog.ui.DatePicker.prototype.setAllowNone = function(b) {
-  'use strict';
+goog.ui.DatePicker.prototype.setAllowNone = function (b) {
   this.allowNone_ = b;
   if (this.elNone_) {
     this.updateTodayAndNone_();
   }
 };
 
-
 /**
  * Sets whether the today button should be shown.
  *
  * @param {boolean} b Whether the today button should be shown.
  */
-goog.ui.DatePicker.prototype.setShowToday = function(b) {
-  'use strict';
+goog.ui.DatePicker.prototype.setShowToday = function (b) {
   this.showToday_ = b;
   if (this.elToday_) {
     this.updateTodayAndNone_();
   }
 };
 
-
 /**
  * Updates the display style of the None and Today buttons as well as hides the
  * table foot if both are hidden.
  * @private
  */
-goog.ui.DatePicker.prototype.updateTodayAndNone_ = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.updateTodayAndNone_ = function () {
   goog.style.setElementShown(this.elToday_, this.showToday_);
   goog.style.setElementShown(this.elNone_, this.allowNone_);
-  goog.style.setElementShown(
-      this.tableFoot_, this.showToday_ || this.allowNone_);
+  goog.style.setElementShown(this.tableFoot_, this.showToday_ || this.allowNone_);
 };
-
 
 /**
  * Sets the decorator function. The function should have the interface of
@@ -671,11 +591,9 @@ goog.ui.DatePicker.prototype.updateTodayAndNone_ = function() {
  *
  * @param {Function} f The decorator function.
  */
-goog.ui.DatePicker.prototype.setDecorator = function(f) {
-  'use strict';
+goog.ui.DatePicker.prototype.setDecorator = function (f) {
   this.decoratorFunction_ = f;
 };
-
 
 /**
  * Sets whether the date will be printed in long format. In long format, dates
@@ -683,110 +601,88 @@ goog.ui.DatePicker.prototype.setDecorator = function(f) {
  *
  * @param {boolean} b Whethere dates should be printed in long format.
  */
-goog.ui.DatePicker.prototype.setLongDateFormat = function(b) {
-  'use strict';
+goog.ui.DatePicker.prototype.setLongDateFormat = function (b) {
   this.longDateFormat_ = b;
   this.redrawCalendarGrid_();
 };
 
-
 /**
  * Changes the active month to the previous one.
  */
-goog.ui.DatePicker.prototype.previousMonth = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.previousMonth = function () {
   this.activeMonth_.add(new goog.date.Interval(goog.date.Interval.MONTHS, -1));
   this.updateCalendarGrid_();
   this.fireChangeActiveMonthEvent_();
 };
 
-
 /**
  * Changes the active month to the next one.
  */
-goog.ui.DatePicker.prototype.nextMonth = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.nextMonth = function () {
   this.activeMonth_.add(new goog.date.Interval(goog.date.Interval.MONTHS, 1));
   this.updateCalendarGrid_();
   this.fireChangeActiveMonthEvent_();
 };
 
-
 /**
  * Changes the active year to the previous one.
  */
-goog.ui.DatePicker.prototype.previousYear = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.previousYear = function () {
   this.activeMonth_.add(new goog.date.Interval(goog.date.Interval.YEARS, -1));
   this.updateCalendarGrid_();
   this.fireChangeActiveMonthEvent_();
 };
 
-
 /**
  * Changes the active year to the next one.
  */
-goog.ui.DatePicker.prototype.nextYear = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.nextYear = function () {
   this.activeMonth_.add(new goog.date.Interval(goog.date.Interval.YEARS, 1));
   this.updateCalendarGrid_();
   this.fireChangeActiveMonthEvent_();
 };
 
-
 /**
  * Selects the current date.
  */
-goog.ui.DatePicker.prototype.selectToday = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.selectToday = function () {
   const today = new goog.date.Date();
   if (this.isUserSelectableDate_(today)) {
     this.setDate(today);
   }
 };
 
-
 /**
  * Clears the selection.
  */
-goog.ui.DatePicker.prototype.selectNone = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.selectNone = function () {
   if (this.allowNone_) {
     this.setDate(null);
   }
 };
 
-
 /**
  * @return {!goog.date.Date} The active month displayed.
  */
-goog.ui.DatePicker.prototype.getActiveMonth = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.getActiveMonth = function () {
   return this.activeMonth_.clone();
 };
-
 
 /**
  * @return {goog.date.Date} The selected date or null if nothing is selected.
  */
-goog.ui.DatePicker.prototype.getDate = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.getDate = function () {
   return this.date_ && this.date_.clone();
 };
-
 
 /**
  * @param {number} row The row in the grid.
  * @param {number} col The column in the grid.
  * @return {goog.date.Date} The date in the grid or null if there is none.
  */
-goog.ui.DatePicker.prototype.getDateAt = function(row, col) {
-  'use strict';
-  return this.grid_[row] ?
-      this.grid_[row][col] ? this.grid_[row][col].clone() : null :
-      null;
+goog.ui.DatePicker.prototype.getDateAt = function (row, col) {
+  return this.grid_[row] ? (this.grid_[row][col] ? this.grid_[row][col].clone() : null) : null;
 };
-
 
 /**
  * Returns a date element given a row and column. In elTable_, the elements that
@@ -798,28 +694,22 @@ goog.ui.DatePicker.prototype.getDateAt = function(row, col) {
  * @return {Element} The element in the grid or null if there is none.
  * @protected
  */
-goog.ui.DatePicker.prototype.getDateElementAt = function(row, col) {
-  'use strict';
+goog.ui.DatePicker.prototype.getDateElementAt = function (row, col) {
   if (row < 0 || col < 0) {
     return null;
   }
   var adjustedRow = row + 1;
-  return this.elTable_[adjustedRow] ?
-      this.elTable_[adjustedRow][col + 1] || null :
-      null;
+  return this.elTable_[adjustedRow] ? this.elTable_[adjustedRow][col + 1] || null : null;
 };
-
 
 /**
  * Sets the selected date. Will always fire the SELECT event.
  *
  * @param {goog.date.Date|Date} date Date to select or null to select nothing.
  */
-goog.ui.DatePicker.prototype.setDate = function(date) {
-  'use strict';
+goog.ui.DatePicker.prototype.setDate = function (date) {
   this.setDate_(date, true);
 };
-
 
 /**
  * Sets the selected date, and optionally fires the SELECT event based on param.
@@ -828,16 +718,17 @@ goog.ui.DatePicker.prototype.setDate = function(date) {
  * @param {boolean} fireSelection Whether to fire the selection event.
  * @private
  */
-goog.ui.DatePicker.prototype.setDate_ = function(date, fireSelection) {
-  'use strict';
+goog.ui.DatePicker.prototype.setDate_ = function (date, fireSelection) {
   // Check if the month has been changed.
-  var sameMonth = date == this.date_ ||
-      date && this.date_ && date.getFullYear() == this.date_.getFullYear() &&
-          date.getMonth() == this.date_.getMonth();
+  var sameMonth =
+    date == this.date_ ||
+    (date &&
+      this.date_ &&
+      date.getFullYear() == this.date_.getFullYear() &&
+      date.getMonth() == this.date_.getMonth());
 
   // Check if the date has been changed.
-  var sameDate =
-      date == this.date_ || sameMonth && date.getDate() == this.date_.getDate();
+  var sameDate = date == this.date_ || (sameMonth && date.getDate() == this.date_.getDate());
 
   // Set current date to clone of supplied goog.date.Date or Date.
   this.date_ = date && new goog.date.Date(date);
@@ -858,14 +749,20 @@ goog.ui.DatePicker.prototype.setDate_ = function(date, fireSelection) {
     // TODO(eae): Standardize selection and change events with other components.
     // Fire select event.
     var selectEvent = new goog.ui.DatePickerEvent(
-        goog.ui.DatePicker.Events.SELECT, this, this.date_);
+      goog.ui.DatePicker.Events.SELECT,
+      this,
+      this.date_
+    );
     this.dispatchEvent(selectEvent);
   }
 
   // Fire change event.
   if (!sameDate) {
     var changeEvent = new goog.ui.DatePickerEvent(
-        goog.ui.DatePicker.Events.CHANGE, this, this.date_);
+      goog.ui.DatePicker.Events.CHANGE,
+      this,
+      this.date_
+    );
     this.dispatchEvent(changeEvent);
   }
 
@@ -875,15 +772,13 @@ goog.ui.DatePicker.prototype.setDate_ = function(date, fireSelection) {
   }
 };
 
-
 /**
  * Updates the navigation row (navigating months and maybe years) in the navRow_
  * element of a created picker.
  * @private
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.ui.DatePicker.prototype.updateNavigationRow_ = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.updateNavigationRow_ = function () {
   if (!this.elNavRow_) {
     return;
   }
@@ -895,67 +790,92 @@ goog.ui.DatePicker.prototype.updateNavigationRow_ = function() {
   }
 
   var fullDateFormat =
-      this.symbols_.DATEFORMATS[goog.i18n.DateTimeFormat.Format.FULL_DATE]
-          .toLowerCase();
+    this.symbols_.DATEFORMATS[goog.i18n.DateTimeFormat.Format.FULL_DATE].toLowerCase();
   this.renderer_.renderNavigationRow(
-      row, this.simpleNavigation_, this.showWeekNum_, fullDateFormat);
+    row,
+    this.simpleNavigation_,
+    this.showWeekNum_,
+    fullDateFormat
+  );
 
   if (this.simpleNavigation_) {
     this.addPreventDefaultClickHandler_(
-        row, goog.getCssName(this.getBaseCssClass(), 'previousMonth'),
-        this.previousMonth);
+      row,
+      goog.getCssName(this.getBaseCssClass(), 'previousMonth'),
+      this.previousMonth
+    );
     var previousMonthElement = goog.dom.getElementByClass(
-        goog.getCssName(this.getBaseCssClass(), 'previousMonth'), row);
+      goog.getCssName(this.getBaseCssClass(), 'previousMonth'),
+      row
+    );
     if (previousMonthElement) {
       // Note: we're hiding the next and previous month buttons from screen
       // readers because keyboard navigation doesn't currently work correctly
       // with them. If that is fixed, we can show the buttons again.
-      goog.a11y.aria.setState(
-          previousMonthElement, goog.a11y.aria.State.HIDDEN, true);
+      goog.a11y.aria.setState(previousMonthElement, goog.a11y.aria.State.HIDDEN, true);
       previousMonthElement.tabIndex = -1;
     }
 
     this.addPreventDefaultClickHandler_(
-        row, goog.getCssName(this.getBaseCssClass(), 'nextMonth'),
-        this.nextMonth);
+      row,
+      goog.getCssName(this.getBaseCssClass(), 'nextMonth'),
+      this.nextMonth
+    );
     var nextMonthElement = goog.dom.getElementByClass(
-        goog.getCssName(this.getBaseCssClass(), 'nextMonth'), row);
+      goog.getCssName(this.getBaseCssClass(), 'nextMonth'),
+      row
+    );
     if (nextMonthElement) {
-      goog.a11y.aria.setState(
-          nextMonthElement, goog.a11y.aria.State.HIDDEN, true);
+      goog.a11y.aria.setState(nextMonthElement, goog.a11y.aria.State.HIDDEN, true);
       nextMonthElement.tabIndex = -1;
     }
 
     this.elMonthYear_ = goog.dom.getElementByClass(
-        goog.getCssName(this.getBaseCssClass(), 'monthyear'), row);
+      goog.getCssName(this.getBaseCssClass(), 'monthyear'),
+      row
+    );
   } else {
     this.addPreventDefaultClickHandler_(
-        row, goog.getCssName(this.getBaseCssClass(), 'previousMonth'),
-        this.previousMonth);
+      row,
+      goog.getCssName(this.getBaseCssClass(), 'previousMonth'),
+      this.previousMonth
+    );
     this.addPreventDefaultClickHandler_(
-        row, goog.getCssName(this.getBaseCssClass(), 'nextMonth'),
-        this.nextMonth);
+      row,
+      goog.getCssName(this.getBaseCssClass(), 'nextMonth'),
+      this.nextMonth
+    );
     this.addPreventDefaultClickHandler_(
-        row, goog.getCssName(this.getBaseCssClass(), 'month'),
-        this.showMonthMenu_);
+      row,
+      goog.getCssName(this.getBaseCssClass(), 'month'),
+      this.showMonthMenu_
+    );
 
     this.addPreventDefaultClickHandler_(
-        row, goog.getCssName(this.getBaseCssClass(), 'previousYear'),
-        this.previousYear);
+      row,
+      goog.getCssName(this.getBaseCssClass(), 'previousYear'),
+      this.previousYear
+    );
     this.addPreventDefaultClickHandler_(
-        row, goog.getCssName(this.getBaseCssClass(), 'nextYear'),
-        this.nextYear);
+      row,
+      goog.getCssName(this.getBaseCssClass(), 'nextYear'),
+      this.nextYear
+    );
     this.addPreventDefaultClickHandler_(
-        row, goog.getCssName(this.getBaseCssClass(), 'year'),
-        this.showYearMenu_);
+      row,
+      goog.getCssName(this.getBaseCssClass(), 'year'),
+      this.showYearMenu_
+    );
 
     this.elMonth_ = goog.dom.getElementByClass(
-        goog.getCssName(this.getBaseCssClass(), 'month'), row);
-    this.elYear_ = goog.dom.getDomHelper().getElementByClass(
-        goog.getCssName(this.getBaseCssClass(), 'year'), row);
+      goog.getCssName(this.getBaseCssClass(), 'month'),
+      row
+    );
+    this.elYear_ = goog.dom
+      .getDomHelper()
+      .getElementByClass(goog.getCssName(this.getBaseCssClass(), 'year'), row);
   }
 };
-
 
 /**
  * Setup click handler with prevent default.
@@ -967,25 +887,24 @@ goog.ui.DatePicker.prototype.updateNavigationRow_ = function() {
  * @param {Function} handlerFunction The click handler function.
  * @private
  */
-goog.ui.DatePicker.prototype.addPreventDefaultClickHandler_ = function(
-    parentElement, cssName, handlerFunction) {
-  'use strict';
+goog.ui.DatePicker.prototype.addPreventDefaultClickHandler_ = function (
+  parentElement,
+  cssName,
+  handlerFunction
+) {
   var element = goog.dom.getElementByClass(cssName, parentElement);
-  this.getHandler().listen(element, goog.events.EventType.CLICK, function(e) {
-    'use strict';
+  this.getHandler().listen(element, goog.events.EventType.CLICK, function (e) {
     e.preventDefault();
     handlerFunction.call(this, e);
   });
 };
-
 
 /**
  * Updates the footer row (with select buttons) in the footRow_ element of a
  * created picker.
  * @private
  */
-goog.ui.DatePicker.prototype.updateFooterRow_ = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.updateFooterRow_ = function () {
   if (!this.elFootRow_) {
     return;
   }
@@ -998,35 +917,40 @@ goog.ui.DatePicker.prototype.updateFooterRow_ = function() {
   this.renderer_.renderFooterRow(row, this.showWeekNum_);
 
   this.addPreventDefaultClickHandler_(
-      row, goog.getCssName(this.getBaseCssClass(), 'today-btn'),
-      this.selectToday);
+    row,
+    goog.getCssName(this.getBaseCssClass(), 'today-btn'),
+    this.selectToday
+  );
   this.addPreventDefaultClickHandler_(
-      row, goog.getCssName(this.getBaseCssClass(), 'none-btn'),
-      this.selectNone);
+    row,
+    goog.getCssName(this.getBaseCssClass(), 'none-btn'),
+    this.selectNone
+  );
 
   this.elToday_ = goog.dom.getElementByClass(
-      goog.getCssName(this.getBaseCssClass(), 'today-btn'), row);
+    goog.getCssName(this.getBaseCssClass(), 'today-btn'),
+    row
+  );
   this.elNone_ = goog.dom.getElementByClass(
-      goog.getCssName(this.getBaseCssClass(), 'none-btn'), row);
+    goog.getCssName(this.getBaseCssClass(), 'none-btn'),
+    row
+  );
 
   this.updateTodayAndNone_();
 };
-
 
 /**
  * @override
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.ui.DatePicker.prototype.decorateInternal = function(el) {
-  'use strict';
+goog.ui.DatePicker.prototype.decorateInternal = function (el) {
   goog.ui.DatePicker.superClass_.decorateInternal.call(this, el);
   goog.asserts.assert(el);
   goog.dom.classlist.add(el, this.getBaseCssClass());
 
-  var table =
-      this.dom_.createDom(goog.dom.TagName.TABLE, {'role': 'presentation'});
+  var table = this.dom_.createDom(goog.dom.TagName.TABLE, { role: 'presentation' });
   var thead = this.dom_.createDom(goog.dom.TagName.THEAD);
-  var tbody = this.dom_.createDom(goog.dom.TagName.TBODY, {'role': 'grid'});
+  var tbody = this.dom_.createDom(goog.dom.TagName.TBODY, { role: 'grid' });
   var tfoot = this.dom_.createDom(goog.dom.TagName.TFOOT);
 
   tbody.tabIndex = 0;
@@ -1036,7 +960,7 @@ goog.ui.DatePicker.prototype.decorateInternal = function(el) {
   this.tableBody_ = tbody;
   this.tableFoot_ = tfoot;
 
-  var row = this.dom_.createDom(goog.dom.TagName.TR, {'role': 'row'});
+  var row = this.dom_.createDom(goog.dom.TagName.TR, { role: 'row' });
   row.className = goog.getCssName(this.getBaseCssClass(), 'head');
   this.elNavRow_ = row;
   this.updateNavigationRow_();
@@ -1051,9 +975,10 @@ goog.ui.DatePicker.prototype.decorateInternal = function(el) {
     for (var j = 0; j < 8; j++) {
       cell = this.dom_.createElement(j == 0 || i == 0 ? 'th' : 'td');
       if ((j == 0 || i == 0) && j != i) {
-        cell.className = (j == 0) ?
-            goog.getCssName(this.getBaseCssClass(), 'week') :
-            goog.getCssName(this.getBaseCssClass(), 'wday');
+        cell.className =
+          j == 0
+            ? goog.getCssName(this.getBaseCssClass(), 'week')
+            : goog.getCssName(this.getBaseCssClass(), 'wday');
         goog.a11y.aria.setRole(cell, j == 0 ? 'rowheader' : 'columnheader');
       } else if (i !== 0 && j !== 0) {
         goog.a11y.aria.setRole(cell, 'gridcell');
@@ -1072,7 +997,6 @@ goog.ui.DatePicker.prototype.decorateInternal = function(el) {
   this.updateFooterRow_();
   tfoot.appendChild(row);
 
-
   table.cellSpacing = '0';
   table.cellPadding = '0';
   table.appendChild(thead);
@@ -1086,32 +1010,27 @@ goog.ui.DatePicker.prototype.decorateInternal = function(el) {
   el.tabIndex = 0;
 };
 
-
 /** @override */
-goog.ui.DatePicker.prototype.createDom = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.createDom = function () {
   goog.ui.DatePicker.superClass_.createDom.call(this);
   this.decorateInternal(this.getElement());
 };
 
-
 /** @override */
-goog.ui.DatePicker.prototype.enterDocument = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.enterDocument = function () {
   goog.ui.DatePicker.superClass_.enterDocument.call(this);
 
   var eh = this.getHandler();
+  eh.listen(this.tableBody_, goog.events.EventType.CLICK, this.handleGridClick_);
   eh.listen(
-      this.tableBody_, goog.events.EventType.CLICK, this.handleGridClick_);
-  eh.listen(
-      this.getKeyHandlerForElement_(this.getElement()),
-      goog.events.KeyHandler.EventType.KEY, this.handleGridKeyPress_);
+    this.getKeyHandlerForElement_(this.getElement()),
+    goog.events.KeyHandler.EventType.KEY,
+    this.handleGridKeyPress_
+  );
 };
 
-
 /** @override */
-goog.ui.DatePicker.prototype.exitDocument = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.exitDocument = function () {
   goog.ui.DatePicker.superClass_.exitDocument.call(this);
   this.destroyMenu_();
   for (var uid in this.keyHandlers_) {
@@ -1120,16 +1039,13 @@ goog.ui.DatePicker.prototype.exitDocument = function() {
   this.keyHandlers_ = {};
 };
 
-
 /**
  * @deprecated Use decorate instead.
  */
 goog.ui.DatePicker.prototype.create = goog.ui.DatePicker.prototype.decorate;
 
-
 /** @override */
-goog.ui.DatePicker.prototype.disposeInternal = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.disposeInternal = function () {
   goog.ui.DatePicker.superClass_.disposeInternal.call(this);
 
   this.elTable_ = null;
@@ -1144,22 +1060,20 @@ goog.ui.DatePicker.prototype.disposeInternal = function() {
   this.elNone_ = null;
 };
 
-
 /**
  * Click handler for date grid.
  * @param {goog.events.BrowserEvent} event Click event.
  * @private
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.ui.DatePicker.prototype.handleGridClick_ = function(event) {
-  'use strict';
+goog.ui.DatePicker.prototype.handleGridClick_ = function (event) {
   if (event.target.tagName == goog.dom.TagName.TD) {
     // colIndex/rowIndex is broken in Safari, find position by looping
-    var el, x = -2, y = -2;  // first col/row is for weekday/weeknum
-    for (el = event.target; el; el = el.previousSibling, x++) {
-    }
-    for (el = event.target.parentNode; el; el = el.previousSibling, y++) {
-    }
+    var el,
+      x = -2,
+      y = -2; // first col/row is for weekday/weeknum
+    for (el = event.target; el; el = el.previousSibling, x++) {}
+    for (el = event.target.parentNode; el; el = el.previousSibling, y++) {}
     var obj = this.grid_[y][x];
     if (this.isUserSelectableDate_(obj)) {
       this.setDate(obj.clone());
@@ -1167,51 +1081,49 @@ goog.ui.DatePicker.prototype.handleGridClick_ = function(event) {
   }
 };
 
-
 /**
  * Keypress handler for date grid.
  *
  * @param {goog.events.BrowserEvent} event Keypress event.
  * @private
  */
-goog.ui.DatePicker.prototype.handleGridKeyPress_ = function(event) {
-  'use strict';
+goog.ui.DatePicker.prototype.handleGridKeyPress_ = function (event) {
   var months, days;
   switch (event.keyCode) {
-    case 33:  // Page up
+    case 33: // Page up
       event.preventDefault();
       months = -1;
       break;
-    case 34:  // Page down
+    case 34: // Page down
       event.preventDefault();
       months = 1;
       break;
-    case 37:  // Left
+    case 37: // Left
       event.preventDefault();
       days = -1;
       break;
-    case 39:  // Right
+    case 39: // Right
       event.preventDefault();
       days = 1;
       break;
-    case 38:  // Down
+    case 38: // Down
       event.preventDefault();
       days = -7;
       break;
-    case 40:  // Up
+    case 40: // Up
       event.preventDefault();
       days = 7;
       break;
-    case 36:  // Home
+    case 36: // Home
       event.preventDefault();
       this.selectToday();
       break;
-    case 46:  // Delete
+    case 46: // Delete
       event.preventDefault();
       this.selectNone();
       break;
-    case 13:  // Enter
-    case 32:  // Space
+    case 13: // Enter
+    case 32: // Space
       event.preventDefault();
       this.setDate_(this.date_, true /* fireSelection */);
     default:
@@ -1233,15 +1145,13 @@ goog.ui.DatePicker.prototype.handleGridKeyPress_ = function(event) {
   }
 };
 
-
 /**
  * Click handler for month button. Opens month selection menu.
  *
  * @param {goog.events.BrowserEvent} event Click event.
  * @private
  */
-goog.ui.DatePicker.prototype.showMonthMenu_ = function(event) {
-  'use strict';
+goog.ui.DatePicker.prototype.showMonthMenu_ = function (event) {
   event.stopPropagation();
 
   var list = [];
@@ -1249,10 +1159,12 @@ goog.ui.DatePicker.prototype.showMonthMenu_ = function(event) {
     list.push(this.symbols_.STANDALONEMONTHS[i]);
   }
   this.createMenu_(
-      this.elMonth_, list, this.handleMonthMenuClick_,
-      this.symbols_.STANDALONEMONTHS[this.activeMonth_.getMonth()]);
+    this.elMonth_,
+    list,
+    this.handleMonthMenuClick_,
+    this.symbols_.STANDALONEMONTHS[this.activeMonth_.getMonth()]
+  );
 };
-
 
 /**
  * Click handler for year button. Opens year selection menu.
@@ -1260,23 +1172,27 @@ goog.ui.DatePicker.prototype.showMonthMenu_ = function(event) {
  * @param {goog.events.BrowserEvent} event Click event.
  * @private
  */
-goog.ui.DatePicker.prototype.showYearMenu_ = function(event) {
-  'use strict';
+goog.ui.DatePicker.prototype.showYearMenu_ = function (event) {
   event.stopPropagation();
 
   var list = [];
   var year = this.activeMonth_.getFullYear();
   var loopDate = this.activeMonth_.clone();
-  for (var i = -goog.ui.DatePicker.YEAR_MENU_RANGE_;
-       i <= goog.ui.DatePicker.YEAR_MENU_RANGE_; i++) {
+  for (
+    var i = -goog.ui.DatePicker.YEAR_MENU_RANGE_;
+    i <= goog.ui.DatePicker.YEAR_MENU_RANGE_;
+    i++
+  ) {
     loopDate.setFullYear(year + i);
     list.push(this.i18nDateFormatterYear_.format(loopDate));
   }
   this.createMenu_(
-      this.elYear_, list, this.handleYearMenuClick_,
-      this.i18nDateFormatterYear_.format(this.activeMonth_));
+    this.elYear_,
+    list,
+    this.handleYearMenuClick_,
+    this.i18nDateFormatterYear_.format(this.activeMonth_)
+  );
 };
-
 
 /**
  * Call back function for month menu.
@@ -1284,8 +1200,7 @@ goog.ui.DatePicker.prototype.showYearMenu_ = function(event) {
  * @param {Element} target Selected item.
  * @private
  */
-goog.ui.DatePicker.prototype.handleMonthMenuClick_ = function(target) {
-  'use strict';
+goog.ui.DatePicker.prototype.handleMonthMenuClick_ = function (target) {
   var itemIndex = Number(target.getAttribute('itemIndex'));
   this.activeMonth_.setMonth(itemIndex);
   this.updateCalendarGrid_();
@@ -1295,28 +1210,24 @@ goog.ui.DatePicker.prototype.handleMonthMenuClick_ = function(target) {
   }
 };
 
-
 /**
  * Call back function for year menu.
  *
  * @param {Element} target Selected item.
  * @private
  */
-goog.ui.DatePicker.prototype.handleYearMenuClick_ = function(target) {
-  'use strict';
+goog.ui.DatePicker.prototype.handleYearMenuClick_ = function (target) {
   if (target.firstChild.nodeType == goog.dom.NodeType.TEXT) {
     // We use the same technique used for months to get the position of the
     // item in the menu, as the year is not necessarily numeric.
     var itemIndex = Number(target.getAttribute('itemIndex'));
     var year = this.activeMonth_.getFullYear();
-    this.activeMonth_.setFullYear(
-        year + itemIndex - goog.ui.DatePicker.YEAR_MENU_RANGE_);
+    this.activeMonth_.setFullYear(year + itemIndex - goog.ui.DatePicker.YEAR_MENU_RANGE_);
     this.updateCalendarGrid_();
   }
 
   this.elYear_.focus();
 };
-
 
 /**
  * Support function for menu creation.
@@ -1327,9 +1238,7 @@ goog.ui.DatePicker.prototype.handleYearMenuClick_ = function(target) {
  * @private
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.ui.DatePicker.prototype.createMenu_ = function(
-    srcEl, items, method, selected) {
-  'use strict';
+goog.ui.DatePicker.prototype.createMenu_ = function (srcEl, items, method, selected) {
   this.destroyMenu_();
 
   var el = this.dom_.createElement(goog.dom.TagName.DIV);
@@ -1357,21 +1266,20 @@ goog.ui.DatePicker.prototype.createMenu_ = function(
   if (!this.menuSelected_) {
     this.menuSelected_ = /** @type {Element} */ (ul.firstChild);
   }
-  this.menuSelected_.className =
-      goog.getCssName(this.getBaseCssClass(), 'menu-selected');
+  this.menuSelected_.className = goog.getCssName(this.getBaseCssClass(), 'menu-selected');
   this.menuCallback_ = method;
 
   var eh = this.getHandler();
   eh.listen(this.menu_, goog.events.EventType.CLICK, this.handleMenuClick_);
   eh.listen(
-      this.getKeyHandlerForElement_(this.menu_),
-      goog.events.KeyHandler.EventType.KEY, this.handleMenuKeyPress_);
-  eh.listen(
-      this.dom_.getDocument(), goog.events.EventType.CLICK, this.destroyMenu_);
+    this.getKeyHandlerForElement_(this.menu_),
+    goog.events.KeyHandler.EventType.KEY,
+    this.handleMenuKeyPress_
+  );
+  eh.listen(this.dom_.getDocument(), goog.events.EventType.CLICK, this.destroyMenu_);
   el.tabIndex = 0;
   el.focus();
 };
-
 
 /**
  * Click handler for menu.
@@ -1379,8 +1287,7 @@ goog.ui.DatePicker.prototype.createMenu_ = function(
  * @param {goog.events.BrowserEvent} event Click event.
  * @private
  */
-goog.ui.DatePicker.prototype.handleMenuClick_ = function(event) {
-  'use strict';
+goog.ui.DatePicker.prototype.handleMenuClick_ = function (event) {
   event.stopPropagation();
 
   this.destroyMenu_();
@@ -1389,40 +1296,38 @@ goog.ui.DatePicker.prototype.handleMenuClick_ = function(event) {
   }
 };
 
-
 /**
  * Keypress handler for menu.
  * @param {goog.events.BrowserEvent} event Keypress event.
  * @private
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.ui.DatePicker.prototype.handleMenuKeyPress_ = function(event) {
-  'use strict';
+goog.ui.DatePicker.prototype.handleMenuKeyPress_ = function (event) {
   // Prevent the grid keypress handler from catching the keypress event.
   event.stopPropagation();
 
   var el;
   var menuSelected = this.menuSelected_;
   switch (event.keyCode) {
-    case 35:  // End
+    case 35: // End
       event.preventDefault();
       el = menuSelected.parentNode.lastChild;
       break;
-    case 36:  // Home
+    case 36: // Home
       event.preventDefault();
       el = menuSelected.parentNode.firstChild;
       break;
-    case 38:  // Up
+    case 38: // Up
       event.preventDefault();
       el = menuSelected.previousSibling;
       break;
-    case 40:  // Down
+    case 40: // Down
       event.preventDefault();
       el = menuSelected.nextSibling;
       break;
-    case 13:  // Enter
-    case 9:   // Tab
-    case 0:   // Space
+    case 13: // Enter
+    case 9: // Tab
+    case 0: // Space
       event.preventDefault();
       this.destroyMenu_();
       this.menuCallback_(menuSelected);
@@ -1435,27 +1340,24 @@ goog.ui.DatePicker.prototype.handleMenuKeyPress_ = function(event) {
   }
 };
 
-
 /**
  * Support function for menu destruction.
  * @private
  */
-goog.ui.DatePicker.prototype.destroyMenu_ = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.destroyMenu_ = function () {
   if (this.menu_) {
     var eh = this.getHandler();
     eh.unlisten(this.menu_, goog.events.EventType.CLICK, this.handleMenuClick_);
     eh.unlisten(
-        this.getKeyHandlerForElement_(this.menu_),
-        goog.events.KeyHandler.EventType.KEY, this.handleMenuKeyPress_);
-    eh.unlisten(
-        this.dom_.getDocument(), goog.events.EventType.CLICK,
-        this.destroyMenu_);
+      this.getKeyHandlerForElement_(this.menu_),
+      goog.events.KeyHandler.EventType.KEY,
+      this.handleMenuKeyPress_
+    );
+    eh.unlisten(this.dom_.getDocument(), goog.events.EventType.CLICK, this.destroyMenu_);
     goog.dom.removeNode(this.menu_);
     delete this.menu_;
   }
 };
-
 
 /**
  * Determines the dates/weekdays for the current month and builds an in memory
@@ -1463,8 +1365,7 @@ goog.ui.DatePicker.prototype.destroyMenu_ = function() {
  *
  * @private
  */
-goog.ui.DatePicker.prototype.updateCalendarGrid_ = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.updateCalendarGrid_ = function () {
   if (!this.getElement()) {
     return;
   }
@@ -1474,16 +1375,13 @@ goog.ui.DatePicker.prototype.updateCalendarGrid_ = function() {
 
   // Show year name of select month
   if (this.elMonthYear_) {
-    goog.dom.setTextContent(
-        this.elMonthYear_, this.i18nDateFormatterMonthYear_.format(date));
+    goog.dom.setTextContent(this.elMonthYear_, this.i18nDateFormatterMonthYear_.format(date));
   }
   if (this.elMonth_) {
-    goog.dom.setTextContent(
-        this.elMonth_, this.symbols_.STANDALONEMONTHS[date.getMonth()]);
+    goog.dom.setTextContent(this.elMonth_, this.symbols_.STANDALONEMONTHS[date.getMonth()]);
   }
   if (this.elYear_) {
-    goog.dom.setTextContent(
-        this.elYear_, this.i18nDateFormatterYear_.format(date));
+    goog.dom.setTextContent(this.elYear_, this.i18nDateFormatterYear_.format(date));
   }
 
   var wday = date.getWeekday();
@@ -1500,9 +1398,11 @@ goog.ui.DatePicker.prototype.updateCalendarGrid_ = function() {
   // Create weekday/day grid
   var dayInterval = new goog.date.Interval(goog.date.Interval.DAYS, 1);
   this.grid_ = [];
-  for (var y = 0; y < 6; y++) {  // Weeks
+  for (var y = 0; y < 6; y++) {
+    // Weeks
     this.grid_[y] = [];
-    for (var x = 0; x < 7; x++) {  // Weekdays
+    for (var x = 0; x < 7; x++) {
+      // Weekdays
       this.grid_[y][x] = date.clone();
       // Date.add breaks dates before year 100 by adding 1900 to the year
       // value. As a workaround we store the year before the add and reapply it
@@ -1520,15 +1420,13 @@ goog.ui.DatePicker.prototype.updateCalendarGrid_ = function() {
   this.redrawCalendarGrid_();
 };
 
-
 /**
  * Draws calendar view from in memory representation and applies class names
  * depending on the selection, weekday and whatever the day belongs to the
  * active month or not.
  * @private
  */
-goog.ui.DatePicker.prototype.redrawCalendarGrid_ = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.redrawCalendarGrid_ = function () {
   if (!this.getElement()) {
     return;
   }
@@ -1547,11 +1445,13 @@ goog.ui.DatePicker.prototype.redrawCalendarGrid_ = function() {
     // Draw week number, if enabled
     if (this.showWeekNum_) {
       goog.dom.setTextContent(
-          this.elTable_[y + 1][0],
-          this.i18nDateFormatterWeek_.format(this.grid_[y][0]));
+        this.elTable_[y + 1][0],
+        this.i18nDateFormatterWeek_.format(this.grid_[y][0])
+      );
       goog.dom.classlist.set(
-          this.elTable_[y + 1][0],
-          goog.getCssName(this.getBaseCssClass(), 'week'));
+        this.elTable_[y + 1][0],
+        goog.getCssName(this.getBaseCssClass(), 'week')
+      );
     } else {
       goog.dom.setTextContent(this.elTable_[y + 1][0], '');
       goog.dom.classlist.set(this.elTable_[y + 1][0], '');
@@ -1569,13 +1469,11 @@ goog.ui.DatePicker.prototype.redrawCalendarGrid_ = function() {
       goog.asserts.assert(el, 'The table DOM element cannot be null.');
       goog.a11y.aria.setRole(el, 'gridcell');
       // Set the aria label of the grid cell to the month plus the day.
-      goog.a11y.aria.setLabel(
-          el, this.i18nDateFormatterDayAriaLabel_.format(o));
+      goog.a11y.aria.setLabel(el, this.i18nDateFormatterDayAriaLabel_.format(o));
 
       var classes = [goog.getCssName(this.getBaseCssClass(), 'date')];
       if (!this.isUserSelectableDate_(o)) {
-        classes.push(
-            goog.getCssName(this.getBaseCssClass(), 'unavailable-date'));
+        classes.push(goog.getCssName(this.getBaseCssClass(), 'unavailable-date'));
       }
       if (this.showOtherMonths_ || o.getMonth() == month) {
         // Date belongs to previous or next month
@@ -1590,18 +1488,23 @@ goog.ui.DatePicker.prototype.redrawCalendarGrid_ = function() {
         }
 
         // Current date
-        if (o.getDate() == todayDate && o.getMonth() == todayMonth &&
-            o.getFullYear() == todayYear) {
+        if (
+          o.getDate() == todayDate &&
+          o.getMonth() == todayMonth &&
+          o.getFullYear() == todayYear
+        ) {
           classes.push(goog.getCssName(this.getBaseCssClass(), 'today'));
         }
 
         // Selected date
-        if (this.date_ && o.getDate() == this.date_.getDate() &&
-            o.getMonth() == this.date_.getMonth() &&
-            o.getFullYear() == this.date_.getFullYear()) {
+        if (
+          this.date_ &&
+          o.getDate() == this.date_.getDate() &&
+          o.getMonth() == this.date_.getMonth() &&
+          o.getFullYear() == this.date_.getFullYear()
+        ) {
           classes.push(goog.getCssName(this.getBaseCssClass(), 'selected'));
-          goog.asserts.assert(
-              this.tableBody_, 'The table body DOM element cannot be null');
+          goog.asserts.assert(this.tableBody_, 'The table body DOM element cannot be null');
           this.selectedCell_ = el;
         }
 
@@ -1614,9 +1517,9 @@ goog.ui.DatePicker.prototype.redrawCalendarGrid_ = function() {
         }
 
         // Set cell text to the date and apply classes.
-        var formattedDate = this.longDateFormat_ ?
-            this.i18nDateFormatterDay2_.format(o) :
-            this.i18nDateFormatterDay_.format(o);
+        var formattedDate = this.longDateFormat_
+          ? this.i18nDateFormatterDay2_.format(o)
+          : this.i18nDateFormatterDay_.format(o);
         goog.dom.setTextContent(el, formattedDate);
         // Date belongs to previous or next month and showOtherMonths is false,
         // clear text and classes.
@@ -1631,11 +1534,10 @@ goog.ui.DatePicker.prototype.redrawCalendarGrid_ = function() {
     // are always shown as no month has less than 28 days).
     if (y >= 4) {
       var parentEl = /** @type {Element} */ (
-          this.elTable_[y + 1][0].parentElement ||
-          this.elTable_[y + 1][0].parentNode);
+        this.elTable_[y + 1][0].parentElement || this.elTable_[y + 1][0].parentNode
+      );
       var doesMonthHaveThisWeek = this.grid_[y][0].getMonth() == month;
-      goog.style.setElementShown(
-          parentEl, doesMonthHaveThisWeek || this.showFixedNumWeeks_);
+      goog.style.setElementShown(parentEl, doesMonthHaveThisWeek || this.showFixedNumWeeks_);
 
       if (!doesMonthHaveThisWeek) {
         numberOfWeeksInThisMonth = Math.min(numberOfWeeksInThisMonth, y);
@@ -1644,9 +1546,8 @@ goog.ui.DatePicker.prototype.redrawCalendarGrid_ = function() {
   }
 
   var numberOfRowsInGrid =
-      (this.showFixedNumWeeks_ ? goog.ui.DatePicker.MAX_NUM_WEEKS_ :
-                                 numberOfWeeksInThisMonth) +
-      (this.showWeekdays_ ? 1 : 0);
+    (this.showFixedNumWeeks_ ? goog.ui.DatePicker.MAX_NUM_WEEKS_ : numberOfWeeksInThisMonth) +
+    (this.showWeekdays_ ? 1 : 0);
 
   if (this.lastNumberOfRowsInGrid_ != numberOfRowsInGrid) {
     if (this.lastNumberOfRowsInGrid_ < numberOfRowsInGrid) {
@@ -1656,27 +1557,25 @@ goog.ui.DatePicker.prototype.redrawCalendarGrid_ = function() {
   }
 };
 
-
 /**
  * Fires the CHANGE_ACTIVE_MONTH event.
  * @private
  */
-goog.ui.DatePicker.prototype.fireChangeActiveMonthEvent_ = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.fireChangeActiveMonthEvent_ = function () {
   var changeMonthEvent = new goog.ui.DatePickerEvent(
-      goog.ui.DatePicker.Events.CHANGE_ACTIVE_MONTH, this,
-      this.getActiveMonth());
+    goog.ui.DatePicker.Events.CHANGE_ACTIVE_MONTH,
+    this,
+    this.getActiveMonth()
+  );
   this.dispatchEvent(changeMonthEvent);
 };
-
 
 /**
  * Draw weekday names, if enabled. Start with whatever day has been set as the
  * first day of week.
  * @private
  */
-goog.ui.DatePicker.prototype.redrawWeekdays_ = function() {
-  'use strict';
+goog.ui.DatePicker.prototype.redrawWeekdays_ = function () {
   if (!this.getElement()) {
     return;
   }
@@ -1688,10 +1587,10 @@ goog.ui.DatePicker.prototype.redrawWeekdays_ = function() {
     }
   }
   var parentEl = /** @type {Element} */ (
-      this.elTable_[0][0].parentElement || this.elTable_[0][0].parentNode);
+    this.elTable_[0][0].parentElement || this.elTable_[0][0].parentNode
+  );
   goog.style.setElementShown(parentEl, this.showWeekdays_);
 };
-
 
 /**
  * Returns the key handler for an element and caches it so that it can be
@@ -1700,16 +1599,13 @@ goog.ui.DatePicker.prototype.redrawWeekdays_ = function() {
  * @return {goog.events.KeyHandler} The key handler for the element.
  * @private
  */
-goog.ui.DatePicker.prototype.getKeyHandlerForElement_ = function(el) {
-  'use strict';
+goog.ui.DatePicker.prototype.getKeyHandlerForElement_ = function (el) {
   var uid = goog.getUid(el);
   if (!(uid in this.keyHandlers_)) {
     this.keyHandlers_[uid] = new goog.events.KeyHandler(el);
   }
   return this.keyHandlers_[uid];
 };
-
-
 
 /**
  * Object representing a date picker event.
@@ -1721,8 +1617,7 @@ goog.ui.DatePicker.prototype.getKeyHandlerForElement_ = function(el) {
  * @extends {goog.events.Event}
  * @final
  */
-goog.ui.DatePickerEvent = function(type, target, date) {
-  'use strict';
+goog.ui.DatePickerEvent = function (type, target, date) {
   goog.events.Event.call(this, type, target);
 
   /**

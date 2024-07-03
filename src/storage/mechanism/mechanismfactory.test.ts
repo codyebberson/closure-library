@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.storage.mechanism.mechanismfactoryTest');
-goog.setTestOnly();
 
 const iterableMechanismTests = goog.require('goog.storage.mechanism.iterableMechanismTests');
 const mechanismSeparationTests = goog.require('goog.storage.mechanism.mechanismSeparationTests');
@@ -19,7 +18,6 @@ let mechanismShared;
 let mechanismSeparate;
 
 testSuite({
-
   setUp() {
     mechanism = mechanismfactory.create('test');
     mechanismShared = mechanismfactory.create('test');
@@ -64,35 +62,21 @@ testSuite({
   },
 
   ...mechanismTests.register({
-    getMechanism: function() {
-      return mechanism;
-    },
-    getMinimumQuota: function() {
-      return 0;
-    },
+    getMechanism: () => mechanism,
+    getMinimumQuota: () => 0,
   }),
 
   ...iterableMechanismTests.register({
-    getMechanism: function() {
-      return mechanism;
-    },
+    getMechanism: () => mechanism,
   }),
 
   ...mechanismSharingTests.register({
-    getMechanism: function() {
-      return mechanism;
-    },
-    getMechanismShared: function() {
-      return mechanismShared;
-    },
+    getMechanism: () => mechanism,
+    getMechanismShared: () => mechanismShared,
   }),
 
   ...mechanismSeparationTests.register({
-    getMechanism: function() {
-      return mechanism;
-    },
-    getMechanismSeparate: function() {
-      return mechanismSeparate;
-    },
+    getMechanism: () => mechanism,
+    getMechanismSeparate: () => mechanismSeparate,
   }),
 });

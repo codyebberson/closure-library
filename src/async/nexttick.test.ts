@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 goog.module('goog.async.nextTickTest');
-goog.setTestOnly();
 
 const ErrorHandler = goog.require('goog.debug.ErrorHandler');
 const GoogPromise = goog.require('goog.Promise');
@@ -32,7 +31,7 @@ testSuite({
     }
     // Unset the cached nextTickImpl behavior so it's re-evaluated for each
     // test.
-    nextTick.nextTickImpl = /** @type {?} */ (undefined);
+    nextTick.nextTickImpl = /** @type {?} */ undefined;
     propertyReplacer.reset();
   },
 
@@ -70,9 +69,7 @@ testSuite({
         }
       };
       for (let i = 0; i < max; i++) {
-        nextTick(
-            goog.partial(counterStep, i), undefined,
-            /* opt_useSetImmediate */ true);
+        nextTick(goog.partial(counterStep, i), undefined, /* opt_useSetImmediate */ true);
       }
       assertTrue(async);
     });
@@ -84,7 +81,7 @@ testSuite({
       let c = 0;
       const max = 10;
       let async = true;
-      const counterStep = function(i) {
+      const counterStep = function (i) {
         async = false;
         assertEquals('Order correct', i, c);
         assertEquals(context, this);
@@ -216,12 +213,13 @@ testSuite({
     propertyReplacer.set(window, 'setImmediate', undefined);
     propertyReplacer.set(window, 'MessageChannel', undefined);
 
-    let atNextTick = new GoogPromise(nextTick);
+    const atNextTick = new GoogPromise(nextTick);
 
     const frame = dom.getElementsByTagName(TagName.IFRAME)[0];
     frame.contentWindow.postMessage(
-        'bogus message',
-        window.location.protocol + '//' + window.location.host);
+      'bogus message',
+      window.location.protocol + '//' + window.location.host
+    );
 
     // The test passes if no error is ever reported by the <iframe>, as would
     // happen if the queue was pumped without an callbacks to run.

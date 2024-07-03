@@ -16,8 +16,6 @@ goog.require('goog.object');
 goog.require('goog.ui.ContainerRenderer');
 goog.requireType('goog.ui.Container');
 
-
-
 /**
  * Default renderer for {@link goog.ui.TabBar}s, based on the `TabPane`
  * code.  The tab bar's DOM structure is determined by its orientation and
@@ -31,13 +29,11 @@ goog.requireType('goog.ui.Container');
  * @constructor
  * @extends {goog.ui.ContainerRenderer}
  */
-goog.ui.TabBarRenderer = function() {
-  'use strict';
+goog.ui.TabBarRenderer = function () {
   goog.ui.ContainerRenderer.call(this, goog.a11y.aria.Role.TAB_LIST);
 };
 goog.inherits(goog.ui.TabBarRenderer, goog.ui.ContainerRenderer);
 goog.addSingletonGetter(goog.ui.TabBarRenderer);
-
 
 /**
  * Default CSS class to be applied to the root element of components rendered
@@ -46,18 +42,13 @@ goog.addSingletonGetter(goog.ui.TabBarRenderer);
  */
 goog.ui.TabBarRenderer.CSS_CLASS = goog.getCssName('goog-tab-bar');
 
-
 /**
  * Returns the CSS class name to be applied to the root element of all tab bars
  * rendered or decorated using this renderer.
  * @return {string} Renderer-specific CSS class name.
  * @override
  */
-goog.ui.TabBarRenderer.prototype.getCssClass = function() {
-  'use strict';
-  return goog.ui.TabBarRenderer.CSS_CLASS;
-};
-
+goog.ui.TabBarRenderer.prototype.getCssClass = () => goog.ui.TabBarRenderer.CSS_CLASS;
 
 /**
  * Sets the tab bar's state based on the given CSS class name, encountered
@@ -71,9 +62,7 @@ goog.ui.TabBarRenderer.prototype.getCssClass = function() {
  * @override
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.ui.TabBarRenderer.prototype.setStateFromClassName = function(
-    tabBar, className, baseClass) {
-  'use strict';
+goog.ui.TabBarRenderer.prototype.setStateFromClassName = function (tabBar, className, baseClass) {
   // Create the class-to-location lookup table on first access.
   if (!this.locationByClass_) {
     this.createLocationByClassMap_();
@@ -86,10 +75,13 @@ goog.ui.TabBarRenderer.prototype.setStateFromClassName = function(
     tabBar.setLocation(location);
   } else {
     goog.ui.TabBarRenderer.superClass_.setStateFromClassName.call(
-        this, tabBar, className, baseClass);
+      this,
+      tabBar,
+      className,
+      baseClass
+    );
   }
 };
-
 
 /**
  * Returns all CSS class names applicable to the tab bar, based on its state.
@@ -101,10 +93,8 @@ goog.ui.TabBarRenderer.prototype.setStateFromClassName = function(
  * @override
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.ui.TabBarRenderer.prototype.getClassNames = function(tabBar) {
-  'use strict';
-  var classNames =
-      goog.ui.TabBarRenderer.superClass_.getClassNames.call(this, tabBar);
+goog.ui.TabBarRenderer.prototype.getClassNames = function (tabBar) {
+  var classNames = goog.ui.TabBarRenderer.superClass_.getClassNames.call(this, tabBar);
 
   // Create the location-to-class lookup table on first access.
   if (!this.classByLocation_) {
@@ -116,13 +106,11 @@ goog.ui.TabBarRenderer.prototype.getClassNames = function(tabBar) {
   return classNames;
 };
 
-
 /**
  * Creates the location-to-class lookup table.
  * @private
  */
-goog.ui.TabBarRenderer.prototype.createClassByLocationMap_ = function() {
-  'use strict';
+goog.ui.TabBarRenderer.prototype.createClassByLocationMap_ = function () {
   var baseClass = this.getCssClass();
 
   /**
@@ -134,19 +122,22 @@ goog.ui.TabBarRenderer.prototype.createClassByLocationMap_ = function() {
    * @suppress {missingRequire} goog.ui.TabBar
    */
   this.classByLocation_ = goog.object.create(
-      goog.ui.TabBar.Location.TOP, goog.getCssName(baseClass, 'top'),
-      goog.ui.TabBar.Location.BOTTOM, goog.getCssName(baseClass, 'bottom'),
-      goog.ui.TabBar.Location.START, goog.getCssName(baseClass, 'start'),
-      goog.ui.TabBar.Location.END, goog.getCssName(baseClass, 'end'));
+    goog.ui.TabBar.Location.TOP,
+    goog.getCssName(baseClass, 'top'),
+    goog.ui.TabBar.Location.BOTTOM,
+    goog.getCssName(baseClass, 'bottom'),
+    goog.ui.TabBar.Location.START,
+    goog.getCssName(baseClass, 'start'),
+    goog.ui.TabBar.Location.END,
+    goog.getCssName(baseClass, 'end')
+  );
 };
-
 
 /**
  * Creates the class-to-location lookup table, used during decoration.
  * @private
  */
-goog.ui.TabBarRenderer.prototype.createLocationByClassMap_ = function() {
-  'use strict';
+goog.ui.TabBarRenderer.prototype.createLocationByClassMap_ = function () {
   // We need the classByLocation_ map so we can transpose it.
   if (!this.classByLocation_) {
     this.createClassByLocationMap_();

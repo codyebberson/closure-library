@@ -8,12 +8,9 @@
  * @fileoverview Basic class for matching words in an array.
  */
 
-
 goog.provide('goog.ui.ac.ArrayMatcher');
 
 goog.require('goog.string');
-
-
 
 /**
  * Basic class for matching words in an array
@@ -23,23 +20,19 @@ goog.require('goog.string');
  * @param {boolean=} opt_noSimilar if true, do not do similarity matches for the
  *     input token against the dictionary.
  */
-goog.ui.ac.ArrayMatcher = function(rows, opt_noSimilar) {
-  'use strict';
+goog.ui.ac.ArrayMatcher = function (rows, opt_noSimilar) {
   /** @type {!Array<?>} */
   this.rows_ = rows || [];
   this.useSimilar_ = !opt_noSimilar;
 };
 
-
 /**
  * Replaces the rows that this object searches over.
  * @param {Array<?>} rows Dictionary of items to match.
  */
-goog.ui.ac.ArrayMatcher.prototype.setRows = function(rows) {
-  'use strict';
+goog.ui.ac.ArrayMatcher.prototype.setRows = function (rows) {
   this.rows_ = rows || [];
 };
-
 
 /**
  * Function used to pass matches to the autocomplete
@@ -48,16 +41,18 @@ goog.ui.ac.ArrayMatcher.prototype.setRows = function(rows) {
  * @param {Function} matchHandler callback to execute after matching.
  * @param {string=} opt_fullString The full string from the input box.
  */
-goog.ui.ac.ArrayMatcher.prototype.requestMatchingRows = function(
-    token, maxMatches, matchHandler, opt_fullString) {
-  'use strict';
-  var matches = this.useSimilar_ ?
-      goog.ui.ac.ArrayMatcher.getMatchesForRows(token, maxMatches, this.rows_) :
-      this.getPrefixMatches(token, maxMatches);
+goog.ui.ac.ArrayMatcher.prototype.requestMatchingRows = function (
+  token,
+  maxMatches,
+  matchHandler,
+  opt_fullString
+) {
+  var matches = this.useSimilar_
+    ? goog.ui.ac.ArrayMatcher.getMatchesForRows(token, maxMatches, this.rows_)
+    : this.getPrefixMatches(token, maxMatches);
 
   matchHandler(token, matches);
 };
-
 
 /**
  * Matches the token against the specified rows, first looking for prefix
@@ -69,18 +64,14 @@ goog.ui.ac.ArrayMatcher.prototype.requestMatchingRows = function(
  *     have a toString method that returns the value to match against.
  * @return {!Array<?>} Rows that match.
  */
-goog.ui.ac.ArrayMatcher.getMatchesForRows = function(token, maxMatches, rows) {
-  'use strict';
-  var matches =
-      goog.ui.ac.ArrayMatcher.getPrefixMatchesForRows(token, maxMatches, rows);
+goog.ui.ac.ArrayMatcher.getMatchesForRows = (token, maxMatches, rows) => {
+  var matches = goog.ui.ac.ArrayMatcher.getPrefixMatchesForRows(token, maxMatches, rows);
 
   if (matches.length == 0) {
-    matches = goog.ui.ac.ArrayMatcher.getSimilarMatchesForRows(
-        token, maxMatches, rows);
+    matches = goog.ui.ac.ArrayMatcher.getSimilarMatchesForRows(token, maxMatches, rows);
   }
   return matches;
 };
-
 
 /**
  * Matches the token against the start of words in the row.
@@ -88,13 +79,9 @@ goog.ui.ac.ArrayMatcher.getMatchesForRows = function(token, maxMatches, rows) {
  * @param {number} maxMatches Max number of matches to return.
  * @return {!Array<?>} Rows that match.
  */
-goog.ui.ac.ArrayMatcher.prototype.getPrefixMatches = function(
-    token, maxMatches) {
-  'use strict';
-  return goog.ui.ac.ArrayMatcher.getPrefixMatchesForRows(
-      token, maxMatches, this.rows_);
+goog.ui.ac.ArrayMatcher.prototype.getPrefixMatches = function (token, maxMatches) {
+  return goog.ui.ac.ArrayMatcher.getPrefixMatchesForRows(token, maxMatches, this.rows_);
 };
-
 
 /**
  * Matches the token against the start of words in the row.
@@ -105,9 +92,7 @@ goog.ui.ac.ArrayMatcher.prototype.getPrefixMatches = function(
  *     a toString method that returns the value to match against.
  * @return {!Array<?>} Rows that match.
  */
-goog.ui.ac.ArrayMatcher.getPrefixMatchesForRows = function(
-    token, maxMatches, rows) {
-  'use strict';
+goog.ui.ac.ArrayMatcher.getPrefixMatchesForRows = (token, maxMatches, rows) => {
   var matches = [];
 
   if (token != '') {
@@ -124,7 +109,6 @@ goog.ui.ac.ArrayMatcher.getPrefixMatchesForRows = function(
   return matches;
 };
 
-
 /**
  * Matches the token against similar rows, by calculating "distance" between the
  * terms.
@@ -132,12 +116,9 @@ goog.ui.ac.ArrayMatcher.getPrefixMatchesForRows = function(
  * @param {number} maxMatches Max number of matches to return.
  * @return {!Array<?>} The best maxMatches rows.
  */
-goog.ui.ac.ArrayMatcher.prototype.getSimilarRows = function(token, maxMatches) {
-  'use strict';
-  return goog.ui.ac.ArrayMatcher.getSimilarMatchesForRows(
-      token, maxMatches, this.rows_);
+goog.ui.ac.ArrayMatcher.prototype.getSimilarRows = function (token, maxMatches) {
+  return goog.ui.ac.ArrayMatcher.getSimilarMatchesForRows(token, maxMatches, this.rows_);
 };
-
 
 /**
  * Matches the token against similar rows, by calculating "distance" between the
@@ -149,9 +130,7 @@ goog.ui.ac.ArrayMatcher.prototype.getSimilarRows = function(token, maxMatches) {
  *     match against.
  * @return {!Array<?>} The best maxMatches rows.
  */
-goog.ui.ac.ArrayMatcher.getSimilarMatchesForRows = function(
-    token, maxMatches, rows) {
-  'use strict';
+goog.ui.ac.ArrayMatcher.getSimilarMatchesForRows = (token, maxMatches, rows) => {
   var results = [];
 
   for (var index = 0; index < rows.length; index++) {
@@ -161,15 +140,14 @@ goog.ui.ac.ArrayMatcher.getSimilarMatchesForRows = function(
     var score = 0;
 
     if (txt.indexOf(str) != -1) {
-      score = parseInt((txt.indexOf(str) / 4).toString(), 10);
-
+      score = Number.parseInt((txt.indexOf(str) / 4).toString(), 10);
     } else {
       var arr = str.split('');
 
       var lastPos = -1;
       var penalty = 10;
 
-      for (var i = 0, c; c = arr[i]; i++) {
+      for (var i = 0, c; (c = arr[i]); i++) {
         var pos = txt.indexOf(c);
 
         if (pos > lastPos) {
@@ -190,12 +168,11 @@ goog.ui.ac.ArrayMatcher.getSimilarMatchesForRows = function(
     }
 
     if (score < str.length * 6) {
-      results.push({str: row, score: score, index: index});
+      results.push({ str: row, score: score, index: index });
     }
   }
 
-  results.sort(function(a, b) {
-    'use strict';
+  results.sort((a, b) => {
     var diff = a.score - b.score;
     if (diff != 0) {
       return diff;

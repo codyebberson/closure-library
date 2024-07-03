@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.TimerTest');
-goog.setTestOnly();
 
 const GoogPromise = goog.require('goog.Promise');
 const MockClock = goog.require('goog.testing.MockClock');
@@ -16,7 +15,7 @@ const testSuite = goog.require('goog.testing.testSuite');
 const intervalIds = {};
 const intervalIdCounter = 0;
 let mockClock;
-const maxDuration = 60 * 1000;  // 60s
+const maxDuration = 60 * 1000; // 60s
 
 // Run a test for 60s and see how many counts we get
 function runTest(string, ticks, number) {
@@ -83,29 +82,35 @@ testSuite({
       }
       c++;
     });
-    assertEquals(
-        'callOnce should return the timeout ID', expectedTimeoutId,
-        actualTimeoutId);
+    assertEquals('callOnce should return the timeout ID', expectedTimeoutId, actualTimeoutId);
 
-    const obj = {c: 0};
-    Timer.callOnce(function() {
-      if (this.c > 0) {
-        assertTrue('callOnce should only be called once', false);
-      }
-      assertEquals(obj, this);
-      this.c++;
-    }, 1, obj);
+    const obj = { c: 0 };
+    Timer.callOnce(
+      function () {
+        if (this.c > 0) {
+          assertTrue('callOnce should only be called once', false);
+        }
+        assertEquals(obj, this);
+        this.c++;
+      },
+      1,
+      obj
+    );
     mockClock.tick(maxDuration);
   },
 
   testCallOnceIgnoresTimeoutsTooLarge() {
     const failCallback = goog.partial(fail, 'Timeout should never be called');
     assertEquals(
-        'Timeouts slightly too large should yield a timer ID of -1', -1,
-        Timer.callOnce(failCallback, 2147483648));
+      'Timeouts slightly too large should yield a timer ID of -1',
+      -1,
+      Timer.callOnce(failCallback, 2147483648)
+    );
     assertEquals(
-        'Infinite timeouts should yield a timer ID of -1', -1,
-        Timer.callOnce(failCallback, Infinity));
+      'Infinite timeouts should yield a timer ID of -1',
+      -1,
+      Timer.callOnce(failCallback, Number.POSITIVE_INFINITY)
+    );
   },
 
   testPromise() {
@@ -121,32 +126,34 @@ testSuite({
   testPromise_cancel() {
     let c = 0;
     Timer.promise(1, 'A')
-        .then(
-            (result) => {
-              fail('promise must not be resolved');
-            },
-            (reason) => {
-              c++;
-              assertTrue(
-                  'promise must fail due to cancel signal',
-                  reason instanceof GoogPromise.CancellationError);
-            })
-        .cancel();
+      .then(
+        (result) => {
+          fail('promise must not be resolved');
+        },
+        (reason) => {
+          c++;
+          assertTrue(
+            'promise must fail due to cancel signal',
+            reason instanceof GoogPromise.CancellationError
+          );
+        }
+      )
+      .cancel();
     mockClock.tick(10);
     assertEquals('promise must be canceled once and only once', 1, c);
   },
 
   testPromise_timeoutTooLarge() {
     let c = 0;
-    Timer.promise(2147483648, 'A')
-        .then(
-            (result) => {
-              fail('promise must not be resolved');
-            },
-            (reason) => {
-              c++;
-              assertTrue('promise must be rejected', reason instanceof Error);
-            });
+    Timer.promise(2147483648, 'A').then(
+      (result) => {
+        fail('promise must not be resolved');
+      },
+      (reason) => {
+        c++;
+        assertTrue('promise must be rejected', reason instanceof Error);
+      }
+    );
     mockClock.tick(10);
     assertEquals('promise must be rejected once and only once', 1, c);
   },
@@ -154,7 +161,7 @@ testSuite({
   testStartInTickIsNoOp() {
     const pendingTimeouts = new Set();
     const obj = {
-      setTimeout: function(callback) {
+      setTimeout: (callback) => {
         const id = setTimeout(() => {
           pendingTimeouts.delete(id);
           callback();
@@ -162,7 +169,7 @@ testSuite({
         pendingTimeouts.add(id);
         return id;
       },
-      clearTimeout: function(id) {
+      clearTimeout: (id) => {
         pendingTimeouts.delete(id);
         clearTimeout(id);
       },

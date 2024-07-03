@@ -10,7 +10,6 @@
 
 /** @suppress {extraProvide} */
 goog.module('goog.dom.dom_test');
-goog.setTestOnly();
 
 const Const = goog.require('goog.string.Const');
 const DomHelper = goog.require('goog.dom.DomHelper');
@@ -55,8 +54,10 @@ function createTestDom(txt) {
  */
 function isFocusableAlternativeImpl(element) {
   element.focus();
-  return document.activeElement == element &&  // programmatically focusable
-      element.tabIndex >= 0;  // keyboard focusing is not disabled
+  return (
+    document.activeElement == element && // programmatically focusable
+    element.tabIndex >= 0
+  ); // keyboard focusing is not disabled
 }
 
 /** @param {!Element} element */
@@ -86,18 +87,18 @@ function assertEqualsCaseAndLeadingWhitespaceInsensitive(value1, value2) {
  * @param {!Array<string>} potentialStringifications
  * @param {...!Const} var_args The constants to use.
  */
-function assertConstHtmlToNodeStringifiesToOneOf(
-    potentialStringifications, var_args) {
-  const node = googDom.constHtmlToNode.apply(
-      undefined, Array.prototype.slice.call(arguments, 1));
+function assertConstHtmlToNodeStringifiesToOneOf(potentialStringifications, var_args) {
+  const node = googDom.constHtmlToNode.apply(undefined, Array.prototype.slice.call(arguments, 1));
   /** @suppress {checkTypes} suppression added to enable type checking */
   const stringified = googDom.getOuterHtml(node);
-  if (potentialStringifications.find(element => element == stringified) ===
-      null) {
+  if (potentialStringifications.find((element) => element == stringified) === null) {
     fail(
-        'Unexpected stringification for a node built from "' +
+      'Unexpected stringification for a node built from "' +
         Array.prototype.slice.call(arguments, 1).map(Const.unwrap).join('') +
-        '": "' + stringified + '"');
+        '": "' +
+        stringified +
+        '"'
+    );
   }
 }
 
@@ -124,8 +125,7 @@ testSuite({
 
     // Setup for the iframe
     myIframe = $('myIframe');
-    myIframeDoc = googDom.getFrameContentDocument(
-        /** @type {HTMLIFrameElement} */ (myIframe));
+    myIframeDoc = googDom.getFrameContentDocument(/** @type {HTMLIFrameElement} */ myIframe);
 
     // Set up document for iframe: total height of elements in document is 65
     // If the elements are not create like below, IE will get a wrong height for
@@ -133,13 +133,14 @@ testSuite({
     myIframeDoc.open();
     // Make sure we progate the compat mode
     myIframeDoc.write(
-        (googDom.isCss1CompatMode() ? '<!DOCTYPE html>' : '') +
+      (googDom.isCss1CompatMode() ? '<!DOCTYPE html>' : '') +
         '<style>body{margin:0;padding:0}</style>' +
         '<div style="height:42px;font-size:1px;line-height:0;">' +
         'hello world</div>' +
         '<div style="height:23px;font-size:1px;line-height:0;">' +
         'hello world</div>' +
-        '<div id="xdoc" class="xdoc"></div>');
+        '<div id="xdoc" class="xdoc"></div>'
+    );
     myIframeDoc.close();
 
     crossDocumentElement = myIframeDoc.getElementById('xdoc').cloneNode(true);
@@ -206,14 +207,15 @@ testSuite({
     const el = domHelper.getRequiredElement('testEl');
     assertTrue(el != null);
     assertEquals('testEl', el.id);
-    assertThrows(/**
+    assertThrows(
+      /**
                     @suppress {undefinedVars} suppression added to enable type
                     checking
                   */
-                 () => {
-                   googDom.getRequiredElementByClass(
-                       'does_not_exist', container);
-                 });
+      () => {
+        googDom.getRequiredElementByClass('does_not_exist', container);
+      }
+    );
   },
 
   testGetRequiredElementByClassDomHelper() {
@@ -223,14 +225,15 @@ testSuite({
 
     const container = domHelper.getElement('span-container');
     assertNotNull(domHelper.getElementByClass('test1', container));
-    assertThrows(/**
+    assertThrows(
+      /**
                     @suppress {checkTypes} suppression added to enable type
                     checking
                   */
-                 () => {
-                   domHelper.getRequiredElementByClass(
-                       'does_not_exist', container);
-                 });
+      () => {
+        domHelper.getRequiredElementByClass('does_not_exist', container);
+      }
+    );
   },
 
   testGetElementsByTagName() {
@@ -252,56 +255,55 @@ testSuite({
 
   testGetElementsByTagNameAndClass() {
     assertEquals(
-        'Should get 6 spans',
-        googDom.getElementsByTagNameAndClass(TagName.SPAN).length, 6);
+      'Should get 6 spans',
+      googDom.getElementsByTagNameAndClass(TagName.SPAN).length,
+      6
+    );
     assertEquals(
-        'Should get 6 spans',
-        googDom.getElementsByTagNameAndClass(TagName.SPAN).length, 6);
+      'Should get 6 spans',
+      googDom.getElementsByTagNameAndClass(TagName.SPAN).length,
+      6
+    );
     assertEquals(
-        'Should get 3 spans',
-        googDom.getElementsByTagNameAndClass(TagName.SPAN, 'test1').length, 3);
+      'Should get 3 spans',
+      googDom.getElementsByTagNameAndClass(TagName.SPAN, 'test1').length,
+      3
+    );
     assertEquals(
-        'Should get 1 span',
-        googDom.getElementsByTagNameAndClass(TagName.SPAN, 'test2').length, 1);
+      'Should get 1 span',
+      googDom.getElementsByTagNameAndClass(TagName.SPAN, 'test2').length,
+      1
+    );
     assertEquals(
-        'Should get 1 span',
-        googDom.getElementsByTagNameAndClass(TagName.SPAN, 'test2').length, 1);
+      'Should get 1 span',
+      googDom.getElementsByTagNameAndClass(TagName.SPAN, 'test2').length,
+      1
+    );
     assertEquals(
-        'Should get lots of elements',
-        googDom.getElementsByTagNameAndClass().length,
-        document.getElementsByTagName('*').length);
+      'Should get lots of elements',
+      googDom.getElementsByTagNameAndClass().length,
+      document.getElementsByTagName('*').length
+    );
 
     assertEquals(
-        'Should get 1 span',
-        googDom.getElementsByTagNameAndClass(TagName.SPAN, null, $('testEl'))
-            .length,
-        1);
+      'Should get 1 span',
+      googDom.getElementsByTagNameAndClass(TagName.SPAN, null, $('testEl')).length,
+      1
+    );
 
     // '*' as the tag name should be equivalent to all tags
     const container = googDom.getElement('span-container');
-    assertEquals(
-        5,
-        googDom.getElementsByTagNameAndClass('*', undefined, container).length);
-    assertEquals(
-        3,
-        googDom.getElementsByTagNameAndClass('*', 'test1', container).length);
-    assertEquals(
-        1,
-        googDom.getElementsByTagNameAndClass('*', 'test2', container).length);
+    assertEquals(5, googDom.getElementsByTagNameAndClass('*', undefined, container).length);
+    assertEquals(3, googDom.getElementsByTagNameAndClass('*', 'test1', container).length);
+    assertEquals(1, googDom.getElementsByTagNameAndClass('*', 'test2', container).length);
 
     // Some version of WebKit have problems with mixed-case class names
-    assertEquals(
-        1,
-        googDom.getElementsByTagNameAndClass(undefined, 'mixedCaseClass')
-            .length);
+    assertEquals(1, googDom.getElementsByTagNameAndClass(undefined, 'mixedCaseClass').length);
 
     // Make sure that out of bounds indices are OK
-    assertUndefined(
-        googDom.getElementsByTagNameAndClass(undefined, 'noSuchClass')[0]);
+    assertUndefined(googDom.getElementsByTagNameAndClass(undefined, 'noSuchClass')[0]);
 
-    assertEquals(
-        googDom.getElementsByTagNameAndClass,
-        googDom.getElementsByTagNameAndClass);
+    assertEquals(googDom.getElementsByTagNameAndClass, googDom.getElementsByTagNameAndClass);
   },
 
   testGetElementsByClass() {
@@ -365,14 +367,14 @@ testSuite({
    */
   testSetProperties() {
     const attrs = {
-      'name': 'test3',
-      'title': 'A title',
-      'random': 'woop',
+      name: 'test3',
+      title: 'A title',
+      random: 'woop',
       'other-random': null,
-      'href': SafeUrl.sanitize('https://google.com'),
-      'stringWithTypedStringProp': 'http://example.com/',
-      'numberWithTypedStringProp': 123,
-      'booleanWithTypedStringProp': true,
+      href: SafeUrl.sanitize('https://google.com'),
+      stringWithTypedStringProp: 'http://example.com/',
+      numberWithTypedStringProp: 123,
+      booleanWithTypedStringProp: true,
     };
 
     // TODO(johnlenz): Attempting to set an property on a primitive throws in
@@ -400,7 +402,7 @@ testSuite({
   },
 
   testSetPropertiesDirectAttributeMap() {
-    const attrs = {'usemap': '#myMap'};
+    const attrs = { usemap: '#myMap' };
     const el = googDom.createDom(TagName.IMG);
 
     const res = googDom.setProperties(el, attrs);
@@ -409,7 +411,7 @@ testSuite({
 
   testSetPropertiesDirectAttributeMapChecksForOwnProperties() {
     stubs.set(Object.prototype, 'customProp', 'sdflasdf.,m.,<>fsdflas213!@#');
-    const attrs = {'usemap': '#myMap'};
+    const attrs = { usemap: '#myMap' };
     const el = googDom.createDom(TagName.IMG);
 
     const res = googDom.setProperties(el, attrs);
@@ -420,14 +422,13 @@ testSuite({
     const attrs = {
       'aria-hidden': 'true',
       'aria-label': 'This is a label',
-      'role': 'presentation',
+      role: 'presentation',
     };
     const el = googDom.createDom(TagName.DIV);
 
     googDom.setProperties(el, attrs);
     assertEquals('Should be equal', 'true', el.getAttribute('aria-hidden'));
-    assertEquals(
-        'Should be equal', 'This is a label', el.getAttribute('aria-label'));
+    assertEquals('Should be equal', 'This is a label', el.getAttribute('aria-label'));
     assertEquals('Should be equal', 'presentation', el.getAttribute('role'));
   },
 
@@ -439,11 +440,8 @@ testSuite({
     const el = googDom.createDom(TagName.DIV);
 
     googDom.setProperties(el, attrs);
-    assertEquals(
-        'Should be equal', 'This is a tooltip',
-        el.getAttribute('data-tooltip'));
-    assertEquals(
-        'Should be equal', '100', el.getAttribute('data-tooltip-delay'));
+    assertEquals('Should be equal', 'This is a tooltip', el.getAttribute('data-tooltip'));
+    assertEquals('Should be equal', '100', el.getAttribute('data-tooltip-delay'));
   },
 
   /**
@@ -452,10 +450,10 @@ testSuite({
    */
   testSetTableProperties() {
     const attrs = {
-      'style': 'padding-left: 10px;',
-      'class': 'mytestclass',
-      'height': '101',
-      'cellpadding': '15',
+      style: 'padding-left: 10px;',
+      class: 'mytestclass',
+      height: '101',
+      cellpadding: '15',
     };
     const el = $('testTable1');
 
@@ -474,11 +472,10 @@ testSuite({
   },
 
   testGetViewportSizeInIframe() {
-    const iframe =
-        /** @type {HTMLIFrameElement} */ (googDom.getElement('iframe'));
+    const iframe = /** @type {HTMLIFrameElement} */ googDom.getElement('iframe');
     const contentDoc = googDom.getFrameContentDocument(iframe);
     const outerSize = googDom.getViewportSize();
-    const innerSize = (new DomHelper(contentDoc)).getViewportSize();
+    const innerSize = new DomHelper(contentDoc).getViewportSize();
     assert('Viewport sizes must not match', innerSize.width != outerSize.width);
   },
 
@@ -488,9 +485,7 @@ testSuite({
     const height = googDom.getDomHelper(myIframeDoc).getDocumentHeight();
 
     // Broken in webkit/edge quirks mode and in IE8+
-    if ((googDom.isCss1CompatMode_(doc) ||
-         !userAgent.WEBKIT && !userAgent.EDGE) &&
-        !isIE()) {
+    if ((googDom.isCss1CompatMode_(doc) || (!userAgent.WEBKIT && !userAgent.EDGE)) && !isIE()) {
       assertEquals('height should be 65', 42 + 23, height);
     }
   },
@@ -501,36 +496,34 @@ testSuite({
    */
   testCreateDom() {
     const el = googDom.createDom(
-        TagName.DIV, {
-          style: 'border: 1px solid black; width: 50%; background-color: #EEE;',
-          onclick: 'alert(\'woo\')',
-        },
+      TagName.DIV,
+      {
+        style: 'border: 1px solid black; width: 50%; background-color: #EEE;',
+        onclick: "alert('woo')",
+      },
+      googDom.createDom(TagName.P, { style: 'font: normal 12px arial; color: red; ' }, 'Para 1'),
+      googDom.createDom(TagName.P, { style: 'font: bold 18px garamond; color: blue; ' }, 'Para 2'),
+      googDom.createDom(
+        TagName.P,
+        { style: 'font: normal 24px monospace; color: green' },
+        'Para 3 ',
         googDom.createDom(
-            TagName.P, {style: 'font: normal 12px arial; color: red; '},
-            'Para 1'),
-        googDom.createDom(
-            TagName.P, {style: 'font: bold 18px garamond; color: blue; '},
-            'Para 2'),
-        googDom.createDom(
-            TagName.P, {style: 'font: normal 24px monospace; color: green'},
-            'Para 3 ',
-            googDom.createDom(
-                TagName.A, {
-                  name: 'link',
-                  href: SafeUrl.sanitize('http://bbc.co.uk/'),
-                },
-                'has a link'),
-            ', how cool is this?'));
+          TagName.A,
+          {
+            name: 'link',
+            href: SafeUrl.sanitize('http://bbc.co.uk/'),
+          },
+          'has a link'
+        ),
+        ', how cool is this?'
+      )
+    );
 
     assertEquals('Tagname should be a DIV', String(TagName.DIV), el.tagName);
     assertEquals('Style width should be 50%', '50%', el.style.width);
-    assertEquals(
-        'first child is a P tag', String(TagName.P), el.childNodes[0].tagName);
-    assertEquals(
-        'second child .innerHTML', 'Para 2', el.childNodes[1].innerHTML);
-    assertEquals(
-        'Link href as SafeUrl', 'http://bbc.co.uk/',
-        el.childNodes[2].childNodes[1].href);
+    assertEquals('first child is a P tag', String(TagName.P), el.childNodes[0].tagName);
+    assertEquals('second child .innerHTML', 'Para 2', el.childNodes[1].innerHTML);
+    assertEquals('Link href as SafeUrl', 'http://bbc.co.uk/', el.childNodes[2].childNodes[1].href);
   },
 
   testCreateDomNoChildren() {
@@ -560,9 +553,7 @@ testSuite({
     ];
     const ul = googDom.createDom(TagName.UL, {}, items);
     assertEquals('List should have two children', 2, ul.childNodes.length);
-    assertEquals(
-        'First child should be an LI tag', String(TagName.LI),
-        ul.firstChild.tagName);
+    assertEquals('First child should be an LI tag', String(TagName.LI), ul.firstChild.tagName);
     assertEquals('Item 1', ul.childNodes[0].innerHTML);
     assertEquals('Item 2', ul.childNodes[1].innerHTML);
   },
@@ -572,21 +563,13 @@ testSuite({
 
     // Test string arg.
     el = googDom.createDom(TagName.DIV, null, 'Hello');
-    assertEquals(
-        'firstChild should be a text node', NodeType.TEXT,
-        el.firstChild.nodeType);
-    assertEquals(
-        'firstChild should have node value "Hello"', 'Hello',
-        el.firstChild.nodeValue);
+    assertEquals('firstChild should be a text node', NodeType.TEXT, el.firstChild.nodeType);
+    assertEquals('firstChild should have node value "Hello"', 'Hello', el.firstChild.nodeValue);
 
     // Test text node arg.
     el = googDom.createDom(TagName.DIV, null, googDom.createTextNode('World'));
-    assertEquals(
-        'firstChild should be a text node', NodeType.TEXT,
-        el.firstChild.nodeType);
-    assertEquals(
-        'firstChild should have node value "World"', 'World',
-        el.firstChild.nodeValue);
+    assertEquals('firstChild should be a text node', NodeType.TEXT, el.firstChild.nodeType);
+    assertEquals('firstChild should have node value "World"', 'World', el.firstChild.nodeValue);
   },
 
   /**
@@ -598,9 +581,12 @@ testSuite({
     const emptyElem = googDom.createDom(TagName.DIV);
     const simpleElem = googDom.createDom(TagName.DIV, null, 'Hello, world!');
     const complexElem = googDom.createDom(
-        TagName.DIV, null, 'Hello, ',
-        googDom.createDom(TagName.B, null, 'world'),
-        googDom.createTextNode('!'));
+      TagName.DIV,
+      null,
+      'Hello, ',
+      googDom.createDom(TagName.B, null, 'world'),
+      googDom.createTextNode('!')
+    );
 
     // Test empty node list.
     el = googDom.createDom(TagName.DIV, null, emptyElem.childNodes);
@@ -611,28 +597,38 @@ testSuite({
     el = googDom.createDom(TagName.DIV, null, simpleElem.childNodes);
     assertNull('simpleElem.firstChild should be null', simpleElem.firstChild);
     assertEquals(
-        'firstChild should be a text node with value "Hello, world!"',
-        'Hello, world!', el.firstChild.nodeValue);
+      'firstChild should be a text node with value "Hello, world!"',
+      'Hello, world!',
+      el.firstChild.nodeValue
+    );
 
     // Test complex node list.
     el = googDom.createDom(TagName.DIV, null, complexElem.childNodes);
     assertNull('complexElem.firstChild should be null', complexElem.firstChild);
     assertEquals('Element should have 3 child nodes', 3, el.childNodes.length);
     assertEquals(
-        'childNodes[0] should be a text node with value "Hello, "', 'Hello, ',
-        el.childNodes[0].nodeValue);
+      'childNodes[0] should be a text node with value "Hello, "',
+      'Hello, ',
+      el.childNodes[0].nodeValue
+    );
     assertEquals(
-        'childNodes[1] should be an element node with tagName "B"',
-        String(TagName.B), el.childNodes[1].tagName);
+      'childNodes[1] should be an element node with tagName "B"',
+      String(TagName.B),
+      el.childNodes[1].tagName
+    );
     assertEquals(
-        'childNodes[2] should be a text node with value "!"', '!',
-        el.childNodes[2].nodeValue);
+      'childNodes[2] should be a text node with value "!"',
+      '!',
+      el.childNodes[2].nodeValue
+    );
   },
 
   testCreateDomWithTypeAttribute() {
     const el = googDom.createDom(
-        TagName.BUTTON, {'type': InputType.RESET, 'id': 'cool-button'},
-        'Cool button');
+      TagName.BUTTON,
+      { type: InputType.RESET, id: 'cool-button' },
+      'Cool button'
+    );
     assertNotNull('Button with type attribute was created successfully', el);
     assertEquals('Button has correct type attribute', InputType.RESET, el.type);
     assertEquals('Button has correct id', 'cool-button', el.id);
@@ -645,11 +641,10 @@ testSuite({
 
   testContains() {
     assertTrue(
-        'HTML should contain BODY',
-        googDom.contains(document.documentElement, document.body));
-    assertTrue(
-        'Document should contain BODY',
-        googDom.contains(document, document.body));
+      'HTML should contain BODY',
+      googDom.contains(document.documentElement, document.body)
+    );
+    assertTrue('Document should contain BODY', googDom.contains(document, document.body));
 
     const d = googDom.createDom(TagName.P, null, 'A paragraph');
     const t = d.firstChild;
@@ -678,84 +673,88 @@ testSuite({
     const b2 = $('b2');
     const p2 = $('p2');
 
-    assertEquals(
-        'equal nodes should compare to 0', 0, googDom.compareNodeOrder(b1, b1));
+    assertEquals('equal nodes should compare to 0', 0, googDom.compareNodeOrder(b1, b1));
+
+    assertTrue('parent should come before child', googDom.compareNodeOrder(p2, b1) < 0);
+    assertTrue('child should come after parent', googDom.compareNodeOrder(b1, p2) > 0);
 
     assertTrue(
-        'parent should come before child',
-        googDom.compareNodeOrder(p2, b1) < 0);
+      'parent should come before text child',
+      googDom.compareNodeOrder(b1, b1.firstChild) < 0
+    );
     assertTrue(
-        'child should come after parent', googDom.compareNodeOrder(b1, p2) > 0);
+      'text child should come after parent',
+      googDom.compareNodeOrder(b1.firstChild, b1) > 0
+    );
+
+    assertTrue('first sibling should come before second', googDom.compareNodeOrder(b1, b2) < 0);
+    assertTrue('second sibling should come after first', googDom.compareNodeOrder(b2, b1) > 0);
 
     assertTrue(
-        'parent should come before text child',
-        googDom.compareNodeOrder(b1, b1.firstChild) < 0);
+      'text node after cousin element returns correct value',
+      googDom.compareNodeOrder(b1.nextSibling, b1) > 0
+    );
     assertTrue(
-        'text child should come after parent',
-        googDom.compareNodeOrder(b1.firstChild, b1) > 0);
+      'text node before cousin element returns correct value',
+      googDom.compareNodeOrder(b1, b1.nextSibling) < 0
+    );
 
     assertTrue(
-        'first sibling should come before second',
-        googDom.compareNodeOrder(b1, b2) < 0);
+      'text node is before once removed cousin element',
+      googDom.compareNodeOrder(b1.firstChild, b2) < 0
+    );
     assertTrue(
-        'second sibling should come after first',
-        googDom.compareNodeOrder(b2, b1) > 0);
+      'once removed cousin element is before text node',
+      googDom.compareNodeOrder(b2, b1.firstChild) > 0
+    );
 
     assertTrue(
-        'text node after cousin element returns correct value',
-        googDom.compareNodeOrder(b1.nextSibling, b1) > 0);
+      'text node is after once removed cousin text node',
+      googDom.compareNodeOrder(b1.nextSibling, b1.firstChild) > 0
+    );
     assertTrue(
-        'text node before cousin element returns correct value',
-        googDom.compareNodeOrder(b1, b1.nextSibling) < 0);
+      'once removed cousin text node is before text node',
+      googDom.compareNodeOrder(b1.firstChild, b1.nextSibling) < 0
+    );
 
     assertTrue(
-        'text node is before once removed cousin element',
-        googDom.compareNodeOrder(b1.firstChild, b2) < 0);
+      'first text node is before second text node',
+      googDom.compareNodeOrder(b1.previousSibling, b1.nextSibling) < 0
+    );
     assertTrue(
-        'once removed cousin element is before text node',
-        googDom.compareNodeOrder(b2, b1.firstChild) > 0);
+      'second text node is after first text node',
+      googDom.compareNodeOrder(b1.nextSibling, b1.previousSibling) > 0
+    );
 
     assertTrue(
-        'text node is after once removed cousin text node',
-        googDom.compareNodeOrder(b1.nextSibling, b1.firstChild) > 0);
+      'grandchild is after grandparent',
+      googDom.compareNodeOrder(b1.firstChild, b1.parentNode) > 0
+    );
     assertTrue(
-        'once removed cousin text node is before text node',
-        googDom.compareNodeOrder(b1.firstChild, b1.nextSibling) < 0);
+      'grandparent is after grandchild',
+      googDom.compareNodeOrder(b1.parentNode, b1.firstChild) < 0
+    );
 
     assertTrue(
-        'first text node is before second text node',
-        googDom.compareNodeOrder(b1.previousSibling, b1.nextSibling) < 0);
+      'grandchild is after grandparent',
+      googDom.compareNodeOrder(b1.firstChild, b1.parentNode) > 0
+    );
     assertTrue(
-        'second text node is after first text node',
-        googDom.compareNodeOrder(b1.nextSibling, b1.previousSibling) > 0);
+      'grandparent is after grandchild',
+      googDom.compareNodeOrder(b1.parentNode, b1.firstChild) < 0
+    );
 
     assertTrue(
-        'grandchild is after grandparent',
-        googDom.compareNodeOrder(b1.firstChild, b1.parentNode) > 0);
+      'second cousins compare correctly',
+      googDom.compareNodeOrder(b1.firstChild, b2.firstChild) < 0
+    );
     assertTrue(
-        'grandparent is after grandchild',
-        googDom.compareNodeOrder(b1.parentNode, b1.firstChild) < 0);
+      'second cousins compare correctly in reverse',
+      googDom.compareNodeOrder(b2.firstChild, b1.firstChild) > 0
+    );
 
-    assertTrue(
-        'grandchild is after grandparent',
-        googDom.compareNodeOrder(b1.firstChild, b1.parentNode) > 0);
-    assertTrue(
-        'grandparent is after grandchild',
-        googDom.compareNodeOrder(b1.parentNode, b1.firstChild) < 0);
-
-    assertTrue(
-        'second cousins compare correctly',
-        googDom.compareNodeOrder(b1.firstChild, b2.firstChild) < 0);
-    assertTrue(
-        'second cousins compare correctly in reverse',
-        googDom.compareNodeOrder(b2.firstChild, b1.firstChild) > 0);
-
-    assertTrue(
-        'testEl2 is after testEl',
-        googDom.compareNodeOrder($('testEl2'), $('testEl')) > 0);
-    assertTrue(
-        'testEl is before testEl2',
-        googDom.compareNodeOrder($('testEl'), $('testEl2')) < 0);
+    assertTrue('testEl2 is after testEl', googDom.compareNodeOrder($('testEl2'), $('testEl')) > 0);
+    assertTrue('testEl is before testEl2', googDom.compareNodeOrder($('testEl'), $('testEl2')) < 0);
 
     const p = $('order-test');
     const text1 = document.createTextNode('1');
@@ -763,25 +762,19 @@ testSuite({
     const text2 = document.createTextNode('1');
     p.appendChild(text2);
 
-    assertEquals(
-        'Equal text nodes should compare to 0', 0,
-        googDom.compareNodeOrder(text1, text1));
-    assertTrue(
-        'First text node is before second',
-        googDom.compareNodeOrder(text1, text2) < 0);
-    assertTrue(
-        'Second text node is after first',
-        googDom.compareNodeOrder(text2, text1) > 0);
-    assertTrue(
-        'Late text node is after b1',
-        googDom.compareNodeOrder(text1, $('b1')) > 0);
+    assertEquals('Equal text nodes should compare to 0', 0, googDom.compareNodeOrder(text1, text1));
+    assertTrue('First text node is before second', googDom.compareNodeOrder(text1, text2) < 0);
+    assertTrue('Second text node is after first', googDom.compareNodeOrder(text2, text1) > 0);
+    assertTrue('Late text node is after b1', googDom.compareNodeOrder(text1, $('b1')) > 0);
 
     assertTrue(
-        'Document node is before non-document node',
-        googDom.compareNodeOrder(document, b1) < 0);
+      'Document node is before non-document node',
+      googDom.compareNodeOrder(document, b1) < 0
+    );
     assertTrue(
-        'Non-document node is after document node',
-        googDom.compareNodeOrder(b1, document) > 0);
+      'Non-document node is after document node',
+      googDom.compareNodeOrder(b1, document) > 0
+    );
   },
 
   testFindCommonAncestor() {
@@ -792,25 +785,22 @@ testSuite({
     const testEl2 = $('testEl2');
 
     assertNull('findCommonAncestor() = null', googDom.findCommonAncestor());
+    assertEquals('findCommonAncestor(b1) = b1', b1, googDom.findCommonAncestor(b1));
+    assertEquals('findCommonAncestor(b1, b1) = b1', b1, googDom.findCommonAncestor(b1, b1));
+    assertEquals('findCommonAncestor(b1, b2) = p2', p2, googDom.findCommonAncestor(b1, b2));
     assertEquals(
-        'findCommonAncestor(b1) = b1', b1, googDom.findCommonAncestor(b1));
+      'findCommonAncestor(p1, b2) = body',
+      document.body,
+      googDom.findCommonAncestor(p1, b2)
+    );
     assertEquals(
-        'findCommonAncestor(b1, b1) = b1', b1,
-        googDom.findCommonAncestor(b1, b1));
-    assertEquals(
-        'findCommonAncestor(b1, b2) = p2', p2,
-        googDom.findCommonAncestor(b1, b2));
-    assertEquals(
-        'findCommonAncestor(p1, b2) = body', document.body,
-        googDom.findCommonAncestor(p1, b2));
-    assertEquals(
-        'findCommonAncestor(testEl2, b1, b2, p1, p2) = body', document.body,
-        googDom.findCommonAncestor(testEl2, b1, b2, p1, p2));
+      'findCommonAncestor(testEl2, b1, b2, p1, p2) = body',
+      document.body,
+      googDom.findCommonAncestor(testEl2, b1, b2, p1, p2)
+    );
 
     const outOfDoc = googDom.createElement(TagName.DIV);
-    assertNull(
-        'findCommonAncestor(outOfDoc, b1) = null',
-        googDom.findCommonAncestor(outOfDoc, b1));
+    assertNull('findCommonAncestor(outOfDoc, b1) = null', googDom.findCommonAncestor(outOfDoc, b1));
   },
 
   testRemoveNode() {
@@ -824,23 +814,20 @@ testSuite({
   testReplaceNode() {
     const n = $('toReplace');
     const previousSibling = n.previousSibling;
-    const goodNode = googDom.createDom(TagName.DIV, {'id': 'goodReplaceNode'});
+    const goodNode = googDom.createDom(TagName.DIV, { id: 'goodReplaceNode' });
     googDom.replaceNode(goodNode, n);
 
-    assertEquals(
-        'n should have been replaced', previousSibling.nextSibling, goodNode);
+    assertEquals('n should have been replaced', previousSibling.nextSibling, goodNode);
     assertNull('n should no longer be in the DOM tree', $('toReplace'));
 
-    const badNode = googDom.createDom(TagName.DIV, {'id': 'badReplaceNode'});
+    const badNode = googDom.createDom(TagName.DIV, { id: 'badReplaceNode' });
     googDom.replaceNode(badNode, n);
     assertNull('badNode should not be in the DOM tree', $('badReplaceNode'));
   },
 
   testCopyContents() {
-    const target =
-        googDom.createDom('div', {}, 'a', googDom.createDom('span', {}, 'b'));
-    const source =
-        googDom.createDom('div', {}, googDom.createDom('span', {}, 'c'), 'd');
+    const target = googDom.createDom('div', {}, 'a', googDom.createDom('span', {}, 'b'));
+    const source = googDom.createDom('div', {}, googDom.createDom('span', {}, 'c'), 'd');
     googDom.copyContents(target, source);
     assertEquals('cd', target.textContent);
     assertEquals('cd', source.textContent);
@@ -904,78 +891,68 @@ testSuite({
 
     assertTrue('span should have been removed', el.lastChild != span);
     assertFalse(
-        'span should have no parent',
-        !!span.parentNode &&
-            span.parentNode.nodeType != NodeType.DOCUMENT_FRAGMENT);
+      'span should have no parent',
+      !!span.parentNode && span.parentNode.nodeType != NodeType.DOCUMENT_FRAGMENT
+    );
     assertEquals('span should have no children', 0, span.childNodes.length);
     assertEquals('Last child of p should be br', br, el.lastChild);
-    assertEquals(
-        'Previous sibling of br should be text', text, br.previousSibling);
+    assertEquals('Previous sibling of br should be text', text, br.previousSibling);
 
     const outOfDoc = googDom.createDom(TagName.SPAN, null, '1 child');
     // Should do nothing.
     googDom.flattenElement(outOfDoc);
-    assertEquals(
-        'outOfDoc should still have 1 child', 1, outOfDoc.childNodes.length);
+    assertEquals('outOfDoc should still have 1 child', 1, outOfDoc.childNodes.length);
   },
 
   testIsNodeLike() {
     assertTrue('document should be node like', googDom.isNodeLike(document));
-    assertTrue(
-        'document.body should be node like', googDom.isNodeLike(document.body));
-    assertTrue(
-        'a text node should be node like',
-        googDom.isNodeLike(document.createTextNode('')));
+    assertTrue('document.body should be node like', googDom.isNodeLike(document.body));
+    assertTrue('a text node should be node like', googDom.isNodeLike(document.createTextNode('')));
 
     assertFalse('null should not be node like', googDom.isNodeLike(null));
     assertFalse('a string should not be node like', googDom.isNodeLike('abcd'));
 
-    assertTrue(
-        'custom object should be node like', googDom.isNodeLike({nodeType: 1}));
+    assertTrue('custom object should be node like', googDom.isNodeLike({ nodeType: 1 }));
   },
 
   testIsElement() {
     assertFalse('document is not an element', googDom.isElement(document));
     assertTrue('document.body is an element', googDom.isElement(document.body));
-    assertFalse(
-        'a text node is not an element',
-        googDom.isElement(document.createTextNode('')));
+    assertFalse('a text node is not an element', googDom.isElement(document.createTextNode('')));
     assertTrue(
-        'an element created with createElement() is an element',
-        googDom.isElement(googDom.createElement(TagName.A)));
+      'an element created with createElement() is an element',
+      googDom.isElement(googDom.createElement(TagName.A))
+    );
 
     assertFalse('null is not an element', googDom.isElement(null));
     assertFalse('a string is not an element', googDom.isElement('abcd'));
 
-    assertTrue('custom object is an element', googDom.isElement({nodeType: 1}));
+    assertTrue('custom object is an element', googDom.isElement({ nodeType: 1 }));
     assertFalse(
-        'custom non-element object is a not an element',
-        googDom.isElement({someProperty: 'somevalue'}));
+      'custom non-element object is a not an element',
+      googDom.isElement({ someProperty: 'somevalue' })
+    );
   },
 
   testIsWindow() {
     const global = globalThis;
     const frame = window.frames['frame'];
     const otherWindow = window.open('', 'blank');
-    const object = {window: globalThis};
+    const object = { window: globalThis };
     const nullVar = null;
     let notDefined;
 
     try {
       // Use try/finally to ensure that we clean up the window we open, even if
       // an assertion fails or something else goes wrong.
-      assertTrue(
-          'global object in HTML context should be a window',
-          googDom.isWindow(globalThis));
+      assertTrue('global object in HTML context should be a window', googDom.isWindow(globalThis));
       assertTrue('iframe window should be a window', googDom.isWindow(frame));
       if (otherWindow) {
-        assertTrue(
-            'other window should be a window', googDom.isWindow(otherWindow));
+        assertTrue('other window should be a window', googDom.isWindow(otherWindow));
       }
       assertFalse('object should not be a window', googDom.isWindow(object));
       assertFalse('null should not be a window', googDom.isWindow(nullVar));
-      assertFalse(
-          'undefined should not be a window', googDom.isWindow(notDefined));
+      assertFalse('undefined should not be a window', googDom.isWindow(notDefined));
     } finally {
       if (otherWindow) {
         otherWindow.close();
@@ -1023,8 +1000,7 @@ testSuite({
 
   testDomHelper() {
     const x = new DomHelper(window.frames['frame'].document);
-    assertTrue(
-        'Should have some HTML', x.getDocument().body.innerHTML.length > 0);
+    assertTrue('Should have some HTML', x.getDocument().body.innerHTML.length > 0);
   },
 
   testGetFirstElementChild() {
@@ -1083,7 +1059,7 @@ testSuite({
     assertNull('Next element sibling of b2 should be null', c);
 
     // Test with an undefined nextElementSibling attribute.
-    const mockB1 = {nextSibling: b2, nextElementSibling: undefined};
+    const mockB1 = { nextSibling: b2, nextElementSibling: undefined };
 
     /** @suppress {checkTypes} suppression added to enable type checking */
     b2 = googDom.getNextElementSibling(mockB1);
@@ -1101,7 +1077,7 @@ testSuite({
     assertNull('Previous element sibling of b1 should be null', c);
 
     // Test with an undefined previousElementSibling attribute.
-    const mockB2 = {previousSibling: b1, previousElementSibling: undefined};
+    const mockB2 = { previousSibling: b1, previousElementSibling: undefined };
 
     /** @suppress {checkTypes} suppression added to enable type checking */
     b1 = googDom.getPreviousElementSibling(mockB2);
@@ -1113,8 +1089,7 @@ testSuite({
     const p2 = $('p2');
     let children = googDom.getChildren(p2);
     assertNotNull('Elements array should not be null', children);
-    assertEquals(
-        'List of element children should be length two.', 2, children.length);
+    assertEquals('List of element children should be length two.', 2, children.length);
 
     const b1 = $('b1');
     const b2 = $('b2');
@@ -1123,35 +1098,35 @@ testSuite({
 
     const noChildren = googDom.getChildren(b1);
     assertNotNull('Element children array should not be null', noChildren);
-    assertEquals(
-        'List of element children should be length zero.', 0,
-        noChildren.length);
+    assertEquals('List of element children should be length zero.', 0, noChildren.length);
 
     // Test with an undefined children attribute.
-    const mockP2 = {childNodes: [b1, b2], children: undefined};
+    const mockP2 = { childNodes: [b1, b2], children: undefined };
 
     /** @suppress {checkTypes} suppression added to enable type checking */
     children = googDom.getChildren(mockP2);
     assertNotNull('Elements array should not be null', children);
-    assertEquals(
-        'List of element children should be length two.', 2, children.length);
+    assertEquals('List of element children should be length two.', 2, children.length);
 
     assertObjectEquals('First element child should be b1.', b1, children[0]);
     assertObjectEquals('Second element child should be b2.', b2, children[1]);
   },
 
   testGetNextNode() {
-    const tree = googDom.safeHtmlToNode(testing.newSafeHtmlForTest(
+    const tree = googDom.safeHtmlToNode(
+      testing.newSafeHtmlForTest(
         '<div>' +
-        '<p>Some text</p>' +
-        '<blockquote>Some <i>special</i> <b>text</b></blockquote>' +
-        '<address><!-- comment -->Foo</address>' +
-        '</div>'));
+          '<p>Some text</p>' +
+          '<blockquote>Some <i>special</i> <b>text</b></blockquote>' +
+          '<address><!-- comment -->Foo</address>' +
+          '</div>'
+      )
+    );
 
     assertNull(googDom.getNextNode(null));
 
     let node = tree;
-    const next = () => node = googDom.getNextNode(node);
+    const next = () => (node = googDom.getNextNode(node));
 
     assertEquals(String(TagName.P), next().tagName);
     assertEquals('Some text', next().nodeValue);
@@ -1170,17 +1145,20 @@ testSuite({
   },
 
   testGetPreviousNode() {
-    const tree = googDom.safeHtmlToNode(testing.newSafeHtmlForTest(
+    const tree = googDom.safeHtmlToNode(
+      testing.newSafeHtmlForTest(
         '<div>' +
-        '<p>Some text</p>' +
-        '<blockquote>Some <i>special</i> <b>text</b></blockquote>' +
-        '<address><!-- comment -->Foo</address>' +
-        '</div>'));
+          '<p>Some text</p>' +
+          '<blockquote>Some <i>special</i> <b>text</b></blockquote>' +
+          '<address><!-- comment -->Foo</address>' +
+          '</div>'
+      )
+    );
 
     assertNull(googDom.getPreviousNode(null));
 
     let node = tree.lastChild.lastChild;
-    const previous = () => node = googDom.getPreviousNode(node);
+    const previous = () => (node = googDom.getPreviousNode(node));
 
     assertEquals(NodeType.COMMENT, previous().nodeType);
     assertEquals(String(TagName.ADDRESS), previous().tagName);
@@ -1210,18 +1188,14 @@ testSuite({
     const p1 = $('p1');
     let s = 'hello world';
     googDom.setTextContent(p1, s);
-    assertEquals(
-        'We should have one childNode after setTextContent', 1,
-        p1.childNodes.length);
+    assertEquals('We should have one childNode after setTextContent', 1, p1.childNodes.length);
     assertEquals(s, p1.firstChild.data);
     assertEquals(s, p1.innerHTML);
 
     s = 'four elefants < five ants';
     const sHtml = 'four elefants &lt; five ants';
     googDom.setTextContent(p1, s);
-    assertEquals(
-        'We should have one childNode after setTextContent', 1,
-        p1.childNodes.length);
+    assertEquals('We should have one childNode after setTextContent', 1, p1.childNodes.length);
     assertEquals(s, p1.firstChild.data);
     assertEquals(sHtml, p1.innerHTML);
 
@@ -1229,36 +1203,28 @@ testSuite({
     p1.innerHTML = 'a<b>b</b>c';
     s = 'hello world';
     googDom.setTextContent(p1, s);
-    assertEquals(
-        'We should have one childNode after setTextContent', 1,
-        p1.childNodes.length);
+    assertEquals('We should have one childNode after setTextContent', 1, p1.childNodes.length);
     assertEquals(s, p1.firstChild.data);
 
     // same but start with an element
     p1.innerHTML = '<b>a</b>b<i>c</i>';
     s = 'hello world';
     googDom.setTextContent(p1, s);
-    assertEquals(
-        'We should have one childNode after setTextContent', 1,
-        p1.childNodes.length);
+    assertEquals('We should have one childNode after setTextContent', 1, p1.childNodes.length);
     assertEquals(s, p1.firstChild.data);
 
     // Text/CharacterData
     googDom.setTextContent(p1, 'before');
     s = 'after';
     googDom.setTextContent(p1.firstChild, s);
-    assertEquals(
-        'We should have one childNode after setTextContent', 1,
-        p1.childNodes.length);
+    assertEquals('We should have one childNode after setTextContent', 1, p1.childNodes.length);
     assertEquals(s, p1.firstChild.data);
 
     // DocumentFragment
     const df = document.createDocumentFragment();
     s = 'hello world';
     googDom.setTextContent(df, s);
-    assertEquals(
-        'We should have one childNode after setTextContent', 1,
-        df.childNodes.length);
+    assertEquals('We should have one childNode after setTextContent', 1, df.childNodes.length);
     assertEquals(s, df.firstChild.data);
 
     // clean up
@@ -1268,22 +1234,24 @@ testSuite({
   testFindNode() {
     let expected = document.body;
     let result = googDom.findNode(
-        document,
-        /**
+      document,
+      /**
            @suppress {strictMissingProperties} suppression added to enable type
            checking
          */
-        (n) => n.nodeType == NodeType.ELEMENT && n.tagName == TagName.BODY);
+      (n) => n.nodeType == NodeType.ELEMENT && n.tagName == TagName.BODY
+    );
     assertEquals(expected, result);
 
     expected = googDom.getElementsByTagName(TagName.P)[0];
     result = googDom.findNode(
-        document,
-        /**
+      document,
+      /**
            @suppress {strictMissingProperties} suppression added to enable type
            checking
          */
-        (n) => n.nodeType == NodeType.ELEMENT && n.tagName == TagName.P);
+      (n) => n.nodeType == NodeType.ELEMENT && n.tagName == TagName.P
+    );
     assertEquals(expected, result);
 
     result = googDom.findNode(document, (n) => false);
@@ -1308,26 +1276,26 @@ testSuite({
   },
 
   testFindElement_excludesRootElement() {
-    assertNull(googDom.findElement(
-        document.body, (element) => element.tagName == 'BODY'));
+    assertNull(googDom.findElement(document.body, (element) => element.tagName == 'BODY'));
   },
 
   testFindElement_onlyCallsFilterFunctionWithElements() {
     googDom.findElement(document, (param) => {
       asserts.assertElement(param);
-      return false;  // to visit all nodes
+      return false; // to visit all nodes
     });
   },
 
   testFindNodes() {
     const expected = googDom.getElementsByTagName(TagName.P);
     let result = googDom.findNodes(
-        document,
-        /**
+      document,
+      /**
            @suppress {strictMissingProperties} suppression added to enable type
            checking
          */
-        (n) => n.nodeType == NodeType.ELEMENT && n.tagName == TagName.P);
+      (n) => n.nodeType == NodeType.ELEMENT && n.tagName == TagName.P
+    );
     assertEquals(expected.length, result.length);
     assertEquals(expected[0], result[0]);
     assertEquals(expected[1], result[1]);
@@ -1343,53 +1311,60 @@ testSuite({
 
     // Should return the elements in the same order as getElementsByTagName.
     assertArrayEquals(
-        googArray.toArray(document.getElementsByTagName('p')),
-        googDom.findElements(document, isP));
+      googArray.toArray(document.getElementsByTagName('p')),
+      googDom.findElements(document, isP)
+    );
     assertArrayEquals(
-        googArray.toArray(document.getElementsByTagName('*')),
-        googDom.findElements(document, functions.TRUE));
+      googArray.toArray(document.getElementsByTagName('*')),
+      googDom.findElements(document, functions.TRUE)
+    );
     assertArrayEquals(
-        googArray.toArray(document.body.getElementsByTagName('*')),
-        googDom.findElements(document.body, functions.TRUE));
+      googArray.toArray(document.body.getElementsByTagName('*')),
+      googDom.findElements(document.body, functions.TRUE)
+    );
   },
 
   testFindElements_excludesRootElement() {
     const isBody = (element) => element.tagName == 'BODY';
 
-    assertArrayEquals(
-        [document.body],
-        googDom.findElements(document.documentElement, isBody));
+    assertArrayEquals([document.body], googDom.findElements(document.documentElement, isBody));
     assertArrayEquals([], googDom.findElements(document.body, isBody));
   },
 
   testFindElements_onlyCallsFilterFunctionWithElements() {
     googDom.findElements(document, (param) => {
       asserts.assertElement(param);
-      return false;  // to visit all nodes
+      return false; // to visit all nodes
     });
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testIsFocusableTabIndex() {
     assertFalse(
-        'isFocusableTabIndex() must be false for no tab index',
-        googDom.isFocusableTabIndex(googDom.getElement('noTabIndex')));
+      'isFocusableTabIndex() must be false for no tab index',
+      googDom.isFocusableTabIndex(googDom.getElement('noTabIndex'))
+    );
     assertFalse(
-        'isFocusableTabIndex() must be false for tab index -2',
-        googDom.isFocusableTabIndex(googDom.getElement('tabIndexNegative2')));
+      'isFocusableTabIndex() must be false for tab index -2',
+      googDom.isFocusableTabIndex(googDom.getElement('tabIndexNegative2'))
+    );
     assertFalse(
-        'isFocusableTabIndex() must be false for tab index -1',
-        googDom.isFocusableTabIndex(googDom.getElement('tabIndexNegative1')));
+      'isFocusableTabIndex() must be false for tab index -1',
+      googDom.isFocusableTabIndex(googDom.getElement('tabIndexNegative1'))
+    );
 
     assertTrue(
-        'isFocusableTabIndex() must be true for tab index 0',
-        googDom.isFocusableTabIndex(googDom.getElement('tabIndex0')));
+      'isFocusableTabIndex() must be true for tab index 0',
+      googDom.isFocusableTabIndex(googDom.getElement('tabIndex0'))
+    );
     assertTrue(
-        'isFocusableTabIndex() must be true for tab index 1',
-        googDom.isFocusableTabIndex(googDom.getElement('tabIndex1')));
+      'isFocusableTabIndex() must be true for tab index 1',
+      googDom.isFocusableTabIndex(googDom.getElement('tabIndex1'))
+    );
     assertTrue(
-        'isFocusableTabIndex() must be true for tab index 2',
-        googDom.isFocusableTabIndex(googDom.getElement('tabIndex2')));
+      'isFocusableTabIndex() must be true for tab index 2',
+      googDom.isFocusableTabIndex(googDom.getElement('tabIndex2'))
+    );
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -1397,44 +1372,48 @@ testSuite({
     // Test enabling focusable tab index.
     googDom.setFocusableTabIndex(googDom.getElement('noTabIndex'), true);
     assertTrue(
-        'isFocusableTabIndex() must be true after enabling tab index',
-        googDom.isFocusableTabIndex(googDom.getElement('noTabIndex')));
+      'isFocusableTabIndex() must be true after enabling tab index',
+      googDom.isFocusableTabIndex(googDom.getElement('noTabIndex'))
+    );
 
     // Test disabling focusable tab index that was added programmatically.
     googDom.setFocusableTabIndex(googDom.getElement('noTabIndex'), false);
     assertFalse(
-        'isFocusableTabIndex() must be false after disabling tab ' +
-            'index that was programmatically added',
-        googDom.isFocusableTabIndex(googDom.getElement('noTabIndex')));
+      'isFocusableTabIndex() must be false after disabling tab ' +
+        'index that was programmatically added',
+      googDom.isFocusableTabIndex(googDom.getElement('noTabIndex'))
+    );
 
     // Test disabling focusable tab index that was specified in markup.
     googDom.setFocusableTabIndex(googDom.getElement('tabIndex0'), false);
     assertFalse(
-        'isFocusableTabIndex() must be false after disabling tab ' +
-            'index that was specified in markup',
-        googDom.isFocusableTabIndex(googDom.getElement('tabIndex0')));
+      'isFocusableTabIndex() must be false after disabling tab ' +
+        'index that was specified in markup',
+      googDom.isFocusableTabIndex(googDom.getElement('tabIndex0'))
+    );
 
     // Test re-enabling focusable tab index.
     googDom.setFocusableTabIndex(googDom.getElement('tabIndex0'), true);
     assertTrue(
-        'isFocusableTabIndex() must be true after reenabling tabindex',
-        googDom.isFocusableTabIndex(googDom.getElement('tabIndex0')));
+      'isFocusableTabIndex() must be true after reenabling tabindex',
+      googDom.isFocusableTabIndex(googDom.getElement('tabIndex0'))
+    );
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testIsFocusable() {
     // Form elements without explicit tab index
-    assertFocusable(googDom.getElement('noTabIndexAnchor'));  // <a href>
-    assertNotFocusable(googDom.getElement('noTabIndexNoHrefAnchor'));  // <a>
-    assertFocusable(googDom.getElement('noTabIndexInput'));     // <input>
-    assertFocusable(googDom.getElement('noTabIndexTextArea'));  // <textarea>
-    assertFocusable(googDom.getElement('noTabIndexSelect'));    // <select>
-    assertFocusable(googDom.getElement('noTabIndexButton'));    // <button>
+    assertFocusable(googDom.getElement('noTabIndexAnchor')); // <a href>
+    assertNotFocusable(googDom.getElement('noTabIndexNoHrefAnchor')); // <a>
+    assertFocusable(googDom.getElement('noTabIndexInput')); // <input>
+    assertFocusable(googDom.getElement('noTabIndexTextArea')); // <textarea>
+    assertFocusable(googDom.getElement('noTabIndexSelect')); // <select>
+    assertFocusable(googDom.getElement('noTabIndexButton')); // <button>
 
     // Form elements with explicit tab indices
-    assertNotFocusable(googDom.getElement('negTabIndexButton'));  // tabIndex=-1
-    assertFocusable(googDom.getElement('zeroTabIndexButton'));    // tabIndex=0
-    assertFocusable(googDom.getElement('posTabIndexButton'));     // tabIndex=1
+    assertNotFocusable(googDom.getElement('negTabIndexButton')); // tabIndex=-1
+    assertFocusable(googDom.getElement('zeroTabIndexButton')); // tabIndex=0
+    assertFocusable(googDom.getElement('posTabIndexButton')); // tabIndex=1
 
     // Disabled form elements with different tab indices
     assertNotFocusable(googDom.getElement('disabledNoTabIndexButton'));
@@ -1444,20 +1423,20 @@ testSuite({
 
     // Test non-form types should return same value as isFocusableTabIndex()
     assertEquals(
-        'isFocusable() and isFocusableTabIndex() must agree for ' +
-            ' no tab index',
-        googDom.isFocusableTabIndex(googDom.getElement('noTabIndex')),
-        googDom.isFocusable(googDom.getElement('noTabIndex')));
+      'isFocusable() and isFocusableTabIndex() must agree for ' + ' no tab index',
+      googDom.isFocusableTabIndex(googDom.getElement('noTabIndex')),
+      googDom.isFocusable(googDom.getElement('noTabIndex'))
+    );
     assertEquals(
-        'isFocusable() and isFocusableTabIndex() must agree for ' +
-            ' tab index -2',
-        googDom.isFocusableTabIndex(googDom.getElement('tabIndexNegative2')),
-        googDom.isFocusable(googDom.getElement('tabIndexNegative2')));
+      'isFocusable() and isFocusableTabIndex() must agree for ' + ' tab index -2',
+      googDom.isFocusableTabIndex(googDom.getElement('tabIndexNegative2')),
+      googDom.isFocusable(googDom.getElement('tabIndexNegative2'))
+    );
     assertEquals(
-        'isFocusable() and isFocusableTabIndex() must agree for ' +
-            ' tab index -1',
-        googDom.isFocusableTabIndex(googDom.getElement('tabIndexNegative1')),
-        googDom.isFocusable(googDom.getElement('tabIndexNegative1')));
+      'isFocusable() and isFocusableTabIndex() must agree for ' + ' tab index -1',
+      googDom.isFocusableTabIndex(googDom.getElement('tabIndexNegative1')),
+      googDom.isFocusable(googDom.getElement('tabIndexNegative1'))
+    );
 
     // Make sure IE doesn't throw for detached elements. IE can't measure
     // detached elements, and calling getBoundingClientRect() will throw
@@ -1468,24 +1447,24 @@ testSuite({
   testGetTextContent() {
     function t(inp, out) {
       assertEquals(
-          out.replace(/ /g, '_'),
-          googDom.getTextContent(createTestDom(inp)).replace(/ /g, '_'));
+        out.replace(/ /g, '_'),
+        googDom.getTextContent(createTestDom(inp)).replace(/ /g, '_')
+      );
     }
 
     t('abcde', 'abcde');
     t('a<b>bcd</b>efgh', 'abcdefgh');
-    t('a<script type="text/javascript' +
-          '">var a=1;<' +
-          '/script>h',
-      'ah');
-    t('<html><head><style type="text/css">' +
-          'p{margin:100%;padding:5px}\n.class{background-color:red;}</style>' +
-          '</head><body><h1>Hello</h1>\n<p>One two three</p>\n<table><tr><td>a' +
-          '<td>b</table><' +
-          'script>var a = \'foo\';' +
-          '</scrip' +
-          't></body></html>',
-      'HelloOne two threeab');
+    t('a<script type="text/javascript' + '">var a=1;<' + '/script>h', 'ah');
+    t(
+      '<html><head><style type="text/css">' +
+        'p{margin:100%;padding:5px}\n.class{background-color:red;}</style>' +
+        '</head><body><h1>Hello</h1>\n<p>One two three</p>\n<table><tr><td>a' +
+        '<td>b</table><' +
+        "script>var a = 'foo';" +
+        '</scrip' +
+        't></body></html>',
+      'HelloOne two threeab'
+    );
     t('abc<br>def', 'abc\ndef');
     t('abc<br>\ndef', 'abc\ndef');
     t('abc<br>\n\ndef', 'abc\ndef');
@@ -1504,43 +1483,41 @@ testSuite({
 
   testGetNodeTextLength() {
     assertEquals(6, googDom.getNodeTextLength(createTestDom('abcdef')));
+    assertEquals(8, googDom.getNodeTextLength(createTestDom('a<b>bcd</b>efgh')));
     assertEquals(
-        8, googDom.getNodeTextLength(createTestDom('a<b>bcd</b>efgh')));
+      2,
+      googDom.getNodeTextLength(
+        createTestDom('a<script type="text/javascript' + '">var a = 1234;<' + '/script>h')
+      )
+    );
+    assertEquals(4, googDom.getNodeTextLength(createTestDom('a<br>\n<!-- some comments -->\nfo')));
     assertEquals(
-        2,
-        googDom.getNodeTextLength(createTestDom(
-            'a<script type="text/javascript' +
-            '">var a = 1234;<' +
-            '/script>h')));
-    assertEquals(
-        4,
-        googDom.getNodeTextLength(
-            createTestDom('a<br>\n<!-- some comments -->\nfo')));
-    assertEquals(
-        20,
-        googDom.getNodeTextLength(createTestDom(
-            '<html><head><style type="text/css">' +
+      20,
+      googDom.getNodeTextLength(
+        createTestDom(
+          '<html><head><style type="text/css">' +
             'p{margin:100%;padding:5px}\n.class{background-color:red;}</style>' +
             '</head><body><h1>Hello</h1><p>One two three</p><table><tr><td>a<td>b' +
             '</table><' +
-            'script>var a = \'foo\';</scrip' +
-            't></body></html>')));
-    assertEquals(
-        10, googDom.getNodeTextLength(createTestDom('a<b>bcd</b><br />efghi')));
+            "script>var a = 'foo';</scrip" +
+            't></body></html>'
+        )
+      )
+    );
+    assertEquals(10, googDom.getNodeTextLength(createTestDom('a<b>bcd</b><br />efghi')));
   },
 
   testGetNodeTextOffset() {
-    assertEquals(
-        4, googDom.getNodeTextOffset($('offsetTest1'), $('offsetParent1')));
+    assertEquals(4, googDom.getNodeTextOffset($('offsetTest1'), $('offsetParent1')));
     assertEquals(12, googDom.getNodeTextOffset($('offsetTest1')));
   },
 
   /** @suppress {missingProperties} suppression added to enable type checking */
   testGetNodeAtOffset() {
     const html =
-        '<div id=a>123<b id=b>45</b><span id=c>67<b id=d>89<i id=e>01' +
-        '</i>23<i id=f>45</i>67</b>890<i id=g>123</i><b id=h>456</b>' +
-        '</span></div><div id=i>7890<i id=j>123</i></div>';
+      '<div id=a>123<b id=b>45</b><span id=c>67<b id=d>89<i id=e>01' +
+      '</i>23<i id=f>45</i>67</b>890<i id=g>123</i><b id=h>456</b>' +
+      '</span></div><div id=i>7890<i id=j>123</i></div>';
     const node = googDom.createElement(TagName.DIV);
     node.innerHTML = html;
     const rv = {};
@@ -1582,12 +1559,16 @@ testSuite({
     node.setAttribute('foo', 'bar');
     node.innerHTML = contents;
     assertEqualsCaseAndLeadingWhitespaceInsensitive(
-        googDom.getOuterHtml(node), `<div foo="bar">${contents}</div>`);
+      googDom.getOuterHtml(node),
+      `<div foo="bar">${contents}</div>`
+    );
 
     const imgNode = googDom.createElement(TagName.IMG);
     imgNode.setAttribute('foo', 'bar');
     assertEqualsCaseAndLeadingWhitespaceInsensitive(
-        googDom.getOuterHtml(imgNode), '<img foo="bar">');
+      googDom.getOuterHtml(imgNode),
+      '<img foo="bar">'
+    );
   },
 
   testGetWindowFrame() {
@@ -1614,12 +1595,12 @@ testSuite({
     const elem = document.getElementById('p2');
     const text = document.getElementById('b2').firstChild;
 
-    assertTrue(
-        'NodeList should be a node list', googDom.isNodeList(elem.childNodes));
+    assertTrue('NodeList should be a node list', googDom.isNodeList(elem.childNodes));
     assertFalse('TextNode should not be a node list', googDom.isNodeList(text));
     assertFalse(
-        'Array of nodes should not be a node list',
-        googDom.isNodeList([elem.firstChild, elem.lastChild]));
+      'Array of nodes should not be a node list',
+      googDom.isNodeList([elem.firstChild, elem.lastChild])
+    );
   },
 
   testGetFrameContentDocument() {
@@ -1643,17 +1624,36 @@ testSuite({
 
   testCanHaveChildren() {
     const EMPTY_ELEMENTS = googObject.createSet(
-        TagName.APPLET, TagName.AREA, TagName.BASE, TagName.BR, TagName.COL,
-        TagName.COMMAND, TagName.EMBED, TagName.FRAME, TagName.HR, TagName.IMG,
-        TagName.INPUT, TagName.IFRAME, TagName.ISINDEX, TagName.KEYGEN,
-        TagName.LINK, TagName.NOFRAMES, TagName.NOSCRIPT, TagName.META,
-        TagName.OBJECT, TagName.PARAM, TagName.SCRIPT, TagName.SOURCE,
-        TagName.STYLE, TagName.TRACK, TagName.WBR);
+      TagName.APPLET,
+      TagName.AREA,
+      TagName.BASE,
+      TagName.BR,
+      TagName.COL,
+      TagName.COMMAND,
+      TagName.EMBED,
+      TagName.FRAME,
+      TagName.HR,
+      TagName.IMG,
+      TagName.INPUT,
+      TagName.IFRAME,
+      TagName.ISINDEX,
+      TagName.KEYGEN,
+      TagName.LINK,
+      TagName.NOFRAMES,
+      TagName.NOSCRIPT,
+      TagName.META,
+      TagName.OBJECT,
+      TagName.PARAM,
+      TagName.SCRIPT,
+      TagName.SOURCE,
+      TagName.STYLE,
+      TagName.TRACK,
+      TagName.WBR
+    );
 
     // IE opens a dialog warning about using Java content if the following
     // elements are created.
-    const IE_ILLEGAL_ELEMENTS =
-        googObject.createSet(TagName.APPLET, TagName.EMBED);
+    const IE_ILLEGAL_ELEMENTS = googObject.createSet(TagName.APPLET, TagName.EMBED);
 
     for (const tag in TagName) {
       if (userAgent.IE && tag in IE_ILLEGAL_ELEMENTS) {
@@ -1663,8 +1663,10 @@ testSuite({
       const expected = !(tag in EMPTY_ELEMENTS);
       const node = googDom.createElement(tag);
       assertEquals(
-          `${tag} should ` + (expected ? '' : 'not ') + 'have children',
-          expected, googDom.canHaveChildren(node));
+        `${tag} should ` + (expected ? '' : 'not ') + 'have children',
+        expected,
+        googDom.canHaveChildren(node)
+      );
 
       // Make sure we can _actually_ add a child if we identify the node as
       // allowing children.
@@ -1675,11 +1677,14 @@ testSuite({
   },
 
   testGetAncestorNoElement() {
+    assertNull(googDom.getAncestor(null /* element */, functions.TRUE /* matcher */));
     assertNull(
-        googDom.getAncestor(null /* element */, functions.TRUE /* matcher */));
-    assertNull(googDom.getAncestor(
-        null /* element */, functions.TRUE /* matcher */,
-        true /* opt_includeNode */));
+      googDom.getAncestor(
+        null /* element */,
+        functions.TRUE /* matcher */,
+        true /* opt_includeNode */
+      )
+    );
   },
 
   testGetAncestorNoMatch() {
@@ -1723,7 +1728,11 @@ testSuite({
     const elem = googDom.getElement('nestedElement');
     const searchEl = elem.parentNode.parentNode;
     const matched = googDom.getAncestorByTagNameAndClass(
-        elem, TagName.DIV, /* class */ undefined, 0);
+      elem,
+      TagName.DIV,
+      /* class */ undefined,
+      0
+    );
     assertNull(matched);
   },
 
@@ -1735,8 +1744,7 @@ testSuite({
   testGetAncestorByTagNameOnly() {
     const elem = googDom.getElement('nestedElement');
     const expected = googDom.getElement('testAncestorDiv');
-    assertEquals(
-        expected, googDom.getAncestorByTagNameAndClass(elem, TagName.DIV));
+    assertEquals(expected, googDom.getAncestorByTagNameAndClass(elem, TagName.DIV));
     assertEquals(expected, googDom.getAncestorByTagNameAndClass(elem, 'div'));
   },
 
@@ -1761,36 +1769,28 @@ testSuite({
   testGetAncestorByTagNameAndClass() {
     const elem = googDom.getElement('nestedElement');
     const expected = googDom.getElement('testAncestorDiv');
-    assertEquals(
-        expected,
-        googDom.getAncestorByTagNameAndClass(
-            elem, TagName.DIV, 'testAncestor'));
+    assertEquals(expected, googDom.getAncestorByTagNameAndClass(elem, TagName.DIV, 'testAncestor'));
     assertNull(
-        'Should return null if no search criteria are given',
-        googDom.getAncestorByTagNameAndClass(elem));
+      'Should return null if no search criteria are given',
+      googDom.getAncestorByTagNameAndClass(elem)
+    );
   },
 
   testCreateTable() {
     let table = googDom.createTable(2, 3, true);
     assertEquals(2, googDom.getElementsByTagName(TagName.TR, table).length);
-    assertEquals(
-        3,
-        googDom.getElementsByTagName(TagName.TR, table)[0].childNodes.length);
+    assertEquals(3, googDom.getElementsByTagName(TagName.TR, table)[0].childNodes.length);
     assertEquals(6, googDom.getElementsByTagName(TagName.TD, table).length);
     assertEquals(
-        Unicode.NBSP,
-        googDom.getElementsByTagName(TagName.TD, table)[0]
-            .firstChild.nodeValue);
+      Unicode.NBSP,
+      googDom.getElementsByTagName(TagName.TD, table)[0].firstChild.nodeValue
+    );
 
     table = googDom.createTable(2, 3, false);
     assertEquals(2, googDom.getElementsByTagName(TagName.TR, table).length);
-    assertEquals(
-        3,
-        googDom.getElementsByTagName(TagName.TR, table)[0].childNodes.length);
+    assertEquals(3, googDom.getElementsByTagName(TagName.TR, table)[0].childNodes.length);
     assertEquals(6, googDom.getElementsByTagName(TagName.TD, table).length);
-    assertEquals(
-        0,
-        googDom.getElementsByTagName(TagName.TD, table)[0].childNodes.length);
+    assertEquals(0, googDom.getElementsByTagName(TagName.TD, table)[0].childNodes.length);
   },
 
   /**
@@ -1798,59 +1798,55 @@ testSuite({
      checking
    */
   testSafeHtmlToNode() {
-    const docFragment =
-        googDom.safeHtmlToNode(testing.newSafeHtmlForTest('<a>1</a><b>2</b>'));
+    const docFragment = googDom.safeHtmlToNode(testing.newSafeHtmlForTest('<a>1</a><b>2</b>'));
     assertNull(docFragment.parentNode);
     assertEquals(2, docFragment.childNodes.length);
 
-    const div =
-        googDom.safeHtmlToNode(testing.newSafeHtmlForTest('<div>3</div>'));
+    const div = googDom.safeHtmlToNode(testing.newSafeHtmlForTest('<div>3</div>'));
     assertEquals(String(TagName.DIV), div.tagName);
 
-    const script =
-        googDom.safeHtmlToNode(testing.newSafeHtmlForTest('<script></script>'));
+    const script = googDom.safeHtmlToNode(testing.newSafeHtmlForTest('<script></script>'));
     assertEquals(String(TagName.SCRIPT), script.tagName);
 
     if (userAgent.IE && !userAgent.isDocumentModeOrHigher(9)) {
       // Removing an Element from a DOM tree in IE sets its parentNode to a new
       // DocumentFragment. Bizarre!
-      assertEquals(
-          NodeType.DOCUMENT_FRAGMENT,
-          googDom.removeNode(div).parentNode.nodeType);
+      assertEquals(NodeType.DOCUMENT_FRAGMENT, googDom.removeNode(div).parentNode.nodeType);
     } else {
       assertNull(div.parentNode);
     }
   },
 
   testRegularConstHtmlToNodeStringifications() {
-    assertConstHtmlToNodeStringifiesToOneOf(
-        ['<b>foo</b>', '<B>foo</B>'], Const.from('<b>foo</b>'));
+    assertConstHtmlToNodeStringifiesToOneOf(['<b>foo</b>', '<B>foo</B>'], Const.from('<b>foo</b>'));
+
+    assertConstHtmlToNodeStringifiesToOneOf(['<br>', '<BR>'], Const.from('<br>'));
 
     assertConstHtmlToNodeStringifiesToOneOf(
-        ['<br>', '<BR>'], Const.from('<br>'));
+      ['<SVG></B>', '<svg></svg>', '<svg xmlns="http://www.w3.org/2000/svg" />'],
+      Const.from('<svg></b>')
+    );
 
     assertConstHtmlToNodeStringifiesToOneOf(
-        [
-          '<SVG></B>',
-          '<svg></svg>',
-          '<svg xmlns="http://www.w3.org/2000/svg" />',
-        ],
-        Const.from('<svg></b>'));
+      ['<unknown></unknown>', '<unknown>', '<UNKNOWN />'],
+      Const.from('<unknown />')
+    );
 
-    assertConstHtmlToNodeStringifiesToOneOf(
-        ['<unknown></unknown>', '<unknown>', '<UNKNOWN />'],
-        Const.from('<unknown />'));
-
-    assertConstHtmlToNodeStringifiesToOneOf(
-        ['&lt;"&amp;', '&lt;"'], Const.from('<"&'));
+    assertConstHtmlToNodeStringifiesToOneOf(['&lt;"&amp;', '&lt;"'], Const.from('<"&'));
   },
 
   testConcatenatedConstHtmlToNodeStringifications() {
     assertConstHtmlToNodeStringifiesToOneOf(
-        ['<b>foo</b>', '<B>foo</B>'], Const.from('<b>foo<'), Const.from('/b>'));
+      ['<b>foo</b>', '<B>foo</B>'],
+      Const.from('<b>foo<'),
+      Const.from('/b>')
+    );
 
     assertConstHtmlToNodeStringifiesToOneOf(
-        ['<b>foo</b>', '<B>foo</B>'], Const.from('<b>foo</b>'), Const.from(''));
+      ['<b>foo</b>', '<B>foo</B>'],
+      Const.from('<b>foo</b>'),
+      Const.from('')
+    );
 
     assertConstHtmlToNodeStringifiesToOneOf(['']);
   },
@@ -1858,28 +1854,31 @@ testSuite({
   testSpecialConstHtmlToNodeStringifications() {
     // body one is IE8, \r\n is opera.
     assertConstHtmlToNodeStringifiesToOneOf(
-        [
-          '<script></script>',
-          '<SCRIPT></SCRIPT>',
-          '<script></body></script>',
-          '\r\n' +
-              '<SCRIPT></SCRIPT>',
-        ],
-        Const.from('<script>'));
+      [
+        '<script></script>',
+        '<SCRIPT></SCRIPT>',
+        '<script></body></script>',
+        '\r\n' + '<SCRIPT></SCRIPT>',
+      ],
+      Const.from('<script>')
+    );
+
+    assertConstHtmlToNodeStringifiesToOneOf(['&lt;% %&gt;', '<% %>'], Const.from('<% %>'));
 
     assertConstHtmlToNodeStringifiesToOneOf(
-        ['&lt;% %&gt;', '<% %>'], Const.from('<% %>'));
+      ['&lt;% <script> %></script>', '<% <script> %>'],
+      Const.from('<% <script> %>')
+    );
 
     assertConstHtmlToNodeStringifiesToOneOf(
-        ['&lt;% <script> %></script>', '<% <script> %>'],
-        Const.from('<% <script> %>'));
+      ['</ hi />', '<!-- hi /-->', ''],
+      Const.from('</ hi />')
+    );
 
     assertConstHtmlToNodeStringifiesToOneOf(
-        ['</ hi />', '<!-- hi /-->', ''], Const.from('</ hi />'));
-
-    assertConstHtmlToNodeStringifiesToOneOf(
-        ['<!-- <script --> /&gt;', '</ <script>/&gt;', ' /&gt;'],
-        Const.from('</ <script > />'));
+      ['<!-- <script --> /&gt;', '</ <script>/&gt;', ' /&gt;'],
+      Const.from('</ <script > />')
+    );
   },
 
   testAppend() {
@@ -1932,9 +1931,9 @@ testSuite({
     // We need getDocumentScroll to handle this case though.
     // In case of IE10 though, we do want to use scrollLeft/scrollTop
     // because the rest of the positioning is done off the scrolled away origin.
-    const fakeDocumentScrollElement = {scrollLeft: 0, scrollTop: 0};
+    const fakeDocumentScrollElement = { scrollLeft: 0, scrollTop: 0 };
     const fakeDocument = {
-      defaultView: {pageXOffset: 100, pageYOffset: 100},
+      defaultView: { pageXOffset: 100, pageYOffset: 100 },
       documentElement: fakeDocumentScrollElement,
       body: fakeDocumentScrollElement,
     };
@@ -1954,8 +1953,8 @@ testSuite({
     // element should be used when computing the document scroll for these
     // documents.
     const fakeDocument = {
-      defaultView: {pageXOffset: 0, pageYOffset: 0},
-      documentElement: {scrollLeft: 0, scrollTop: 0},
+      defaultView: { pageXOffset: 0, pageYOffset: 0 },
+      documentElement: { scrollLeft: 0, scrollTop: 0 },
     };
 
     /** @suppress {checkTypes} suppression added to enable type checking */
@@ -1967,19 +1966,21 @@ testSuite({
   },
 
   testDefaultToScrollingElement() {
-    const fakeDocument = {documentElement: {}, body: {}};
+    const fakeDocument = { documentElement: {}, body: {} };
     /** @suppress {checkTypes} suppression added to enable type checking */
     const dh = new DomHelper(fakeDocument);
 
     // When scrollingElement isn't supported or is null (no element causes
     // scrolling), then behavior is UA-dependent for maximum compatibility.
     assertTrue(
-        dh.getDocumentScrollElement() == fakeDocument.body ||
-        dh.getDocumentScrollElement() == fakeDocument.documentElement);
+      dh.getDocumentScrollElement() == fakeDocument.body ||
+        dh.getDocumentScrollElement() == fakeDocument.documentElement
+    );
     fakeDocument.scrollingElement = null;
     assertTrue(
-        dh.getDocumentScrollElement() == fakeDocument.body ||
-        dh.getDocumentScrollElement() == fakeDocument.documentElement);
+      dh.getDocumentScrollElement() == fakeDocument.body ||
+        dh.getDocumentScrollElement() == fakeDocument.documentElement
+    );
 
     // But when scrollingElement is set, we use it directly.
     fakeDocument.scrollingElement = fakeDocument.documentElement;
@@ -2010,14 +2011,17 @@ testSuite({
     const documentNotAnElement = googDom.getParentElement(htmlEl);
     assertNull(documentNotAnElement);
 
-    const tree = googDom.safeHtmlToNode(testing.newSafeHtmlForTest(
+    const tree = googDom.safeHtmlToNode(
+      testing.newSafeHtmlForTest(
         '<div>' +
-        '<p>Some text</p>' +
-        '<blockquote>Some <i>special</i> <b>text</b></blockquote>' +
-        '<address><!-- comment -->Foo</address>' +
-        '</div>'));
+          '<p>Some text</p>' +
+          '<blockquote>Some <i>special</i> <b>text</b></blockquote>' +
+          '<address><!-- comment -->Foo</address>' +
+          '</div>'
+      )
+    );
     assertNull(googDom.getParentElement(tree));
-    let pEl = googDom.getNextNode(tree);
+    const pEl = googDom.getNextNode(tree);
     /** @suppress {checkTypes} suppression added to enable type checking */
     const fragmentRootEl = googDom.getParentElement(pEl);
     assertEquals(tree, fragmentRootEl);
@@ -2027,8 +2031,10 @@ testSuite({
     assertNull(detachedHasNoParent);
 
     // svg is not supported in IE8 and below or in IE9 quirks mode
-    const supported = !userAgent.IE || userAgent.isDocumentModeOrHigher(10) ||
-        (googDom.isCss1CompatMode() && userAgent.isDocumentModeOrHigher(9));
+    const supported =
+      !userAgent.IE ||
+      userAgent.isDocumentModeOrHigher(10) ||
+      (googDom.isCss1CompatMode() && userAgent.isDocumentModeOrHigher(9));
     if (!supported) {
       return;
     }
@@ -2057,21 +2063,18 @@ testSuite({
   testDevicePixelRatio() {
     const devicePixelRatio = 1.5;
     setWindow({
-      'matchMedia': /**
+      /**
                        @suppress {checkTypes} suppression added to enable type
                        checking
                      */
-          function(query) {
-            return {
-              'matches':
-                  devicePixelRatio >= parseFloat(query.split(': ')[1], 10),
-            };
-          },
+      matchMedia: (query) => ({
+        matches: devicePixelRatio >= Number.parseFloat(query.split(': ')[1], 10),
+      }),
     });
 
     assertEquals(devicePixelRatio, googDom.getPixelRatio());
 
-    setWindow({'devicePixelRatio': 2.0});
+    setWindow({ devicePixelRatio: 2.0 });
     assertEquals(2, googDom.getPixelRatio());
 
     setWindow({});

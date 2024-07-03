@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.string.pathTest');
-goog.setTestOnly();
 
 const path = goog.require('goog.string.path');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -44,8 +43,7 @@ testSuite({
     assertEquals('//', path.normalizePath('//'));
     assertEquals('/', path.normalizePath('///'));
     assertEquals('/foo/bar', path.normalizePath('///foo/.//bar//'));
-    assertEquals(
-        '/foo/baz', path.normalizePath('///foo/.//bar//.//..//.//baz'));
+    assertEquals('/foo/baz', path.normalizePath('///foo/.//bar//.//..//.//baz'));
     assertEquals('/foo/bar', path.normalizePath('///..//./foo/.//bar'));
     assertEquals('../../cat/dog', path.normalizePath('../../cat/dog/'));
     assertEquals('../dog', path.normalizePath('../cat/../dog/'));

@@ -8,15 +8,13 @@
  * @fileoverview Description of this file.
  */
 goog.module('goog.labs.useragent.verifierTest');
-goog.setTestOnly();
 
 const browser = goog.require('goog.labs.userAgent.browser');
 const testSuite = goog.require('goog.testing.testSuite');
 const verifier = goog.require('goog.labs.useragent.verifier');
 
-
 testSuite({
-  testIEVersion: function() {
+  testIEVersion: () => {
     const isUserAgentIE = browser.isIE();
     const versionByBehavior = verifier.detectIeVersionByBehavior();
     const versionByNavigator = verifier.detectIeVersionByNavigator();
@@ -26,8 +24,7 @@ testSuite({
       const version = Number(browser.getVersion());
       assertEquals('behavior detection incorrect', version, versionByBehavior);
       if (version != 11) {
-        assertEquals(
-            'navigator version incorrect', version, versionByNavigator);
+        assertEquals('navigator version incorrect', version, versionByNavigator);
       } else {
         // IE 11 doesn't want to be detected as IE
         assertEquals('navigator version incorrect', 0, versionByNavigator);

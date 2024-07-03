@@ -18,8 +18,6 @@ goog.require('goog.ui.Component');
 goog.require('goog.ui.Container');
 goog.requireType('goog.events.Event');
 
-
-
 /**
  * Plug-on scrolling behavior for a container.
  *
@@ -39,8 +37,7 @@ goog.requireType('goog.events.Event');
  * @extends {goog.Disposable}
  * @final
  */
-goog.ui.ContainerScroller = function(container) {
-  'use strict';
+goog.ui.ContainerScroller = function (container) {
   goog.Disposable.call(this);
 
   /**
@@ -57,14 +54,10 @@ goog.ui.ContainerScroller = function(container) {
    */
   this.eventHandler_ = new goog.events.EventHandler(this);
 
-  this.eventHandler_.listen(
-      container, goog.ui.Component.EventType.HIGHLIGHT, this.onHighlight_);
-  this.eventHandler_.listen(
-      container, goog.ui.Component.EventType.ENTER, this.onEnter_);
-  this.eventHandler_.listen(
-      container, goog.ui.Container.EventType.AFTER_SHOW, this.onAfterShow_);
-  this.eventHandler_.listen(
-      container, goog.ui.Component.EventType.HIDE, this.onHide_);
+  this.eventHandler_.listen(container, goog.ui.Component.EventType.HIGHLIGHT, this.onHighlight_);
+  this.eventHandler_.listen(container, goog.ui.Component.EventType.ENTER, this.onEnter_);
+  this.eventHandler_.listen(container, goog.ui.Container.EventType.AFTER_SHOW, this.onAfterShow_);
+  this.eventHandler_.listen(container, goog.ui.Component.EventType.HIDE, this.onHide_);
 
   // TODO(gboyer): Allow a ContainerScroller to be attached with a Container
   // before the container is rendered.
@@ -72,7 +65,6 @@ goog.ui.ContainerScroller = function(container) {
   this.doScrolling_(true);
 };
 goog.inherits(goog.ui.ContainerScroller, goog.Disposable);
-
 
 /**
  * The last target the user hovered over.
@@ -83,7 +75,6 @@ goog.inherits(goog.ui.ContainerScroller, goog.Disposable);
  */
 goog.ui.ContainerScroller.prototype.lastEnterTarget_ = null;
 
-
 /**
  * The scrollTop of the container before it was hidden.
  * Used to restore the scroll position when the container is shown again.
@@ -91,7 +82,6 @@ goog.ui.ContainerScroller.prototype.lastEnterTarget_ = null;
  * @private
  */
 goog.ui.ContainerScroller.prototype.scrollTopBeforeHide_ = null;
-
 
 /**
  * Whether we are disabling the default handler for hovering.
@@ -103,7 +93,6 @@ goog.ui.ContainerScroller.prototype.scrollTopBeforeHide_ = null;
  */
 goog.ui.ContainerScroller.prototype.disableHover_ = false;
 
-
 /**
  * Handles hover events on the container's children.
  *
@@ -113,8 +102,7 @@ goog.ui.ContainerScroller.prototype.disableHover_ = false;
  * @param {goog.events.Event} e The container's ENTER event.
  * @private
  */
-goog.ui.ContainerScroller.prototype.onEnter_ = function(e) {
-  'use strict';
+goog.ui.ContainerScroller.prototype.onEnter_ = function (e) {
   if (this.disableHover_) {
     // The container was scrolled recently.  Since the mouse may be over the
     // container, stop the default action of the ENTER event from causing
@@ -127,17 +115,14 @@ goog.ui.ContainerScroller.prototype.onEnter_ = function(e) {
   }
 };
 
-
 /**
  * Handles highlight events on the container's children.
  * @param {goog.events.Event} e The container's highlight event.
  * @private
  */
-goog.ui.ContainerScroller.prototype.onHighlight_ = function(e) {
-  'use strict';
+goog.ui.ContainerScroller.prototype.onHighlight_ = function (e) {
   this.doScrolling_();
 };
-
 
 /**
  * Handles AFTER_SHOW events on the container. Makes the container
@@ -148,8 +133,7 @@ goog.ui.ContainerScroller.prototype.onHighlight_ = function(e) {
  * @param {goog.events.Event} e The container's AFTER_SHOW event.
  * @private
  */
-goog.ui.ContainerScroller.prototype.onAfterShow_ = function(e) {
-  'use strict';
+goog.ui.ContainerScroller.prototype.onAfterShow_ = function (e) {
   if (this.scrollTopBeforeHide_ != null) {
     this.container_.getElement().scrollTop = this.scrollTopBeforeHide_;
     // Make sure the highlighted item is still visible, in case the list
@@ -160,7 +144,6 @@ goog.ui.ContainerScroller.prototype.onAfterShow_ = function(e) {
   }
 };
 
-
 /**
  * Handles hide events on the container. Clears out the last enter target,
  * since it is no longer applicable, and remembers the scroll position of
@@ -168,14 +151,12 @@ goog.ui.ContainerScroller.prototype.onAfterShow_ = function(e) {
  * @param {goog.events.Event} e The container's hide event.
  * @private
  */
-goog.ui.ContainerScroller.prototype.onHide_ = function(e) {
-  'use strict';
+goog.ui.ContainerScroller.prototype.onHide_ = function (e) {
   if (e.target == this.container_) {
     this.lastEnterTarget_ = null;
     this.scrollTopBeforeHide_ = this.container_.getElement().scrollTop;
   }
 };
-
 
 /**
  * Centers the currently highlighted item, if this is scrollable.
@@ -184,40 +165,36 @@ goog.ui.ContainerScroller.prototype.onHide_ = function(e) {
  *     render.
  * @private
  */
-goog.ui.ContainerScroller.prototype.doScrolling_ = function(opt_center) {
-  'use strict';
+goog.ui.ContainerScroller.prototype.doScrolling_ = function (opt_center) {
   var highlighted = this.container_.getHighlighted();
 
   // Only scroll if we're visible and there is a highlighted item.
-  if (this.container_.isVisible() && highlighted &&
-      highlighted != this.lastEnterTarget_) {
+  if (this.container_.isVisible() && highlighted && highlighted != this.lastEnterTarget_) {
     var element = this.container_.getElement();
-    goog.style.scrollIntoContainerView(
-        highlighted.getElement(), element, opt_center);
+    goog.style.scrollIntoContainerView(highlighted.getElement(), element, opt_center);
     this.temporarilyDisableHover_();
     this.lastEnterTarget_ = null;
   }
 };
-
 
 /**
  * Temporarily disables hover events from changing highlight.
  * @see #onEnter_
  * @private
  */
-goog.ui.ContainerScroller.prototype.temporarilyDisableHover_ = function() {
-  'use strict';
+goog.ui.ContainerScroller.prototype.temporarilyDisableHover_ = function () {
   this.disableHover_ = true;
-  goog.Timer.callOnce(function() {
-    'use strict';
-    this.disableHover_ = false;
-  }, 0, this);
+  goog.Timer.callOnce(
+    function () {
+      this.disableHover_ = false;
+    },
+    0,
+    this
+  );
 };
 
-
 /** @override */
-goog.ui.ContainerScroller.prototype.disposeInternal = function() {
-  'use strict';
+goog.ui.ContainerScroller.prototype.disposeInternal = function () {
   goog.ui.ContainerScroller.superClass_.disposeInternal.call(this);
   this.eventHandler_.dispose();
   this.lastEnterTarget_ = null;

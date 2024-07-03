@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Defines a class for parsing JSON using the browser's built in
  * JSON library.
@@ -16,9 +15,7 @@ goog.module.declareLegacyNamespace();
 const Parser = goog.require('goog.string.Parser');
 const Stringifier = goog.require('goog.string.Stringifier');
 const asserts = goog.require('goog.asserts');
-const {Replacer, Reviver} = goog.require('goog.json.types');
-
-
+const { Replacer, Reviver } = goog.require('goog.json.types');
 
 /**
  * A class that parses and stringifies JSON using the browser's built-in JSON
@@ -50,7 +47,7 @@ exports = class {
      * @private
      */
     this.reviver_ = opt_reviver;
-  };
+  }
 
   /**
    * Serializes an object or a value to a string.

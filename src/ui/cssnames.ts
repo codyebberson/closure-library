@@ -10,7 +10,6 @@
 
 goog.provide('goog.ui.INLINE_BLOCK_CLASSNAME');
 
-
 /**
  * CSS class name for applying the "display: inline-block" property in a
  * cross-browser way.

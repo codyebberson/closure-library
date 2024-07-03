@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.fx.css3.TransitionTest');
-goog.setTestOnly();
 
 const Css3Transition = goog.require('goog.fx.css3.Transition');
 const MockClock = goog.require('goog.testing.MockClock');
@@ -24,8 +23,12 @@ let mockClock;
 
 function createTransition(element, duration) {
   return new Css3Transition(
-      element, duration, {'opacity': 0}, {'opacity': 1},
-      {property: 'opacity', duration: duration, timing: 'ease-in', delay: 0});
+    element,
+    duration,
+    { opacity: 0 },
+    { opacity: 1 },
+    { property: 'opacity', duration: duration, timing: 'ease-in', delay: 0 }
+  );
 }
 
 testSuite({

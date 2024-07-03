@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.singletontest');
-goog.setTestOnly();
 
 const singleton = goog.require('goog.singleton');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -111,5 +110,5 @@ testSuite({
     }
 
     assertNotEquals(Foo.getInstance(), Bar.getInstance());
-  }
+  },
 });

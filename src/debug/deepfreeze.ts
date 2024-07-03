@@ -11,13 +11,14 @@
  */
 goog.module('goog.debug.deepFreeze');
 
-const {enhanceError, freeze} = goog.require('goog.debug');
+const { enhanceError, freeze } = goog.require('goog.debug');
 
 /**
  * @private
  */
 const throwingGetterError_ = new Error(
-    'Retrieving object values after deepFreeze is disallowed. Please use the frozen object instead.');
+  'Retrieving object values after deepFreeze is disallowed. Please use the frozen object instead.'
+);
 
 /**
  * @type {!ObjectPropertyDescriptor}
@@ -25,12 +26,13 @@ const throwingGetterError_ = new Error(
  */
 const throwingPropertyDescriptor_ = {
   configurable: false,
-  get: function() {
+  get: () => {
     throw throwingGetterError_;
   },
-  set: function() {
+  set: () => {
     throw new Error(
-        'Setting object values after deepFreeze is disallowed. Please use the frozen object instead.');
+      'Setting object values after deepFreeze is disallowed. Please use the frozen object instead.'
+    );
   },
 };
 
@@ -40,7 +42,7 @@ const throwingPropertyDescriptor_ = {
  * @param {?Object} arg The object whose accessors should be broken.
  * @private
  */
-const deepFreezeBreakObjectInternal_ = function(arg) {
+const deepFreezeBreakObjectInternal_ = (arg) => {
   if (!arg) {
     return;
   }
@@ -51,10 +53,7 @@ const deepFreezeBreakObjectInternal_ = function(arg) {
       return;
   }
 
-  const keys = [
-    ...Object.getOwnPropertyNames(arg),
-    ...Object.getOwnPropertySymbols(arg),
-  ];
+  const keys = [...Object.getOwnPropertyNames(arg), ...Object.getOwnPropertySymbols(arg)];
   const descriptorBundle = {};
   for (const key of keys) {
     const descriptor = Object.getOwnPropertyDescriptor(arg, key);
@@ -94,7 +93,7 @@ const deepFreezeBreakObjectInternal_ = function(arg) {
  * @template T
  * @private
  */
-const deepFreezeInternal_ = function(arg, seenSet) {
+const deepFreezeInternal_ = (arg, seenSet) => {
   // Check for primitives and non-recursive object types to avoid adding to seen
   // set.
   switch (typeof arg) {
@@ -123,10 +122,7 @@ const deepFreezeInternal_ = function(arg, seenSet) {
 
   seenSet.add(arg);
   const dupe = prototype === Array.prototype ? new Array(arg.length) : {};
-  const keys = [
-    ...Object.getOwnPropertyNames(arg),
-    ...Object.getOwnPropertySymbols(arg),
-  ];
+  const keys = [...Object.getOwnPropertyNames(arg), ...Object.getOwnPropertySymbols(arg)];
 
   for (const key of keys) {
     const descriptor = Object.getOwnPropertyDescriptor(arg, key);
@@ -156,12 +152,12 @@ const deepFreezeInternal_ = function(arg, seenSet) {
  * @return {T}
  * @template T
  */
-const deepFreeze = function(arg) {
+const deepFreeze = (arg) => {
   // NOTE: this compiles to nothing, but hides the possible side effect of
   // deepFreezeInternal_ from the compiler so that the entire call can be
   // removed if the result is not used.
   return {
-    valueOf: function() {
+    valueOf: () => {
       if (!goog.DEBUG) return arg;
       const dupe = deepFreezeInternal_(arg, new Set());
       deepFreezeBreakObjectInternal_(arg);
@@ -170,4 +166,4 @@ const deepFreeze = function(arg) {
   }.valueOf();
 };
 
-exports = {deepFreeze};
+exports = { deepFreeze };

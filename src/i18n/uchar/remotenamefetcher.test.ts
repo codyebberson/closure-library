@@ -9,7 +9,6 @@
  * @suppress {missingRequire} Swapping XhrIo
  */
 goog.module('goog.i18n.uChar.RemoteNameFetcherTest');
-goog.setTestOnly();
 
 const NetXhrIo = goog.require('goog.testing.net.XhrIo');
 const RemoteNameFetcher = goog.require('goog.i18n.uChar.RemoteNameFetcher');
@@ -33,15 +32,16 @@ testSuite({
 
   /** @suppress {visibility} suppression added to enable type checking */
   testGetName_remote() {
-    const callback =
-        recordFunction(/**
+    const callback = recordFunction(
+      /**
                           @suppress {visibility} suppression added to enable
                           type checking
                         */
-                       (name) => {
-                         assertEquals('Latin Capital Letter P', name);
-                         assertTrue(nameFetcher.charNames_.has('50'));
-                       });
+      (name) => {
+        assertEquals('Latin Capital Letter P', name);
+        assertTrue(nameFetcher.charNames_.has('50'));
+      }
+    );
     nameFetcher.getName('P', callback);
     const responseJsonText = '{"50":{"name":"Latin Capital Letter P"}}';
     nameFetcher.getNameXhrIo_.simulateResponse(200, responseJsonText);
@@ -65,8 +65,9 @@ testSuite({
     });
     nameFetcher.getName('\uD801\uDC9D', callback);
     assertEquals(
-        'http://www.example.com?c=1049d&p=name',
-        nameFetcher.getNameXhrIo_.getLastUri().toString());
+      'http://www.example.com?c=1049d&p=name',
+      nameFetcher.getNameXhrIo_.getLastUri().toString()
+    );
     nameFetcher.getNameXhrIo_.simulateResponse(400);
     assertEquals(1, callback.getCallCount());
   },
@@ -82,8 +83,9 @@ testSuite({
     });
     nameFetcher.getName('ÿ', callback2);
     assertEquals(
-        'http://www.example.com?c=ff&p=name',
-        nameFetcher.getNameXhrIo_.getLastUri().toString());
+      'http://www.example.com?c=ff&p=name',
+      nameFetcher.getNameXhrIo_.getLastUri().toString()
+    );
     const responseJsonText = '{"ff":{"name":"LATIN SMALL LETTER Y"}}';
     nameFetcher.getNameXhrIo_.simulateResponse(200, responseJsonText);
     assertEquals(1, callback1.getCallCount());
@@ -94,11 +96,13 @@ testSuite({
   testPrefetch() {
     nameFetcher.prefetch('ÿI\uD801\uDC9D');
     assertEquals(
-        'http://www.example.com?b88=%C3%BFI%F0%90%92%9D&p=name',
-        nameFetcher.prefetchXhrIo_.getLastUri().toString());
+      'http://www.example.com?b88=%C3%BFI%F0%90%92%9D&p=name',
+      nameFetcher.prefetchXhrIo_.getLastUri().toString()
+    );
 
-    const responseJsonText = '{"ff":{"name":"LATIN SMALL LETTER Y"},"49":{' +
-        '"name":"LATIN CAPITAL LETTER I"}, "1049d":{"name":"OSMYANA OO"}}';
+    const responseJsonText =
+      '{"ff":{"name":"LATIN SMALL LETTER Y"},"49":{' +
+      '"name":"LATIN CAPITAL LETTER I"}, "1049d":{"name":"OSMYANA OO"}}';
     nameFetcher.prefetchXhrIo_.simulateResponse(200, responseJsonText);
 
     assertEquals(3, nameFetcher.charNames_.size);
@@ -112,8 +116,9 @@ testSuite({
     nameFetcher.prefetch('I\uD801\uDC9D');
     nameFetcher.prefetch('ÿ');
     assertEquals(
-        'http://www.example.com?b88=%C3%BF&p=name',
-        nameFetcher.prefetchXhrIo_.getLastUri().toString());
+      'http://www.example.com?b88=%C3%BF&p=name',
+      nameFetcher.prefetchXhrIo_.getLastUri().toString()
+    );
   },
 
   testIsNameAvailable() {

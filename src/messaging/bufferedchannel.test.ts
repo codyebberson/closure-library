@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.messaging.BufferedChannelTest');
-goog.setTestOnly();
 
 const AsyncMockControl = goog.require('goog.testing.async.MockControl');
 const BufferedChannel = goog.require('goog.messaging.BufferedChannel');
@@ -21,8 +20,8 @@ const testSuite = goog.require('goog.testing.testSuite');
 
 let clock;
 const messages = [
-  {serviceName: 'firstService', payload: 'firstPayload'},
-  {serviceName: 'secondService', payload: 'secondPayload'},
+  { serviceName: 'firstService', payload: 'firstPayload' },
+  { serviceName: 'secondService', payload: 'secondPayload' },
 ];
 let mockControl;
 let asyncMockControl;
@@ -30,11 +29,8 @@ let asyncMockControl;
 function assertMessageArraysEqual(ma1, ma2) {
   assertEquals('message array lengths differ', ma1.length, ma2.length);
   for (let i = 0; i < ma1.length; i++) {
-    assertEquals(
-        'message array serviceNames differ', ma1[i].serviceName,
-        ma2[i].serviceName);
-    assertEquals(
-        'message array payloads differ', ma1[i].payload, ma2[i].payload);
+    assertEquals('message array serviceNames differ', ma1[i].serviceName, ma2[i].serviceName);
+    assertEquals('message array payloads differ', ma1[i].payload, ma2[i].payload);
   }
 }
 
@@ -69,25 +65,33 @@ testSuite({
     const mockChannel = new MockMessageChannel(mockControl);
     const channel = new BufferedChannel(mockChannel);
 
-    channel.registerDefaultService(asyncMockControl.asyncAssertEquals(
-        'default service should be delegated', 'defaultServiceName',
-        'default service payload'));
+    channel.registerDefaultService(
+      asyncMockControl.asyncAssertEquals(
+        'default service should be delegated',
+        'defaultServiceName',
+        'default service payload'
+      )
+    );
     channel.registerService(
-        'normalServiceName',
-        asyncMockControl.asyncAssertEquals(
-            'normal service should be delegated', 'normal service payload'));
-    mockChannel.send(
-        BufferedChannel.USER_CHANNEL_NAME_ + ':message', 'payload');
+      'normalServiceName',
+      asyncMockControl.asyncAssertEquals(
+        'normal service should be delegated',
+        'normal service payload'
+      )
+    );
+    mockChannel.send(BufferedChannel.USER_CHANNEL_NAME_ + ':message', 'payload');
 
     mockControl.$replayAll();
     /** @suppress {visibility} suppression added to enable type checking */
-    channel.peerReady_ = true;  // Prevent buffering so we delegate send calls.
+    channel.peerReady_ = true; // Prevent buffering so we delegate send calls.
     mockChannel.receive(
-        BufferedChannel.USER_CHANNEL_NAME_ + ':defaultServiceName',
-        'default service payload');
+      BufferedChannel.USER_CHANNEL_NAME_ + ':defaultServiceName',
+      'default service payload'
+    );
     mockChannel.receive(
-        BufferedChannel.USER_CHANNEL_NAME_ + ':normalServiceName',
-        'normal service payload');
+      BufferedChannel.USER_CHANNEL_NAME_ + ':normalServiceName',
+      'normal service payload'
+    );
     channel.send('message', 'payload');
     mockControl.$verifyAll();
   },
@@ -110,22 +114,24 @@ testSuite({
 
     const errorMessage = 'errorMessage';
     mockChannel
-        .send(
-            BufferedChannel.CONTROL_CHANNEL_NAME_ + ':' +
-                BufferedChannel.PEER_READY_SERVICE_NAME_,
-            /* payload */ '')
-        .$throws(Error(errorMessage));
+      .send(
+        BufferedChannel.CONTROL_CHANNEL_NAME_ + ':' + BufferedChannel.PEER_READY_SERVICE_NAME_,
+        /* payload */ ''
+      )
+      .$throws(Error(errorMessage));
     /** @suppress {visibility} suppression added to enable type checking */
     channel.timer_.enabled = true;
 
     mockControl.$replayAll();
-    const exception = assertThrows(/**
+    const exception = assertThrows(
+      /**
                                       @suppress {visibility} suppression added
                                       to enable type checking
                                     */
-                                   () => {
-                                     channel.sendReadyPing_();
-                                   });
+      () => {
+        channel.sendReadyPing_();
+      }
+    );
     assertContains(errorMessage, exception.message);
     assertFalse(channel.timer_.enabled);
     mockControl.$verifyAll();
@@ -136,11 +142,9 @@ testSuite({
     const mockChannel = new MockMessageChannel(mockControl);
     const channel = new BufferedChannel(mockChannel);
 
-    assertEquals(
-        BufferedChannel.DEFAULT_INTERVAL_MILLIS_, channel.timer_.getInterval());
+    assertEquals(BufferedChannel.DEFAULT_INTERVAL_MILLIS_, channel.timer_.getInterval());
     const interval = 100;
-    const longIntervalChannel =
-        new BufferedChannel(new MockMessageChannel(mockControl), interval);
+    const longIntervalChannel = new BufferedChannel(new MockMessageChannel(mockControl), interval);
     assertEquals(interval, longIntervalChannel.timer_.getInterval());
   },
 
@@ -150,39 +154,41 @@ testSuite({
     const mockChannel2 = new MockMessageChannel(mockControl);
     const bufferedChannel1 = new BufferedChannel(mockChannel1);
     const bufferedChannel2 = new BufferedChannel(mockChannel2);
-    mockChannel1
-        .send(BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_', '')
-        .$does(/**
+    mockChannel1.send(BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_', '').$does(
+      /**
                   @suppress {visibility} suppression added to enable type
                   checking
                 */
-               () => {
-                 bufferedChannel2.setPeerReady_('');
-               });
-    mockChannel2
-        .send(BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_', '1')
-        .$does(/**
+      () => {
+        bufferedChannel2.setPeerReady_('');
+      }
+    );
+    mockChannel2.send(BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_', '1').$does(
+      /**
                   @suppress {visibility} suppression added to enable type
                   checking
                 */
-               () => {
-                 bufferedChannel1.setPeerReady_('1');
-               });
-    mockChannel1
-        .send(BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_', '1')
-        .$does(/**
+      () => {
+        bufferedChannel1.setPeerReady_('1');
+      }
+    );
+    mockChannel1.send(BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_', '1').$does(
+      /**
                   @suppress {visibility} suppression added to enable type
                   checking
                 */
-               () => {
-                 bufferedChannel2.setPeerReady_('1');
-               });
+      () => {
+        bufferedChannel2.setPeerReady_('1');
+      }
+    );
     mockChannel1.send(
-        BufferedChannel.USER_CHANNEL_NAME_ + ':' + messages[0].serviceName,
-        messages[0].payload);
+      BufferedChannel.USER_CHANNEL_NAME_ + ':' + messages[0].serviceName,
+      messages[0].payload
+    );
     mockChannel2.send(
-        BufferedChannel.USER_CHANNEL_NAME_ + ':' + messages[1].serviceName,
-        messages[1].payload);
+      BufferedChannel.USER_CHANNEL_NAME_ + ':' + messages[1].serviceName,
+      messages[1].payload
+    );
 
     mockControl.$replayAll();
     bufferedChannel1.send(messages[0].serviceName, messages[0].payload);
@@ -209,74 +215,74 @@ testSuite({
     const bufferedChannel3 = new BufferedChannel(mockChannel3);
 
     // First tick
-    mockChannel1
-        .send(BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_', '')
-        .$does(/**
+    mockChannel1.send(BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_', '').$does(
+      /**
                   @suppress {visibility} suppression added to enable type
                   checking
                 */
-               () => {
-                 bufferedChannel2.setPeerReady_('');
-               });
-    mockChannel2
-        .send(BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_', '1')
-        .$does(/**
+      () => {
+        bufferedChannel2.setPeerReady_('');
+      }
+    );
+    mockChannel2.send(BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_', '1').$does(
+      /**
                   @suppress {visibility} suppression added to enable type
                   checking
                 */
-               () => {
-                 bufferedChannel1.setPeerReady_('1');
-               });
-    mockChannel1
-        .send(BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_', '1')
-        .$does(/**
+      () => {
+        bufferedChannel1.setPeerReady_('1');
+      }
+    );
+    mockChannel1.send(BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_', '1').$does(
+      /**
                   @suppress {visibility} suppression added to enable type
                   checking
                 */
-               () => {
-                 bufferedChannel2.setPeerReady_('1');
-               });
-    mockChannel3.send(
-        BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_',
-        '');  // pretend it's not ready to connect yet
+      () => {
+        bufferedChannel2.setPeerReady_('1');
+      }
+    );
+    mockChannel3.send(BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_', ''); // pretend it's not ready to connect yet
 
     // Second tick
-    mockChannel3
-        .send(BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_', '')
-        .$does(/**
+    mockChannel3.send(BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_', '').$does(
+      /**
                   @suppress {visibility} suppression added to enable type
                   checking
                 */
-               () => {
-                 bufferedChannel1.setPeerReady_('');
-               });
+      () => {
+        bufferedChannel1.setPeerReady_('');
+      }
+    );
 
     // Third tick
-    mockChannel1
-        .send(BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_', '1')
-        .$does(/**
+    mockChannel1.send(BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_', '1').$does(
+      /**
                   @suppress {visibility} suppression added to enable type
                   checking
                 */
-               () => {
-                 bufferedChannel3.setPeerReady_('1');
-               });
-    mockChannel3
-        .send(BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_', '1')
-        .$does(/**
+      () => {
+        bufferedChannel3.setPeerReady_('1');
+      }
+    );
+    mockChannel3.send(BufferedChannel.CONTROL_CHANNEL_NAME_ + ':setPeerReady_', '1').$does(
+      /**
                   @suppress {visibility} suppression added to enable type
                   checking
                 */
-               () => {
-                 bufferedChannel1.setPeerReady_('1');
-               });
+      () => {
+        bufferedChannel1.setPeerReady_('1');
+      }
+    );
 
     mockChannel1.send(
-        BufferedChannel.USER_CHANNEL_NAME_ + ':' + messages[0].serviceName,
-        messages[0].payload);
+      BufferedChannel.USER_CHANNEL_NAME_ + ':' + messages[0].serviceName,
+      messages[0].payload
+    );
     mockChannel3.send(
-        BufferedChannel.USER_CHANNEL_NAME_ + ':' + messages[1].serviceName,
-        messages[1].payload);
+      BufferedChannel.USER_CHANNEL_NAME_ + ':' + messages[1].serviceName,
+      messages[1].payload
+    );
 
     mockControl.$replayAll();
     // First tick causes setPeerReady_ to fire, which sets up the connection

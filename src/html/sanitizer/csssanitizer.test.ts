@@ -7,7 +7,6 @@
 /** @fileoverview testcases for CSS Sanitizer. */
 
 goog.module('goog.html.CssSanitizerTest');
-goog.setTestOnly();
 
 const CssSanitizer = goog.require('goog.html.sanitizer.CssSanitizer');
 const SafeStyle = goog.require('goog.html.SafeStyle');
@@ -40,8 +39,9 @@ function getStyleFromCssText(cssText) {
  */
 function assertCSSTextEquals(expectedCssText, actualCssText) {
   assertEquals(
-      getStyleFromCssText(expectedCssText).cssText,
-      getStyleFromCssText(actualCssText).cssText);
+    getStyleFromCssText(expectedCssText).cssText,
+    getStyleFromCssText(actualCssText).cssText
+  );
 }
 
 /**
@@ -53,9 +53,11 @@ function assertCSSTextEquals(expectedCssText, actualCssText) {
  */
 function getSanitizedInlineStyle(sourceCss, urlRewrite = undefined) {
   try {
-    return SafeStyle.unwrap(CssSanitizer.sanitizeInlineStyle(
-               getStyleFromCssText(sourceCss), urlRewrite)) ||
-        '';
+    return (
+      SafeStyle.unwrap(
+        CssSanitizer.sanitizeInlineStyle(getStyleFromCssText(sourceCss), urlRewrite)
+      ) || ''
+    );
   } catch (err) {
     // IE8 doesn't like setting invalid properties. It throws an "Invalid
     // Argument" exception.
@@ -72,10 +74,17 @@ function getSanitizedInlineStyle(sourceCss, urlRewrite = undefined) {
  * @param {function(string, string):?SafeUrl=} uriRewriter
  */
 function assertSanitizedCssEquals(
-    expectedCssText, inputCssText, containerId = undefined,
-    uriRewriter = undefined) {
+  expectedCssText,
+  inputCssText,
+  containerId = undefined,
+  uriRewriter = undefined
+) {
   assertBrowserSanitizedCssEquals(
-      {chrome: expectedCssText}, inputCssText, containerId, uriRewriter);
+    { chrome: expectedCssText },
+    inputCssText,
+    containerId,
+    uriRewriter
+  );
 }
 
 /**
@@ -95,8 +104,11 @@ function assertSanitizedCssEquals(
  * @param {function(string, string):?SafeUrl=} uriRewriter
  */
 function assertBrowserSanitizedCssEquals(
-    expectedCssTextByBrowser, inputCssText, containerId = undefined,
-    uriRewriter = undefined) {
+  expectedCssTextByBrowser,
+  inputCssText,
+  containerId = undefined,
+  uriRewriter = undefined
+) {
   let expectedCssText = undefined;
   if (product.CHROME) {
     expectedCssText = expectedCssTextByBrowser.chrome;
@@ -113,10 +125,15 @@ function assertBrowserSanitizedCssEquals(
     expectedCssText = expectedCssTextByBrowser.chrome;
   }
   assertEquals(
-      expectedCssText,
-      SafeStyleSheet.unwrap(CssSanitizer.sanitizeStyleSheetString(
-          inputCssText, containerId === undefined ? 'foo' : containerId,
-          uriRewriter)));
+    expectedCssText,
+    SafeStyleSheet.unwrap(
+      CssSanitizer.sanitizeStyleSheetString(
+        inputCssText,
+        containerId === undefined ? 'foo' : containerId,
+        uriRewriter
+      )
+    )
+  );
 }
 
 /**
@@ -126,8 +143,7 @@ function assertBrowserSanitizedCssEquals(
  * @return {string}
  */
 function inlineStyleRulesString(html) {
-  const tree =
-      CssSanitizer.safeParseHtmlAndGetInertElement(`<span>${html}</span>`);
+  const tree = CssSanitizer.safeParseHtmlAndGetInertElement(`<span>${html}</span>`);
   if (tree == null) {
     return '';
   }
@@ -143,8 +159,7 @@ function inlineStyleRulesString(html) {
  */
 function assertInlinedStyles(expectedHtml, originalHtml) {
   const inlinedHtml = inlineStyleRulesString(originalHtml);
-  dom.assertHtmlMatches(
-      expectedHtml, inlinedHtml, true /* opt_strictAttributes */);
+  dom.assertHtmlMatches(expectedHtml, inlinedHtml, true /* opt_strictAttributes */);
 }
 
 /**
@@ -153,14 +168,12 @@ function assertInlinedStyles(expectedHtml, originalHtml) {
  * @param {function(string, string):?SafeUrl=} uriRewriter A URI rewriter that
  *     returns a SafeUrl.
  */
-function assertInlineStyleStringEquals(
-    expectedCssText, inputCssText, uriRewriter = undefined) {
+function assertInlineStyleStringEquals(expectedCssText, inputCssText, uriRewriter = undefined) {
   if (userAgent.IE && document.documentMode < 10) {
     expectedCssText = '';
   }
 
-  const safeStyle =
-      CssSanitizer.sanitizeInlineStyleString(inputCssText, uriRewriter);
+  const safeStyle = CssSanitizer.sanitizeInlineStyleString(inputCssText, uriRewriter);
   const output = SafeStyle.unwrap(safeStyle);
   assertCSSTextEquals(expectedCssText, output);
 }
@@ -186,7 +199,7 @@ testSuite({
     if (isSafari9OrOlder) {
       // We never figured out why Safari didn't work here, but it's obsolete
       // now.
-      expectedCSS = 'quotes: \'{\';';
+      expectedCSS = "quotes: '{';";
     }
     assertCSSTextEquals(expectedCSS, getSanitizedInlineStyle(actualCSS));
   },
@@ -214,20 +227,19 @@ testSuite({
     assertCSSTextEquals(expectedCSS, getSanitizedInlineStyle(actualCSS));
 
     // Font-family does not allow quantities at all.
-    actualCSS = 'font-family: 7 .5 23 1.25 -7 -.5 -23 -1.25 +7 +.5 +23 +1.25 ' +
-        '7cm .5em 23.mm 1.25px -7cm -.5em -23.mm -1.25px ' +
-        '+7cm +.5em +23.mm +1.25px 0 .0 -0+00.0 /';
+    actualCSS =
+      'font-family: 7 .5 23 1.25 -7 -.5 -23 -1.25 +7 +.5 +23 +1.25 ' +
+      '7cm .5em 23.mm 1.25px -7cm -.5em -23.mm -1.25px ' +
+      '+7cm +.5em +23.mm +1.25px 0 .0 -0+00.0 /';
     assertCSSTextEquals(expectedCSS, getSanitizedInlineStyle(actualCSS));
 
     actualCSS = 'background: bogus url("foo.png") transparent';
-    assertCSSTextEquals(
-        expectedCSS, getSanitizedInlineStyle(actualCSS, SafeUrl.sanitize));
+    assertCSSTextEquals(expectedCSS, getSanitizedInlineStyle(actualCSS, SafeUrl.sanitize));
 
     // expression(...) is not allowed for font so is rejected wholesale -- the
     // internal string "pwned" is not passed through.
     actualCSS =
-        'font-family: Arial Black,monospace,expression(return "pwned"),' +
-        'Helvetica,#88ff88';
+      'font-family: Arial Black,monospace,expression(return "pwned"),' + 'Helvetica,#88ff88';
     assertCSSTextEquals(expectedCSS, getSanitizedInlineStyle(actualCSS));
   },
 
@@ -242,14 +254,11 @@ testSuite({
     // Don't require the URL sanitizer to protect string boundaries.
     actualCSS = 'background-image: url("javascript:evil(1337)")';
     expectedCSS = '';
-    assertCSSTextEquals(
-        expectedCSS, getSanitizedInlineStyle(actualCSS, SafeUrl.sanitize));
+    assertCSSTextEquals(expectedCSS, getSanitizedInlineStyle(actualCSS, SafeUrl.sanitize));
 
     actualCSS = 'background-image: url("http://goo.gl/foo.png")';
-    expectedCSS =
-        'background-image: url(https://goo.gl/proxy?url=http://goo.gl/foo.png)';
-    assertCSSTextEquals(
-        expectedCSS, getSanitizedInlineStyle(actualCSS, proxyUrl));
+    expectedCSS = 'background-image: url(https://goo.gl/proxy?url=http://goo.gl/foo.png)';
+    assertCSSTextEquals(expectedCSS, getSanitizedInlineStyle(actualCSS, proxyUrl));
 
     // Without any URL sanitizer.
     actualCSS = 'background: transparent url("Bar.png")';
@@ -284,16 +293,19 @@ testSuite({
     ];
     const notcolors = [
       // Finding words that are not X11 colors is harder than you think.
-      'killitwithfire', 'invisible', 'expression(red=blue)', '#aa-1bb',
-      '#expression', '#doevil'
+      'killitwithfire',
+      'invisible',
+      'expression(red=blue)',
+      '#aa-1bb',
+      '#expression',
+      '#doevil',
       // 'rgb(0, 0, 100%)' // Invalid in all browsers
       // 'rgba(128,255,128,50%)', // Invalid in all browsers
     ];
 
     for (let i = 0; i < colors.length; ++i) {
       const validColorValue = 'color: ' + colors[i];
-      assertCSSTextEquals(
-          validColorValue, getSanitizedInlineStyle(validColorValue));
+      assertCSSTextEquals(validColorValue, getSanitizedInlineStyle(validColorValue));
     }
 
     for (let i = 0; i < notcolors.length; ++i) {
@@ -308,13 +320,11 @@ testSuite({
   },
 
   testExpressionsPreserved() {
-
     let actualCSS;
     let expectedCSS;
 
     actualCSS = 'background-image: linear-gradient(to bottom right, red, blue)';
-    expectedCSS =
-        'background-image: linear-gradient(to right bottom, red, blue)';
+    expectedCSS = 'background-image: linear-gradient(to right bottom, red, blue)';
     assertCSSTextEquals(expectedCSS, getSanitizedInlineStyle(actualCSS));
   },
 
@@ -327,8 +337,7 @@ testSuite({
   testSanitizeInlineStyleString_basic() {
     assertInlineStyleStringEquals('', '');
     assertInlineStyleStringEquals('color: red;', 'color: red');
-    assertInlineStyleStringEquals(
-        'color: green; padding: 10px;', 'color: green; padding: 10px');
+    assertInlineStyleStringEquals('color: green; padding: 10px;', 'color: green; padding: 10px');
   },
 
   testSanitizeInlineStyleString_malicious() {
@@ -336,32 +345,42 @@ testSuite({
   },
 
   testSanitizeInlineStyleString_url() {
-    assertInlineStyleStringEquals(
-        '', 'background-image: url("http://example.com")');
+    assertInlineStyleStringEquals('', 'background-image: url("http://example.com")');
 
+    assertInlineStyleStringEquals('', 'background-image: url("http://example.com")', (uri) => null);
     assertInlineStyleStringEquals(
-        '', 'background-image: url("http://example.com")', (uri) => null);
-    assertInlineStyleStringEquals(
-        'background-image: url("http://example.com");',
-        'background-image: url("http://example.com")', SafeUrl.sanitize);
+      'background-image: url("http://example.com");',
+      'background-image: url("http://example.com")',
+      SafeUrl.sanitize
+    );
   },
 
   testSanitizeInlineStyleString_unbalancedParenthesesInUnquotedUrl() {
     assertEquals(
-        '',
-        SafeStyle.unwrap(CssSanitizer.sanitizeInlineStyleString(
-            'background-image: url(http://example.com/aaa(a)',
-            SafeUrl.sanitize)));
+      '',
+      SafeStyle.unwrap(
+        CssSanitizer.sanitizeInlineStyleString(
+          'background-image: url(http://example.com/aaa(a)',
+          SafeUrl.sanitize
+        )
+      )
+    );
     assertEquals(
-        '',
-        SafeStyle.unwrap(CssSanitizer.sanitizeInlineStyleString(
-            'background-image: url(http://example.com/aaa)a)',
-            SafeUrl.sanitize)));
+      '',
+      SafeStyle.unwrap(
+        CssSanitizer.sanitizeInlineStyleString(
+          'background-image: url(http://example.com/aaa)a)',
+          SafeUrl.sanitize
+        )
+      )
+    );
   },
 
   testSanitizeInlineStyleString_preservesCase() {
     assertInlineStyleStringEquals(
-        'font-family: Roboto, sans-serif', 'font-family: Roboto, sans-serif');
+      'font-family: Roboto, sans-serif',
+      'font-family: Roboto, sans-serif'
+    );
   },
 
   testSanitizeInlineStyleString_simpleFunctions() {
@@ -372,16 +391,16 @@ testSuite({
   },
 
   testSanitizeInlineStyleString_nestedFunction() {
-    const expectedCss =
-        'background-image: linear-gradient(217deg, rgba(255,0,0,.8), blue);';
+    const expectedCss = 'background-image: linear-gradient(217deg, rgba(255,0,0,.8), blue);';
     assertInlineStyleStringEquals(expectedCss, expectedCss);
   },
 
   testSanitizeInlineStyleString_repeatingLinearGradient() {
-    const expectedCss = 'background-image: repeating-linear-gradient(' +
-        '-45deg, rgb(66, 133, 244), rgb(66, 133, 244) 4px, ' +
-        'rgb(255, 255, 255) 4px, rgb(255, 255, 255) 5px, ' +
-        'rgb(66, 133, 244) 5px, rgb(66, 133, 244) 8px);';
+    const expectedCss =
+      'background-image: repeating-linear-gradient(' +
+      '-45deg, rgb(66, 133, 244), rgb(66, 133, 244) 4px, ' +
+      'rgb(255, 255, 255) 4px, rgb(255, 255, 255) 5px, ' +
+      'rgb(66, 133, 244) 5px, rgb(66, 133, 244) 8px);';
     assertInlineStyleStringEquals(expectedCss, expectedCss);
   },
 
@@ -393,7 +412,9 @@ testSuite({
     // CssPropertySanitizer dropping the value. Check that no browser does
     // value fanout.
     const safeStyle = CssSanitizer.sanitizeInlineStyleString(
-        'background: url("http://foo.com/a")', SafeUrl.sanitize);
+      'background: url("http://foo.com/a")',
+      SafeUrl.sanitize
+    );
     const output = SafeStyle.unwrap(safeStyle);
     // We can't use assertInlineStyleStringEquals, the browser is inconsistent
     // about fanout of properties. We'll use plain substring matching instead.
@@ -408,8 +429,9 @@ testSuite({
     let expected = '#foo a{color: red;}';
     assertSanitizedCssEquals(expected, input);
 
-    input = 'a {color: red} b {color:red; not-allowed: 1; ' +
-        'background-image: url(\'http://not.allowed\');}';
+    input =
+      'a {color: red} b {color:red; not-allowed: 1; ' +
+      "background-image: url('http://not.allowed');}";
     expected = '#foo a{color: red;}#foo b{color: red;}';
     assertSanitizedCssEquals(expected, input);
   },
@@ -449,18 +471,19 @@ testSuite({
     let input = 'a {background-image: url("http://bar.com")}';
     const quoted = '#foo a{background-image: url("http://bar.com");}';
     assertBrowserSanitizedCssEquals(
-        {safari: quoted, chrome: quoted}, input,
-        undefined /* opt_containerId */, urlRewriter);
+      { safari: quoted, chrome: quoted },
+      input,
+      undefined /* opt_containerId */,
+      urlRewriter
+    );
 
     input = 'a {background-image: url("http://nope.com")}';
     let expected = '#foo a{}';
-    assertSanitizedCssEquals(
-        expected, input, undefined /* opt_containerId */, urlRewriter);
+    assertSanitizedCssEquals(expected, input, undefined /* opt_containerId */, urlRewriter);
 
-    input = 'a{background-image: url("javascript:alert(\"bar\")")}';
+    input = 'a{background-image: url("javascript:alert("bar")")}';
     expected = '#foo a{}';
-    assertSanitizedCssEquals(
-        expected, input, undefined /* opt_containerId */, urlRewriter);
+    assertSanitizedCssEquals(expected, input, undefined /* opt_containerId */, urlRewriter);
   },
 
   testSanitizeStyleSheetString_unrecognized() {
@@ -482,12 +505,11 @@ testSuite({
     expected = '#foo a{font-size: 10px;}';
     assertSanitizedCssEquals(expected, input);
 
-    input =
-        'a {;;;} a { font-size: 10px } ;;; a { background-image: url(() }};;';
+    input = 'a {;;;} a { font-size: 10px } ;;; a { background-image: url(() }};;';
     expected = '#foo a{}#foo a{font-size: 10px;}';
     assertSanitizedCssEquals(expected, input);
 
-    input = 'a[a=\"ccc] { color: red;}';
+    input = 'a[a="ccc] { color: red;}';
     expected = '';
     assertSanitizedCssEquals(expected, input);
   },
@@ -496,31 +518,24 @@ testSuite({
     let input = 'a[data-foo="foo,bar"], b { color: red }';
     // IE converts the string to single quotes.
     let doubleQuoted = '#foo a[data-foo="foo,bar"],#foo b{color: red;}';
-    let singleQuoted = '#foo a[data-foo=\'foo,bar\'],#foo b{color: red;}';
-    assertBrowserSanitizedCssEquals(
-        {chrome: doubleQuoted, newIE: singleQuoted}, input);
+    let singleQuoted = "#foo a[data-foo='foo,bar'],#foo b{color: red;}";
+    assertBrowserSanitizedCssEquals({ chrome: doubleQuoted, newIE: singleQuoted }, input);
 
-    input = 'a[data-foo=\'foo,bar\'], b { color: red }';
+    input = "a[data-foo='foo,bar'], b { color: red }";
     // Chrome converts the string to double quotes.
     doubleQuoted = '#foo a[data-foo="foo,bar"],#foo b{color: red;}';
-    singleQuoted = '#foo a[data-foo=\'foo,bar\'],#foo b{color: red;}';
-    assertBrowserSanitizedCssEquals(
-        {chrome: doubleQuoted, newIE: singleQuoted}, input);
+    singleQuoted = "#foo a[data-foo='foo,bar'],#foo b{color: red;}";
+    assertBrowserSanitizedCssEquals({ chrome: doubleQuoted, newIE: singleQuoted }, input);
 
     input = 'a[foo="foo,bar"][bar="baz"], b { color: blue }';
     doubleQuoted = '#foo a[foo="foo,bar"][bar="baz"],#foo b{color: blue;}';
-    singleQuoted = '#foo a[foo=\'foo,bar\'][bar=\'baz\'],#foo b{color: blue;}';
-    assertBrowserSanitizedCssEquals(
-        {chrome: doubleQuoted, newIE: singleQuoted}, input);
+    singleQuoted = "#foo a[foo='foo,bar'][bar='baz'],#foo b{color: blue;}";
+    assertBrowserSanitizedCssEquals({ chrome: doubleQuoted, newIE: singleQuoted }, input);
 
     input = 'a[foo="foo,bar"], b, c[foo="f,b"][bar="f,b"] { color: red }';
-    doubleQuoted = '#foo a[foo="foo,bar"],#foo b,#foo c[foo="f,b"][bar="f,b"]' +
-        '{color: red;}';
-    singleQuoted =
-        '#foo a[foo=\'foo,bar\'],#foo b,#foo c[bar=\'f,b\'][foo=\'f,b\']' +
-        '{color: red;}';
-    assertBrowserSanitizedCssEquals(
-        {chrome: doubleQuoted, newIE: singleQuoted}, input);
+    doubleQuoted = '#foo a[foo="foo,bar"],#foo b,#foo c[foo="f,b"][bar="f,b"]' + '{color: red;}';
+    singleQuoted = "#foo a[foo='foo,bar'],#foo b,#foo c[bar='f,b'][foo='f,b']" + '{color: red;}';
+    assertBrowserSanitizedCssEquals({ chrome: doubleQuoted, newIE: singleQuoted }, input);
   },
 
   testSanitizeStyleSheetString_stringWithEscapedQuotesInSelector() {
@@ -528,48 +543,49 @@ testSuite({
     // before the regex is executed.
     let input = 'a[a="a\\"b"] { color: black; }';
     let doubleQuoted = '#foo a[a="a\\"b"]{color: black;}';
-    let singleQuoted = '#foo a[a=\'a"b\']{color: black;}';
-    assertBrowserSanitizedCssEquals(
-        {chrome: doubleQuoted, newIE: singleQuoted}, input);
+    let singleQuoted = "#foo a[a='a\"b']{color: black;}";
+    assertBrowserSanitizedCssEquals({ chrome: doubleQuoted, newIE: singleQuoted }, input);
 
     input = 'a[a="a\\\'b"] { color: grey; }';
     doubleQuoted = '#foo a[a="a\'b"]{color: grey;}';
-    singleQuoted = '#foo a[a=\'a\\\'b\']{color: grey;}';
+    singleQuoted = "#foo a[a='a\\'b']{color: grey;}";
     assertBrowserSanitizedCssEquals(
-        {
-          chrome: doubleQuoted,
-          firefox: doubleQuoted,
-          newIE: singleQuoted,
-        },
-        input);
+      {
+        chrome: doubleQuoted,
+        firefox: doubleQuoted,
+        newIE: singleQuoted,
+      },
+      input
+    );
 
-    input = 'a[a=\'\\\'b\'] {color: red; }';
+    input = "a[a='\\'b'] {color: red; }";
     doubleQuoted = '#foo a[a="\'b"]{color: red;}';
-    singleQuoted = '#foo a[a=\'\\\'b\']{color: red;}';
+    singleQuoted = "#foo a[a='\\'b']{color: red;}";
     assertBrowserSanitizedCssEquals(
-        {
-          chrome: doubleQuoted,
-          firefox: doubleQuoted,
-          newIE: singleQuoted,
-        },
-        input);
+      {
+        chrome: doubleQuoted,
+        firefox: doubleQuoted,
+        newIE: singleQuoted,
+      },
+      input
+    );
 
-    input = 'a[foo=\'b\\\'a, ,\'] { color: blue; }';
+    input = "a[foo='b\\'a, ,'] { color: blue; }";
     doubleQuoted = '#foo a[foo="b\'a, ,"]{color: blue;}';
-    singleQuoted = '#foo a[foo=\'b\\\'a, ,\']{color: blue;}';
+    singleQuoted = "#foo a[foo='b\\'a, ,']{color: blue;}";
     assertBrowserSanitizedCssEquals(
-        {
-          chrome: doubleQuoted,
-          firefox: doubleQuoted,
-          newIE: singleQuoted,
-        },
-        input);
+      {
+        chrome: doubleQuoted,
+        firefox: doubleQuoted,
+        newIE: singleQuoted,
+      },
+      input
+    );
 
-    input = 'a[a=\'a\\"b\'] { color: black; }';
+    input = "a[a='a\\\"b'] { color: black; }";
     doubleQuoted = '#foo a[a="a\\"b"]{color: black;}';
-    singleQuoted = '#foo a[a=\'a"b\']{color: black;}';
-    assertBrowserSanitizedCssEquals(
-        {chrome: doubleQuoted, newIE: singleQuoted}, input);
+    singleQuoted = "#foo a[a='a\"b']{color: black;}";
+    assertBrowserSanitizedCssEquals({ chrome: doubleQuoted, newIE: singleQuoted }, input);
   },
 
   testSanitizeInlineStyleString_invalidSelector() {
@@ -607,9 +623,10 @@ testSuite({
   testInlineStyleRules_specificity() {
     // Assert that the #foo style is applied over the <a> style (ID selectors
     // have a higher specificity).
-    const input = '<style>a{color: red; border: 1px}' +
-        '#foo{color: white; border: 2px}</style>' +
-        '<a id="foo" style="color: black">foo</a>';
+    const input =
+      '<style>a{color: red; border: 1px}' +
+      '#foo{color: white; border: 2px}</style>' +
+      '<a id="foo" style="color: black">foo</a>';
     const expected = '<a id="foo" style="color: black; border: 2px">foo</a>';
     assertInlinedStyles(expected, input);
   },
@@ -617,9 +634,10 @@ testSuite({
   testInlineStyleRules_specificity_reverse() {
     // Assert that the style rule with greater specificity (#foo) wins
     // regardless of the order of appearance.
-    const input = '<style>#foo{color: white; border: 2px}' +
-        'a{color: red; border: 1px}</style>' +
-        '<a id="foo" style="color: black">foo</a>';
+    const input =
+      '<style>#foo{color: white; border: 2px}' +
+      'a{color: red; border: 1px}</style>' +
+      '<a id="foo" style="color: black">foo</a>';
     const expected = '<a id="foo" style="color: black; border: 2px">foo</a>';
     assertInlinedStyles(expected, input);
   },
@@ -628,30 +646,29 @@ testSuite({
     // In case of a specificity tie, assert that the last style rule defined
     // wins.
     const input =
-        '<style>.zoo{color: blue} .foo.bar{color: red} .bar.zoo{color: white}' +
-        '</style><a class="foo bar zoo">foo</a>';
+      '<style>.zoo{color: blue} .foo.bar{color: red} .bar.zoo{color: white}' +
+      '</style><a class="foo bar zoo">foo</a>';
     const expected = '<a class="foo bar zoo" style="color: white">foo</a>';
     assertInlinedStyles(expected, input);
   },
 
   testInlineStyleRules_media() {
     const input =
-        '<style>a{color: red;} @media screen { border: 1px; }</style>' +
-        '<a id="foo">foo</a>';
+      '<style>a{color: red;} @media screen { border: 1px; }</style>' + '<a id="foo">foo</a>';
     const expected = '<a id="foo" style="color: red;">foo</a>';
     assertInlinedStyles(expected, input);
   },
 
   testInlineStyleRules_background() {
     const input = '<style>a{background: none;}</style><a id="foo">foo</a>';
-    const expected = product.SAFARI ?
-        // Safari will expand multi-value properties such as background, border,
+    const expected = product.SAFARI
+      ? // Safari will expand multi-value properties such as background, border,
         // etc into multiple properties. The result is more verbose but it
         // should not affect the effective style.
-        ('<a id="foo" style="background-image: none; ' +
-         'background-position: initial initial; ' +
-         'background-repeat: initial initial;">foo</a>') :
-        '<a id="foo" style="background: none;">foo</a>';
+        '<a id="foo" style="background-image: none; ' +
+        'background-position: initial initial; ' +
+        'background-repeat: initial initial;">foo</a>'
+      : '<a id="foo" style="background: none;">foo</a>';
     assertInlinedStyles(expected, input);
   },
 });

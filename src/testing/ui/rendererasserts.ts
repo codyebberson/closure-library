@@ -9,7 +9,6 @@
  */
 goog.module('goog.testing.ui.rendererasserts');
 goog.module.declareLegacyNamespace();
-goog.setTestOnly();
 
 const ControlRenderer = goog.require('goog.ui.ControlRenderer');
 const asserts = goog.require('goog.testing.asserts');
@@ -36,7 +35,7 @@ function assertNoGetCssClassCallsInConstructor(rendererClassUnderTest) {
    * @override
    * @return {string}
    */
-  TestControlRenderer.prototype.getCssClass = function() {
+  TestControlRenderer.prototype.getCssClass = function () {
     getCssClassCalls++;
     return TestControlRenderer.superClass_.getCssClass.call(this);
   };
@@ -45,9 +44,11 @@ function assertNoGetCssClassCallsInConstructor(rendererClassUnderTest) {
   new TestControlRenderer();
 
   asserts.assertEquals(
-      'Constructors should not call getCssClass, ' +
-          'getCustomRenderer must be able to override it post construction.',
-      0, getCssClassCalls);
+    'Constructors should not call getCssClass, ' +
+      'getCustomRenderer must be able to override it post construction.',
+    0,
+    getCssClassCalls
+  );
 }
 
 exports = {

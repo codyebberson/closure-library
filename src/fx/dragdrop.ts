@@ -18,8 +18,6 @@ goog.provide('goog.fx.DragDrop');
 goog.require('goog.fx.AbstractDragDrop');
 goog.require('goog.fx.DragDropItem');
 
-
-
 /**
  * Drag/drop implementation for creating drag sources/drop targets consisting of
  * a single HTML Element.
@@ -33,8 +31,7 @@ goog.require('goog.fx.DragDropItem');
  * @constructor
  * @struct
  */
-goog.fx.DragDrop = function(element, opt_data) {
-  'use strict';
+goog.fx.DragDrop = function (element, opt_data) {
   goog.fx.AbstractDragDrop.call(this);
 
   var item = new goog.fx.DragDropItem(element, opt_data);

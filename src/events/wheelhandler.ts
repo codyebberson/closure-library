@@ -40,8 +40,6 @@ goog.require('goog.userAgent');
 goog.require('goog.userAgent.product');
 goog.requireType('goog.events.BrowserEvent');
 
-
-
 /**
  * This event handler allows you to catch wheel events in a consistent manner.
  * @param {!Element|!Document} element The element to listen to the wheel event
@@ -51,8 +49,7 @@ goog.requireType('goog.events.BrowserEvent');
  * @constructor
  * @extends {goog.events.EventTarget}
  */
-goog.events.WheelHandler = function(element, opt_capture) {
-  'use strict';
+goog.events.WheelHandler = function (element, opt_capture) {
   goog.events.WheelHandler.base(this, 'constructor');
 
   /**
@@ -61,9 +58,9 @@ goog.events.WheelHandler = function(element, opt_capture) {
    */
   this.element_ = element;
 
-  var rtlElement = goog.dom.isElement(this.element_) ?
-      /** @type {!Element} */ (this.element_) :
-                              /** @type {!Document} */ (this.element_).body;
+  var rtlElement = goog.dom.isElement(this.element_)
+    ? /** @type {!Element} */ (this.element_)
+    : /** @type {!Document} */ (this.element_).body;
 
   /**
    * True if the element exists and is RTL, false otherwise.
@@ -76,21 +73,21 @@ goog.events.WheelHandler = function(element, opt_capture) {
    * @private {goog.events.Key}
    */
   this.listenKey_ = goog.events.listen(
-      this.element_, goog.events.WheelHandler.getDomEventType(), this,
-      opt_capture);
+    this.element_,
+    goog.events.WheelHandler.getDomEventType(),
+    this,
+    opt_capture
+  );
 };
 goog.inherits(goog.events.WheelHandler, goog.events.EventTarget);
-
 
 /**
  * Returns the dom event type.
  * @return {string} The dom event type.
  */
-goog.events.WheelHandler.getDomEventType = function() {
-  'use strict';
+goog.events.WheelHandler.getDomEventType = () => {
   // Prefer to use wheel events whenever supported.
-  if (goog.userAgent.GECKO || goog.userAgent.IE ||
-      goog.userAgent.product.CHROME) {
+  if (goog.userAgent.GECKO || goog.userAgent.IE || goog.userAgent.product.CHROME) {
     return 'wheel';
   }
 
@@ -98,14 +95,12 @@ goog.events.WheelHandler.getDomEventType = function() {
   return goog.userAgent.GECKO ? 'DOMMouseScroll' : 'mousewheel';
 };
 
-
 /**
  * Handles the events on the element.
  * @param {!goog.events.BrowserEvent} e The underlying browser event.
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.events.WheelHandler.prototype.handleEvent = function(e) {
-  'use strict';
+goog.events.WheelHandler.prototype.handleEvent = function (e) {
   var deltaMode = goog.events.WheelEvent.DeltaMode.PIXEL;
   var deltaX = 0;
   var deltaY = 0;
@@ -125,7 +120,8 @@ goog.events.WheelHandler.prototype.handleEvent = function(e) {
     } else {
       deltaY = -be.wheelDelta;
     }
-  } else {  // Historical Gecko
+  } else {
+    // Historical Gecko
     // Gecko returns multiple of 3 (representing the number of lines)
     deltaMode = goog.events.WheelEvent.DeltaMode.LINE;
     // Firefox 3.1 adds an axis field to the event to indicate axis.
@@ -139,15 +135,12 @@ goog.events.WheelHandler.prototype.handleEvent = function(e) {
   if (this.isRtl_) {
     deltaX = -deltaX;
   }
-  var newEvent =
-      new goog.events.WheelEvent(be, deltaMode, deltaX, deltaY, deltaZ);
+  var newEvent = new goog.events.WheelEvent(be, deltaMode, deltaX, deltaY, deltaZ);
   this.dispatchEvent(newEvent);
 };
 
-
 /** @override */
-goog.events.WheelHandler.prototype.disposeInternal = function() {
-  'use strict';
+goog.events.WheelHandler.prototype.disposeInternal = function () {
   goog.events.WheelHandler.superClass_.disposeInternal.call(this);
   goog.events.unlistenByKey(this.listenKey_);
   this.listenKey_ = null;

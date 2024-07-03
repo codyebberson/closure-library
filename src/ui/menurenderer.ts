@@ -21,8 +21,6 @@ goog.require('goog.ui.Separator');
 goog.requireType('goog.ui.Control');
 goog.requireType('goog.ui.Menu');
 
-
-
 /**
  * Default renderer for {@link goog.ui.Menu}s, based on {@link
  * goog.ui.ContainerRenderer}.
@@ -30,14 +28,11 @@ goog.requireType('goog.ui.Menu');
  * @constructor
  * @extends {goog.ui.ContainerRenderer}
  */
-goog.ui.MenuRenderer = function(opt_ariaRole) {
-  'use strict';
-  goog.ui.ContainerRenderer.call(
-      this, opt_ariaRole || goog.a11y.aria.Role.MENU);
+goog.ui.MenuRenderer = function (opt_ariaRole) {
+  goog.ui.ContainerRenderer.call(this, opt_ariaRole || goog.a11y.aria.Role.MENU);
 };
 goog.inherits(goog.ui.MenuRenderer, goog.ui.ContainerRenderer);
 goog.addSingletonGetter(goog.ui.MenuRenderer);
-
 
 /**
  * Default CSS class to be applied to the root element of toolbars rendered
@@ -46,19 +41,18 @@ goog.addSingletonGetter(goog.ui.MenuRenderer);
  */
 goog.ui.MenuRenderer.CSS_CLASS = goog.getCssName('goog-menu');
 
-
 /**
  * Returns whether the element is a UL or acceptable to our superclass.
  * @param {Element} element Element to decorate.
  * @return {boolean} Whether the renderer can decorate the element.
  * @override
  */
-goog.ui.MenuRenderer.prototype.canDecorate = function(element) {
-  'use strict';
-  return element.tagName == goog.dom.TagName.UL ||
-      goog.ui.MenuRenderer.superClass_.canDecorate.call(this, element);
+goog.ui.MenuRenderer.prototype.canDecorate = function (element) {
+  return (
+    element.tagName == goog.dom.TagName.UL ||
+    goog.ui.MenuRenderer.superClass_.canDecorate.call(this, element)
+  );
 };
-
 
 /**
  * Inspects the element, and creates an instance of {@link goog.ui.Control} or
@@ -69,13 +63,11 @@ goog.ui.MenuRenderer.prototype.canDecorate = function(element) {
  *     (null if none).
  * @override
  */
-goog.ui.MenuRenderer.prototype.getDecoratorForChild = function(element) {
-  'use strict';
-  return element.tagName == goog.dom.TagName.HR ?
-      new goog.ui.Separator() :
-      goog.ui.MenuRenderer.superClass_.getDecoratorForChild.call(this, element);
+goog.ui.MenuRenderer.prototype.getDecoratorForChild = function (element) {
+  return element.tagName == goog.dom.TagName.HR
+    ? new goog.ui.Separator()
+    : goog.ui.MenuRenderer.superClass_.getDecoratorForChild.call(this, element);
 };
-
 
 /**
  * Returns whether the given element is contained in the menu's DOM.
@@ -83,11 +75,8 @@ goog.ui.MenuRenderer.prototype.getDecoratorForChild = function(element) {
  * @param {Element} element The element to test.
  * @return {boolean} Whether the given element is contained in the menu.
  */
-goog.ui.MenuRenderer.prototype.containsElement = function(menu, element) {
-  'use strict';
-  return goog.dom.contains(menu.getElement(), element);
-};
-
+goog.ui.MenuRenderer.prototype.containsElement = (menu, element) =>
+  goog.dom.contains(menu.getElement(), element);
 
 /**
  * Returns the CSS class to be applied to the root element of containers
@@ -95,15 +84,10 @@ goog.ui.MenuRenderer.prototype.containsElement = function(menu, element) {
  * @return {string} Renderer-specific CSS class.
  * @override
  */
-goog.ui.MenuRenderer.prototype.getCssClass = function() {
-  'use strict';
-  return goog.ui.MenuRenderer.CSS_CLASS;
-};
-
+goog.ui.MenuRenderer.prototype.getCssClass = () => goog.ui.MenuRenderer.CSS_CLASS;
 
 /** @override */
-goog.ui.MenuRenderer.prototype.initializeDom = function(container) {
-  'use strict';
+goog.ui.MenuRenderer.prototype.initializeDom = function (container) {
   goog.ui.MenuRenderer.superClass_.initializeDom.call(this, container);
 
   var element = container.getElement();

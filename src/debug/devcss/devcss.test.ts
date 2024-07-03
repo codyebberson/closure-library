@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.debug.DevCssTest');
-goog.setTestOnly();
 
 const DevCss = goog.require('goog.debug.DevCss');
 const style = goog.require('goog.style');
@@ -57,47 +56,39 @@ testSuite({
     /** @suppress {visibility} suppression added to enable type checking */
     let newCss = devcssInstance.getIe6CombinedSelectorText_(css);
     assertEquals('.class1_class2', newCss);
-    assertArrayEquals(
-        ['class1', 'class2'], devcssInstance.ie6CombinedMatches_[0].classNames);
-    assertEquals(
-        'class1_class2',
-        devcssInstance.ie6CombinedMatches_[0].combinedClassName);
+    assertArrayEquals(['class1', 'class2'], devcssInstance.ie6CombinedMatches_[0].classNames);
+    assertEquals('class1_class2', devcssInstance.ie6CombinedMatches_[0].combinedClassName);
 
     devcssInstance = new DevCss();
     /** @suppress {visibility} suppression added to enable type checking */
     devcssInstance.ie6CombinedMatches_ = [];
-    css = '.class3 { prop: val; -goog-ie6-selector:".class1_class2_class3";' +
-        'prop: val; }';
+    css = '.class3 { prop: val; -goog-ie6-selector:".class1_class2_class3";' + 'prop: val; }';
     /** @suppress {visibility} suppression added to enable type checking */
     newCss = devcssInstance.getIe6CombinedSelectorText_(css);
     assertEquals('.class1_class2_class3', newCss);
     assertArrayEquals(
-        ['class1', 'class2', 'class3'],
-        devcssInstance.ie6CombinedMatches_[0].classNames);
-    assertEquals(
-        'class1_class2_class3',
-        devcssInstance.ie6CombinedMatches_[0].combinedClassName);
+      ['class1', 'class2', 'class3'],
+      devcssInstance.ie6CombinedMatches_[0].classNames
+    );
+    assertEquals('class1_class2_class3', devcssInstance.ie6CombinedMatches_[0].combinedClassName);
 
     devcssInstance = new DevCss();
     /** @suppress {visibility} suppression added to enable type checking */
     devcssInstance.ie6CombinedMatches_ = [];
-    css = '.class3, .class5 {' +
-        '-goog-ie6-selector:".class1_class2_class3, .class4_class5";' +
-        'prop: val; }';
+    css =
+      '.class3, .class5 {' +
+      '-goog-ie6-selector:".class1_class2_class3, .class4_class5";' +
+      'prop: val; }';
     /** @suppress {visibility} suppression added to enable type checking */
     newCss = devcssInstance.getIe6CombinedSelectorText_(css);
     assertEquals('.class1_class2_class3, .class4_class5', newCss);
     assertArrayEquals(
-        ['class1', 'class2', 'class3'],
-        devcssInstance.ie6CombinedMatches_[0].classNames);
-    assertEquals(
-        'class1_class2_class3',
-        devcssInstance.ie6CombinedMatches_[0].combinedClassName);
-    assertArrayEquals(
-        ['class4', 'class5'], devcssInstance.ie6CombinedMatches_[1].classNames);
-    assertEquals(
-        'class4_class5',
-        devcssInstance.ie6CombinedMatches_[1].combinedClassName);
+      ['class1', 'class2', 'class3'],
+      devcssInstance.ie6CombinedMatches_[0].classNames
+    );
+    assertEquals('class1_class2_class3', devcssInstance.ie6CombinedMatches_[0].combinedClassName);
+    assertArrayEquals(['class4', 'class5'], devcssInstance.ie6CombinedMatches_[1].classNames);
+    assertEquals('class4_class5', devcssInstance.ie6CombinedMatches_[1].combinedClassName);
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -114,7 +105,7 @@ testSuite({
       {
         classNames: ['ie6-2', 'ie6-1'],
         combinedClassName: 'ie6-1_ie6-2',
-        els: []
+        els: [],
       },
       {
         classNames: ['ie6-2', 'ie6-3', 'ie6-1'],
@@ -172,13 +163,13 @@ testSuite({
   testActivateBrowserSpecificCssGteInvalid() {
     // WEBKIT_GTE255
     let marginBox = style.getMarginBox(el);
-    assertEquals(1, marginBox.top);  // should still be 1
+    assertEquals(1, marginBox.top); // should still be 1
 
     /** @suppress {checkTypes} suppression added to enable type checking */
     const devcssInstance = new DevCss('WEBKIT', 254);
     devcssInstance.activateBrowserSpecificCssRules(false);
     marginBox = style.getMarginBox(el);
-    assertEquals(1, marginBox.top);  // should still be 1
+    assertEquals(1, marginBox.top); // should still be 1
   },
 
   testActivateBrowserSpecificCssGteValid() {
@@ -192,13 +183,13 @@ testSuite({
   testActivateBrowserSpecificCssLteInvalid() {
     // IE_LTE6
     let marginBox = style.getMarginBox(el);
-    assertEquals(1, marginBox.left);  // should still be 1
+    assertEquals(1, marginBox.left); // should still be 1
 
     /** @suppress {checkTypes} suppression added to enable type checking */
     const devcssInstance = new DevCss('WEBKIT', 202);
     devcssInstance.activateBrowserSpecificCssRules(false);
     marginBox = style.getMarginBox(el);
-    assertEquals(1, marginBox.left);  // should still be 1
+    assertEquals(1, marginBox.left); // should still be 1
   },
 
   testActivateBrowserSpecificCssLteValid() {
@@ -219,13 +210,13 @@ testSuite({
     let backgroundColor = spaceless(style.getBackgroundColor(compound2El));
 
     assertTrue(
-        `Unexpected background color: ${backgroundColor}`,
-        'transparent' == backgroundColor || 'rgba(0,0,0,0)' == backgroundColor);
+      `Unexpected background color: ${backgroundColor}`,
+      'transparent' == backgroundColor || 'rgba(0,0,0,0)' == backgroundColor
+    );
 
     // And this one should have the combined selector working, even in
     // IE6.
-    backgroundColor = style.getBackgroundColor(
-        document.getElementById('devcss-test-compound1-2'));
+    backgroundColor = style.getBackgroundColor(document.getElementById('devcss-test-compound1-2'));
     assertEquals('rgb(255,192,203)', spaceless(backgroundColor));
   },
 });

@@ -9,14 +9,11 @@
  */
 
 goog.provide('goog.storage.collectableStorageTester');
-goog.setTestOnly();
 
 goog.require('goog.testing.asserts');
 goog.requireType('goog.storage.CollectableStorage');
 goog.requireType('goog.storage.mechanism.IterableMechanism');
 goog.requireType('goog.testing.MockClock');
-
-
 
 /**
  * Tests basic operation: expiration and collection of collectable storage.
@@ -24,10 +21,8 @@ goog.requireType('goog.testing.MockClock');
  * @param {goog.storage.mechanism.IterableMechanism} mechanism
  * @param {goog.testing.MockClock} clock
  * @param {goog.storage.CollectableStorage} storage
-  */
-goog.storage.collectableStorageTester.runBasicTests = function(
-    mechanism, clock, storage) {
-  'use strict';
+ */
+goog.storage.collectableStorageTester.runBasicTests = (mechanism, clock, storage) => {
   // No expiration.
   storage.set('first', 'three seconds', 3000);
   storage.set('second', 'one second', 1000);

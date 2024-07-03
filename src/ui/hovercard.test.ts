@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.HoverCardTest');
-goog.setTestOnly();
 
 const Coordinate = goog.require('goog.math.Coordinate');
 const GoogTestingEvent = goog.require('goog.testing.events.Event');
@@ -38,9 +37,8 @@ let child;
 let elsewhere;
 let offAnchor;
 
-function initCard(
-    opt_isAnchor, checkChildren = undefined, maxSearchSteps = undefined) {
-  const isAnchor = opt_isAnchor || {SPAN: 'email'};
+function initCard(opt_isAnchor, checkChildren = undefined, maxSearchSteps = undefined) {
+  const isAnchor = opt_isAnchor || { SPAN: 'email' };
   card = new HoverCard(isAnchor, checkChildren);
   card.setText('Test hovercard');
 
@@ -201,8 +199,7 @@ testSuite({
 
     testingEvents.fireMouseOutEvent(james, john);
     testingEvents.fireMouseOverEvent(john, james);
-    assertEquals(
-        'Should still show second card', james, card.getAnchorElement());
+    assertEquals('Should still show second card', james, card.getAnchorElement());
     assertTrue(card.isVisible());
 
     shownCard = null;
@@ -275,10 +272,10 @@ testSuite({
     const inChild = new Coordinate(childBounds.left + 1, childBounds.top + 1);
     testingEvents.fireMouseOutEvent(james, child);
     testingEvents.fireMouseMoveEvent(child, inChild);
-    assertNull('Shouldn\'t cancel trigger', cancelledElement);
+    assertNull("Shouldn't cancel trigger", cancelledElement);
     triggeredElement = null;
     testingEvents.fireMouseOverEvent(child, james);
-    assertNull('Shouldn\'t retrigger card', triggeredElement);
+    assertNull("Shouldn't retrigger card", triggeredElement);
     timer.tick(250);
     assertTrue('Card should show with original delay', card.isVisible());
 
@@ -319,14 +316,12 @@ testSuite({
     testingEvents.fireMouseOverEvent(john, elsewhere);
     timer.tick(showDelay);
     assertTrue('Should trigger card', card.isVisible());
-    assertEquals(
-        'Card cursor x coordinate should be 1', card.position_.coordinate.x, 1);
+    assertEquals('Card cursor x coordinate should be 1', card.position_.coordinate.x, 1);
     /** @suppress {visibility} suppression added to enable type checking */
     card.cursorPosition = new Coordinate(2, 2);
     testingEvents.fireMouseOverEvent(child, elsewhere);
     timer.tick(showDelay);
     assertTrue('Should trigger card', card.isVisible());
-    assertEquals(
-        'Card cursor x coordinate should be 2', card.position_.coordinate.x, 2);
+    assertEquals('Card cursor x coordinate should be 2', card.position_.coordinate.x, 2);
   },
 });

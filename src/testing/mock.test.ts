@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.MockTest');
-goog.setTestOnly();
 
 const Mock = goog.require('goog.testing.Mock');
 const MockControl = goog.require('goog.testing.MockControl');
@@ -60,8 +59,8 @@ testSuite({
     for (let i = 0; i < MockExpectation.MAX_RECORDED_ERRORS; i++) {
       expectedMessage += 'ex' + i + '\n';
     }
-    expectedMessage += 'Plus ' + excessErrors +
-        ' more errors discarded to avoid out-of-memory failure.';
+    expectedMessage +=
+      'Plus ' + excessErrors + ' more errors discarded to avoid out-of-memory failure.';
     assertEquals(expectedMessage, expectation.getErrorMessage());
     assertEquals(totalErrors, expectation.getErrorMessageCount());
   },
@@ -79,12 +78,12 @@ testSuite({
     assertTrue(mock.$verifyCall(expectation, 'a', [2]));
 
     // single object arg (using standard === comparison)
-    const obj = {prop1: 'prop1', prop2: 2};
+    const obj = { prop1: 'prop1', prop2: 2 };
     expectation.argumentList = [obj];
     assertTrue(mock.$verifyCall(expectation, 'a', [obj]));
 
     // make sure comparison succeeds if args are similar, but not ===
-    const obj2 = {prop1: 'prop1', prop2: 2};
+    const obj2 = { prop1: 'prop1', prop2: 2 };
     expectation.argumentList = [obj];
     assertTrue(mock.$verifyCall(expectation, 'a', [obj2]));
     assertEquals('', expectation.getErrorMessage());
@@ -112,10 +111,9 @@ testSuite({
     const expectationB = new MockExpectation('b');
 
     // Simple matcher that return true if all args are === equivalent.
-    mock.$registerArgumentListVerifier(
-        'a',
-        (expectedArgs, args) =>
-            googArray.equals(expectedArgs, args, (a, b) => a === b));
+    mock.$registerArgumentListVerifier('a', (expectedArgs, args) =>
+      googArray.equals(expectedArgs, args, (a, b) => a === b)
+    );
 
     // test single string arg
     expectationA.argumentList = ['foo'];
@@ -126,7 +124,7 @@ testSuite({
     assertTrue(mock.$verifyCall(expectationA, 'a', [2]));
 
     // single object arg (using standard === comparison)
-    const obj = {prop1: 'prop1', prop2: 2};
+    const obj = { prop1: 'prop1', prop2: 2 };
     expectationA.argumentList = [obj];
     expectationB.argumentList = [obj];
     assertTrue(mock.$verifyCall(expectationA, 'a', [obj]));
@@ -134,7 +132,7 @@ testSuite({
 
     // if args are similar, but not ===, then comparison should succeed
     // for method with registered object matcher, and fail for method without
-    const obj2 = {prop1: 'prop1', prop2: 2};
+    const obj2 = { prop1: 'prop1', prop2: 2 };
     expectationA.argumentList = [obj];
     expectationB.argumentList = [obj];
     assertFalse(mock.$verifyCall(expectationA, 'a', [obj2]));
@@ -154,31 +152,33 @@ testSuite({
     assertThrows(() => {
       new Mock(RealObject, true, true);
     });
-    assertThrows(/**
+    assertThrows(
+      /**
                     @suppress {checkTypes} suppression added to enable type
                     checking
                   */
-                 () => {
-                   new Mock(1, false, true);
-                 });
+      () => {
+        new Mock(1, false, true);
+      }
+    );
   },
 
   testValidConstructorArgument() {
     const someNamespace = {};
-    assertThrows(/**
+    assertThrows(
+      /**
                     @suppress {missingProperties} suppression added to enable
                     type checking
                   */
-                 () => {
-                   new Mock(someNamespace.RealObjectWithTypo);
-                 });
+      () => {
+        new Mock(someNamespace.RealObjectWithTypo);
+      }
+    );
   },
 
   testArgumentsAsString() {
     assertEquals('()', mock.$argumentsAsString([]));
-    assertEquals(
-        '(string, number, object, null)',
-        mock.$argumentsAsString(['red', 1, {}, null]));
+    assertEquals('(string, number, object, null)', mock.$argumentsAsString(['red', 1, {}, null]));
   },
 
   testThrowCallExceptionBadArgs() {
@@ -191,12 +191,9 @@ testSuite({
     mock.$throwCallException('fn1', ['b'], {
       name: 'fn1',
       argumentList: ['c'],
-      getErrorMessage: function() {
-        return '';
-      },
+      getErrorMessage: () => '',
     });
-    assertContains(
-        'Bad arguments to fn1().\nActual: (string)\nExpected: (string)', msg);
+    assertContains('Bad arguments to fn1().\nActual: (string)\nExpected: (string)', msg);
   },
 
   testThrowCallExceptionUnexpected() {
@@ -210,10 +207,7 @@ testSuite({
     };
 
     mock.$throwCallException('fn1', ['b']);
-    assertEquals(
-        'Unexpected call to fn1(string).\n' +
-            'Did you forget to $replay?',
-        msg);
+    assertEquals('Unexpected call to fn1(string).\n' + 'Did you forget to $replay?', msg);
   },
 
   testThrowCallExceptionUnexpectedWithNext() {
@@ -229,15 +223,14 @@ testSuite({
     mock.$throwCallException('fn1', ['b'], {
       name: 'fn2',
       argumentList: [3],
-      getErrorMessage: function() {
-        return '';
-      },
+      getErrorMessage: () => '',
     });
     assertEquals(
-        'Unexpected call to fn1(string).\n' +
-            'Did you forget to $replay?\n' +
-            'Next expected call was to fn2(number)',
-        msg);
+      'Unexpected call to fn1(string).\n' +
+        'Did you forget to $replay?\n' +
+        'Next expected call was to fn2(number)',
+      msg
+    );
   },
 
   // This tests that base Object functions which are not enumerable in IE can
@@ -333,8 +326,10 @@ testSuite({
 
     const mockControl = new MockControl();
     const mock = mockControl.createLooseMock(
-        SomeType, false /* opt_ignoreUnexpectedCalls */,
-        true /* opt_mockStaticMethods */);
+      SomeType,
+      false /* opt_ignoreUnexpectedCalls */,
+      true /* opt_mockStaticMethods */
+    );
     mock.staticMethod().$returns('staticMethod');
 
     // Execute and assert that the Mock is working correctly.
@@ -384,8 +379,10 @@ testSuite({
 
     const mockControl = new MockControl();
     const mock = mockControl.createLooseMock(
-        Foo, false /* opt_ignoreUnexpectedCalls */,
-        true /* opt_mockStaticMethods */);
+      Foo,
+      false /* opt_ignoreUnexpectedCalls */,
+      true /* opt_mockStaticMethods */
+    );
     mock.a().$returns('a');
     mock.apply().$returns('apply');
 
@@ -409,22 +406,26 @@ testSuite({
     strictMock.a().$returns('a');
 
     mockControl.$replayAll();
-    setTimeout(/**
+    setTimeout(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 looseMock.a();
-               },
-               0);
-    setTimeout(/**
+      () => {
+        looseMock.a();
+      },
+      0
+    );
+    setTimeout(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 strictMock.a();
-               },
-               0);
+      () => {
+        strictMock.a();
+      },
+      0
+    );
     await mockControl.$waitAndVerifyAll();
   },
 
@@ -441,12 +442,12 @@ testSuite({
       mockControl.$verifyAll();
     } catch (ex) {
       assertEquals(
-          'Threw an exception while in record mode, did you $replay?\n' +
-              'Not enough calls to a\n' +
-              'Expected: 1 but was: 0',
-          ex.toString());
-      const getTestCase =
-          goog.getObjectByName('goog.testing.TestCase.getActiveTestCase');
+        'Threw an exception while in record mode, did you $replay?\n' +
+          'Not enough calls to a\n' +
+          'Expected: 1 but was: 0',
+        ex.toString()
+      );
+      const getTestCase = goog.getObjectByName('goog.testing.TestCase.getActiveTestCase');
       const testCase = getTestCase && getTestCase();
       if (testCase) {
         testCase.invalidateAssertionException(ex);
@@ -500,9 +501,9 @@ testSuite({
       Mock.record(notAMock);
     } catch (ex) {
       assertEquals(
-          `Assertion failed: ${string} is not a mock.  ` +
-              'Did you pass a real object to record()?',
-          ex.message);
+        `Assertion failed: ${string} is not a mock.  ` + 'Did you pass a real object to record()?',
+        ex.message
+      );
     }
   },
 });

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.i18n.uChar.LocalNameFetcherTest');
-goog.setTestOnly();
 
 const LocalNameFetcher = goog.require('goog.i18n.uChar.LocalNameFetcher');
 const recordFunction = goog.require('goog.testing.recordFunction');

@@ -13,16 +13,16 @@ goog.provide('goog.crypt');
 goog.require('goog.asserts');
 goog.require('goog.async.throwException');
 
-
 /**
  * Whether to async-throw on unicode input to the legacy versions of
  * `goog.crypt.stringToByteArray` (i.e. when `throwSync` is false).
  * NOTE: The default will change to `true` soon, after notifying users.
  * @define {boolean}
  */
-goog.crypt.ASYNC_THROW_ON_UNICODE_TO_BYTE =
-    goog.define('goog.crypt.ASYNC_THROW_ON_UNICODE_TO_BYTE', goog.DEBUG);
-
+goog.crypt.ASYNC_THROW_ON_UNICODE_TO_BYTE = goog.define(
+  'goog.crypt.ASYNC_THROW_ON_UNICODE_TO_BYTE',
+  goog.DEBUG
+);
 
 /**
  * Test-only stub to make our use of async.throwException more testable.
@@ -30,14 +30,11 @@ goog.crypt.ASYNC_THROW_ON_UNICODE_TO_BYTE =
  */
 goog.crypt.TEST_ONLY = {};
 
-
 /** Remappable alias. */
 goog.crypt.TEST_ONLY.throwException = goog.async.throwException;
 
-
 /** Configurable so that we can test the async-throw behavior. */
 goog.crypt.TEST_ONLY.alwaysThrowSynchronously = goog.DEBUG;
-
 
 /**
  * Turns a string into an array of bytes; a "byte" being a JS number in the
@@ -46,10 +43,7 @@ goog.crypt.TEST_ONLY.alwaysThrowSynchronously = goog.DEBUG;
  * @return {!Array<number>} Array of numbers corresponding to the
  *     UCS character codes of each character in str.
  */
-goog.crypt.binaryStringToByteArray = function(str) {
-  return goog.crypt.stringToByteArray(str, true);
-};
-
+goog.crypt.binaryStringToByteArray = (str) => goog.crypt.stringToByteArray(str, true);
 
 /**
  * Turns a string into an array of bytes; a "byte" being a JS number in the
@@ -59,9 +53,9 @@ goog.crypt.binaryStringToByteArray = function(str) {
  * @return {!Array<number>} Array of numbers corresponding to the
  *     UCS character codes of each character in str.
  */
-goog.crypt.stringToByteArray = function(str, throwSync) {
-  'use strict';
-  var output = [], p = 0;
+goog.crypt.stringToByteArray = (str, throwSync) => {
+  var output = [],
+    p = 0;
   for (var i = 0; i < str.length; i++) {
     var c = str.charCodeAt(i);
     // NOTE: c <= 0xffff since JavaScript strings are UTF-16.
@@ -81,6 +75,14 @@ goog.crypt.stringToByteArray = function(str, throwSync) {
   return output;
 };
 
+/**
+ * Turns an array of numbers into the string given by the concatenation of the
+ * characters to which the numbers correspond.
+ * @param {!Uint8Array|!Array<number>} bytes Array of numbers representing
+ *     characters.
+ * @return {string} Stringification of the array.
+ */
+goog.crypt.byteArrayToString = (bytes) => goog.crypt.byteArrayToBinaryString(bytes);
 
 /**
  * Turns an array of numbers into the string given by the concatenation of the
@@ -89,20 +91,7 @@ goog.crypt.stringToByteArray = function(str, throwSync) {
  *     characters.
  * @return {string} Stringification of the array.
  */
-goog.crypt.byteArrayToString = function(bytes) {
-  return goog.crypt.byteArrayToBinaryString(bytes);
-};
-
-
-/**
- * Turns an array of numbers into the string given by the concatenation of the
- * characters to which the numbers correspond.
- * @param {!Uint8Array|!Array<number>} bytes Array of numbers representing
- *     characters.
- * @return {string} Stringification of the array.
- */
-goog.crypt.byteArrayToBinaryString = function(bytes) {
-  'use strict';
+goog.crypt.byteArrayToBinaryString = (bytes) => {
   var CHUNK_SIZE = 8192;
 
   // Special-case the simple case for speed's sake.
@@ -122,7 +111,6 @@ goog.crypt.byteArrayToBinaryString = function(bytes) {
   return str;
 };
 
-
 /**
  * Turns an array of numbers into the hex string given by the concatenation of
  * the hex values to which the numbers correspond.
@@ -131,19 +119,13 @@ goog.crypt.byteArrayToBinaryString = function(bytes) {
  * @param {string=} opt_separator Optional separator between values
  * @return {string} Hex string.
  */
-goog.crypt.byteArrayToHex = function(array, opt_separator) {
-  'use strict';
-  return Array.prototype.map
-      .call(
-          array,
-          function(numByte) {
-            'use strict';
-            var hexByte = numByte.toString(16);
-            return hexByte.length > 1 ? hexByte : '0' + hexByte;
-          })
-      .join(opt_separator || '');
-};
-
+goog.crypt.byteArrayToHex = (array, opt_separator) =>
+  Array.prototype.map
+    .call(array, (numByte) => {
+      var hexByte = numByte.toString(16);
+      return hexByte.length > 1 ? hexByte : '0' + hexByte;
+    })
+    .join(opt_separator || '');
 
 /**
  * Converts a hex string into an integer array.
@@ -151,37 +133,31 @@ goog.crypt.byteArrayToHex = function(array, opt_separator) {
  *     per integer).
  * @return {!Array<number>} Array of {0,255} integers for the given string.
  */
-goog.crypt.hexToByteArray = function(hexString) {
-  'use strict';
-  goog.asserts.assert(
-      hexString.length % 2 == 0, 'Key string length must be multiple of 2');
+goog.crypt.hexToByteArray = (hexString) => {
+  goog.asserts.assert(hexString.length % 2 == 0, 'Key string length must be multiple of 2');
   var arr = [];
   for (var i = 0; i < hexString.length; i += 2) {
-    arr.push(parseInt(hexString.substring(i, i + 2), 16));
+    arr.push(Number.parseInt(hexString.substring(i, i + 2), 16));
   }
   return arr;
 };
 
+/**
+ * Converts a JS string to a UTF-8 "byte" array.
+ * @param {string} str 16-bit unicode string.
+ * @return {!Array<number>} UTF-8 byte array.
+ */
+goog.crypt.stringToUtf8ByteArray = (str) => goog.crypt.textToByteArray(str);
 
 /**
  * Converts a JS string to a UTF-8 "byte" array.
  * @param {string} str 16-bit unicode string.
  * @return {!Array<number>} UTF-8 byte array.
  */
-goog.crypt.stringToUtf8ByteArray = function(str) {
-  return goog.crypt.textToByteArray(str);
-};
-
-
-/**
- * Converts a JS string to a UTF-8 "byte" array.
- * @param {string} str 16-bit unicode string.
- * @return {!Array<number>} UTF-8 byte array.
- */
-goog.crypt.textToByteArray = function(str) {
-  'use strict';
+goog.crypt.textToByteArray = (str) => {
   // TODO(user): Use native implementations if/when available
-  var out = [], p = 0;
+  var out = [],
+    p = 0;
   for (var i = 0; i < str.length; i++) {
     var c = str.charCodeAt(i);
     if (c < 128) {
@@ -190,10 +166,12 @@ goog.crypt.textToByteArray = function(str) {
       out[p++] = (c >> 6) | 192;
       out[p++] = (c & 63) | 128;
     } else if (
-        ((c & 0xFC00) == 0xD800) && (i + 1) < str.length &&
-        ((str.charCodeAt(i + 1) & 0xFC00) == 0xDC00)) {
+      (c & 0xfc00) == 0xd800 &&
+      i + 1 < str.length &&
+      (str.charCodeAt(i + 1) & 0xfc00) == 0xdc00
+    ) {
       // Surrogate Pair
-      c = 0x10000 + ((c & 0x03FF) << 10) + (str.charCodeAt(++i) & 0x03FF);
+      c = 0x10000 + ((c & 0x03ff) << 10) + (str.charCodeAt(++i) & 0x03ff);
       out[p++] = (c >> 18) | 240;
       out[p++] = ((c >> 12) & 63) | 128;
       out[p++] = ((c >> 6) & 63) | 128;
@@ -207,52 +185,46 @@ goog.crypt.textToByteArray = function(str) {
   return out;
 };
 
+/**
+ * Converts a UTF-8 byte array to JavaScript's 16-bit Unicode.
+ * @param {Uint8Array|Array<number>} bytes UTF-8 byte array.
+ * @return {string} 16-bit Unicode string.
+ */
+goog.crypt.utf8ByteArrayToString = (bytes) => goog.crypt.byteArrayToText(bytes);
 
 /**
  * Converts a UTF-8 byte array to JavaScript's 16-bit Unicode.
  * @param {Uint8Array|Array<number>} bytes UTF-8 byte array.
  * @return {string} 16-bit Unicode string.
  */
-goog.crypt.utf8ByteArrayToString = function(bytes) {
-  return goog.crypt.byteArrayToText(bytes);
-};
-
-
-/**
- * Converts a UTF-8 byte array to JavaScript's 16-bit Unicode.
- * @param {Uint8Array|Array<number>} bytes UTF-8 byte array.
- * @return {string} 16-bit Unicode string.
- */
-goog.crypt.byteArrayToText = function(bytes) {
-  'use strict';
+goog.crypt.byteArrayToText = (bytes) => {
   // TODO(user): Use native implementations if/when available
-  var out = [], pos = 0, c = 0;
+  var out = [],
+    pos = 0,
+    c = 0;
   while (pos < bytes.length) {
     var c1 = bytes[pos++];
     if (c1 < 128) {
       out[c++] = String.fromCharCode(c1);
     } else if (c1 > 191 && c1 < 224) {
       var c2 = bytes[pos++];
-      out[c++] = String.fromCharCode((c1 & 31) << 6 | c2 & 63);
+      out[c++] = String.fromCharCode(((c1 & 31) << 6) | (c2 & 63));
     } else if (c1 > 239 && c1 < 365) {
       // Surrogate Pair
       var c2 = bytes[pos++];
       var c3 = bytes[pos++];
       var c4 = bytes[pos++];
-      var u = ((c1 & 7) << 18 | (c2 & 63) << 12 | (c3 & 63) << 6 | c4 & 63) -
-          0x10000;
-      out[c++] = String.fromCharCode(0xD800 + (u >> 10));
-      out[c++] = String.fromCharCode(0xDC00 + (u & 1023));
+      var u = (((c1 & 7) << 18) | ((c2 & 63) << 12) | ((c3 & 63) << 6) | (c4 & 63)) - 0x10000;
+      out[c++] = String.fromCharCode(0xd800 + (u >> 10));
+      out[c++] = String.fromCharCode(0xdc00 + (u & 1023));
     } else {
       var c2 = bytes[pos++];
       var c3 = bytes[pos++];
-      out[c++] =
-          String.fromCharCode((c1 & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
+      out[c++] = String.fromCharCode(((c1 & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
     }
   }
   return out.join('');
 };
-
 
 /**
  * XOR two byte arrays.
@@ -260,10 +232,8 @@ goog.crypt.byteArrayToText = function(bytes) {
  * @param {!Uint8Array|!Int8Array|!Array<number>} bytes2 Byte array 2.
  * @return {!Array<number>} Resulting XOR of the two byte arrays.
  */
-goog.crypt.xorByteArray = function(bytes1, bytes2) {
-  'use strict';
-  goog.asserts.assert(
-      bytes1.length == bytes2.length, 'XOR array lengths must match');
+goog.crypt.xorByteArray = (bytes1, bytes2) => {
+  goog.asserts.assert(bytes1.length == bytes2.length, 'XOR array lengths must match');
 
   var result = [];
   for (var i = 0; i < bytes1.length; i++) {

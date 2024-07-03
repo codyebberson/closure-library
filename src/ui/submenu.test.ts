@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.SubMenuTest');
-goog.setTestOnly();
 
 const Component = goog.require('goog.ui.Component');
 const GoogEvent = goog.require('goog.events.Event');
@@ -38,12 +37,21 @@ let mockClock;
 // dynamic menu positioning if the menu doesn't fit in the window.)
 const oldPositionFn = positioning.positionAtCoordinate;
 /** @suppress {checkTypes} suppression added to enable type checking */
-positioning.positionAtCoordinate =
-    (absolutePos, movableElement, movableElementCorner, margin = undefined,
-     overflow = undefined) =>
-        oldPositionFn.call(
-            null, absolutePos, movableElement, movableElementCorner, margin,
-            Overflow.IGNORE);
+positioning.positionAtCoordinate = (
+  absolutePos,
+  movableElement,
+  movableElementCorner,
+  margin = undefined,
+  overflow = undefined
+) =>
+  oldPositionFn.call(
+    null,
+    absolutePos,
+    movableElement,
+    movableElementCorner,
+    margin,
+    Overflow.IGNORE
+  );
 
 function assertKeyHandlingIsCorrect(keyToOpenSubMenu, keyToCloseSubMenu) {
   menu.setFocusable(true);
@@ -59,15 +67,12 @@ function assertKeyHandlingIsCorrect(keyToOpenSubMenu, keyToCloseSubMenu) {
 
   const fireKeySequence = testingEvents.fireKeySequence;
 
-  const keySequenceReturn =
-      fireKeySequence(plainItem.getElement(), keyToOpenSubMenu);
+  const keySequenceReturn = fireKeySequence(plainItem.getElement(), keyToOpenSubMenu);
 
   // Expect keyToOpenSubMenu to only be handled when ENTER because menuItem
   // handles ENTER, while subMenu handles LEFT, RIGHT and ENTER.
   if (keyToOpenSubMenu == KeyCodes.ENTER) {
-    assertFalse(
-        'Expected OpenSubMenu key to be handled when KeyCode is ENTER',
-        keySequenceReturn);
+    assertFalse('Expected OpenSubMenu key to be handled when KeyCode is ENTER', keySequenceReturn);
   } else {
     assertTrue('Expected OpenSubMenu key to not be handled', keySequenceReturn);
   }
@@ -77,34 +82,34 @@ function assertKeyHandlingIsCorrect(keyToOpenSubMenu, keyToCloseSubMenu) {
   subMenuItem1Menu.setVisible(true);
   assertFalse(fireKeySequence(subMenuItem1.getElement(), KeyCodes.ENTER));
 
-  assertFalse(
-      'Expected F key to be handled',
-      fireKeySequence(plainItem.getElement(), KeyCodes.F));
+  assertFalse('Expected F key to be handled', fireKeySequence(plainItem.getElement(), KeyCodes.F));
 
   assertFalse(
-      'Expected DOWN key to be handled',
-      fireKeySequence(plainItem.getElement(), KeyCodes.DOWN));
+    'Expected DOWN key to be handled',
+    fireKeySequence(plainItem.getElement(), KeyCodes.DOWN)
+  );
   assertEquals(subMenuItem1, menu.getChildAt(1));
 
   // Expect keyToOpenSubMenu to be handled when subMenu is not visible.
   subMenuItem1Menu.setVisible(false);
   assertFalse(
-      'Expected OpenSubMenu key to be handled',
-      fireKeySequence(subMenuItem1.getElement(), keyToOpenSubMenu));
+    'Expected OpenSubMenu key to be handled',
+    fireKeySequence(subMenuItem1.getElement(), keyToOpenSubMenu)
+  );
   assertTrue(subMenuItem1Menu.isVisible());
 
   assertFalse(
-      'Expected CloseSubMenu key to be handled',
-      fireKeySequence(subMenuItem1.getElement(), keyToCloseSubMenu));
+    'Expected CloseSubMenu key to be handled',
+    fireKeySequence(subMenuItem1.getElement(), keyToCloseSubMenu)
+  );
   assertFalse(subMenuItem1Menu.isVisible());
 
   assertFalse(
-      'Expected UP key to be handled',
-      fireKeySequence(subMenuItem1.getElement(), KeyCodes.UP));
+    'Expected UP key to be handled',
+    fireKeySequence(subMenuItem1.getElement(), KeyCodes.UP)
+  );
 
-  assertFalse(
-      'Expected S key to be handled',
-      fireKeySequence(plainItem.getElement(), KeyCodes.S));
+  assertFalse('Expected S key to be handled', fireKeySequence(plainItem.getElement(), KeyCodes.S));
   assertTrue(subMenuItem1Menu.isVisible());
 }
 
@@ -121,8 +126,10 @@ function assertRenderDirection(subMenu, left) {
   const menuPosition = style.getPageOffset(subMenu.getMenu().getElement());
   assert(Math.abs(menuItemPosition.y - menuPosition.y) < 5);
   assertEquals(
-      'Menu at: ' + menuPosition.x + ', submenu item at: ' + menuItemPosition.x,
-      left, menuPosition.x < menuItemPosition.x);
+    'Menu at: ' + menuPosition.x + ', submenu item at: ' + menuItemPosition.x,
+    left,
+    menuPosition.x < menuItemPosition.x
+  );
 }
 
 /**
@@ -133,8 +140,9 @@ function assertRenderDirection(subMenu, left) {
  */
 function assertArrowDirection(subMenu, left) {
   assertEquals(
-      left ? SubMenuRenderer.LEFT_ARROW_ : SubMenuRenderer.RIGHT_ARROW_,
-      getArrowElement(subMenu).innerHTML);
+    left ? SubMenuRenderer.LEFT_ARROW_ : SubMenuRenderer.RIGHT_ARROW_,
+    getArrowElement(subMenu).innerHTML
+  );
 }
 
 /**
@@ -149,18 +157,20 @@ function assertArrowPosition(subMenu, left) {
    * @suppress {strictMissingProperties} suppression added to enable type
    * checking
    */
-  const expectedLeft =
-      left ? 0 : arrow.offsetParent.offsetWidth - arrow.offsetWidth;
+  const expectedLeft = left ? 0 : arrow.offsetParent.offsetWidth - arrow.offsetWidth;
   /**
    * @suppress {strictMissingProperties} suppression added to enable type
    * checking
    */
   const actualLeft = arrow.offsetLeft;
   assertTrue(
-      `Expected left offset: ${expectedLeft}
+    `Expected left offset: ${expectedLeft}
 ` +
-          'Actual left offset: ' + actualLeft + '\n',
-      Math.abs(expectedLeft - actualLeft) < 5);
+      'Actual left offset: ' +
+      actualLeft +
+      '\n',
+    Math.abs(expectedLeft - actualLeft) < 5
+  );
 }
 
 /**
@@ -319,39 +329,34 @@ testSuite({
     const subMenu = menu.getChildAt(1);
     subMenu.setHighlighted(true);
 
-    events.listen(
-        subMenu, [Component.EventType.OPEN, Component.EventType.CLOSE],
-        handleEvent);
+    events.listen(subMenu, [Component.EventType.OPEN, Component.EventType.CLOSE], handleEvent);
 
     assertFalse(
-        'Submenu must not have "-open" CSS class',
-        classlist.contains(subMenu.getElement(), 'goog-submenu-open'));
-    assertFalse(
-        'Popup menu must not be visible', subMenu.getMenu().isVisible());
+      'Submenu must not have "-open" CSS class',
+      classlist.contains(subMenu.getElement(), 'goog-submenu-open')
+    );
+    assertFalse('Popup menu must not be visible', subMenu.getMenu().isVisible());
     assertFalse('No OPEN event must have been dispatched', openEventDispatched);
-    assertFalse(
-        'No CLOSE event must have been dispatched', closeEventDispatched);
+    assertFalse('No CLOSE event must have been dispatched', closeEventDispatched);
 
     subMenu.showSubMenu();
     assertTrue(
-        'Submenu must have "-open" CSS class',
-        classlist.contains(subMenu.getElement(), 'goog-submenu-open'));
+      'Submenu must have "-open" CSS class',
+      classlist.contains(subMenu.getElement(), 'goog-submenu-open')
+    );
     assertTrue('Popup menu must be visible', subMenu.getMenu().isVisible());
     assertTrue('OPEN event must have been dispatched', openEventDispatched);
-    assertFalse(
-        'No CLOSE event must have been dispatched', closeEventDispatched);
+    assertFalse('No CLOSE event must have been dispatched', closeEventDispatched);
 
     subMenu.dismissSubMenu();
     assertFalse(
-        'Submenu must not have "-open" CSS class',
-        classlist.contains(subMenu.getElement(), 'goog-submenu-open'));
-    assertFalse(
-        'Popup menu must not be visible', subMenu.getMenu().isVisible());
+      'Submenu must not have "-open" CSS class',
+      classlist.contains(subMenu.getElement(), 'goog-submenu-open')
+    );
+    assertFalse('Popup menu must not be visible', subMenu.getMenu().isVisible());
     assertTrue('CLOSE event must have been dispatched', closeEventDispatched);
 
-    events.unlisten(
-        subMenu, [Component.EventType.OPEN, Component.EventType.CLOSE],
-        handleEvent);
+    events.unlisten(subMenu, [Component.EventType.OPEN, Component.EventType.CLOSE], handleEvent);
   },
 
   testDismissWhenSubMenuNotVisible() {
@@ -375,34 +380,29 @@ testSuite({
     const subMenu = menu.getChildAt(1);
     subMenu.setHighlighted(true);
 
-    events.listen(
-        subMenu, [Component.EventType.OPEN, Component.EventType.CLOSE],
-        handleEvent);
+    events.listen(subMenu, [Component.EventType.OPEN, Component.EventType.CLOSE], handleEvent);
 
     assertFalse(
-        'Submenu must not have "-open" CSS class',
-        classlist.contains(subMenu.getElement(), 'goog-submenu-open'));
-    assertFalse(
-        'Popup menu must not be visible', subMenu.getMenu().isVisible());
+      'Submenu must not have "-open" CSS class',
+      classlist.contains(subMenu.getElement(), 'goog-submenu-open')
+    );
+    assertFalse('Popup menu must not be visible', subMenu.getMenu().isVisible());
     assertFalse('No OPEN event must have been dispatched', openEventDispatched);
-    assertFalse(
-        'No CLOSE event must have been dispatched', closeEventDispatched);
+    assertFalse('No CLOSE event must have been dispatched', closeEventDispatched);
 
     subMenu.showSubMenu();
     subMenu.getMenu().setVisible(false);
 
     subMenu.dismissSubMenu();
     assertFalse(
-        'Submenu must not have "-open" CSS class',
-        classlist.contains(subMenu.getElement(), 'goog-submenu-open'));
+      'Submenu must not have "-open" CSS class',
+      classlist.contains(subMenu.getElement(), 'goog-submenu-open')
+    );
     assertFalse(subMenu.menuIsVisible_);
-    assertFalse(
-        'Popup menu must not be visible', subMenu.getMenu().isVisible());
+    assertFalse('Popup menu must not be visible', subMenu.getMenu().isVisible());
     assertTrue('CLOSE event must have been dispatched', closeEventDispatched);
 
-    events.unlisten(
-        subMenu, [Component.EventType.OPEN, Component.EventType.CLOSE],
-        handleEvent);
+    events.unlisten(subMenu, [Component.EventType.OPEN, Component.EventType.CLOSE], handleEvent);
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -422,7 +422,7 @@ testSuite({
       this.keyCode = keyCode;
       this.propagationStopped = false;
       this.preventDefault = () => {};
-      this.stopPropagation = function() {
+      this.stopPropagation = function () {
         this.propagationStopped = true;
       };
     }
@@ -431,14 +431,18 @@ testSuite({
     // set correctly.
     subMenu.handleKeyEvent(new MyFakeEvent(KeyCodes.DOWN));
     assertEquals(
-        'First item in submenu must be the aria-activedescendant', 'child1',
-        aria.getState(menu.getElement(), State.ACTIVEDESCENDANT));
+      'First item in submenu must be the aria-activedescendant',
+      'child1',
+      aria.getState(menu.getElement(), State.ACTIVEDESCENDANT)
+    );
 
     // Dismiss the submenu and verify the activedescendant is updated correctly.
     subMenu.handleKeyEvent(new MyFakeEvent(KeyCodes.LEFT));
     assertEquals(
-        'Submenu must be the aria-activedescendant', 'subMenu',
-        aria.getState(menu.getElement(), State.ACTIVEDESCENDANT));
+      'Submenu must be the aria-activedescendant',
+      'subMenu',
+      aria.getState(menu.getElement(), State.ACTIVEDESCENDANT)
+    );
   },
 
   testLazyInstantiateSubMenu() {
@@ -457,16 +461,13 @@ testSuite({
 
     subMenu.showSubMenu();
     assertNotNull('Popup menu must have been created', lazyMenu);
-    assertEquals(
-        'Popup menu must be a child of the submenu', subMenu,
-        lazyMenu.getParent());
+    assertEquals('Popup menu must be a child of the submenu', subMenu, lazyMenu.getParent());
     assertTrue('Popup menu must have been rendered', lazyMenu.isInDocument());
     assertTrue('Popup menu must be visible', lazyMenu.isVisible());
 
     menu.dispose();
     assertTrue('Submenu must have been disposed of', subMenu.isDisposed());
-    assertFalse(
-        'Popup menu must not have been disposed of', lazyMenu.isDisposed());
+    assertFalse('Popup menu must not have been disposed of', lazyMenu.isDisposed());
 
     lazyMenu.dispose();
 
@@ -489,48 +490,38 @@ testSuite({
     assertNull('Shared menu must not have a parent', sharedMenu.getParent());
 
     subMenuOne.setMenu(sharedMenu);
-    assertEquals(
-        'SubMenuOne must point to the shared menu', sharedMenu,
-        subMenuOne.getMenu());
-    assertEquals(
-        'SubMenuOne must be the shared menu\'s parent', subMenuOne,
-        sharedMenu.getParent());
+    assertEquals('SubMenuOne must point to the shared menu', sharedMenu, subMenuOne.getMenu());
+    assertEquals("SubMenuOne must be the shared menu's parent", subMenuOne, sharedMenu.getParent());
 
     subMenuTwo.setMenu(sharedMenu);
+    assertEquals('SubMenuTwo must point to the shared menu', sharedMenu, subMenuTwo.getMenu());
+    assertEquals("SubMenuTwo must be the shared menu's parent", subMenuTwo, sharedMenu.getParent());
     assertEquals(
-        'SubMenuTwo must point to the shared menu', sharedMenu,
-        subMenuTwo.getMenu());
-    assertEquals(
-        'SubMenuTwo must be the shared menu\'s parent', subMenuTwo,
-        sharedMenu.getParent());
-    assertEquals(
-        'SubMenuOne must still point to the shared menu', sharedMenu,
-        subMenuOne.getMenu());
+      'SubMenuOne must still point to the shared menu',
+      sharedMenu,
+      subMenuOne.getMenu()
+    );
 
     menu.setHighlighted(subMenuOne);
     subMenuOne.showSubMenu();
+    assertEquals('SubMenuOne must point to the shared menu', sharedMenu, subMenuOne.getMenu());
+    assertEquals("SubMenuOne must be the shared menu's parent", subMenuOne, sharedMenu.getParent());
     assertEquals(
-        'SubMenuOne must point to the shared menu', sharedMenu,
-        subMenuOne.getMenu());
-    assertEquals(
-        'SubMenuOne must be the shared menu\'s parent', subMenuOne,
-        sharedMenu.getParent());
-    assertEquals(
-        'SubMenuTwo must still point to the shared menu', sharedMenu,
-        subMenuTwo.getMenu());
+      'SubMenuTwo must still point to the shared menu',
+      sharedMenu,
+      subMenuTwo.getMenu()
+    );
     assertTrue('Shared menu must be visible', sharedMenu.isVisible());
 
     menu.setHighlighted(subMenuTwo);
     subMenuTwo.showSubMenu();
+    assertEquals('SubMenuTwo must point to the shared menu', sharedMenu, subMenuTwo.getMenu());
+    assertEquals("SubMenuTwo must be the shared menu's parent", subMenuTwo, sharedMenu.getParent());
     assertEquals(
-        'SubMenuTwo must point to the shared menu', sharedMenu,
-        subMenuTwo.getMenu());
-    assertEquals(
-        'SubMenuTwo must be the shared menu\'s parent', subMenuTwo,
-        sharedMenu.getParent());
-    assertEquals(
-        'SubMenuOne must still point to the shared menu', sharedMenu,
-        subMenuOne.getMenu());
+      'SubMenuOne must still point to the shared menu',
+      sharedMenu,
+      subMenuOne.getMenu()
+    );
     assertTrue('Shared menu must be visible', sharedMenu.isVisible());
   },
 
@@ -589,8 +580,7 @@ testSuite({
     submenu.setSelectable(false);
     submenu.performActionInternal(null);
 
-    assertEquals(
-        'The submenu should not have fired any further events', 2, numClicks);
+    assertEquals('The submenu should not have fired any further events', 2, numClicks);
   },
 
   /**
@@ -617,8 +607,7 @@ testSuite({
     submenu.setCheckable(false);
     submenu.performActionInternal(null);
 
-    assertEquals(
-        'The submenu should not have fired any further events', 2, numClicks);
+    assertEquals('The submenu should not have fired any further events', 2, numClicks);
   },
 
   /**

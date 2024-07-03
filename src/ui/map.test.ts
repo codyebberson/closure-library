@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.MapTest');
-goog.setTestOnly();
 
 const StructsMap = goog.require('goog.ui.Map');
 // const googIter = goog.require('goog.iter');
@@ -22,7 +21,7 @@ function stringifyMap(m) {
 }
 
 function getMap() {
-  const m = new StructsMap;
+  const m = new StructsMap();
   m.set('a', 0);
   m.set('b', 1);
   m.set('c', 2);
@@ -40,53 +39,47 @@ testSuite({
 
   testKeys() {
     const m = getMap();
-    assertEquals(
-        'getKeys, The keys should be a,b,c', m.getKeys().join(','), 'a,b,c,d');
+    assertEquals('getKeys, The keys should be a,b,c', m.getKeys().join(','), 'a,b,c,d');
   },
 
   testValues() {
     const m = getMap();
-    assertEquals(
-        'getValues, The values should be 0,1,2', m.getValues().join(','),
-        '0,1,2,3');
+    assertEquals('getValues, The values should be 0,1,2', m.getValues().join(','), '0,1,2,3');
   },
 
   testContainsKey() {
     const m = getMap();
-    assertTrue('containsKey, Should contain the \'a\' key', m.containsKey('a'));
-    assertFalse(
-        'containsKey, Should not contain the \'e\' key', m.containsKey('e'));
+    assertTrue("containsKey, Should contain the 'a' key", m.containsKey('a'));
+    assertFalse("containsKey, Should not contain the 'e' key", m.containsKey('e'));
   },
 
   testClear() {
     const m = getMap();
     m.clear();
     assertTrue('cleared so it should be empty', m.isEmpty());
-    assertTrue(
-        'cleared so it should not contain \'a\' key', !m.containsKey('a'));
+    assertTrue("cleared so it should not contain 'a' key", !m.containsKey('a'));
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testAddAll() {
-    const m = new StructsMap;
-    m.addAll({a: 0, b: 1, c: 2, d: 3});
+    const m = new StructsMap();
+    m.addAll({ a: 0, b: 1, c: 2, d: 3 });
     assertTrue('addAll so it should not be empty', !m.isEmpty());
-    assertTrue('addAll so it should contain \'c\' key', m.containsKey('c'));
+    assertTrue("addAll so it should contain 'c' key", m.containsKey('c'));
 
-    const m2 = new StructsMap;
+    const m2 = new StructsMap();
     m2.addAll(m);
     assertTrue('addAll so it should not be empty', !m2.isEmpty());
-    assertTrue('addAll so it should contain \'c\' key', m2.containsKey('c'));
+    assertTrue("addAll so it should contain 'c' key", m2.containsKey('c'));
 
-    m2.addAll(null);  // Ensure that passing a null object does not err.
+    m2.addAll(null); // Ensure that passing a null object does not err.
   },
 
   testConstructor() {
     const m = getMap();
     const m2 = new StructsMap(m);
     assertTrue('constr with Map so it should not be empty', !m2.isEmpty());
-    assertTrue(
-        'constr with Map so it should contain \'c\' key', m2.containsKey('c'));
+    assertTrue("constr with Map so it should contain 'c' key", m2.containsKey('c'));
   },
 
   testConstructorWithVarArgs() {
@@ -111,7 +104,7 @@ testSuite({
     const m = getMap();
     const m2 = m.clone();
     assertTrue('clone so it should not be empty', !m2.isEmpty());
-    assertTrue('clone so it should contain \'c\' key', m2.containsKey('c'));
+    assertTrue("clone so it should contain 'c' key", m2.containsKey('c'));
   },
 
   testRemove() {
@@ -200,7 +193,7 @@ testSuite({
   },
 
   testObjectProperties() {
-    const m = new StructsMap;
+    const m = new StructsMap();
 
     assertEquals(m.get('toString'), undefined);
     assertEquals(m.get('valueOf'), undefined);
@@ -226,15 +219,14 @@ testSuite({
     assertEquals(m.get(':foo'), 'happy');
 
     const keys = m.getKeys().join(',');
-    assertEquals(
-        keys, 'toString,valueOf,eval,toSource,prototype,hasOwnProperty,:foo');
+    assertEquals(keys, 'toString,valueOf,eval,toSource,prototype,hasOwnProperty,:foo');
 
     const values = m.getValues().join(',');
     assertEquals(values, 'once,upon,a,midnight,dreary,dark,happy');
   },
 
   testDuplicateKeys() {
-    const m = new StructsMap;
+    const m = new StructsMap();
 
     m.set('a', 1);
     m.set('b', 2);
@@ -263,9 +255,7 @@ testSuite({
       map.set('a', 0);
       const obj = map.toObject();
       assertTrue('object representation has key "a"', obj.hasOwnProperty('a'));
-      assertFalse(
-          'object representation does not have key "b"',
-          obj.hasOwnProperty('b'));
+      assertFalse('object representation does not have key "b"', obj.hasOwnProperty('b'));
       assertEquals('value for key "a"', 0, obj['a']);
     } finally {
       delete Object.prototype.b;
@@ -295,7 +285,7 @@ testSuite({
     assertTrue('maps are the same', map1.equals(map2));
 
     map2.set('d', '3');
-    assertFalse('maps have 3 and \'3\'', map1.equals(map2));
+    assertFalse("maps have 3 and '3'", map1.equals(map2));
   },
 
   testEqualsWithCustomEqualityFn() {

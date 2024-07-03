@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.singletonTest');
-goog.setTestOnly();
 
 const asserts = goog.require('goog.testing.asserts');
 const singleton = goog.require('goog.testing.singleton');

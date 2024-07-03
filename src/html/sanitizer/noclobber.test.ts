@@ -7,7 +7,6 @@
 /** @fileoverview Tests for {@link goog.html.sanitizer.noclobber} */
 
 goog.module('goog.html.sanitizer.noclobberTest');
-goog.setTestOnly();
 
 const NodeType = goog.require('goog.dom.NodeType');
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
@@ -18,8 +17,7 @@ const testingDom = goog.require('goog.testing.dom');
 const userAgentProduct = goog.require('goog.userAgent.product');
 
 /** Whether we support functions that operate on Node and Element. */
-const elementAndNodeSupported =
-    !userAgentProduct.IE || document.documentMode >= 10;
+const elementAndNodeSupported = !userAgentProduct.IE || document.documentMode >= 10;
 
 /**
  * @param {string} html
@@ -79,24 +77,20 @@ testSuite({
 
     element = createElement('getElementsByTagName');
     assertArrayEquals(
-        Array.from(element.children),
-        noclobber.getElementsByTagName(element, 'input'));
+      Array.from(element.children),
+      noclobber.getElementsByTagName(element, 'input')
+    );
 
-    element = htmlToElement(
-        '<form><input name="sheet"><style>color:red</style></form>');
-    document.body.appendChild(element);  // needs to be rooted into the DOM.
-    assertEquals(
-        element.children[1].sheet,
-        noclobber.getElementStyleSheet(element.children[1]));
+    element = htmlToElement('<form><input name="sheet"><style>color:red</style></form>');
+    document.body.appendChild(element); // needs to be rooted into the DOM.
+    assertEquals(element.children[1].sheet, noclobber.getElementStyleSheet(element.children[1]));
 
     element = createElement('matches');
     assertTrue(noclobber.elementMatches(element, '#foo'));
     assertFalse(noclobber.elementMatches(element, '#bar'));
 
     element = createElement('namespaceURI');
-    assertEquals(
-        'http://www.w3.org/1999/xhtml',
-        noclobber.getElementNamespaceURI(element));
+    assertEquals('http://www.w3.org/1999/xhtml', noclobber.getElementNamespaceURI(element));
   },
 
   /**
@@ -114,65 +108,62 @@ testSuite({
 
     let element = createElement('attributes');
     replacer.set(noclobber.Methods, 'ATTRIBUTES_GETTER', null);
-    assertThrows(function() {
+    assertThrows(() => {
       noclobber.getElementAttributes(element);
     });
 
     element = createElement('hasAttribute');
     replacer.set(noclobber.Methods, 'HAS_ATTRIBUTE', null);
-    assertThrows(function() {
+    assertThrows(() => {
       noclobber.hasElementAttribute(element, 'id');
     });
 
     element = createElement('getAttribute');
     replacer.set(noclobber.Methods, 'GET_ATTRIBUTE', null);
-    assertThrows(function() {
+    assertThrows(() => {
       noclobber.getElementAttribute(element, 'id');
     });
 
     element = createElement('setAttribute');
     replacer.set(noclobber.Methods, 'SET_ATTRIBUTE', null);
-    assertThrows(function() {
+    assertThrows(() => {
       noclobber.setElementAttribute(element, 'id', 'bar');
     });
 
     element = createElement('removeAttribute');
     replacer.set(noclobber.Methods, 'REMOVE_ATTRIBUTE', null);
-    assertThrows(function() {
+    assertThrows(() => {
       noclobber.removeElementAttribute(element, 'id');
     });
 
     element = createElement('innerHTML');
     replacer.set(noclobber.Methods, 'INNER_HTML_GETTER', null);
-    assertThrows(function() {
+    assertThrows(() => {
       noclobber.getElementInnerHTML(element);
     });
 
     element = createElement('style');
     replacer.set(noclobber.Methods, 'STYLE_GETTER', null);
-    assertThrows(function() {
+    assertThrows(() => {
       noclobber.getElementStyle(element);
     });
 
     element = createElement('getElementsByTagName');
     replacer.set(noclobber.Methods, 'GET_ELEMENTS_BY_TAG_NAME', null);
-    assertThrows(function() {
+    assertThrows(() => {
       noclobber.getElementsByTagName(element, 'input');
     });
 
     // Sheet can't be clobbered, we only test that it works on browsers without
     // prototypes.
-    element = htmlToElement(
-        '<form><input name="foo"><style>color:red</style></form>');
-    document.body.appendChild(element);  // needs to be rooted into the DOM.
+    element = htmlToElement('<form><input name="foo"><style>color:red</style></form>');
+    document.body.appendChild(element); // needs to be rooted into the DOM.
     replacer.set(noclobber.Methods, 'SHEET_GETTER', null);
-    assertEquals(
-        element.children[1].sheet,
-        noclobber.getElementStyleSheet(element.children[1]));
+    assertEquals(element.children[1].sheet, noclobber.getElementStyleSheet(element.children[1]));
 
     element = createElement('matches');
     replacer.set(noclobber.Methods, 'MATCHES', null);
-    assertThrows(function() {
+    assertThrows(() => {
       noclobber.elementMatches(element, '#foo');
     });
 
@@ -199,8 +190,7 @@ testSuite({
 
     element = createElement('appendChild');
     noclobber.appendNodeChild(element, document.createElement('div'));
-    assertEquals(
-        'DIV', element.childNodes[element.childNodes.length - 1].nodeName);
+    assertEquals('DIV', element.childNodes[element.childNodes.length - 1].nodeName);
   },
 
   testNodeClobbered() {
@@ -212,31 +202,31 @@ testSuite({
 
     let element = createElement('nodeName');
     replacer.set(noclobber.Methods, 'NODE_NAME_GETTER', null);
-    assertThrows(function() {
+    assertThrows(() => {
       noclobber.getNodeName(element);
     });
 
     element = createElement('nodeType');
     replacer.set(noclobber.Methods, 'NODE_TYPE_GETTER', null);
-    assertThrows(function() {
+    assertThrows(() => {
       noclobber.getNodeType(element);
     });
 
     element = createElement('parentNode');
     replacer.set(noclobber.Methods, 'PARENT_NODE_GETTER', null);
-    assertThrows(function() {
+    assertThrows(() => {
       noclobber.getParentNode(element);
     });
 
     element = createElement('childNodes');
     replacer.set(noclobber.Methods, 'CHILD_NODES_GETTER', null);
-    assertThrows(function() {
+    assertThrows(() => {
       noclobber.getChildNodes(element);
     });
 
     element = createElement('appendChild');
     replacer.set(noclobber.Methods, 'APPEND_CHILD', null);
-    assertThrows(function() {
+    assertThrows(() => {
       noclobber.appendNodeChild(element, document.createElement('div'));
     });
 
@@ -245,8 +235,7 @@ testSuite({
 
   testCSSStyleDeclaration() {
     // Properties on the CSSStyleDeclaration object can't be clobbered.
-    const element =
-        htmlToElement('<form style="color:red"><input name="test"></form>');
+    const element = htmlToElement('<form style="color:red"><input name="test"></form>');
     assertEquals('red', noclobber.getCssPropertyValue(element.style, 'color'));
     noclobber.setCssProperty(element.style, 'color', 'black');
     assertEquals('black', element.style.color);
@@ -259,13 +248,14 @@ testSuite({
 
     replacer.set(noclobber.Methods, 'GET_PROPERTY_VALUE', null);
     const element = htmlToElement(
-        '<form style="color:red"><input name="' +
+      '<form style="color:red"><input name="' +
         (userAgentProduct.IE ? 'getAttribute' : 'getPropertyValue') +
-        '" style="color: green"></form>');
+        '" style="color: green"></form>'
+    );
     assertEquals('red', noclobber.getCssPropertyValue(element.style, 'color'));
     noclobber.setCssProperty(element.style, 'color', 'black');
     assertEquals('black', element.style.color);
 
     replacer.reset();
-  }
+  },
 });

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.net.FileDownloaderTest');
-goog.setTestOnly();
 
 const ErrorCode = goog.require('goog.net.ErrorCode');
 const FileDownloader = goog.require('goog.net.FileDownloader');
@@ -31,7 +30,7 @@ function assertMatches(expected, actual) {
 testSuite({
   setUpPage() {
     testingFs.install(new PropertyReplacer());
-    TestCase.getActiveTestCase().promiseTimeout = 10000;  // 10s
+    TestCase.getActiveTestCase().promiseTimeout = 10000; // 10s
   },
 
   setUp() {
@@ -61,107 +60,114 @@ testSuite({
   },
 
   testGetDownloadedBlob() {
-    const promise = downloader.download('/foo/bar')
-                        .then(() => downloader.getDownloadedBlob('/foo/bar'))
-                        .then((blob) => {
-                          assertEquals('data', blob.toString());
-                        });
+    const promise = downloader
+      .download('/foo/bar')
+      .then(() => downloader.getDownloadedBlob('/foo/bar'))
+      .then((blob) => {
+        assertEquals('data', blob.toString());
+      });
 
     xhr.simulateResponse(200, 'data');
     return promise;
   },
 
   testGetLocalUrl() {
-    const promise = downloader.download('/foo/bar')
-                        .then(() => downloader.getLocalUrl('/foo/bar'))
-                        .then((url) => {
-                          assertMatches(/\/`bar$/, url);
-                        });
+    const promise = downloader
+      .download('/foo/bar')
+      .then(() => downloader.getLocalUrl('/foo/bar'))
+      .then((url) => {
+        assertMatches(/\/`bar$/, url);
+      });
 
     xhr.simulateResponse(200, 'data');
     return promise;
   },
 
   testLocalUrlWithContentDisposition() {
-    const promise = downloader.download('/foo/bar')
-                        .then(() => downloader.getLocalUrl('/foo/bar'))
-                        .then((url) => {
-                          assertMatches(/\/`qux`22bap$/, url);
-                        });
+    const promise = downloader
+      .download('/foo/bar')
+      .then(() => downloader.getLocalUrl('/foo/bar'))
+      .then((url) => {
+        assertMatches(/\/`qux`22bap$/, url);
+      });
 
-    xhr.simulateResponse(
-        200, 'data',
-        {'Content-Disposition': 'attachment; filename="qux\\"bap"'});
+    xhr.simulateResponse(200, 'data', {
+      'Content-Disposition': 'attachment; filename="qux\\"bap"',
+    });
     return promise;
   },
 
   testIsDownloaded() {
-    const promise =
-        downloader.download('/foo/bar')
-            .then(() => downloader.isDownloaded('/foo/bar'))
-            .then(assertTrue)
-            .then((isDownloaded) => downloader.isDownloaded('/foo/baz'))
-            .then(assertFalse);
+    const promise = downloader
+      .download('/foo/bar')
+      .then(() => downloader.isDownloaded('/foo/bar'))
+      .then(assertTrue)
+      .then((isDownloaded) => downloader.isDownloaded('/foo/baz'))
+      .then(assertFalse);
 
     xhr.simulateResponse(200, 'data');
     return promise;
   },
 
   testRemove() {
-    const promise =
-        downloader.download('/foo/bar')
-            .then(() => downloader.remove('/foo/bar'))
-            .then(() => downloader.isDownloaded('/foo/bar'))
-            .then(assertFalse)
-            .then(() => downloader.getDownloadedBlob('/foo/bar'))
-            .then(
-                () => {
-                  fail('Should not be able to download a missing blob.');
-                },
-                (err) => {
-                  assertEquals(FsError.ErrorCode.NOT_FOUND, err.code);
-                  const download = downloader.download('/foo/bar');
-                  xhr.simulateResponse(200, 'more data');
-                  return download;
-                })
-            .then(() => downloader.isDownloaded('/foo/bar'))
-            .then(assertTrue)
-            .then(() => downloader.getDownloadedBlob('/foo/bar'))
-            .then((blob) => {
-              assertEquals('more data', blob.toString());
-            });
+    const promise = downloader
+      .download('/foo/bar')
+      .then(() => downloader.remove('/foo/bar'))
+      .then(() => downloader.isDownloaded('/foo/bar'))
+      .then(assertFalse)
+      .then(() => downloader.getDownloadedBlob('/foo/bar'))
+      .then(
+        () => {
+          fail('Should not be able to download a missing blob.');
+        },
+        (err) => {
+          assertEquals(FsError.ErrorCode.NOT_FOUND, err.code);
+          const download = downloader.download('/foo/bar');
+          xhr.simulateResponse(200, 'more data');
+          return download;
+        }
+      )
+      .then(() => downloader.isDownloaded('/foo/bar'))
+      .then(assertTrue)
+      .then(() => downloader.getDownloadedBlob('/foo/bar'))
+      .then((blob) => {
+        assertEquals('more data', blob.toString());
+      });
 
     xhr.simulateResponse(200, 'data');
     return promise;
   },
 
   testSetBlob() {
-    return downloader.setBlob('/foo/bar', testingFs.getBlob('data'))
-        .then(() => downloader.isDownloaded('/foo/bar'))
-        .then(assertTrue)
-        .then(() => downloader.getDownloadedBlob('/foo/bar'))
-        .then((blob) => {
-          assertEquals('data', blob.toString());
-        });
+    return downloader
+      .setBlob('/foo/bar', testingFs.getBlob('data'))
+      .then(() => downloader.isDownloaded('/foo/bar'))
+      .then(assertTrue)
+      .then(() => downloader.getDownloadedBlob('/foo/bar'))
+      .then((blob) => {
+        assertEquals('data', blob.toString());
+      });
   },
 
   testSetBlobWithName() {
-    return downloader.setBlob('/foo/bar', testingFs.getBlob('data'), 'qux')
-        .then(() => downloader.getLocalUrl('/foo/bar'))
-        .then((url) => {
-          assertMatches(/\/`qux$/, url);
-        });
+    return downloader
+      .setBlob('/foo/bar', testingFs.getBlob('data'), 'qux')
+      .then(() => downloader.getLocalUrl('/foo/bar'))
+      .then((url) => {
+        assertMatches(/\/`qux$/, url);
+      });
   },
 
   testDownloadDuringDownload() {
     const download1 = downloader.download('/foo/bar');
     const download2 = downloader.download('/foo/bar');
 
-    const promise = download1.then(() => download2)
-                        .then(() => downloader.getDownloadedBlob('/foo/bar'))
-                        .then((blob) => {
-                          assertEquals('data', blob.toString());
-                        });
+    const promise = download1
+      .then(() => download2)
+      .then(() => downloader.getDownloadedBlob('/foo/bar'))
+      .then((blob) => {
+        assertEquals('data', blob.toString());
+      });
 
     // There should only need to be one response for both downloads, since the
     // second should return the same deferred as the first.
@@ -175,12 +181,13 @@ testSuite({
       hasDownloaded = true;
     });
 
-    const promise = downloader.waitForDownload('/foo/bar')
-                        .then(() => downloader.getDownloadedBlob('/foo/bar'))
-                        .then((blob) => {
-                          assertTrue(hasDownloaded);
-                          assertEquals('data', blob.toString());
-                        });
+    const promise = downloader
+      .waitForDownload('/foo/bar')
+      .then(() => downloader.getDownloadedBlob('/foo/bar'))
+      .then((blob) => {
+        assertTrue(hasDownloaded);
+        assertEquals('data', blob.toString());
+      });
 
     xhr.simulateResponse(200, 'data');
     return promise;
@@ -192,11 +199,12 @@ testSuite({
       hasDownloaded = true;
     });
 
-    const promise = downloader.waitForDownload('/foo/bar')
-                        .then(() => downloader.isDownloaded('/foo/bar'))
-                        .then(() => {
-                          assertTrue(hasDownloaded);
-                        });
+    const promise = downloader
+      .waitForDownload('/foo/bar')
+      .then(() => downloader.isDownloaded('/foo/bar'))
+      .then(() => {
+        assertTrue(hasDownloaded);
+      });
 
     xhr.simulateResponse(200, 'data');
     return promise;
@@ -208,13 +216,14 @@ testSuite({
       hasDownloaded = true;
     });
 
-    const promise = downloader.waitForDownload('/foo/bar')
-                        .then(() => downloader.remove('/foo/bar'))
-                        .then(() => {
-                          assertTrue(hasDownloaded);
-                        })
-                        .then(() => downloader.isDownloaded('/foo/bar'))
-                        .then(assertFalse);
+    const promise = downloader
+      .waitForDownload('/foo/bar')
+      .then(() => downloader.remove('/foo/bar'))
+      .then(() => {
+        assertTrue(hasDownloaded);
+      })
+      .then(() => downloader.isDownloaded('/foo/bar'))
+      .then(assertFalse);
 
     xhr.simulateResponse(200, 'data');
     return promise;
@@ -223,25 +232,22 @@ testSuite({
   testSetBlobDuringDownload() {
     const download = downloader.download('/foo/bar');
 
-    const promise =
-        downloader.waitForDownload('/foo/bar')
-            .then(
-                () => downloader.setBlob(
-                    '/foo/bar', testingFs.getBlob('blob data')))
-            .then(
-                () => {
-                  fail('Should not be able to set blob during a download.');
-                },
-                (err) => {
-                  assertEquals(
-                      FsError.ErrorCode.INVALID_MODIFICATION,
-                      err.fileError.code);
-                  return download;
-                })
-            .then(() => downloader.getDownloadedBlob('/foo/bar'))
-            .then((b) => {
-              assertEquals('xhr data', b.toString());
-            });
+    const promise = downloader
+      .waitForDownload('/foo/bar')
+      .then(() => downloader.setBlob('/foo/bar', testingFs.getBlob('blob data')))
+      .then(
+        () => {
+          fail('Should not be able to set blob during a download.');
+        },
+        (err) => {
+          assertEquals(FsError.ErrorCode.INVALID_MODIFICATION, err.fileError.code);
+          return download;
+        }
+      )
+      .then(() => downloader.getDownloadedBlob('/foo/bar'))
+      .then((b) => {
+        assertEquals('xhr data', b.toString());
+      });
 
     xhr.simulateResponse(200, 'xhr data');
     return promise;
@@ -250,20 +256,20 @@ testSuite({
   testDownloadCanceledBeforeXhr() {
     const download = downloader.download('/foo/bar');
 
-    const promise =
-        download
-            .then(
-                () => {
-                  fail('Download should have been canceled.');
-                },
-                () => {
-                  assertEquals('/foo/bar', xhr.getLastUri());
-                  assertEquals(ErrorCode.ABORT, xhr.getLastErrorCode());
-                  assertFalse(xhr.isActive());
+    const promise = download
+      .then(
+        () => {
+          fail('Download should have been canceled.');
+        },
+        () => {
+          assertEquals('/foo/bar', xhr.getLastUri());
+          assertEquals(ErrorCode.ABORT, xhr.getLastErrorCode());
+          assertFalse(xhr.isActive());
 
-                  return downloader.isDownloaded('/foo/bar');
-                })
-            .then(assertFalse);
+          return downloader.isDownloaded('/foo/bar');
+        }
+      )
+      .then(assertFalse);
 
     download.cancel();
     return promise;
@@ -275,86 +281,87 @@ testSuite({
     download.cancel();
 
     return download
-        .then(
-            () => {
-              fail('Should not succeed after cancellation.');
-            },
-            () => {
-              assertEquals('/foo/bar', xhr.getLastUri());
-              assertEquals(ErrorCode.NO_ERROR, xhr.getLastErrorCode());
-              assertFalse(xhr.isActive());
+      .then(
+        () => {
+          fail('Should not succeed after cancellation.');
+        },
+        () => {
+          assertEquals('/foo/bar', xhr.getLastUri());
+          assertEquals(ErrorCode.NO_ERROR, xhr.getLastErrorCode());
+          assertFalse(xhr.isActive());
 
-              return downloader.isDownloaded('/foo/bar');
-            })
-        .then(assertFalse);
+          return downloader.isDownloaded('/foo/bar');
+        }
+      )
+      .then(assertFalse);
   },
 
   testFailedXhr() {
-    const promise =
-        downloader.download('/foo/bar')
-            .then(
-                () => {
-                  fail('Download should not have succeeded.');
-                },
-                (err) => {
-                  assertEquals('/foo/bar', err.url);
-                  assertEquals(404, err.xhrStatus);
-                  assertEquals(ErrorCode.HTTP_ERROR, err.xhrErrorCode);
-                  assertUndefined(err.fileError);
+    const promise = downloader
+      .download('/foo/bar')
+      .then(
+        () => {
+          fail('Download should not have succeeded.');
+        },
+        (err) => {
+          assertEquals('/foo/bar', err.url);
+          assertEquals(404, err.xhrStatus);
+          assertEquals(ErrorCode.HTTP_ERROR, err.xhrErrorCode);
+          assertUndefined(err.fileError);
 
-                  return downloader.isDownloaded('/foo/bar');
-                })
-            .then(assertFalse);
+          return downloader.isDownloaded('/foo/bar');
+        }
+      )
+      .then(assertFalse);
 
     xhr.simulateResponse(404);
     return promise;
   },
 
   testFailedDownloadSave() {
-    const promise =
-        downloader.download('/foo/bar')
-            .then(() => {
-              const download = downloader.download('/foo/bar');
-              xhr.simulateResponse(200, 'data');
-              return download;
-            })
-            .then(
-                () => {
-                  fail('Should not be able to modify an active download.');
-                },
-                (err) => {
-                  assertEquals('/foo/bar', err.url);
-                  assertUndefined(err.xhrStatus);
-                  assertUndefined(err.xhrErrorCode);
-                  assertEquals(
-                      FsError.ErrorCode.INVALID_MODIFICATION,
-                      err.fileError.code);
-                });
+    const promise = downloader
+      .download('/foo/bar')
+      .then(() => {
+        const download = downloader.download('/foo/bar');
+        xhr.simulateResponse(200, 'data');
+        return download;
+      })
+      .then(
+        () => {
+          fail('Should not be able to modify an active download.');
+        },
+        (err) => {
+          assertEquals('/foo/bar', err.url);
+          assertUndefined(err.xhrStatus);
+          assertUndefined(err.xhrErrorCode);
+          assertEquals(FsError.ErrorCode.INVALID_MODIFICATION, err.fileError.code);
+        }
+      );
 
     xhr.simulateResponse(200, 'data');
     return promise;
   },
 
   testFailedGetDownloadedBlob() {
-    return downloader.getDownloadedBlob('/foo/bar')
-        .then(
-            () => {
-              fail('Should not be able to get a missing blob.');
-            },
-            (err) => {
-              assertEquals(FsError.ErrorCode.NOT_FOUND, err.code);
-            });
+    return downloader.getDownloadedBlob('/foo/bar').then(
+      () => {
+        fail('Should not be able to get a missing blob.');
+      },
+      (err) => {
+        assertEquals(FsError.ErrorCode.NOT_FOUND, err.code);
+      }
+    );
   },
 
   testFailedRemove() {
-    return downloader.remove('/foo/bar')
-        .then(
-            () => {
-              fail('Should not be able to remove a missing file.');
-            },
-            (err) => {
-              assertEquals(FsError.ErrorCode.NOT_FOUND, err.code);
-            });
+    return downloader.remove('/foo/bar').then(
+      () => {
+        fail('Should not be able to remove a missing file.');
+      },
+      (err) => {
+        assertEquals(FsError.ErrorCode.NOT_FOUND, err.code);
+      }
+    );
   },
 
   testIsDownloading() {

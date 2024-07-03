@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Contains the attribute allowlists for use in the Html
  * sanitizer.
@@ -102,7 +101,7 @@ const AllowedAttributes = {
   '* VALIGN': true,
   '* VALUE': true,
   '* VSPACE': true,
-  '* WIDTH': true
+  '* WIDTH': true,
 };
 exports.AllowedAttributes = AllowedAttributes;
 
@@ -114,7 +113,6 @@ exports.AllowedAttributes = AllowedAttributes;
  * @const @dict {boolean}
  */
 const SanitizedAttributeAllowlist = {
-
   // Attributes which can contain URL fragments
   '* USEMAP': true,
   // Attributes which can contain URLs
@@ -137,6 +135,6 @@ const SanitizedAttributeAllowlist = {
   '* ID': true,
 
   // CSS style can cause network requests and XSSs
-  '* STYLE': true
+  '* STYLE': true,
 };
 exports.SanitizedAttributeAllowlist = SanitizedAttributeAllowlist;

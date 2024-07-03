@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.focusTest');
-goog.setTestOnly();
 
 const BrowserFeature = goog.require('goog.editor.BrowserFeature');
 const focus = goog.require('goog.editor.focus');
@@ -27,20 +26,25 @@ testSuite({
    */
   testFocusInputField() {
     const input = document.getElementById('myInput');
-    assertNotEquals(
-        'Input should not be focused initially', input, document.activeElement);
+    assertNotEquals('Input should not be focused initially', input, document.activeElement);
 
     focus.focusInputField(input);
     if (BrowserFeature.HAS_ACTIVE_ELEMENT) {
       assertEquals(
-          'Input should be focused after call to focusInputField', input,
-          document.activeElement);
+        'Input should be focused after call to focusInputField',
+        input,
+        document.activeElement
+      );
     }
     assertEquals(
-        'Selection should start at the end of the input text',
-        input.value.length, selection.getStart(input));
+      'Selection should start at the end of the input text',
+      input.value.length,
+      selection.getStart(input)
+    );
     assertEquals(
-        'Selection should end at the end of the input text', input.value.length,
-        selection.getEnd(input));
+      'Selection should end at the end of the input text',
+      input.value.length,
+      selection.getEnd(input)
+    );
   },
 });

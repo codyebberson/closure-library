@@ -39,12 +39,8 @@ testSuite({
 
   testIsSupportedCommand() {
     fieldMock.$replay();
-    assertTrue(
-        '+helloWorld should be suported',
-        plugin.isSupportedCommand('+helloWorld'));
-    assertFalse(
-        'other commands should not be supported',
-        plugin.isSupportedCommand('blah'));
+    assertTrue('+helloWorld should be suported', plugin.isSupportedCommand('+helloWorld'));
+    assertFalse('other commands should not be supported', plugin.isSupportedCommand('blah'));
     fieldMock.$verify();
   },
 

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dom.formsTest');
-goog.setTestOnly();
 
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
 const dom = goog.require('goog.dom');
@@ -22,7 +21,7 @@ const stubs = new PropertyReplacer();
 function mockWindowOpen(mockForm) {
   const windowOpen = () => ({
     document: {
-      createElement: function(name) {
+      createElement: (name) => {
         if (name == 'form') {
           return Object.assign(mockForm, {
             tagName: 'FORM',
@@ -44,20 +43,20 @@ testSuite({
 
   testSubmitFormInNewWindowWithSubmitButton() {
     const expectedForm = [
-      {name: 'in1', value: 'foo', type: 'hidden'},
-      {name: 'in2', value: 'bar', type: 'hidden'},
-      {name: 'in2', value: 'baaz', type: 'hidden'},
-      {name: 'in3', value: '', type: 'hidden'},
-      {name: 'pass', value: 'bar', type: 'hidden'},
-      {name: 'textarea', value: 'foo bar baz', type: 'hidden'},
-      {name: 'select1', value: '1', type: 'hidden'},
-      {name: 'select2', value: 'a', type: 'hidden'},
-      {name: 'select2', value: 'c', type: 'hidden'},
-      {name: 'select3', value: '', type: 'hidden'},
-      {name: 'checkbox1', value: 'on', type: 'hidden'},
-      {name: 'radio', value: 'X', type: 'hidden'},
-      {name: 'radio2', value: 'Y', type: 'hidden'},
-      {name: 'submit', value: 'submitb', type: 'hidden'},
+      { name: 'in1', value: 'foo', type: 'hidden' },
+      { name: 'in2', value: 'bar', type: 'hidden' },
+      { name: 'in2', value: 'baaz', type: 'hidden' },
+      { name: 'in3', value: '', type: 'hidden' },
+      { name: 'pass', value: 'bar', type: 'hidden' },
+      { name: 'textarea', value: 'foo bar baz', type: 'hidden' },
+      { name: 'select1', value: '1', type: 'hidden' },
+      { name: 'select2', value: 'a', type: 'hidden' },
+      { name: 'select2', value: 'c', type: 'hidden' },
+      { name: 'select3', value: '', type: 'hidden' },
+      { name: 'checkbox1', value: 'on', type: 'hidden' },
+      { name: 'radio', value: 'X', type: 'hidden' },
+      { name: 'radio2', value: 'Y', type: 'hidden' },
+      { name: 'submit', value: 'submitb', type: 'hidden' },
     ];
 
     const formElements = [];
@@ -94,20 +93,20 @@ testSuite({
 
   testSubmitFormInNewWindowWithSubmitInput() {
     const expectedForm = [
-      {name: 'in1', value: 'foo', type: 'hidden'},
-      {name: 'in2', value: 'bar', type: 'hidden'},
-      {name: 'in2', value: 'baaz', type: 'hidden'},
-      {name: 'in3', value: '', type: 'hidden'},
-      {name: 'pass', value: 'bar', type: 'hidden'},
-      {name: 'textarea', value: 'foo bar baz', type: 'hidden'},
-      {name: 'select1', value: '1', type: 'hidden'},
-      {name: 'select2', value: 'a', type: 'hidden'},
-      {name: 'select2', value: 'c', type: 'hidden'},
-      {name: 'select3', value: '', type: 'hidden'},
-      {name: 'checkbox1', value: 'on', type: 'hidden'},
-      {name: 'radio', value: 'X', type: 'hidden'},
-      {name: 'radio2', value: 'Y', type: 'hidden'},
-      {name: 'submit', value: 'submitv', type: 'hidden'},
+      { name: 'in1', value: 'foo', type: 'hidden' },
+      { name: 'in2', value: 'bar', type: 'hidden' },
+      { name: 'in2', value: 'baaz', type: 'hidden' },
+      { name: 'in3', value: '', type: 'hidden' },
+      { name: 'pass', value: 'bar', type: 'hidden' },
+      { name: 'textarea', value: 'foo bar baz', type: 'hidden' },
+      { name: 'select1', value: '1', type: 'hidden' },
+      { name: 'select2', value: 'a', type: 'hidden' },
+      { name: 'select2', value: 'c', type: 'hidden' },
+      { name: 'select3', value: '', type: 'hidden' },
+      { name: 'checkbox1', value: 'on', type: 'hidden' },
+      { name: 'radio', value: 'X', type: 'hidden' },
+      { name: 'radio2', value: 'Y', type: 'hidden' },
+      { name: 'submit', value: 'submitv', type: 'hidden' },
     ];
 
     const formElements = [];
@@ -143,19 +142,19 @@ testSuite({
 
   testSubmitFormInNewWindowWithoutSubmitButton() {
     const expectedForm = [
-      {name: 'in1', value: 'foo', type: 'hidden'},
-      {name: 'in2', value: 'bar', type: 'hidden'},
-      {name: 'in2', value: 'baaz', type: 'hidden'},
-      {name: 'in3', value: '', type: 'hidden'},
-      {name: 'pass', value: 'bar', type: 'hidden'},
-      {name: 'textarea', value: 'foo bar baz', type: 'hidden'},
-      {name: 'select1', value: '1', type: 'hidden'},
-      {name: 'select2', value: 'a', type: 'hidden'},
-      {name: 'select2', value: 'c', type: 'hidden'},
-      {name: 'select3', value: '', type: 'hidden'},
-      {name: 'checkbox1', value: 'on', type: 'hidden'},
-      {name: 'radio', value: 'X', type: 'hidden'},
-      {name: 'radio2', value: 'Y', type: 'hidden'},
+      { name: 'in1', value: 'foo', type: 'hidden' },
+      { name: 'in2', value: 'bar', type: 'hidden' },
+      { name: 'in2', value: 'baaz', type: 'hidden' },
+      { name: 'in3', value: '', type: 'hidden' },
+      { name: 'pass', value: 'bar', type: 'hidden' },
+      { name: 'textarea', value: 'foo bar baz', type: 'hidden' },
+      { name: 'select1', value: '1', type: 'hidden' },
+      { name: 'select2', value: 'a', type: 'hidden' },
+      { name: 'select2', value: 'c', type: 'hidden' },
+      { name: 'select3', value: '', type: 'hidden' },
+      { name: 'checkbox1', value: 'on', type: 'hidden' },
+      { name: 'radio', value: 'X', type: 'hidden' },
+      { name: 'radio2', value: 'Y', type: 'hidden' },
     ];
 
     const formElements = [];
@@ -194,34 +193,35 @@ testSuite({
     const resetEl = dom.getElement('reset');
 
     assertThrows(
-        'Non-submit type elements cannot be used to submit form.', /**
+      'Non-submit type elements cannot be used to submit form.' /**
                                                                       @suppress {checkTypes}
                                                                       suppression
                                                                       added to
                                                                       enable
                                                                       type
                                                                       checking
-                                                                    */
-        () => {
-          forms.submitFormInNewWindow(formEl, resetEl);
-        });
+                                                                    */,
+      () => {
+        forms.submitFormInNewWindow(formEl, resetEl);
+      }
+    );
   },
 
   testSubmitFormDataInNewWindow() {
     const expectedForm = [
-      {name: 'in1', value: 'foo', type: 'hidden'},
-      {name: 'in2', value: 'bar', type: 'hidden'},
-      {name: 'in2', value: 'baaz', type: 'hidden'},
-      {name: 'in3', value: '', type: 'hidden'},
-      {name: 'pass', value: 'bar', type: 'hidden'},
-      {name: 'textarea', value: 'foo bar baz', type: 'hidden'},
-      {name: 'select1', value: '1', type: 'hidden'},
-      {name: 'select2', value: 'a', type: 'hidden'},
-      {name: 'select2', value: 'c', type: 'hidden'},
-      {name: 'select3', value: '', type: 'hidden'},
-      {name: 'checkbox1', value: 'on', type: 'hidden'},
-      {name: 'radio', value: 'X', type: 'hidden'},
-      {name: 'radio2', value: 'Y', type: 'hidden'},
+      { name: 'in1', value: 'foo', type: 'hidden' },
+      { name: 'in2', value: 'bar', type: 'hidden' },
+      { name: 'in2', value: 'baaz', type: 'hidden' },
+      { name: 'in3', value: '', type: 'hidden' },
+      { name: 'pass', value: 'bar', type: 'hidden' },
+      { name: 'textarea', value: 'foo bar baz', type: 'hidden' },
+      { name: 'select1', value: '1', type: 'hidden' },
+      { name: 'select2', value: 'a', type: 'hidden' },
+      { name: 'select2', value: 'c', type: 'hidden' },
+      { name: 'select3', value: '', type: 'hidden' },
+      { name: 'checkbox1', value: 'on', type: 'hidden' },
+      { name: 'radio', value: 'X', type: 'hidden' },
+      { name: 'radio2', value: 'Y', type: 'hidden' },
     ];
 
     const formElements = [];
@@ -253,8 +253,7 @@ testSuite({
      * @suppress {strictMissingProperties} suppression added to enable type
      * checking
      */
-    const result =
-        forms.submitFormDataInNewWindow(formEl.action, formEl.method, formData);
+    const result = forms.submitFormDataInNewWindow(formEl.action, formEl.method, formData);
     assertTrue(result);
     HTMLFormElement.prototype.appendChild = appendChild;
     HTMLFormElement.prototype.submit = submit;
@@ -265,9 +264,10 @@ testSuite({
     /** @suppress {checkTypes} suppression added to enable type checking */
     const result = forms.getFormDataString(el);
     assertEquals(
-        'in1=foo&in2=bar&in2=baaz&in3=&pass=bar&textarea=foo%20bar%20baz&' +
-            'select1=1&select2=a&select2=c&select3=&checkbox1=on&radio=X&radio2=Y',
-        result);
+      'in1=foo&in2=bar&in2=baaz&in3=&pass=bar&textarea=foo%20bar%20baz&' +
+        'select1=1&select2=a&select2=c&select3=&checkbox1=on&radio=X&radio2=Y',
+      result
+    );
   },
 
   testGetFormDataMap() {
@@ -459,9 +459,7 @@ testSuite({
     assertEquals({}.toString(), forms.getValue(el));
 
     forms.setValue(el, {
-      toString: function() {
-        return 'test';
-      }
+      toString: () => 'test',
     });
     assertEquals('test', forms.getValue(el));
 
@@ -471,12 +469,12 @@ testSuite({
   },
 
   testGetValueMeter() {
-    const el = dom.createDom('meter', {'min': 0, 'max': 3, 'value': 2.3});
+    const el = dom.createDom('meter', { min: 0, max: 3, value: 2.3 });
     assertEquals(2.3, forms.getValue(el));
   },
 
   testSetValueMeter() {
-    const el = dom.createDom('meter', {'min': 1, 'max': 5, 'value': 3});
+    const el = dom.createDom('meter', { min: 1, max: 5, value: 3 });
 
     assertEquals(3, forms.getValue(el));
 

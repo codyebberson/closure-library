@@ -9,7 +9,6 @@
 goog.module('goog.html.CssSpecificity');
 goog.module.declareLegacyNamespace();
 
-
 /**
  * Cached mapping from selectors to specificities.
  * @type {!Object<string, !Array<number>>}
@@ -26,13 +25,11 @@ var specificityCache = {};
  * @supported IE9+, other browsers.
  */
 function getSpecificity(selector) {
-  var specificity = specificityCache.hasOwnProperty(selector) ?
-      specificityCache[selector] :
-      null;
+  var specificity = specificityCache.hasOwnProperty(selector) ? specificityCache[selector] : null;
   if (specificity) {
     return specificity;
   }
-  if (Object.keys(specificityCache).length > (1 << 16)) {
+  if (Object.keys(specificityCache).length > 1 << 16) {
     // Limit the size of cache to (1 << 16) == 65536. Normally HTML pages don't
     // have such numbers of selectors.
     specificityCache = {};
@@ -51,7 +48,7 @@ function getSpecificity(selector) {
  * @return {string}
  */
 function replaceWithEmptyText(selector, specificity, regex, typeIndex) {
-  return selector.replace(regex, function(match) {
+  return selector.replace(regex, (match) => {
     specificity[typeIndex] += 1;
     // Replace this simple selector with whitespace so it won't be counted
     // in further simple selectors.
@@ -67,9 +64,7 @@ function replaceWithEmptyText(selector, specificity, regex, typeIndex) {
  * @return {string}
  */
 function replaceWithPlainText(selector, regex) {
-  return selector.replace(regex, function(match) {
-    return Array(match.length + 1).join('A');
-  });
+  return selector.replace(regex, (match) => Array(match.length + 1).join('A'));
 }
 
 /**
@@ -88,10 +83,10 @@ function calculateSpecificity(selector) {
 
   // Matches a backslash followed by six hexadecimal digits followed by an
   // optional single whitespace character.
-  var escapeHexadecimalRegex = new RegExp('\\\\[0-9A-Fa-f]{6}\\s?', 'g');
+  var escapeHexadecimalRegex = /\\[0-9A-Fa-f]{6}\s?/g;
   // Matches a backslash followed by fewer than six hexadecimal digits
   // followed by a mandatory single whitespace character.
-  var escapeHexadecimalRegex2 = new RegExp('\\\\[0-9A-Fa-f]{1,5}\\s', 'g');
+  var escapeHexadecimalRegex2 = /\\[0-9A-Fa-f]{1,5}\s/g;
   // Matches a backslash followed by any character
   var escapeSpecialCharacter = /\\./g;
   selector = replaceWithPlainText(selector, escapeHexadecimalRegex);
@@ -100,32 +95,31 @@ function calculateSpecificity(selector) {
 
   // Remove the negation pseudo-class (:not) but leave its argument because
   // specificity is calculated on its argument.
-  var pseudoClassWithNotRegex = new RegExp(':not\\(([^\\)]*)\\)', 'g');
+  var pseudoClassWithNotRegex = /:not\(([^\)]*)\)/g;
   selector = selector.replace(pseudoClassWithNotRegex, '     $1 ');
 
   // Remove anything after a left brace in case a user has pasted in a rule,
   // not just a selector.
-  var rulesRegex = new RegExp('{[^]*', 'gm');
+  var rulesRegex = /{[^]*/gm;
   selector = selector.replace(rulesRegex, '');
 
   // The following regular expressions assume that selectors matching the
   // preceding regular expressions have been removed.
 
   // SPECIFICITY 2: Counts attribute selectors.
-  var attributeRegex = new RegExp('(\\[[^\\]]+\\])', 'g');
+  var attributeRegex = /(\[[^\]]+\])/g;
   selector = replaceWithEmptyText(selector, specificity, attributeRegex, 2);
 
   // SPECIFICITY 1: Counts ID selectors.
-  var idRegex = new RegExp('(#[^\\#\\s\\+>~\\.\\[:]+)', 'g');
+  var idRegex = /(#[^\#\s\+>~\.\[:]+)/g;
   selector = replaceWithEmptyText(selector, specificity, idRegex, 1);
 
   // SPECIFICITY 2: Counts class selectors.
-  var classRegex = new RegExp('(\\.[^\\s\\+>~\\.\\[:]+)', 'g');
+  var classRegex = /(\.[^\s\+>~\.\[:]+)/g;
   selector = replaceWithEmptyText(selector, specificity, classRegex, 2);
 
   // SPECIFICITY 3: Counts pseudo-element selectors.
-  var pseudoElementRegex =
-      /(::[^\s\+>~\.\[:]+|:first-line|:first-letter|:before|:after)/gi;
+  var pseudoElementRegex = /(::[^\s\+>~\.\[:]+|:first-line|:first-letter|:before|:after)/gi;
   selector = replaceWithEmptyText(selector, specificity, pseudoElementRegex, 3);
 
   // SPECIFICITY 2: Counts pseudo-class selectors.
@@ -136,8 +130,7 @@ function calculateSpecificity(selector) {
   //   :nth-last-type()
   //   :lang()
   var pseudoClassWithBracketsRegex = /(:[\w-]+\([^\)]*\))/gi;
-  selector = replaceWithEmptyText(
-      selector, specificity, pseudoClassWithBracketsRegex, 2);
+  selector = replaceWithEmptyText(selector, specificity, pseudoClassWithBracketsRegex, 2);
   // A regex for other pseudo classes, which don't have brackets.
   var pseudoClassRegex = /(:[^\s\+>~\.\[:]+)/g;
   selector = replaceWithEmptyText(selector, specificity, pseudoClassRegex, 2);
@@ -157,5 +150,5 @@ function calculateSpecificity(selector) {
 }
 
 exports = {
-  getSpecificity: getSpecificity
+  getSpecificity: getSpecificity,
 };

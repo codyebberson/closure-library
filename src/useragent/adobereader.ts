@@ -16,10 +16,9 @@ goog.module.declareLegacyNamespace();
 var googString = goog.require('goog.string');
 var userAgent = goog.require('goog.userAgent');
 
-
 var version = '';
 if (userAgent.IE) {
-  var detectOnIe = function(classId) {
+  var detectOnIe = (classId) => {
     try {
       new ActiveXObject(classId);
       return true;
@@ -41,9 +40,7 @@ if (userAgent.IE) {
       if (description && description.indexOf('Adobe') != -1) {
         // Newer plugins do not include the version in the description, so we
         // default to 7.
-        version = description.indexOf('Version') != -1 ?
-            description.split('Version')[1] :
-            '7';
+        version = description.indexOf('Version') != -1 ? description.split('Version')[1] : '7';
       }
     }
   }
@@ -55,14 +52,12 @@ if (userAgent.IE) {
  */
 exports.HAS_READER = !!version;
 
-
 /**
  * The version of the installed Adobe Reader plugin. Versions after 7
  * will all be reported as '7'.
  * @type {string}
  */
 exports.VERSION = version;
-
 
 /**
  * On certain combinations of platform/browser/plugin, a print dialog
@@ -74,5 +69,4 @@ exports.VERSION = version;
  *
  * @type {boolean}
  */
-exports.SILENT_PRINT =
-    userAgent.WINDOWS && googString.compareVersions(version, '6') >= 0;
+exports.SILENT_PRINT = userAgent.WINDOWS && googString.compareVersions(version, '6') >= 0;

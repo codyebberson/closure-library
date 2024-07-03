@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.module.ModuleLoadCallbackTest');
-goog.setTestOnly();
 
 const ErrorHandler = goog.require('goog.debug.ErrorHandler');
 const ModuleLoadCallback = goog.require('goog.module.ModuleLoadCallback');
@@ -26,14 +25,12 @@ testSuite({
     assertEquals(0, errorFn.getCallCount());
     assertThrows(goog.bind(callback1.execute, callback1));
     assertEquals(1, errorFn.getCallCount());
-    assertContains(
-        'callback1', errorFn.getLastCall().getArguments()[0].message);
+    assertContains('callback1', errorFn.getLastCall().getArguments()[0].message);
 
     // Test a callback created after the protect method is called.
     const callback2 = new ModuleLoadCallback(functions.error('callback2'));
     assertThrows(goog.bind(callback1.execute, callback2));
     assertEquals(2, errorFn.getCallCount());
-    assertContains(
-        'callback2', errorFn.getLastCall().getArguments()[0].message);
+    assertContains('callback2', errorFn.getLastCall().getArguments()[0].message);
   },
 });

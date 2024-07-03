@@ -5,34 +5,33 @@
  */
 
 goog.module('goog.debug.FormatterTest');
-goog.setTestOnly();
 
 const HtmlFormatter = goog.require('goog.debug.HtmlFormatter');
 const SafeHtml = goog.require('goog.html.SafeHtml');
 const testSuite = goog.require('goog.testing.testSuite');
-const {Level, LogRecord} = goog.require('goog.log');
+const { Level, LogRecord } = goog.require('goog.log');
 
 const EXPECTED_RECORD_HTML_RE =
-    '^prefix \\[.*?\\] \\[ &#160;.*?s\\] \\[loggerName\\] ' +
-    '<span class="dbg-f">mess<br> &#160;age<br>Message:';
+  '^prefix \\[.*?\\] \\[ &#160;.*?s\\] \\[loggerName\\] ' +
+  '<span class="dbg-f">mess<br> &#160;age<br>Message:';
 let logRecord;
 
 testSuite({
   setUp() {
-    logRecord =
-        new LogRecord(Level.CONFIG, 'mess\n  age', 'loggerName', 1, 100);
+    logRecord = new LogRecord(Level.CONFIG, 'mess\n  age', 'loggerName', 1, 100);
     // Exception needs to be present for exception text to get printed
     // by HtmlFormatter.
     logRecord.setException(new Error('exc\n  eption'));
   },
 
   testExposeException() {
-    const expected = 'Message: message&quot;<br>' +
-        'Url: <a href="view-source:http://fileName&quot;" ' +
-        'target="_new">http://fileName&quot;</a><br>' +
-        'Line: lineNumber&quot;<br><br>' +
-        'Browser stack:<br>' +
-        'stack&quot;-&gt; [end]';
+    const expected =
+      'Message: message&quot;<br>' +
+      'Url: <a href="view-source:http://fileName&quot;" ' +
+      'target="_new">http://fileName&quot;</a><br>' +
+      'Line: lineNumber&quot;<br><br>' +
+      'Browser stack:<br>' +
+      'stack&quot;-&gt; [end]';
     const error = {
       message: 'message"',
       fileName: 'http://fileName"',

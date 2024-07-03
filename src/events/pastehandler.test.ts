@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.events.PasteHandlerTest');
-goog.setTestOnly();
 
 const BrowserEvent = goog.require('goog.events.BrowserEvent');
 const EventType = goog.require('goog.events.EventType');
@@ -20,7 +19,7 @@ const testSuite = goog.require('goog.testing.testSuite');
 /** @suppress {checkTypes} suppression added to enable type checking */
 function newBrowserEvent(type) {
   if (typeof type === 'string') {
-    return new BrowserEvent({type: type});
+    return new BrowserEvent({ type: type });
   } else {
     return new BrowserEvent(type);
   }
@@ -61,10 +60,9 @@ testSuite({
     /** @suppress {checkTypes} suppression added to enable type checking */
     const handlerThatSupportsPasteEvents = new PasteHandler(textarea);
     // user clicks on the textarea and give it focus
-    events.listen(
-        handlerThatSupportsPasteEvents, PasteHandler.EventType.PASTE, () => {
-          pasted = true;
-        });
+    events.listen(handlerThatSupportsPasteEvents, PasteHandler.EventType.PASTE, () => {
+      pasted = true;
+    });
     textarea.dispatchEvent(newBrowserEvent('paste'));
     assertTrue(pasted);
   },
@@ -77,10 +75,12 @@ testSuite({
     textarea.dispatchEvent(newBrowserEvent(EventType.FOCUS));
     assertFalse(pasted);
     // user starts typing
-    textarea.dispatchEvent(newBrowserEvent({
-      type: EventType.KEYDOWN,
-      keyCode: KeyCodes.A,
-    }));
+    textarea.dispatchEvent(
+      newBrowserEvent({
+        type: EventType.KEYDOWN,
+        keyCode: KeyCodes.A,
+      })
+    );
     /**
      * @suppress {strictMissingProperties} suppression added to enable type
      * checking
@@ -89,7 +89,7 @@ testSuite({
     assertFalse(pasted);
 
     // still typing
-    textarea.dispatchEvent({type: EventType.KEYDOWN, keyCode: KeyCodes.B});
+    textarea.dispatchEvent({ type: EventType.KEYDOWN, keyCode: KeyCodes.B });
     /**
      * @suppress {strictMissingProperties} suppression added to enable type
      * checking
@@ -98,7 +98,7 @@ testSuite({
     assertFalse(pasted);
 
     // ends typing
-    textarea.dispatchEvent({type: EventType.KEYDOWN, keyCode: KeyCodes.C});
+    textarea.dispatchEvent({ type: EventType.KEYDOWN, keyCode: KeyCodes.C });
     /**
      * @suppress {strictMissingProperties} suppression added to enable type
      * checking
@@ -152,19 +152,23 @@ testSuite({
     textarea.dispatchEvent(newBrowserEvent(EventType.FOCUS));
 
     // starts typing something
-    textarea.dispatchEvent(newBrowserEvent({
-      type: EventType.KEYDOWN,
-      keyCode: KeyCodes.A,
-    }));
+    textarea.dispatchEvent(
+      newBrowserEvent({
+        type: EventType.KEYDOWN,
+        keyCode: KeyCodes.A,
+      })
+    );
     assertTrue(handler.getState() == PasteHandler.State.TYPING);
     assertFalse(pasted);
 
     // and then presses ctrl+v
-    textarea.dispatchEvent(newBrowserEvent({
-      type: EventType.KEYDOWN,
-      keyCode: KeyCodes.V,
-      ctrlKey: true,
-    }));
+    textarea.dispatchEvent(
+      newBrowserEvent({
+        type: EventType.KEYDOWN,
+        keyCode: KeyCodes.V,
+        ctrlKey: true,
+      })
+    );
     assertTrue(handler.getState() == PasteHandler.State.TYPING);
 
     // makes sure we detected it
@@ -203,7 +207,7 @@ testSuite({
     }
     textarea.dispatchEvent(EventType.FOCUS);
     assertFalse(pasted);
-    textarea.dispatchEvent({type: EventType.KEYDOWN, keyCode: KeyCodes.A});
+    textarea.dispatchEvent({ type: EventType.KEYDOWN, keyCode: KeyCodes.A });
     assertFalse(pasted);
     /**
      * @suppress {strictMissingProperties} suppression added to enable type
@@ -224,7 +228,7 @@ testSuite({
     }
     textarea.dispatchEvent(EventType.FOCUS);
 
-    textarea.dispatchEvent({type: EventType.KEYDOWN, keyCode: KeyCodes.A});
+    textarea.dispatchEvent({ type: EventType.KEYDOWN, keyCode: KeyCodes.A });
     assertFalse(pasted);
     /**
      * @suppress {strictMissingProperties} suppression added to enable type
@@ -261,7 +265,7 @@ testSuite({
     // scenario, that actually does produce a valid paste action.
     // {@see testRightClickRightClickAlsoDispatchesTwoConsecutiveInputEvents}
 
-    textarea.dispatchEvent({type: EventType.KEYDOWN, keyCode: KeyCodes.A});
+    textarea.dispatchEvent({ type: EventType.KEYDOWN, keyCode: KeyCodes.A });
     assertFalse(pasted);
     /**
      * @suppress {strictMissingProperties} suppression added to enable type
@@ -329,11 +333,9 @@ testSuite({
     const handlerUsedToListenForScriptingChanges = new PasteHandler(textarea);
     pasted = false;
     // user clicks on the textarea and give it focus
-    events.listen(
-        handlerUsedToListenForScriptingChanges, PasteHandler.EventType.PASTE,
-        () => {
-          pasted = true;
-        });
+    events.listen(handlerUsedToListenForScriptingChanges, PasteHandler.EventType.PASTE, () => {
+      pasted = true;
+    });
     /**
      * @suppress {strictMissingProperties} suppression added to enable type
      * checking
@@ -368,16 +370,13 @@ testSuite({
     /** @suppress {checkTypes} suppression added to enable type checking */
     const handlerThatSupportsPasteEvents = new PasteHandler(textarea);
     pasted = false;
-    events.listen(
-        handlerThatSupportsPasteEvents, PasteHandler.EventType.PASTE, () => {
-          pasted = true;
-        });
+    events.listen(handlerThatSupportsPasteEvents, PasteHandler.EventType.PASTE, () => {
+      pasted = true;
+    });
     let afterPasteFired = false;
-    events.listen(
-        handlerThatSupportsPasteEvents, PasteHandler.EventType.AFTER_PASTE,
-        () => {
-          afterPasteFired = true;
-        });
+    events.listen(handlerThatSupportsPasteEvents, PasteHandler.EventType.AFTER_PASTE, () => {
+      afterPasteFired = true;
+    });
 
     // Initial paste event comes before AFTER_PASTE has fired.
     textarea.dispatchEvent(newBrowserEvent('paste'));
@@ -404,16 +403,13 @@ testSuite({
     /** @suppress {checkTypes} suppression added to enable type checking */
     const handlerThatSupportsPasteEvents = new PasteHandler(textarea);
     pasted = false;
-    events.listen(
-        handlerThatSupportsPasteEvents, PasteHandler.EventType.PASTE, () => {
-          pasted = true;
-        });
+    events.listen(handlerThatSupportsPasteEvents, PasteHandler.EventType.PASTE, () => {
+      pasted = true;
+    });
     let afterPasteFired = false;
-    events.listen(
-        handlerThatSupportsPasteEvents, PasteHandler.EventType.AFTER_PASTE,
-        () => {
-          afterPasteFired = true;
-        });
+    events.listen(handlerThatSupportsPasteEvents, PasteHandler.EventType.AFTER_PASTE, () => {
+      afterPasteFired = true;
+    });
 
     // Initial paste event comes before AFTER_PASTE has fired.
     textarea.dispatchEvent(newBrowserEvent('paste'));

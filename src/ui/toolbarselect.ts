@@ -18,8 +18,6 @@ goog.requireType('goog.ui.ControlContent');
 goog.requireType('goog.ui.Menu');
 goog.requireType('goog.ui.MenuButtonRenderer');
 
-
-
 /**
  * A select control for a toolbar.
  *
@@ -34,20 +32,19 @@ goog.requireType('goog.ui.MenuButtonRenderer');
  * @constructor
  * @extends {goog.ui.Select}
  */
-goog.ui.ToolbarSelect = function(
-    caption, opt_menu, opt_renderer, opt_domHelper) {
-  'use strict';
+goog.ui.ToolbarSelect = function (caption, opt_menu, opt_renderer, opt_domHelper) {
   goog.ui.Select.call(
-      this, caption, opt_menu,
-      opt_renderer || goog.ui.ToolbarMenuButtonRenderer.getInstance(),
-      opt_domHelper);
+    this,
+    caption,
+    opt_menu,
+    opt_renderer || goog.ui.ToolbarMenuButtonRenderer.getInstance(),
+    opt_domHelper
+  );
 };
 goog.inherits(goog.ui.ToolbarSelect, goog.ui.Select);
 
-
 // Registers a decorator factory function for select controls used in toolbars.
 goog.ui.registry.setDecoratorByClassName(
-    goog.getCssName('goog-toolbar-select'), function() {
-      'use strict';
-      return new goog.ui.ToolbarSelect(null);
-    });
+  goog.getCssName('goog-toolbar-select'),
+  () => new goog.ui.ToolbarSelect(null)
+);

@@ -15,8 +15,6 @@ goog.provide('goog.net.WrapperXmlHttpFactory');
 goog.require('goog.net.XhrLike');
 goog.require('goog.net.XmlHttpFactory');
 
-
-
 /**
  * An xhr factory subclass which can be constructed using two factory methods.
  * This exists partly to allow the preservation of goog.net.XmlHttp.setFactory()
@@ -29,8 +27,7 @@ goog.require('goog.net.XmlHttpFactory');
  * @constructor
  * @final
  */
-goog.net.WrapperXmlHttpFactory = function(xhrFactory, optionsFactory) {
-  'use strict';
+goog.net.WrapperXmlHttpFactory = function (xhrFactory, optionsFactory) {
   goog.net.XmlHttpFactory.call(this);
 
   /**
@@ -49,16 +46,12 @@ goog.net.WrapperXmlHttpFactory = function(xhrFactory, optionsFactory) {
 };
 goog.inherits(goog.net.WrapperXmlHttpFactory, goog.net.XmlHttpFactory);
 
-
 /** @override */
-goog.net.WrapperXmlHttpFactory.prototype.createInstance = function() {
-  'use strict';
+goog.net.WrapperXmlHttpFactory.prototype.createInstance = function () {
   return this.xhrFactory_();
 };
 
-
 /** @override */
-goog.net.WrapperXmlHttpFactory.prototype.getOptions = function() {
-  'use strict';
+goog.net.WrapperXmlHttpFactory.prototype.getOptions = function () {
   return this.optionsFactory_();
 };

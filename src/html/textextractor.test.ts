@@ -9,11 +9,9 @@
  */
 
 goog.module('goog.html.textExtractorTest');
-goog.setTestOnly();
 
 const testSuite = goog.require('goog.testing.testSuite');
 const textExtractor = goog.require('goog.html.textExtractor');
-
 
 /**
  * Verifies that the expected text is extracted from the HTML string.
@@ -31,76 +29,78 @@ function assertExtractedTextEquals(html, expectedText) {
 }
 
 testSuite({
-  testExtractTextContent_justText: function() {
+  testExtractTextContent_justText: () => {
     const html = 'Hello';
     assertExtractedTextEquals(html, html);
   },
 
-  testExtractTextContent_basic: function() {
+  testExtractTextContent_basic: () => {
     const html = '<p>Hello</p>';
     const expectedText = 'Hello';
     assertExtractedTextEquals(html, expectedText);
   },
 
-  testExtractTextContent_removesScript: function() {
+  testExtractTextContent_removesScript: () => {
     const html = '<p>Foo<script>Bar</script>Baz</p>';
     const expectedText = 'FooBaz';
     assertExtractedTextEquals(html, expectedText);
   },
 
-  testExtractTextContent_blocks: function() {
+  testExtractTextContent_blocks: () => {
     const html = '<div>Foo</div><div>Bar</div>';
     const expectedText = 'Foo\n\nBar';
     assertExtractedTextEquals(html, expectedText);
   },
 
-  testExtractTextContent_extraNewlines: function() {
+  testExtractTextContent_extraNewlines: () => {
     const html = '<p>Foo</p>\n<p>Bar</p>';
     const expectedText = 'Foo\n\nBar';
     assertExtractedTextEquals(html, expectedText);
   },
 
-  testExtractTextContent_inline: function() {
+  testExtractTextContent_inline: () => {
     const html = '<h1>Foo<span>Bar</span></h1>';
     const expectedText = 'FooBar';
     assertExtractedTextEquals(html, expectedText);
   },
 
-  testExtractTextContent_complex: function() {
-    const html = '<div>\n' +
-        '  \n' +
-        '  A\n' +
-        '\n' +
-        '  mind\n' +
-        '\n' +
-        '  needs books<br>as a sword needs a whetstone<p>' +  // no line break
-        'if it is to <span style="display: block">keep</span> its edge.\n' +
-        '  </p>\n' +
-        '\n' +
-        '</div>';
-    const expectedText = 'A mind needs books\n' +
-        'as a sword needs a whetstone\n' +
-        'if it is to\n' +
-        'keep\n' +
-        'its edge.';
+  testExtractTextContent_complex: () => {
+    const html =
+      '<div>\n' +
+      '  \n' +
+      '  A\n' +
+      '\n' +
+      '  mind\n' +
+      '\n' +
+      '  needs books<br>as a sword needs a whetstone<p>' + // no line break
+      'if it is to <span style="display: block">keep</span> its edge.\n' +
+      '  </p>\n' +
+      '\n' +
+      '</div>';
+    const expectedText =
+      'A mind needs books\n' +
+      'as a sword needs a whetstone\n' +
+      'if it is to\n' +
+      'keep\n' +
+      'its edge.';
     assertExtractedTextEquals(html, expectedText);
   },
 
-  testExtractTextContent_newlines: function() {
+  testExtractTextContent_newlines: () => {
     const html = 'Hello\nWorld';
     const expectedText = 'Hello World';
     assertExtractedTextEquals(html, expectedText);
   },
 
-  testExtractTextContent_br: function() {
+  testExtractTextContent_br: () => {
     const html = 'Hello\n<br>World';
     const expectedText = 'Hello\nWorld';
     assertExtractedTextEquals(html, expectedText);
   },
 
-  testExtractTextContent_brAndBlock: function() {
+  testExtractTextContent_brAndBlock: () => {
     const html = 'Hello\n\n<br>\n<p>World</p>';
     const expectedText = 'Hello\n\nWorld';
     assertExtractedTextEquals(html, expectedText);
-  }
+  },
 });

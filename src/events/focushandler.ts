@@ -21,8 +21,6 @@ goog.require('goog.events.BrowserEvent');
 goog.require('goog.events.EventTarget');
 goog.require('goog.userAgent');
 
-
-
 /**
  * This event handler allows you to catch focus events when descendants gain or
  * loses focus.
@@ -31,8 +29,7 @@ goog.require('goog.userAgent');
  * @extends {goog.events.EventTarget}
  * @final
  */
-goog.events.FocusHandler = function(element) {
-  'use strict';
+goog.events.FocusHandler = function (element) {
   goog.events.EventTarget.call(this);
 
   /**
@@ -52,19 +49,16 @@ goog.events.FocusHandler = function(element) {
    * @private
    * @type {goog.events.Key}
    */
-  this.listenKeyIn_ =
-      goog.events.listen(this.element_, typeIn, this, !goog.userAgent.IE);
+  this.listenKeyIn_ = goog.events.listen(this.element_, typeIn, this, !goog.userAgent.IE);
 
   /**
    * Store the listen key so it easier to unlisten in dispose.
    * @private
    * @type {goog.events.Key}
    */
-  this.listenKeyOut_ =
-      goog.events.listen(this.element_, typeOut, this, !goog.userAgent.IE);
+  this.listenKeyOut_ = goog.events.listen(this.element_, typeOut, this, !goog.userAgent.IE);
 };
 goog.inherits(goog.events.FocusHandler, goog.events.EventTarget);
-
 
 /**
  * Enum type for the events fired by the focus handler
@@ -72,28 +66,25 @@ goog.inherits(goog.events.FocusHandler, goog.events.EventTarget);
  */
 goog.events.FocusHandler.EventType = {
   FOCUSIN: 'focusin',
-  FOCUSOUT: 'focusout'
+  FOCUSOUT: 'focusout',
 };
-
 
 /**
  * This handles the underlying events and dispatches a new event.
  * @param {goog.events.BrowserEvent} e  The underlying browser event.
  */
-goog.events.FocusHandler.prototype.handleEvent = function(e) {
-  'use strict';
+goog.events.FocusHandler.prototype.handleEvent = function (e) {
   var be = e.getBrowserEvent();
   var event = new goog.events.BrowserEvent(be);
-  event.type = e.type == 'focusin' || e.type == 'focus' ?
-      goog.events.FocusHandler.EventType.FOCUSIN :
-      goog.events.FocusHandler.EventType.FOCUSOUT;
+  event.type =
+    e.type == 'focusin' || e.type == 'focus'
+      ? goog.events.FocusHandler.EventType.FOCUSIN
+      : goog.events.FocusHandler.EventType.FOCUSOUT;
   this.dispatchEvent(event);
 };
 
-
 /** @override */
-goog.events.FocusHandler.prototype.disposeInternal = function() {
-  'use strict';
+goog.events.FocusHandler.prototype.disposeInternal = function () {
   goog.events.FocusHandler.superClass_.disposeInternal.call(this);
   goog.events.unlistenByKey(this.listenKeyIn_);
   goog.events.unlistenByKey(this.listenKeyOut_);

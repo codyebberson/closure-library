@@ -46,13 +46,13 @@ class Long {
      * @const {number}
      * @private
      */
-    this.low_ = low | 0;  // force into 32 signed bits.
+    this.low_ = low | 0; // force into 32 signed bits.
 
     /**
      * @const {number}
      * @private
      */
-    this.high_ = high | 0;  // force into 32 signed bits.
+    this.high_ = high | 0; // force into 32 signed bits.
   }
 
   /** @return {number} The value, assuming it is a 32-bit integer. */
@@ -74,11 +74,13 @@ class Long {
   isSafeInteger() {
     var top11Bits = this.high_ >> 21;
     // If top11Bits are all 0s, then the number is between [0, 2^53-1]
-    return top11Bits == 0
-        // If top11Bits are all 1s, then the number is between [-1, -2^53]
-        || (top11Bits == -1
-            // and exclude -2^53
-            && !(this.low_ == 0 && this.high_ == (0xffe00000 | 0)));
+    return (
+      top11Bits == 0 ||
+      // If top11Bits are all 1s, then the number is between [-1, -2^53]
+      (top11Bits == -1 &&
+        // and exclude -2^53
+        !(this.low_ == 0 && this.high_ == (0xffe00000 | 0)))
+    );
   }
 
   /**
@@ -98,7 +100,7 @@ class Long {
       var asNumber = this.toNumber();
       // Shortcutting for radix 10 (common case) to avoid boxing via toString:
       // https://jsperf.com/tostring-vs-vs-if
-      return radix == 10 ? ('' + asNumber) : asNumber.toString(radix);
+      return radix == 10 ? '' + asNumber : asNumber.toString(radix);
     }
 
     // We need to split 64bit integer into: `a * radix**safeDigits + b` where
@@ -112,12 +114,11 @@ class Long {
     var safeDigits = 14 - (radix >> 2);
 
     var radixPowSafeDigits = Math.pow(radix, safeDigits);
-    var radixToPower =
-        Long.fromBits(radixPowSafeDigits, radixPowSafeDigits / TWO_PWR_32_DBL_);
+    var radixToPower = Long.fromBits(radixPowSafeDigits, radixPowSafeDigits / TWO_PWR_32_DBL_);
 
     var remDiv = this.div(radixToPower);
     var val = Math.abs(this.subtract(remDiv.multiply(radixToPower)).toNumber());
-    var digits = radix == 10 ? ('' + val) : val.toString(radix);
+    var digits = radix == 10 ? '' + val : val.toString(radix);
 
     if (digits.length < safeDigits) {
       // Up to 13 leading 0s we might need to insert as the greatest safeDigits
@@ -228,7 +229,7 @@ class Long {
    */
   equals(other) {
     // Compare low parts first as there is higher chance they are different.
-    return (this.low_ == other.low_) && (this.high_ == other.high_);
+    return this.low_ == other.low_ && this.high_ == other.high_;
   }
 
   /**
@@ -304,27 +305,30 @@ class Long {
     // Divide each number into 4 chunks of 16 bits, and then sum the chunks.
 
     var a48 = this.high_ >>> 16;
-    var a32 = this.high_ & 0xFFFF;
+    var a32 = this.high_ & 0xffff;
     var a16 = this.low_ >>> 16;
-    var a00 = this.low_ & 0xFFFF;
+    var a00 = this.low_ & 0xffff;
 
     var b48 = other.high_ >>> 16;
-    var b32 = other.high_ & 0xFFFF;
+    var b32 = other.high_ & 0xffff;
     var b16 = other.low_ >>> 16;
-    var b00 = other.low_ & 0xFFFF;
+    var b00 = other.low_ & 0xffff;
 
-    var c48 = 0, c32 = 0, c16 = 0, c00 = 0;
+    var c48 = 0,
+      c32 = 0,
+      c16 = 0,
+      c00 = 0;
     c00 += a00 + b00;
     c16 += c00 >>> 16;
-    c00 &= 0xFFFF;
+    c00 &= 0xffff;
     c16 += a16 + b16;
     c32 += c16 >>> 16;
-    c16 &= 0xFFFF;
+    c16 &= 0xffff;
     c32 += a32 + b32;
     c48 += c32 >>> 16;
-    c32 &= 0xFFFF;
+    c32 &= 0xffff;
     c48 += a48 + b48;
-    c48 &= 0xFFFF;
+    c48 &= 0xffff;
     return Long.fromBits((c16 << 16) | c00, (c48 << 16) | c32);
   }
 
@@ -354,36 +358,39 @@ class Long {
     // We can skip products that would overflow.
 
     var a48 = this.high_ >>> 16;
-    var a32 = this.high_ & 0xFFFF;
+    var a32 = this.high_ & 0xffff;
     var a16 = this.low_ >>> 16;
-    var a00 = this.low_ & 0xFFFF;
+    var a00 = this.low_ & 0xffff;
 
     var b48 = other.high_ >>> 16;
-    var b32 = other.high_ & 0xFFFF;
+    var b32 = other.high_ & 0xffff;
     var b16 = other.low_ >>> 16;
-    var b00 = other.low_ & 0xFFFF;
+    var b00 = other.low_ & 0xffff;
 
-    var c48 = 0, c32 = 0, c16 = 0, c00 = 0;
+    var c48 = 0,
+      c32 = 0,
+      c16 = 0,
+      c00 = 0;
     c00 += a00 * b00;
     c16 += c00 >>> 16;
-    c00 &= 0xFFFF;
+    c00 &= 0xffff;
     c16 += a16 * b00;
     c32 += c16 >>> 16;
-    c16 &= 0xFFFF;
+    c16 &= 0xffff;
     c16 += a00 * b16;
     c32 += c16 >>> 16;
-    c16 &= 0xFFFF;
+    c16 &= 0xffff;
     c32 += a32 * b00;
     c48 += c32 >>> 16;
-    c32 &= 0xFFFF;
+    c32 &= 0xffff;
     c32 += a16 * b16;
     c48 += c32 >>> 16;
-    c32 &= 0xFFFF;
+    c32 &= 0xffff;
     c32 += a00 * b32;
     c48 += c32 >>> 16;
-    c32 &= 0xFFFF;
+    c32 &= 0xffff;
     c48 += a48 * b00 + a32 * b16 + a16 * b32 + a00 * b48;
-    c48 &= 0xFFFF;
+    c48 &= 0xffff;
     return Long.fromBits((c16 << 16) | c00, (c48 << 16) | c32);
   }
 
@@ -399,7 +406,7 @@ class Long {
     if (this.isNegative()) {
       if (this.equals(Long.getMinValue())) {
         if (other.equals(Long.getOne()) || other.equals(Long.getNegOne())) {
-          return Long.getMinValue();  // recall -MIN_VALUE == MIN_VALUE
+          return Long.getMinValue(); // recall -MIN_VALUE == MIN_VALUE
         }
         if (other.equals(Long.getMinValue())) {
           return Long.getOne();
@@ -444,7 +451,7 @@ class Long {
       // We will tweak the approximate result by changing it in the 48-th digit
       // or the smallest non-fractional digit, whichever is larger.
       var log2 = Math.ceil(Math.log(approx) / Math.LN2);
-      var delta = (log2 <= 48) ? 1 : Math.pow(2, log2 - 48);
+      var delta = log2 <= 48 ? 1 : Math.pow(2, log2 - 48);
 
       // Decrease the approximation until it is smaller than the remainder. Note
       // that if it is too large, the product overflows and is negative.
@@ -522,8 +529,7 @@ class Long {
       var low = this.low_;
       if (numBits < 32) {
         var high = this.high_;
-        return Long.fromBits(
-            low << numBits, (high << numBits) | (low >>> (32 - numBits)));
+        return Long.fromBits(low << numBits, (high << numBits) | (low >>> (32 - numBits)));
       } else {
         return Long.fromBits(0, low << (numBits - 32));
       }
@@ -544,8 +550,7 @@ class Long {
       var high = this.high_;
       if (numBits < 32) {
         var low = this.low_;
-        return Long.fromBits(
-            (low >>> numBits) | (high << (32 - numBits)), high >> numBits);
+        return Long.fromBits((low >>> numBits) | (high << (32 - numBits)), high >> numBits);
       } else {
         return Long.fromBits(high >> (numBits - 32), high >= 0 ? 0 : -1);
       }
@@ -567,8 +572,7 @@ class Long {
       var high = this.high_;
       if (numBits < 32) {
         var low = this.low_;
-        return Long.fromBits(
-            (low >>> numBits) | (high << (32 - numBits)), high >>> numBits);
+        return Long.fromBits((low >>> numBits) | (high << (32 - numBits)), high >>> numBits);
       } else if (numBits == 32) {
         return Long.fromBits(high, 0);
       } else {
@@ -642,11 +646,9 @@ class Long {
 
     // We can avoid very expensive multiply based code path for some common
     // cases.
-    var numberValue = parseInt(str, opt_radix || 10);
+    var numberValue = Number.parseInt(str, opt_radix || 10);
     if (numberValue <= MAX_SAFE_INTEGER_) {
-      return new Long(
-          (numberValue % TWO_PWR_32_DBL_) | 0,
-          (numberValue / TWO_PWR_32_DBL_) | 0);
+      return new Long((numberValue % TWO_PWR_32_DBL_) | 0, (numberValue / TWO_PWR_32_DBL_) | 0);
     }
 
     if (str.length == 0) {
@@ -668,7 +670,7 @@ class Long {
     var result = Long.getZero();
     for (var i = 0; i < str.length; i += 8) {
       var size = Math.min(8, str.length - i);
-      var value = parseInt(str.substring(i, i + size), radix);
+      var value = Number.parseInt(str.substring(i, i + size), radix);
       if (size < 8) {
         var power = Long.fromNumber(Math.pow(radix, size));
         result = result.multiply(power).add(Long.fromNumber(value));
@@ -694,8 +696,8 @@ class Long {
       throw new Error('radix out of range: ' + radix);
     }
 
-    var extremeValue = (str.charAt(0) == '-') ? MIN_VALUE_FOR_RADIX_[radix] :
-                                                MAX_VALUE_FOR_RADIX_[radix];
+    var extremeValue =
+      str.charAt(0) == '-' ? MIN_VALUE_FOR_RADIX_[radix] : MAX_VALUE_FOR_RADIX_[radix];
 
     if (str.length < extremeValue.length) {
       return true;
@@ -760,14 +762,12 @@ exports = Long;
 // NOTE: Common constant values ZERO, ONE, NEG_ONE, etc. are defined below the
 // from* methods on which they depend.
 
-
 /**
  * A cache of the Long representations of small integer values.
  * @type {!Object<number, !Long>}
  * @private @const
  */
 const IntCache_ = {};
-
 
 /**
  * Returns a cached long number representing the given (32-bit) integer value.
@@ -776,9 +776,7 @@ const IntCache_ = {};
  * @private
  */
 function getCachedIntValue_(value) {
-  return reflect.cache(IntCache_, value, function(val) {
-    return new Long(val, val < 0 ? -1 : 0);
-  });
+  return reflect.cache(IntCache_, value, (val) => new Long(val, val < 0 ? -1 : 0));
 }
 
 /**
@@ -787,45 +785,45 @@ function getCachedIntValue_(value) {
  * @private @const {!Array<string>}
  */
 const MAX_VALUE_FOR_RADIX_ = [
-  '', '',  // unused
+  '',
+  '', // unused
   '111111111111111111111111111111111111111111111111111111111111111',
   // base 2
-  '2021110011022210012102010021220101220221',  // base 3
-  '13333333333333333333333333333333',          // base 4
-  '1104332401304422434310311212',              // base 5
-  '1540241003031030222122211',                 // base 6
-  '22341010611245052052300',                   // base 7
-  '777777777777777777777',                     // base 8
-  '67404283172107811827',                      // base 9
-  '9223372036854775807',                       // base 10
-  '1728002635214590697',                       // base 11
-  '41a792678515120367',                        // base 12
-  '10b269549075433c37',                        // base 13
-  '4340724c6c71dc7a7',                         // base 14
-  '160e2ad3246366807',                         // base 15
-  '7fffffffffffffff',                          // base 16
-  '33d3d8307b214008',                          // base 17
-  '16agh595df825fa7',                          // base 18
-  'ba643dci0ffeehh',                           // base 19
-  '5cbfjia3fh26ja7',                           // base 20
-  '2heiciiie82dh97',                           // base 21
-  '1adaibb21dckfa7',                           // base 22
-  'i6k448cf4192c2',                            // base 23
-  'acd772jnc9l0l7',                            // base 24
-  '64ie1focnn5g77',                            // base 25
-  '3igoecjbmca687',                            // base 26
-  '27c48l5b37oaop',                            // base 27
-  '1bk39f3ah3dmq7',                            // base 28
-  'q1se8f0m04isb',                             // base 29
-  'hajppbc1fc207',                             // base 30
-  'bm03i95hia437',                             // base 31
-  '7vvvvvvvvvvvv',                             // base 32
-  '5hg4ck9jd4u37',                             // base 33
-  '3tdtk1v8j6tpp',                             // base 34
-  '2pijmikexrxp7',                             // base 35
-  '1y2p0ij32e8e7'                              // base 36
+  '2021110011022210012102010021220101220221', // base 3
+  '13333333333333333333333333333333', // base 4
+  '1104332401304422434310311212', // base 5
+  '1540241003031030222122211', // base 6
+  '22341010611245052052300', // base 7
+  '777777777777777777777', // base 8
+  '67404283172107811827', // base 9
+  '9223372036854775807', // base 10
+  '1728002635214590697', // base 11
+  '41a792678515120367', // base 12
+  '10b269549075433c37', // base 13
+  '4340724c6c71dc7a7', // base 14
+  '160e2ad3246366807', // base 15
+  '7fffffffffffffff', // base 16
+  '33d3d8307b214008', // base 17
+  '16agh595df825fa7', // base 18
+  'ba643dci0ffeehh', // base 19
+  '5cbfjia3fh26ja7', // base 20
+  '2heiciiie82dh97', // base 21
+  '1adaibb21dckfa7', // base 22
+  'i6k448cf4192c2', // base 23
+  'acd772jnc9l0l7', // base 24
+  '64ie1focnn5g77', // base 25
+  '3igoecjbmca687', // base 26
+  '27c48l5b37oaop', // base 27
+  '1bk39f3ah3dmq7', // base 28
+  'q1se8f0m04isb', // base 29
+  'hajppbc1fc207', // base 30
+  'bm03i95hia437', // base 31
+  '7vvvvvvvvvvvv', // base 32
+  '5hg4ck9jd4u37', // base 33
+  '3tdtk1v8j6tpp', // base 34
+  '2pijmikexrxp7', // base 35
+  '1y2p0ij32e8e7', // base 36
 ];
-
 
 /**
  * The array of minimum values of a Long in string representation for a given
@@ -833,43 +831,44 @@ const MAX_VALUE_FOR_RADIX_ = [
  * @private @const {!Array<string>}
  */
 const MIN_VALUE_FOR_RADIX_ = [
-  '', '',  // unused
+  '',
+  '', // unused
   '-1000000000000000000000000000000000000000000000000000000000000000',
   // base 2
-  '-2021110011022210012102010021220101220222',  // base 3
-  '-20000000000000000000000000000000',          // base 4
-  '-1104332401304422434310311213',              // base 5
-  '-1540241003031030222122212',                 // base 6
-  '-22341010611245052052301',                   // base 7
-  '-1000000000000000000000',                    // base 8
-  '-67404283172107811828',                      // base 9
-  '-9223372036854775808',                       // base 10
-  '-1728002635214590698',                       // base 11
-  '-41a792678515120368',                        // base 12
-  '-10b269549075433c38',                        // base 13
-  '-4340724c6c71dc7a8',                         // base 14
-  '-160e2ad3246366808',                         // base 15
-  '-8000000000000000',                          // base 16
-  '-33d3d8307b214009',                          // base 17
-  '-16agh595df825fa8',                          // base 18
-  '-ba643dci0ffeehi',                           // base 19
-  '-5cbfjia3fh26ja8',                           // base 20
-  '-2heiciiie82dh98',                           // base 21
-  '-1adaibb21dckfa8',                           // base 22
-  '-i6k448cf4192c3',                            // base 23
-  '-acd772jnc9l0l8',                            // base 24
-  '-64ie1focnn5g78',                            // base 25
-  '-3igoecjbmca688',                            // base 26
-  '-27c48l5b37oaoq',                            // base 27
-  '-1bk39f3ah3dmq8',                            // base 28
-  '-q1se8f0m04isc',                             // base 29
-  '-hajppbc1fc208',                             // base 30
-  '-bm03i95hia438',                             // base 31
-  '-8000000000000',                             // base 32
-  '-5hg4ck9jd4u38',                             // base 33
-  '-3tdtk1v8j6tpq',                             // base 34
-  '-2pijmikexrxp8',                             // base 35
-  '-1y2p0ij32e8e8'                              // base 36
+  '-2021110011022210012102010021220101220222', // base 3
+  '-20000000000000000000000000000000', // base 4
+  '-1104332401304422434310311213', // base 5
+  '-1540241003031030222122212', // base 6
+  '-22341010611245052052301', // base 7
+  '-1000000000000000000000', // base 8
+  '-67404283172107811828', // base 9
+  '-9223372036854775808', // base 10
+  '-1728002635214590698', // base 11
+  '-41a792678515120368', // base 12
+  '-10b269549075433c38', // base 13
+  '-4340724c6c71dc7a8', // base 14
+  '-160e2ad3246366808', // base 15
+  '-8000000000000000', // base 16
+  '-33d3d8307b214009', // base 17
+  '-16agh595df825fa8', // base 18
+  '-ba643dci0ffeehi', // base 19
+  '-5cbfjia3fh26ja8', // base 20
+  '-2heiciiie82dh98', // base 21
+  '-1adaibb21dckfa8', // base 22
+  '-i6k448cf4192c3', // base 23
+  '-acd772jnc9l0l8', // base 24
+  '-64ie1focnn5g78', // base 25
+  '-3igoecjbmca688', // base 26
+  '-27c48l5b37oaoq', // base 27
+  '-1bk39f3ah3dmq8', // base 28
+  '-q1se8f0m04isc', // base 29
+  '-hajppbc1fc208', // base 30
+  '-bm03i95hia438', // base 31
+  '-8000000000000', // base 32
+  '-5hg4ck9jd4u38', // base 33
+  '-3tdtk1v8j6tpq', // base 34
+  '-2pijmikexrxp8', // base 35
+  '-1y2p0ij32e8e8', // base 36
 ];
 
 /**
@@ -891,19 +890,16 @@ const MAX_SAFE_INTEGER_ = 0x1fffffffffffff;
  */
 const TWO_PWR_32_DBL_ = 0x100000000;
 
-
 /**
  * @const {number}
  * @private
  */
 const TWO_PWR_63_DBL_ = 0x8000000000000000;
 
-
 /**
  * @private @const {!Long}
  */
 const ZERO_ = Long.fromBits(0, 0);
-
 
 /**
  * @private @const {!Long}
@@ -918,7 +914,7 @@ const NEG_ONE_ = Long.fromBits(-1, -1);
 /**
  * @private @const {!Long}
  */
-const MAX_VALUE_ = Long.fromBits(0xFFFFFFFF, 0x7FFFFFFF);
+const MAX_VALUE_ = Long.fromBits(0xffffffff, 0x7fffffff);
 
 /**
  * @private @const {!Long}

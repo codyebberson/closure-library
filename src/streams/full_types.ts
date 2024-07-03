@@ -98,7 +98,7 @@ class ReadableStream {
    * @param {{preventCancel: boolean}=} options
    * @return {!AsyncIterator<T>}
    */
-  getIterator({preventCancel = false} = {}) {}
+  getIterator({ preventCancel = false } = {}) {}
 
   /**
    * Returns an Array with two elements, both new ReadableStreams that contain
@@ -114,7 +114,7 @@ class ReadableStream {
    * @param {{preventCancel: boolean}=} options
    * @return {!AsyncIterator<T>}
    */
-  [Symbol.asyncIterator]({preventCancel = false} = {}) {}
+  [Symbol.asyncIterator]({ preventCancel = false } = {}) {}
 }
 
 /**

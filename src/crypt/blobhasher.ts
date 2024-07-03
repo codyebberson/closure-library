@@ -27,8 +27,6 @@ goog.require('goog.fs');
 goog.require('goog.log');
 goog.requireType('goog.crypt.Hash');
 
-
-
 /**
  * Construct the hash computer.
  *
@@ -39,8 +37,7 @@ goog.requireType('goog.crypt.Hash');
  * @extends {goog.events.EventTarget}
  * @final
  */
-goog.crypt.BlobHasher = function(hashFn, opt_blockSize) {
-  'use strict';
+goog.crypt.BlobHasher = function (hashFn, opt_blockSize) {
   goog.crypt.BlobHasher.base(this, 'constructor');
 
   /**
@@ -76,7 +73,7 @@ goog.crypt.BlobHasher = function(hashFn, opt_blockSize) {
    * @type {number}
    * @private
    */
-  this.hashingLimit_ = Infinity;
+  this.hashingLimit_ = Number.POSITIVE_INFINITY;
 
   /**
    * Processing block size.
@@ -101,7 +98,6 @@ goog.crypt.BlobHasher = function(hashFn, opt_blockSize) {
 };
 goog.inherits(goog.crypt.BlobHasher, goog.events.EventTarget);
 
-
 /**
  * Event names for hash computation events
  * @enum {string}
@@ -112,16 +108,14 @@ goog.crypt.BlobHasher.EventType = {
   THROTTLED: 'throttled',
   COMPLETE: 'complete',
   ABORT: 'abort',
-  ERROR: 'error'
+  ERROR: 'error',
 };
-
 
 /**
  * Start the hash computation.
  * @param {!Blob} blob The blob of data to compute the hash for.
  */
-goog.crypt.BlobHasher.prototype.hash = function(blob) {
-  'use strict';
+goog.crypt.BlobHasher.prototype.hash = function (blob) {
   this.abort();
   this.hashFn_.reset();
   this.blob_ = blob;
@@ -131,7 +125,6 @@ goog.crypt.BlobHasher.prototype.hash = function(blob) {
 
   this.processNextBlock_();
 };
-
 
 /**
  * Sets the maximum number of bytes to hash or Infinity for no limit. Can be
@@ -144,8 +137,7 @@ goog.crypt.BlobHasher.prototype.hash = function(blob) {
  *     Should be a non-negative integer or Infinity for no limit. Negative
  *     values are not allowed.
  */
-goog.crypt.BlobHasher.prototype.setHashingLimit = function(byteOffset) {
-  'use strict';
+goog.crypt.BlobHasher.prototype.setHashingLimit = function (byteOffset) {
   goog.asserts.assert(byteOffset >= 0, 'Hashing limit must be non-negative.');
   this.hashingLimit_ = byteOffset;
 
@@ -156,12 +148,10 @@ goog.crypt.BlobHasher.prototype.setHashingLimit = function(byteOffset) {
   }
 };
 
-
 /**
  * Abort hash computation.
  */
-goog.crypt.BlobHasher.prototype.abort = function() {
-  'use strict';
+goog.crypt.BlobHasher.prototype.abort = function () {
   if (this.fileReader_) {
     this.fileReader_.abort();
     this.fileReader_ = null;
@@ -173,32 +163,26 @@ goog.crypt.BlobHasher.prototype.abort = function() {
   }
 };
 
-
 /**
  * @return {number} Number of bytes processed so far.
  */
-goog.crypt.BlobHasher.prototype.getBytesProcessed = function() {
-  'use strict';
+goog.crypt.BlobHasher.prototype.getBytesProcessed = function () {
   return this.bytesProcessed_;
 };
-
 
 /**
  * @return {Array<number>} The computed hash value or null if not ready.
  */
-goog.crypt.BlobHasher.prototype.getHash = function() {
-  'use strict';
+goog.crypt.BlobHasher.prototype.getHash = function () {
   return this.hashVal_;
 };
-
 
 /**
  * Helper function setting up the processing for the next block, or finalizing
  * the computation if all blocks were processed.
  * @private
  */
-goog.crypt.BlobHasher.prototype.processNextBlock_ = function() {
-  'use strict';
+goog.crypt.BlobHasher.prototype.processNextBlock_ = function () {
   goog.asserts.assert(this.blob_, 'A hash computation must be in progress.');
 
   if (this.bytesProcessed_ < this.blob_.size) {
@@ -217,8 +201,7 @@ goog.crypt.BlobHasher.prototype.processNextBlock_ = function() {
 
     var endOffset = Math.min(this.hashingLimit_, this.blob_.size);
     var size = Math.min(endOffset - this.bytesProcessed_, this.blockSize_);
-    var chunk = goog.fs.sliceBlob(
-        this.blob_, this.bytesProcessed_, this.bytesProcessed_ + size);
+    var chunk = goog.fs.sliceBlob(this.blob_, this.bytesProcessed_, this.bytesProcessed_ + size);
     if (!chunk || chunk.size != size) {
       goog.log.error(this.logger_, 'Failed slicing the blob');
       this.onError_();
@@ -240,22 +223,21 @@ goog.crypt.BlobHasher.prototype.processNextBlock_ = function() {
   }
 };
 
-
 /**
  * Handle processing block loaded.
  * @private
  */
-goog.crypt.BlobHasher.prototype.onLoad_ = function() {
-  'use strict';
+goog.crypt.BlobHasher.prototype.onLoad_ = function () {
   goog.log.info(this.logger_, 'Successfully loaded a chunk');
 
   var array = null;
-  if (this.fileReader_.result instanceof Array ||
-      typeof this.fileReader_.result === 'string') {
+  if (this.fileReader_.result instanceof Array || typeof this.fileReader_.result === 'string') {
     array = this.fileReader_.result;
   } else if (
-      goog.global['ArrayBuffer'] && goog.global['Uint8Array'] &&
-      this.fileReader_.result instanceof ArrayBuffer) {
+    goog.global['ArrayBuffer'] &&
+    goog.global['Uint8Array'] &&
+    this.fileReader_.result instanceof ArrayBuffer
+  ) {
     array = new Uint8Array(this.fileReader_.result);
   }
   if (!array) {
@@ -272,13 +254,11 @@ goog.crypt.BlobHasher.prototype.onLoad_ = function() {
   this.processNextBlock_();
 };
 
-
 /**
  * Handles error.
  * @private
  */
-goog.crypt.BlobHasher.prototype.onError_ = function() {
-  'use strict';
+goog.crypt.BlobHasher.prototype.onError_ = function () {
   this.fileReader_ = null;
   this.blob_ = null;
   this.dispatchEvent(goog.crypt.BlobHasher.EventType.ERROR);

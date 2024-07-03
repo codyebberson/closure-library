@@ -7,7 +7,6 @@
 /** @fileoverview Unit tests for SafeStyle and its builders. */
 
 goog.module('goog.html.safeStyleTest');
-goog.setTestOnly();
 
 const Const = goog.require('goog.string.Const');
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
@@ -34,9 +33,8 @@ testSuite({
   },
 
   testConstructor_throwsOnBadToken() {
-    assertThrows(() => new (/** @type {?} */ (SafeStyle))(''));
-    assertThrows(
-        () => new (/** @type {?} */ (SafeStyle.EMPTY)).constructor(''));
+    assertThrows(() => new /** @type {?} */ SafeStyle(''));
+    assertThrows(() => new /** @type {?} */ SafeStyle.EMPTY.constructor(''));
   },
 
   testSafeStyle() {
@@ -54,8 +52,7 @@ testSuite({
   /** @suppress {checkTypes} */
   testUnwrap() {
     const privateFieldName = 'privateDoNotAccessOrElseSafeStyleWrappedValue_';
-    const propNames =
-        googObject.getKeys(SafeStyle.fromConstant(Const.from('')));
+    const propNames = googObject.getKeys(SafeStyle.fromConstant(Const.from('')));
     assertContains(privateFieldName, propNames);
     const evil = {};
     evil[privateFieldName] = 'width: expression(evil);';
@@ -87,9 +84,10 @@ testSuite({
   },
 
   testCreate() {
-    assertCreateEquals(
-        'background:url(i.png);margin:0;',
-        {'background': Const.from('url(i.png)'), 'margin': '0'});
+    assertCreateEquals('background:url(i.png);margin:0;', {
+      background: Const.from('url(i.png)'),
+      margin: '0',
+    });
   },
 
   testCreate_allowsEmpty() {
@@ -97,236 +95,250 @@ testSuite({
   },
 
   testCreate_skipsNull() {
-    const style = SafeStyle.create({'background': null});
+    const style = SafeStyle.create({ background: null });
     assertEquals(SafeStyle.EMPTY, style);
   },
 
   testCreate_allowsLengths() {
     assertCreateEquals(
-        'padding:0 1px .2% 3.4em;',  // expected
-        {'padding': '0 1px .2% 3.4em'});
+      'padding:0 1px .2% 3.4em;', // expected
+      { padding: '0 1px .2% 3.4em' }
+    );
   },
 
   testCreate_allowsRgb() {
     assertCreateEquals(
-        'color:rgb(10,20,30);',  // expected
-        {'color': 'rgb(10,20,30)'});
+      'color:rgb(10,20,30);', // expected
+      { color: 'rgb(10,20,30)' }
+    );
     assertCreateEquals(
-        'color:rgb(10%, 20%, 30%);',  // expected
-        {'color': 'rgb(10%, 20%, 30%)'});
+      'color:rgb(10%, 20%, 30%);', // expected
+      { color: 'rgb(10%, 20%, 30%)' }
+    );
     assertCreateEquals(
-        'background:0 5px rgb(10,20,30);',  // expected
-        {'background': '0 5px rgb(10,20,30)'});
-    assertCreateEquals(
-        'background:rgb(10,0,0), rgb(0,0,30);',
-        {'background': 'rgb(10,0,0), rgb(0,0,30)'});
+      'background:0 5px rgb(10,20,30);', // expected
+      { background: '0 5px rgb(10,20,30)' }
+    );
+    assertCreateEquals('background:rgb(10,0,0), rgb(0,0,30);', {
+      background: 'rgb(10,0,0), rgb(0,0,30)',
+    });
   },
 
   testCreate_allowsRgba() {
     assertCreateEquals(
-        'color:rgba(10,20,30,0.1);',  // expected
-        {'color': 'rgba(10,20,30,0.1)'});
+      'color:rgba(10,20,30,0.1);', // expected
+      { color: 'rgba(10,20,30,0.1)' }
+    );
     assertCreateEquals(
-        'color:rgba(10%, 20%, 30%, .5);',  // expected
-        {'color': 'rgba(10%, 20%, 30%, .5)'});
+      'color:rgba(10%, 20%, 30%, .5);', // expected
+      { color: 'rgba(10%, 20%, 30%, .5)' }
+    );
   },
 
   testCreate_allowsCalc() {
     assertCreateEquals(
-        'height:calc(100% * 0.8 - 20px + 3vh);',  // expected
-        {'height': 'calc(100% * 0.8 - 20px + 3vh)'});
+      'height:calc(100% * 0.8 - 20px + 3vh);', // expected
+      { height: 'calc(100% * 0.8 - 20px + 3vh)' }
+    );
   },
 
   testCreate_allowsRepeat() {
-    assertCreateEquals(
-        'grid-template-columns:repeat(3, [start] 100px [end]);',
-        {'grid-template-columns': 'repeat(3, [start] 100px [end])'});
+    assertCreateEquals('grid-template-columns:repeat(3, [start] 100px [end]);', {
+      'grid-template-columns': 'repeat(3, [start] 100px [end])',
+    });
   },
 
   testCreate_allowsSteps() {
-    assertCreateEquals(
-        'animation-timing-function:steps(2, start);',
-        {'animation-timing-function': 'steps(2, start)'});
+    assertCreateEquals('animation-timing-function:steps(2, start);', {
+      'animation-timing-function': 'steps(2, start)',
+    });
   },
 
   testCreate_allowsCubicBezier() {
-    assertCreateEquals(
-        'transition-timing-function:cubic-bezier(0.26, 0.86, 0.44, 0.95);',
-        {'transition-timing-function': 'cubic-bezier(0.26, 0.86, 0.44, 0.95)'});
+    assertCreateEquals('transition-timing-function:cubic-bezier(0.26, 0.86, 0.44, 0.95);', {
+      'transition-timing-function': 'cubic-bezier(0.26, 0.86, 0.44, 0.95)',
+    });
   },
 
   testCreate_allowsMinmax() {
-    assertCreateEquals(
-        'grid-template-columns:minmax(max-content, 50px) 20px;',
-        {'grid-template-columns': 'minmax(max-content, 50px) 20px'});
+    assertCreateEquals('grid-template-columns:minmax(max-content, 50px) 20px;', {
+      'grid-template-columns': 'minmax(max-content, 50px) 20px',
+    });
   },
 
   testCreate_allowsFitContent() {
-    assertCreateEquals(
-        'grid-template-columns:fit-content(50px) 20px;',
-        {'grid-template-columns': 'fit-content(50px) 20px'});
+    assertCreateEquals('grid-template-columns:fit-content(50px) 20px;', {
+      'grid-template-columns': 'fit-content(50px) 20px',
+    });
   },
 
   testCreate_allowsScale() {
     assertCreateEquals(
-        'transform:scale(.5, 2);',  // expected
-        {'transform': 'scale(.5, 2)'});
+      'transform:scale(.5, 2);', // expected
+      { transform: 'scale(.5, 2)' }
+    );
   },
 
   testCreate_allowsRotate() {
     assertCreateEquals(
-        'transform:rotate(45deg);',  // expected
-        {'transform': 'rotate(45deg)'});
+      'transform:rotate(45deg);', // expected
+      { transform: 'rotate(45deg)' }
+    );
   },
 
   testCreate_allowsTranslate() {
     assertCreateEquals(
-        'transform:translate(10px);',  // expected
-        {'transform': 'translate(10px)'});
+      'transform:translate(10px);', // expected
+      { transform: 'translate(10px)' }
+    );
     assertCreateEquals(
-        'transform:translateX(5px);',  // expected
-        {'transform': 'translateX(5px)'});
+      'transform:translateX(5px);', // expected
+      { transform: 'translateX(5px)' }
+    );
   },
 
   testCreate_allowsVar() {
     assertCreateEquals(
-        'color:var(--xyz);',  // expected
-        {'color': 'var(--xyz)'});
+      'color:var(--xyz);', // expected
+      { color: 'var(--xyz)' }
+    );
     assertCreateEquals(
-        'color:var(--xyz, black);',  // expected
-        {'color': 'var(--xyz, black)'});
+      'color:var(--xyz, black);', // expected
+      { color: 'var(--xyz, black)' }
+    );
   },
 
   testCreate_allowsLinearGradient() {
-    assertCreateEquals(
-        'background:linear-gradient(red, blue);',
-        {'background': 'linear-gradient(red, blue)'});
-    assertCreateEquals(
-        'background:linear-gradient(rgb(10,0,0), rgb(0,0,30));',
-        {'background': 'linear-gradient(rgb(10,0,0), rgb(0,0,30))'});
-    assertCreateEquals(
-        'background:linear-gradient(#333, #eee);',
-        {'background': 'linear-gradient(#333, #eee)'});
-    assertCreateEquals(
-        'background:linear-gradient(#C0C0C0, #FF0000);',
-        {'background': 'linear-gradient(#C0C0C0, #FF0000)'});
+    assertCreateEquals('background:linear-gradient(red, blue);', {
+      background: 'linear-gradient(red, blue)',
+    });
+    assertCreateEquals('background:linear-gradient(rgb(10,0,0), rgb(0,0,30));', {
+      background: 'linear-gradient(rgb(10,0,0), rgb(0,0,30))',
+    });
+    assertCreateEquals('background:linear-gradient(#333, #eee);', {
+      background: 'linear-gradient(#333, #eee)',
+    });
+    assertCreateEquals('background:linear-gradient(#C0C0C0, #FF0000);', {
+      background: 'linear-gradient(#C0C0C0, #FF0000)',
+    });
   },
 
   testCreate_allowsRadialGradient() {
-    assertCreateEquals(
-        'background:radial-gradient(red, blue);',
-        {'background': 'radial-gradient(red, blue)'});
-    assertCreateEquals(
-        'background:radial-gradient(rgb(10,0,0), rgb(0,0,30));',
-        {'background': 'radial-gradient(rgb(10,0,0), rgb(0,0,30))'});
-    assertCreateEquals(
-        'background:radial-gradient(#333, #eee);',
-        {'background': 'radial-gradient(#333, #eee)'});
-    assertCreateEquals(
-        'background:radial-gradient(#C0C0C0, #FF0000);',
-        {'background': 'radial-gradient(#C0C0C0, #FF0000)'});
+    assertCreateEquals('background:radial-gradient(red, blue);', {
+      background: 'radial-gradient(red, blue)',
+    });
+    assertCreateEquals('background:radial-gradient(rgb(10,0,0), rgb(0,0,30));', {
+      background: 'radial-gradient(rgb(10,0,0), rgb(0,0,30))',
+    });
+    assertCreateEquals('background:radial-gradient(#333, #eee);', {
+      background: 'radial-gradient(#333, #eee)',
+    });
+    assertCreateEquals('background:radial-gradient(#C0C0C0, #FF0000);', {
+      background: 'radial-gradient(#C0C0C0, #FF0000)',
+    });
   },
 
   testCreate_allowsSafeUrl() {
     assertCreateEquals('background:url("http://example.com");', {
-      'background': SafeUrl.fromConstant(Const.from('http://example.com')),
+      background: SafeUrl.fromConstant(Const.from('http://example.com')),
     });
   },
 
   testCreate_allowsSafeUrlWithSpecialCharacters() {
     assertCreateEquals('background:url("http://example.com/\\"");', {
-      'background': SafeUrl.fromConstant(Const.from('http://example.com/"')),
+      background: SafeUrl.fromConstant(Const.from('http://example.com/"')),
     });
     assertCreateEquals('background:url("http://example.com/%3c");', {
-      'background': SafeUrl.fromConstant(Const.from('http://example.com/<')),
+      background: SafeUrl.fromConstant(Const.from('http://example.com/<')),
     });
     assertCreateEquals('background:url("http://example.com/;");', {
-      'background': SafeUrl.fromConstant(Const.from('http://example.com/;')),
+      background: SafeUrl.fromConstant(Const.from('http://example.com/;')),
     });
   },
 
   testCreate_allowsArray() {
     const url = SafeUrl.fromConstant(Const.from('http://example.com'));
-    assertCreateEquals(
-        'background:red url("http://example.com") repeat-y;',
-        {'background': ['red', url, 'repeat-y']});
+    assertCreateEquals('background:red url("http://example.com") repeat-y;', {
+      background: ['red', url, 'repeat-y'],
+    });
   },
 
   testCreate_allowsUrl() {
+    assertCreateEquals('background:url(http://example.com);', {
+      background: 'url(http://example.com)',
+    });
+    assertCreateEquals('background:url("http://example.com");', {
+      background: 'url("http://example.com")',
+    });
+    assertCreateEquals("background:url( 'http://example.com' );", {
+      background: "url( 'http://example.com' )",
+    });
+    assertCreateEquals('background:url(http://example.com) red;', {
+      background: 'url(http://example.com) red',
+    });
+    assertCreateEquals('background:url(' + SafeUrl.INNOCUOUS_STRING + ');', {
+      background: 'url(javascript:alert)',
+    });
     assertCreateEquals(
-        'background:url(http://example.com);',
-        {'background': 'url(http://example.com)'});
+      'background:url(")");', // Expected.
+      { background: 'url(")")' }
+    );
     assertCreateEquals(
-        'background:url("http://example.com");',
-        {'background': 'url("http://example.com")'});
-    assertCreateEquals(
-        'background:url( \'http://example.com\' );',
-        {'background': 'url( \'http://example.com\' )'});
-    assertCreateEquals(
-        'background:url(http://example.com) red;',
-        {'background': 'url(http://example.com) red'});
-    assertCreateEquals(
-        'background:url(' + SafeUrl.INNOCUOUS_STRING + ');',
-        {'background': 'url(javascript:alert)'});
-    assertCreateEquals(
-        'background:url(")");',  // Expected.
-        {'background': 'url(")")'});
-    assertCreateEquals(
-        'background:url(" ");',  // Expected.
-        {'background': 'url(" ")'});
+      'background:url(" ");', // Expected.
+      { background: 'url(" ")' }
+    );
     assertThrows(() => {
-      SafeStyle.create({'background': 'url(\'http://example.com\'"")'});
+      SafeStyle.create({ background: 'url(\'http://example.com\'"")' });
     });
     assertThrows(() => {
-      SafeStyle.create({'background': 'url("\\\\")'});
+      SafeStyle.create({ background: 'url("\\\\")' });
     });
     assertThrows(() => {
-      SafeStyle.create({'background': 'url(a""b)'});
+      SafeStyle.create({ background: 'url(a""b)' });
     });
   },
 
   testCreate_throwsOnForbiddenCharacters() {
     assertThrows(() => {
-      SafeStyle.create({'<': '0'});
+      SafeStyle.create({ '<': '0' });
     });
   },
 
   testCreate_allowsNestedFunctions() {
-    assertCreateEquals(
-        'grid-template-columns:repeat(3, minmax(100px, 200px));',
-        {'grid-template-columns': 'repeat(3, minmax(100px, 200px))'});
+    assertCreateEquals('grid-template-columns:repeat(3, minmax(100px, 200px));', {
+      'grid-template-columns': 'repeat(3, minmax(100px, 200px))',
+    });
     assertThrows(() => {
       SafeStyle.create({
-        'grid-template-columns':
-            'repeat(3, minmax(100px, minmax(200px, 300px)))',
+        'grid-template-columns': 'repeat(3, minmax(100px, minmax(200px, 300px)))',
       });
     });
   },
 
   testCreate_disallowsComments() {
     assertThrows(() => {
-      SafeStyle.create({'color': 'rgb(/*)'});
+      SafeStyle.create({ color: 'rgb(/*)' });
     });
   },
 
   testCreate_allowBalancedSquareBrackets() {
-    assertCreateEquals(
-        'grid-template-columns:[trackName] 20px [other_track-name];',
-        {'grid-template-columns': '[trackName] 20px [other_track-name]'});
-    assertThrows(() => {
-      SafeStyle.create({'grid-template-columns': '20px ["trackName"]'});
+    assertCreateEquals('grid-template-columns:[trackName] 20px [other_track-name];', {
+      'grid-template-columns': '[trackName] 20px [other_track-name]',
     });
     assertThrows(() => {
-      SafeStyle.create({'grid-template-columns': '20px [tra[ckName]'});
+      SafeStyle.create({ 'grid-template-columns': '20px ["trackName"]' });
     });
     assertThrows(() => {
-      SafeStyle.create({'grid-template-columns': '20px [tra'});
+      SafeStyle.create({ 'grid-template-columns': '20px [tra[ckName]' });
     });
     assertThrows(() => {
-      SafeStyle.create({'grid-template-columns': '20px [tra ckName]'});
+      SafeStyle.create({ 'grid-template-columns': '20px [tra' });
     });
     assertThrows(() => {
-      SafeStyle.create({'grid-template-columns': '20px [trackName] 20px]'});
+      SafeStyle.create({ 'grid-template-columns': '20px [tra ckName]' });
+    });
+    assertThrows(() => {
+      SafeStyle.create({ 'grid-template-columns': '20px [trackName] 20px]' });
     });
   },
 
@@ -342,7 +354,7 @@ testSuite({
       '#f00',
       'red !important',
       '"Times New Roman"',
-      '\'Times New Roman\'',
+      "'Times New Roman'",
       '"Bold \'nuff"',
       '"O\'Connor\'s Revenge"',
       '20% / 50%',
@@ -351,21 +363,16 @@ testSuite({
     for (let i = 0; i < valids.length; i++) {
       const value = valids[i];
       assertCreateEquals(
-          `background:${value};`,  // expected
-          {'background': value});
+        `background:${value};`, // expected
+        { background: value }
+      );
     }
 
-    const invalids = [
-      '',
-      'expression(alert(1))',
-      '"',
-      '"\'"\'',
-      Const.from('red;'),
-    ];
+    const invalids = ['', 'expression(alert(1))', '"', '"\'"\'', Const.from('red;')];
     for (let i = 0; i < invalids.length; i++) {
       const value = invalids[i];
       assertThrows(() => {
-        SafeStyle.create({'background': value});
+        SafeStyle.create({ background: value });
       });
     }
   },
@@ -373,15 +380,16 @@ testSuite({
   /** @suppress {checkTypes} suppression added to enable type checking */
   testCreate_withMonkeypatchedObjectPrototype() {
     stubs.set(Object.prototype, 'foo', 'bar');
-    assertCreateEquals(
-        'background:url(i.png);margin:0;',
-        {'background': Const.from('url(i.png)'), 'margin': '0'});
+    assertCreateEquals('background:url(i.png);margin:0;', {
+      background: Const.from('url(i.png)'),
+      margin: '0',
+    });
   },
 
   testConcat() {
     const width = SafeStyle.fromConstant(Const.from('width: 1em;'));
-    const margin = SafeStyle.create({'margin': '0'});
-    const padding = SafeStyle.create({'padding': '0'});
+    const margin = SafeStyle.create({ margin: '0' });
+    const padding = SafeStyle.create({ padding: '0' });
 
     let style = SafeStyle.concat(width, margin);
     assertEquals('width: 1em;margin:0;', SafeStyle.unwrap(style));

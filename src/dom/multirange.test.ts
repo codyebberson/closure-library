@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dom.MultiRangeTest');
-goog.setTestOnly();
 
 const MultiRange = goog.require('goog.dom.MultiRange');
 const Range = goog.require('goog.dom.Range');

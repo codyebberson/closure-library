@@ -9,7 +9,6 @@
  */
 
 goog.module('goog.async.runNextTickTest');
-goog.setTestOnly();
 
 const MockClock = goog.require('goog.testing.MockClock');
 const dispose = goog.require('goog.dispose');

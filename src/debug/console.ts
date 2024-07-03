@@ -17,13 +17,11 @@ goog.require('goog.debug.TextFormatter');
 goog.require('goog.log');
 goog.requireType('goog.log.LogRecord');
 
-
 /**
  * Create and install a log handler that logs to window.console if available
  * @constructor
  */
-goog.debug.Console = function() {
-  'use strict';
+goog.debug.Console = function () {
   this.publishHandler_ = goog.bind(this.addLogRecord, this);
 
   /**
@@ -48,23 +46,19 @@ goog.debug.Console = function() {
   this.filteredLoggers_ = {};
 };
 
-
 /**
  * Returns the text formatter used by this console
  * @return {!goog.debug.TextFormatter} The text formatter.
  */
-goog.debug.Console.prototype.getFormatter = function() {
-  'use strict';
+goog.debug.Console.prototype.getFormatter = function () {
   return this.formatter_;
 };
-
 
 /**
  * Sets whether we are currently capturing logger output.
  * @param {boolean} capturing Whether to capture logger output.
  */
-goog.debug.Console.prototype.setCapturing = function(capturing) {
-  'use strict';
+goog.debug.Console.prototype.setCapturing = function (capturing) {
   if (capturing == this.isCapturing_) {
     return;
   }
@@ -79,13 +73,11 @@ goog.debug.Console.prototype.setCapturing = function(capturing) {
   this.isCapturing_ = capturing;
 };
 
-
 /**
  * Adds a log record.
  * @param {?goog.log.LogRecord} logRecord The log entry.
  */
-goog.debug.Console.prototype.addLogRecord = function(logRecord) {
-  'use strict';
+goog.debug.Console.prototype.addLogRecord = function (logRecord) {
   // Check to see if the log record is filtered or not.
   if (this.filteredLoggers_[logRecord.getLoggerName()]) {
     return;
@@ -121,40 +113,33 @@ goog.debug.Console.prototype.addLogRecord = function(logRecord) {
     // TODO(user): Make getLevel() non-null and update
     // getConsoleMethodName_ parameters.
     var logMethod = getConsoleMethodName_(logRecord.getLevel());
-    goog.debug.Console.logToConsole_(
-        console, logMethod, record, logRecord.getException());
+    goog.debug.Console.logToConsole_(console, logMethod, record, logRecord.getException());
   } else {
     this.logBuffer_ += record;
   }
 };
 
-
 /**
  * Adds a logger name to be filtered.
  * @param {string} loggerName the logger name to add.
  */
-goog.debug.Console.prototype.addFilter = function(loggerName) {
-  'use strict';
+goog.debug.Console.prototype.addFilter = function (loggerName) {
   this.filteredLoggers_[loggerName] = true;
 };
-
 
 /**
  * Removes a logger name to be filtered.
  * @param {string} loggerName the logger name to remove.
  */
-goog.debug.Console.prototype.removeFilter = function(loggerName) {
-  'use strict';
+goog.debug.Console.prototype.removeFilter = function (loggerName) {
   delete this.filteredLoggers_[loggerName];
 };
-
 
 /**
  * Global console logger instance
  * @type {?goog.debug.Console}
  */
 goog.debug.Console.instance = null;
-
 
 /**
  * The console to which to log.  This is a property so it can be mocked out in
@@ -165,42 +150,34 @@ goog.debug.Console.instance = null;
  */
 goog.debug.Console.console_ = goog.global['console'];
 
-
 /**
  * Sets the console to which to log.
  * @param {!Object} console The console to which to log.
  */
-goog.debug.Console.setConsole = function(console) {
-  'use strict';
+goog.debug.Console.setConsole = (console) => {
   goog.debug.Console.console_ = /** @type {{log:!Function}} */ (console);
 };
-
 
 /**
  * Install the console and start capturing if "Debug=true" is in the page URL
  */
-goog.debug.Console.autoInstall = function() {
-  'use strict';
+goog.debug.Console.autoInstall = () => {
   if (!goog.debug.Console.instance) {
     goog.debug.Console.instance = new goog.debug.Console();
   }
 
-  if (goog.global.location &&
-      goog.global.location.href.indexOf('Debug=true') != -1) {
+  if (goog.global.location && goog.global.location.href.indexOf('Debug=true') != -1) {
     goog.debug.Console.instance.setCapturing(true);
   }
 };
-
 
 /**
  * Show an alert with all of the captured debug information.
  * Information is only captured if console is not available
  */
-goog.debug.Console.show = function() {
-  'use strict';
+goog.debug.Console.show = () => {
   alert(goog.debug.Console.instance.logBuffer_);
 };
-
 
 /**
  * Logs the record to the console using the given function.  If the function is
@@ -211,9 +188,7 @@ goog.debug.Console.show = function() {
  * @param {*} exception An additional exception to log.
  * @private
  */
-goog.debug.Console.logToConsole_ = function(
-    console, fnName, record, exception) {
-  'use strict';
+goog.debug.Console.logToConsole_ = (console, fnName, record, exception) => {
   if (console[fnName]) {
     console[fnName](record, exception === undefined ? '' : exception);
   } else {

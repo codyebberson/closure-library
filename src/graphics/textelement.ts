@@ -4,11 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview A thin wrapper around the DOM element for text elements.
  */
-
 
 goog.provide('goog.graphics.TextElement');
 
@@ -16,8 +14,6 @@ goog.require('goog.graphics.StrokeAndFillElement');
 goog.requireType('goog.graphics.AbstractGraphics');
 goog.requireType('goog.graphics.Fill');
 goog.requireType('goog.graphics.Stroke');
-
-
 
 /**
  * Interface for a graphics text element.
@@ -35,13 +31,10 @@ goog.requireType('goog.graphics.Stroke');
  *     differences before the canvas tag was widely supported.  See
  *     http://en.wikipedia.org/wiki/Canvas_element for details.
  */
-goog.graphics.TextElement = function(element, graphics, stroke, fill) {
-  'use strict';
-  goog.graphics.StrokeAndFillElement.call(
-      this, element, graphics, stroke, fill);
+goog.graphics.TextElement = function (element, graphics, stroke, fill) {
+  goog.graphics.StrokeAndFillElement.call(this, element, graphics, stroke, fill);
 };
 goog.inherits(goog.graphics.TextElement, goog.graphics.StrokeAndFillElement);
-
 
 /**
  * Update the displayed text of the element.

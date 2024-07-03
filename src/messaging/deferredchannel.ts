@@ -15,7 +15,6 @@ goog.require('goog.Disposable');
 goog.require('goog.messaging.MessageChannel');
 goog.requireType('goog.async.Deferred');
 
-
 /**
  * Creates a new DeferredChannel, which wraps a deferred MessageChannel and
  * enqueues messages to be sent once the wrapped channel is resolved.
@@ -27,8 +26,7 @@ goog.requireType('goog.async.Deferred');
  * @implements {goog.messaging.MessageChannel}
  * @final
  */
-goog.messaging.DeferredChannel = function(deferredChannel) {
-  'use strict';
+goog.messaging.DeferredChannel = function (deferredChannel) {
   goog.messaging.DeferredChannel.base(this, 'constructor');
 
   /** @private {!goog.async.Deferred<!goog.messaging.MessageChannel>} */
@@ -36,67 +34,50 @@ goog.messaging.DeferredChannel = function(deferredChannel) {
 };
 goog.inherits(goog.messaging.DeferredChannel, goog.Disposable);
 
-
 /**
  * Cancels the wrapped Deferred.
  */
-goog.messaging.DeferredChannel.prototype.cancel = function() {
-  'use strict';
+goog.messaging.DeferredChannel.prototype.cancel = function () {
   this.deferred_.cancel();
 };
 
-
 /** @override */
-goog.messaging.DeferredChannel.prototype.connect = function(opt_connectCb) {
-  'use strict';
+goog.messaging.DeferredChannel.prototype.connect = (opt_connectCb) => {
   if (opt_connectCb) {
     opt_connectCb();
   }
 };
 
+/** @override */
+goog.messaging.DeferredChannel.prototype.isConnected = () => true;
 
 /** @override */
-goog.messaging.DeferredChannel.prototype.isConnected = function() {
-  'use strict';
-  return true;
-};
-
-
-/** @override */
-goog.messaging.DeferredChannel.prototype.registerService = function(
-    serviceName, callback, opt_objectPayload) {
-  'use strict';
-  this.deferred_.addCallback(function(resolved) {
-    'use strict';
+goog.messaging.DeferredChannel.prototype.registerService = function (
+  serviceName,
+  callback,
+  opt_objectPayload
+) {
+  this.deferred_.addCallback((resolved) => {
     resolved.registerService(serviceName, callback, opt_objectPayload);
   });
 };
 
-
 /** @override */
-goog.messaging.DeferredChannel.prototype.registerDefaultService = function(
-    callback) {
-  'use strict';
-  this.deferred_.addCallback(function(resolved) {
-    'use strict';
+goog.messaging.DeferredChannel.prototype.registerDefaultService = function (callback) {
+  this.deferred_.addCallback((resolved) => {
     resolved.registerDefaultService(callback);
   });
 };
 
-
 /** @override */
-goog.messaging.DeferredChannel.prototype.send = function(serviceName, payload) {
-  'use strict';
-  this.deferred_.addCallback(function(resolved) {
-    'use strict';
+goog.messaging.DeferredChannel.prototype.send = function (serviceName, payload) {
+  this.deferred_.addCallback((resolved) => {
     resolved.send(serviceName, payload);
   });
 };
 
-
 /** @override */
-goog.messaging.DeferredChannel.prototype.disposeInternal = function() {
-  'use strict';
+goog.messaging.DeferredChannel.prototype.disposeInternal = function () {
   this.cancel();
   goog.messaging.DeferredChannel.base(this, 'disposeInternal');
 };

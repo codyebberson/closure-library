@@ -17,8 +17,6 @@ goog.require('goog.Promise');
 goog.require('goog.events.EventTarget');
 goog.requireType('goog.Thenable');
 
-
-
 /**
  * Class for handling timing events.
  *
@@ -29,8 +27,7 @@ goog.requireType('goog.Thenable');
  * @constructor
  * @extends {goog.events.EventTarget}
  */
-goog.Timer = function(opt_interval, opt_timerObject) {
-  'use strict';
+goog.Timer = function (opt_interval, opt_timerObject) {
   goog.events.EventTarget.call(this);
 
   /**
@@ -48,7 +45,8 @@ goog.Timer = function(opt_interval, opt_timerObject) {
    * @private {{setTimeout:!Function, clearTimeout:!Function}}
    */
   this.timerObject_ = /** @type {{setTimeout, clearTimeout}} */ (
-      opt_timerObject || goog.Timer.defaultTimerObject);
+    opt_timerObject || goog.Timer.defaultTimerObject
+  );
 
   /**
    * Cached `tick_` bound to the object for later use in the timer.
@@ -68,7 +66,6 @@ goog.Timer = function(opt_interval, opt_timerObject) {
 };
 goog.inherits(goog.Timer, goog.events.EventTarget);
 
-
 /**
  * Maximum timeout value.
  *
@@ -82,7 +79,6 @@ goog.inherits(goog.Timer, goog.events.EventTarget);
  */
 goog.Timer.MAX_TIMEOUT_ = 2147483647;
 
-
 /**
  * A timer ID that cannot be returned by any known implementation of
  * `window.setTimeout`. Passing this value to `window.clearTimeout`
@@ -93,13 +89,11 @@ goog.Timer.MAX_TIMEOUT_ = 2147483647;
  */
 goog.Timer.INVALID_TIMEOUT_ID_ = -1;
 
-
 /**
  * Whether this timer is enabled
  * @type {boolean}
  */
 goog.Timer.prototype.enabled = false;
-
 
 /**
  * An object that implements `setTimeout`, `setInterval`,
@@ -111,7 +105,6 @@ goog.Timer.prototype.enabled = false;
  */
 goog.Timer.defaultTimerObject = goog.global;
 
-
 /**
  * Variable that controls the timer error correction. If the timer is called
  * before the requested interval times `intervalScale`, which often
@@ -121,30 +114,25 @@ goog.Timer.defaultTimerObject = goog.global;
  */
 goog.Timer.intervalScale = 0.8;
 
-
 /**
  * Variable for storing the result of `setInterval`.
  * @private {?number}
  */
 goog.Timer.prototype.timer_ = null;
 
-
 /**
  * Gets the interval of the timer.
  * @return {number} interval Number of ms between ticks.
  */
-goog.Timer.prototype.getInterval = function() {
-  'use strict';
+goog.Timer.prototype.getInterval = function () {
   return this.interval_;
 };
-
 
 /**
  * Sets the interval of the timer.
  * @param {number} interval Number of ms between ticks.
  */
-goog.Timer.prototype.setInterval = function(interval) {
-  'use strict';
+goog.Timer.prototype.setInterval = function (interval) {
   this.interval_ = interval;
   if (this.timer_ && this.enabled) {
     // Stop and then start the timer to reset the interval.
@@ -155,18 +143,15 @@ goog.Timer.prototype.setInterval = function(interval) {
   }
 };
 
-
 /**
  * Callback for the `setTimeout` used by the timer.
  * @private
  */
-goog.Timer.prototype.tick_ = function() {
-  'use strict';
+goog.Timer.prototype.tick_ = function () {
   if (this.enabled) {
     var elapsed = goog.now() - this.last_;
     if (elapsed > 0 && elapsed < this.interval_ * goog.Timer.intervalScale) {
-      this.timer_ = this.timerObject_.setTimeout(
-          this.boundTick_, this.interval_ - elapsed);
+      this.timer_ = this.timerObject_.setTimeout(this.boundTick_, this.interval_ - elapsed);
       return;
     }
 
@@ -188,21 +173,17 @@ goog.Timer.prototype.tick_ = function() {
   }
 };
 
-
 /**
  * Dispatches the TICK event. This is its own method so subclasses can override.
  */
-goog.Timer.prototype.dispatchTick = function() {
-  'use strict';
+goog.Timer.prototype.dispatchTick = function () {
   this.dispatchEvent(goog.Timer.TICK);
 };
-
 
 /**
  * Starts the timer.
  */
-goog.Timer.prototype.start = function() {
-  'use strict';
+goog.Timer.prototype.start = function () {
   this.enabled = true;
 
   // If there is no interval already registered, start it now
@@ -224,12 +205,10 @@ goog.Timer.prototype.start = function() {
   }
 };
 
-
 /**
  * Stops the timer.
  */
-goog.Timer.prototype.stop = function() {
-  'use strict';
+goog.Timer.prototype.stop = function () {
   this.enabled = false;
   if (this.timer_) {
     this.timerObject_.clearTimeout(this.timer_);
@@ -237,22 +216,18 @@ goog.Timer.prototype.stop = function() {
   }
 };
 
-
 /** @override */
-goog.Timer.prototype.disposeInternal = function() {
-  'use strict';
+goog.Timer.prototype.disposeInternal = function () {
   goog.Timer.superClass_.disposeInternal.call(this);
   this.stop();
   delete this.timerObject_;
 };
-
 
 /**
  * Constant for the timer's event type.
  * @const
  */
 goog.Timer.TICK = 'tick';
-
 
 /**
  * Calls the given function once, after the optional pause.
@@ -268,8 +243,7 @@ goog.Timer.TICK = 'tick';
  * @return {number} A handle to the timer ID.
  * @template SCOPE
  */
-goog.Timer.callOnce = function(listener, opt_delay, opt_handler) {
-  'use strict';
+goog.Timer.callOnce = (listener, opt_delay, opt_handler) => {
   if (typeof listener === 'function') {
     if (opt_handler) {
       listener = goog.bind(listener, opt_handler);
@@ -291,16 +265,13 @@ goog.Timer.callOnce = function(listener, opt_delay, opt_handler) {
   }
 };
 
-
 /**
  * Clears a timeout initiated by {@link #callOnce}.
  * @param {?number} timerId A timer ID.
  */
-goog.Timer.clear = function(timerId) {
-  'use strict';
+goog.Timer.clear = (timerId) => {
   goog.Timer.defaultTimerObject.clearTimeout(timerId);
 };
-
 
 /**
  * @param {number} delay Milliseconds to wait.
@@ -310,24 +281,18 @@ goog.Timer.clear = function(timerId) {
  *     the specified delay, unless it is canceled first.
  * @template RESULT
  */
-goog.Timer.promise = function(delay, opt_result) {
-  'use strict';
+goog.Timer.promise = (delay, opt_result) => {
   var timerKey = null;
-  return new goog
-      .Promise(function(resolve, reject) {
-        'use strict';
-        timerKey = goog.Timer.callOnce(function() {
-          'use strict';
-          resolve(opt_result);
-        }, delay);
-        if (timerKey == goog.Timer.INVALID_TIMEOUT_ID_) {
-          reject(new Error('Failed to schedule timer.'));
-        }
-      })
-      .thenCatch(function(error) {
-        'use strict';
-        // Clear the timer. The most likely reason is "cancel" signal.
-        goog.Timer.clear(timerKey);
-        throw error;
-      });
+  return new goog.Promise((resolve, reject) => {
+    timerKey = goog.Timer.callOnce(() => {
+      resolve(opt_result);
+    }, delay);
+    if (timerKey == goog.Timer.INVALID_TIMEOUT_ID_) {
+      reject(new Error('Failed to schedule timer.'));
+    }
+  }).thenCatch((error) => {
+    // Clear the timer. The most likely reason is "cancel" signal.
+    goog.Timer.clear(timerKey);
+    throw error;
+  });
 };

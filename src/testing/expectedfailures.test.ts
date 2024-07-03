@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.ExpectedFailuresTest');
-goog.setTestOnly();
 
 const ExpectedFailures = goog.require('goog.testing.ExpectedFailures');
 const JsUnitException = goog.require('goog.testing.JsUnitException');
@@ -45,9 +44,7 @@ testSuite({
     expectedFailures.handleException(new JsUnitException('', ''));
     assertEquals('Should have logged a message', 1, count);
     assertEquals('Should have logged an info message', Level.INFO, lastLevel);
-    assertContains(
-        'Should log a suppression message', 'Suppressing test failure',
-        lastMessage);
+    assertContains('Should log a suppression message', 'Suppressing test failure', lastMessage);
 
     expectedFailures.handleTearDown();
     assertEquals('Should not have logged another message', 1, count);
@@ -68,9 +65,7 @@ testSuite({
     expectedFailures.handleTearDown();
     assertEquals('Should have logged a message', 1, count);
     assertEquals('Should have logged a warning', Level.WARNING, lastLevel);
-    assertContains(
-        'Should log a suppression message', 'Expected a test failure',
-        lastMessage);
+    assertContains('Should log a suppression message', 'Expected a test failure', lastMessage);
   },
 
   testRun() {
@@ -82,9 +77,7 @@ testSuite({
 
     assertEquals('Should have logged a message', 1, count);
     assertEquals('Should have logged an info message', Level.INFO, lastLevel);
-    assertContains(
-        'Should log a suppression message', 'Suppressing test failure',
-        lastMessage);
+    assertContains('Should log a suppression message', 'Suppressing test failure', lastMessage);
 
     expectedFailures.handleTearDown();
     assertEquals('Should not have logged another message', 1, count);
@@ -94,29 +87,22 @@ testSuite({
     expectedFailures.expectFailureFor(true);
 
     const ex = assertThrowsJsUnitException(() => {
-      expectedFailures.run(
-          () => {
-              // Doesn't fail!
-          });
+      expectedFailures.run(() => {
+        // Doesn't fail!
+      });
     });
-    assertContains(
-        'Expected a test failure in \'testRunStrict\' but the test passed.',
-        ex.message);
+    assertContains("Expected a test failure in 'testRunStrict' but the test passed.", ex.message);
   },
 
   testRunLenient() {
     expectedFailures.expectFailureFor(true);
 
-    expectedFailures.run(
-        () => {
-            // Doesn't fail!
-        },
-        true);
+    expectedFailures.run(() => {
+      // Doesn't fail!
+    }, true);
     expectedFailures.handleTearDown();
     assertEquals('Should have logged a message', 1, count);
     assertEquals('Should have logged a warning', Level.WARNING, lastLevel);
-    assertContains(
-        'Should log a suppression message', 'Expected a test failure',
-        lastMessage);
+    assertContains('Should log a suppression message', 'Expected a test failure', lastMessage);
   },
 });

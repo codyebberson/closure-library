@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.editor.TestHelperTest');
-goog.setTestOnly();
 
 const TagName = goog.require('goog.dom.TagName');
 const TestHelper = goog.require('goog.testing.editor.TestHelper');
@@ -20,14 +19,11 @@ let helper;
 function findNodeWithHierarchy() {
   // Test a more complicated hierarchy.
   root.innerHTML = '<div>a<p>b<span>c</span>d</p>e</div>';
-  assertEquals(
-      String(TagName.DIV), helper.findTextNode('a').parentNode.tagName);
+  assertEquals(String(TagName.DIV), helper.findTextNode('a').parentNode.tagName);
   assertEquals(String(TagName.P), helper.findTextNode('b').parentNode.tagName);
-  assertEquals(
-      String(TagName.SPAN), helper.findTextNode('c').parentNode.tagName);
+  assertEquals(String(TagName.SPAN), helper.findTextNode('c').parentNode.tagName);
   assertEquals(String(TagName.P), helper.findTextNode('d').parentNode.tagName);
-  assertEquals(
-      String(TagName.DIV), helper.findTextNode('e').parentNode.tagName);
+  assertEquals(String(TagName.DIV), helper.findTextNode('e').parentNode.tagName);
 }
 
 function setUpAssertHtmlMatches() {
@@ -106,19 +102,18 @@ testSuite({
   testFindNodeDuplicate() {
     // Test duplicate.
     root.innerHTML = 'c<br>c';
-    assertEquals(
-        'Should return first duplicate', helper.findTextNode('c'),
-        root.firstChild);
+    assertEquals('Should return first duplicate', helper.findTextNode('c'), root.firstChild);
   },
 
   testAssertHtmlMatches() {
     setUpAssertHtmlMatches();
 
     helper.assertHtmlMatches(
-        '<div style="display: none; font-size: 2em">' +
+      '<div style="display: none; font-size: 2em">' +
         '[[IE EDGE GECKO]]NonWebKitText<div class="IE EDGE"><p class="WEBKIT">' +
         '<span class="GECKO"><br class="GECKO WEBKIT">Text</span></p></div>' +
-        '</div>[[WEBKIT]]WebKitText');
+        '</div>[[WEBKIT]]WebKitText'
+    );
   },
 
   testAssertHtmlMismatchText() {
@@ -127,10 +122,11 @@ testSuite({
     // Should fail due to mismatched text
     const e = assertThrowsJsUnitException(() => {
       helper.assertHtmlMatches(
-          '<div style="display: none; font-size: 2em">' +
+        '<div style="display: none; font-size: 2em">' +
           '[[IE GECKO]]NonWebKitText<div class="IE"><p class="WEBKIT">' +
           '<span class="GECKO"><br class="GECKO WEBKIT">Bad</span></p></div>' +
-          '</div>[[WEBKIT]]Extra');
+          '</div>[[WEBKIT]]Extra'
+      );
     });
     assertContains('Text should match', e.message);
   },
@@ -141,10 +137,11 @@ testSuite({
     // Should fail due to mismatched tag
     const e = assertThrowsJsUnitException(() => {
       helper.assertHtmlMatches(
-          '<span style="display: none; font-size: 2em">[[IE EDGE GECKO]]' +
+        '<span style="display: none; font-size: 2em">[[IE EDGE GECKO]]' +
           'NonWebKitText<div class="IE EDGE"><p class="WEBKIT">' +
           '<span class="GECKO"><br class="GECKO WEBKIT">Text</span></p></div>' +
-          '</span>[[WEBKIT]]Extra');
+          '</span>[[WEBKIT]]Extra'
+      );
     });
     assertContains('Tag names should match', e.message);
   },
@@ -155,10 +152,11 @@ testSuite({
     // Should fail due to mismatched style
     const e = assertThrowsJsUnitException(() => {
       helper.assertHtmlMatches(
-          '<div style="display: none; font-size: 3em">[[IE EDGE GECKO]]' +
+        '<div style="display: none; font-size: 3em">[[IE EDGE GECKO]]' +
           'NonWebKitText<div class="IE EDGE"><p class="WEBKIT">' +
           '<span class="GECKO"><br class="GECKO WEBKIT">Text</span></p></div>' +
-          '</div>[[WEBKIT]]Extra');
+          '</div>[[WEBKIT]]Extra'
+      );
     });
     assertContains('Should have same styles', e.message);
   },
@@ -169,10 +167,11 @@ testSuite({
     // Should fail due to mismatched style
     const e = assertThrowsJsUnitException(() => {
       helper.assertHtmlMatches(
-          '<div style="display: none; font-size: 2em">' +
+        '<div style="display: none; font-size: 2em">' +
           '[[IE EDGE GECKO]]Bad<div class="IE EDGE"><p class="WEBKIT">' +
           '<span class="GECKO"><br class="GECKO WEBKIT">Text</span></p></div>' +
-          '</div>[[WEBKIT]]Bad');
+          '</div>[[WEBKIT]]Bad'
+      );
     });
     assertContains('Text should match', e.message);
   },

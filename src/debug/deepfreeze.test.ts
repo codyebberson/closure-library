@@ -5,22 +5,21 @@
  */
 
 goog.module('goog.deepFreezeTest');
-goog.setTestOnly();
 
 const asserts = goog.require('goog.asserts');
 const testSuite = goog.require('goog.testing.testSuite');
-const {deepFreeze} = goog.require('goog.debug.deepFreeze');
+const { deepFreeze } = goog.require('goog.debug.deepFreeze');
 
 testSuite({
   testDeepFreeze: {
     testObject() {
       const a = {
-        'b': 'c',
-        'c': true,
-        'd': false,
-        'e': null,
-        'f': 5,
-        'g': undefined,
+        b: 'c',
+        c: true,
+        d: false,
+        e: null,
+        f: 5,
+        g: undefined,
       };
       const f = deepFreeze(a);
       assertEquals('c', f.b);
@@ -44,8 +43,8 @@ testSuite({
 
     testObjectWithArray() {
       const a = {
-        'b': 'c',
-        'c': ['d', 'e', 'f'],
+        b: 'c',
+        c: ['d', 'e', 'f'],
       };
       const f = deepFreeze(a);
       assertEquals('c', f.b);
@@ -67,9 +66,9 @@ testSuite({
 
     testObjectWithChildObjects() {
       const a = {
-        'c': {
-          'd': 'e',
-          'r': 'f',
+        c: {
+          d: 'e',
+          r: 'f',
         },
       };
       const f = deepFreeze(a);
@@ -97,12 +96,12 @@ testSuite({
      */
     testObjectWithChildMultipath() {
       const a = {
-        'c': {
-          'd': 'e',
-          'r': 'f',
+        c: {
+          d: 'e',
+          r: 'f',
         },
       };
-      const d = {'a': 'b'};
+      const d = { a: 'b' };
       // Create two ways to access object d. This should not throw when frozen,
       // and both paths to this same object should throw.
       a.c['g'] = d;
@@ -153,8 +152,7 @@ testSuite({
       // IE doesn't throw when changing a frozen symbol key's value.
       try {
         f[s] = 'new thing!';
-      } catch (expectedInStrictMode) {
-      }
+      } catch (expectedInStrictMode) {}
       assertEquals('hello world', f[s]);
       assertThrows(() => {
         console.log(a[s]);
@@ -171,7 +169,7 @@ testSuite({
         return;
       }
       const a = {
-        's': s,
+        s: s,
       };
       const f = deepFreeze(a);
       assertEquals(s, f.s);
@@ -202,7 +200,7 @@ testSuite({
 
     testFailsWithFunctions() {
       assertThrows(() => {
-        deepFreeze(function() {
+        deepFreeze(() => {
           console.log('');
         });
       });
@@ -211,7 +209,7 @@ testSuite({
     testFailsWithFunctionInObject() {
       assertThrows(() => {
         deepFreeze({
-          a: function() {
+          a: () => {
             console.log('');
           },
         });
@@ -239,7 +237,7 @@ testSuite({
         }
         const b = new C();
         deepFreeze({
-          'b': b,
+          b: b,
         });
       });
     },
@@ -255,7 +253,7 @@ testSuite({
       assertThrows(() => {
         const b = class C {};
         deepFreeze({
-          'b': b,
+          b: b,
         });
       });
     },
@@ -285,9 +283,8 @@ testSuite({
       });
     },
 
-
     testFailsWithCyclicReferences() {
-      const a = {b: {}};
+      const a = { b: {} };
       a.b.c = a;
       assertThrows(() => {
         deepFreeze(a);

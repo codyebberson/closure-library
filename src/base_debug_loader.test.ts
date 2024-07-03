@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 /**
  * @fileoverview Unit tests for Closure's base.js that require debug loading.
  * @suppress {missingRequire}
@@ -48,19 +47,17 @@ var autoLoadDep = true;
  * @extends {goog.Dependency}
  */
 function FakeDependency(path, relativePath, provides, requires, loadFlags) {
-  FakeDependency.base(
-      this, 'constructor', path, relativePath, provides, requires, loadFlags);
+  FakeDependency.base(this, 'constructor', path, relativePath, provides, requires, loadFlags);
   this.loadCalled = false;
 }
 goog.inherits(FakeDependency, goog.Dependency);
-
 
 /**
  * @override
  * @suppress {missingProperties,checkTypes}
  */
-FakeDependency.prototype.load = function(controller) {
-  this.markLoaded = function() {
+FakeDependency.prototype.load = function (controller) {
+  this.markLoaded = function () {
     delete this.markLoaded;
     controller.loaded();
   };
@@ -70,7 +67,6 @@ FakeDependency.prototype.load = function(controller) {
     this.markLoaded(controller);
   }
 };
-
 
 /**
  * @struct @constructor
@@ -82,18 +78,21 @@ function FakeDependencyFactory() {
 }
 goog.inherits(FakeDependencyFactory, goog.DependencyFactory);
 
-
 /** @override */
-FakeDependencyFactory.prototype.createDependency = function(
-    path, relativePath, provides, requires, loadFlags) {
-  var dep =
-      new FakeDependency(path, relativePath, provides, requires, loadFlags);
+FakeDependencyFactory.prototype.createDependency = function (
+  path,
+  relativePath,
+  provides,
+  requires,
+  loadFlags
+) {
+  var dep = new FakeDependency(path, relativePath, provides, requires, loadFlags);
   testDependencies.push(dep);
-  realDependencies.push(this.realFactory.createDependency(
-      path, relativePath, provides, requires, loadFlags));
+  realDependencies.push(
+    this.realFactory.createDependency(path, relativePath, provides, requires, loadFlags)
+  );
   return dep;
 };
-
 
 var testDependencies = [];
 var realDependencies = [];
@@ -101,11 +100,9 @@ var realDependencies = [];
 // Avoid the compiler checks on goog.addDependency
 const addDependency = goog.addDependency;
 
-
 function setUpPage() {
   goog.global['CLOSURE_NO_DEPS'] = true;
 }
-
 
 /** @suppress {visibility,const} */
 function setUp() {
@@ -115,7 +112,6 @@ function setUp() {
   goog.debugLoader_ = new goog.DebugLoader_();
   goog.setDependencyFactory(new FakeDependencyFactory());
 }
-
 
 function tearDown() {
   // Use computed property here to avoid the compiler check that the value
@@ -133,7 +129,7 @@ function testInHtmlDocument() {
     assertFalse(goog.inHtmlDocument_());
     goog.global.document = {};
     assertFalse(goog.inHtmlDocument_());
-    goog.global.document.write = function() {};
+    goog.global.document.write = () => {};
     assertTrue(goog.inHtmlDocument_());
   } finally {
     // Restore context to respect other tests.
@@ -167,8 +163,7 @@ function testLoadBaseWithQueryParamOk() {
     goog.global = {};
     goog.global.document = {
       write: () => {},
-      getElementsByTagName:
-          goog.functions.constant([{src: '/path/to/base.js?zx=5'}])
+      getElementsByTagName: goog.functions.constant([{ src: '/path/to/base.js?zx=5' }]),
     };
     assertTrue(goog.inHtmlDocument_());
     goog.findBasePath_();
@@ -186,8 +181,7 @@ function testLoadBaseFromGlobalVariableOk() {
     goog.global = {};
     goog.global.document = {
       write: () => {},
-      getElementsByTagName:
-          goog.functions.constant([{src: '/path/to/base.js?zx=5'}])
+      getElementsByTagName: goog.functions.constant([{ src: '/path/to/base.js?zx=5' }]),
     };
     goog.global.CLOSURE_BASE_PATH = '/from/constant/';
     goog.findBasePath_();
@@ -205,15 +199,12 @@ function testLoadBaseFromGlobalVariableDOMClobbered() {
     goog.global = {};
     goog.global.document = {
       write: () => {},
-      getElementsByTagName:
-          goog.functions.constant([{src: '/path/to/base.js?zx=5'}])
+      getElementsByTagName: goog.functions.constant([{ src: '/path/to/base.js?zx=5' }]),
     };
     // Make goog.global.CLOSURE_BASE_PATH an object with a toString, like
     // it would be if it were a DOM clobbered HTMLElement.
     goog.global.CLOSURE_BASE_PATH = {};
-    goog.global.CLOSURE_BASE_PATH.toString = function() {
-      return '/from/constant/';
-    };
+    goog.global.CLOSURE_BASE_PATH.toString = () => '/from/constant/';
     goog.findBasePath_();
     assertEquals('/path/to/', goog.basePath);
   } finally {
@@ -229,9 +220,8 @@ function testLoadBaseFromCurrentScriptIgnoringOthers() {
     goog.global = {};
     goog.global.document = {
       write: () => {},
-      currentScript: {src: '/currentScript/base.js?zx=5'},
-      getElementsByTagName:
-          goog.functions.constant([{src: '/path/to/base.js?zx=5'}])
+      currentScript: { src: '/currentScript/base.js?zx=5' },
+      getElementsByTagName: goog.functions.constant([{ src: '/path/to/base.js?zx=5' }]),
     };
     goog.findBasePath_();
     assertEquals('/currentScript/', goog.basePath);
@@ -262,7 +252,6 @@ function testAddDependency() {
   testDep = undefined;
 }
 
-
 /**
  * Asserts all test deps up to and including the expected index have loaded,
  * and anything past that has not.
@@ -274,7 +263,6 @@ function assertLoaded(expected) {
     assertEquals(expected >= i, testDependencies[i].loadCalled);
   }
 }
-
 
 /**
  * @param {!goog.Dependency} dep
@@ -290,19 +278,17 @@ function assertDepData(dep, relPath, provides, requires, loadFlags) {
   assertTrue(goog.object.equals(loadFlags, dep.loadFlags));
 }
 
-
 function testAddDependencyModule() {
   addDependency('mod.js', ['testDep.mod'], [], true);
   addDependency('empty.js', ['testDep.empty'], [], {});
-  addDependency('mod-goog.js', ['testDep.goog'], [], {'module': 'goog'});
+  addDependency('mod-goog.js', ['testDep.goog'], [], { module: 'goog' });
 
   // To differentiate this call from the real one.
   var require = goog.require;
 
   require('testDep.mod');
   assertLoaded(0);
-  assertDepData(
-      realDependencies[0], 'mod.js', ['testDep.mod'], [], {'module': 'goog'});
+  assertDepData(realDependencies[0], 'mod.js', ['testDep.mod'], [], { module: 'goog' });
   assertTrue(realDependencies[0] instanceof goog.GoogModuleDependency);
 
   require('testDep.empty');
@@ -312,30 +298,24 @@ function testAddDependencyModule() {
 
   require('testDep.goog');
   assertLoaded(2);
-  assertDepData(
-      realDependencies[2], 'mod-goog.js', ['testDep.goog'], [],
-      {'module': 'goog'});
+  assertDepData(realDependencies[2], 'mod-goog.js', ['testDep.goog'], [], { module: 'goog' });
   assertTrue(realDependencies[2] instanceof goog.GoogModuleDependency);
 
   // Unset provided namespace so the test can be re-run.
   testDep = undefined;
 }
 
-
 function testAddDependencyEs6Module() {
-  addDependency('mod-es6.js', ['testDep.es6'], [], {'module': 'es6'});
+  addDependency('mod-es6.js', ['testDep.es6'], [], { module: 'es6' });
 
   // To differentiate this call from the real one.
   var require = goog.require;
 
   require('testDep.es6');
   assertLoaded(0);
-  assertDepData(
-      realDependencies[0], 'mod-es6.js', ['testDep.es6'], [],
-      {'module': 'es6'});
+  assertDepData(realDependencies[0], 'mod-es6.js', ['testDep.es6'], [], { module: 'es6' });
   assertTrue(realDependencies[0] instanceof goog.Es6ModuleDependency);
 }
-
 
 async function testBootstrap() {
   addDependency('a.js', ['a'], [], {});
@@ -345,7 +325,7 @@ async function testBootstrap() {
   assertEquals(3, testDependencies.length);
 
   await new Promise((resolve, reject) => {
-    goog.bootstrap(['b', 'c'], function() {
+    goog.bootstrap(['b', 'c'], () => {
       resolve();
     });
   });
@@ -354,7 +334,6 @@ async function testBootstrap() {
     assertTrue(testDependencies[i].loadCalled);
   }
 }
-
 
 /** @suppress {missingProperties} */
 async function testBootstrapDelayLoadingDep() {
@@ -381,7 +360,7 @@ async function testBootstrapDelayLoadingDep() {
   // Loading one of the two requested deps shouldn't call the function.
   testDependencies[2].markLoaded();
 
-  await new Promise(resolve => setTimeout(resolve, 50));
+  await new Promise((resolve) => setTimeout(resolve, 50));
 
   assertFalse(bootstrapped);
   testDependencies[1].markLoaded();
@@ -390,11 +369,10 @@ async function testBootstrapDelayLoadingDep() {
   // Await setTimeout so we enter the macrotask queue (goog.boostrap uses
   // setTimeout, which is a macrotask. Native Promises (non-polyfill) are
   // microtasks and would resolve before macrotasks.
-  await new Promise(resolve => setTimeout(resolve, 0));
+  await new Promise((resolve) => setTimeout(resolve, 0));
 
   assertTrue(bootstrapped);
 }
-
 
 //=== tests for Provide logic ===
 
@@ -406,15 +384,13 @@ function testProvide() {
   provide('goog.test.name.space');
   assertNotUndefined('provide failed: goog.test', goog.test);
   assertNotUndefined('provide failed: goog.test.name', goog.test.name);
-  assertNotUndefined(
-      'provide failed: goog.test.name.space', goog.test.name.space);
+  assertNotUndefined('provide failed: goog.test.name.space', goog.test.name.space);
 
   // ensure that providing 'goog.test.name' doesn't throw an exception
   provide('goog.test');
   provide('goog.test.name');
   delete goog.test;
 }
-
 
 // "watch" is a native member of Object.prototype on Firefox
 // Ensure it can still be added as a namespace
@@ -449,10 +425,10 @@ function testProvideStrictness() {
 /** @param {?} namespace */
 function assertProvideFails(namespace) {
   assertThrows(
-      'goog.provide(' + namespace + ') should have failed',
-      goog.partial(goog.provide, namespace));
+    'goog.provide(' + namespace + ') should have failed',
+    goog.partial(goog.provide, namespace)
+  );
 }
-
 
 /** @suppress {visibility} */
 function testIsProvided() {
@@ -466,14 +442,12 @@ function testIsProvided() {
   assertTrue(goog.isProvided_('goog.implicit.explicit'));
 }
 
-
 //=== tests for Require logic ===
 
 function testRequireClosure() {
   assertNotUndefined('goog.Timer should be available', goog.Timer);
   /** @suppress {missingRequire} */
-  assertNotUndefined(
-      'goog.events.EventTarget should be available', goog.events.EventTarget);
+  assertNotUndefined('goog.events.EventTarget should be available', goog.events.EventTarget);
 }
 
 function testRequireWithExternalDuplicate() {
@@ -487,7 +461,7 @@ function testRequireWithExternalDuplicate() {
   provide('dup.base');
 
   stubs.set(goog, 'isDocumentFinishedLoading_', false);
-  stubs.set(goog.global, 'CLOSURE_IMPORT_SCRIPT', function(src) {
+  stubs.set(goog.global, 'CLOSURE_IMPORT_SCRIPT', (src) => {
     if (src == goog.basePath + 'dup.js') {
       fail('Duplicate script written!');
     } else if (src == goog.basePath + 'dup-child.js') {
@@ -530,7 +504,7 @@ function testGoogRequireCheck() {
 
   assertNotUndefined(far.out);
   assertEvaluatesToTrue(goog.getObjectByName('far.out'));
-  assertObjectEquals({'far': true}, goog.implicitNamespaces_);
+  assertObjectEquals({ far: true }, goog.implicitNamespaces_);
   assertTrue(goog.isProvided_('far.out'));
 
   goog.global.far.out = 42;
@@ -554,7 +528,6 @@ function testGoogRequireCheck() {
   stubs.reset();
   delete goog.global.far;
 }
-
 
 /** @suppress {visibility} */
 function testGetScriptNonce() {
@@ -601,11 +574,11 @@ function testBaseClass() {
   }
   goog.inherits(D, C);
 
-  assertEquals(15, (new D(1, 0)).foo);
-  assertEquals(16, (new D(1, 1)).foo);
-  assertEquals(16, (new D(2, 0)).foo);
-  assertEquals(7, (new C(1, 0)).foo);
-  assertEquals(3, (new B(1, 0)).foo);
+  assertEquals(15, new D(1, 0).foo);
+  assertEquals(16, new D(1, 1).foo);
+  assertEquals(16, new D(2, 0).foo);
+  assertEquals(7, new C(1, 0).foo);
+  assertEquals(3, new B(1, 0).foo);
 }
 
 /** @suppress {checkTypes} */
@@ -615,7 +588,7 @@ function testBaseMethodAndBaseCtor() {
   function A(x, y) {
     this.foo(x, y);
   }
-  A.prototype.foo = function(x, y) {
+  A.prototype.foo = function (x, y) {
     this.bar = x + y;
   };
 
@@ -623,14 +596,13 @@ function testBaseMethodAndBaseCtor() {
     B.base(this, 'constructor', x, y);
   }
   goog.inherits(B, A);
-  B.prototype.foo = function(x, y) {
+  B.prototype.foo = function (x, y) {
     B.base(this, 'foo', x, y);
     this.bar = this.bar * 2;
   };
 
   assertEquals(14, new B(3, 4).bar);
 }
-
 
 //=== tests for bind() and friends ===
 
@@ -647,9 +619,8 @@ var foo = 'global';
  * @suppress {checkTypes}
  */
 function getFoo(arg1, arg2) {
-  return {foo: this.foo, arg1: arg1, arg2: arg2};
+  return { foo: this.foo, arg1: arg1, arg2: arg2 };
 }
-
 
 /** @suppress {checkTypes} */
 function testBindWithoutObj() {
@@ -665,29 +636,28 @@ function testBindWithNullObj() {
   }
 }
 
-
 // Validate the behavior of goog.module when used from traditional files.
 /** @suppress {missingProperties} namespaces */
 function testGoogModuleGet() {
   // assert that goog.module doesn't modify the global namespace
   assertUndefined(
-      'module failed to protect global namespace: ' +
-          'goog.test_module_dep',
-      goog.test_module_dep);
+    'module failed to protect global namespace: ' + 'goog.test_module_dep',
+    goog.test_module_dep
+  );
 
   // assert that goog.module with goog.module.declareLegacyNamespace is
   // present.
   assertNotUndefined(
-      'module failed to declare global namespace: ' +
-          'goog.test_module',
-      goog.test_module);
+    'module failed to declare global namespace: ' + 'goog.test_module',
+    goog.test_module
+  );
 
   // assert that a require'd goog.module is available immediately after the
   // goog.require call.
   assertNotUndefined(
-      'module failed to protect global namespace: ' +
-          'goog.test_module_dep',
-      earlyTestModuleGet);
+    'module failed to protect global namespace: ' + 'goog.test_module_dep',
+    earlyTestModuleGet
+  );
 
   // assert that an non-existent module request doesn't throw and returns
   // null.
@@ -700,7 +670,7 @@ function testGoogModuleGet() {
 
   // Test that any escaping of </script> in test files is correct. Escape the
   // / in </script> here so that any such code does not affect it here.
-  assertEquals('<\/script>', testModuleExports.CLOSING_SCRIPT_TAG);
+  assertEquals('</script>', testModuleExports.CLOSING_SCRIPT_TAG);
 
   // Validate that the module exports object has not changed
   assertEquals(earlyTestModuleGet, testModuleExports);

@@ -55,42 +55,42 @@ exports.DayPeriods = DayPeriods;
  * @type {!DayPeriods}
  */
 exports.DayPeriods_zh_Hant = {
-  midnight: {at: '00:00', formatNames: ['午夜'], periodName: 'midnight'},
+  midnight: { at: '00:00', formatNames: ['午夜'], periodName: 'midnight' },
   night1: {
     from: '00:00',
     before: '05:00',
     formatNames: ['凌晨'],
-    periodName: 'night1'
+    periodName: 'night1',
   },
   morning1: {
     from: '05:00',
     before: '08:00',
     formatNames: ['清晨'],
-    periodName: 'morning1'
+    periodName: 'morning1',
   },
   morning2: {
     from: '08:00',
     before: '12:00',
     formatNames: ['上午'],
-    periodName: 'morning2'
+    periodName: 'morning2',
   },
   afternoon1: {
     from: '12:00',
     before: '13:00',
     formatNames: ['中午'],
-    periodName: 'afternoon1'
+    periodName: 'afternoon1',
   },
   afternoon2: {
     from: '13:00',
     before: '19:00',
     formatNames: ['下午'],
-    periodName: 'afternoon2'
+    periodName: 'afternoon2',
   },
   evening1: {
     from: '19:00',
     before: '24:00',
     formatNames: ['晚上'],
-    periodName: 'evening1'
+    periodName: 'evening1',
   },
 };
 
@@ -105,15 +105,13 @@ let defaultDayPeriods;
  * Returns the DayPeriod for the given locale. This may be undefined or null.
  * @return {?DayPeriods}
  */
-exports.getDayPeriods = function() {
-  return defaultDayPeriods;
-};
+exports.getDayPeriods = () => defaultDayPeriods;
 
 /**
  * Sets the default ListFormatSymbols
  * @param {?DayPeriods} newDayPeriods
  */
-exports.setDayPeriods = function(newDayPeriods) {
+exports.setDayPeriods = (newDayPeriods) => {
   defaultDayPeriods = newDayPeriods;
 };
 

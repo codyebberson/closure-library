@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.html.HtmlSanitizerUnifiedTest');
-goog.setTestOnly();
 
 const SafeHtml = goog.require('goog.html.SafeHtml');
 const SanitizerBuilder = goog.require('goog.html.sanitizer.HtmlSanitizer.Builder');
@@ -15,9 +14,9 @@ const testVectors = goog.require('goog.html.htmlTestVectors');
 const sanitizer = new SanitizerBuilder().build();
 
 const suite = {};
-for (const v of /** @type {?} */ (testVectors.HTML_TEST_VECTORS)) {
+for (const v of /** @type {?} */ testVectors.HTML_TEST_VECTORS) {
   /** @suppress {missingProperties} suppression added to enable type checking */
-  suite[`testVector[${v.name}]`] = function() {
+  suite[`testVector[${v.name}]`] = () => {
     const sanitized = SafeHtml.unwrap(sanitizer.sanitize(v.input));
     assertContains(sanitized, v.acceptable);
   };

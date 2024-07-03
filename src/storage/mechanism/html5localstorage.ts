@@ -14,8 +14,6 @@ goog.provide('goog.storage.mechanism.HTML5LocalStorage');
 
 goog.require('goog.storage.mechanism.HTML5WebStorage');
 
-
-
 /**
  * Provides a storage mechanism that uses HTML5 local storage.
  *
@@ -23,18 +21,14 @@ goog.require('goog.storage.mechanism.HTML5WebStorage');
  * @struct
  * @extends {goog.storage.mechanism.HTML5WebStorage}
  */
-goog.storage.mechanism.HTML5LocalStorage = function() {
-  'use strict';
+goog.storage.mechanism.HTML5LocalStorage = function () {
   var storage = null;
 
   try {
     // May throw an exception in cases where the local storage object
     // is visible but access to it is disabled.
     storage = window.localStorage || null;
-  } catch (e) {
-  }
+  } catch (e) {}
   goog.storage.mechanism.HTML5LocalStorage.base(this, 'constructor', storage);
 };
-goog.inherits(
-    goog.storage.mechanism.HTML5LocalStorage,
-    goog.storage.mechanism.HTML5WebStorage);
+goog.inherits(goog.storage.mechanism.HTML5LocalStorage, goog.storage.mechanism.HTML5WebStorage);

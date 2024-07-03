@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.stacktraceTest');
-goog.setTestOnly();
 
 const ExpectedFailures = goog.require('goog.testing.ExpectedFailures');
 const Frame = goog.require('goog.testing.stacktrace.Frame');
@@ -45,16 +44,14 @@ testSuite({
     frameString = '    at Object.assert (file:///.../asserts.js:29:10)';
     /** @suppress {visibility} suppression added to enable type checking */
     frame = stacktrace.parseStackFrame_(frameString);
-    expected =
-        new Frame('Object', 'assert', '', 'file:///.../asserts.js:29:10');
+    expected = new Frame('Object', 'assert', '', 'file:///.../asserts.js:29:10');
     assertObjectEquals('context object + function name + url', expected, frame);
 
     frameString = '    at Object.x.y.z (/Users/bob/file.js:564:9)';
     /** @suppress {visibility} suppression added to enable type checking */
     frame = stacktrace.parseStackFrame_(frameString);
     expected = new Frame('Object.x.y', 'z', '', '/Users/bob/file.js:564:9');
-    assertObjectEquals(
-        'nested context object + function name + url', expected, frame);
+    assertObjectEquals('nested context object + function name + url', expected, frame);
 
     frameString = '    at http://www.example.com/jsunit.js:117:13';
     /** @suppress {visibility} suppression added to enable type checking */
@@ -99,13 +96,10 @@ testSuite({
     assertObjectEquals('Path without schema', expected, frame);
 
     // In the Chrome console, execute: console.log(eval('Error().stack')).
-    frameString =
-        '    at eval (eval at <anonymous> (unknown source), <anonymous>:1:1)';
+    frameString = '    at eval (eval at <anonymous> (unknown source), <anonymous>:1:1)';
     /** @suppress {visibility} suppression added to enable type checking */
     frame = stacktrace.parseStackFrame_(frameString);
-    expected = new Frame(
-        '', 'eval', '',
-        'eval at <anonymous> (unknown source), <anonymous>:1:1');
+    expected = new Frame('', 'eval', '', 'eval at <anonymous> (unknown source), <anonymous>:1:1');
     assertObjectEquals('nested eval', expected, frame);
   },
 
@@ -143,8 +137,7 @@ testSuite({
     assertObjectEquals('name and path', expected, frame);
 
     // (function() { throw new Error() })()
-    frameString =
-        '<anonymous function>([arguments not available])@file:///foo:42';
+    frameString = '<anonymous function>([arguments not available])@file:///foo:42';
     /** @suppress {visibility} suppression added to enable type checking */
     frame = stacktrace.parseStackFrame_(frameString);
     expected = new Frame('', '', '', 'file:///foo:42');
@@ -205,27 +198,24 @@ testSuite({
     const frameString = 'ns.method@http://some.thing/a.js:1:2';
     /** @suppress {visibility} suppression added to enable type checking */
     const frame = stacktrace.parseStackFrame_(frameString);
-    const expected =
-        new Frame('', 'ns.method', '', 'http://some.thing/a.js:1:2');
+    const expected = new Frame('', 'ns.method', '', 'http://some.thing/a.js:1:2');
     assertObjectEquals('anonymous function', expected, frame);
   },
 
   testCanonicalizeFrame() {
     const frame = new Frame('<window>', 'foo', 'bar', 'http://x?a=1&b=2:1');
     assertEquals(
-        'canonical stack frame, everything is escaped',
-        '&lt;window&gt;.foo ' +
-            '[as bar] at http://x?a=1&amp;b=2:1',
-        frame.toCanonicalString());
+      'canonical stack frame, everything is escaped',
+      '&lt;window&gt;.foo ' + '[as bar] at http://x?a=1&amp;b=2:1',
+      frame.toCanonicalString()
+    );
   },
 
   testDeobfuscateFunctionName() {
     stacktrace.setDeobfuscateFunctionName((name) => name.replace(/\$/g, '.'));
 
     const frame = new Frame('', 'a$b$c', 'd$e', '');
-    assertEquals(
-        'deobfuscated function name', 'a.b.c [as d.e]',
-        frame.toCanonicalString());
+    assertEquals('deobfuscated function name', 'a.b.c [as d.e]', frame.toCanonicalString());
   },
 
   testFramesToString() {
@@ -242,8 +232,8 @@ testSuite({
   // to blow Firefox 3x's stack if put through a RegExp.
   testParsingLongStackTrace() {
     const longArg = '(' + googString.repeat('x', 1000000) + ')';
-    const stackTrace = 'shortFrame()@:0\n' +
-        'longFrame' + longArg + '@http://google.com/somescript:0\n';
+    const stackTrace =
+      'shortFrame()@:0\n' + 'longFrame' + longArg + '@http://google.com/somescript:0\n';
     /** @suppress {visibility} suppression added to enable type checking */
     const frames = stacktrace.parse_(stackTrace);
     assertEquals('number of returned frames', 2, frames.length);
@@ -263,8 +253,7 @@ testSuite({
     frameString = '   at Anonymous function (http://bar:4000/bar.js:150:3)';
     /** @suppress {visibility} suppression added to enable type checking */
     frame = stacktrace.parseStackFrame_(frameString);
-    expected =
-        new Frame('', 'Anonymous function', '', 'http://bar:4000/bar.js:150:3');
+    expected = new Frame('', 'Anonymous function', '', 'http://bar:4000/bar.js:150:3');
     assertObjectEquals('Anonymous function', expected, frame);
 
     frameString = '   at Global code (http://bar:4000/bar.js:150:3)';
@@ -298,8 +287,7 @@ testSuite({
     const frameString = '   at a.b.c (http://host.com:80/some/file.js:101:2)';
     /** @suppress {visibility} suppression added to enable type checking */
     const frame = stacktrace.parseStackFrame_(frameString);
-    const expected =
-        new Frame('', 'a.b.c', '', 'http://host.com:80/some/file.js:101:2');
+    const expected = new Frame('', 'a.b.c', '', 'http://host.com:80/some/file.js:101:2');
     assertObjectEquals(expected, frame);
   },
 
@@ -323,12 +311,10 @@ testSuite({
     // triggers an exception for the purpose of reading and returning its stack
     // trace. Here, pretend that V8 provided an array of CallSites instead of
     // the string that browsers provide.
-    stubs.set(
-        stacktrace, 'getNativeStack_',
-        () =>
-            [createCallSite('fn1', 'file1', 1, 2),
-             createCallSite('fn2', 'file2', 3, 4),
-             createCallSite('fn3', 'file3', 5, 6),
+    stubs.set(stacktrace, 'getNativeStack_', () => [
+      createCallSite('fn1', 'file1', 1, 2),
+      createCallSite('fn2', 'file2', 3, 4),
+      createCallSite('fn3', 'file3', 5, 6),
     ]);
 
     // Retrieve the stacktrace. This should translate the array of CallSites

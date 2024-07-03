@@ -22,7 +22,8 @@ function assertRetainsReference(/** !Object */ object, /** * */ value) {
   const path = searchForReference(object, value);
   if (!path) {
     asserts.raiseException(
-        `The object does not transitively retain a reference to the given value`);
+      `The object does not transitively retain a reference to the given value`
+    );
   }
 }
 
@@ -37,8 +38,8 @@ function assertDoesNotRetainReference(/** !Object */ object, /** * */ value) {
   const path = searchForReference(object, value);
   if (path) {
     asserts.raiseException(
-        `expected there to be no retention path, found the value @ object['${
-            path.join('\'][\'')}']`);
+      `expected there to be no retention path, found the value @ object['${path.join("']['")}']`
+    );
   }
 }
 
@@ -60,7 +61,7 @@ function searchForReference(object, needle) {
       return true;
     }
     if (!object || visited.has(object)) {
-      return false;  // cycle or null
+      return false; // cycle or null
     }
     visited.add(object);
     for (const key in object) {

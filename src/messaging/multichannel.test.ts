@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.messaging.MultiChannelTest');
-goog.setTestOnly();
 
 const IgnoreArgument = goog.require('goog.testing.mockmatchers.IgnoreArgument');
 const MockControl = goog.require('goog.testing.MockControl');
@@ -23,8 +22,12 @@ let channel2;
 function expectedFn(name, callback) {
   const ignored = new IgnoreArgument();
   const fn = mockControl.createFunctionMock(name);
-  fn(ignored).$does(function(args) { callback.apply(this, args); });
-  return function() { fn(arguments); };
+  fn(ignored).$does(function (args) {
+    callback.apply(this, args);
+  });
+  return () => {
+    fn(arguments);
+  };
 }
 
 function notExpectedFn() {
@@ -33,7 +36,7 @@ function notExpectedFn() {
 
 function assertEqualsFn() {
   const expectedArgs = Array.prototype.slice.call(arguments);
-  return expectedFn('assertEqualsFn', function() {
+  return expectedFn('assertEqualsFn', () => {
     assertObjectEquals(expectedArgs, Array.prototype.slice.call(arguments));
   });
 }
@@ -54,15 +57,15 @@ testSuite({
   },
 
   testSend0() {
-    mockChannel.send('foo:fooBar', {foo: 'bar'});
+    mockChannel.send('foo:fooBar', { foo: 'bar' });
     mockControl.$replayAll();
-    channel0.send('fooBar', {foo: 'bar'});
+    channel0.send('fooBar', { foo: 'bar' });
   },
 
   testSend1() {
-    mockChannel.send('bar:fooBar', {foo: 'bar'});
+    mockChannel.send('bar:fooBar', { foo: 'bar' });
     mockControl.$replayAll();
-    channel1.send('fooBar', {foo: 'bar'});
+    channel1.send('fooBar', { foo: 'bar' });
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */

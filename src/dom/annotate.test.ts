@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dom.annotateTest');
-goog.setTestOnly();
 
 const SafeHtml = goog.require('goog.html.SafeHtml');
 const TagName = goog.require('goog.dom.TagName');
@@ -18,7 +17,7 @@ const $ = dom.getElement;
 const TEXT = 'This little piggy cried "Wee! Wee! Wee!" all the way home.';
 
 function doAnnotation(termIndex, termHtml) {
-  return SafeHtml.create('span', {'class': `c${termIndex}`}, termHtml);
+  return SafeHtml.create('span', { class: `c${termIndex}` }, termHtml);
 }
 
 testSuite({
@@ -33,9 +32,10 @@ testSuite({
     /** @suppress {checkTypes} suppression added to enable type checking */
     html = SafeHtml.unwrap(html);
     assertEquals(
-        'This little <span class="c0">pig</span>gy cried ' +
-            '&quot;Wee! Wee! Wee!&quot; all the way home.',
-        html);
+      'This little <span class="c0">pig</span>gy cried ' +
+        '&quot;Wee! Wee! Wee!&quot; all the way home.',
+      html
+    );
 
     terms = [[' piggy ', true]];
     html = annotate.annotateText(TEXT, terms, doAnnotation);
@@ -46,18 +46,23 @@ testSuite({
     /** @suppress {checkTypes} suppression added to enable type checking */
     html = SafeHtml.unwrap(html);
     assertEquals(
-        'This little<span class="c0"> piggy </span>cried ' +
-            '&quot;Wee! Wee! Wee!&quot; all the way home.',
-        html);
+      'This little<span class="c0"> piggy </span>cried ' +
+        '&quot;Wee! Wee! Wee!&quot; all the way home.',
+      html
+    );
 
-    terms = [['goose', true], ['piggy', true]];
+    terms = [
+      ['goose', true],
+      ['piggy', true],
+    ];
     html = annotate.annotateText(TEXT, terms, doAnnotation);
     /** @suppress {checkTypes} suppression added to enable type checking */
     html = SafeHtml.unwrap(html);
     assertEquals(
-        'This little <span class="c1">piggy</span> cried ' +
-            '&quot;Wee! Wee! Wee!&quot; all the way home.',
-        html);
+      'This little <span class="c1">piggy</span> cried ' +
+        '&quot;Wee! Wee! Wee!&quot; all the way home.',
+      html
+    );
   },
 
   testAnnotateTextHtmlEscaping() {
@@ -86,31 +91,40 @@ testSuite({
     /** @suppress {checkTypes} suppression added to enable type checking */
     html = SafeHtml.unwrap(html);
     assertEquals(
-        'This little piggy cried &quot;<span class="c0">Wee</span>! ' +
-            '<span class="c0">Wee</span>! <span class="c0">Wee</span>!' +
-            '&quot; all the way home.',
-        html);
+      'This little piggy cried &quot;<span class="c0">Wee</span>! ' +
+        '<span class="c0">Wee</span>! <span class="c0">Wee</span>!' +
+        '&quot; all the way home.',
+      html
+    );
 
-    terms = [['WEE!', true], ['HE', false]];
+    terms = [
+      ['WEE!', true],
+      ['HE', false],
+    ];
     html = annotate.annotateText(TEXT, terms, doAnnotation, true);
     /** @suppress {checkTypes} suppression added to enable type checking */
     html = SafeHtml.unwrap(html);
     assertEquals(
-        'This little piggy cried &quot;<span class="c0">Wee!</span> ' +
-            '<span class="c0">Wee!</span> <span class="c0">Wee!</span>' +
-            '&quot; all t<span class="c1">he</span> way home.',
-        html);
+      'This little piggy cried &quot;<span class="c0">Wee!</span> ' +
+        '<span class="c0">Wee!</span> <span class="c0">Wee!</span>' +
+        '&quot; all t<span class="c1">he</span> way home.',
+      html
+    );
   },
 
   testAnnotateTextOverlappingTerms() {
-    const terms = [['tt', false], ['little', false]];
+    const terms = [
+      ['tt', false],
+      ['little', false],
+    ];
     let html = annotate.annotateText(TEXT, terms, doAnnotation);
     /** @suppress {checkTypes} suppression added to enable type checking */
     html = SafeHtml.unwrap(html);
     assertEquals(
-        'This <span class="c1">little</span> piggy cried &quot;Wee! ' +
-            'Wee! Wee!&quot; all the way home.',
-        html);
+      'This <span class="c1">little</span> piggy cried &quot;Wee! ' +
+        'Wee! Wee!&quot; all the way home.',
+      html
+    );
   },
 
   // goog.dom.annotate.annotateTerms tests
@@ -145,8 +159,7 @@ testSuite({
   testAnnotateTermsWithClassExclusions() {
     const terms = [['pig', false]];
     const classesToIgnore = ['s'];
-    assertTrue(annotate.annotateTerms(
-        $('r'), terms, doAnnotation, false, classesToIgnore));
+    assertTrue(annotate.annotateTerms($('r'), terms, doAnnotation, false, classesToIgnore));
     const spans = dom.getElementsByTagNameAndClass(TagName.SPAN, 'c0', $('r'));
     assertEquals(1, spans.length);
     assertEquals('pig', spans[0].innerHTML);

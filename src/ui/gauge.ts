@@ -214,8 +214,7 @@ class Gauge extends Component {
      * @type {!AbstractGraphics}
      * @private
      */
-    this.graphics_ =
-        googGraphics.createGraphics(width, height, null, null, opt_domHelper);
+    this.graphics_ = googGraphics.createGraphics(width, height, null, null, opt_domHelper);
 
     /**
      * Colors to paint the background of certain ranges (optional).
@@ -411,7 +410,7 @@ class Gauge extends Component {
     this.value_ = value;
     this.formattedValue_ = opt_formattedValue || null;
 
-    this.stopAnimation_();  // Stop the active animation if exists
+    this.stopAnimation_(); // Stop the active animation if exists
 
     // Compute desired value position (normalize value to range 0-1)
     const valuePosition = this.valueToRangePosition_(value);
@@ -422,17 +421,19 @@ class Gauge extends Component {
     } else {
       // Animate move
       this.animation_ = new Animation(
-          [this.needleValuePosition_], [valuePosition], NEEDLE_MOVE_TIME,
-          easing.inAndOut);
+        [this.needleValuePosition_],
+        [valuePosition],
+        NEEDLE_MOVE_TIME,
+        easing.inAndOut
+      );
 
       const events = [
-        Transition.EventType.BEGIN, Animation.EventType.ANIMATE,
-        Transition.EventType.END
+        Transition.EventType.BEGIN,
+        Animation.EventType.ANIMATE,
+        Transition.EventType.END,
       ];
       googEvents.listen(this.animation_, events, this.onAnimate_, false, this);
-      googEvents.listen(
-          this.animation_, Transition.EventType.END, this.onAnimateEnd_, false,
-          this);
+      googEvents.listen(this.animation_, Transition.EventType.END, this.onAnimateEnd_, false, this);
 
       // Start animation
       this.animation_.play(false);
@@ -529,9 +530,13 @@ class Gauge extends Component {
    * @override
    */
   createDom() {
-    this.setElementInternal(this.getDomHelper().createDom(
-        TagName.DIV, goog.getCssName('goog-gauge'),
-        this.graphics_.getElement()));
+    this.setElementInternal(
+      this.getDomHelper().createDom(
+        TagName.DIV,
+        goog.getCssName('goog-gauge'),
+        this.graphics_.getElement()
+      )
+    );
   }
 
   /**
@@ -593,19 +598,16 @@ class Gauge extends Component {
       const fromAngle = this.valueToAngle_(fromValue);
       const toAngle = this.valueToAngle_(toValue);
       // Move to outer point at "from" angle
-      path.moveTo(
-          cx + googMath.angleDx(fromAngle, r),
-          cy + googMath.angleDy(fromAngle, r));
+      path.moveTo(cx + googMath.angleDx(fromAngle, r), cy + googMath.angleDy(fromAngle, r));
       // Arc to outer point at "to" angle
       path.arcTo(r, r, fromAngle, toAngle - fromAngle);
       // Line to inner point at "to" angle
       path.lineTo(
-          cx + googMath.angleDx(toAngle, rBackgroundInternal),
-          cy + googMath.angleDy(toAngle, rBackgroundInternal));
+        cx + googMath.angleDx(toAngle, rBackgroundInternal),
+        cy + googMath.angleDy(toAngle, rBackgroundInternal)
+      );
       // Arc to inner point at "from" angle
-      path.arcTo(
-          rBackgroundInternal, rBackgroundInternal, toAngle,
-          fromAngle - toAngle);
+      path.arcTo(rBackgroundInternal, rBackgroundInternal, toAngle, fromAngle - toAngle);
       path.close();
       fill = new SolidFill(rangeColor.backgroundColor);
       graphics.drawPath(path, null, fill);
@@ -623,14 +625,21 @@ class Gauge extends Component {
       fill = new SolidFill(theme.getTitleColor());
       if (this.titleTop_) {
         y = cy - Math.round(r * FACTOR_TITLE_OFFSET);
-        graphics.drawTextOnLine(
-            this.titleTop_, 0, y, this.width_, y, 'center', font, null, fill);
+        graphics.drawTextOnLine(this.titleTop_, 0, y, this.width_, y, 'center', font, null, fill);
       }
       if (this.titleBottom_) {
         y = cy + Math.round(r * FACTOR_TITLE_OFFSET);
         graphics.drawTextOnLine(
-            this.titleBottom_, 0, y, this.width_, y, 'center', font, null,
-            fill);
+          this.titleBottom_,
+          0,
+          y,
+          this.width_,
+          y,
+          'center',
+          font,
+          null,
+          fill
+        );
       }
     }
 
@@ -648,8 +657,7 @@ class Gauge extends Component {
     const tickLabelFill = new SolidFill(theme.getTickLabelColor());
     let tickLabelFont = this.tickLabelFont_;
     if (!tickLabelFont) {
-      tickLabelFont = new Font(
-          Math.round(r * FACTOR_TICK_LABEL_FONT_SIZE), TITLE_FONT_NAME);
+      tickLabelFont = new Font(Math.round(r * FACTOR_TICK_LABEL_FONT_SIZE), TITLE_FONT_NAME);
     }
     const tickLabelFontSize = tickLabelFont.size;
 
@@ -686,13 +694,12 @@ class Gauge extends Component {
             x2 = this.width_;
           } else {
             // Values around top (angle 260-280) are centered around point
-            const dw = Math.min(x, this.width_ - x);  // Nearest side border
+            const dw = Math.min(x, this.width_ - x); // Nearest side border
             x1 = x - dw;
             x2 = x + dw;
-            y += Math.round(tickLabelFontSize / 4);  // Movea bit down
+            y += Math.round(tickLabelFontSize / 4); // Movea bit down
           }
-          graphics.drawTextOnLine(
-              label, x1, y, x2, y, align, tickLabelFont, null, tickLabelFill);
+          graphics.drawTextOnLine(label, x1, y, x2, y, align, tickLabelFont, null, tickLabelFill);
         }
       }
     }
@@ -752,7 +759,7 @@ class Gauge extends Component {
    */
   valueToRangePosition_(value) {
     const valueRange = this.maxValue_ - this.minValue_;
-    let valuePct = (value - this.minValue_) / valueRange;  // 0 to 1
+    let valuePct = (value - this.minValue_) / valueRange; // 0 to 1
 
     // If value is out of range, trim it not to be too much out of range
     valuePct = Math.max(valuePct, -MAX_EXCEED_POSITION_POSITION);
@@ -803,8 +810,7 @@ class Gauge extends Component {
     const theme = this.theme_;
     const cx = this.width_ / 2;
     const cy = this.height_ / 2;
-    const angle = this.valuePositionToAngle_(
-        /** @type {number} */ (this.needleValuePosition_));
+    const angle = this.valuePositionToAngle_(/** @type {number} */ (this.needleValuePosition_));
 
     // Compute the needle path
     const frontRadius = Math.round(r * FACTOR_NEEDLE_FRONT);
@@ -815,21 +821,27 @@ class Gauge extends Component {
     const backDy = googMath.angleDy(angle, backRadius);
     const angleRight = googMath.standardAngle(angle + 90);
     const distanceControlPointBase = r * FACTOR_NEEDLE_WIDTH;
-    const controlPointMidDx =
-        googMath.angleDx(angleRight, distanceControlPointBase);
-    const controlPointMidDy =
-        googMath.angleDy(angleRight, distanceControlPointBase);
+    const controlPointMidDx = googMath.angleDx(angleRight, distanceControlPointBase);
+    const controlPointMidDy = googMath.angleDy(angleRight, distanceControlPointBase);
 
     const path = new Path();
     path.moveTo(cx + frontDx, cy + frontDy);
     path.curveTo(
-        cx + controlPointMidDx, cy + controlPointMidDy,
-        cx - backDx + (controlPointMidDx / 2),
-        cy - backDy + (controlPointMidDy / 2), cx - backDx, cy - backDy);
+      cx + controlPointMidDx,
+      cy + controlPointMidDy,
+      cx - backDx + controlPointMidDx / 2,
+      cy - backDy + controlPointMidDy / 2,
+      cx - backDx,
+      cy - backDy
+    );
     path.curveTo(
-        cx - backDx - (controlPointMidDx / 2),
-        cy - backDy - (controlPointMidDy / 2), cx - controlPointMidDx,
-        cy - controlPointMidDy, cx + frontDx, cy + frontDy);
+      cx - backDx - controlPointMidDx / 2,
+      cy - backDy - controlPointMidDy / 2,
+      cx - controlPointMidDx,
+      cy - controlPointMidDy,
+      cx + frontDx,
+      cy + frontDy
+    );
 
     // Draw the needle hinge
     const rh = Math.round(r * FACTOR_NEEDLE_HINGE);
@@ -851,11 +863,20 @@ class Gauge extends Component {
         font.bold = true;
         this.valueFont_ = font;
       }
-      let fill = new SolidFill(theme.getValueColor());
+      const fill = new SolidFill(theme.getValueColor());
       const y = cy + Math.round(r * FACTOR_VALUE_OFFSET);
       graphics.drawTextOnLine(
-          this.formattedValue_, 0, y, this.width_, y, 'center', font, null,
-          fill, needleGroup);
+        this.formattedValue_,
+        0,
+        y,
+        this.width_,
+        y,
+        'center',
+        font,
+        null,
+        fill,
+        needleGroup
+      );
     }
 
     // Draw the needle

@@ -4,11 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview A thin wrapper around the DOM element for paths.
  */
-
 
 goog.provide('goog.graphics.PathElement');
 
@@ -17,8 +15,6 @@ goog.requireType('goog.graphics.AbstractGraphics');
 goog.requireType('goog.graphics.Fill');
 goog.requireType('goog.graphics.Path');
 goog.requireType('goog.graphics.Stroke');
-
-
 
 /**
  * Interface for a graphics path element.
@@ -35,13 +31,10 @@ goog.requireType('goog.graphics.Stroke');
  *     differences before the canvas tag was widely supported.  See
  *     http://en.wikipedia.org/wiki/Canvas_element for details.
  */
-goog.graphics.PathElement = function(element, graphics, stroke, fill) {
-  'use strict';
-  goog.graphics.StrokeAndFillElement.call(
-      this, element, graphics, stroke, fill);
+goog.graphics.PathElement = function (element, graphics, stroke, fill) {
+  goog.graphics.StrokeAndFillElement.call(this, element, graphics, stroke, fill);
 };
 goog.inherits(goog.graphics.PathElement, goog.graphics.StrokeAndFillElement);
-
 
 /**
  * Update the underlying path.

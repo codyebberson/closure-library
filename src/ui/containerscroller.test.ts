@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.ContainerScrollerTest');
-goog.setTestOnly();
 
 const Container = goog.require('goog.ui.Container');
 const ContainerScroller = goog.require('goog.ui.ContainerScroller');
@@ -65,9 +64,11 @@ testSuite({
     scroller = new ContainerScroller(container);
     container.getChildAt(8).setHighlighted(true);
     assertEquals(
-        'Since scrolling is lazy, when highlighting the second' +
-            ' last, the item should be the last visible one.',
-        80, container.getElement().scrollTop);
+      'Since scrolling is lazy, when highlighting the second' +
+        ' last, the item should be the last visible one.',
+      80,
+      container.getElement().scrollTop
+    );
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -86,9 +87,11 @@ testSuite({
     container.setVisible(false);
     container.setVisible(true);
     assertEquals(
-        'Scroll position should be the same after restore, if it ' +
-            'still makes highlighted item visible',
-        scrollTop, container.getElement().scrollTop);
+      'Scroll position should be the same after restore, if it ' +
+        'still makes highlighted item visible',
+      scrollTop,
+      container.getElement().scrollTop
+    );
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -100,11 +103,13 @@ testSuite({
     container.getChildAt(0).setHighlighted(true);
     container.setVisible(true);
     assertNotEquals(
-        'Scroll position should not be the same after restore, if ' +
-            'the scroll position when the menu was hidden no longer ' +
-            'makes the highlighted item visible when the container is ' +
-            'shown again',
-        100, container.getElement().scrollTop);
+      'Scroll position should not be the same after restore, if ' +
+        'the scroll position when the menu was hidden no longer ' +
+        'makes the highlighted item visible when the container is ' +
+        'shown again',
+      100,
+      container.getElement().scrollTop
+    );
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -116,32 +121,31 @@ testSuite({
     // #2 should be at the top when 4 is centered, meaning a scroll top
     // of 40 pixels.
     assertEquals(
-        'On the very first display of the scroller, the item should be ' +
-            'centered, rather than just assured in view.',
-        40, container.getElement().scrollTop);
+      'On the very first display of the scroller, the item should be ' +
+        'centered, rather than just assured in view.',
+      40,
+      container.getElement().scrollTop
+    );
   },
 
   testHighlightsAreIgnoredInResponseToScrolling() {
     scroller = new ContainerScroller(container);
     container.getChildAt(9).setHighlighted(true);
-    events.fireMouseOverEvent(
-        dom.getElement('control-5'), dom.getElement('control-9'));
-    assertEquals(
-        'Mouseovers due to scrolls should be ignored', 9,
-        container.getHighlightedIndex());
+    events.fireMouseOverEvent(dom.getElement('control-5'), dom.getElement('control-9'));
+    assertEquals('Mouseovers due to scrolls should be ignored', 9, container.getHighlightedIndex());
   },
 
   testHighlightsAreNotIgnoredWhenNotScrolling() {
     scroller = new ContainerScroller(container);
     container.getChildAt(5).setHighlighted(true);
     mockClock.tick(1000);
-    events.fireMouseOutEvent(
-        dom.getElement('control-5'), dom.getElement('control-6'));
-    events.fireMouseOverEvent(
-        dom.getElement('control-6'), dom.getElement('control-5'));
+    events.fireMouseOutEvent(dom.getElement('control-5'), dom.getElement('control-6'));
+    events.fireMouseOverEvent(dom.getElement('control-6'), dom.getElement('control-5'));
     assertEquals(
-        'Mousovers not due to scrolls should not be ignored', 6,
-        container.getHighlightedIndex());
+      'Mousovers not due to scrolls should not be ignored',
+      6,
+      container.getHighlightedIndex()
+    );
   },
 
   testFastSynchronousHighlightsNotIgnored() {
@@ -154,12 +158,16 @@ testSuite({
     container.getChildAt(9).setHighlighted(true);
     container.getChildAt(1).setHighlighted(true);
     assertEquals(
-        'Synchronous highlights should NOT be ignored.', 1,
-        container.getHighlightedIndex());
+      'Synchronous highlights should NOT be ignored.',
+      1,
+      container.getHighlightedIndex()
+    );
     container.getChildAt(8).setHighlighted(true);
     assertEquals(
-        'Synchronous highlights should NOT be ignored.', 8,
-        container.getHighlightedIndex());
+      'Synchronous highlights should NOT be ignored.',
+      8,
+      container.getHighlightedIndex()
+    );
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -169,9 +177,11 @@ testSuite({
     // #2 should be at the top when 4 is centered, meaning a scroll top
     // of 40 pixels.
     assertEquals(
-        'On the very first attachment of the scroller, the item should be ' +
-            'centered, rather than just assured in view.',
-        40, container.getElement().scrollTop);
+      'On the very first attachment of the scroller, the item should be ' +
+        'centered, rather than just assured in view.',
+      40,
+      container.getElement().scrollTop
+    );
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -185,9 +195,7 @@ testSuite({
     scroller = new ContainerScroller(container);
     /** @suppress {checkTypes} suppression added to enable type checking */
     container.getElement = () => {
-      fail(
-          'getElement() must not be called when a control in the container is ' +
-          'being hidden');
+      fail('getElement() must not be called when a control in the container is ' + 'being hidden');
     };
     container.getChildAt(0).setVisible(false);
   },

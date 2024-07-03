@@ -15,8 +15,6 @@ goog.require('goog.events.Event');
 goog.requireType('goog.fs.FileReader.EventType');
 goog.requireType('goog.fs.FileSaver.EventType');
 
-
-
 /**
  * A mock progress event.
  *
@@ -28,8 +26,7 @@ goog.requireType('goog.fs.FileSaver.EventType');
  * @extends {goog.events.Event}
  * @final
  */
-goog.testing.fs.ProgressEvent = function(type, loaded, total) {
-  'use strict';
+goog.testing.fs.ProgressEvent = function (type, loaded, total) {
   goog.testing.fs.ProgressEvent.base(this, 'constructor', type);
 
   /**
@@ -38,7 +35,6 @@ goog.testing.fs.ProgressEvent = function(type, loaded, total) {
    * @private
    */
   this.loaded_ = loaded;
-
 
   /**
    * The total data that was to be procesed, in bytes.
@@ -49,32 +45,24 @@ goog.testing.fs.ProgressEvent = function(type, loaded, total) {
 };
 goog.inherits(goog.testing.fs.ProgressEvent, goog.events.Event);
 
-
 /**
  * @see {goog.fs.ProgressEvent#isLengthComputable}
  * @return {boolean} True if the length is known.
  */
-goog.testing.fs.ProgressEvent.prototype.isLengthComputable = function() {
-  'use strict';
-  return true;
-};
-
+goog.testing.fs.ProgressEvent.prototype.isLengthComputable = () => true;
 
 /**
  * @see {goog.fs.ProgressEvent#getLoaded}
  * @return {number} The number of bytes loaded or written.
  */
-goog.testing.fs.ProgressEvent.prototype.getLoaded = function() {
-  'use strict';
+goog.testing.fs.ProgressEvent.prototype.getLoaded = function () {
   return this.loaded_;
 };
-
 
 /**
  * @see {goog.fs.ProgressEvent#getTotal}
  * @return {number} The total bytes to load or write.
  */
-goog.testing.fs.ProgressEvent.prototype.getTotal = function() {
-  'use strict';
+goog.testing.fs.ProgressEvent.prototype.getTotal = function () {
   return this.total_;
 };

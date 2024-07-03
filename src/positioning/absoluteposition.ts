@@ -16,8 +16,6 @@ goog.require('goog.positioning.AbstractPosition');
 goog.requireType('goog.math.Box');
 goog.requireType('goog.math.Size');
 
-
-
 /**
  * Encapsulates a popup position where the popup absolutely positioned by
  * setting the left/top style elements directly to the specified values.
@@ -30,19 +28,17 @@ goog.requireType('goog.math.Size');
  * @constructor
  * @extends {goog.positioning.AbstractPosition}
  */
-goog.positioning.AbsolutePosition = function(arg1, opt_arg2) {
-  'use strict';
+goog.positioning.AbsolutePosition = function (arg1, opt_arg2) {
   /**
    * Coordinate to position popup at.
    * @type {goog.math.Coordinate}
    */
-  this.coordinate = arg1 instanceof goog.math.Coordinate ?
-      arg1 :
-      new goog.math.Coordinate(/** @type {number} */ (arg1), opt_arg2);
+  this.coordinate =
+    arg1 instanceof goog.math.Coordinate
+      ? arg1
+      : new goog.math.Coordinate(/** @type {number} */ (arg1), opt_arg2);
 };
-goog.inherits(
-    goog.positioning.AbsolutePosition, goog.positioning.AbstractPosition);
-
+goog.inherits(goog.positioning.AbsolutePosition, goog.positioning.AbstractPosition);
 
 /**
  * Repositions the popup according to the current state.
@@ -55,10 +51,19 @@ goog.inherits(
  *     movableElement.
  * @override
  */
-goog.positioning.AbsolutePosition.prototype.reposition = function(
-    movableElement, movableCorner, opt_margin, opt_preferredSize) {
-  'use strict';
+goog.positioning.AbsolutePosition.prototype.reposition = function (
+  movableElement,
+  movableCorner,
+  opt_margin,
+  opt_preferredSize
+) {
   goog.positioning.positionAtCoordinate(
-      this.coordinate, movableElement, movableCorner, opt_margin, null, null,
-      opt_preferredSize);
+    this.coordinate,
+    movableElement,
+    movableCorner,
+    opt_margin,
+    null,
+    null,
+    opt_preferredSize
+  );
 };

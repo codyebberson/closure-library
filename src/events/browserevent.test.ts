@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.events.BrowserEventTest');
-goog.setTestOnly();
 
 const BrowserEvent = goog.require('goog.events.BrowserEvent');
 const Coordinate = goog.require('goog.math.Coordinate');
@@ -26,7 +25,11 @@ const PointerType = BrowserEvent.PointerType;
  * @suppress {checkTypes} suppression added to enable type checking
  */
 function createMouseEvent(type, button, opt_ctrlKey) {
-  return new BrowserEvent({type: type, button: button, ctrlKey: !!opt_ctrlKey});
+  return new BrowserEvent({
+    type: type,
+    button: button,
+    ctrlKey: !!opt_ctrlKey,
+  });
 }
 
 /**
@@ -41,12 +44,14 @@ function createTouchEvent(type, target, clientCoords, screenCoords) {
   return new BrowserEvent({
     type: type,
     target: target,
-    changedTouches: [{
-      clientX: clientCoords.x,
-      clientY: clientCoords.y,
-      screenX: screenCoords.x,
-      screenY: screenCoords.y,
-    }],
+    changedTouches: [
+      {
+        clientX: clientCoords.x,
+        clientY: clientCoords.y,
+        screenX: screenCoords.x,
+        screenY: screenCoords.y,
+      },
+    ],
   });
 }
 
@@ -58,8 +63,11 @@ function createTouchEvent(type, target, clientCoords, screenCoords) {
  * @suppress {checkTypes} suppression added to enable type checking
  */
 function createPointerEvent(type, pointerId, pointerType) {
-  return new BrowserEvent(
-      {type: type, pointerId: pointerId, pointerType: pointerType});
+  return new BrowserEvent({
+    type: type,
+    pointerId: pointerId,
+    pointerType: pointerType,
+  });
 }
 
 /**
@@ -70,11 +78,12 @@ function createPointerEvent(type, pointerId, pointerType) {
  * @suppress {missingReturn} suppression added to enable type checking
  */
 function assertIsButton(event, button, isActionButton) {
-  for (let key in Button) {
+  for (const key in Button) {
     assertEquals(
-        'Testing isButton(' + key + ') against ' + button + ' and type ' +
-            event.type,
-        Button[key] == button, event.isButton(Button[key]));
+      'Testing isButton(' + key + ') against ' + button + ' and type ' + event.type,
+      Button[key] == button,
+      event.isButton(Button[key])
+    );
   }
 
   assertEquals(isActionButton, event.isMouseActionButton());
@@ -96,11 +105,13 @@ testSuite({
     event.relatedTarget.__defineGetter__('nodeName', () => {
       throw new Error('https://bugzilla.mozilla.org/show_bug.cgi?id=497780');
     });
-    assertThrows(/**
+    assertThrows(
+      /**
                     @suppress {missingProperties} suppression added to enable
                     type checking
                   */
-                 () => event.relatedTarget.nodeName);
+      () => event.relatedTarget.nodeName
+    );
 
     /** @suppress {checkTypes} suppression added to enable type checking */
     const bEvent = new BrowserEvent(event);
@@ -136,8 +147,7 @@ testSuite({
     assertIsButton(createMouseEvent('mousedown', 2), Button.RIGHT, false);
     assertIsButton(createMouseEvent('mousedown', 2, true), Button.RIGHT, false);
     assertIsButton(createMouseEvent('mousedown', 1), Button.MIDDLE, false);
-    assertIsButton(
-        createMouseEvent('mousedown', 1, true), Button.MIDDLE, false);
+    assertIsButton(createMouseEvent('mousedown', 1, true), Button.MIDDLE, false);
   },
 
   testIsButtonGecko() {
@@ -151,14 +161,10 @@ testSuite({
     const clientCoords = new Coordinate(5, 5);
     const screenCoords = new Coordinate(10, 10);
     const target = document.body;
-    const touchStart =
-        createTouchEvent('touchstart', target, clientCoords, screenCoords);
-    const touchMove =
-        createTouchEvent('touchmove', target, clientCoords, screenCoords);
-    const touchEnd =
-        createTouchEvent('touchend', target, clientCoords, screenCoords);
-    const touchCancel =
-        createTouchEvent('touchcancel', target, clientCoords, screenCoords);
+    const touchStart = createTouchEvent('touchstart', target, clientCoords, screenCoords);
+    const touchMove = createTouchEvent('touchmove', target, clientCoords, screenCoords);
+    const touchEnd = createTouchEvent('touchend', target, clientCoords, screenCoords);
+    const touchCancel = createTouchEvent('touchcancel', target, clientCoords, screenCoords);
 
     assertEquals(clientCoords.x, touchStart.clientX);
     assertEquals(clientCoords.y, touchStart.clientY);
@@ -194,7 +200,7 @@ testSuite({
     const onlyPageCoords = new BrowserEvent({
       type: 'touchstart',
       target: document.body,
-      changedTouches: [{pageX: 6, pageY: 7}],
+      changedTouches: [{ pageX: 6, pageY: 7 }],
     });
 
     assertEquals(undefined, noChangedTouches.clientX);

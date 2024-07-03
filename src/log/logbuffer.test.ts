@@ -5,17 +5,12 @@
  */
 
 goog.module('goog.log.LogBufferTest');
-goog.setTestOnly();
 
 const Level = goog.require('goog.log.Level');
 const LogBuffer = goog.require('goog.log.LogBuffer');
 const testSuite = goog.require('goog.testing.testSuite');
 
-const PLACEHOLDER_LEVELS = [
-  Level.INFO,
-  Level.WARNING,
-  Level.SEVERE,
-];
+const PLACEHOLDER_LEVELS = [Level.INFO, Level.WARNING, Level.SEVERE];
 const PLACEHOLDER_MESSAGES = ['a', 'b', 'c'];
 const PLACEHOLDER_NAMES = ['X', 'Y', 'Z'];
 const CAPACITY = 4;
@@ -28,13 +23,9 @@ function verifyRecord(expectedIndex, record) {
   const message = PLACEHOLDER_MESSAGES[index];
   const level = PLACEHOLDER_LEVELS[index];
   const name = PLACEHOLDER_NAMES[index];
-  assertEquals(
-      `Wrong level for record ${expectedIndex}`, level, record.getLevel());
-  assertEquals(
-      `Wrong message for record ${expectedIndex}`, message,
-      record.getMessage());
-  assertEquals(
-      `Wrong name for record ${expectedIndex}`, name, record.getLoggerName());
+  assertEquals(`Wrong level for record ${expectedIndex}`, level, record.getLevel());
+  assertEquals(`Wrong message for record ${expectedIndex}`, message, record.getMessage());
+  assertEquals(`Wrong name for record ${expectedIndex}`, name, record.getLoggerName());
 }
 
 function addAndVerifyRecord() {
@@ -89,7 +80,6 @@ testSuite({
     buffer.forEachRecord((record) => {
       verifyRecord(index++, record);
     });
-    assertEquals(
-        'Wrong number of records when full.', howMany1 + howMany2, index);
+    assertEquals('Wrong number of records when full.', howMany1 + howMany2, index);
   },
 });

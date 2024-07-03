@@ -7,7 +7,6 @@
 /** @fileoverview Unit tests for goog.html.util. */
 
 goog.module('goog.html.UtilsTest');
-goog.setTestOnly();
 
 const TagName = goog.require('goog.dom.TagName');
 const googArray = goog.require('goog.array');
@@ -28,8 +27,7 @@ let result;
  * @param {string=} id Optional id to give the element.
  * @return {string} The HTML of an element from the given tag and content.
  */
-function makeHtml(
-    tag, content, copies = undefined, tabIndex = undefined, id = undefined) {
+function makeHtml(tag, content, copies = undefined, tabIndex = undefined, id = undefined) {
   let html = [`<${tag}`, `>${content}</${tag}>`];
   if (typeof tabIndex === 'number') {
     googArray.insertAt(html, ` tabIndex="${tabIndex}"`, 1);
@@ -83,33 +81,33 @@ testSuite({
   },
 
   testComplex() {
-    const html = '<h1 id=\"life\">Life at Google</h1>' +
-        '<p>Read and interact with the information below to learn about ' +
-        'life at <u>Google</u>.</p>' +
-        '<h2 id=\"food\">Food at Google</h2>' +
-        '<p>Google has <em>the best food in the world</em>.</p>' +
-        '<h2 id=\"transportation\">Transportation at Google</h2>' +
-        '<p>Google provides <i>free transportation</i>.</p>' +
-        // Some text with symbols to make sure that it does not get stripped
-        '<3i><x>\n-10<x<10 3cat < 3dog &amp;&lt;&gt;&quot;';
+    const html =
+      '<h1 id="life">Life at Google</h1>' +
+      '<p>Read and interact with the information below to learn about ' +
+      'life at <u>Google</u>.</p>' +
+      '<h2 id="food">Food at Google</h2>' +
+      '<p>Google has <em>the best food in the world</em>.</p>' +
+      '<h2 id="transportation">Transportation at Google</h2>' +
+      '<p>Google provides <i>free transportation</i>.</p>' +
+      // Some text with symbols to make sure that it does not get stripped
+      '<3i><x>\n-10<x<10 3cat < 3dog &amp;&lt;&gt;&quot;';
     result = utils.stripHtmlTags(html);
-    const expected = 'Life at Google ' +
-        'Read and interact with the information below to learn about ' +
-        'life at Google. ' +
-        'Food at Google ' +
-        'Google has the best food in the world. ' +
-        'Transportation at Google ' +
-        'Google provides free transportation. ' +
-        '-10<x<10 3cat < 3dog &<>\"';
+    const expected =
+      'Life at Google ' +
+      'Read and interact with the information below to learn about ' +
+      'life at Google. ' +
+      'Food at Google ' +
+      'Google has the best food in the world. ' +
+      'Transportation at Google ' +
+      'Google provides free transportation. ' +
+      '-10<x<10 3cat < 3dog &<>"';
     assertEquals(FAILURE_MESSAGE, expected, result);
   },
 
   testInteresting() {
-    result = utils.stripHtmlTags(
-        '<img/src="bogus"onerror=alert(13) style="display:none">');
+    result = utils.stripHtmlTags('<img/src="bogus"onerror=alert(13) style="display:none">');
     assertEquals(FAILURE_MESSAGE, '', result);
-    result = utils.stripHtmlTags(
-        '<img o\'reilly blob src=bogus onerror=alert(1337)>');
+    result = utils.stripHtmlTags("<img o'reilly blob src=bogus onerror=alert(1337)>");
     assertEquals(FAILURE_MESSAGE, '', result);
   },
 });

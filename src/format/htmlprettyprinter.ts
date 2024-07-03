@@ -15,8 +15,6 @@ goog.require('goog.dom.TagName');
 goog.require('goog.object');
 goog.require('goog.string.StringBuffer');
 
-
-
 /**
  * This class formats HTML to be more human-readable.
  * TODO(user): Add hierarchical indentation.
@@ -26,17 +24,14 @@ goog.require('goog.string.StringBuffer');
  * @constructor
  * @final
  */
-goog.format.HtmlPrettyPrinter = function(opt_timeOutMillis) {
-  'use strict';
+goog.format.HtmlPrettyPrinter = function (opt_timeOutMillis) {
   /**
    * Max # milliseconds to spend on #format.
    * @type {number}
    * @private
    */
-  this.timeOutMillis_ =
-      opt_timeOutMillis && opt_timeOutMillis > 0 ? opt_timeOutMillis : 0;
+  this.timeOutMillis_ = opt_timeOutMillis && opt_timeOutMillis > 0 ? opt_timeOutMillis : 0;
 };
-
 
 /**
  * Singleton.
@@ -44,32 +39,25 @@ goog.format.HtmlPrettyPrinter = function(opt_timeOutMillis) {
  */
 goog.format.HtmlPrettyPrinter.instance_ = null;
 
-
 /**
  * Singleton lazy initializer.
  * @return {!goog.format.HtmlPrettyPrinter} Singleton.
  * @private
  */
-goog.format.HtmlPrettyPrinter.getInstance_ = function() {
-  'use strict';
+goog.format.HtmlPrettyPrinter.getInstance_ = () => {
   if (!goog.format.HtmlPrettyPrinter.instance_) {
-    goog.format.HtmlPrettyPrinter.instance_ =
-        new goog.format.HtmlPrettyPrinter();
+    goog.format.HtmlPrettyPrinter.instance_ = new goog.format.HtmlPrettyPrinter();
   }
   return goog.format.HtmlPrettyPrinter.instance_;
 };
-
 
 /**
  * Static utility function. See prototype #format.
  * @param {string} html The HTML text to pretty print.
  * @return {string} Formatted result.
  */
-goog.format.HtmlPrettyPrinter.format = function(html) {
-  'use strict';
-  return goog.format.HtmlPrettyPrinter.getInstance_().format(html);
-};
-
+goog.format.HtmlPrettyPrinter.format = (html) =>
+  goog.format.HtmlPrettyPrinter.getInstance_().format(html);
 
 /**
  * List of patterns used to tokenize HTML for pretty printing. Cache
@@ -78,9 +66,7 @@ goog.format.HtmlPrettyPrinter.format = function(html) {
  * @private {!RegExp}
  * @const
  */
-goog.format.HtmlPrettyPrinter.TOKEN_REGEX_ =
-    /(?:<!--.*?-->|<!.*?>|<(\/?)(\w+)[^<>]*>|[^<]+|<)/g;
-
+goog.format.HtmlPrettyPrinter.TOKEN_REGEX_ = /(?:<!--.*?-->|<!.*?>|<(\/?)(\w+)[^<>]*>|[^<]+|<)/g;
 
 /**
  * Tags whose contents we don't want pretty printed.
@@ -88,9 +74,11 @@ goog.format.HtmlPrettyPrinter.TOKEN_REGEX_ =
  * @const
  */
 goog.format.HtmlPrettyPrinter.NON_PRETTY_PRINTED_TAGS_ = goog.object.createSet(
-    goog.dom.TagName.SCRIPT, goog.dom.TagName.STYLE, goog.dom.TagName.PRE,
-    'XMP');
-
+  goog.dom.TagName.SCRIPT,
+  goog.dom.TagName.STYLE,
+  goog.dom.TagName.PRE,
+  'XMP'
+);
 
 /**
  * 'Block' tags. We should add newlines before and after these tags during
@@ -101,24 +89,56 @@ goog.format.HtmlPrettyPrinter.NON_PRETTY_PRINTED_TAGS_ = goog.object.createSet(
  * @const
  */
 goog.format.HtmlPrettyPrinter.BLOCK_TAGS_ = goog.object.createSet(
-    goog.dom.TagName.ADDRESS, goog.dom.TagName.APPLET, goog.dom.TagName.AREA,
-    goog.dom.TagName.BASE, goog.dom.TagName.BASEFONT,
-    goog.dom.TagName.BLOCKQUOTE, goog.dom.TagName.BODY,
-    goog.dom.TagName.CAPTION, goog.dom.TagName.CENTER, goog.dom.TagName.COL,
-    goog.dom.TagName.COLGROUP, goog.dom.TagName.DIR, goog.dom.TagName.DIV,
-    goog.dom.TagName.DL, goog.dom.TagName.FIELDSET, goog.dom.TagName.FORM,
-    goog.dom.TagName.FRAME, goog.dom.TagName.FRAMESET, goog.dom.TagName.H1,
-    goog.dom.TagName.H2, goog.dom.TagName.H3, goog.dom.TagName.H4,
-    goog.dom.TagName.H5, goog.dom.TagName.H6, goog.dom.TagName.HEAD,
-    goog.dom.TagName.HR, goog.dom.TagName.HTML, goog.dom.TagName.IFRAME,
-    goog.dom.TagName.ISINDEX, goog.dom.TagName.LEGEND, goog.dom.TagName.LINK,
-    goog.dom.TagName.MENU, goog.dom.TagName.META, goog.dom.TagName.NOFRAMES,
-    goog.dom.TagName.NOSCRIPT, goog.dom.TagName.OL, goog.dom.TagName.OPTGROUP,
-    goog.dom.TagName.OPTION, goog.dom.TagName.P, goog.dom.TagName.PARAM,
-    goog.dom.TagName.TABLE, goog.dom.TagName.TBODY, goog.dom.TagName.TD,
-    goog.dom.TagName.TFOOT, goog.dom.TagName.TH, goog.dom.TagName.THEAD,
-    goog.dom.TagName.TITLE, goog.dom.TagName.TR, goog.dom.TagName.UL);
-
+  goog.dom.TagName.ADDRESS,
+  goog.dom.TagName.APPLET,
+  goog.dom.TagName.AREA,
+  goog.dom.TagName.BASE,
+  goog.dom.TagName.BASEFONT,
+  goog.dom.TagName.BLOCKQUOTE,
+  goog.dom.TagName.BODY,
+  goog.dom.TagName.CAPTION,
+  goog.dom.TagName.CENTER,
+  goog.dom.TagName.COL,
+  goog.dom.TagName.COLGROUP,
+  goog.dom.TagName.DIR,
+  goog.dom.TagName.DIV,
+  goog.dom.TagName.DL,
+  goog.dom.TagName.FIELDSET,
+  goog.dom.TagName.FORM,
+  goog.dom.TagName.FRAME,
+  goog.dom.TagName.FRAMESET,
+  goog.dom.TagName.H1,
+  goog.dom.TagName.H2,
+  goog.dom.TagName.H3,
+  goog.dom.TagName.H4,
+  goog.dom.TagName.H5,
+  goog.dom.TagName.H6,
+  goog.dom.TagName.HEAD,
+  goog.dom.TagName.HR,
+  goog.dom.TagName.HTML,
+  goog.dom.TagName.IFRAME,
+  goog.dom.TagName.ISINDEX,
+  goog.dom.TagName.LEGEND,
+  goog.dom.TagName.LINK,
+  goog.dom.TagName.MENU,
+  goog.dom.TagName.META,
+  goog.dom.TagName.NOFRAMES,
+  goog.dom.TagName.NOSCRIPT,
+  goog.dom.TagName.OL,
+  goog.dom.TagName.OPTGROUP,
+  goog.dom.TagName.OPTION,
+  goog.dom.TagName.P,
+  goog.dom.TagName.PARAM,
+  goog.dom.TagName.TABLE,
+  goog.dom.TagName.TBODY,
+  goog.dom.TagName.TD,
+  goog.dom.TagName.TFOOT,
+  goog.dom.TagName.TH,
+  goog.dom.TagName.THEAD,
+  goog.dom.TagName.TITLE,
+  goog.dom.TagName.TR,
+  goog.dom.TagName.UL
+);
 
 /**
  * Non-block tags that break flow. We insert a line break after, but not before
@@ -127,9 +147,12 @@ goog.format.HtmlPrettyPrinter.BLOCK_TAGS_ = goog.object.createSet(
  * @const
  */
 goog.format.HtmlPrettyPrinter.BREAKS_FLOW_TAGS_ = goog.object.createSet(
-    goog.dom.TagName.BR, goog.dom.TagName.DD, goog.dom.TagName.DT,
-    goog.dom.TagName.LI, goog.dom.TagName.NOFRAMES);
-
+  goog.dom.TagName.BR,
+  goog.dom.TagName.DD,
+  goog.dom.TagName.DT,
+  goog.dom.TagName.LI,
+  goog.dom.TagName.NOFRAMES
+);
 
 /**
  * Empty tags. These are treated as both start and end tags.
@@ -137,8 +160,10 @@ goog.format.HtmlPrettyPrinter.BREAKS_FLOW_TAGS_ = goog.object.createSet(
  * @const
  */
 goog.format.HtmlPrettyPrinter.EMPTY_TAGS_ = goog.object.createSet(
-    goog.dom.TagName.BR, goog.dom.TagName.HR, goog.dom.TagName.ISINDEX);
-
+  goog.dom.TagName.BR,
+  goog.dom.TagName.HR,
+  goog.dom.TagName.ISINDEX
+);
 
 /**
  * Breaks up HTML so it's easily readable by the user.
@@ -146,8 +171,7 @@ goog.format.HtmlPrettyPrinter.EMPTY_TAGS_ = goog.object.createSet(
  * @return {string} Formatted result.
  * @throws {Error} Regex error, data loss, or endless loop detected.
  */
-goog.format.HtmlPrettyPrinter.prototype.format = function(html) {
-  'use strict';
+goog.format.HtmlPrettyPrinter.prototype.format = function (html) {
   // Trim leading whitespace, but preserve first indent; in other words, keep
   // any spaces immediately before the first non-whitespace character (that's
   // what $1 is), but remove all other leading whitespace. This adjustment
@@ -180,7 +204,7 @@ goog.format.HtmlPrettyPrinter.prototype.format = function(html) {
 
   // Loop through each matched token.
   var match;
-  while (match = tokenRegex.exec(html)) {
+  while ((match = tokenRegex.exec(html))) {
     // Get token.
     var token = match[0];
 
@@ -266,16 +290,13 @@ goog.format.HtmlPrettyPrinter.prototype.format = function(html) {
   return result;
 };
 
-
-
 /**
  * This class is a buffer to which we push our output. It tracks line breaks to
  * make sure we don't add unnecessary ones.
  * @constructor
  * @final
  */
-goog.format.HtmlPrettyPrinter.Buffer = function() {
-  'use strict';
+goog.format.HtmlPrettyPrinter.Buffer = function () {
   /**
    * Tokens to be output in #toString.
    * @type {goog.string.StringBuffer}
@@ -284,13 +305,11 @@ goog.format.HtmlPrettyPrinter.Buffer = function() {
   this.out_ = new goog.string.StringBuffer();
 };
 
-
 /**
  * Tracks number of line breaks added.
  * @type {number}
  */
 goog.format.HtmlPrettyPrinter.Buffer.prototype.breakCount = 0;
-
 
 /**
  * Tracks if we are at the start of a new line.
@@ -299,14 +318,12 @@ goog.format.HtmlPrettyPrinter.Buffer.prototype.breakCount = 0;
  */
 goog.format.HtmlPrettyPrinter.Buffer.prototype.isBeginningOfNewLine_ = true;
 
-
 /**
  * Tracks if we need a new line before the next token.
  * @type {boolean}
  * @private
  */
 goog.format.HtmlPrettyPrinter.Buffer.prototype.needsNewLine_ = false;
-
 
 /**
  * Adds token and necessary line breaks to output buffer.
@@ -316,17 +333,18 @@ goog.format.HtmlPrettyPrinter.Buffer.prototype.needsNewLine_ = false;
  * @param {boolean} breakAfter If true, add line break after token if
  *     necessary.
  */
-goog.format.HtmlPrettyPrinter.Buffer.prototype.pushToken = function(
-    breakBefore, token, breakAfter) {
-  'use strict';
+goog.format.HtmlPrettyPrinter.Buffer.prototype.pushToken = function (
+  breakBefore,
+  token,
+  breakAfter
+) {
   // If this token needs a preceding line break, and
   // we haven't already added a line break, and
   // this token does not start with a line break,
   // then add line break.
   // Due to FF3.0 bug with lists, we don't insert a /n
   // right before </ul>. See bug 1520665.
-  if ((this.needsNewLine_ || breakBefore) && !/^\r?\n/.test(token) &&
-      !/\/ul/i.test(token)) {
+  if ((this.needsNewLine_ || breakBefore) && !/^\r?\n/.test(token) && !/\/ul/i.test(token)) {
     this.lineBreak();
   }
 
@@ -343,24 +361,20 @@ goog.format.HtmlPrettyPrinter.Buffer.prototype.pushToken = function(
   this.needsNewLine_ = breakAfter && !this.isBeginningOfNewLine_;
 };
 
-
 /**
  * Append line break if we need one.
  */
-goog.format.HtmlPrettyPrinter.Buffer.prototype.lineBreak = function() {
-  'use strict';
+goog.format.HtmlPrettyPrinter.Buffer.prototype.lineBreak = function () {
   if (!this.isBeginningOfNewLine_) {
     this.out_.append('\n');
     ++this.breakCount;
   }
 };
 
-
 /**
  * @return {string} String representation of tokens.
  * @override
  */
-goog.format.HtmlPrettyPrinter.Buffer.prototype.toString = function() {
-  'use strict';
+goog.format.HtmlPrettyPrinter.Buffer.prototype.toString = function () {
   return this.out_.toString();
 };

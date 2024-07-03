@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.math.RangeSetTest');
-goog.setTestOnly();
 
 const Range = goog.require('goog.math.Range');
 const RangeSet = goog.require('goog.math.RangeSet');
@@ -30,18 +29,19 @@ function assertRangesEqual(a, b, c = undefined) {
 
   if (Array.isArray(expected)) {
     assertEquals(
-        `${message}
+      `${message}
 ` +
-            'Expected ranges must be specified as goog.math.Range ' +
-            'objects or as 2-element number arrays. Found [' +
-            expected.join(', ') + ']',
-        2, expected.length);
+        'Expected ranges must be specified as goog.math.Range ' +
+        'objects or as 2-element number arrays. Found [' +
+        expected.join(', ') +
+        ']',
+      2,
+      expected.length
+    );
     expected = new Range(expected[0], expected[1]);
   }
 
-  if (!Range.equals(
-          /** @type {!Range} */ (expected),
-          /** @type {!Range} */ (actual))) {
+  if (!Range.equals(/** @type {!Range} */ expected, /** @type {!Range} */ actual)) {
     if (message) {
       assertEquals(message, expected, actual);
     } else {
@@ -63,14 +63,14 @@ function assertRangesEqual(a, b, c = undefined) {
  * @suppress {checkTypes} suppression added to enable type checking
  */
 function assertRangeListsEqual(a, b, c = undefined) {
-  const message = c ? `${a}
-` :
-                      '';
+  const message = c
+    ? `${a}
+`
+    : '';
   const expected = c ? b : a;
   const actual = c ? c : b;
 
-  assertEquals(
-      `${message}Array lengths unequal.`, expected.length, actual.length);
+  assertEquals(`${message}Array lengths unequal.`, expected.length, actual.length);
 
   for (let i = 0; i < expected.length; i++) {
     assertRangesEqual(`${message}Range ${i} mismatch.`, expected[i], actual[i]);
@@ -91,19 +91,30 @@ testSuite({
     r.add(new Range(8, 11));
 
     test = r.clone();
-    assertRangeListsEqual([[-10, -2], [2.72, 3.14], [8, 11]], test.ranges_);
+    assertRangeListsEqual(
+      [
+        [-10, -2],
+        [2.72, 3.14],
+        [8, 11],
+      ],
+      test.ranges_
+    );
 
     const test2 = r.clone();
     assertRangeListsEqual(test.ranges_, test2.ranges_);
 
     assertNotEquals(
-        'The clones should not share the same list reference.', test.ranges_,
-        test2.ranges_);
+      'The clones should not share the same list reference.',
+      test.ranges_,
+      test2.ranges_
+    );
 
     for (let i = 0; i < test.ranges_.length; i++) {
       assertNotEquals(
-          'The clones should not share references to ranges.', test.ranges_[i],
-          test2.ranges_[i]);
+        'The clones should not share references to ranges.',
+        test.ranges_[i],
+        test2.ranges_[i]
+      );
     }
   },
 
@@ -114,15 +125,14 @@ testSuite({
     const range = new Range(1, 2);
     r.add(range);
 
-    assertNotEquals(
-        'Only a copy of the input range should be stored.', range,
-        r.ranges_[0]);
+    assertNotEquals('Only a copy of the input range should be stored.', range, r.ranges_[0]);
 
     range.end = 5;
     assertRangeListsEqual(
-        'Modifying an input range after use should not ' +
-            'affect the set.',
-        [[1, 2]], r.ranges_);
+      'Modifying an input range after use should not ' + 'affect the set.',
+      [[1, 2]],
+      r.ranges_
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -133,32 +143,72 @@ testSuite({
     assertRangeListsEqual([[7, 12]], r.ranges_);
 
     r.add(new Range(1, 3));
-    assertRangeListsEqual([[1, 3], [7, 12]], r.ranges_);
+    assertRangeListsEqual(
+      [
+        [1, 3],
+        [7, 12],
+      ],
+      r.ranges_
+    );
 
     r.add(new Range(13, 18));
-    assertRangeListsEqual([[1, 3], [7, 12], [13, 18]], r.ranges_);
+    assertRangeListsEqual(
+      [
+        [1, 3],
+        [7, 12],
+        [13, 18],
+      ],
+      r.ranges_
+    );
 
     r.add(new Range(5, 5));
     assertRangeListsEqual(
-        'Zero length ranges should be ignored.', [[1, 3], [7, 12], [13, 18]],
-        r.ranges_);
+      'Zero length ranges should be ignored.',
+      [
+        [1, 3],
+        [7, 12],
+        [13, 18],
+      ],
+      r.ranges_
+    );
 
     const badRange = new Range(5, 5);
     badRange.end = 4;
     r.add(badRange);
     assertRangeListsEqual(
-        'Negative length ranges should be ignored.',
-        [[1, 3], [7, 12], [13, 18]], r.ranges_);
+      'Negative length ranges should be ignored.',
+      [
+        [1, 3],
+        [7, 12],
+        [13, 18],
+      ],
+      r.ranges_
+    );
 
     r.add(new Range(-22, -15));
     assertRangeListsEqual(
-        'Negative ranges should work fine.',
-        [[-22, -15], [1, 3], [7, 12], [13, 18]], r.ranges_);
+      'Negative ranges should work fine.',
+      [
+        [-22, -15],
+        [1, 3],
+        [7, 12],
+        [13, 18],
+      ],
+      r.ranges_
+    );
 
     r.add(new Range(3.1, 6.9));
     assertRangeListsEqual(
-        'Non-integer ranges should work fine.',
-        [[-22, -15], [1, 3], [3.1, 6.9], [7, 12], [13, 18]], r.ranges_);
+      'Non-integer ranges should work fine.',
+      [
+        [-22, -15],
+        [1, 3],
+        [3.1, 6.9],
+        [7, 12],
+        [13, 18],
+      ],
+      r.ranges_
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -171,13 +221,25 @@ testSuite({
 
     r.add(new Range(15, 20));
     r.add(new Range(18, 25));
-    assertRangeListsEqual([[5, 12], [15, 25]], r.ranges_);
+    assertRangeListsEqual(
+      [
+        [5, 12],
+        [15, 25],
+      ],
+      r.ranges_
+    );
 
     r.add(new Range(10, 17));
     assertRangeListsEqual([[5, 25]], r.ranges_);
 
     r.add(new Range(-4, 4.5));
-    assertRangeListsEqual([[-4, 4.5], [5, 25]], r.ranges_);
+    assertRangeListsEqual(
+      [
+        [-4, 4.5],
+        [5, 25],
+      ],
+      r.ranges_
+    );
 
     r.add(new Range(4.2, 5.3));
     assertRangeListsEqual([[-4, 25]], r.ranges_);
@@ -189,25 +251,56 @@ testSuite({
 
     r.add(new Range(7, 12));
     r.add(new Range(13, 19));
-    assertRangeListsEqual([[7, 12], [13, 19]], r.ranges_);
+    assertRangeListsEqual(
+      [
+        [7, 12],
+        [13, 19],
+      ],
+      r.ranges_
+    );
 
     r.add(new Range(4, 6));
-    assertRangeListsEqual([[4, 6], [7, 12], [13, 19]], r.ranges_);
+    assertRangeListsEqual(
+      [
+        [4, 6],
+        [7, 12],
+        [13, 19],
+      ],
+      r.ranges_
+    );
 
     r.add(new Range(6, 7));
-    assertRangeListsEqual([[4, 12], [13, 19]], r.ranges_);
+    assertRangeListsEqual(
+      [
+        [4, 12],
+        [13, 19],
+      ],
+      r.ranges_
+    );
 
     r.add(new Range(12, 13));
     assertRangeListsEqual([[4, 19]], r.ranges_);
 
     r.add(new Range(19.1, 22));
-    assertRangeListsEqual([[4, 19], [19.1, 22]], r.ranges_);
+    assertRangeListsEqual(
+      [
+        [4, 19],
+        [19.1, 22],
+      ],
+      r.ranges_
+    );
 
     r.add(new Range(19, 19.1));
     assertRangeListsEqual([[4, 22]], r.ranges_);
 
     r.add(new Range(-3, -2));
-    assertRangeListsEqual([[-3, -2], [4, 22]], r.ranges_);
+    assertRangeListsEqual(
+      [
+        [-3, -2],
+        [4, 22],
+      ],
+      r.ranges_
+    );
 
     r.add(new Range(-2, 4));
     assertRangeListsEqual([[-3, 22]], r.ranges_);
@@ -230,7 +323,16 @@ testSuite({
       r.add(new Range(i, i + 1));
     }
     assertRangeListsEqual(
-        [[7, 12], [20, 21], [22, 23], [24, 25], [26, 27], [28, 29]], r.ranges_);
+      [
+        [7, 12],
+        [20, 21],
+        [22, 23],
+        [24, 25],
+        [26, 27],
+        [28, 29],
+      ],
+      r.ranges_
+    );
 
     r.add(new Range(1, 30));
     assertRangeListsEqual([[1, 30]], r.ranges_);
@@ -245,10 +347,23 @@ testSuite({
     r.add(new Range(10, 20));
 
     r.remove(new Range(3, 6));
-    assertRangeListsEqual([[1, 3], [7, 8], [10, 20]], r.ranges_);
+    assertRangeListsEqual(
+      [
+        [1, 3],
+        [7, 8],
+        [10, 20],
+      ],
+      r.ranges_
+    );
 
     r.remove(new Range(7, 8));
-    assertRangeListsEqual([[1, 3], [10, 20]], r.ranges_);
+    assertRangeListsEqual(
+      [
+        [1, 3],
+        [10, 20],
+      ],
+      r.ranges_
+    );
 
     r.remove(new Range(1, 3));
     assertRangeListsEqual([[10, 20]], r.ranges_);
@@ -260,14 +375,19 @@ testSuite({
     assertRangeListsEqual([[11, 18]], r.ranges_);
 
     r.remove(new Range(15, 16));
-    assertRangeListsEqual([[11, 15], [16, 18]], r.ranges_);
+    assertRangeListsEqual(
+      [
+        [11, 15],
+        [16, 18],
+      ],
+      r.ranges_
+    );
 
     r.remove(new Range(11, 15));
     assertRangeListsEqual([[16, 18]], r.ranges_);
 
     r.remove(new Range(16, 16));
-    assertRangeListsEqual(
-        'Empty ranges should be ignored.', [[16, 18]], r.ranges_);
+    assertRangeListsEqual('Empty ranges should be ignored.', [[16, 18]], r.ranges_);
 
     r.remove(new Range(16, 17));
     assertRangeListsEqual([[17, 18]], r.ranges_);
@@ -283,16 +403,13 @@ testSuite({
     r.add(new Range(10, 20));
 
     r.remove(new Range(5, 8));
-    assertRangeListsEqual(
-        'Non-overlapping ranges should be ignored.', [[10, 20]], r.ranges_);
+    assertRangeListsEqual('Non-overlapping ranges should be ignored.', [[10, 20]], r.ranges_);
 
     r.remove(new Range(20, 30));
-    assertRangeListsEqual(
-        'Non-overlapping ranges should be ignored.', [[10, 20]], r.ranges_);
+    assertRangeListsEqual('Non-overlapping ranges should be ignored.', [[10, 20]], r.ranges_);
 
     r.remove(new Range(15, 15));
-    assertRangeListsEqual(
-        'Zero-length ranges should be ignored.', [[10, 20]], r.ranges_);
+    assertRangeListsEqual('Zero-length ranges should be ignored.', [[10, 20]], r.ranges_);
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -302,10 +419,23 @@ testSuite({
     r.add(new Range(10, 20));
     r.add(new Range(30, 40));
     r.add(new Range(50, 60));
-    assertRangeListsEqual([[10, 20], [30, 40], [50, 60]], r.ranges_);
+    assertRangeListsEqual(
+      [
+        [10, 20],
+        [30, 40],
+        [50, 60],
+      ],
+      r.ranges_
+    );
 
     r.remove(new Range(30, 40));
-    assertRangeListsEqual([[10, 20], [50, 60]], r.ranges_);
+    assertRangeListsEqual(
+      [
+        [10, 20],
+        [50, 60],
+      ],
+      r.ranges_
+    );
 
     r.remove(new Range(50, 60));
     assertRangeListsEqual([[10, 20]], r.ranges_);
@@ -340,12 +470,28 @@ testSuite({
     }
 
     assertRangeListsEqual(
-        'Setting up the test data seems to have failed, how embarrassing.',
-        [[5, 8], [10, 21], [22, 23], [24, 25], [26, 27], [28, 29], [30, 35]],
-        r.ranges_);
+      'Setting up the test data seems to have failed, how embarrassing.',
+      [
+        [5, 8],
+        [10, 21],
+        [22, 23],
+        [24, 25],
+        [26, 27],
+        [28, 29],
+        [30, 35],
+      ],
+      r.ranges_
+    );
 
     r.remove(new Range(15, 32));
-    assertRangeListsEqual([[5, 8], [10, 15], [32, 35]], r.ranges_);
+    assertRangeListsEqual(
+      [
+        [5, 8],
+        [10, 15],
+        [32, 35],
+      ],
+      r.ranges_
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -361,7 +507,13 @@ testSuite({
     assertRangeListsEqual([[2.72, 3.14]], r.ranges_);
 
     r.remove(new Range(2.8, 3));
-    assertRangeListsEqual([[2.72, 2.8], [3, 3.14]], r.ranges_);
+    assertRangeListsEqual(
+      [
+        [2.72, 2.8],
+        [3, 3.14],
+      ],
+      r.ranges_
+    );
   },
 
   testEquals() {
@@ -405,14 +557,11 @@ testSuite({
 
     assertTrue(r.contains(new Range(5.9, 5.999)));
 
-    assertFalse(
-        'An empty input range should always return false.',
-        r.contains(new Range(15, 15)));
+    assertFalse('An empty input range should always return false.', r.contains(new Range(15, 15)));
 
     const badRange = new Range(15, 15);
     badRange.end = 14;
-    assertFalse(
-        'An invalid range should always return false.', r.contains(badRange));
+    assertFalse('An invalid range should always return false.', r.contains(badRange));
   },
 
   testContainsValue() {
@@ -449,10 +598,22 @@ testSuite({
     b.add(new Range(8, 18));
 
     const test1 = a.union(b);
-    assertRangeListsEqual([[0, 5], [8, 20]], test1.ranges_);
+    assertRangeListsEqual(
+      [
+        [0, 5],
+        [8, 20],
+      ],
+      test1.ranges_
+    );
 
     const test2 = b.union(a);
-    assertRangeListsEqual([[0, 5], [8, 20]], test2.ranges_);
+    assertRangeListsEqual(
+      [
+        [0, 5],
+        [8, 20],
+      ],
+      test2.ranges_
+    );
 
     const test3 = a.union(a);
     assertRangeListsEqual(a.ranges_, test3.ranges_);
@@ -475,7 +636,14 @@ testSuite({
     assertRangeListsEqual([[18, 20]], test1.ranges_);
 
     const test2 = b.difference(a);
-    assertRangeListsEqual([[0, 1], [8, 10], [11, 15]], test2.ranges_);
+    assertRangeListsEqual(
+      [
+        [0, 1],
+        [8, 10],
+        [11, 15],
+      ],
+      test2.ranges_
+    );
 
     const test3 = a.difference(a);
     assertRangeListsEqual([], test3.ranges_);
@@ -498,10 +666,24 @@ testSuite({
     b.add(new Range(8, 18));
 
     const test1 = a.intersection(b);
-    assertRangeListsEqual([[1, 5], [10, 11], [15, 18]], test1.ranges_);
+    assertRangeListsEqual(
+      [
+        [1, 5],
+        [10, 11],
+        [15, 18],
+      ],
+      test1.ranges_
+    );
 
     const test2 = b.intersection(a);
-    assertRangeListsEqual([[1, 5], [10, 11], [15, 18]], test2.ranges_);
+    assertRangeListsEqual(
+      [
+        [1, 5],
+        [10, 11],
+        [15, 18],
+      ],
+      test2.ranges_
+    );
 
     const test3 = a.intersection(a);
     assertRangeListsEqual(a.ranges_, test3.ranges_);
@@ -525,20 +707,31 @@ testSuite({
     assertRangeListsEqual([[9, 15]], test.ranges_);
 
     test = r.slice(new Range(4, 30));
-    assertRangeListsEqual([[5, 6], [9, 15]], test.ranges_);
+    assertRangeListsEqual(
+      [
+        [5, 6],
+        [9, 15],
+      ],
+      test.ranges_
+    );
 
     test = r.slice(new Range(2, 15));
-    assertRangeListsEqual([[2, 4], [5, 6], [9, 15]], test.ranges_);
+    assertRangeListsEqual(
+      [
+        [2, 4],
+        [5, 6],
+        [9, 15],
+      ],
+      test.ranges_
+    );
 
     test = r.slice(new Range(10, 10));
-    assertRangeListsEqual(
-        'An empty range should produce an empty set.', [], test.ranges_);
+    assertRangeListsEqual('An empty range should produce an empty set.', [], test.ranges_);
 
     const badRange = new Range(10, 10);
     badRange.end = 9;
     test = r.slice(badRange);
-    assertRangeListsEqual(
-        'An invalid range should produce an empty set.', [], test.ranges_);
+    assertRangeListsEqual('An invalid range should produce an empty set.', [], test.ranges_);
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -562,20 +755,30 @@ testSuite({
     assertRangeListsEqual([[10, 12]], test.ranges_);
 
     test = r.inverse(new Range(2, 9));
-    assertRangeListsEqual([[3, 5], [6, 8]], test.ranges_);
+    assertRangeListsEqual(
+      [
+        [3, 5],
+        [6, 8],
+      ],
+      test.ranges_
+    );
 
     test = r.inverse(new Range(4, 9));
-    assertRangeListsEqual([[4, 5], [6, 8]], test.ranges_);
+    assertRangeListsEqual(
+      [
+        [4, 5],
+        [6, 8],
+      ],
+      test.ranges_
+    );
 
     test = r.inverse(new Range(9, 9));
-    assertRangeListsEqual(
-        'An empty range should produce an empty set.', [], test.ranges_);
+    assertRangeListsEqual('An empty range should produce an empty set.', [], test.ranges_);
 
     const badRange = new Range(9, 9);
     badRange.end = 8;
     test = r.inverse(badRange);
-    assertRangeListsEqual(
-        'An invalid range should produce an empty set.', [], test.ranges_);
+    assertRangeListsEqual('An invalid range should produce an empty set.', [], test.ranges_);
   },
 
   testCoveredLength() {
@@ -643,31 +846,43 @@ testSuite({
     r.add(new Range(5, 6));
     r.add(new Range(8, 10));
 
-    assertRangeListsEqual([[1, 3], [5, 6], [8, 10]], iter.toArray(r));
+    assertRangeListsEqual(
+      [
+        [1, 3],
+        [5, 6],
+        [8, 10],
+      ],
+      iter.toArray(r)
+    );
 
     let i = 0;
     iter.forEach(
-        r, /**
+      r /**
               @suppress {visibility} suppression added to enable type checking
-            */
-        (testRange) => {
-          assertRangesEqual(
-              'Iterated set values should match the originals.', r.ranges_[i],
-              testRange);
-          assertNotEquals(
-              'Iterated range should not be a reference to the original.',
-              r.ranges_[i], testRange);
-          i++;
-        });
+            */,
+      (testRange) => {
+        assertRangesEqual(
+          'Iterated set values should match the originals.',
+          r.ranges_[i],
+          testRange
+        );
+        assertNotEquals(
+          'Iterated range should not be a reference to the original.',
+          r.ranges_[i],
+          testRange
+        );
+        i++;
+      }
+    );
 
     i = 0;
     for (const testRange of r) {
-      assertRangesEqual(
-          'Iterated set values should match the originals.', r.ranges_[i],
-          testRange);
+      assertRangesEqual('Iterated set values should match the originals.', r.ranges_[i], testRange);
       assertNotEquals(
-          'Iterated range should not be a reference to the original.',
-          r.ranges_[i], testRange);
+        'Iterated range should not be a reference to the original.',
+        r.ranges_[i],
+        testRange
+      );
       i++;
     }
   },

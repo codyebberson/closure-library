@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.fs.FileReaderTest');
-goog.setTestOnly();
 
 const EventObserver = goog.require('goog.testing.events.EventObserver');
 const FsError = goog.require('goog.fs.Error');
@@ -32,14 +31,13 @@ let reader;
 let observer;
 
 /** @const */
-const hasArrayBuffer = (globalThis.ArrayBuffer !== undefined);
+const hasArrayBuffer = globalThis.ArrayBuffer !== undefined;
 
 testSuite({
   setUp() {
     const observedEvents = [];
     const fs = new FsFileSystem();
-    const fileEntry =
-        fs.getRoot().createDirectorySync('foo').createFileSync('bar');
+    const fileEntry = fs.getRoot().createDirectorySync('foo').createFileSync('bar');
 
     file = fileEntry.fileSync();
     file.setDataInternal('test content');
@@ -60,24 +58,18 @@ testSuite({
     assertUndefined(reader.getResult());
 
     return new GoogPromise((resolve, reject) => {
-             events.listen(reader, EventType.LOAD_END, resolve);
-             reader.readAsText(file);
-             assertEquals(ReadyState.LOADING, reader.getReadyState());
-           })
-        .then((result) => {
-          assertEquals(file.toString(), reader.getResult());
+      events.listen(reader, EventType.LOAD_END, resolve);
+      reader.readAsText(file);
+      assertEquals(ReadyState.LOADING, reader.getReadyState());
+    }).then((result) => {
+      assertEquals(file.toString(), reader.getResult());
 
-          assertEquals(ReadyState.DONE, reader.getReadyState());
-          assertArrayEquals(
-              [
-                EventType.LOAD_START,
-                EventType.LOAD,
-                EventType.LOAD,
-                EventType.LOAD,
-                EventType.LOAD_END,
-              ],
-              observer.getEvents().map(e => e.type));
-        });
+      assertEquals(ReadyState.DONE, reader.getReadyState());
+      assertArrayEquals(
+        [EventType.LOAD_START, EventType.LOAD, EventType.LOAD, EventType.LOAD, EventType.LOAD_END],
+        observer.getEvents().map((e) => e.type)
+      );
+    });
   },
 
   testReadAsArrayBuffer() {
@@ -87,67 +79,63 @@ testSuite({
     }
 
     return new GoogPromise((resolve, reject) => {
-             events.listen(reader, EventType.LOAD_END, resolve);
-             reader.readAsArrayBuffer(file);
-             assertEquals(ReadyState.LOADING, reader.getReadyState());
-           })
-        .then(/**
+      events.listen(reader, EventType.LOAD_END, resolve);
+      reader.readAsArrayBuffer(file);
+      assertEquals(ReadyState.LOADING, reader.getReadyState());
+    }).then(
+      /**
                  @suppress {checkTypes} suppression added to enable type
                  checking
                */
-              (result) => {
-                assertElementsEquals(file.toArrayBuffer(), reader.getResult());
+      (result) => {
+        assertElementsEquals(file.toArrayBuffer(), reader.getResult());
 
-                assertEquals(ReadyState.DONE, reader.getReadyState());
-                assertArrayEquals(
-                    [
-                      EventType.LOAD_START,
-                      EventType.LOAD,
-                      EventType.LOAD,
-                      EventType.LOAD,
-                      EventType.LOAD_END,
-                    ],
-                    observer.getEvents().map(e => e.type));
-              });
+        assertEquals(ReadyState.DONE, reader.getReadyState());
+        assertArrayEquals(
+          [
+            EventType.LOAD_START,
+            EventType.LOAD,
+            EventType.LOAD,
+            EventType.LOAD,
+            EventType.LOAD_END,
+          ],
+          observer.getEvents().map((e) => e.type)
+        );
+      }
+    );
   },
 
   testReadAsDataUrl() {
     return new GoogPromise((resolve, reject) => {
-             events.listen(reader, EventType.LOAD_END, resolve);
-             reader.readAsDataUrl(file);
-             assertEquals(ReadyState.LOADING, reader.getReadyState());
-           })
-        .then((result) => {
-          assertEquals(file.toDataUrl(), reader.getResult());
+      events.listen(reader, EventType.LOAD_END, resolve);
+      reader.readAsDataUrl(file);
+      assertEquals(ReadyState.LOADING, reader.getReadyState());
+    }).then((result) => {
+      assertEquals(file.toDataUrl(), reader.getResult());
 
-          assertEquals(ReadyState.DONE, reader.getReadyState());
-          assertArrayEquals(
-              [
-                EventType.LOAD_START,
-                EventType.LOAD,
-                EventType.LOAD,
-                EventType.LOAD,
-                EventType.LOAD_END,
-              ],
-              observer.getEvents().map(e => e.type));
-        });
+      assertEquals(ReadyState.DONE, reader.getReadyState());
+      assertArrayEquals(
+        [EventType.LOAD_START, EventType.LOAD, EventType.LOAD, EventType.LOAD, EventType.LOAD_END],
+        observer.getEvents().map((e) => e.type)
+      );
+    });
   },
 
   testAbort() {
     return new GoogPromise((resolve, reject) => {
-             events.listen(reader, EventType.LOAD_END, resolve);
-             reader.readAsText(file);
-             assertEquals(ReadyState.LOADING, reader.getReadyState());
-             reader.abort();
-           })
-        .then((result) => {
-          assertUndefined(reader.getResult());
+      events.listen(reader, EventType.LOAD_END, resolve);
+      reader.readAsText(file);
+      assertEquals(ReadyState.LOADING, reader.getReadyState());
+      reader.abort();
+    }).then((result) => {
+      assertUndefined(reader.getResult());
 
-          assertEquals(ReadyState.DONE, reader.getReadyState());
-          assertArrayEquals(
-              [EventType.ERROR, EventType.ABORT, EventType.LOAD_END],
-              observer.getEvents().map(e => e.type));
-        });
+      assertEquals(ReadyState.DONE, reader.getReadyState());
+      assertArrayEquals(
+        [EventType.ERROR, EventType.ABORT, EventType.LOAD_END],
+        observer.getEvents().map((e) => e.type)
+      );
+    });
   },
 
   /**

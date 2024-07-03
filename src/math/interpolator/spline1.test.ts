@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.math.interpolator.Spline1Test');
-goog.setTestOnly();
 
 const Spline1 = goog.require('goog.math.interpolator.Spline1');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -31,14 +30,14 @@ testSuite({
     y = [2, 5];
     interp = new Spline1();
     interp.setData(x, y);
-    assertRoughlyEquals(3.5, interp.interpolate(.5), 1e-4);
+    assertRoughlyEquals(3.5, interp.interpolate(0.5), 1e-4);
 
     // Test special case with 3 data points.
     x = [0, 1, 2];
     y = [2, 5, 4];
     interp = new Spline1();
     interp.setData(x, y);
-    assertRoughlyEquals(4, interp.interpolate(.5), 1e-4);
+    assertRoughlyEquals(4, interp.interpolate(0.5), 1e-4);
     assertRoughlyEquals(-1, interp.interpolate(3), 1e-4);
 
     // Test general case.
@@ -51,8 +50,7 @@ testSuite({
     interp.setData(x, y);
 
     const xi = [0, 0.5, 1, 2, 3, 4, 5, 6, 7];
-    const expected =
-        [0, 0.5775, 0.8415, 0.7047, 0.1411, -0.3601, -0.55940, -0.2794, 0.6570];
+    const expected = [0, 0.5775, 0.8415, 0.7047, 0.1411, -0.3601, -0.5594, -0.2794, 0.657];
     const result = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     for (let i = 0; i < xi.length; ++i) {
       result[i] = interp.interpolate(xi[i]);

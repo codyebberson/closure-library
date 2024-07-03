@@ -13,9 +13,11 @@ goog.module('goog.i18n.DurationFormat');
 
 const DurationSymbols = goog.require('goog.i18n.DurationSymbols');
 const MessageFormat = goog.require('goog.i18n.MessageFormat');
-const {DurationSymbols: DurationSymbolsTypes, DurationSymbolsFormatStyles} = goog.require('goog.i18n.DurationSymbolTypes');
-const {ListFormat, ListFormatStyle, ListFormatType} = goog.require('goog.i18n.listFormat');
-const {assert, assertNumber, assertObject} = goog.require('goog.asserts');
+const { DurationSymbols: DurationSymbolsTypes, DurationSymbolsFormatStyles } = goog.require(
+  'goog.i18n.DurationSymbolTypes'
+);
+const { ListFormat, ListFormatStyle, ListFormatType } = goog.require('goog.i18n.listFormat');
+const { assert, assertNumber, assertObject } = goog.require('goog.asserts');
 
 /**
  * Choices for options bag 'type' in DurationFormat's constructor.
@@ -39,7 +41,7 @@ const DurationFormatUnit = {
   DAY: 'days',
   HOUR: 'hours',
   MINUTE: 'minutes',
-  SECOND: 'seconds'
+  SECOND: 'seconds',
 };
 exports.DurationFormatUnit = DurationFormatUnit;
 
@@ -90,9 +92,9 @@ class DurationFormat {
     /** @private {!DurationFormatStyle} */
     const style = opt_options?.style || DurationFormatStyle.SHORT;
     assert(
-        style >= DurationFormatStyle.SHORT &&
-            style <= DurationFormatStyle.NARROW,
-        'Style must be LONG, SHORT, NARROW');
+      style >= DurationFormatStyle.SHORT && style <= DurationFormatStyle.NARROW,
+      'Style must be LONG, SHORT, NARROW'
+    );
     /** @private @const {!DurationFormatStyle} */
     this.style_ = style;
 
@@ -100,8 +102,7 @@ class DurationFormat {
      * DurationSymbols object for locale data required by the formatter.
      * @private @const {!DurationSymbolsTypes}
      */
-    const durationSymbols =
-        opt_durationSymbols || DurationSymbols.getDurationSymbols();
+    const durationSymbols = opt_durationSymbols || DurationSymbols.getDurationSymbols();
     assert(durationSymbols !== null, 'Duration symbols cannot be null');
     this.durationSymbols_ = durationSymbols;
   }
@@ -116,7 +117,7 @@ class DurationFormat {
     const unitInfo = this.getIcuFormattingPatternsForUnit_(durationUnit);
     assertObject(unitInfo);
     return this.getIcuFormattingPatternForStyle_(unitInfo);
-  };
+  }
 
   /**
    * From the data, check if the duration unit is legal.
@@ -125,13 +126,15 @@ class DurationFormat {
    * @private
    */
   checkIfLegalUnit_(durationUnit) {
-    return durationUnit === DurationFormatUnit.YEAR ||
-        durationUnit === DurationFormatUnit.MONTH ||
-        durationUnit === DurationFormatUnit.WEEK ||
-        durationUnit === DurationFormatUnit.DAY ||
-        durationUnit === DurationFormatUnit.HOUR ||
-        durationUnit === DurationFormatUnit.MINUTE ||
-        durationUnit === DurationFormatUnit.SECOND;
+    return (
+      durationUnit === DurationFormatUnit.YEAR ||
+      durationUnit === DurationFormatUnit.MONTH ||
+      durationUnit === DurationFormatUnit.WEEK ||
+      durationUnit === DurationFormatUnit.DAY ||
+      durationUnit === DurationFormatUnit.HOUR ||
+      durationUnit === DurationFormatUnit.MINUTE ||
+      durationUnit === DurationFormatUnit.SECOND
+    );
   }
 
   /**
@@ -142,8 +145,9 @@ class DurationFormat {
    */
   getIcuFormattingPatternsForUnit_(unit) {
     assert(
-        this.checkIfLegalUnit_(unit),
-        'Unit must be years, months, weeks, days, hours, minutes or seconds');
+      this.checkIfLegalUnit_(unit),
+      'Unit must be years, months, weeks, days, hours, minutes or seconds'
+    );
     switch (unit) {
       default:
       case DurationFormatUnit.YEAR:
@@ -161,7 +165,7 @@ class DurationFormat {
       case DurationFormatUnit.SECOND:
         return this.durationSymbols_.SECOND;
     }
-  };
+  }
 
   /**
    * Use unit symbol to retrieve data for that unit, given the style.
@@ -184,7 +188,7 @@ class DurationFormat {
       default:
         return unitInfo.SHORT;
     }
-  };
+  }
 
   /**
    * Format using pure JavaScript
@@ -207,10 +211,9 @@ class DurationFormat {
      * @type {?MessageFormat}
      */
     // Take basic message and wrap with plural message type.
-    const msgFormatter =
-        new MessageFormat('{DURATION_VALUE,plural,' + unitStyleString + '}');
-    return msgFormatter.format({'DURATION_VALUE': quantity});
-  };
+    const msgFormatter = new MessageFormat('{DURATION_VALUE,plural,' + unitStyleString + '}');
+    return msgFormatter.format({ DURATION_VALUE: quantity });
+  }
 
   /**
    * Formats a string with the amount and one unit.
@@ -226,7 +229,7 @@ class DurationFormat {
 
     // TODO(user): Add formatNative_ method when available.
     return this.formatPolyfill_(quantity, durationUnit);
-  };
+  }
 
   /**
    * Formats a string with the amount and correspondent unit.
@@ -244,45 +247,40 @@ class DurationFormat {
     const minutes = durationLike[DurationFormatUnit.MINUTE];
     const seconds = durationLike[DurationFormatUnit.SECOND];
     if (years != null) {
-      formattedDurationList.push(
-          this.formatWithUnit_(years, DurationFormatUnit.YEAR));
+      formattedDurationList.push(this.formatWithUnit_(years, DurationFormatUnit.YEAR));
     }
 
     if (months != null) {
-      formattedDurationList.push(
-          this.formatWithUnit_(months, DurationFormatUnit.MONTH));
+      formattedDurationList.push(this.formatWithUnit_(months, DurationFormatUnit.MONTH));
     }
 
     if (weeks != null) {
-      formattedDurationList.push(
-          this.formatWithUnit_(weeks, DurationFormatUnit.WEEK));
+      formattedDurationList.push(this.formatWithUnit_(weeks, DurationFormatUnit.WEEK));
     }
 
     if (days != null) {
-      formattedDurationList.push(
-          this.formatWithUnit_(days, DurationFormatUnit.DAY));
+      formattedDurationList.push(this.formatWithUnit_(days, DurationFormatUnit.DAY));
     }
 
     if (hours != null) {
-      formattedDurationList.push(
-          this.formatWithUnit_(hours, DurationFormatUnit.HOUR));
+      formattedDurationList.push(this.formatWithUnit_(hours, DurationFormatUnit.HOUR));
     }
 
     if (minutes != null) {
-      formattedDurationList.push(
-          this.formatWithUnit_(minutes, DurationFormatUnit.MINUTE));
+      formattedDurationList.push(this.formatWithUnit_(minutes, DurationFormatUnit.MINUTE));
     }
 
     if (seconds != null) {
-      formattedDurationList.push(
-          this.formatWithUnit_(seconds, DurationFormatUnit.SECOND));
+      formattedDurationList.push(this.formatWithUnit_(seconds, DurationFormatUnit.SECOND));
     }
 
     // TODO(user): Add method for STYLE.DIGIT when available.
-    const newListFormater = new ListFormat(
-        {type: ListFormatType.UNIT, style: ListFormatStyle.NARROW});
+    const newListFormater = new ListFormat({
+      type: ListFormatType.UNIT,
+      style: ListFormatStyle.NARROW,
+    });
     return newListFormater.format(formattedDurationList);
-  };
+  }
 }
 
 exports.DurationFormat = DurationFormat;

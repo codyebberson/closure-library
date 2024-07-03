@@ -16,12 +16,12 @@ goog.module('goog.labs.userAgent.browser');
 goog.module.declareLegacyNamespace();
 
 const util = goog.require('goog.labs.userAgent.util');
-const {AsyncValue, Version} = goog.require('goog.labs.userAgent.highEntropy.highEntropyValue');
-const {ChromiumRebrand} = goog.require('goog.labs.userAgent.chromiumRebrands');
-const {assert, assertExists} = goog.require('goog.asserts');
-const {compareVersions} = goog.require('goog.string.internal');
-const {fullVersionList} = goog.require('goog.labs.userAgent.highEntropy.highEntropyData');
-const {useClientHints} = goog.require('goog.labs.userAgent');
+const { AsyncValue, Version } = goog.require('goog.labs.userAgent.highEntropy.highEntropyValue');
+const { ChromiumRebrand } = goog.require('goog.labs.userAgent.chromiumRebrands');
+const { assert, assertExists } = goog.require('goog.asserts');
+const { compareVersions } = goog.require('goog.string.internal');
+const { fullVersionList } = goog.require('goog.labs.userAgent.highEntropy.highEntropyData');
+const { useClientHints } = goog.require('goog.labs.userAgent');
 
 // TODO(nnaze): Refactor to remove excessive exclusion logic in matching
 // functions.
@@ -188,10 +188,20 @@ function matchFirefox() {
 function matchSafari() {
   // Apple-based browsers don't support navigator.userAgentData yet, so use
   // navigator.userAgent.
-  return util.matchUserAgent('Safari') &&
-      !(matchChrome() || matchCoast() || matchOpera() || matchEdgeHtml() ||
-        matchEdgeChromium() || matchOperaChromium() || matchFirefox() ||
-        isSilk() || util.matchUserAgent('Android'));
+  return (
+    util.matchUserAgent('Safari') &&
+    !(
+      matchChrome() ||
+      matchCoast() ||
+      matchOpera() ||
+      matchEdgeHtml() ||
+      matchEdgeChromium() ||
+      matchOperaChromium() ||
+      matchFirefox() ||
+      isSilk() ||
+      util.matchUserAgent('Android')
+    )
+  );
 }
 
 /**
@@ -211,9 +221,14 @@ function matchIosWebview() {
   // Apple-based browsers don't support navigator.userAgentData yet, so use
   // navigator.userAgent.
   // iOS Webview does not show up as Chrome or Safari.
-  return (util.matchUserAgent('iPad') || util.matchUserAgent('iPhone')) &&
-      !matchSafari() && !matchChrome() && !matchCoast() && !matchFirefox() &&
-      util.matchUserAgent('AppleWebKit');
+  return (
+    (util.matchUserAgent('iPad') || util.matchUserAgent('iPhone')) &&
+    !matchSafari() &&
+    !matchChrome() &&
+    !matchCoast() &&
+    !matchFirefox() &&
+    util.matchUserAgent('AppleWebKit')
+  );
 }
 
 /**
@@ -224,17 +239,17 @@ function matchChrome() {
   if (useUserAgentDataBrand()) {
     return util.matchUserAgentDataBrand(Brand.CHROMIUM);
   }
-  return ((util.matchUserAgent('Chrome') || util.matchUserAgent('CriOS')) &&
-          !matchEdgeHtml()) ||
-      isSilk();
+  return (
+    ((util.matchUserAgent('Chrome') || util.matchUserAgent('CriOS')) && !matchEdgeHtml()) ||
+    isSilk()
+  );
 }
 
 /** @return {boolean} Whether the user's browser is the Android browser. */
 function matchAndroidBrowser() {
   // Android can appear in the user agent string for Chrome on Android.
   // This is not the Android standalone browser if it does.
-  return util.matchUserAgent('Android') &&
-      !(isChrome() || isFirefox() || isOpera() || isSilk());
+  return util.matchUserAgent('Android') && !(isChrome() || isFirefox() || isOpera() || isSilk());
 }
 
 /** @return {boolean} Whether the user's browser is Opera. */
@@ -397,7 +412,7 @@ function getVersion() {
   // Usually products browser versions are in the third tuple after "Mozilla"
   // and the engine.
   const tuple = versionTuples[2];
-  return tuple && tuple[1] || '';
+  return (tuple && tuple[1]) || '';
 }
 exports.getVersion = getVersion;
 
@@ -522,12 +537,14 @@ function getFullVersionFromUserAgentString(browser) {
 
   // For the following browsers, the browser version is in the third tuple after
   // "Mozilla" and the engine.
-  if ((browser === Brand.FIREFOX && isFirefox()) ||
-      (browser === Brand.SAFARI && isSafari()) ||
-      (browser === Brand.ANDROID_BROWSER && isAndroidBrowser()) ||
-      (browser === Brand.SILK && isSilk())) {
+  if (
+    (browser === Brand.FIREFOX && isFirefox()) ||
+    (browser === Brand.SAFARI && isSafari()) ||
+    (browser === Brand.ANDROID_BROWSER && isAndroidBrowser()) ||
+    (browser === Brand.SILK && isSilk())
+  ) {
     const tuple = versionTuples[2];
-    return tuple && tuple[1] || '';
+    return (tuple && tuple[1]) || '';
   }
 
   return '';
@@ -552,23 +569,23 @@ function versionOf_(browser) {
   // so if checking its version, always fall back to the user agent string.
   if (useUserAgentDataBrand() && browser !== Brand.SILK) {
     const data = util.getUserAgentData();
-    const matchingBrand = data.brands.find(({brand}) => brand === browser);
+    const matchingBrand = data.brands.find(({ brand }) => brand === browser);
     if (!matchingBrand || !matchingBrand.version) {
-      return NaN;
+      return Number.NaN;
     }
     versionParts = matchingBrand.version.split('.');
   } else {
     const fullVersion = getFullVersionFromUserAgentString(browser);
     if (fullVersion === '') {
-      return NaN;
+      return Number.NaN;
     }
     versionParts = fullVersion.split('.');
   }
   if (versionParts.length === 0) {
-    return NaN;
+    return Number.NaN;
   }
   const majorVersion = versionParts[0];
-  return Number(majorVersion);  // Returns NaN if it is not parseable.
+  return Number(majorVersion); // Returns NaN if it is not parseable.
 }
 
 /**
@@ -582,9 +599,7 @@ function versionOf_(browser) {
  *     and is at least the given version.
  */
 function isAtLeast(brand, majorVersion) {
-  assert(
-      Math.floor(majorVersion) === majorVersion,
-      'Major version must be an integer');
+  assert(Math.floor(majorVersion) === majorVersion, 'Major version must be an integer');
   return versionOf_(brand) >= majorVersion;
 }
 exports.isAtLeast = isAtLeast;
@@ -600,9 +615,7 @@ exports.isAtLeast = isAtLeast;
  *     and is at most the given version.
  */
 function isAtMost(brand, majorVersion) {
-  assert(
-      Math.floor(majorVersion) === majorVersion,
-      'Major version must be an integer');
+  assert(Math.floor(majorVersion) === majorVersion, 'Major version must be an integer');
   return versionOf_(brand) <= majorVersion;
 }
 exports.isAtMost = isAtMost;
@@ -640,8 +653,7 @@ class HighEntropyBrandVersion {
     if (this.useUach_) {
       const loadedVersionList = fullVersionList.getIfLoaded();
       if (loadedVersionList !== undefined) {
-        const matchingBrand =
-            loadedVersionList.find(({brand}) => this.brand_ === brand);
+        const matchingBrand = loadedVersionList.find(({ brand }) => this.brand_ === brand);
         // We assumed in fullVersionOf that if the fullVersionList is defined
         // the brands must match. Double-check this here.
         assertExists(matchingBrand);
@@ -668,8 +680,7 @@ class HighEntropyBrandVersion {
     if (this.useUach_) {
       const loadedVersionList = await fullVersionList.load();
       if (loadedVersionList !== undefined) {
-        const matchingBrand =
-            loadedVersionList.find(({brand}) => this.brand_ === brand);
+        const matchingBrand = loadedVersionList.find(({ brand }) => this.brand_ === brand);
         assertExists(matchingBrand);
         return new Version(matchingBrand.version);
       }
@@ -724,7 +735,6 @@ exports.resetForTesting = () => {
   fullVersionList.resetForTesting();
 };
 
-
 /**
  * Returns an object that provides access to the full version string of the
  * current browser -- or undefined, based on whether the current browser matches
@@ -754,7 +764,7 @@ function fullVersionOf(browser) {
     // Operate under the assumption that the low-entropy and high-entropy lists
     // of brand/version pairs contain an identical set of brands. Therefore, if
     // the low-entropy list doesn't contain the given brand, return undefined.
-    if (!data.brands.find(({brand}) => brand === browser)) {
+    if (!data.brands.find(({ brand }) => brand === browser)) {
       return undefined;
     }
   } else if (fallbackVersionString === '') {
@@ -763,7 +773,6 @@ function fullVersionOf(browser) {
   return new HighEntropyBrandVersion(browser, useUach, fallbackVersionString);
 }
 exports.fullVersionOf = fullVersionOf;
-
 
 /**
  * Returns a version string for the current browser or undefined, based on
@@ -785,7 +794,7 @@ function getVersionStringForLogging(browser) {
       }
       // No full version, return the major version instead.
       const data = util.getUserAgentData();
-      const matchingBrand = data.brands.find(({brand}) => brand === browser);
+      const matchingBrand = data.brands.find(({ brand }) => brand === browser);
       // Checking for the existence of matchingBrand is not necessary because
       // the existence of fullVersionObj implies that there is already a
       // matching brand.

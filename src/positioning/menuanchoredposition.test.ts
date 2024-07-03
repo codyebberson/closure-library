@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.positioning.MenuAnchoredPositionTest');
-goog.setTestOnly();
 
 const Corner = goog.require('goog.positioning.Corner');
 const MenuAnchoredPosition = goog.require('goog.positioning.MenuAnchoredPosition');
@@ -61,8 +60,7 @@ testSuite({
    */
   testRepositionWithAdjustAndOffscreenAnchor() {
     // This does not get adjusted because it's too far offscreen.
-    const pos =
-        new MenuAnchoredPosition(offscreenAnchor, Corner.TOP_LEFT, true);
+    const pos = new MenuAnchoredPosition(offscreenAnchor, Corner.TOP_LEFT, true);
     pos.reposition(menu, Corner.TOP_LEFT);
 
     assertEquals(-1000, menu.offsetTop);
@@ -74,8 +72,7 @@ testSuite({
      checking
    */
   testRespositionFailoverEvenWhenResizeHeightIsOn() {
-    const pos =
-        new MenuAnchoredPosition(onscreenAnchor, Corner.TOP_LEFT, true, true);
+    const pos = new MenuAnchoredPosition(onscreenAnchor, Corner.TOP_LEFT, true, true);
     pos.reposition(menu, Corner.TOP_RIGHT);
 
     // The menu should not get positioned offscreen.
@@ -89,15 +86,14 @@ testSuite({
    */
   testRepositionToBottomLeftWhenBottomFailsAndRightFailsAndResizeOn() {
     const pageSize = dom.getViewportSize();
-    customAnchor.style.left = (pageSize.width - 10) + 'px';
+    customAnchor.style.left = pageSize.width - 10 + 'px';
 
     // Add so many children that it can't possibly fit onscreen.
     for (let i = 0; i < 200; i++) {
       menu.appendChild(dom.createDom(TagName.DIV, null, `New Item ${i}`));
     }
 
-    const pos =
-        new MenuAnchoredPosition(customAnchor, Corner.TOP_LEFT, true, true);
+    const pos = new MenuAnchoredPosition(customAnchor, Corner.TOP_LEFT, true, true);
     pos.reposition(menu, Corner.TOP_LEFT);
     assertEquals(menu.offsetLeft + menu.offsetWidth, customAnchor.offsetLeft);
   },

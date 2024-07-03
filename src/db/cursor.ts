@@ -8,7 +8,6 @@
  * @fileoverview Wrapper for a IndexedDB cursor.
  */
 
-
 goog.provide('goog.db.Cursor');
 
 goog.require('goog.async.Deferred');
@@ -16,8 +15,6 @@ goog.require('goog.db.Error');
 goog.require('goog.db.KeyRange');
 goog.require('goog.debug');
 goog.require('goog.events.EventTarget');
-
-
 
 /**
  * Creates a new IDBCursor wrapper object. Should not be created directly,
@@ -28,12 +25,10 @@ goog.require('goog.events.EventTarget');
  * @extends {goog.events.EventTarget}
  * @final
  */
-goog.db.Cursor = function() {
-  'use strict';
+goog.db.Cursor = function () {
   goog.db.Cursor.base(this, 'constructor');
 };
 goog.inherits(goog.db.Cursor, goog.events.EventTarget);
-
 
 /**
  * Underlying IndexedDB cursor object.
@@ -42,7 +37,6 @@ goog.inherits(goog.db.Cursor, goog.events.EventTarget);
  * @private
  */
 goog.db.Cursor.prototype.cursor_ = null;
-
 
 /**
  * Advances the cursor to the next position along its direction. When new data
@@ -54,15 +48,13 @@ goog.db.Cursor.prototype.cursor_ = null;
  *
  * @param {IDBKeyType=} opt_key The optional key to advance to.
  */
-goog.db.Cursor.prototype.next = function(opt_key) {
-  'use strict';
+goog.db.Cursor.prototype.next = function (opt_key) {
   if (opt_key) {
     this.cursor_['continue'](opt_key);
   } else {
     this.cursor_['continue']();
   }
 };
-
 
 /**
  * Updates the value at the current position of the cursor in the object store.
@@ -72,8 +64,7 @@ goog.db.Cursor.prototype.next = function(opt_key) {
  * @param {*} value The value to be stored.
  * @return {!goog.async.Deferred} The resulting deferred request.
  */
-goog.db.Cursor.prototype.update = function(value) {
-  'use strict';
+goog.db.Cursor.prototype.update = function (value) {
   let msg = 'updating via cursor with value ';
   const d = new goog.async.Deferred();
   let request;
@@ -85,18 +76,15 @@ goog.db.Cursor.prototype.update = function(value) {
     d.errback(goog.db.Error.fromException(err, msg));
     return d;
   }
-  request.onsuccess = function(ev) {
-    'use strict';
+  request.onsuccess = (ev) => {
     d.callback();
   };
-  request.onerror = function(ev) {
-    'use strict';
+  request.onerror = (ev) => {
     msg += goog.debug.deepExpose(value);
     d.errback(goog.db.Error.fromRequest(ev.target, msg));
   };
   return d;
 };
-
 
 /**
  * Deletes the value at the cursor's position, without changing the cursor's
@@ -104,8 +92,7 @@ goog.db.Cursor.prototype.update = function(value) {
  *
  * @return {!goog.async.Deferred} The resulting deferred request.
  */
-goog.db.Cursor.prototype.remove = function() {
-  'use strict';
+goog.db.Cursor.prototype.remove = function () {
   const msg = 'deleting via cursor';
   const d = new goog.async.Deferred();
   let request;
@@ -116,37 +103,30 @@ goog.db.Cursor.prototype.remove = function() {
     d.errback(goog.db.Error.fromException(err, msg));
     return d;
   }
-  request.onsuccess = function(ev) {
-    'use strict';
+  request.onsuccess = (ev) => {
     d.callback();
   };
-  request.onerror = function(ev) {
-    'use strict';
+  request.onerror = (ev) => {
     d.errback(goog.db.Error.fromRequest(ev.target, msg));
   };
   return d;
 };
 
-
 /**
  * @return {*} The value for the value at the cursor's position. Undefined
  *     if no current value, or null if value has just been deleted.
  */
-goog.db.Cursor.prototype.getValue = function() {
-  'use strict';
+goog.db.Cursor.prototype.getValue = function () {
   return this.cursor_['value'];
 };
-
 
 /**
  * @return {IDBKeyType} The key for the value at the cursor's position. If
  *     the cursor is outside its range, this is undefined.
  */
-goog.db.Cursor.prototype.getKey = function() {
-  'use strict';
+goog.db.Cursor.prototype.getKey = function () {
   return this.cursor_.key;
 };
-
 
 /**
  * Opens a value cursor from IDBObjectStore or IDBIndex over the specified key
@@ -159,8 +139,7 @@ goog.db.Cursor.prototype.getKey = function() {
  * @return {!goog.db.Cursor} The cursor.
  * @throws {goog.db.Error} If there was a problem opening the cursor.
  */
-goog.db.Cursor.openCursor = function(source, opt_range, opt_direction) {
-  'use strict';
+goog.db.Cursor.openCursor = (source, opt_range, opt_direction) => {
   const cursor = new goog.db.Cursor();
   let request;
 
@@ -175,8 +154,7 @@ goog.db.Cursor.openCursor = function(source, opt_range, opt_direction) {
     cursor.dispose();
     throw goog.db.Error.fromException(ex, source.name);
   }
-  request.onsuccess = function(e) {
-    'use strict';
+  request.onsuccess = (e) => {
     cursor.cursor_ = e.target.result || null;
     if (cursor.cursor_) {
       cursor.dispatchEvent(goog.db.Cursor.EventType.NEW_DATA);
@@ -184,13 +162,11 @@ goog.db.Cursor.openCursor = function(source, opt_range, opt_direction) {
       cursor.dispatchEvent(goog.db.Cursor.EventType.COMPLETE);
     }
   };
-  request.onerror = function(e) {
-    'use strict';
+  request.onerror = (e) => {
     cursor.dispatchEvent(goog.db.Cursor.EventType.ERROR);
   };
   return cursor;
 };
-
 
 /**
  * Possible cursor directions.
@@ -202,9 +178,8 @@ goog.db.Cursor.Direction = {
   NEXT: 'next',
   NEXT_NO_DUPLICATE: 'nextunique',
   PREV: 'prev',
-  PREV_NO_DUPLICATE: 'prevunique'
+  PREV_NO_DUPLICATE: 'prevunique',
 };
-
 
 /**
  * Event types that the cursor can dispatch. COMPLETE events are dispatched when
@@ -216,5 +191,5 @@ goog.db.Cursor.Direction = {
 goog.db.Cursor.EventType = {
   COMPLETE: 'c',
   ERROR: 'e',
-  NEW_DATA: 'n'
+  NEW_DATA: 'n',
 };

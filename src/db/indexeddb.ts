@@ -8,7 +8,6 @@
  * @fileoverview Wrapper for an IndexedDB database.
  */
 
-
 goog.provide('goog.db.IndexedDb');
 
 goog.require('goog.db.Error');
@@ -17,8 +16,6 @@ goog.require('goog.db.Transaction');
 goog.require('goog.events.Event');
 goog.require('goog.events.EventHandler');
 goog.require('goog.events.EventTarget');
-
-
 
 /**
  * Creates an IDBDatabase wrapper object. The database object has methods for
@@ -31,8 +28,7 @@ goog.require('goog.events.EventTarget');
  * @extends {goog.events.EventTarget}
  * @final
  */
-goog.db.IndexedDb = function(db) {
-  'use strict';
+goog.db.IndexedDb = function (db) {
   goog.db.IndexedDb.base(this, 'constructor');
 
   /**
@@ -51,19 +47,23 @@ goog.db.IndexedDb = function(db) {
   this.eventHandler_ = new goog.events.EventHandler(this);
 
   this.eventHandler_.listen(
-      this.db_, goog.db.IndexedDb.EventType.ABORT,
-      goog.bind(this.dispatchEvent, this, goog.db.IndexedDb.EventType.ABORT));
+    this.db_,
+    goog.db.IndexedDb.EventType.ABORT,
+    goog.bind(this.dispatchEvent, this, goog.db.IndexedDb.EventType.ABORT)
+  );
+  this.eventHandler_.listen(this.db_, goog.db.IndexedDb.EventType.ERROR, this.dispatchError_);
   this.eventHandler_.listen(
-      this.db_, goog.db.IndexedDb.EventType.ERROR, this.dispatchError_);
+    this.db_,
+    goog.db.IndexedDb.EventType.VERSION_CHANGE,
+    this.dispatchVersionChange_
+  );
   this.eventHandler_.listen(
-      this.db_, goog.db.IndexedDb.EventType.VERSION_CHANGE,
-      this.dispatchVersionChange_);
-  this.eventHandler_.listen(
-      this.db_, goog.db.IndexedDb.EventType.CLOSE,
-      goog.bind(this.dispatchEvent, this, goog.db.IndexedDb.EventType.CLOSE));
+    this.db_,
+    goog.db.IndexedDb.EventType.CLOSE,
+    goog.bind(this.dispatchEvent, this, goog.db.IndexedDb.EventType.CLOSE)
+  );
 };
 goog.inherits(goog.db.IndexedDb, goog.events.EventTarget);
-
 
 /**
  * True iff the database connection is open.
@@ -73,15 +73,13 @@ goog.inherits(goog.db.IndexedDb, goog.events.EventTarget);
  */
 goog.db.IndexedDb.prototype.open_ = true;
 
-
 /**
  * Dispatches a wrapped error event based on the given event.
  *
  * @param {!Event} ev The error event given to the underlying IDBDatabase.
  * @private
  */
-goog.db.IndexedDb.prototype.dispatchError_ = function(ev) {
-  'use strict';
+goog.db.IndexedDb.prototype.dispatchError_ = function (ev) {
   const idbRequest = /** @type {?IDBRequest} */ (ev.target);
   const domError = idbRequest && idbRequest.error;
   /** @suppress {strictMissingProperties} Added to tighten compiler checks */
@@ -92,7 +90,6 @@ goog.db.IndexedDb.prototype.dispatchError_ = function(ev) {
   });
 };
 
-
 /**
  * Dispatches a wrapped version change event based on the given event.
  *
@@ -100,63 +97,52 @@ goog.db.IndexedDb.prototype.dispatchError_ = function(ev) {
  *     underlying IDBDatabase.
  * @private
  */
-goog.db.IndexedDb.prototype.dispatchVersionChange_ = function(ev) {
-  'use strict';
-  this.dispatchEvent(new goog.db.IndexedDb.VersionChangeEvent(
-      ev.oldVersion, /** @type {number} */ (ev.newVersion)));
+goog.db.IndexedDb.prototype.dispatchVersionChange_ = function (ev) {
+  this.dispatchEvent(
+    new goog.db.IndexedDb.VersionChangeEvent(ev.oldVersion, /** @type {number} */ (ev.newVersion))
+  );
 };
-
 
 /**
  * Closes the database connection. Metadata queries can still be made after this
  * method is called, but otherwise this wrapper should not be used further.
  */
-goog.db.IndexedDb.prototype.close = function() {
-  'use strict';
+goog.db.IndexedDb.prototype.close = function () {
   if (this.open_) {
     this.db_.close();
     this.open_ = false;
   }
 };
 
-
 /**
  * @return {boolean} Whether a connection is open and the database can be used.
  */
-goog.db.IndexedDb.prototype.isOpen = function() {
-  'use strict';
+goog.db.IndexedDb.prototype.isOpen = function () {
   return this.open_;
 };
-
 
 /**
  * @return {string} The name of this database.
  */
-goog.db.IndexedDb.prototype.getName = function() {
-  'use strict';
+goog.db.IndexedDb.prototype.getName = function () {
   return this.db_.name;
 };
-
 
 /**
  * @return {number} The current database version.
  */
-goog.db.IndexedDb.prototype.getVersion = function() {
-  'use strict';
+goog.db.IndexedDb.prototype.getVersion = function () {
   // TODO(bradfordcsmith): drop Number() call once closure compiler's externs
   // are updated
   return Number(this.db_.version);
 };
 
-
 /**
  * @return {!DOMStringList} List of object stores in this database.
  */
-goog.db.IndexedDb.prototype.getObjectStoreNames = function() {
-  'use strict';
+goog.db.IndexedDb.prototype.getObjectStoreNames = function () {
   return this.db_.objectStoreNames;
 };
-
 
 /**
  * Creates an object store in this database. Can only be called inside a
@@ -174,16 +160,13 @@ goog.db.IndexedDb.prototype.getObjectStoreNames = function() {
  * @return {!goog.db.ObjectStore} The newly created object store.
  * @throws {goog.db.Error} If there's a problem creating the object store.
  */
-goog.db.IndexedDb.prototype.createObjectStore = function(name, opt_params) {
-  'use strict';
+goog.db.IndexedDb.prototype.createObjectStore = function (name, opt_params) {
   try {
-    return new goog.db.ObjectStore(
-        this.db_.createObjectStore(name, opt_params));
+    return new goog.db.ObjectStore(this.db_.createObjectStore(name, opt_params));
   } catch (ex) {
     throw goog.db.Error.fromException(ex, 'creating object store ' + name);
   }
 };
-
 
 /**
  * Deletes an object store. Can only be called inside a
@@ -192,15 +175,13 @@ goog.db.IndexedDb.prototype.createObjectStore = function(name, opt_params) {
  * @param {string} name Name of the object store to delete.
  * @throws {goog.db.Error} If there's a problem deleting the object store.
  */
-goog.db.IndexedDb.prototype.deleteObjectStore = function(name) {
-  'use strict';
+goog.db.IndexedDb.prototype.deleteObjectStore = function (name) {
   try {
     this.db_.deleteObjectStore(name);
   } catch (ex) {
     throw goog.db.Error.fromException(ex, 'deleting object store ' + name);
   }
 };
-
 
 /**
  * Creates a new transaction.
@@ -213,27 +194,24 @@ goog.db.IndexedDb.prototype.deleteObjectStore = function(name) {
  * @return {!goog.db.Transaction} The wrapper for the newly created transaction.
  * @throws {goog.db.Error} If there's a problem creating the transaction.
  */
-goog.db.IndexedDb.prototype.createTransaction = function(storeNames, opt_mode) {
-  'use strict';
+goog.db.IndexedDb.prototype.createTransaction = function (storeNames, opt_mode) {
   try {
     // IndexedDB on Chrome 22+ requires that opt_mode not be passed rather than
     // be explicitly passed as undefined.
-    const transaction = opt_mode ? this.db_.transaction(storeNames, opt_mode) :
-                                   this.db_.transaction(storeNames);
+    const transaction = opt_mode
+      ? this.db_.transaction(storeNames, opt_mode)
+      : this.db_.transaction(storeNames);
     return new goog.db.Transaction(transaction, this);
   } catch (ex) {
     throw goog.db.Error.fromException(ex, 'creating transaction');
   }
 };
 
-
 /** @override */
-goog.db.IndexedDb.prototype.disposeInternal = function() {
-  'use strict';
+goog.db.IndexedDb.prototype.disposeInternal = function () {
   goog.db.IndexedDb.base(this, 'disposeInternal');
   this.eventHandler_.dispose();
 };
-
 
 /**
  * Event types fired by a database.
@@ -241,7 +219,6 @@ goog.db.IndexedDb.prototype.disposeInternal = function() {
  * @enum {string} The event types for the web socket.
  */
 goog.db.IndexedDb.EventType = {
-
   /**
    * Fired when a transaction is aborted and the event bubbles to its database.
    */
@@ -266,10 +243,8 @@ goog.db.IndexedDb.EventType = {
    * no active database connections, this usually means that the database should
    * be closed so that the other client can make its changes.
    */
-  VERSION_CHANGE: 'versionchange'
+  VERSION_CHANGE: 'versionchange',
 };
-
-
 
 /**
  * Event representing a (possibly attempted) change in the database structure.
@@ -284,10 +259,12 @@ goog.db.IndexedDb.EventType = {
  * @extends {goog.events.Event}
  * @final
  */
-goog.db.IndexedDb.VersionChangeEvent = function(oldVersion, newVersion) {
-  'use strict';
+goog.db.IndexedDb.VersionChangeEvent = function (oldVersion, newVersion) {
   goog.db.IndexedDb.VersionChangeEvent.base(
-      this, 'constructor', goog.db.IndexedDb.EventType.VERSION_CHANGE);
+    this,
+    'constructor',
+    goog.db.IndexedDb.EventType.VERSION_CHANGE
+  );
 
   /**
    * The previous version of the database.

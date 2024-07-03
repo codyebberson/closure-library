@@ -7,7 +7,6 @@
 /** @fileoverview Unit tests for hybrid. */
 
 goog.module('goog.json.hybridTest');
-goog.setTestOnly();
 
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
 const googJson = goog.require('goog.json');
@@ -24,11 +23,11 @@ let googJsonSerialize;
 
 function parseJson() {
   const obj = hybrid.parse('{"a": 2}');
-  assertObjectEquals({'a': 2}, obj);
+  assertObjectEquals({ a: 2 }, obj);
 }
 
 function serializeJson() {
-  const str = hybrid.stringify({b: 2});
+  const str = hybrid.stringify({ b: 2 });
   assertEquals('{"b":2}', str);
 }
 
@@ -41,8 +40,7 @@ testSuite({
     propertyReplacer.set(googJson, 'serialize', googJsonSerialize);
 
     jsonParse = recordFunction(globalThis.JSON && globalThis.JSON.parse);
-    jsonStringify =
-        recordFunction(globalThis.JSON && globalThis.JSON.stringify);
+    jsonStringify = recordFunction(globalThis.JSON && globalThis.JSON.stringify);
 
     if (globalThis.JSON) {
       propertyReplacer.set(globalThis.JSON, 'parse', jsonParse);

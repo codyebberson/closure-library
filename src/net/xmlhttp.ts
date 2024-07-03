@@ -19,16 +19,11 @@ goog.require('goog.net.WrapperXmlHttpFactory');
 goog.require('goog.net.XmlHttpFactory');
 goog.requireType('goog.net.XhrLike');
 
-
 /**
  * Static class for creating XMLHttpRequest objects.
  * @return {!goog.net.XhrLike.OrNative} A new XMLHttpRequest object.
  */
-goog.net.XmlHttp = function() {
-  'use strict';
-  return goog.net.XmlHttp.factory_.createInstance();
-};
-
+goog.net.XmlHttp = () => goog.net.XmlHttp.factory_.createInstance();
 
 /**
  * @define {boolean} Whether to assume XMLHttpRequest exists. Setting this to
@@ -38,32 +33,26 @@ goog.net.XmlHttp = function() {
  * `goog.net.XmlHttpDefines.ASSUME_NATIVE_XHR` instead.
  * TODO(ruilopes): Collapse both defines.
  */
-goog.net.XmlHttp.ASSUME_NATIVE_XHR =
-    goog.define('goog.net.XmlHttp.ASSUME_NATIVE_XHR', false);
-
+goog.net.XmlHttp.ASSUME_NATIVE_XHR = goog.define('goog.net.XmlHttp.ASSUME_NATIVE_XHR', false);
 
 /** @const */
 goog.net.XmlHttpDefines = {};
-
 
 /**
  * @define {boolean} Whether to assume XMLHttpRequest exists. Setting this to
  *     true eliminates the ActiveX probing code.
  */
-goog.net.XmlHttpDefines.ASSUME_NATIVE_XHR =
-    goog.define('goog.net.XmlHttpDefines.ASSUME_NATIVE_XHR', false);
-
+goog.net.XmlHttpDefines.ASSUME_NATIVE_XHR = goog.define(
+  'goog.net.XmlHttpDefines.ASSUME_NATIVE_XHR',
+  false
+);
 
 /**
  * Gets the options to use with the XMLHttpRequest objects obtained using
  * the static methods.
  * @return {Object} The options.
  */
-goog.net.XmlHttp.getOptions = function() {
-  'use strict';
-  return goog.net.XmlHttp.factory_.getOptions();
-};
-
+goog.net.XmlHttp.getOptions = () => goog.net.XmlHttp.factory_.getOptions();
 
 /**
  * Type of options that an XmlHttp object can have.
@@ -83,7 +72,6 @@ goog.net.XmlHttp.OptionType = {
    */
   LOCAL_REQUEST_ERROR: 1,
 };
-
 
 /**
  * Status constants for XMLHTTP, matches:
@@ -117,7 +105,6 @@ goog.net.XmlHttp.ReadyState = {
   COMPLETE: 4,
 };
 
-
 /**
  * The global factory instance for creating XMLHttpRequest objects.
  * @type {goog.net.XmlHttpFactory}
@@ -125,30 +112,28 @@ goog.net.XmlHttp.ReadyState = {
  */
 goog.net.XmlHttp.factory_;
 
-
 /**
  * Sets the factories for creating XMLHttpRequest objects and their options.
  * @param {Function} factory The factory for XMLHttpRequest objects.
  * @param {Function} optionsFactory The factory for options.
  * @deprecated Use setGlobalFactory instead.
  */
-goog.net.XmlHttp.setFactory = function(factory, optionsFactory) {
-  'use strict';
-  goog.net.XmlHttp.setGlobalFactory(new goog.net.WrapperXmlHttpFactory(
-      goog.asserts.assert(factory), goog.asserts.assert(optionsFactory)));
+goog.net.XmlHttp.setFactory = (factory, optionsFactory) => {
+  goog.net.XmlHttp.setGlobalFactory(
+    new goog.net.WrapperXmlHttpFactory(
+      goog.asserts.assert(factory),
+      goog.asserts.assert(optionsFactory)
+    )
+  );
 };
-
 
 /**
  * Sets the global factory object.
  * @param {!goog.net.XmlHttpFactory} factory New global factory object.
  */
-goog.net.XmlHttp.setGlobalFactory = function(factory) {
-  'use strict';
+goog.net.XmlHttp.setGlobalFactory = (factory) => {
   goog.net.XmlHttp.factory_ = factory;
 };
-
-
 
 /**
  * Default factory to use when creating xhr objects.  You probably shouldn't be
@@ -156,16 +141,13 @@ goog.net.XmlHttp.setGlobalFactory = function(factory) {
  * @extends {goog.net.XmlHttpFactory}
  * @constructor
  */
-goog.net.DefaultXmlHttpFactory = function() {
-  'use strict';
+goog.net.DefaultXmlHttpFactory = function () {
   goog.net.XmlHttpFactory.call(this);
 };
 goog.inherits(goog.net.DefaultXmlHttpFactory, goog.net.XmlHttpFactory);
 
-
 /** @override */
-goog.net.DefaultXmlHttpFactory.prototype.createInstance = function() {
-  'use strict';
+goog.net.DefaultXmlHttpFactory.prototype.createInstance = function () {
   const progId = this.getProgId_();
   if (progId) {
     return new ActiveXObject(progId);
@@ -174,10 +156,8 @@ goog.net.DefaultXmlHttpFactory.prototype.createInstance = function() {
   }
 };
 
-
 /** @override */
-goog.net.DefaultXmlHttpFactory.prototype.internalGetOptions = function() {
-  'use strict';
+goog.net.DefaultXmlHttpFactory.prototype.internalGetOptions = function () {
   const progId = this.getProgId_();
   const options = {};
   if (progId) {
@@ -187,7 +167,6 @@ goog.net.DefaultXmlHttpFactory.prototype.internalGetOptions = function() {
   return options;
 };
 
-
 /**
  * The ActiveX PROG ID string to use to create xhr's in IE. Lazily initialized.
  * @type {string|undefined}
@@ -195,16 +174,13 @@ goog.net.DefaultXmlHttpFactory.prototype.internalGetOptions = function() {
  */
 goog.net.DefaultXmlHttpFactory.prototype.ieProgId_;
 
-
 /**
  * Initialize the private state used by other functions.
  * @return {string} The ActiveX PROG ID string to use to create xhr's in IE.
  * @private
  */
-goog.net.DefaultXmlHttpFactory.prototype.getProgId_ = function() {
-  'use strict';
-  if (goog.net.XmlHttp.ASSUME_NATIVE_XHR ||
-      goog.net.XmlHttpDefines.ASSUME_NATIVE_XHR) {
+goog.net.DefaultXmlHttpFactory.prototype.getProgId_ = function () {
+  if (goog.net.XmlHttp.ASSUME_NATIVE_XHR || goog.net.XmlHttpDefines.ASSUME_NATIVE_XHR) {
     return '';
   }
 
@@ -213,8 +189,11 @@ goog.net.DefaultXmlHttpFactory.prototype.getProgId_ = function() {
   // http://blogs.msdn.com/xmlteam/archive/2006/10/23/using-the-right-version-of-msxml-in-internet-explorer.aspx
   // However we do not (yet) fully trust that this will be OK for old versions
   // of IE on Win9x so we therefore keep the last 2.
-  if (!this.ieProgId_ && typeof XMLHttpRequest == 'undefined' &&
-      typeof ActiveXObject != 'undefined') {
+  if (
+    !this.ieProgId_ &&
+    typeof XMLHttpRequest == 'undefined' &&
+    typeof ActiveXObject != 'undefined'
+  ) {
     // Candidate Active X types.
     const ACTIVE_X_IDENTS = [
       'MSXML2.XMLHTTP.6.0',
@@ -238,13 +217,13 @@ goog.net.DefaultXmlHttpFactory.prototype.getProgId_ = function() {
 
     // couldn't find any matches
     throw new Error(
-        'Could not create ActiveXObject. ActiveX might be disabled,' +
-        ' or MSXML might not be installed');
+      'Could not create ActiveXObject. ActiveX might be disabled,' +
+        ' or MSXML might not be installed'
+    );
   }
 
   return /** @type {string} */ (this.ieProgId_);
 };
-
 
 // Set the global factory to an instance of the default factory.
 goog.net.XmlHttp.setGlobalFactory(new goog.net.DefaultXmlHttpFactory());

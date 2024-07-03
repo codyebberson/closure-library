@@ -279,5 +279,5 @@ goog.locale.countries = [
   'YT', // Mayotte
   'ZA', // South Africa
   'ZM', // Zambia
-  'ZW' // Zimbabwe
+  'ZW', // Zimbabwe
 ];

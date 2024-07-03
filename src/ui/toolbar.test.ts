@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.ToolbarTest');
-goog.setTestOnly();
 
 const EventType = goog.require('goog.events.EventType');
 const GoogTestingEvent = goog.require('goog.testing.events.Event');
@@ -52,9 +51,7 @@ testSuite({
     events.fireFocusEvent(toolbar.getElement());
     assertEquals(0, toolbar.getHighlightedIndex());
     assertTrue(firstButton.isHighlighted());
-    assertEquals(
-        firstButton.getElement(),
-        aria.getActiveDescendant(toolbar.getElement()));
+    assertEquals(firstButton.getElement(), aria.getActiveDescendant(toolbar.getElement()));
 
     // Verify that removing focus unhighlights the first item and removes it as
     // the active descendant.
@@ -70,17 +67,13 @@ testSuite({
 
     // Verify that mousing over and clicking on a toolbar button selects only
     // the correct item.
-    const mouseover =
-        new GoogTestingEvent(EventType.MOUSEOVER, secondButton.getElement());
+    const mouseover = new GoogTestingEvent(EventType.MOUSEOVER, secondButton.getElement());
     events.fireBrowserEvent(mouseover);
-    const mousedown =
-        new GoogTestingEvent(EventType.MOUSEDOWN, toolbar.getElement());
+    const mousedown = new GoogTestingEvent(EventType.MOUSEDOWN, toolbar.getElement());
     events.fireBrowserEvent(mousedown);
     assertEquals(1, toolbar.getHighlightedIndex());
     assertTrue(secondButton.isHighlighted());
     assertFalse(firstButton.isHighlighted());
-    assertEquals(
-        secondButton.getElement(),
-        aria.getActiveDescendant(toolbar.getElement()));
+    assertEquals(secondButton.getElement(), aria.getActiveDescendant(toolbar.getElement()));
   },
 });

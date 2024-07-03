@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.labs.testing.objectMatcherTest');
-goog.setTestOnly();
 
 const MatcherError = goog.require('goog.labs.testing.MatcherError');
 const assertThat = goog.require('goog.labs.testing.assertThat');
@@ -26,12 +25,12 @@ testSuite({
   },
 
   testObjectEquals() {
-    const obj1 = {x: 1};
+    const obj1 = { x: 1 };
     const obj2 = obj1;
     assertThat(obj1, equalsObject(obj2), 'obj1 equals obj2');
 
     assertMatcherError(() => {
-      assertThat({x: 1}, equalsObject({}));
+      assertThat({ x: 1 }, equalsObject({}));
     }, 'equalsObject does not throw exception on failure');
   },
 
@@ -41,19 +40,21 @@ testSuite({
     }
     /** @suppress {checkTypes} suppression added to enable type checking */
     const input = new expected();
-    assertThat(
-        input, instanceOfClass(expected), 'input is an instance of expected');
+    assertThat(input, instanceOfClass(expected), 'input is an instance of expected');
 
     assertMatcherError(() => {
-      assertThat(5, instanceOfClass(() => {}));
+      assertThat(
+        5,
+        instanceOfClass(() => {})
+      );
     }, 'instanceOfClass does not throw exception on failure');
   },
 
   testHasProperty() {
-    assertThat({x: 1}, hasProperty('x'), '{x:1} has property x}');
+    assertThat({ x: 1 }, hasProperty('x'), '{x:1} has property x}');
 
     assertMatcherError(() => {
-      assertThat({x: 1}, hasProperty('y'));
+      assertThat({ x: 1 }, hasProperty('y'));
     }, 'hasProperty does not throw exception on failure');
   },
 
@@ -67,8 +68,7 @@ testSuite({
 
   testIsNullOrUndefined() {
     let x;
-    assertThat(
-        undefined, isNullOrUndefined(), 'undefined is null or undefined');
+    assertThat(undefined, isNullOrUndefined(), 'undefined is null or undefined');
     assertThat(x, isNullOrUndefined(), 'undefined is null or undefined');
     x = null;
     assertThat(null, isNullOrUndefined(), 'null is null or undefined');

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.structs.StringSetTest');
-goog.setTestOnly();
 
 const StringSet = goog.require('goog.structs.StringSet');
 const asserts = goog.require('goog.testing.asserts');
@@ -31,27 +30,39 @@ const TEST_VALUES = [
 ];
 
 const TEST_VALUES_WITH_DUPLICATES = [
-  '',          '',
-  ' ',         '  ',
-  'true',      true,
-  'null',      null,
-  'undefined', undefined,
-  '0',         0,
-  'new',       'constructor',
-  'prototype', '__proto__',
-  'set',       'hasOwnProperty',
-  'toString',  'valueOf',
+  '',
+  '',
+  ' ',
+  '  ',
+  'true',
+  true,
+  'null',
+  null,
+  'undefined',
+  undefined,
+  '0',
+  0,
+  'new',
+  'constructor',
+  'prototype',
+  '__proto__',
+  'set',
+  'hasOwnProperty',
+  'toString',
+  'valueOf',
 ];
 
 testSuite({
   testConstructor() {
-    const empty = new StringSet;
+    const empty = new StringSet();
     assertSameElements('elements in empty set', [], empty.getValues());
 
     const s = new StringSet(TEST_VALUES_WITH_DUPLICATES);
     assertSameElements(
-        'duplicates are filtered out by their string value', TEST_VALUES,
-        s.getValues());
+      'duplicates are filtered out by their string value',
+      TEST_VALUES,
+      s.getValues()
+    );
   },
 
   testConstructorAssertsThatObjectPrototypeHasNoEnumerableKeys() {
@@ -77,19 +88,19 @@ testSuite({
   },
 
   testAdd() {
-    const s = new StringSet;
+    const s = new StringSet();
     TEST_VALUES_WITH_DUPLICATES.forEach(s.add, s);
     assertSameElements(TEST_VALUES, s.getValues());
   },
 
   testAddArray() {
-    const s = new StringSet;
+    const s = new StringSet();
     s.addArray(TEST_VALUES_WITH_DUPLICATES);
     assertSameElements('added elements from array', TEST_VALUES, s.getValues());
   },
 
   testAddSet() {
-    const s = new StringSet;
+    const s = new StringSet();
     s.addSet(new StringSet([1, 2]));
     assertSameElements('empty set + {1, 2}', ['1', '2'], s.getValues());
     s.addSet(new StringSet([2, 3]));
@@ -108,19 +119,21 @@ testSuite({
     assertSameElements('elements in clone', ['1', '2'], c.getValues());
     s.add(3);
     assertSameElements(
-        'changing the original set does not affect the clone', ['1', '2'],
-        c.getValues());
+      'changing the original set does not affect the clone',
+      ['1', '2'],
+      c.getValues()
+    );
   },
 
   testContains() {
-    const e = new StringSet;
-    TEST_VALUES.forEach(element => {
+    const e = new StringSet();
+    TEST_VALUES.forEach((element) => {
       assertFalse(`empty set does not contain ${element}`, e.contains(element));
       assertFalse(`empty set does not contain ${element}`, e.has(element));
     });
 
     const s = new StringSet(TEST_VALUES);
-    TEST_VALUES_WITH_DUPLICATES.forEach(element => {
+    TEST_VALUES_WITH_DUPLICATES.forEach((element) => {
       assertTrue(`s contains ${element}`, s.contains(element));
       assertTrue(`s contains ${element}`, s.has(element));
     });
@@ -132,8 +145,9 @@ testSuite({
     const s = new StringSet(TEST_VALUES);
     assertTrue('set contains empty array', s.containsArray([]));
     assertTrue(
-        'set contains all elements of itself with some duplication',
-        s.containsArray(TEST_VALUES_WITH_DUPLICATES));
+      'set contains all elements of itself with some duplication',
+      s.containsArray(TEST_VALUES_WITH_DUPLICATES)
+    );
     assertFalse('set does not contain 42', s.containsArray([42]));
   },
 
@@ -141,29 +155,25 @@ testSuite({
     const s = new StringSet([1, 2]);
     assertTrue('set equals to itself', s.equals(s));
     assertTrue('set equals to its clone', s.equals(s.clone()));
-    assertFalse(
-        'set does not equal to its subset', s.equals(new StringSet([1])));
-    assertFalse(
-        'set does not equal to its superset',
-        s.equals(new StringSet([1, 2, 3])));
+    assertFalse('set does not equal to its subset', s.equals(new StringSet([1])));
+    assertFalse('set does not equal to its superset', s.equals(new StringSet([1, 2, 3])));
   },
 
   testForEach() {
     const s = new StringSet(TEST_VALUES);
     const values = [];
     const context = {};
-    s.forEach(function(value, key, stringSet) {
+    s.forEach(function (value, key, stringSet) {
       assertEquals('context of forEach callback', context, this);
       values.push(value);
       assertUndefined('key argument of forEach callback', key);
       assertEquals('set argument of forEach callback', s, stringSet);
     }, context);
-    assertSameElements(
-        'values passed to forEach callback', TEST_VALUES, values);
+    assertSameElements('values passed to forEach callback', TEST_VALUES, values);
   },
 
   testGetCount() {
-    const empty = new StringSet;
+    const empty = new StringSet();
     assertEquals('count(empty set)', 0, empty.getCount());
 
     const s = new StringSet(TEST_VALUES);
@@ -173,34 +183,33 @@ testSuite({
   testGetDifference() {
     const s1 = new StringSet([1, 2]);
     const s2 = new StringSet([2, 3]);
-    assertSameElements(
-        '{1, 2} - {2, 3}', ['1'], s1.getDifference(s2).getValues());
+    assertSameElements('{1, 2} - {2, 3}', ['1'], s1.getDifference(s2).getValues());
   },
 
   testGetIntersection() {
     const s1 = new StringSet([1, 2]);
     const s2 = new StringSet([2, 3]);
-    assertSameElements(
-        '{1, 2} * {2, 3}', ['2'], s1.getIntersection(s2).getValues());
+    assertSameElements('{1, 2} * {2, 3}', ['2'], s1.getIntersection(s2).getValues());
   },
 
   testGetSymmetricDifference() {
     const s1 = new StringSet([1, 2]);
     const s2 = new StringSet([2, 3]);
     assertSameElements(
-        '{1, 2} sym.diff. {2, 3}', ['1', '3'],
-        s1.getSymmetricDifference(s2).getValues());
+      '{1, 2} sym.diff. {2, 3}',
+      ['1', '3'],
+      s1.getSymmetricDifference(s2).getValues()
+    );
   },
 
   testGetUnion() {
     const s1 = new StringSet([1, 2]);
     const s2 = new StringSet([2, 3]);
-    assertSameElements(
-        '{1, 2} + {2, 3}', ['1', '2', '3'], s1.getUnion(s2).getValues());
+    assertSameElements('{1, 2} + {2, 3}', ['1', '2', '3'], s1.getUnion(s2).getValues());
   },
 
   testIsDisjoint() {
-    const s = new StringSet;
+    const s = new StringSet();
     const s12 = new StringSet([1, 2]);
     const s23 = new StringSet([2, 3]);
     const s34 = new StringSet([3, 4]);
@@ -250,8 +259,7 @@ testSuite({
 
     const s = new StringSet(TEST_VALUES);
     TEST_VALUES.forEach(s.remove, s);
-    assertSameElements(
-        'all special values have been removed', [], s.getValues());
+    assertSameElements('all special values have been removed', [], s.getValues());
   },
 
   testDelete() {
@@ -272,8 +280,10 @@ testSuite({
     const s = new StringSet(TEST_VALUES);
     s.removeArray(TEST_VALUES.slice(0, TEST_VALUES.length - 2));
     assertSameElements(
-        'removed elements from array',
-        TEST_VALUES.slice(TEST_VALUES.length - 2), s.getValues());
+      'removed elements from array',
+      TEST_VALUES.slice(TEST_VALUES.length - 2),
+      s.getValues()
+    );
   },
 
   testRemoveSet() {
@@ -289,7 +299,6 @@ testSuite({
     iter.forEach(s, (value) => {
       values.push(value);
     });
-    assertSameElements(
-        '__iterator__ takes all elements once', TEST_VALUES, values);
+    assertSameElements('__iterator__ takes all elements once', TEST_VALUES, values);
   },
 });

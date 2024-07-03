@@ -10,7 +10,6 @@
  */
 
 goog.module('goog.module.ModuleLoaderTest');
-goog.setTestOnly();
 
 const BulkLoader = goog.require('goog.net.BulkLoader');
 const Const = goog.require('goog.string.Const');
@@ -55,45 +54,45 @@ const stubs = new PropertyReplacer();
 const modA1 = TrustedResourceUrl.fromConstant(Const.from('testdata/modA_1.js'));
 const modA2 = TrustedResourceUrl.fromConstant(Const.from('testdata/modA_2.js'));
 const modB1 = TrustedResourceUrl.fromConstant(Const.from('testdata/modB_1.js'));
-const errorMod =
-    TrustedResourceUrl.fromConstant(Const.from('testdata/errorMod.js'));
+const errorMod = TrustedResourceUrl.fromConstant(Const.from('testdata/errorMod.js'));
 
 const EventType = ModuleLoader.EventType;
 let observer;
 
 function assertSourceInjection() {
   return new GoogPromise((resolve, reject) => {
-           moduleManager.execOnLoad('modB', resolve);
-         })
-      .then(/**
+    moduleManager.execOnLoad('modB', resolve);
+  }).then(
+    /**
                @suppress {undefinedVars} suppression added to enable type
                checking
              */
-            () => {
-              assertTrue(!!throwErrorInModuleB);
+    () => {
+      assertTrue(!!throwErrorInModuleB);
 
-              const ex = assertThrows(() => {
-                throwErrorInModuleB();
-              });
+      const ex = assertThrows(() => {
+        throwErrorInModuleB();
+      });
 
-              if (!ex.stack) {
-                return;
-              }
+      if (!ex.stack) {
+        return;
+      }
 
-              const stackTrace = ex.stack.toString();
-              const expectedString = 'testdata/modB_1.js';
+      const stackTrace = ex.stack.toString();
+      const expectedString = 'testdata/modB_1.js';
 
-              if (ModuleLoader.supportsSourceUrlStackTraces()) {
-                // Source URL should be added in eval or in jsloader.
-                assertContains(expectedString, stackTrace);
-              } else if (moduleLoader.getDebugMode()) {
-                // Browsers used jsloader, thus URLs are present.
-                assertContains(expectedString, stackTrace);
-              } else {
-                // Browser used eval, does not support source URL.
-                assertNotContains(expectedString, stackTrace);
-              }
-            });
+      if (ModuleLoader.supportsSourceUrlStackTraces()) {
+        // Source URL should be added in eval or in jsloader.
+        assertContains(expectedString, stackTrace);
+      } else if (moduleLoader.getDebugMode()) {
+        // Browsers used jsloader, thus URLs are present.
+        assertContains(expectedString, stackTrace);
+      } else {
+        // Browser used eval, does not support source URL.
+        assertNotContains(expectedString, stackTrace);
+      }
+    }
+  );
 }
 
 function assertLoaded(id) {
@@ -105,7 +104,7 @@ function assertNotLoaded(id) {
 }
 testSuite({
   setUpPage() {
-    TestCase.getActiveTestCase().promiseTimeout = 10000;  // 10s
+    TestCase.getActiveTestCase().promiseTimeout = 10000; // 10s
   },
 
   setUp() {
@@ -126,10 +125,12 @@ testSuite({
     events.listen(moduleLoader, googObject.getValues(EventType), observer);
 
     moduleManager.setLoader(moduleLoader);
-    moduleManager.setAllModuleInfo(
-        {'modA': [], 'modB': ['modA'], 'errorMod': []});
-    moduleManager.setModuleTrustedUris(
-        {'modA': [modA1, modA2], 'modB': [modB1], 'errorMod': [errorMod]});
+    moduleManager.setAllModuleInfo({ modA: [], modB: ['modA'], errorMod: [] });
+    moduleManager.setModuleTrustedUris({
+      modA: [modA1, modA2],
+      modB: [modB1],
+      errorMod: [errorMod],
+    });
 
     assertNotLoaded('modA');
     assertNotLoaded('modB');
@@ -159,125 +160,114 @@ testSuite({
 
   testLoadModuleA() {
     return new GoogPromise((resolve, reject) => {
-             moduleManager.execOnLoad('modA', () => {
-               assertLoaded('modA');
-               assertNotLoaded('modB');
-               assertTrue(modA1Loaded);
+      moduleManager.execOnLoad('modA', () => {
+        assertLoaded('modA');
+        assertNotLoaded('modB');
+        assertTrue(modA1Loaded);
 
-               // The code is not evaluated immediately, but only after a
-               // browser yield.
-               assertEquals(
-                   'EVALUATE_CODE', 0,
-                   observer.getEvents(EventType.EVALUATE_CODE).length);
-               assertEquals(
-                   'REQUEST_SUCCESS', 1,
-                   observer.getEvents(EventType.REQUEST_SUCCESS).length);
-               assertArrayEquals(
-                   ['modA'],
-                   observer.getEvents(EventType.REQUEST_SUCCESS)[0].moduleIds);
-               assertEquals(
-                   'REQUEST_ERROR', 0,
-                   observer.getEvents(EventType.REQUEST_ERROR).length);
-               resolve();
-             });
-           })
-        .then(() => {
-          assertEquals(
-              'EVALUATE_CODE after tick', 1,
-              observer.getEvents(EventType.EVALUATE_CODE).length);
-          assertEquals(
-              'REQUEST_SUCCESS after tick', 1,
-              observer.getEvents(EventType.REQUEST_SUCCESS).length);
-          assertEquals(
-              'REQUEST_ERROR after tick', 0,
-              observer.getEvents(EventType.REQUEST_ERROR).length);
-        });
+        // The code is not evaluated immediately, but only after a
+        // browser yield.
+        assertEquals('EVALUATE_CODE', 0, observer.getEvents(EventType.EVALUATE_CODE).length);
+        assertEquals('REQUEST_SUCCESS', 1, observer.getEvents(EventType.REQUEST_SUCCESS).length);
+        assertArrayEquals(['modA'], observer.getEvents(EventType.REQUEST_SUCCESS)[0].moduleIds);
+        assertEquals('REQUEST_ERROR', 0, observer.getEvents(EventType.REQUEST_ERROR).length);
+        resolve();
+      });
+    }).then(() => {
+      assertEquals(
+        'EVALUATE_CODE after tick',
+        1,
+        observer.getEvents(EventType.EVALUATE_CODE).length
+      );
+      assertEquals(
+        'REQUEST_SUCCESS after tick',
+        1,
+        observer.getEvents(EventType.REQUEST_SUCCESS).length
+      );
+      assertEquals(
+        'REQUEST_ERROR after tick',
+        0,
+        observer.getEvents(EventType.REQUEST_ERROR).length
+      );
+    });
   },
 
   testLoadModuleB() {
     return new GoogPromise((resolve, reject) => {
-             moduleManager.execOnLoad('modB', resolve);
-           })
-        .then(() => {
-          assertLoaded('modA');
-          assertLoaded('modB');
-          assertTrue(modA1Loaded);
-        });
+      moduleManager.execOnLoad('modB', resolve);
+    }).then(() => {
+      assertLoaded('modA');
+      assertLoaded('modB');
+      assertTrue(modA1Loaded);
+    });
   },
 
   testLoadDebugModuleA() {
     moduleLoader.setDebugMode(true);
     return new GoogPromise((resolve, reject) => {
-             moduleManager.execOnLoad('modA', resolve);
-           })
-        .then(() => {
-          assertLoaded('modA');
-          assertNotLoaded('modB');
-          assertTrue(modA1Loaded);
-        });
+      moduleManager.execOnLoad('modA', resolve);
+    }).then(() => {
+      assertLoaded('modA');
+      assertNotLoaded('modB');
+      assertTrue(modA1Loaded);
+    });
   },
 
   testLoadDebugModuleB() {
     moduleLoader.setDebugMode(true);
     return new GoogPromise((resolve, reject) => {
-             moduleManager.execOnLoad('modB', resolve);
-           })
-        .then(() => {
-          assertLoaded('modA');
-          assertLoaded('modB');
-          assertTrue(modA1Loaded);
-        });
+      moduleManager.execOnLoad('modB', resolve);
+    }).then(() => {
+      assertLoaded('modA');
+      assertLoaded('modB');
+      assertTrue(modA1Loaded);
+    });
   },
 
   testLoadDebugModuleAThenB() {
     // Swap the script tags of module A, to introduce a race condition.
     // See the comments on this in ModuleLoader's debug loader.
-    moduleManager.setModuleTrustedUris(
-        {'modA': [modA2, modA1], 'modB': [modB1]});
+    moduleManager.setModuleTrustedUris({ modA: [modA2, modA1], modB: [modB1] });
     moduleLoader.setDebugMode(true);
     return new GoogPromise((resolve, reject) => {
-             moduleManager.execOnLoad('modB', resolve);
-           })
-        .then(() => {
-          assertLoaded('modA');
-          assertLoaded('modB');
+      moduleManager.execOnLoad('modB', resolve);
+    }).then(() => {
+      assertLoaded('modA');
+      assertLoaded('modB');
 
-          const scripts =
-              googArray.clone(dom.getElementsByTagName(TagName.SCRIPT));
-          let seenLastScriptOfModuleA = false;
-          for (let i = 0; i < scripts.length; i++) {
-            const uri = scripts[i].src;
-            if (uri.indexOf('modA_1.js') >= 0) {
-              seenLastScriptOfModuleA = true;
-            } else if (uri.indexOf('modB') >= 0) {
-              assertTrue(seenLastScriptOfModuleA);
-            }
-          }
-        });
+      const scripts = googArray.clone(dom.getElementsByTagName(TagName.SCRIPT));
+      let seenLastScriptOfModuleA = false;
+      for (let i = 0; i < scripts.length; i++) {
+        const uri = scripts[i].src;
+        if (uri.indexOf('modA_1.js') >= 0) {
+          seenLastScriptOfModuleA = true;
+        } else if (uri.indexOf('modB') >= 0) {
+          assertTrue(seenLastScriptOfModuleA);
+        }
+      }
+    });
   },
 
   testLoadScriptTagModuleA() {
     moduleLoader.setUseScriptTags(true);
     return new GoogPromise((resolve, reject) => {
-             moduleManager.execOnLoad('modA', resolve);
-           })
-        .then(() => {
-          assertLoaded('modA');
-          assertNotLoaded('modB');
-          assertTrue(modA1Loaded);
-        });
+      moduleManager.execOnLoad('modA', resolve);
+    }).then(() => {
+      assertLoaded('modA');
+      assertNotLoaded('modB');
+      assertTrue(modA1Loaded);
+    });
   },
 
   testLoadScriptTagModuleB() {
     moduleLoader.setUseScriptTags(true);
     return new GoogPromise((resolve, reject) => {
-             moduleManager.execOnLoad('modB', resolve);
-           })
-        .then(() => {
-          assertLoaded('modA');
-          assertLoaded('modB');
-          assertTrue(modA1Loaded);
-        });
+      moduleManager.execOnLoad('modB', resolve);
+    }).then(() => {
+      assertLoaded('modA');
+      assertLoaded('modB');
+      assertTrue(modA1Loaded);
+    });
   },
 
   testSourceInjection() {
@@ -307,9 +297,12 @@ testSuite({
       uris[modName] = [];
       deps[modName] = num ? ['mod' + (num - 1)] : [];
       for (let i = 0; i < 5; i++) {
-        uris[modName].push(TrustedResourceUrl.format(
+        uris[modName].push(
+          TrustedResourceUrl.format(
             Const.from('https://www.google.com/crossdomain%{num}x%{i}.js'),
-            {'num': num, 'i': i}));
+            { num: num, i: i }
+          )
+        );
       }
     }
 
@@ -319,9 +312,10 @@ testSuite({
     // Make all XHRs throw an error, so that we test the error-handling
     // functionality.
     const oldXmlHttp = goog.net.XmlHttp;
-    stubs.set(goog.net, 'XmlHttp', function() {
-      return {open: functions.error('mock error'), abort: () => {}};
-    });
+    stubs.set(goog.net, 'XmlHttp', () => ({
+      open: functions.error('mock error'),
+      abort: () => {},
+    }));
     googObject.extend(goog.net.XmlHttp, oldXmlHttp);
 
     let errorCount = 0;
@@ -330,8 +324,7 @@ testSuite({
       errorCount++;
       errorIds.push(modId);
     };
-    moduleManager.registerCallback(
-        ModuleManager.CallbackType.ERROR, errorHandler);
+    moduleManager.registerCallback(ModuleManager.CallbackType.ERROR, errorHandler);
 
     moduleManager.execOnLoad(mods[0], () => {
       fail('modB should not load successfully');
@@ -373,8 +366,7 @@ testSuite({
         }
         resolve();
       };
-      moduleManager.registerCallback(
-          ModuleManager.CallbackType.ERROR, errorHandler);
+      moduleManager.registerCallback(ModuleManager.CallbackType.ERROR, errorHandler);
 
       moduleManager.execOnLoad('errorMod', () => {
         fail('errorMod should not load successfully');
@@ -384,43 +376,35 @@ testSuite({
 
   testEventError() {
     return new GoogPromise((resolve, reject) => {
-             const errorHandler = () => {
-               try {
-                 assertNotLoaded('errorMod');
-               } catch (e) {
-                 reject(e);
-               }
-               resolve();
-             };
-             moduleManager.registerCallback(
-                 ModuleManager.CallbackType.ERROR, errorHandler);
+      const errorHandler = () => {
+        try {
+          assertNotLoaded('errorMod');
+        } catch (e) {
+          reject(e);
+        }
+        resolve();
+      };
+      moduleManager.registerCallback(ModuleManager.CallbackType.ERROR, errorHandler);
 
-             moduleManager.execOnLoad('errorMod', () => {
-               fail('errorMod should not load successfully');
-             });
-           })
-        .then(() => {
-          assertEquals(
-              'EVALUATE_CODE', 3,
-              observer.getEvents(EventType.EVALUATE_CODE).length);
-          assertUndefined(observer.getEvents(EventType.EVALUATE_CODE)[0].error);
+      moduleManager.execOnLoad('errorMod', () => {
+        fail('errorMod should not load successfully');
+      });
+    }).then(() => {
+      assertEquals('EVALUATE_CODE', 3, observer.getEvents(EventType.EVALUATE_CODE).length);
+      assertUndefined(observer.getEvents(EventType.EVALUATE_CODE)[0].error);
 
-          assertEquals(
-              'REQUEST_SUCCESS', 3,
-              observer.getEvents(EventType.REQUEST_SUCCESS).length);
-          assertUndefined(
-              observer.getEvents(EventType.REQUEST_SUCCESS)[0].error);
+      assertEquals('REQUEST_SUCCESS', 3, observer.getEvents(EventType.REQUEST_SUCCESS).length);
+      assertUndefined(observer.getEvents(EventType.REQUEST_SUCCESS)[0].error);
 
-          const requestErrors = observer.getEvents(EventType.REQUEST_ERROR);
-          assertEquals('REQUEST_ERROR', 3, requestErrors.length);
-          const requestError = requestErrors[0];
-          assertNotNull(requestError.error);
-          const expectedString = 'should not load';
-          const messageAndStack =
-              requestErrors[0].error.message + requestErrors[0].error.stack;
-          assertContains(expectedString, messageAndStack);
-          assertNull(requestError.status);
-        });
+      const requestErrors = observer.getEvents(EventType.REQUEST_ERROR);
+      assertEquals('REQUEST_ERROR', 3, requestErrors.length);
+      const requestError = requestErrors[0];
+      assertNotNull(requestError.error);
+      const expectedString = 'should not load';
+      const messageAndStack = requestErrors[0].error.message + requestErrors[0].error.stack;
+      assertContains(expectedString, messageAndStack);
+      assertNull(requestError.status);
+    });
   },
 
   testPrefetchThenLoadModuleA() {
@@ -430,20 +414,13 @@ testSuite({
     });
 
     return new GoogPromise((resolve, reject) => {
-             moduleManager.execOnLoad('modA', resolve);
-           })
-        .then(() => {
-          assertLoaded('modA');
-          assertEquals(
-              'REQUEST_SUCCESS', 1,
-              observer.getEvents(EventType.REQUEST_SUCCESS).length);
-          assertArrayEquals(
-              ['modA'],
-              observer.getEvents(EventType.REQUEST_SUCCESS)[0].moduleIds);
-          assertEquals(
-              'REQUEST_ERROR', 0,
-              observer.getEvents(EventType.REQUEST_ERROR).length);
-        });
+      moduleManager.execOnLoad('modA', resolve);
+    }).then(() => {
+      assertLoaded('modA');
+      assertEquals('REQUEST_SUCCESS', 1, observer.getEvents(EventType.REQUEST_SUCCESS).length);
+      assertArrayEquals(['modA'], observer.getEvents(EventType.REQUEST_SUCCESS)[0].moduleIds);
+      assertEquals('REQUEST_ERROR', 0, observer.getEvents(EventType.REQUEST_ERROR).length);
+    });
   },
 
   testPrefetchThenLoadModuleB() {
@@ -453,74 +430,47 @@ testSuite({
     });
 
     return new GoogPromise((resolve, reject) => {
-             moduleManager.execOnLoad('modB', resolve);
-           })
-        .then(() => {
-          assertLoaded('modA');
-          assertLoaded('modB');
-          assertEquals(
-              'REQUEST_SUCCESS', 2,
-              observer.getEvents(EventType.REQUEST_SUCCESS).length);
-          assertArrayEquals(
-              ['modA'],
-              observer.getEvents(EventType.REQUEST_SUCCESS)[0].moduleIds);
-          assertArrayEquals(
-              ['modB'],
-              observer.getEvents(EventType.REQUEST_SUCCESS)[1].moduleIds);
-          assertEquals(
-              'REQUEST_ERROR', 0,
-              observer.getEvents(EventType.REQUEST_ERROR).length);
-        });
+      moduleManager.execOnLoad('modB', resolve);
+    }).then(() => {
+      assertLoaded('modA');
+      assertLoaded('modB');
+      assertEquals('REQUEST_SUCCESS', 2, observer.getEvents(EventType.REQUEST_SUCCESS).length);
+      assertArrayEquals(['modA'], observer.getEvents(EventType.REQUEST_SUCCESS)[0].moduleIds);
+      assertArrayEquals(['modB'], observer.getEvents(EventType.REQUEST_SUCCESS)[1].moduleIds);
+      assertEquals('REQUEST_ERROR', 0, observer.getEvents(EventType.REQUEST_ERROR).length);
+    });
   },
 
   testPrefetchModuleAThenLoadModuleB() {
     moduleManager.prefetchModule('modA');
 
     return new GoogPromise((resolve, reject) => {
-             moduleManager.execOnLoad('modB', resolve);
-           })
-        .then(() => {
-          assertLoaded('modA');
-          assertLoaded('modB');
-          assertEquals(
-              'REQUEST_SUCCESS', 2,
-              observer.getEvents(EventType.REQUEST_SUCCESS).length);
-          assertArrayEquals(
-              ['modA'],
-              observer.getEvents(EventType.REQUEST_SUCCESS)[0].moduleIds);
-          assertArrayEquals(
-              ['modB'],
-              observer.getEvents(EventType.REQUEST_SUCCESS)[1].moduleIds);
-          assertEquals(
-              'REQUEST_ERROR', 0,
-              observer.getEvents(EventType.REQUEST_ERROR).length);
-        });
+      moduleManager.execOnLoad('modB', resolve);
+    }).then(() => {
+      assertLoaded('modA');
+      assertLoaded('modB');
+      assertEquals('REQUEST_SUCCESS', 2, observer.getEvents(EventType.REQUEST_SUCCESS).length);
+      assertArrayEquals(['modA'], observer.getEvents(EventType.REQUEST_SUCCESS)[0].moduleIds);
+      assertArrayEquals(['modB'], observer.getEvents(EventType.REQUEST_SUCCESS)[1].moduleIds);
+      assertEquals('REQUEST_ERROR', 0, observer.getEvents(EventType.REQUEST_ERROR).length);
+    });
   },
 
   testLoadModuleBThenPrefetchModuleA() {
     return new GoogPromise((resolve, reject) => {
-             moduleManager.execOnLoad('modB', resolve);
-           })
-        .then(() => {
-          assertLoaded('modA');
-          assertLoaded('modB');
-          assertEquals(
-              'REQUEST_SUCCESS', 2,
-              observer.getEvents(EventType.REQUEST_SUCCESS).length);
-          assertArrayEquals(
-              ['modA'],
-              observer.getEvents(EventType.REQUEST_SUCCESS)[0].moduleIds);
-          assertArrayEquals(
-              ['modB'],
-              observer.getEvents(EventType.REQUEST_SUCCESS)[1].moduleIds);
-          assertEquals(
-              'REQUEST_ERROR', 0,
-              observer.getEvents(EventType.REQUEST_ERROR).length);
-          stubs.set(BulkLoader.prototype, 'load', () => {
-            fail('modA should not be downloaded again.');
-          });
-          moduleManager.prefetchModule('modA');
-        });
+      moduleManager.execOnLoad('modB', resolve);
+    }).then(() => {
+      assertLoaded('modA');
+      assertLoaded('modB');
+      assertEquals('REQUEST_SUCCESS', 2, observer.getEvents(EventType.REQUEST_SUCCESS).length);
+      assertArrayEquals(['modA'], observer.getEvents(EventType.REQUEST_SUCCESS)[0].moduleIds);
+      assertArrayEquals(['modB'], observer.getEvents(EventType.REQUEST_SUCCESS)[1].moduleIds);
+      assertEquals('REQUEST_ERROR', 0, observer.getEvents(EventType.REQUEST_ERROR).length);
+      stubs.set(BulkLoader.prototype, 'load', () => {
+        fail('modA should not be downloaded again.');
+      });
+      moduleManager.prefetchModule('modA');
+    });
   },
 
   testPrefetchModuleAThenLoadModuleBWithBatchEnabled() {
@@ -528,46 +478,44 @@ testSuite({
     moduleManager.prefetchModule('modA');
 
     assertThrows(
-        'Modules prefetching is only supported in batch mode when using ' +
-            'script tags',
-        () => {
-          moduleManager.execOnLoad('modB', () => {});
-        });
+      'Modules prefetching is only supported in batch mode when using ' + 'script tags',
+      () => {
+        moduleManager.execOnLoad('modB', () => {});
+      }
+    );
   },
 
   testLoadModulesAAndBWithBatchEnabledAndScriptTagEnabled() {
     moduleLoader.setUseScriptTags(true);
     const moduleInfoMap = {
-      'modA': moduleManager.getModuleInfo('modA'),
-      'modB': moduleManager.getModuleInfo('modB')
+      modA: moduleManager.getModuleInfo('modA'),
+      modB: moduleManager.getModuleInfo('modB'),
     };
     return new GoogPromise((resolve, reject) => {
-             moduleLoader.loadModules(['modA', 'modB'], moduleInfoMap, {
-               onSuccess: resolve,
-             });
-           })
-        .then(() => {
-          assertLoaded('modA');
-          assertLoaded('modB');
-        });
+      moduleLoader.loadModules(['modA', 'modB'], moduleInfoMap, {
+        onSuccess: resolve,
+      });
+    }).then(() => {
+      assertLoaded('modA');
+      assertLoaded('modB');
+    });
   },
 
   testPrefetchAAndThenLoadModulesAAndBWithBatchEnabledAndScriptTagEnabled() {
     moduleLoader.setUseScriptTags(true);
     const moduleInfoMap = {
-      'modA': moduleManager.getModuleInfo('modA'),
-      'modB': moduleManager.getModuleInfo('modB')
+      modA: moduleManager.getModuleInfo('modA'),
+      modB: moduleManager.getModuleInfo('modB'),
     };
     moduleLoader.prefetchModule('modA', moduleInfoMap['modA']);
     return new GoogPromise((resolve, reject) => {
-             moduleLoader.loadModules(['modA', 'modB'], moduleInfoMap, {
-               onSuccess: resolve,
-             });
-           })
-        .then(() => {
-          assertLoaded('modA');
-          assertLoaded('modB');
-        });
+      moduleLoader.loadModules(['modA', 'modB'], moduleInfoMap, {
+        onSuccess: resolve,
+      });
+    }).then(() => {
+      assertLoaded('modA');
+      assertLoaded('modB');
+    });
   },
 
   testPrefetchModuleAThenLoadModuleBWithBatchEnabledAndScriptTagEnabled() {
@@ -576,33 +524,28 @@ testSuite({
     moduleManager.prefetchModule('modA');
 
     return new GoogPromise((resolve, reject) => {
-             moduleManager.execOnLoad('modB', resolve);
-           })
-        .then(() => {
-          assertLoaded('modA');
-          assertLoaded('modB');
-        });
+      moduleManager.execOnLoad('modB', resolve);
+    }).then(() => {
+      assertLoaded('modA');
+      assertLoaded('modB');
+    });
   },
 
   testLoadModuleBWithBatchEnabled() {
     moduleManager.setBatchModeEnabled(true);
 
     return new GoogPromise((resolve, reject) => {
-             moduleManager.execOnLoad('modB', resolve);
-           })
-        .then(() => {
-          assertLoaded('modA');
-          assertLoaded('modB');
-          assertEquals(
-              'REQUEST_SUCCESS', 1,
-              observer.getEvents(EventType.REQUEST_SUCCESS).length);
-          assertArrayEquals(
-              ['modA', 'modB'],
-              observer.getEvents(EventType.REQUEST_SUCCESS)[0].moduleIds);
-          assertEquals(
-              'REQUEST_ERROR', 0,
-              observer.getEvents(EventType.REQUEST_ERROR).length);
-        });
+      moduleManager.execOnLoad('modB', resolve);
+    }).then(() => {
+      assertLoaded('modA');
+      assertLoaded('modB');
+      assertEquals('REQUEST_SUCCESS', 1, observer.getEvents(EventType.REQUEST_SUCCESS).length);
+      assertArrayEquals(
+        ['modA', 'modB'],
+        observer.getEvents(EventType.REQUEST_SUCCESS)[0].moduleIds
+      );
+      assertEquals('REQUEST_ERROR', 0, observer.getEvents(EventType.REQUEST_ERROR).length);
+    });
   },
 
   /** @suppress {missingProperties} suppression added to enable type checking */
@@ -610,17 +553,17 @@ testSuite({
     // Make all XHRs throw an error, so that we test the error-handling
     // functionality.
     const oldXmlHttp = goog.net.XmlHttp;
-    stubs.set(goog.net, 'XmlHttp', function() {
-      return {open: functions.error('mock error'), abort: () => {}};
-    });
+    stubs.set(goog.net, 'XmlHttp', () => ({
+      open: functions.error('mock error'),
+      abort: () => {},
+    }));
     googObject.extend(goog.net.XmlHttp, oldXmlHttp);
 
     let errorCount = 0;
     const errorHandler = () => {
       errorCount++;
     };
-    moduleManager.registerCallback(
-        ModuleManager.CallbackType.ERROR, errorHandler);
+    moduleManager.registerCallback(ModuleManager.CallbackType.ERROR, errorHandler);
 
     moduleLoader.prefetchModule('modA', moduleManager.moduleInfoMap['modA']);
     moduleLoader.loadModules(['modA'], moduleManager.moduleInfoMap, {

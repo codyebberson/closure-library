@@ -14,14 +14,12 @@ goog.provide('goog.date.duration');
 goog.require('goog.i18n.DateTimeFormat');
 goog.require('goog.i18n.MessageFormat');
 
-
 /**
  * Number of milliseconds in a minute.
  * @type {number}
  * @private
  */
 goog.date.duration.MINUTE_MS_ = 60000;
-
 
 /**
  * Number of milliseconds in an hour.
@@ -30,7 +28,6 @@ goog.date.duration.MINUTE_MS_ = 60000;
  */
 goog.date.duration.HOUR_MS_ = 3600000;
 
-
 /**
  * Number of milliseconds in a day.
  * @type {number}
@@ -38,15 +35,13 @@ goog.date.duration.HOUR_MS_ = 3600000;
  */
 goog.date.duration.DAY_MS_ = 86400000;
 
-
 /**
  * Accepts a duration in milliseconds and outputs an absolute duration time in
  * form of "1 day", "2 hours", "20 minutes", "2 days 1 hour 15 minutes" etc.
  * @param {number} durationMs Duration in milliseconds.
  * @return {string} The formatted duration.
  */
-goog.date.duration.format = function(durationMs) {
-  'use strict';
+goog.date.duration.format = (durationMs) => {
   var ms = Math.abs(durationMs);
 
   // Handle durations shorter than 1 minute.
@@ -80,33 +75,28 @@ goog.date.duration.format = function(durationMs) {
    * @desc The days part of the duration message: 1 day, 5 days.
    */
   var MSG_DURATION_DAYS = goog.getMsg(
-      '{COUNT, plural, ' +
-      '=0 {}' +
-      '=1 {{TEXT} day}' +
-      'other {{TEXT} days}}');
+    '{COUNT, plural, ' + '=0 {}' + '=1 {{TEXT} day}' + 'other {{TEXT} days}}'
+  );
   /**
    * @desc The hours part of the duration message: 1 hour, 5 hours.
    */
   var MSG_DURATION_HOURS = goog.getMsg(
-      '{COUNT, plural, ' +
-      '=0 {}' +
-      '=1 {{TEXT} hour}' +
-      'other {{TEXT} hours}}');
+    '{COUNT, plural, ' + '=0 {}' + '=1 {{TEXT} hour}' + 'other {{TEXT} hours}}'
+  );
   /**
    * @desc The minutes part of the duration message: 1 minute, 5 minutes.
    */
   var MSG_DURATION_MINUTES = goog.getMsg(
-      '{COUNT, plural, ' +
-      '=0 {}' +
-      '=1 {{TEXT} minute}' +
-      'other {{TEXT} minutes}}');
+    '{COUNT, plural, ' + '=0 {}' + '=1 {{TEXT} minute}' + 'other {{TEXT} minutes}}'
+  );
 
-  var daysPart = goog.date.duration.getDurationMessagePart_(
-      MSG_DURATION_DAYS, days, daysText);
-  var hoursPart = goog.date.duration.getDurationMessagePart_(
-      MSG_DURATION_HOURS, hours, hoursText);
+  var daysPart = goog.date.duration.getDurationMessagePart_(MSG_DURATION_DAYS, days, daysText);
+  var hoursPart = goog.date.duration.getDurationMessagePart_(MSG_DURATION_HOURS, hours, hoursText);
   var minutesPart = goog.date.duration.getDurationMessagePart_(
-      MSG_DURATION_MINUTES, minutes, minutesText);
+    MSG_DURATION_MINUTES,
+    minutes,
+    minutesText
+  );
 
   /**
    * @desc Duration time text concatenated from the individual time unit message
@@ -115,18 +105,18 @@ goog.date.duration.format = function(durationMs) {
    * e.g. '1 hour 30 minutes', '3 days 15 minutes', '2 hours').
    */
   var MSG_CONCATENATED_DURATION_TEXT = goog.getMsg(
-      '{$daysPart}{$daysSeparator}{$hoursPart}{$hoursSeparator}{$minutesPart}',
-      {
-        'daysPart': daysPart,
-        'daysSeparator': daysSeparator,
-        'hoursPart': hoursPart,
-        'hoursSeparator': hoursSeparator,
-        'minutesPart': minutesPart
-      });
+    '{$daysPart}{$daysSeparator}{$hoursPart}{$hoursSeparator}{$minutesPart}',
+    {
+      daysPart: daysPart,
+      daysSeparator: daysSeparator,
+      hoursPart: hoursPart,
+      hoursSeparator: hoursSeparator,
+      minutesPart: minutesPart,
+    }
+  );
 
   return MSG_CONCATENATED_DURATION_TEXT;
 };
-
 
 /**
  * Gets a duration message part for a time unit.
@@ -136,8 +126,7 @@ goog.date.duration.format = function(durationMs) {
  * @return {string} The formatted message part.
  * @private
  */
-goog.date.duration.getDurationMessagePart_ = function(pattern, count, text) {
-  'use strict';
+goog.date.duration.getDurationMessagePart_ = (pattern, count, text) => {
   var formatter = new goog.i18n.MessageFormat(pattern);
-  return formatter.format({'COUNT': count, 'TEXT': text});
+  return formatter.format({ COUNT: count, TEXT: text });
 };

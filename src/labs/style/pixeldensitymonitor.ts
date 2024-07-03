@@ -18,8 +18,6 @@ goog.require('goog.events');
 goog.require('goog.events.EventTarget');
 goog.requireType('goog.dom.DomHelper');
 
-
-
 /**
  * Monitors the window for changes to the ratio between device and screen
  * pixels, e.g. when the user moves the window from a high density screen to a
@@ -39,8 +37,7 @@ goog.requireType('goog.dom.DomHelper');
  * @extends {goog.events.EventTarget}
  * @final
  */
-goog.labs.style.PixelDensityMonitor = function(opt_domHelper) {
-  'use strict';
+goog.labs.style.PixelDensityMonitor = function (opt_domHelper) {
   goog.labs.style.PixelDensityMonitor.base(this, 'constructor');
 
   /**
@@ -78,23 +75,23 @@ goog.labs.style.PixelDensityMonitor = function(opt_domHelper) {
    * @type {?MediaQueryList}
    * @private
    */
-  this.mediaQueryList_ = this.window_.matchMedia ?
-      this.window_.matchMedia(
-          goog.labs.style.PixelDensityMonitor.HIGH_DENSITY_QUERY_) :
-      null;
+  this.mediaQueryList_ = this.window_.matchMedia
+    ? this.window_.matchMedia(goog.labs.style.PixelDensityMonitor.HIGH_DENSITY_QUERY_)
+    : null;
 
   /**
    * The Cobalt browser (https://cobalt.dev/) doesn't implement `addListener` or
    * `addEventListener`.
    */
-  if (this.mediaQueryList_ &&
-      typeof this.mediaQueryList_.addListener !== 'function' &&
-      typeof this.mediaQueryList_.addEventListener !== 'function') {
+  if (
+    this.mediaQueryList_ &&
+    typeof this.mediaQueryList_.addListener !== 'function' &&
+    typeof this.mediaQueryList_.addEventListener !== 'function'
+  ) {
     this.mediaQueryList_ = null;
   }
 };
 goog.inherits(goog.labs.style.PixelDensityMonitor, goog.events.EventTarget);
-
 
 /**
  * The two different pixel density modes on which the various ratios between
@@ -112,9 +109,8 @@ goog.labs.style.PixelDensityMonitor.Density = {
    * Mode for newer portable devices with a high resolution screen, defined as
    * having a device pixel ratio of more than 1.5.
    */
-  HIGH: 2
+  HIGH: 2,
 };
-
 
 /**
  * The events fired by the PixelDensityMonitor.
@@ -125,9 +121,8 @@ goog.labs.style.PixelDensityMonitor.EventType = {
   /**
    * Dispatched when density changes between NORMAL and HIGH.
    */
-  CHANGE: goog.events.getUniqueId('change')
+  CHANGE: goog.events.getUniqueId('change'),
 };
-
 
 /**
  * Minimum ratio between device and screen pixel needed for high density mode.
@@ -137,7 +132,6 @@ goog.labs.style.PixelDensityMonitor.EventType = {
  */
 goog.labs.style.PixelDensityMonitor.HIGH_DENSITY_RATIO_ = 1.5;
 
-
 /**
  * Media query that matches for high density.
  * @type {string}
@@ -145,14 +139,12 @@ goog.labs.style.PixelDensityMonitor.HIGH_DENSITY_RATIO_ = 1.5;
  * @const
  */
 goog.labs.style.PixelDensityMonitor.HIGH_DENSITY_QUERY_ =
-    '(min-resolution: 1.5dppx), (-webkit-min-device-pixel-ratio: 1.5)';
-
+  '(min-resolution: 1.5dppx), (-webkit-min-device-pixel-ratio: 1.5)';
 
 /**
  * Starts monitoring for changes in pixel density.
  */
-goog.labs.style.PixelDensityMonitor.prototype.start = function() {
-  'use strict';
+goog.labs.style.PixelDensityMonitor.prototype.start = function () {
   if (this.mediaQueryList_) {
     if (typeof this.mediaQueryList_.addEventListener === 'function') {
       this.mediaQueryList_.addEventListener('change', this.listener_);
@@ -168,30 +160,24 @@ goog.labs.style.PixelDensityMonitor.prototype.start = function() {
   }
 };
 
-
 /**
  * @return {!goog.labs.style.PixelDensityMonitor.Density} The density for the
  *     window.
  */
-goog.labs.style.PixelDensityMonitor.prototype.getDensity = function() {
-  'use strict';
-  if (this.window_.devicePixelRatio >=
-      goog.labs.style.PixelDensityMonitor.HIGH_DENSITY_RATIO_) {
+goog.labs.style.PixelDensityMonitor.prototype.getDensity = function () {
+  if (this.window_.devicePixelRatio >= goog.labs.style.PixelDensityMonitor.HIGH_DENSITY_RATIO_) {
     return goog.labs.style.PixelDensityMonitor.Density.HIGH;
   } else {
     return goog.labs.style.PixelDensityMonitor.Density.NORMAL;
   }
 };
 
-
 /**
  * Handles a change to the media query and checks whether the density has
  * changed since the last call.
  * @private
  */
-goog.labs.style.PixelDensityMonitor.prototype.handleMediaQueryChange_ =
-    function() {
-  'use strict';
+goog.labs.style.PixelDensityMonitor.prototype.handleMediaQueryChange_ = function () {
   const newDensity = this.getDensity();
   if (this.lastDensity_ != newDensity) {
     this.lastDensity_ = newDensity;
@@ -199,10 +185,8 @@ goog.labs.style.PixelDensityMonitor.prototype.handleMediaQueryChange_ =
   }
 };
 
-
 /** @override */
-goog.labs.style.PixelDensityMonitor.prototype.disposeInternal = function() {
-  'use strict';
+goog.labs.style.PixelDensityMonitor.prototype.disposeInternal = function () {
   if (this.removeListener_) {
     this.removeListener_();
   }

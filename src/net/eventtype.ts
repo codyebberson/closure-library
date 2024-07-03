@@ -8,9 +8,7 @@
  * @fileoverview Common events for the network classes.
  */
 
-
 goog.provide('goog.net.EventType');
-
 
 /**
  * Event names for network events

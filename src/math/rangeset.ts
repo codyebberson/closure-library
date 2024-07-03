@@ -21,8 +21,6 @@ goog.require('goog.iter');
 goog.require('goog.iter.Iterator');
 goog.require('goog.math.Range');
 
-
-
 /**
  * Constructs a new RangeSet, which can store numeric ranges.
  *
@@ -37,8 +35,7 @@ goog.require('goog.math.Range');
  * @constructor
  * @final
  */
-goog.math.RangeSet = function() {
-  'use strict';
+goog.math.RangeSet = function () {
   /**
    * A sorted list of ranges that represent the values in the set.
    * @type {!Array<!goog.math.Range>}
@@ -47,18 +44,15 @@ goog.math.RangeSet = function() {
   this.ranges_ = [];
 };
 
-
 if (goog.DEBUG) {
   /**
    * @return {string} A debug string in the form [[1, 5], [8, 9], [15, 30]].
    * @override
    */
-  goog.math.RangeSet.prototype.toString = function() {
-    'use strict';
+  goog.math.RangeSet.prototype.toString = function () {
     return '[' + this.ranges_.join(', ') + ']';
   };
 }
-
 
 /**
  * Compares two sets for equality.
@@ -67,30 +61,24 @@ if (goog.DEBUG) {
  * @param {goog.math.RangeSet} b A range set.
  * @return {boolean} Whether both sets contain the same values.
  */
-goog.math.RangeSet.equals = function(a, b) {
-  'use strict';
+goog.math.RangeSet.equals = (a, b) => {
   // Fast check for object equality. Also succeeds if a and b are both null.
-  return a == b ||
-      !!(a && b &&
-         goog.array.equals(a.ranges_, b.ranges_, goog.math.Range.equals));
+  return a == b || !!(a && b && goog.array.equals(a.ranges_, b.ranges_, goog.math.Range.equals));
 };
-
 
 /**
  * @return {!goog.math.RangeSet} A new RangeSet containing the same values as
  *      this one.
  */
-goog.math.RangeSet.prototype.clone = function() {
-  'use strict';
+goog.math.RangeSet.prototype.clone = function () {
   var set = new goog.math.RangeSet();
 
-  for (var i = this.ranges_.length; i--;) {
+  for (var i = this.ranges_.length; i--; ) {
     set.ranges_[i] = this.ranges_[i].clone();
   }
 
   return set;
 };
-
 
 /**
  * Adds a range to the set. If the new range overlaps existing values, those
@@ -98,8 +86,7 @@ goog.math.RangeSet.prototype.clone = function() {
  *
  * @param {goog.math.Range} a The range to add.
  */
-goog.math.RangeSet.prototype.add = function(a) {
-  'use strict';
+goog.math.RangeSet.prototype.add = function (a) {
   if (a.end <= a.start) {
     // Empty ranges are ignored.
     return;
@@ -108,7 +95,7 @@ goog.math.RangeSet.prototype.add = function(a) {
   a = a.clone();
 
   // Find the insertion point.
-  for (var i = 0, b; b = this.ranges_[i]; i++) {
+  for (var i = 0, b; (b = this.ranges_[i]); i++) {
     if (a.start <= b.end) {
       a.start = Math.min(a.start, b.start);
       break;
@@ -117,7 +104,7 @@ goog.math.RangeSet.prototype.add = function(a) {
 
   var insertionPoint = i;
 
-  for (; b = this.ranges_[i]; i++) {
+  for (; (b = this.ranges_[i]); i++) {
     if (a.end < b.start) {
       break;
     }
@@ -127,21 +114,19 @@ goog.math.RangeSet.prototype.add = function(a) {
   this.ranges_.splice(insertionPoint, i - insertionPoint, a);
 };
 
-
 /**
  * Removes a range of values from the set.
  *
  * @param {goog.math.Range} a The range to remove.
  */
-goog.math.RangeSet.prototype.remove = function(a) {
-  'use strict';
+goog.math.RangeSet.prototype.remove = function (a) {
   if (a.end <= a.start) {
     // Empty ranges are ignored.
     return;
   }
 
   // Find the insertion point.
-  for (var i = 0, b; b = this.ranges_[i]; i++) {
+  for (var i = 0, b; (b = this.ranges_[i]); i++) {
     if (a.start < b.end) {
       break;
     }
@@ -159,13 +144,12 @@ goog.math.RangeSet.prototype.remove = function(a) {
     insertionPoint++;
 
     if (a.end < b.end) {
-      goog.array.insertAt(
-          this.ranges_, new goog.math.Range(a.end, b.end), insertionPoint);
+      goog.array.insertAt(this.ranges_, new goog.math.Range(a.end, b.end), insertionPoint);
     }
     b.end = a.start;
   }
 
-  for (i = insertionPoint; b = this.ranges_[i]; i++) {
+  for (i = insertionPoint; (b = this.ranges_[i]); i++) {
     b.start = Math.max(a.end, b.start);
     if (a.end < b.end) {
       break;
@@ -175,7 +159,6 @@ goog.math.RangeSet.prototype.remove = function(a) {
   this.ranges_.splice(insertionPoint, i - insertionPoint);
 };
 
-
 /**
  * Determines whether a given range is in the set. Only succeeds if the entire
  * range is available.
@@ -183,13 +166,12 @@ goog.math.RangeSet.prototype.remove = function(a) {
  * @param {goog.math.Range} a The query range.
  * @return {boolean} Whether the entire requested range is set.
  */
-goog.math.RangeSet.prototype.contains = function(a) {
-  'use strict';
+goog.math.RangeSet.prototype.contains = function (a) {
   if (a.end <= a.start) {
     return false;
   }
 
-  for (var i = 0, b; b = this.ranges_[i]; i++) {
+  for (var i = 0, b; (b = this.ranges_[i]); i++) {
     if (a.start < b.end) {
       if (a.end >= b.start) {
         return goog.math.Range.contains(b, a);
@@ -200,16 +182,14 @@ goog.math.RangeSet.prototype.contains = function(a) {
   return false;
 };
 
-
 /**
  * Determines whether a given value is set in the RangeSet.
  *
  * @param {number} value The value to test.
  * @return {boolean} Whether the given value is in the set.
  */
-goog.math.RangeSet.prototype.containsValue = function(value) {
-  'use strict';
-  for (var i = 0, b; b = this.ranges_[i]; i++) {
+goog.math.RangeSet.prototype.containsValue = function (value) {
+  for (var i = 0, b; (b = this.ranges_[i]); i++) {
     if (value < b.end) {
       if (value >= b.start) {
         return true;
@@ -220,7 +200,6 @@ goog.math.RangeSet.prototype.containsValue = function(value) {
   return false;
 };
 
-
 /**
  * Returns the union of this RangeSet with another.
  *
@@ -228,19 +207,17 @@ goog.math.RangeSet.prototype.containsValue = function(value) {
  * @return {!goog.math.RangeSet} A new RangeSet containing all values from
  *     either set.
  */
-goog.math.RangeSet.prototype.union = function(set) {
-  'use strict';
+goog.math.RangeSet.prototype.union = function (set) {
   // TODO(brenneman): A linear-time merge would be preferable if it is ever a
   // bottleneck.
   set = set.clone();
 
-  for (var i = 0, a; a = this.ranges_[i]; i++) {
+  for (var i = 0, a; (a = this.ranges_[i]); i++) {
     set.add(a);
   }
 
   return set;
 };
-
 
 /**
  * Subtracts the ranges of another set from this one, returning the result
@@ -250,17 +227,15 @@ goog.math.RangeSet.prototype.union = function(set) {
  * @return {!goog.math.RangeSet} A new RangeSet containing all values in this
  *     set minus the values of the input set.
  */
-goog.math.RangeSet.prototype.difference = function(set) {
-  'use strict';
+goog.math.RangeSet.prototype.difference = function (set) {
   var ret = this.clone();
 
-  for (var i = 0, a; a = set.ranges_[i]; i++) {
+  for (var i = 0, a; (a = set.ranges_[i]); i++) {
     ret.remove(a);
   }
 
   return ret;
 };
-
 
 /**
  * Intersects this RangeSet with another.
@@ -269,15 +244,13 @@ goog.math.RangeSet.prototype.difference = function(set) {
  * @return {!goog.math.RangeSet} A new RangeSet containing all values set in
  *     both this and the input set.
  */
-goog.math.RangeSet.prototype.intersection = function(set) {
-  'use strict';
+goog.math.RangeSet.prototype.intersection = function (set) {
   if (this.isEmpty() || set.isEmpty()) {
     return new goog.math.RangeSet();
   }
 
   return this.difference(set.inverse(this.getBounds()));
 };
-
 
 /**
  * Creates a subset of this set over the input range.
@@ -286,14 +259,13 @@ goog.math.RangeSet.prototype.intersection = function(set) {
  * @return {!goog.math.RangeSet} A new RangeSet with a copy of the values in the
  *     input range.
  */
-goog.math.RangeSet.prototype.slice = function(range) {
-  'use strict';
+goog.math.RangeSet.prototype.slice = function (range) {
   var set = new goog.math.RangeSet();
   if (range.start >= range.end) {
     return set;
   }
 
-  for (var i = 0, b; b = this.ranges_[i]; i++) {
+  for (var i = 0, b; (b = this.ranges_[i]); i++) {
     if (b.end <= range.start) {
       continue;
     }
@@ -301,14 +273,11 @@ goog.math.RangeSet.prototype.slice = function(range) {
       break;
     }
 
-    set.add(
-        new goog.math.Range(
-            Math.max(range.start, b.start), Math.min(range.end, b.end)));
+    set.add(new goog.math.Range(Math.max(range.start, b.start), Math.min(range.end, b.end)));
   }
 
   return set;
 };
-
 
 /**
  * Creates an inverted slice of this set over the input range.
@@ -317,12 +286,11 @@ goog.math.RangeSet.prototype.slice = function(range) {
  * @return {!goog.math.RangeSet} A new RangeSet containing inverted values from
  *     the original over the input range.
  */
-goog.math.RangeSet.prototype.inverse = function(range) {
-  'use strict';
+goog.math.RangeSet.prototype.inverse = function (range) {
   var set = new goog.math.RangeSet();
 
   set.add(range);
-  for (var i = 0, b; b = this.ranges_[i]; i++) {
+  for (var i = 0, b; (b = this.ranges_[i]); i++) {
     if (range.start >= b.end) {
       continue;
     }
@@ -336,51 +304,40 @@ goog.math.RangeSet.prototype.inverse = function(range) {
   return set;
 };
 
-
 /**
  * @return {number} The sum of the lengths of ranges covered in the set.
  */
-goog.math.RangeSet.prototype.coveredLength = function() {
-  'use strict';
-  return /** @type {number} */ (this.ranges_.reduce(function(res, range) {
-    'use strict';
-    return res + range.end - range.start;
-  }, 0));
+goog.math.RangeSet.prototype.coveredLength = function () {
+  return /** @type {number} */ (
+    this.ranges_.reduce((res, range) => res + range.end - range.start, 0)
+  );
 };
-
 
 /**
  * @return {goog.math.Range} The total range this set covers, ignoring any
  *     gaps between ranges.
  */
-goog.math.RangeSet.prototype.getBounds = function() {
-  'use strict';
+goog.math.RangeSet.prototype.getBounds = function () {
   if (this.ranges_.length) {
-    return new goog.math.Range(
-        this.ranges_[0].start, goog.array.peek(this.ranges_).end);
+    return new goog.math.Range(this.ranges_[0].start, goog.array.peek(this.ranges_).end);
   }
 
   return null;
 };
 
-
 /**
  * @return {boolean} Whether any ranges are currently in the set.
  */
-goog.math.RangeSet.prototype.isEmpty = function() {
-  'use strict';
+goog.math.RangeSet.prototype.isEmpty = function () {
   return this.ranges_.length == 0;
 };
-
 
 /**
  * Removes all values in the set.
  */
-goog.math.RangeSet.prototype.clear = function() {
-  'use strict';
+goog.math.RangeSet.prototype.clear = function () {
   this.ranges_.length = 0;
 };
-
 
 /**
  * Returns an iterator that iterates over the ranges in the RangeSet.
@@ -388,8 +345,7 @@ goog.math.RangeSet.prototype.clear = function() {
  * @param {boolean=} opt_keys Ignored for RangeSets.
  * @return {!goog.iter.Iterator} An iterator over the values in the set.
  */
-goog.math.RangeSet.prototype.__iterator__ = function(opt_keys) {
-  'use strict';
+goog.math.RangeSet.prototype.__iterator__ = function (opt_keys) {
   var i = 0;
   var list = this.ranges_;
 
@@ -398,8 +354,7 @@ goog.math.RangeSet.prototype.__iterator__ = function(opt_keys) {
    * @return {!IIterableResult<!goog.math.Range>}
    * @override
    */
-  iterator.next = function() {
-    'use strict';
+  iterator.next = () => {
     if (i >= list.length) {
       return goog.iter.ES6_ITERATOR_DONE;
     }
@@ -409,12 +364,11 @@ goog.math.RangeSet.prototype.__iterator__ = function(opt_keys) {
   return iterator;
 };
 
-
 /**
  * Returns an iterator that iterates over the ranges in the RangeSet.
  * @return {!Iterator<!goog.math.Range>} An iterator over the values in the set.
  */
-goog.math.RangeSet.prototype[Symbol.iterator] = function() {
+goog.math.RangeSet.prototype[Symbol.iterator] = function () {
   // These are now identical!
   return goog.math.RangeSet.prototype.__iterator__.call(this);
 };

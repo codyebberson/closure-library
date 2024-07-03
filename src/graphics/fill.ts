@@ -4,15 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Represents a fill goog.graphics.
  */
 
-
 goog.provide('goog.graphics.Fill');
-
-
 
 /**
  * Creates a fill object
@@ -21,14 +17,12 @@ goog.provide('goog.graphics.Fill');
  *     differences before the canvas tag was widely supported.  See
  *     http://en.wikipedia.org/wiki/Canvas_element for details.
  */
-goog.graphics.Fill = function() {};
-
+goog.graphics.Fill = () => {};
 
 /**
  * @return {string} The start color of a gradient fill.
  */
 goog.graphics.Fill.prototype.getColor1 = goog.abstractMethod;
-
 
 /**
  * @return {string} The end color of a gradient fill.

@@ -19,8 +19,6 @@ goog.requireType('goog.dom.DomHelper');
 goog.requireType('goog.ui.ButtonRenderer');
 goog.requireType('goog.ui.ControlContent');
 
-
-
 /**
  * A toggle button, with checkbox-like semantics.  Rendered using
  * {@link goog.ui.CustomButtonRenderer} by default, though any
@@ -35,20 +33,19 @@ goog.requireType('goog.ui.ControlContent');
  * @constructor
  * @extends {goog.ui.Button}
  */
-goog.ui.ToggleButton = function(content, opt_renderer, opt_domHelper) {
-  'use strict';
+goog.ui.ToggleButton = function (content, opt_renderer, opt_domHelper) {
   goog.ui.Button.call(
-      this, content, opt_renderer || goog.ui.CustomButtonRenderer.getInstance(),
-      opt_domHelper);
+    this,
+    content,
+    opt_renderer || goog.ui.CustomButtonRenderer.getInstance(),
+    opt_domHelper
+  );
   this.setSupportedState(goog.ui.Component.State.CHECKED, true);
 };
 goog.inherits(goog.ui.ToggleButton, goog.ui.Button);
 
-
 // Register a decorator factory function for goog.ui.ToggleButtons.
-goog.ui.registry.setDecoratorByClassName(
-    goog.getCssName('goog-toggle-button'), function() {
-      'use strict';
-      // ToggleButton defaults to using CustomButtonRenderer.
-      return new goog.ui.ToggleButton(null);
-    });
+goog.ui.registry.setDecoratorByClassName(goog.getCssName('goog-toggle-button'), () => {
+  // ToggleButton defaults to using CustomButtonRenderer.
+  return new goog.ui.ToggleButton(null);
+});

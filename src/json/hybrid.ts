@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Utility to attempt native JSON processing, falling back to
  *     goog.json if not available.
@@ -18,17 +17,15 @@ goog.provide('goog.json.hybrid');
 goog.require('goog.asserts');
 goog.require('goog.json');
 
-
 /**
  * Attempts to serialize the JSON string natively, falling back to
  * `goog.json.serialize` if unsuccessful.
  * @param {!Object} obj JavaScript object to serialize to JSON.
  * @return {string} Resulting JSON string.
  */
-goog.json.hybrid.stringify = goog.json.USE_NATIVE_JSON ?
-    goog.global['JSON']['stringify'] :
-    function(obj) {
-      'use strict';
+goog.json.hybrid.stringify = goog.json.USE_NATIVE_JSON
+  ? goog.global['JSON']['stringify']
+  : (obj) => {
       if (goog.global.JSON) {
         try {
           return goog.global.JSON.stringify(obj);
@@ -41,7 +38,6 @@ goog.json.hybrid.stringify = goog.json.USE_NATIVE_JSON ?
       return goog.json.serialize(obj);
     };
 
-
 /**
  * Attempts to parse the JSON string natively, falling back to
  * the supplied `fallbackParser` if unsuccessful.
@@ -51,8 +47,7 @@ goog.json.hybrid.stringify = goog.json.USE_NATIVE_JSON ?
  * @return {?Object} Resulting JSON object.
  * @private
  */
-goog.json.hybrid.parse_ = function(jsonString, fallbackParser) {
-  'use strict';
+goog.json.hybrid.parse_ = (jsonString, fallbackParser) => {
   if (goog.global.JSON) {
     try {
       var obj = goog.global.JSON.parse(jsonString);
@@ -66,16 +61,12 @@ goog.json.hybrid.parse_ = function(jsonString, fallbackParser) {
   return fallbackParser(jsonString);
 };
 
-
 /**
  * Attempts to parse the JSON string natively, falling back to
  * `goog.json.parse` if unsuccessful.
  * @param {string} jsonString JSON string to parse.
  * @return {?Object} Resulting JSON object.
  */
-goog.json.hybrid.parse = goog.json.USE_NATIVE_JSON ?
-    goog.global['JSON']['parse'] :
-    function(jsonString) {
-      'use strict';
-      return goog.json.hybrid.parse_(jsonString, goog.json.parse);
-    };
+goog.json.hybrid.parse = goog.json.USE_NATIVE_JSON
+  ? goog.global['JSON']['parse']
+  : (jsonString) => goog.json.hybrid.parse_(jsonString, goog.json.parse);

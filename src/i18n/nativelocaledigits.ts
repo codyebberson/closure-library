@@ -30,11 +30,11 @@ exports.LocaleScriptMap;
  * @const {!LocaleScriptMap}
  */
 exports.FormatWithLocaleDigits = {
-  'ar': 'latn',
+  ar: 'latn',
   'ar-EG': 'arab',
-  'bn': 'beng',
-  'fa': 'arabext',
-  'mr': 'deva',
-  'my': 'mymr',
-  'ne': 'deva'
+  bn: 'beng',
+  fa: 'arabext',
+  mr: 'deva',
+  my: 'mymr',
+  ne: 'deva',
 };

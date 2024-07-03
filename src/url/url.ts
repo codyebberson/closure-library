@@ -45,9 +45,9 @@ const ConstString = goog.require('goog.string.Const');
 const Tagname = goog.require('goog.dom.TagName');
 const safe = goog.require('goog.dom.safe');
 const uncheckedConversions = goog.require('goog.html.uncheckedconversions');
-const {assert} = goog.require('goog.asserts');
-const {concat: iterableConcat, map: iterableMap} = goog.require('goog.collections.iters');
-const {createElement} = goog.require('goog.dom');
+const { assert } = goog.require('goog.asserts');
+const { concat: iterableConcat, map: iterableMap } = goog.require('goog.collections.iters');
+const { createElement } = goog.require('goog.dom');
 
 // Capture the native URL constructor before users have a chance to clobber it.
 /** @type {?typeof URL} */
@@ -55,16 +55,19 @@ const NATIVE_URL = goog.global['URL'];
 
 /** @define {boolean} */
 const ASSUME_COMPLIANT_URL_API = goog.define(
-    'ASSUME_COMPLIANT_URL_API',
-    // TODO(user) narrow this down if earlier featureset years allow,
-    // if they get defined. FY2020 does NOT include Edge (EdgeHTML), which is
-    // good as workarounds are needed for spec compliance and a searchParams
-    // polyfill.
-    goog.FEATURESET_YEAR >= 2020);
+  'ASSUME_COMPLIANT_URL_API',
+  // TODO(user) narrow this down if earlier featureset years allow,
+  // if they get defined. FY2020 does NOT include Edge (EdgeHTML), which is
+  // good as workarounds are needed for spec compliance and a searchParams
+  // polyfill.
+  goog.FEATURESET_YEAR >= 2020
+);
 
-let urlBase = goog.global?.document?.baseURI ||
-    // baseURI is not available in IE11 and earlier
-    goog.global.location?.href || '';
+let urlBase =
+  goog.global?.document?.baseURI ||
+  // baseURI is not available in IE11 and earlier
+  goog.global.location?.href ||
+  '';
 
 /**
  * For testing only - this adjusts the base used in `resolveRelativeUrl`.
@@ -73,12 +76,11 @@ let urlBase = goog.global?.document?.baseURI ||
  * it?
  * @package
  */
-const setUrlBaseForTesting = function(base) {
+const setUrlBaseForTesting = (base) => {
   urlBase = base;
 };
 
 exports.setUrlBaseForTesting = setUrlBaseForTesting;
-
 
 /**
  * Feature-detection for native URL parsing
@@ -87,7 +89,7 @@ exports.setUrlBaseForTesting = setUrlBaseForTesting;
 const supportsNativeURLConstructor = {
   // TODO(user) Does this work without JSCompiler?
   /** @return {boolean} */
-  valueOf: function() {
+  valueOf: () => {
     if (ASSUME_COMPLIANT_URL_API) {
       return true;
     }
@@ -97,7 +99,7 @@ const supportsNativeURLConstructor = {
     } catch (e) {
       return false;
     }
-  }
+  },
 }.valueOf();
 
 /**
@@ -122,7 +124,7 @@ class ReadonlySearchParams {
    * first value is returned (as per the spec). All values will be url-decoded
    * already.
    */
-  get(key) {};
+  get(key) {}
 
   /**
    * @param {string} key The key to retrieve all values for. Must not be
@@ -131,18 +133,18 @@ class ReadonlySearchParams {
    *     empty array if there are no values for the key. All values will have
    *     been url-decoded already.
    */
-  getAll(key) {};
+  getAll(key) {}
 
   /**
    * @param {string} key The key to search for. Must not be url-encoded.
    * @return {boolean} True iff this key exists within the search params.
    */
-  has(key) {};
+  has(key) {}
 
   /**
    * @return {string}
    */
-  toString() {};
+  toString() {}
 }
 
 exports.ReadonlySearchParams = ReadonlySearchParams;
@@ -165,7 +167,7 @@ class SearchParamsImpl {
       search = search.substring(1);
     }
     const params = search.split('&');
-    for (let p of params) {
+    for (const p of params) {
       let key = p;
       let val = '';
       const keyValueSplit = p.split('=');
@@ -211,13 +213,15 @@ class SearchParamsImpl {
    * @return {!IteratorIterable<!Array<string>>}
    */
   [Symbol.iterator]() {
-    return iterableConcat(...iterableMap(this.paramMap_, (e) => {
-      const key = /** @const {string} */ (e[0]);
-      const values = /** @const {!Array<string>} */ (e[1]);
-      return iterableMap(values, (v) => {
-        return [key, v];
-      });
-    }));
+    return iterableConcat(
+      ...iterableMap(this.paramMap_, (e) => {
+        const key = /** @const {string} */ e[0];
+        const values = /** @const {!Array<string>} */ e[1];
+        return iterableMap(values, (v) => {
+          return [key, v];
+        });
+      })
+    );
   }
 
   /**
@@ -235,7 +239,7 @@ class SearchParamsImpl {
  * @return {string} The serialized SearchParams, with all keys and values
  *     correctly encoded.
  */
-const iterableSearchParamsToString = function(iterable) {
+const iterableSearchParamsToString = (iterable) => {
   // Some characters are not form-encoded properly by encodeURIComponent, so we
   // enumerate their replacements here for use later.
   const encode = (s) => {
@@ -250,17 +254,15 @@ const iterableSearchParamsToString = function(iterable) {
         '(': '%28',
         ')': '%29',
         '%20': '+',
-        '\'': '%27',
+        "'": '%27',
         '~': '%7E',
       }[c];
     });
   };
-  return Array
-      .from(
-          iterable,
-          (keyValuePair) =>
-              encode(keyValuePair[0]) + '=' + encode(keyValuePair[1]))
-      .join('&');
+  return Array.from(
+    iterable,
+    (keyValuePair) => encode(keyValuePair[0]) + '=' + encode(keyValuePair[1])
+  ).join('&');
 };
 
 /**
@@ -334,7 +336,7 @@ class UrlLike {
   }
 
   /** @return {string} */
-  toString() {};
+  toString() {}
 }
 
 exports.UrlLike = UrlLike;
@@ -347,18 +349,21 @@ exports.UrlLike = UrlLike;
  * @return {!UrlLike} A canonicalized version of the information from the URL.
  *     Will throw if the resulting URL is invalid.
  */
-const createAnchorElementInIE = function(urlStr) {
+const createAnchorElementInIE = (urlStr) => {
   const aTag = createElement(Tagname.A);
 
   let protocol;
   try {
     safe.setAnchorHref(
-        aTag,
-        uncheckedConversions.safeUrlFromStringKnownToSatisfyTypeContract(
-            ConstString.from(
-                'This url is attached to an Anchor tag that is NEVER attached ' +
-                ' to the DOM and is not returned from this function.'),
-            urlStr));
+      aTag,
+      uncheckedConversions.safeUrlFromStringKnownToSatisfyTypeContract(
+        ConstString.from(
+          'This url is attached to an Anchor tag that is NEVER attached ' +
+            ' to the DOM and is not returned from this function.'
+        ),
+        urlStr
+      )
+    );
     // If the URL is actually invalid, trying to read from it will throw.
     protocol = aTag.protocol;
   } catch (e) {
@@ -372,8 +377,7 @@ const createAnchorElementInIE = function(urlStr) {
   // '' : IE11.719.18362, IE11.0.9600
   // ':' : IE11.??? (web testing version as of 04/03/2020)
   // last char != ':': hunch...
-  if (protocol === '' || protocol === ':' ||
-      protocol[protocol.length - 1] != ':') {
+  if (protocol === '' || protocol === ':' || protocol[protocol.length - 1] != ':') {
     throw new Error(`${urlStr} is not a valid URL.`);
   }
   if (!canonicalPortForProtocols.has(protocol)) {
@@ -406,8 +410,7 @@ const createAnchorElementInIE = function(urlStr) {
   } else {
     urlLike.host = aTag.host;
     urlLike.port = aTag.port;
-    urlLike.origin =
-        urlLike.protocol + '//' + urlLike.hostname + ':' + urlLike.port;
+    urlLike.origin = urlLike.protocol + '//' + urlLike.hostname + ':' + urlLike.port;
   }
   return urlLike;
 };
@@ -417,7 +420,7 @@ const createAnchorElementInIE = function(urlStr) {
  * @param {?string} password
  * @return {string} The serialized userinfo string
  */
-const assembleUserInfo = function(username, password) {
+const assembleUserInfo = (username, password) => {
   if (username && password) {
     return username + ':' + password + '@';
   } else if (username) {
@@ -437,7 +440,7 @@ const assembleUserInfo = function(username, password) {
  * @param {string} urlStr
  * @return {!UrlLike}
  */
-const urlParseWithCommonChecks = function(urlStr) {
+const urlParseWithCommonChecks = (urlStr) => {
   let res;
   try {
     res = new NATIVE_URL(urlStr);
@@ -509,7 +512,7 @@ const urlParseWithCommonChecks = function(urlStr) {
  *     object where possible, users should NOT rely on this property and instead
  *     treat it as a simple record.
  */
-const resolveUrl = function(urlStr, baseStr) {
+const resolveUrl = (urlStr, baseStr) => {
   if (ASSUME_COMPLIANT_URL_API) {
     // Safari throws a TypeError if you call the constructor with a second
     // argument that isn't defined, so we can't pass baseStr all the time.
@@ -565,8 +568,8 @@ const resolveUrl = function(urlStr, baseStr) {
     // This is similar to the [state machine][1] mentioned in the
     // spec except we already know that urlStr is NOT absolute.
     // [1]: https://url.spec.whatwg.org/#relative-state
-    const newBaseStr = baseUrl.protocol + '//' +
-        assembleUserInfo(baseUrl.username, baseUrl.password) + baseUrl.host;
+    const newBaseStr =
+      baseUrl.protocol + '//' + assembleUserInfo(baseUrl.username, baseUrl.password) + baseUrl.host;
     let /** string */ href;
     const firstChar = urlStr[0];
     if (firstChar === '/' || firstChar === '\\') {
@@ -580,9 +583,7 @@ const resolveUrl = function(urlStr, baseStr) {
       // but other browsers treat it implicitly as an extension to the existing
       // path, removing anything after the last '/' and appending urlStr to it.
       const lastPathSeparator = baseUrl.pathname.lastIndexOf('/');
-      const path = lastPathSeparator > 0 ?
-          baseUrl.pathname.substring(0, lastPathSeparator) :
-          '';
+      const path = lastPathSeparator > 0 ? baseUrl.pathname.substring(0, lastPathSeparator) : '';
       href = newBaseStr + path + '/' + urlStr;
     }
     return createAnchorElementInIE(href);
@@ -615,9 +616,8 @@ const canonicalPortForProtocols = new Map([
  * @return {!ReadonlySearchParams} The URLSearchParams-like object for the URL.
  * @suppress {strictMissingProperties} url.searchParams on union
  */
-const getSearchParams = function(url) {
-  if (goog.FEATURESET_YEAR >= 2020 ||
-      (supportsNativeURLConstructor && url.searchParams)) {
+const getSearchParams = (url) => {
+  if (goog.FEATURESET_YEAR >= 2020 || (supportsNativeURLConstructor && url.searchParams)) {
     return url.searchParams;
   }
   return new SearchParamsImpl(url.search);
@@ -635,9 +635,7 @@ exports.getSearchParams = getSearchParams;
  * @return {!UrlLike} A URL that is relative to the current document's Base URI
  *     with all the relevant relative parts from the input parameter.
  */
-const resolveRelativeUrl = function(relativeURL) {
-  return resolveUrl(relativeURL, urlBase);
-};
+const resolveRelativeUrl = (relativeURL) => resolveUrl(relativeURL, urlBase);
 
 exports.resolveRelativeUrl = resolveRelativeUrl;
 
@@ -698,13 +696,11 @@ exports.UrlPrimitivePartsPartial = UrlPrimitivePartsPartial;
  * @return {!UrlLike} The resulting URL object if valid. Will throw an error if
  *     the resulting combination of parts and base is invalid.
  */
-const createUrl = function(parts, base = undefined) {
-  assert(
-      !(parts.search && parts.searchParams),
-      'Only provide search or searchParams, not both');
+const createUrl = (parts, base = undefined) => {
+  assert(!(parts.search && parts.searchParams), 'Only provide search or searchParams, not both');
   // Alas we cannot use Object.assign as the native URL object will not let its
   // properties be copied over.
-  let newParts = {};
+  const newParts = {};
   if (base) {
     newParts.protocol = base.protocol;
     newParts.username = base.username;
@@ -721,7 +717,7 @@ const createUrl = function(parts, base = undefined) {
 
   // Check for spec compliance
   if (newParts.port && newParts.port[0] === ':') {
-    throw new Error('port should not start with \':\'');
+    throw new Error("port should not start with ':'");
   }
   if (newParts.hash && newParts.hash[0] != '#') {
     newParts.hash = '#' + newParts.hash;

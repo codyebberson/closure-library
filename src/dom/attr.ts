@@ -4,9 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 goog.provide('goog.dom.Attr');
-
 
 /**
  * Enum of all html attribute names specified by the HTML specifications.
@@ -194,5 +192,5 @@ goog.dom.Attr = {
   USEMAP: 'usemap',
   VALUE: 'value',
   WIDTH: 'width',
-  WRAP: 'wrap'
+  WRAP: 'wrap',
 };

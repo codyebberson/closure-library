@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dom.tagsTest');
-goog.setTestOnly();
 
 const tags = goog.require('goog.dom.tags');
 const testSuite = goog.require('goog.testing.testSuite');

@@ -8,8 +8,8 @@ goog.module('goog.iter.es6Test');
 goog.setTestOnly('goog.iter.es6Test');
 
 const testSuite = goog.require('goog.testing.testSuite');
-const {ShimIterable} = goog.require('goog.iter.es6');
-const {range, toArray} = goog.require('goog.iter');
+const { ShimIterable } = goog.require('goog.iter.es6');
+const { range, toArray } = goog.require('goog.iter');
 
 /** @return {!Iterator<number>} */
 function* gen() {
@@ -26,7 +26,7 @@ function fromEs6Iterable() {
   return ShimIterable.of({
     [Symbol.iterator]() {
       return gen();
-    }
+    },
   });
 }
 
@@ -40,12 +40,11 @@ function fromGoogIterable() {
   return ShimIterable.of({
     __iterator__() {
       return range(1, 6, 2);
-    }
+    },
   });
 }
 
 testSuite({
-
   // Start with ES6
 
   testEs6IterableAsIterable() {

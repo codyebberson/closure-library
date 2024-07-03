@@ -12,7 +12,6 @@
 ////////////////////////// NOTE ABOUT EDITING THIS FILE ///////////////////////
 
 goog.module('goog.vec.vec2dTest');
-goog.setTestOnly();
 
 const testSuite = goog.require('goog.testing.testSuite');
 const vec = goog.require('goog.vec');
@@ -114,7 +113,7 @@ testSuite({
     vec2d.componentDivide(v2, v1, v2);
     assertElementsRoughlyEqual([1, 2], v0, 10e-5);
     assertElementsRoughlyEqual([4, 5], v1, 10e-5);
-    assertElementsRoughlyEqual([.25, .4], v2, 10e-5);
+    assertElementsRoughlyEqual([0.25, 0.4], v2, 10e-5);
 
     vec2d.setFromValues(v2, 0, 0);
     vec2d.componentDivide(v1, v0, v2);
@@ -122,7 +121,7 @@ testSuite({
 
     v2 = vec2d.setFromVec2d(vec2d.create(), v0);
     vec2d.componentDivide(v2, v1, v2);
-    assertElementsRoughlyEqual([.25, .4], v2, 10e-5);
+    assertElementsRoughlyEqual([0.25, 0.4], v2, 10e-5);
 
     vec2d.componentDivide(vec2d.componentDivide(v1, v0, v2), v0, v2);
     assertElementsRoughlyEqual([4, 1.25], v2, 10e-5);
@@ -230,8 +229,7 @@ testSuite({
     vec2d.setFromValues(v0, 1, 1);
     vec2d.setFromValues(v1, 0, 0);
     vec2d.direction(v0, v1, dirVec);
-    assertElementsRoughlyEqual(
-        [-0.707106781, -0.707106781], dirVec, vec.EPSILON);
+    assertElementsRoughlyEqual([-0.707106781, -0.707106781], dirVec, vec.EPSILON);
   },
 
   testLerp() {
@@ -243,7 +241,7 @@ testSuite({
     assertElementsEquals([1, 2], v2);
     vec2d.lerp(v2, v1, 1, v2);
     assertElementsEquals([10, 20], v2);
-    vec2d.lerp(v0, v1, .5, v2);
+    vec2d.lerp(v0, v1, 0.5, v2);
     assertElementsEquals([5.5, 11], v2);
   },
 

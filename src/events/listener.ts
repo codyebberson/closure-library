@@ -14,8 +14,6 @@ goog.provide('goog.events.Listener');
 goog.require('goog.events.ListenableKey');
 goog.requireType('goog.events.Listenable');
 
-
-
 /**
  * Simple class that stores information about a listener
  * @param {function(?):?} listener Callback function.
@@ -28,9 +26,7 @@ goog.requireType('goog.events.Listenable');
  * @implements {goog.events.ListenableKey}
  * @constructor
  */
-goog.events.Listener = function(
-    listener, proxy, src, type, capture, opt_handler) {
-  'use strict';
+goog.events.Listener = function (listener, proxy, src, type, capture, opt_handler) {
   if (goog.events.Listener.ENABLE_MONITORING) {
     this.creationStack = new Error().stack;
   }
@@ -90,7 +86,6 @@ goog.events.Listener = function(
   this.removed = false;
 };
 
-
 /**
  * @define {boolean} Whether to enable the monitoring of the
  *     goog.events.Listener instances. Switching on the monitoring is only
@@ -98,9 +93,10 @@ goog.events.Listener = function(
  *     performance and memory usage. If switched off, the monitoring code
  *     compiles down to 0 bytes.
  */
-goog.events.Listener.ENABLE_MONITORING =
-    goog.define('goog.events.Listener.ENABLE_MONITORING', false);
-
+goog.events.Listener.ENABLE_MONITORING = goog.define(
+  'goog.events.Listener.ENABLE_MONITORING',
+  false
+);
 
 /**
  * If monitoring the goog.events.Listener instances is enabled, stores the
@@ -109,13 +105,11 @@ goog.events.Listener.ENABLE_MONITORING =
  */
 goog.events.Listener.prototype.creationStack;
 
-
 /**
  * Marks this listener as removed. This also remove references held by
  * this listener object (such as listener and event source).
  */
-goog.events.Listener.prototype.markAsRemoved = function() {
-  'use strict';
+goog.events.Listener.prototype.markAsRemoved = function () {
   this.removed = true;
   this.listener = null;
   this.proxy = null;

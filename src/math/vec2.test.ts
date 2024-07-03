@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.math.Vec2Test');
-goog.setTestOnly();
 
 const Vec2 = goog.require('goog.math.Vec2');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -51,8 +50,7 @@ testSuite({
 
   testMagnitudeOverflow() {
     const x = Number.MAX_VALUE / 2;
-    assertEquals(
-        (Number.MAX_VALUE / 2) * Math.sqrt(2), new Vec2(x, x).magnitude());
+    assertEquals((Number.MAX_VALUE / 2) * Math.sqrt(2), new Vec2(x, x).magnitude());
   },
 
   testSquaredMagnitude() {
@@ -64,9 +62,7 @@ testSuite({
     const a = new Vec2(1, 2);
     const scaled = a.scale(0.5);
 
-    assertTrue(
-        'The type of the return value should be goog.math.Vec2',
-        scaled instanceof Vec2);
+    assertTrue('The type of the return value should be goog.math.Vec2', scaled instanceof Vec2);
     assertVectorEquals(new Vec2(0.5, 1), a);
   },
 
@@ -74,9 +70,7 @@ testSuite({
     const a = new Vec2(10, 15);
     const scaled = a.scale(2, 3);
     assertEquals('The function should return the target instance', a, scaled);
-    assertTrue(
-        'The type of the return value should be goog.math.Vec2',
-        scaled instanceof Vec2);
+    assertTrue('The type of the return value should be goog.math.Vec2', scaled instanceof Vec2);
     assertVectorEquals(new Vec2(20, 45), a);
   },
 
@@ -117,8 +111,7 @@ testSuite({
   },
 
   testRotateAroundPoint() {
-    const a =
-        Vec2.rotateAroundPoint(new Vec2(1, -1), new Vec2(1, 0), Math.PI / 2);
+    const a = Vec2.rotateAroundPoint(new Vec2(1, -1), new Vec2(1, 0), Math.PI / 2);
     assertRoughlyEquals(2, a.x, 0.000001);
     assertRoughlyEquals(0, a.y, 0.000001);
   },

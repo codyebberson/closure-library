@@ -34,22 +34,18 @@ goog.requireType('goog.ui.MenuButton');
 goog.requireType('goog.ui.MenuButtonRenderer');
 goog.requireType('goog.ui.Select');
 
-
 /**
  * Takes a font spec (e.g. "Arial, Helvetica, sans-serif") and returns the
  * primary font name, normalized to lowercase (e.g. "arial").
  * @param {string} fontSpec Font specification.
  * @return {string} The primary font name, in lowercase.
  */
-goog.ui.editor.ToolbarFactory.getPrimaryFont = function(fontSpec) {
-  'use strict';
+goog.ui.editor.ToolbarFactory.getPrimaryFont = (fontSpec) => {
   const i = fontSpec.indexOf(',');
-  const fontName =
-      (i != -1 ? fontSpec.substring(0, i) : fontSpec).toLowerCase();
+  const fontName = (i != -1 ? fontSpec.substring(0, i) : fontSpec).toLowerCase();
   // Strip leading/trailing quotes from the font name (bug 1050118).
   return goog.string.stripQuotes(fontName, '"\'');
 };
-
 
 /**
  * Bulk-adds fonts to the given font menu button.  The argument must be an
@@ -64,14 +60,11 @@ goog.ui.editor.ToolbarFactory.getPrimaryFont = function(fontSpec) {
  * @param {!Array<{caption: string, value: string}>} fonts Array of
  *     font descriptors.
  */
-goog.ui.editor.ToolbarFactory.addFonts = function(button, fonts) {
-  'use strict';
-  fonts.forEach(function(font) {
-    'use strict';
+goog.ui.editor.ToolbarFactory.addFonts = (button, fonts) => {
+  fonts.forEach((font) => {
     goog.ui.editor.ToolbarFactory.addFont(button, font.caption, font.value);
   });
 };
-
 
 /**
  * Adds a menu item to the given font menu button.  The first font listed in
@@ -81,8 +74,7 @@ goog.ui.editor.ToolbarFactory.addFonts = function(button, fonts) {
  * @param {string} caption Caption to show for the font menu.
  * @param {string} value Value for the corresponding 'font-family' CSS style.
  */
-goog.ui.editor.ToolbarFactory.addFont = function(button, caption, value) {
-  'use strict';
+goog.ui.editor.ToolbarFactory.addFont = (button, caption, value) => {
   // The font ID is the first font listed in the CSS style, normalized to
   // lowercase.
   const id = goog.ui.editor.ToolbarFactory.getPrimaryFont(value);
@@ -96,7 +88,6 @@ goog.ui.editor.ToolbarFactory.addFont = function(button, caption, value) {
   option.getContentElement().style.fontFamily = value;
 };
 
-
 /**
  * Bulk-adds font sizes to the given font size menu button.  The argument must
  * be an array of font size descriptor objects, each of which must have the
@@ -109,14 +100,11 @@ goog.ui.editor.ToolbarFactory.addFont = function(button, caption, value) {
  * @param {!Array<{caption: string, value:number}>} sizes Array of font
  *     size descriptors.
  */
-goog.ui.editor.ToolbarFactory.addFontSizes = function(button, sizes) {
-  'use strict';
-  sizes.forEach(function(size) {
-    'use strict';
+goog.ui.editor.ToolbarFactory.addFontSizes = (button, sizes) => {
+  sizes.forEach((size) => {
     goog.ui.editor.ToolbarFactory.addFontSize(button, size.caption, size.value);
   });
 };
-
 
 /**
  * Adds a menu item to the given font size menu button.  The `value`
@@ -126,8 +114,7 @@ goog.ui.editor.ToolbarFactory.addFontSizes = function(button, sizes) {
  * @param {number} value Value for the corresponding HTML font size.
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.ui.editor.ToolbarFactory.addFontSize = function(button, caption, value) {
-  'use strict';
+goog.ui.editor.ToolbarFactory.addFontSize = (button, caption, value) => {
   // Construct the option, and add it to the button.
   const option = new goog.ui.Option(caption, value, button.getDomHelper());
   button.addItem(option);
@@ -136,11 +123,9 @@ goog.ui.editor.ToolbarFactory.addFontSize = function(button, caption, value) {
   // element after they've been rendered by addItem().  Captions are shown in
   // the corresponding font size, and lining up the checkbox is tricky.
   const content = option.getContentElement();
-  content.style.fontSize =
-      goog.ui.editor.ToolbarFactory.getPxFromLegacySize(value) + 'px';
+  content.style.fontSize = goog.ui.editor.ToolbarFactory.getPxFromLegacySize(value) + 'px';
   content.firstChild.style.height = '1.1em';
 };
-
 
 /**
  * Converts a legacy font size specification into an equivalent pixel size.
@@ -148,11 +133,8 @@ goog.ui.editor.ToolbarFactory.addFontSize = function(button, caption, value) {
  * @param {number} fontSize Legacy font size spec in the 0-7 range.
  * @return {number} Equivalent pixel size.
  */
-goog.ui.editor.ToolbarFactory.getPxFromLegacySize = function(fontSize) {
-  'use strict';
-  return goog.ui.editor.ToolbarFactory.LEGACY_SIZE_TO_PX_MAP_[fontSize] || 10;
-};
-
+goog.ui.editor.ToolbarFactory.getPxFromLegacySize = (fontSize) =>
+  goog.ui.editor.ToolbarFactory.LEGACY_SIZE_TO_PX_MAP_[fontSize] || 10;
 
 /**
  * Converts a pixel font size specification into an equivalent legacy size.
@@ -163,22 +145,18 @@ goog.ui.editor.ToolbarFactory.getPxFromLegacySize = function(fontSize) {
  * @return {number} Equivalent legacy size spec in the 0-7 range, or -1 if none
  *     exists.
  */
-goog.ui.editor.ToolbarFactory.getLegacySizeFromPx = function(px) {
-  'use strict';
+goog.ui.editor.ToolbarFactory.getLegacySizeFromPx = (px) => {
   // Use lastIndexOf to get the largest legacy size matching the pixel size
   // (most notably returning 1 instead of 0 for 10px).
   return goog.ui.editor.ToolbarFactory.LEGACY_SIZE_TO_PX_MAP_.lastIndexOf(px);
 };
-
 
 /**
  * Map of legacy font sizes (0-7) to equivalent pixel sizes.
  * @type {!Array<number>}
  * @private
  */
-goog.ui.editor.ToolbarFactory.LEGACY_SIZE_TO_PX_MAP_ =
-    [10, 10, 13, 16, 18, 24, 32, 48];
-
+goog.ui.editor.ToolbarFactory.LEGACY_SIZE_TO_PX_MAP_ = [10, 10, 13, 16, 18, 24, 32, 48];
 
 /**
  * Bulk-adds format options to the given "Format block" menu button.  The
@@ -193,15 +171,11 @@ goog.ui.editor.ToolbarFactory.LEGACY_SIZE_TO_PX_MAP_ =
  * @param {!Array<{caption: string, command: !goog.dom.TagName}>} formats Array
  *     of format option descriptors.
  */
-goog.ui.editor.ToolbarFactory.addFormatOptions = function(button, formats) {
-  'use strict';
-  formats.forEach(function(format) {
-    'use strict';
-    goog.ui.editor.ToolbarFactory.addFormatOption(
-        button, format.caption, format.command);
+goog.ui.editor.ToolbarFactory.addFormatOptions = (button, formats) => {
+  formats.forEach((format) => {
+    goog.ui.editor.ToolbarFactory.addFormatOption(button, format.caption, format.command);
   });
 };
-
 
 /**
  * Adds a menu item to the given "Format block" menu button.
@@ -209,17 +183,18 @@ goog.ui.editor.ToolbarFactory.addFormatOptions = function(button, formats) {
  * @param {string} caption Caption to show in the menu.
  * @param {!goog.dom.TagName} tag Corresponding block format tag.
  */
-goog.ui.editor.ToolbarFactory.addFormatOption = function(button, caption, tag) {
-  'use strict';
+goog.ui.editor.ToolbarFactory.addFormatOption = (button, caption, tag) => {
   // Construct the option, and add it to the button.
   // TODO(attila): Create boring but functional menu item for now...
   const buttonDom = button.getDomHelper();
   const option = new goog.ui.Option(
-      buttonDom.createDom(goog.dom.TagName.DIV, null, caption), tag, buttonDom);
+    buttonDom.createDom(goog.dom.TagName.DIV, null, caption),
+    tag,
+    buttonDom
+  );
   option.setId(String(tag));
   button.addItem(option);
 };
-
 
 /**
  * Creates a {@link goog.ui.Toolbar} containing the specified set of
@@ -234,15 +209,15 @@ goog.ui.editor.ToolbarFactory.addFormatOption = function(button, caption, tag) {
  * @return {!goog.ui.Toolbar} Editor toolbar, rendered into the given parent
  *     element.
  */
-goog.ui.editor.ToolbarFactory.makeToolbar = function(
-    items, elem, opt_isRightToLeft) {
-  'use strict';
+goog.ui.editor.ToolbarFactory.makeToolbar = (items, elem, opt_isRightToLeft) => {
   const domHelper = goog.dom.getDomHelper(elem);
 
   // Create an empty horizontal toolbar using the default renderer.
   const toolbar = new goog.ui.Toolbar(
-      goog.ui.ToolbarRenderer.getInstance(),
-      goog.ui.Container.Orientation.HORIZONTAL, domHelper);
+    goog.ui.ToolbarRenderer.getInstance(),
+    goog.ui.Container.Orientation.HORIZONTAL,
+    domHelper
+  );
 
   // Optimization:  Explicitly test for the directionality of the parent
   // element here, so we can set it for both the toolbar and its children,
@@ -255,7 +230,7 @@ goog.ui.editor.ToolbarFactory.makeToolbar = function(
   // to avoid creating unnecessary keyboard event handler objects.
   toolbar.setFocusable(false);
 
-  for (let i = 0, button; button = items[i]; i++) {
+  for (let i = 0, button; (button = items[i]); i++) {
     // Optimization:  Set the button to non-focusable before it is rendered,
     // to avoid creating unnecessary keyboard event handler objects.  Also set
     // the directionality of the button explicitly, to avoid expensive calls
@@ -268,7 +243,6 @@ goog.ui.editor.ToolbarFactory.makeToolbar = function(
   toolbar.render(elem);
   return toolbar;
 };
-
 
 /**
  * Creates a toolbar button with the given ID, tooltip, and caption.  Applies
@@ -285,18 +259,23 @@ goog.ui.editor.ToolbarFactory.makeToolbar = function(
  *     creation; defaults to the current document if unspecified.
  * @return {!goog.ui.Button} A toolbar button.
  */
-goog.ui.editor.ToolbarFactory.makeButton = function(
-    id, tooltip, caption, opt_classNames, opt_renderer, opt_domHelper) {
-  'use strict';
+goog.ui.editor.ToolbarFactory.makeButton = (
+  id,
+  tooltip,
+  caption,
+  opt_classNames,
+  opt_renderer,
+  opt_domHelper
+) => {
   const button = new goog.ui.ToolbarButton(
-      goog.ui.editor.ToolbarFactory.createContent_(
-          caption, opt_classNames, opt_domHelper),
-      opt_renderer, opt_domHelper);
+    goog.ui.editor.ToolbarFactory.createContent_(caption, opt_classNames, opt_domHelper),
+    opt_renderer,
+    opt_domHelper
+  );
   button.setId(id);
   button.setTooltip(tooltip);
   return button;
 };
-
 
 /**
  * Creates a toggle button with the given ID, tooltip, and caption. Applies
@@ -314,15 +293,25 @@ goog.ui.editor.ToolbarFactory.makeButton = function(
  *     creation; defaults to the current document if unspecified.
  * @return {!goog.ui.Button} A toggle button.
  */
-goog.ui.editor.ToolbarFactory.makeToggleButton = function(
-    id, tooltip, caption, opt_classNames, opt_renderer, opt_domHelper) {
-  'use strict';
+goog.ui.editor.ToolbarFactory.makeToggleButton = (
+  id,
+  tooltip,
+  caption,
+  opt_classNames,
+  opt_renderer,
+  opt_domHelper
+) => {
   const button = goog.ui.editor.ToolbarFactory.makeButton(
-      id, tooltip, caption, opt_classNames, opt_renderer, opt_domHelper);
+    id,
+    tooltip,
+    caption,
+    opt_classNames,
+    opt_renderer,
+    opt_domHelper
+  );
   button.setSupportedState(goog.ui.Component.State.CHECKED, true);
   return button;
 };
-
 
 /**
  * Creates a menu button with the given ID, tooltip, and caption. Applies
@@ -342,18 +331,24 @@ goog.ui.editor.ToolbarFactory.makeToggleButton = function(
  *     creation; defaults to the current document if unspecified.
  * @return {!goog.ui.MenuButton} A menu button.
  */
-goog.ui.editor.ToolbarFactory.makeMenuButton = function(
-    id, tooltip, caption, opt_classNames, opt_renderer, opt_domHelper) {
-  'use strict';
+goog.ui.editor.ToolbarFactory.makeMenuButton = (
+  id,
+  tooltip,
+  caption,
+  opt_classNames,
+  opt_renderer,
+  opt_domHelper
+) => {
   const button = new goog.ui.ToolbarMenuButton(
-      goog.ui.editor.ToolbarFactory.createContent_(
-          caption, opt_classNames, opt_domHelper),
-      null, opt_renderer, opt_domHelper);
+    goog.ui.editor.ToolbarFactory.createContent_(caption, opt_classNames, opt_domHelper),
+    null,
+    opt_renderer,
+    opt_domHelper
+  );
   button.setId(id);
   button.setTooltip(tooltip);
   return button;
 };
-
 
 /**
  * Creates a select button with the given ID, tooltip, and caption. Applies
@@ -374,11 +369,15 @@ goog.ui.editor.ToolbarFactory.makeMenuButton = function(
  *     creation; defaults to the current document if unspecified.
  * @return {!goog.ui.Select} A select button.
  */
-goog.ui.editor.ToolbarFactory.makeSelectButton = function(
-    id, tooltip, caption, opt_classNames, opt_renderer, opt_domHelper) {
-  'use strict';
-  const button =
-      new goog.ui.ToolbarSelect(null, null, opt_renderer, opt_domHelper);
+goog.ui.editor.ToolbarFactory.makeSelectButton = (
+  id,
+  tooltip,
+  caption,
+  opt_classNames,
+  opt_renderer,
+  opt_domHelper
+) => {
+  const button = new goog.ui.ToolbarSelect(null, null, opt_renderer, opt_domHelper);
   if (opt_classNames) {
     // Unlike the other button types, for goog.ui.Select buttons we apply the
     // extra class names to the root element, because for select buttons the
@@ -391,7 +390,6 @@ goog.ui.editor.ToolbarFactory.makeSelectButton = function(
   button.setTooltip(tooltip);
   return button;
 };
-
 
 /**
  * Creates a color menu button with the given ID, tooltip, and caption.
@@ -411,18 +409,24 @@ goog.ui.editor.ToolbarFactory.makeSelectButton = function(
  *     creation; defaults to the current document if unspecified.
  * @return {!goog.ui.ColorMenuButton} A color menu button.
  */
-goog.ui.editor.ToolbarFactory.makeColorMenuButton = function(
-    id, tooltip, caption, opt_classNames, opt_renderer, opt_domHelper) {
-  'use strict';
+goog.ui.editor.ToolbarFactory.makeColorMenuButton = (
+  id,
+  tooltip,
+  caption,
+  opt_classNames,
+  opt_renderer,
+  opt_domHelper
+) => {
   const button = new goog.ui.ToolbarColorMenuButton(
-      goog.ui.editor.ToolbarFactory.createContent_(
-          caption, opt_classNames, opt_domHelper),
-      null, opt_renderer, opt_domHelper);
+    goog.ui.editor.ToolbarFactory.createContent_(caption, opt_classNames, opt_domHelper),
+    null,
+    opt_renderer,
+    opt_domHelper
+  );
   button.setId(id);
   button.setTooltip(tooltip);
   return button;
 };
-
 
 /**
  * Creates a new DIV that wraps a button caption, optionally applying CSS
@@ -435,9 +439,9 @@ goog.ui.editor.ToolbarFactory.makeColorMenuButton = function(
  * @return {!Element} DIV that wraps the caption.
  * @private
  */
-goog.ui.editor.ToolbarFactory.createContent_ = function(
-    caption, opt_classNames, opt_domHelper) {
-  'use strict';
-  return (opt_domHelper || goog.dom.getDomHelper())
-      .createDom(goog.dom.TagName.DIV, opt_classNames, caption);
-};
+goog.ui.editor.ToolbarFactory.createContent_ = (caption, opt_classNames, opt_domHelper) =>
+  (opt_domHelper || goog.dom.getDomHelper()).createDom(
+    goog.dom.TagName.DIV,
+    opt_classNames,
+    caption
+  );

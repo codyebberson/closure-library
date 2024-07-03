@@ -18,8 +18,6 @@ goog.require('goog.ui.registry');
 goog.requireType('goog.dom.DomHelper');
 goog.requireType('goog.ui.ControlContent');
 
-
-
 /**
  * Class representing a menu header.
  * @param {goog.ui.ControlContent} content Text caption or DOM structure to
@@ -31,11 +29,13 @@ goog.requireType('goog.ui.ControlContent');
  * @constructor
  * @extends {goog.ui.Control}
  */
-goog.ui.MenuHeader = function(content, opt_domHelper, opt_renderer) {
-  'use strict';
+goog.ui.MenuHeader = function (content, opt_domHelper, opt_renderer) {
   goog.ui.Control.call(
-      this, content, opt_renderer || goog.ui.MenuHeaderRenderer.getInstance(),
-      opt_domHelper);
+    this,
+    content,
+    opt_renderer || goog.ui.MenuHeaderRenderer.getInstance(),
+    opt_domHelper
+  );
 
   this.setSupportedState(goog.ui.Component.State.DISABLED, false);
   this.setSupportedState(goog.ui.Component.State.HOVER, false);
@@ -47,11 +47,8 @@ goog.ui.MenuHeader = function(content, opt_domHelper, opt_renderer) {
 };
 goog.inherits(goog.ui.MenuHeader, goog.ui.Control);
 
-
 // Register a decorator factory function for goog.ui.MenuHeaders.
-goog.ui.registry.setDecoratorByClassName(
-    goog.ui.MenuHeaderRenderer.CSS_CLASS, function() {
-      'use strict';
-      // MenuHeader defaults to using MenuHeaderRenderer.
-      return new goog.ui.MenuHeader(null);
-    });
+goog.ui.registry.setDecoratorByClassName(goog.ui.MenuHeaderRenderer.CSS_CLASS, () => {
+  // MenuHeader defaults to using MenuHeaderRenderer.
+  return new goog.ui.MenuHeader(null);
+});

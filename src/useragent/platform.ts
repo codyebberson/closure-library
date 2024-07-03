@@ -13,7 +13,6 @@ goog.provide('goog.userAgent.platform');
 goog.require('goog.string');
 goog.require('goog.userAgent');
 
-
 /**
  * Detects the version of the OS/platform the browser is running in. Not
  * supported for Linux, where an empty string is returned.
@@ -21,8 +20,7 @@ goog.require('goog.userAgent');
  * @private
  * @return {string} The platform version.
  */
-goog.userAgent.platform.determineVersion_ = function() {
-  'use strict';
+goog.userAgent.platform.determineVersion_ = () => {
   var re;
   if (goog.userAgent.WINDOWS) {
     re = /Windows NT ([0-9.]+)/;
@@ -42,8 +40,7 @@ goog.userAgent.platform.determineVersion_ = function() {
     re = /Android\s+([^\);]+)(\)|;)/;
     var match = re.exec(goog.userAgent.getUserAgentString());
     return match ? match[1] : '';
-  } else if (
-      goog.userAgent.IPHONE || goog.userAgent.IPAD || goog.userAgent.IPOD) {
+  } else if (goog.userAgent.IPHONE || goog.userAgent.IPAD || goog.userAgent.IPOD) {
     re = /(?:iPhone|CPU)\s+OS\s+(\S+)/;
     var match = re.exec(goog.userAgent.getUserAgentString());
     // Report the version as x.y.z and not x_y_z
@@ -53,7 +50,6 @@ goog.userAgent.platform.determineVersion_ = function() {
   return '';
 };
 
-
 /**
  * The version of the platform. We don't determine the version of Linux.
  * For Windows, we only look at the NT version. Non-NT-based versions
@@ -61,7 +57,6 @@ goog.userAgent.platform.determineVersion_ = function() {
  * @type {string}
  */
 goog.userAgent.platform.VERSION = goog.userAgent.platform.determineVersion_();
-
 
 /**
  * Whether the user agent platform version is higher or the same as the given
@@ -71,8 +66,5 @@ goog.userAgent.platform.VERSION = goog.userAgent.platform.determineVersion_();
  * @return {boolean} Whether the user agent platform version is higher or the
  *     same as the given version.
  */
-goog.userAgent.platform.isVersion = function(version) {
-  'use strict';
-  return goog.string.compareVersions(
-             goog.userAgent.platform.VERSION, version) >= 0;
-};
+goog.userAgent.platform.isVersion = (version) =>
+  goog.string.compareVersions(goog.userAgent.platform.VERSION, version) >= 0;

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.events.EventTargetGoogEventsTest');
-goog.setTestOnly();
 
 const GoogEventTarget = goog.require('goog.events.EventTarget');
 const eventTargetTester = goog.require('goog.events.eventTargetTester');
@@ -18,16 +17,27 @@ const EventType = eventTargetTester.EventType;
 const TestEvent = eventTargetTester.TestEvent;
 const UnlistenReturnType = eventTargetTester.UnlistenReturnType;
 
-testSuite(Object.assign(
+testSuite(
+  Object.assign(
     {
       setUp() {
         const newListenableFn = () => new GoogEventTarget();
         const unlistenByKeyFn = (src, key) => events.unlistenByKey(key);
         eventTargetTester.setUp(
-            newListenableFn, events.listen, events.unlisten, unlistenByKeyFn,
-            events.listenOnce, events.dispatchEvent, events.removeAll,
-            events.getListeners, events.getListener, events.hasListener,
-            KeyType.NUMBER, UnlistenReturnType.BOOLEAN, true);
+          newListenableFn,
+          events.listen,
+          events.unlisten,
+          unlistenByKeyFn,
+          events.listenOnce,
+          events.dispatchEvent,
+          events.removeAll,
+          events.getListeners,
+          events.getListener,
+          events.hasListener,
+          KeyType.NUMBER,
+          UnlistenReturnType.BOOLEAN,
+          true
+        );
       },
 
       tearDown() {
@@ -36,30 +46,41 @@ testSuite(Object.assign(
 
       testUnlistenProperCleanup() {
         events.listen(
-            eventTargetTester.getTargets()[0], EventType.A,
-            eventTargetTester.getListeners()[0]);
+          eventTargetTester.getTargets()[0],
+          EventType.A,
+          eventTargetTester.getListeners()[0]
+        );
         events.unlisten(
-            eventTargetTester.getTargets()[0], EventType.A,
-            eventTargetTester.getListeners()[0]);
+          eventTargetTester.getTargets()[0],
+          EventType.A,
+          eventTargetTester.getListeners()[0]
+        );
 
         events.listen(
-            eventTargetTester.getTargets()[0], EventType.A,
-            eventTargetTester.getListeners()[0]);
-        eventTargetTester.getTargets()[0].unlisten(
-            EventType.A, eventTargetTester.getListeners()[0]);
+          eventTargetTester.getTargets()[0],
+          EventType.A,
+          eventTargetTester.getListeners()[0]
+        );
+        eventTargetTester
+          .getTargets()[0]
+          .unlisten(EventType.A, eventTargetTester.getListeners()[0]);
       },
 
       testUnlistenByKeyProperCleanup() {
         const keyNum = events.listen(
-            eventTargetTester.getTargets()[0], EventType.A,
-            eventTargetTester.getListeners()[0]);
+          eventTargetTester.getTargets()[0],
+          EventType.A,
+          eventTargetTester.getListeners()[0]
+        );
         events.unlistenByKey(keyNum);
       },
 
       testListenOnceProperCleanup() {
         events.listenOnce(
-            eventTargetTester.getTargets()[0], EventType.A,
-            eventTargetTester.getListeners()[0]);
+          eventTargetTester.getTargets()[0],
+          EventType.A,
+          eventTargetTester.getListeners()[0]
+        );
         eventTargetTester.getTargets()[0].dispatchEvent(EventType.A);
       },
 
@@ -75,8 +96,9 @@ testSuite(Object.assign(
         const obj = {};
         obj.handleEvent = () => false;
         events.listen(eventTargetTester.getTargets()[0], EventType.A, obj);
-        assertFalse(
-            eventTargetTester.getTargets()[0].dispatchEvent(EventType.A));
+        assertFalse(eventTargetTester.getTargets()[0].dispatchEvent(EventType.A));
       },
     },
-    eventTargetTester.commonTests));
+    eventTargetTester.commonTests
+  )
+);

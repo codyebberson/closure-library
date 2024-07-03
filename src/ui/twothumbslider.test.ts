@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.TwoThumbSliderTest');
-goog.setTestOnly();
 
 const SliderBase = goog.require('goog.ui.SliderBase');
 const TwoThumbSlider = goog.require('goog.ui.TwoThumbSlider');
@@ -23,10 +22,12 @@ testSuite({
   testGetCssClass() {
     slider = new TwoThumbSlider();
     assertEquals(
-        'goog-twothumbslider-horizontal',
-        slider.getCssClass(SliderBase.Orientation.HORIZONTAL));
+      'goog-twothumbslider-horizontal',
+      slider.getCssClass(SliderBase.Orientation.HORIZONTAL)
+    );
     assertEquals(
-        'goog-twothumbslider-vertical',
-        slider.getCssClass(SliderBase.Orientation.VERTICAL));
+      'goog-twothumbslider-vertical',
+      slider.getCssClass(SliderBase.Orientation.VERTICAL)
+    );
   },
 });

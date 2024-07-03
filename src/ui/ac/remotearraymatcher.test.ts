@@ -10,7 +10,6 @@
  */
 
 goog.module('goog.ui.ac.RemoteArrayMatcherTest');
-goog.setTestOnly();
 
 const MockControl = goog.require('goog.testing.MockControl');
 const NetXhrIo = goog.require('goog.testing.net.XhrIo');
@@ -32,7 +31,7 @@ let mockMatchHandler;
 
 testSuite({
   setUp() {
-    goog.net.XhrIo = /** @type {?} */ (NetXhrIo);
+    goog.net.XhrIo = /** @type {?} */ NetXhrIo;
     mockControl = new MockControl();
     mockMatchHandler = mockControl.createFunctionMock();
   },
@@ -63,8 +62,7 @@ testSuite({
     mockMatchHandler(token, responseJson);
     mockControl.$replayAll();
 
-    matcher.requestMatchingRows(
-        token, maxMatches, dummyMatchHandler, fullToken);
+    matcher.requestMatchingRows(token, maxMatches, dummyMatchHandler, fullToken);
 
     matcher.requestMatchingRows(token, maxMatches, mockMatchHandler, fullToken);
     matcher.xhr_.simulateResponse(200, responseJsonText);

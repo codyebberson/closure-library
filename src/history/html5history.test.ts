@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.history.Html5HistoryTest');
-goog.setTestOnly();
 
 const EventType = goog.require('goog.events.EventType');
 const HistoryEventType = goog.require('goog.history.EventType');
@@ -37,13 +36,10 @@ testSuite({
   setUp() {
     mockControl = new MockControl();
 
-    mockWindow = {location: {}};
+    mockWindow = { location: {} };
     mockWindow.attachEvent = mockControl.createFunctionMock();
-    mockWindow
-        .attachEvent(mockmatchers.ignoreArgument, mockmatchers.ignoreArgument)
-        .$anyTimes();
-    const mockHistoryIsSupportedMethod =
-        mockControl.createMethodMock(Html5History, 'isSupported');
+    mockWindow.attachEvent(mockmatchers.ignoreArgument, mockmatchers.ignoreArgument).$anyTimes();
+    const mockHistoryIsSupportedMethod = mockControl.createMethodMock(Html5History, 'isSupported');
     mockHistoryIsSupportedMethod(mockWindow).$returns(true).$anyTimes();
   },
 
@@ -102,8 +98,7 @@ testSuite({
 
   testGetTokenWithoutUsingFragmentWithCustomTransformer() {
     mockWindow.location.pathname = '/test/something';
-    const mockTransformer =
-        mockControl.createLooseMock(Html5History.TokenTransformer);
+    const mockTransformer = mockControl.createLooseMock(Html5History.TokenTransformer);
     mockTransformer.retrieveToken('/', mockWindow.location).$returns('abc/1');
 
     mockControl.$replayAll();
@@ -117,10 +112,8 @@ testSuite({
 
   testGetTokenWithoutUsingFragmentWithCustomTransformerAndPrefix() {
     mockWindow.location.pathname = '/test/something';
-    const mockTransformer =
-        mockControl.createLooseMock(Html5History.TokenTransformer);
-    mockTransformer.retrieveToken('/test/', mockWindow.location)
-        .$returns('abc/1');
+    const mockTransformer = mockControl.createLooseMock(Html5History.TokenTransformer);
+    mockTransformer.retrieveToken('/test/', mockWindow.location).$returns('abc/1');
 
     mockControl.$replayAll();
     /** @suppress {checkTypes} suppression added to enable type checking */
@@ -155,36 +148,34 @@ testSuite({
     html5History.setUseFragment(false);
     html5History.setPathPrefix('/test/');
 
-    assertEquals(
-        '/test/some/token?q=something', html5History.getUrl_('some/token'));
+    assertEquals('/test/some/token?q=something', html5History.getUrl_('some/token'));
     mockControl.$verifyAll();
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
   testGetUrlWithoutUsingFragmentWithCustomTransformer() {
     mockWindow.location.search = '?q=something';
-    const mockTransformer =
-        mockControl.createLooseMock(Html5History.TokenTransformer);
-    mockTransformer.createUrl('some/token', '/', mockWindow.location)
-        .$returns('/something/else/?different');
+    const mockTransformer = mockControl.createLooseMock(Html5History.TokenTransformer);
+    mockTransformer
+      .createUrl('some/token', '/', mockWindow.location)
+      .$returns('/something/else/?different');
 
     mockControl.$replayAll();
     /** @suppress {checkTypes} suppression added to enable type checking */
     html5History = new Html5History(mockWindow, mockTransformer);
     html5History.setUseFragment(false);
 
-    assertEquals(
-        '/something/else/?different', html5History.getUrl_('some/token'));
+    assertEquals('/something/else/?different', html5History.getUrl_('some/token'));
     mockControl.$verifyAll();
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
   testGetUrlWithoutUsingFragmentWithCustomTransformerAndPrefix() {
     mockWindow.location.search = '?q=something';
-    const mockTransformer =
-        mockControl.createLooseMock(Html5History.TokenTransformer);
-    mockTransformer.createUrl('some/token', '/test/', mockWindow.location)
-        .$returns('/something/else/?different');
+    const mockTransformer = mockControl.createLooseMock(Html5History.TokenTransformer);
+    mockTransformer
+      .createUrl('some/token', '/test/', mockWindow.location)
+      .$returns('/something/else/?different');
 
     mockControl.$replayAll();
     /** @suppress {checkTypes} suppression added to enable type checking */
@@ -192,13 +183,12 @@ testSuite({
     html5History.setUseFragment(false);
     html5History.setPathPrefix('/test/');
 
-    assertEquals(
-        '/something/else/?different', html5History.getUrl_('some/token'));
+    assertEquals('/something/else/?different', html5History.getUrl_('some/token'));
     mockControl.$verifyAll();
   },
 
   testNavigateFiresOnceOnNavigation() {
-    const history = new Html5History;
+    const history = new Html5History();
     const onNavigate = recordFunction();
     history.setEnabled(true);
     history.listen(HistoryEventType.NAVIGATE, onNavigate);
@@ -209,36 +199,37 @@ testSuite({
      */
     location = '#' + Date.now();
 
-    return Timer.promise(0)
-        .then(/**
+    return Timer.promise(0).then(
+      /**
                  @suppress {strictMissingProperties}
                  suppression added to enable type checking
                */
-              () => {
-                // NAVIGATE should fire once with
-                // isNavigation=true.
-                onNavigate.assertCallCount(1);
-                assertTrue(
-                    onNavigate.getLastCall().getArgument(0).isNavigation);
-                return Timer.promise(0).then(() => {
-                  // NAVIGATE should not fire again after the
-                  // current JS execution context.
-                  onNavigate.assertCallCount(1);
-                });
-              });
+      () => {
+        // NAVIGATE should fire once with
+        // isNavigation=true.
+        onNavigate.assertCallCount(1);
+        assertTrue(onNavigate.getLastCall().getArgument(0).isNavigation);
+        return Timer.promise(0).then(() => {
+          // NAVIGATE should not fire again after the
+          // current JS execution context.
+          onNavigate.assertCallCount(1);
+        });
+      }
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
   testNavigateFiresOnceWithoutPopstate() {
-    const history = new Html5History;
+    const history = new Html5History();
     const onNavigate = recordFunction();
     history.setEnabled(true);
     history.listen(HistoryEventType.NAVIGATE, onNavigate);
 
     // Removing POPSTATE to ensure NAVIGATE is triggered in browsers that don't
     // support it.
-    assertTrue(events.unlisten(
-        window, EventType.POPSTATE, history.onHistoryEvent_, false, history));
+    assertTrue(
+      events.unlisten(window, EventType.POPSTATE, history.onHistoryEvent_, false, history)
+    );
 
     // Simulate that the user navigates in the history.
     /**
@@ -246,22 +237,22 @@ testSuite({
      */
     location = '#' + Date.now();
 
-    return Timer.promise(0)
-        .then(/**
+    return Timer.promise(0).then(
+      /**
                  @suppress {strictMissingProperties}
                  suppression added to enable type checking
                */
-              () => {
-                // NAVIGATE should fire once with
-                // isNavigation=true.
-                onNavigate.assertCallCount(1);
-                assertTrue(
-                    onNavigate.getLastCall().getArgument(0).isNavigation);
-                return Timer.promise(0).then(() => {
-                  // NAVIGATE should not fire again after the
-                  // current JS execution context.
-                  onNavigate.assertCallCount(1);
-                });
-              });
+      () => {
+        // NAVIGATE should fire once with
+        // isNavigation=true.
+        onNavigate.assertCallCount(1);
+        assertTrue(onNavigate.getLastCall().getArgument(0).isNavigation);
+        return Timer.promise(0).then(() => {
+          // NAVIGATE should not fire again after the
+          // current JS execution context.
+          onNavigate.assertCallCount(1);
+        });
+      }
+    );
   },
 });

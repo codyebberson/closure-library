@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.editor.LinkDialogTest');
-goog.setTestOnly();
 
 const AbstractDialog = goog.require('goog.ui.editor.AbstractDialog');
 const ArgumentMatcher = goog.require('goog.testing.mockmatchers.ArgumentMatcher');
@@ -74,8 +73,11 @@ function setUpAnchor(href, text, opt_isNew, opt_target, opt_rel) {
  * @suppress {checkTypes} suppression added to enable type checking
  */
 function createAndShow(
-    document = undefined, openInNewWindow = undefined, noFollow = undefined,
-    opt_focusTextToDisplayOnOpenIfEmpty) {
+  document = undefined,
+  openInNewWindow = undefined,
+  noFollow = undefined,
+  opt_focusTextToDisplayOnOpenIfEmpty
+) {
   /** @suppress {checkTypes} suppression added to enable type checking */
   dialog = new LinkDialog(new DomHelper(document), mockLink);
   if (openInNewWindow) {
@@ -97,14 +99,22 @@ function createAndShow(
  * @suppress {missingProperties} suppression added to enable type checking
  */
 function expectOk(linkText, linkUrl, opt_openInNewWindow, opt_noFollow) {
-  mockOkHandler.handleEvent(new ArgumentMatcher(
-      (arg) => arg.type == AbstractDialog.EventType.OK &&
-          arg.linkText == linkText && arg.linkUrl == linkUrl &&
-          arg.openInNewWindow == !!opt_openInNewWindow &&
-          arg.noFollow == !!opt_noFollow,
+  mockOkHandler.handleEvent(
+    new ArgumentMatcher(
+      (arg) =>
+        arg.type == AbstractDialog.EventType.OK &&
+        arg.linkText == linkText &&
+        arg.linkUrl == linkUrl &&
+        arg.openInNewWindow == !!opt_openInNewWindow &&
+        arg.noFollow == !!opt_noFollow,
       `{linkText: ${linkText}, linkUrl: ${linkUrl}` +
-          ', openInNewWindow: ' + opt_openInNewWindow +
-          ', noFollow: ' + opt_noFollow + '}'));
+        ', openInNewWindow: ' +
+        opt_openInNewWindow +
+        ', noFollow: ' +
+        opt_noFollow +
+        '}'
+    )
+  );
 }
 
 /**
@@ -113,8 +123,7 @@ function expectOk(linkText, linkUrl, opt_openInNewWindow, opt_noFollow) {
  * @suppress {checkTypes} suppression added to enable type checking
  */
 function useActiveElement() {
-  return BrowserFeature.HAS_ACTIVE_ELEMENT ||
-      userAgent.WEBKIT && userAgent.isVersionOrHigher(9);
+  return BrowserFeature.HAS_ACTIVE_ELEMENT || (userAgent.WEBKIT && userAgent.isVersionOrHigher(9));
 }
 
 /** @suppress {visibility} suppression added to enable type checking */
@@ -236,30 +245,24 @@ testSuite({
    */
   testShowNewLinkSwitchToUrl(document = undefined) {
     mockCtrl.$replayAll();
-    setUpAnchor('', '', true);  // Must be done before creating the dialog.
+    setUpAnchor('', '', true); // Must be done before creating the dialog.
     createAndShow(document);
 
     /** @suppress {visibility} suppression added to enable type checking */
-    const webRadio =
-        dialog.dom.getElement(LinkDialog.Id_.ON_WEB_TAB).firstChild;
+    const webRadio = dialog.dom.getElement(LinkDialog.Id_.ON_WEB_TAB).firstChild;
     /** @suppress {visibility} suppression added to enable type checking */
-    const emailRadio =
-        dialog.dom.getElement(LinkDialog.Id_.EMAIL_ADDRESS_TAB).firstChild;
+    const emailRadio = dialog.dom.getElement(LinkDialog.Id_.EMAIL_ADDRESS_TAB).firstChild;
     assertTrue('Web Radio Button selected', webRadio.checked);
     assertFalse('Email Radio Button selected', emailRadio.checked);
     if (useActiveElement()) {
-      assertEquals(
-          'Focus should be on url input', getUrlInput(),
-          dialog.dom.getActiveElement());
+      assertEquals('Focus should be on url input', getUrlInput(), dialog.dom.getActiveElement());
     }
 
     emailRadio.click();
     assertFalse('Web Radio Button selected', webRadio.checked);
     assertTrue('Email Radio Button selected', emailRadio.checked);
     if (useActiveElement()) {
-      assertEquals(
-          'Focus should be on url input', getEmailInput(),
-          dialog.dom.getActiveElement());
+      assertEquals('Focus should be on url input', getEmailInput(), dialog.dom.getActiveElement());
     }
 
     mockCtrl.$verifyAll();
@@ -275,19 +278,14 @@ testSuite({
    */
   testShowForNewLink(document = undefined) {
     mockCtrl.$replayAll();
-    setUpAnchor('', '', true);  // Must be done before creating the dialog.
+    setUpAnchor('', '', true); // Must be done before creating the dialog.
     createAndShow(document);
 
-    assertEquals(
-        'Display text input field should be empty', '', getDisplayInputText());
+    assertEquals('Display text input field should be empty', '', getDisplayInputText());
     assertEquals('Url input field should be empty', '', getUrlInputText());
-    assertEquals(
-        'On the web tab should be selected', LinkDialog.Id_.ON_WEB,
-        dialog.curTabId_);
+    assertEquals('On the web tab should be selected', LinkDialog.Id_.ON_WEB, dialog.curTabId_);
     if (useActiveElement()) {
-      assertEquals(
-          'Focus should be on url input', getUrlInput(),
-          dialog.dom.getActiveElement());
+      assertEquals('Focus should be on url input', getUrlInput(), dialog.dom.getActiveElement());
     }
 
     mockCtrl.$verifyAll();
@@ -301,8 +299,7 @@ testSuite({
    */
   testShowForNewLinkWithDiffAppWindow() {
     const frame = dom.createDom(TagName.IFRAME);
-    safe.setIframeSrc(
-        frame, TrustedResourceUrl.fromConstant(Const.from('about:blank')));
+    safe.setIframeSrc(frame, TrustedResourceUrl.fromConstant(Const.from('about:blank')));
     try {
       document.body.appendChild(frame);
       this.testShowForNewLink(frame.contentDocument);
@@ -323,17 +320,14 @@ testSuite({
     createAndShow();
 
     assertEquals(
-        'Display text input field should be filled in', ANCHOR_TEXT,
-        getDisplayInputText());
-    assertEquals(
-        'Url input field should be filled in', ANCHOR_URL, getUrlInputText());
-    assertEquals(
-        'On the web tab should be selected', LinkDialog.Id_.ON_WEB,
-        dialog.curTabId_);
+      'Display text input field should be filled in',
+      ANCHOR_TEXT,
+      getDisplayInputText()
+    );
+    assertEquals('Url input field should be filled in', ANCHOR_URL, getUrlInputText());
+    assertEquals('On the web tab should be selected', LinkDialog.Id_.ON_WEB, dialog.curTabId_);
     if (useActiveElement()) {
-      assertEquals(
-          'Focus should be on url input', getUrlInput(),
-          dialog.dom.getActiveElement());
+      assertEquals('Focus should be on url input', getUrlInput(), dialog.dom.getActiveElement());
     }
 
     mockCtrl.$verifyAll();
@@ -351,19 +345,22 @@ testSuite({
     createAndShow();
 
     assertEquals(
-        'Display text input field should be filled in', ANCHOR_TEXT,
-        getDisplayInputText());
+      'Display text input field should be filled in',
+      ANCHOR_TEXT,
+      getDisplayInputText()
+    );
     assertEquals(
-        'Email input field should be filled in',
-        ANCHOR_EMAIL,  // The 'mailto:' is not in the input!
-        getEmailInputText());
-    assertEquals(
-        'Email tab should be selected', LinkDialog.Id_.EMAIL_ADDRESS,
-        dialog.curTabId_);
+      'Email input field should be filled in',
+      ANCHOR_EMAIL, // The 'mailto:' is not in the input!
+      getEmailInputText()
+    );
+    assertEquals('Email tab should be selected', LinkDialog.Id_.EMAIL_ADDRESS, dialog.curTabId_);
     if (useActiveElement()) {
       assertEquals(
-          'Focus should be on email input', getEmailInput(),
-          dialog.dom.getActiveElement());
+        'Focus should be on email input',
+        getEmailInput(),
+        dialog.dom.getActiveElement()
+      );
     }
 
     mockCtrl.$verifyAll();
@@ -381,22 +378,23 @@ testSuite({
    */
   testShowForNewLink_focusTextToDisplayOnOpenIfEmpty(document = undefined) {
     mockCtrl.$replayAll();
-    setUpAnchor('', '', true);  // Must be done before creating the dialog.
+    setUpAnchor('', '', true); // Must be done before creating the dialog.
     createAndShow(
-        document, undefined /* opt_openInNewWindow */,
-        undefined /*  opt_noFollow */,
-        true /* opt_focusTextToDisplayOnOpenIfEmpty */);
+      document,
+      undefined /* opt_openInNewWindow */,
+      undefined /*  opt_noFollow */,
+      true /* opt_focusTextToDisplayOnOpenIfEmpty */
+    );
 
-    assertEquals(
-        'Display text input field should be empty', '', getDisplayInputText());
+    assertEquals('Display text input field should be empty', '', getDisplayInputText());
     assertEquals('Url input field should be empty', '', getUrlInputText());
-    assertEquals(
-        'On the web tab should be selected', LinkDialog.Id_.ON_WEB,
-        dialog.curTabId_);
+    assertEquals('On the web tab should be selected', LinkDialog.Id_.ON_WEB, dialog.curTabId_);
     if (useActiveElement()) {
       assertEquals(
-          'Focus should be on text to display input', getDisplayInput(),
-          dialog.dom.getActiveElement());
+        'Focus should be on text to display input',
+        getDisplayInput(),
+        dialog.dom.getActiveElement()
+      );
     }
 
     mockCtrl.$verifyAll();
@@ -416,20 +414,20 @@ testSuite({
     mockCtrl.$replayAll();
     setUpAnchor('', ANCHOR_TEXT);
     createAndShow(
-        document /* opt_document */, undefined /* opt_openInNewWindow */,
-        undefined /*  opt_noFollow */,
-        true /* opt_focusTextToDisplayOnOpenIfEmpty */);
+      document /* opt_document */,
+      undefined /* opt_openInNewWindow */,
+      undefined /*  opt_noFollow */,
+      true /* opt_focusTextToDisplayOnOpenIfEmpty */
+    );
 
     assertEquals(
-        'Display text input field should be filled in', ANCHOR_TEXT,
-        getDisplayInputText());
-    assertEquals(
-        'On the web tab should be selected', LinkDialog.Id_.ON_WEB,
-        dialog.curTabId_);
+      'Display text input field should be filled in',
+      ANCHOR_TEXT,
+      getDisplayInputText()
+    );
+    assertEquals('On the web tab should be selected', LinkDialog.Id_.ON_WEB, dialog.curTabId_);
     if (useActiveElement()) {
-      assertEquals(
-          'Focus should be on url input', getUrlInput(),
-          dialog.dom.getActiveElement());
+      assertEquals('Focus should be on url input', getUrlInput(), dialog.dom.getActiveElement());
     }
 
     mockCtrl.$verifyAll();
@@ -449,20 +447,24 @@ testSuite({
     mockCtrl.$replayAll();
     setUpAnchor(ANCHOR_MAILTO, ANCHOR_TEXT);
     createAndShow(
-        document /* opt_document */, undefined /* opt_openInNewWindow */,
-        undefined /*  opt_noFollow */,
-        true /* opt_focusTextToDisplayOnOpenIfEmpty */);
+      document /* opt_document */,
+      undefined /* opt_openInNewWindow */,
+      undefined /*  opt_noFollow */,
+      true /* opt_focusTextToDisplayOnOpenIfEmpty */
+    );
 
     assertEquals(
-        'Display text input field should be filled in', ANCHOR_TEXT,
-        getDisplayInputText());
-    assertEquals(
-        'Email tab should be selected', LinkDialog.Id_.EMAIL_ADDRESS,
-        dialog.curTabId_);
+      'Display text input field should be filled in',
+      ANCHOR_TEXT,
+      getDisplayInputText()
+    );
+    assertEquals('Email tab should be selected', LinkDialog.Id_.EMAIL_ADDRESS, dialog.curTabId_);
     if (useActiveElement()) {
       assertEquals(
-          'Focus should be on email input', getEmailInput(),
-          dialog.dom.getActiveElement());
+        'Focus should be on email input',
+        getEmailInput(),
+        dialog.dom.getActiveElement()
+      );
     }
 
     mockCtrl.$verifyAll();
@@ -479,26 +481,22 @@ testSuite({
 
     // Simulate typing a url when everything is empty, should autogen.
     setUrlInputText(ANCHOR_URL);
-    assertEquals(
-        'Display text should have been autogenerated', ANCHOR_URL,
-        getDisplayInputText());
+    assertEquals('Display text should have been autogenerated', ANCHOR_URL, getDisplayInputText());
 
     // Simulate typing text when url is set, afterwards should not autogen.
     setDisplayInputText(ANCHOR_TEXT);
     setUrlInputText(ANCHOR_MAILTO);
     assertNotEquals(
-        'Display text should not have been autogenerated', ANCHOR_MAILTO,
-        getDisplayInputText());
-    assertEquals(
-        'Display text should have remained the same', ANCHOR_TEXT,
-        getDisplayInputText());
+      'Display text should not have been autogenerated',
+      ANCHOR_MAILTO,
+      getDisplayInputText()
+    );
+    assertEquals('Display text should have remained the same', ANCHOR_TEXT, getDisplayInputText());
 
     // Simulate typing text equal to existing url, afterwards should autogen.
     setDisplayInputText(ANCHOR_MAILTO);
     setUrlInputText(ANCHOR_URL);
-    assertEquals(
-        'Display text should have been autogenerated', ANCHOR_URL,
-        getDisplayInputText());
+    assertEquals('Display text should have been autogenerated', ANCHOR_URL, getDisplayInputText());
 
     mockCtrl.$verifyAll();
   },
@@ -518,27 +516,27 @@ testSuite({
 
     // Simulate typing a url when everything is empty, should not autogen.
     setUrlInputText(ANCHOR_URL);
-    assertEquals(
-        'Display text should not have been autogenerated', '',
-        getDisplayInputText());
+    assertEquals('Display text should not have been autogenerated', '', getDisplayInputText());
 
     // Simulate typing text when url is set, afterwards should not autogen.
     setDisplayInputText(ANCHOR_TEXT);
     setUrlInputText(ANCHOR_MAILTO);
     assertNotEquals(
-        'Display text should not have been autogenerated', ANCHOR_MAILTO,
-        getDisplayInputText());
-    assertEquals(
-        'Display text should have remained the same', ANCHOR_TEXT,
-        getDisplayInputText());
+      'Display text should not have been autogenerated',
+      ANCHOR_MAILTO,
+      getDisplayInputText()
+    );
+    assertEquals('Display text should have remained the same', ANCHOR_TEXT, getDisplayInputText());
 
     // Simulate typing text equal to existing url, afterwards should not
     // autogen.
     setDisplayInputText(ANCHOR_MAILTO);
     setUrlInputText(ANCHOR_URL);
     assertEquals(
-        'Display text should not have been autogenerated', ANCHOR_MAILTO,
-        getDisplayInputText());
+      'Display text should not have been autogenerated',
+      ANCHOR_MAILTO,
+      getDisplayInputText()
+    );
 
     mockCtrl.$verifyAll();
   },
@@ -613,13 +611,12 @@ testSuite({
     setDisplayInputText(ANCHOR_TEXT);
     setUrlInputText(ANCHOR_URL);
 
-    assertFalse(
-        '"Open in new window" should start unchecked',
-        getOpenInNewWindowCheckboxChecked());
+    assertFalse('"Open in new window" should start unchecked', getOpenInNewWindowCheckboxChecked());
     setOpenInNewWindowCheckboxChecked(true);
     assertTrue(
-        '"Open in new window" should have gotten checked',
-        getOpenInNewWindowCheckboxChecked());
+      '"Open in new window" should have gotten checked',
+      getOpenInNewWindowCheckboxChecked()
+    );
     testingEvents.fireClickSequence(dialog.getOkButtonElement());
 
     // Reopen same dialog
@@ -629,12 +626,14 @@ testSuite({
     setUrlInputText(ANCHOR_URL);
 
     assertTrue(
-        '"Open in new window" should remember it was checked',
-        getOpenInNewWindowCheckboxChecked());
+      '"Open in new window" should remember it was checked',
+      getOpenInNewWindowCheckboxChecked()
+    );
     setOpenInNewWindowCheckboxChecked(false);
     assertFalse(
-        '"Open in new window" should have gotten unchecked',
-        getOpenInNewWindowCheckboxChecked());
+      '"Open in new window" should have gotten unchecked',
+      getOpenInNewWindowCheckboxChecked()
+    );
     testingEvents.fireClickSequence(dialog.getOkButtonElement());
   },
 
@@ -650,8 +649,9 @@ testSuite({
     setUrlInputText(ANCHOR_URL);
 
     assertTrue(
-        '"Open in new window" should start checked for existing link',
-        getOpenInNewWindowCheckboxChecked());
+      '"Open in new window" should start checked for existing link',
+      getOpenInNewWindowCheckboxChecked()
+    );
 
     mockCtrl.$verifyAll();
   },
@@ -670,9 +670,7 @@ testSuite({
     dialog.tabPane_.setSelectedTabId(LinkDialog.Id_.ON_WEB_TAB);
     setDisplayInputText(ANCHOR_TEXT);
     setUrlInputText(ANCHOR_URL);
-    assertFalse(
-        'rel=nofollow should start unchecked',
-        dialog.relNoFollowCheckbox_.checked);
+    assertFalse('rel=nofollow should start unchecked', dialog.relNoFollowCheckbox_.checked);
 
     // Check rel=nofollow and close the dialog.
     /** @suppress {visibility} suppression added to enable type checking */
@@ -686,8 +684,9 @@ testSuite({
     setDisplayInputText(ANCHOR_TEXT);
     setUrlInputText(ANCHOR_URL);
     assertTrue(
-        'rel=nofollow should start checked when reopening the dialog',
-        dialog.relNoFollowCheckbox_.checked);
+      'rel=nofollow should start checked when reopening the dialog',
+      dialog.relNoFollowCheckbox_.checked
+    );
   },
 
   /**
@@ -700,8 +699,9 @@ testSuite({
     setUpAnchor('', '', null, null, 'foo nofollow bar');
     createAndShow(null, null, true);
     assertTrue(
-        'rel=nofollow should start checked for existing link',
-        dialog.relNoFollowCheckbox_.checked);
+      'rel=nofollow should start checked for existing link',
+      dialog.relNoFollowCheckbox_.checked
+    );
 
     mockCtrl.$verifyAll();
   },
@@ -721,23 +721,26 @@ testSuite({
     let width;
 
     mockWindowOpen(
-        ANCHOR_URL,
-        new ArgumentMatcher(
-            (options) => !asserts.findDifferences(options, {
-              target: '_blank',
-              width: width,
-              height: height,
-              toolbar: true,
-              scrollbars: true,
-              location: true,
-              statusbar: false,
-              menubar: true,
-              resizable: true,
-              noreferrer: false,
-              noopener: false,
-            }),
-            '2nd arg: window.open() options'),
-        window);
+      ANCHOR_URL,
+      new ArgumentMatcher(
+        (options) =>
+          !asserts.findDifferences(options, {
+            target: '_blank',
+            width: width,
+            height: height,
+            toolbar: true,
+            scrollbars: true,
+            location: true,
+            statusbar: false,
+            menubar: true,
+            resizable: true,
+            noreferrer: false,
+            noopener: false,
+          }),
+        '2nd arg: window.open() options'
+      ),
+      window
+    );
 
     mockCtrl.$replayAll();
     setUpAnchor(ANCHOR_URL, ANCHOR_TEXT);
@@ -751,7 +754,9 @@ testSuite({
 
     /** @suppress {visibility} suppression added to enable type checking */
     const testLink = testingDom.findTextNode(
-        messages.MSG_TEST_THIS_LINK, dialog.dialogInternal_.getElement());
+      messages.MSG_TEST_THIS_LINK,
+      dialog.dialogInternal_.getElement()
+    );
     testingEvents.fireClickSequence(testLink.parentNode);
 
     mockCtrl.$verifyAll();
@@ -772,7 +777,9 @@ testSuite({
     });
     /** @suppress {visibility} suppression added to enable type checking */
     const testLink = testingDom.findTextNode(
-        messages.MSG_TEST_THIS_LINK, dialog.dialogInternal_.getElement());
+      messages.MSG_TEST_THIS_LINK,
+      dialog.dialogInternal_.getElement()
+    );
     testingEvents.fireClickSequence(testLink.parentNode);
 
     mockCtrl.$verifyAll();
@@ -788,13 +795,11 @@ testSuite({
     setUpAnchor('', '', true);
     createAndShow();
 
-    assertNotEquals(
-        'none', style.getStyle(dialog.textToDisplayDiv_, 'display'));
+    assertNotEquals('none', style.getStyle(dialog.textToDisplayDiv_, 'display'));
     dialog.setTextToDisplayVisible(false);
     assertEquals('none', style.getStyle(dialog.textToDisplayDiv_, 'display'));
     dialog.setTextToDisplayVisible(true);
-    assertNotEquals(
-        'none', style.getStyle(dialog.textToDisplayDiv_, 'display'));
+    assertNotEquals('none', style.getStyle(dialog.textToDisplayDiv_, 'display'));
 
     mockCtrl.$verifyAll();
   },

@@ -29,8 +29,6 @@ goog.require('goog.array');
 goog.require('goog.events.Event');
 goog.requireType('goog.events.EventId');
 
-
-
 /**
  * Event observer.  Implements a handleEvent interface so it may be used as
  * a listener in listening functions and methods.
@@ -39,8 +37,7 @@ goog.requireType('goog.events.EventId');
  * @constructor
  * @final
  */
-goog.testing.events.EventObserver = function() {
-  'use strict';
+goog.testing.events.EventObserver = function () {
   /**
    * A list of events handled by the observer in order of handling, oldest to
    * newest.
@@ -50,7 +47,6 @@ goog.testing.events.EventObserver = function() {
   this.events_ = [];
 };
 
-
 /**
  * Handles an event and remembers it.  Event listening functions and methods
  * will call this method when this observer is used as a listener.
@@ -58,34 +54,26 @@ goog.testing.events.EventObserver = function() {
  * @see goog.events.EventHandler
  * @param {!goog.events.Event} e Event to handle.
  */
-goog.testing.events.EventObserver.prototype.handleEvent = function(e) {
-  'use strict';
+goog.testing.events.EventObserver.prototype.handleEvent = function (e) {
   this.events_.push(e);
 };
-
 
 /**
  * @param {string|!goog.events.EventId=} opt_type If given, only return events
  *     of this type.
  * @return {!Array<!goog.events.Event>} The events handled, oldest to newest.
  */
-goog.testing.events.EventObserver.prototype.getEvents = function(opt_type) {
-  'use strict';
+goog.testing.events.EventObserver.prototype.getEvents = function (opt_type) {
   let events = goog.array.clone(this.events_);
 
   if (opt_type) {
-    events = events.filter(function(event) {
-      'use strict';
-      return event.type == String(opt_type);
-    });
+    events = events.filter((event) => event.type == String(opt_type));
   }
 
   return events;
 };
 
-
 /** Clears the list of events seen by this observer. */
-goog.testing.events.EventObserver.prototype.clear = function() {
-  'use strict';
+goog.testing.events.EventObserver.prototype.clear = function () {
   this.events_ = [];
 };

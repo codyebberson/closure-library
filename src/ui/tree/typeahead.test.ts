@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.tree.TypeAheadTest');
-goog.setTestOnly();
 
 const KeyCodes = goog.require('goog.events.KeyCodes');
 const TreeControl = goog.require('goog.ui.tree.TreeControl');
@@ -18,8 +17,21 @@ function makeATree() {
   const testData = [
     'level1',
     [
-      ['level2', [['eve', []], ['eve2', [['eve4', []]]]]],
-      ['level22', [['eve', []], ['eve3', []], ['eve5', []]]],
+      [
+        'level2',
+        [
+          ['eve', []],
+          ['eve2', [['eve4', []]]],
+        ],
+      ],
+      [
+        'level22',
+        [
+          ['eve', []],
+          ['eve3', []],
+          ['eve5', []],
+        ],
+      ],
     ],
   ];
 
@@ -68,7 +80,7 @@ testSuite({
     handled = typeAhead.jumpToLabel_('eve3');
     selectedItem = tree.getSelectedItem();
     assertTrue(handled && selectedItem.getHtml() == 'eve3');
-    const leafNode = selectedItem;  // eve3 is a leaf
+    const leafNode = selectedItem; // eve3 is a leaf
 
     // Test the case after leaf node removal; ensure no node is picked.
     leafNode.getParent().removeChild(leafNode);
@@ -89,7 +101,7 @@ testSuite({
     handled = typeAhead.jumpToLabel_('eve');
     selectedItem = tree.getSelectedItem();
     assertTrue(handled && selectedItem.getHtml() == 'eve2');
-    const parentNode = selectedItem;  // eve2 is a parent
+    const parentNode = selectedItem; // eve2 is a parent
 
     // Test the case after prior parent node removal of node with similar
     // prefix.
@@ -106,8 +118,7 @@ testSuite({
 
     // Jump to the first matching 'eve', followed by Ctrl+DOWN to jump to
     // second matching 'eve'
-    let handled = typeAhead.jumpToLabel_('eve') &&
-        typeAhead.jumpTo_(TypeAhead.Offset.DOWN);
+    let handled = typeAhead.jumpToLabel_('eve') && typeAhead.jumpTo_(TypeAhead.Offset.DOWN);
     let selectedItem = tree.getSelectedItem();
     assertTrue(handled && selectedItem.getHtml() == 'eve');
 

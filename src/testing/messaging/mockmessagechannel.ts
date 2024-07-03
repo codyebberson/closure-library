@@ -9,15 +9,12 @@
  * messages and test that the right messages are sent.
  */
 
-
 goog.setTestOnly('goog.testing.messaging.MockMessageChannel');
 goog.provide('goog.testing.messaging.MockMessageChannel');
 
 goog.require('goog.messaging.AbstractChannel');
 goog.require('goog.testing.MockControl');
 goog.require('goog.testing.asserts');
-
-
 
 /**
  * Class for unit-testing code that communicates over a MessageChannel.
@@ -27,8 +24,7 @@ goog.require('goog.testing.asserts');
  * @constructor
  * @final
  */
-goog.testing.messaging.MockMessageChannel = function(mockControl) {
-  'use strict';
+goog.testing.messaging.MockMessageChannel = function (mockControl) {
   goog.testing.messaging.MockMessageChannel.base(this, 'constructor');
 
   /**
@@ -39,9 +35,7 @@ goog.testing.messaging.MockMessageChannel = function(mockControl) {
 
   mockControl.createMethodMock(this, 'send');
 };
-goog.inherits(
-    goog.testing.messaging.MockMessageChannel, goog.messaging.AbstractChannel);
-
+goog.inherits(goog.testing.messaging.MockMessageChannel, goog.messaging.AbstractChannel);
 
 /**
  * A mock send function. Actually an instance of
@@ -50,27 +44,21 @@ goog.inherits(
  * @param {string|!Object} payload The payload to send to the remote page.
  * @override
  */
-goog.testing.messaging.MockMessageChannel.prototype.send = function(
-    serviceName, payload) {};
-
+goog.testing.messaging.MockMessageChannel.prototype.send = (serviceName, payload) => {};
 
 /**
  * Sets a flag indicating that this is disposed.
  * @override
  */
-goog.testing.messaging.MockMessageChannel.prototype.dispose = function() {
-  'use strict';
+goog.testing.messaging.MockMessageChannel.prototype.dispose = function () {
   this.disposed = true;
 };
-
 
 /**
  * Mocks the receipt of a message. Passes the payload the appropriate service.
  * @param {string} serviceName The service to run.
  * @param {string|!Object} payload The argument to pass to the service.
  */
-goog.testing.messaging.MockMessageChannel.prototype.receive = function(
-    serviceName, payload) {
-  'use strict';
+goog.testing.messaging.MockMessageChannel.prototype.receive = function (serviceName, payload) {
   this.deliver(serviceName, payload);
 };

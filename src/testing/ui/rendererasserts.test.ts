@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.ui.rendererassertsTest');
-goog.setTestOnly();
 
 const ControlRenderer = goog.require('goog.ui.ControlRenderer');
 const asserts = goog.require('goog.testing.asserts');
@@ -31,9 +30,9 @@ testSuite({
       rendererasserts.assertNoGetCssClassCallsInConstructor(BadRenderer);
     });
     assertTrue(
-        'Expected assertNoGetCssClassCallsInConstructor to throw a' +
-            ' jsunit exception',
-        ex.isJsUnitException);
+      'Expected assertNoGetCssClassCallsInConstructor to throw a' + ' jsunit exception',
+      ex.isJsUnitException
+    );
     assertContains('getCssClass', ex.message);
   },
 });

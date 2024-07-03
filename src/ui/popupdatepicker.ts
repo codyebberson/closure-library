@@ -25,8 +25,6 @@ goog.requireType('goog.date.Date');
 goog.requireType('goog.dom.DomHelper');
 goog.requireType('goog.events.Event');
 
-
-
 /**
  * Popup date picker widget. Fires goog.ui.PopupBase.EventType.SHOW or HIDE
  * events when its visibility changes.
@@ -37,8 +35,7 @@ goog.requireType('goog.events.Event');
  * @extends {goog.ui.Component}
  * @constructor
  */
-goog.ui.PopupDatePicker = function(opt_datePicker, opt_domHelper) {
-  'use strict';
+goog.ui.PopupDatePicker = function (opt_datePicker, opt_domHelper) {
   goog.ui.Component.call(this, opt_domHelper);
 
   this.datePicker_ = opt_datePicker || new goog.ui.DatePicker();
@@ -53,14 +50,12 @@ goog.ui.PopupDatePicker = function(opt_datePicker, opt_domHelper) {
 };
 goog.inherits(goog.ui.PopupDatePicker, goog.ui.Component);
 
-
 /**
  * Instance of a date picker control.
  * @type {goog.ui.DatePicker?}
  * @private
  */
 goog.ui.PopupDatePicker.prototype.datePicker_ = null;
-
 
 /**
  * Instance of goog.ui.Popup used to manage the behavior of the date picker.
@@ -69,14 +64,12 @@ goog.ui.PopupDatePicker.prototype.datePicker_ = null;
  */
 goog.ui.PopupDatePicker.prototype.popup_ = null;
 
-
 /**
  * Reference to the element that triggered the last popup.
  * @type {?Element}
  * @private
  */
 goog.ui.PopupDatePicker.prototype.lastTarget_ = null;
-
 
 /**
  * Whether the date picker can move the focus to its key event target when it
@@ -88,29 +81,23 @@ goog.ui.PopupDatePicker.prototype.lastTarget_ = null;
  */
 goog.ui.PopupDatePicker.prototype.allowAutoFocus_ = true;
 
-
 /** @override */
-goog.ui.PopupDatePicker.prototype.createDom = function() {
-  'use strict';
+goog.ui.PopupDatePicker.prototype.createDom = function () {
   goog.ui.PopupDatePicker.superClass_.createDom.call(this);
   this.getElement().className = goog.getCssName('goog-popupdatepicker');
   this.popup_ = new goog.ui.Popup(this.getElement());
   this.popup_.setParentEventTarget(this);
 };
 
-
 /**
  * @return {boolean} Whether the date picker is visible.
  */
-goog.ui.PopupDatePicker.prototype.isVisible = function() {
-  'use strict';
+goog.ui.PopupDatePicker.prototype.isVisible = function () {
   return this.popup_ ? this.popup_.isVisible() : false;
 };
 
-
 /** @override */
-goog.ui.PopupDatePicker.prototype.enterDocument = function() {
-  'use strict';
+goog.ui.PopupDatePicker.prototype.enterDocument = function () {
   goog.ui.PopupDatePicker.superClass_.enterDocument.call(this);
   // Create the DatePicker, if it isn't already.
   // Done here as DatePicker assumes that the element passed to it is attached
@@ -123,18 +110,12 @@ goog.ui.PopupDatePicker.prototype.enterDocument = function() {
     this.datePicker_.decorate(el);
   }
   this.getHandler()
-      .listen(
-          this.datePicker_, goog.ui.DatePicker.Events.CHANGE,
-          this.onDateChanged_)
-      .listen(
-          this.datePicker_, goog.ui.DatePicker.Events.SELECT,
-          this.onDateSelected_);
+    .listen(this.datePicker_, goog.ui.DatePicker.Events.CHANGE, this.onDateChanged_)
+    .listen(this.datePicker_, goog.ui.DatePicker.Events.SELECT, this.onDateSelected_);
 };
 
-
 /** @override */
-goog.ui.PopupDatePicker.prototype.disposeInternal = function() {
-  'use strict';
+goog.ui.PopupDatePicker.prototype.disposeInternal = function () {
   goog.ui.PopupDatePicker.superClass_.disposeInternal.call(this);
   if (this.popup_) {
     this.popup_.dispose();
@@ -145,7 +126,6 @@ goog.ui.PopupDatePicker.prototype.disposeInternal = function() {
   this.lastTarget_ = null;
 };
 
-
 /**
  * DatePicker cannot be used to decorate pre-existing html, since they're
  * not based on Components.
@@ -153,122 +133,94 @@ goog.ui.PopupDatePicker.prototype.disposeInternal = function() {
  * @return {boolean} Returns always false.
  * @override
  */
-goog.ui.PopupDatePicker.prototype.canDecorate = function(element) {
-  'use strict';
-  return false;
-};
-
+goog.ui.PopupDatePicker.prototype.canDecorate = (element) => false;
 
 /**
  * @return {goog.ui.DatePicker} The date picker instance.
  */
-goog.ui.PopupDatePicker.prototype.getDatePicker = function() {
-  'use strict';
+goog.ui.PopupDatePicker.prototype.getDatePicker = function () {
   return this.datePicker_;
 };
 
 /**
  * @return {?goog.ui.Popup} The popup instance.
  */
-goog.ui.PopupDatePicker.prototype.getPopup = function() {
-  'use strict';
+goog.ui.PopupDatePicker.prototype.getPopup = function () {
   return this.popup_;
 };
-
 
 /**
  * @return {goog.date.Date?} The selected date, if any.  See
  *     goog.ui.DatePicker.getDate().
  */
-goog.ui.PopupDatePicker.prototype.getDate = function() {
-  'use strict';
+goog.ui.PopupDatePicker.prototype.getDate = function () {
   return this.datePicker_.getDate();
 };
-
 
 /**
  * Sets the selected date.  See goog.ui.DatePicker.setDate().
  * @param {goog.date.Date?} date The date to select.
  */
-goog.ui.PopupDatePicker.prototype.setDate = function(date) {
-  'use strict';
+goog.ui.PopupDatePicker.prototype.setDate = function (date) {
   this.datePicker_.setDate(date);
 };
-
 
 /**
  * @return {Element} The last element that triggered the popup.
  */
-goog.ui.PopupDatePicker.prototype.getLastTarget = function() {
-  'use strict';
+goog.ui.PopupDatePicker.prototype.getLastTarget = function () {
   return this.lastTarget_;
 };
-
 
 /**
  * Attaches the popup date picker to an element.
  * @param {Element} element The element to attach to.
  */
-goog.ui.PopupDatePicker.prototype.attach = function(element) {
-  'use strict';
-  this.getHandler().listen(
-      element, goog.events.EventType.MOUSEDOWN, this.showPopup_);
+goog.ui.PopupDatePicker.prototype.attach = function (element) {
+  this.getHandler().listen(element, goog.events.EventType.MOUSEDOWN, this.showPopup_);
 };
-
 
 /**
  * Detatches the popup date picker from an element.
  * @param {Element} element The element to detach from.
  */
-goog.ui.PopupDatePicker.prototype.detach = function(element) {
-  'use strict';
-  this.getHandler().unlisten(
-      element, goog.events.EventType.MOUSEDOWN, this.showPopup_);
+goog.ui.PopupDatePicker.prototype.detach = function (element) {
+  this.getHandler().unlisten(element, goog.events.EventType.MOUSEDOWN, this.showPopup_);
 };
-
 
 /**
  * Sets whether the date picker can automatically move focus to its key event
  * target when it is set to visible.
  * @param {boolean} allow Whether to allow auto focus.
  */
-goog.ui.PopupDatePicker.prototype.setAllowAutoFocus = function(allow) {
-  'use strict';
+goog.ui.PopupDatePicker.prototype.setAllowAutoFocus = function (allow) {
   this.allowAutoFocus_ = allow;
 };
-
 
 /**
  * @return {boolean} Whether the date picker can automatically move focus to
  * its key event target when it is set to visible.
  */
-goog.ui.PopupDatePicker.prototype.getAllowAutoFocus = function() {
-  'use strict';
+goog.ui.PopupDatePicker.prototype.getAllowAutoFocus = function () {
   return this.allowAutoFocus_;
 };
-
 
 /**
  * Sets whether to reposition the popup when the date picker size changes so
  * that all weeks are visible in the viewport.
  * @param {boolean} keepAllWeeksInViewport
  */
-goog.ui.PopupDatePicker.prototype.setKeepAllWeeksInViewport = function(
-    keepAllWeeksInViewport) {
-  'use strict';
+goog.ui.PopupDatePicker.prototype.setKeepAllWeeksInViewport = function (keepAllWeeksInViewport) {
   this.keepAllWeeksInViewport_ = keepAllWeeksInViewport;
 };
-
 
 /**
  * @return {boolean} Whether to reposition the popup when the date picker size
  *     changes so that all weeks are visible in the viewport.
  */
-goog.ui.PopupDatePicker.prototype.getKeepAllWeeksInViewport = function() {
-  'use strict';
+goog.ui.PopupDatePicker.prototype.getKeepAllWeeksInViewport = function () {
   return this.keepAllWeeksInViewport_;
 };
-
 
 /**
  * Show the popup at the bottom-left corner of the specified element.
@@ -277,26 +229,28 @@ goog.ui.PopupDatePicker.prototype.getKeepAllWeeksInViewport = function() {
  * @param {boolean=} opt_keepDate Whether to keep the date picker's current
  *     date. If false, the date is set to null. Defaults to false.
  */
-goog.ui.PopupDatePicker.prototype.showPopup = function(element, opt_keepDate) {
-  'use strict';
+goog.ui.PopupDatePicker.prototype.showPopup = function (element, opt_keepDate) {
   this.lastTarget_ = element;
-  this.popup_.setPosition(new goog.positioning.AnchoredViewportPosition(
-      element, goog.positioning.Corner.BOTTOM_START, true));
+  this.popup_.setPosition(
+    new goog.positioning.AnchoredViewportPosition(
+      element,
+      goog.positioning.Corner.BOTTOM_START,
+      true
+    )
+  );
 
   // Don't listen to date changes while we're setting up the popup so we don't
   // have to worry about change events when we call setDate(). Don't listen to
   // grid size changes since the popup will position itself when we call
   // setVisible().
   this.getHandler()
-      .unlisten(
-          this.datePicker_, goog.ui.DatePicker.Events.CHANGE,
-          this.onDateChanged_)
-      .unlisten(
-          this.datePicker_, goog.ui.DatePicker.Events.SELECT,
-          this.onDateSelected_)
-      .unlisten(
-          this.datePicker_, goog.ui.DatePicker.Events.GRID_SIZE_INCREASE,
-          this.onGridSizeIncrease_);
+    .unlisten(this.datePicker_, goog.ui.DatePicker.Events.CHANGE, this.onDateChanged_)
+    .unlisten(this.datePicker_, goog.ui.DatePicker.Events.SELECT, this.onDateSelected_)
+    .unlisten(
+      this.datePicker_,
+      goog.ui.DatePicker.Events.GRID_SIZE_INCREASE,
+      this.onGridSizeIncrease_
+    );
 
   var keepDate = !!opt_keepDate;
   if (!keepDate) {
@@ -310,47 +264,40 @@ goog.ui.PopupDatePicker.prototype.showPopup = function(element, opt_keepDate) {
 
   this.popup_.setVisible(true);
   if (this.allowAutoFocus_) {
-    this.getElement().focus();  // Our element contains the date picker.
+    this.getElement().focus(); // Our element contains the date picker.
   }
 
   this.getHandler()
-      .listen(
-          this.datePicker_, goog.ui.DatePicker.Events.CHANGE,
-          this.onDateChanged_)
-      .listen(
-          this.datePicker_, goog.ui.DatePicker.Events.SELECT,
-          this.onDateSelected_);
+    .listen(this.datePicker_, goog.ui.DatePicker.Events.CHANGE, this.onDateChanged_)
+    .listen(this.datePicker_, goog.ui.DatePicker.Events.SELECT, this.onDateSelected_);
 
   if (this.keepAllWeeksInViewport_) {
     this.getHandler().listen(
-        this.datePicker_, goog.ui.DatePicker.Events.GRID_SIZE_INCREASE,
-        this.onGridSizeIncrease_);
+      this.datePicker_,
+      goog.ui.DatePicker.Events.GRID_SIZE_INCREASE,
+      this.onGridSizeIncrease_
+    );
   }
 };
-
 
 /**
  * Handles click events on the targets and shows the date picker.
  * @param {goog.events.Event} event The click event.
  * @private
  */
-goog.ui.PopupDatePicker.prototype.showPopup_ = function(event) {
-  'use strict';
+goog.ui.PopupDatePicker.prototype.showPopup_ = function (event) {
   this.showPopup(/** @type {Element} */ (event.currentTarget));
 };
-
 
 /**
  * Hides this popup.
  */
-goog.ui.PopupDatePicker.prototype.hidePopup = function() {
-  'use strict';
+goog.ui.PopupDatePicker.prototype.hidePopup = function () {
   this.popup_.setVisible(false);
   if (this.allowAutoFocus_ && this.lastTarget_) {
     this.lastTarget_.focus();
   }
 };
-
 
 /**
  * Called when date selection is made.
@@ -358,14 +305,12 @@ goog.ui.PopupDatePicker.prototype.hidePopup = function() {
  * @param {!goog.events.Event} event The date change event.
  * @private
  */
-goog.ui.PopupDatePicker.prototype.onDateSelected_ = function(event) {
-  'use strict';
+goog.ui.PopupDatePicker.prototype.onDateSelected_ = function (event) {
   this.hidePopup();
 
   // Forward the change event onto our listeners.
   this.dispatchEvent(event);
 };
-
 
 /**
  * Called when the date is changed.
@@ -373,18 +318,15 @@ goog.ui.PopupDatePicker.prototype.onDateSelected_ = function(event) {
  * @param {!goog.events.Event} event The date change event.
  * @private
  */
-goog.ui.PopupDatePicker.prototype.onDateChanged_ = function(event) {
-  'use strict';
+goog.ui.PopupDatePicker.prototype.onDateChanged_ = function (event) {
   // Forward the change event onto our listeners.
   this.dispatchEvent(event);
 };
-
 
 /**
  * Called when the container DatePicker's size increases.
  * @private
  */
-goog.ui.PopupDatePicker.prototype.onGridSizeIncrease_ = function() {
-  'use strict';
+goog.ui.PopupDatePicker.prototype.onGridSizeIncrease_ = function () {
   this.popup_ && this.popup_.reposition();
 };

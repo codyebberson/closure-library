@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.ActivityMonitorTest');
-goog.setTestOnly();
 
 const ActivityMonitor = goog.require('goog.ui.ActivityMonitor');
 const EventType = goog.require('goog.events.EventType');
@@ -39,26 +38,28 @@ testSuite({
   testIdle() {
     const activityMonitor = new ActivityMonitor();
     assertEquals(
-        'Upon creation, last event time should be creation time',
-        mockClock.getCurrentTime(), activityMonitor.getLastEventTime());
+      'Upon creation, last event time should be creation time',
+      mockClock.getCurrentTime(),
+      activityMonitor.getLastEventTime()
+    );
 
     mockClock.tick(1000);
     activityMonitor.resetTimer();
     const resetTime = mockClock.getCurrentTime();
     assertEquals(
-        'Upon reset, last event time should be reset time', resetTime,
-        activityMonitor.getLastEventTime());
-    assertEquals(
-        'Upon reset, idle time should be zero', 0,
-        activityMonitor.getIdleTime());
+      'Upon reset, last event time should be reset time',
+      resetTime,
+      activityMonitor.getLastEventTime()
+    );
+    assertEquals('Upon reset, idle time should be zero', 0, activityMonitor.getIdleTime());
 
     mockClock.tick(1000);
     assertEquals(
-        '1s after reset, last event time should be reset time', resetTime,
-        activityMonitor.getLastEventTime());
-    assertEquals(
-        '1s after reset, idle time should be 1s', 1000,
-        activityMonitor.getIdleTime());
+      '1s after reset, last event time should be reset time',
+      resetTime,
+      activityMonitor.getLastEventTime()
+    );
+    assertEquals('1s after reset, idle time should be 1s', 1000, activityMonitor.getIdleTime());
   },
 
   testEventFired() {
@@ -69,22 +70,26 @@ testSuite({
     mockClock.tick(1000);
     testingEvents.fireClickEvent(mydiv);
     assertEquals(
-        'Activity event should fire when click happens after creation', 1,
-        listener.getCallCount());
+      'Activity event should fire when click happens after creation',
+      1,
+      listener.getCallCount()
+    );
 
     mockClock.tick(3000);
     testingEvents.fireClickEvent(mydiv);
     assertEquals(
-        'Activity event should not fire when click happens 3s or ' +
-            'less since the last activity',
-        1, listener.getCallCount());
+      'Activity event should not fire when click happens 3s or ' + 'less since the last activity',
+      1,
+      listener.getCallCount()
+    );
 
     mockClock.tick(1);
     testingEvents.fireClickEvent(mydiv);
     assertEquals(
-        'Activity event should fire when click happens more than ' +
-            '3s since the last activity',
-        2, listener.getCallCount());
+      'Activity event should fire when click happens more than ' + '3s since the last activity',
+      2,
+      listener.getCallCount()
+    );
   },
 
   testEventFiredWhenPropagationStopped() {
@@ -95,9 +100,11 @@ testSuite({
     events.listenOnce(mydiv, EventType.CLICK, GoogEvent.stopPropagation);
     testingEvents.fireClickEvent(mydiv);
     assertEquals(
-        'Activity event should fire despite click propagation ' +
-            'stopped because listening on capture',
-        1, listener.getCallCount());
+      'Activity event should fire despite click propagation ' +
+        'stopped because listening on capture',
+      1,
+      listener.getCallCount()
+    );
   },
 
   testEventNotFiredWhenPropagationStopped() {
@@ -108,9 +115,10 @@ testSuite({
     events.listenOnce(mydiv, EventType.CLICK, GoogEvent.stopPropagation);
     testingEvents.fireClickEvent(mydiv);
     assertEquals(
-        'Activity event should not fire since click propagation ' +
-            'stopped and listening on bubble',
-        0, listener.getCallCount());
+      'Activity event should not fire since click propagation ' + 'stopped and listening on bubble',
+      0,
+      listener.getCallCount()
+    );
   },
 
   testTouchSequenceFired() {
@@ -121,22 +129,26 @@ testSuite({
     mockClock.tick(1000);
     testingEvents.fireTouchSequence(mydiv);
     assertEquals(
-        'Activity event should fire when touch happens after creation', 1,
-        listener.getCallCount());
+      'Activity event should fire when touch happens after creation',
+      1,
+      listener.getCallCount()
+    );
 
     mockClock.tick(3000);
     testingEvents.fireTouchSequence(mydiv);
     assertEquals(
-        'Activity event should not fire when touch happens 3s or ' +
-            'less since the last activity',
-        1, listener.getCallCount());
+      'Activity event should not fire when touch happens 3s or ' + 'less since the last activity',
+      1,
+      listener.getCallCount()
+    );
 
     mockClock.tick(1);
     testingEvents.fireTouchSequence(mydiv);
     assertEquals(
-        'Activity event should fire when touch happens more than ' +
-            '3s since the last activity',
-        2, listener.getCallCount());
+      'Activity event should fire when touch happens more than ' + '3s since the last activity',
+      2,
+      listener.getCallCount()
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -151,7 +163,6 @@ testSuite({
     activityMonitor.addDocument(defaultDoc);
     assertEquals(1, activityMonitor.documents_.length);
     assertEquals(defaultDoc, activityMonitor.documents_[0]);
-    assertEquals(
-        listenerCount, activityMonitor.eventHandler_.getListenerCount());
+    assertEquals(listenerCount, activityMonitor.eventHandler_.getListenerCount());
   },
 });

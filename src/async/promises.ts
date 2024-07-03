@@ -10,7 +10,6 @@
 
 goog.module('goog.async.promises');
 
-
 /**
  * Resolves when all promise values in the map resolve. The resolved value will
  * be a Map with the same keys as the input map, but with the resolved values of

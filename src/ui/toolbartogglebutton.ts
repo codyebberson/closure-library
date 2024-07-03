@@ -16,8 +16,6 @@ goog.require('goog.ui.registry');
 goog.requireType('goog.dom.DomHelper');
 goog.requireType('goog.ui.ControlContent');
 
-
-
 /**
  * A toggle button control for a toolbar.
  *
@@ -31,19 +29,18 @@ goog.requireType('goog.ui.ControlContent');
  * @constructor
  * @extends {goog.ui.ToggleButton}
  */
-goog.ui.ToolbarToggleButton = function(content, opt_renderer, opt_domHelper) {
-  'use strict';
+goog.ui.ToolbarToggleButton = function (content, opt_renderer, opt_domHelper) {
   goog.ui.ToggleButton.call(
-      this, content,
-      opt_renderer || goog.ui.ToolbarButtonRenderer.getInstance(),
-      opt_domHelper);
+    this,
+    content,
+    opt_renderer || goog.ui.ToolbarButtonRenderer.getInstance(),
+    opt_domHelper
+  );
 };
 goog.inherits(goog.ui.ToolbarToggleButton, goog.ui.ToggleButton);
 
-
 // Registers a decorator factory function for toggle buttons in toolbars.
 goog.ui.registry.setDecoratorByClassName(
-    goog.getCssName('goog-toolbar-toggle-button'), function() {
-      'use strict';
-      return new goog.ui.ToolbarToggleButton(null);
-    });
+  goog.getCssName('goog-toolbar-toggle-button'),
+  () => new goog.ui.ToolbarToggleButton(null)
+);

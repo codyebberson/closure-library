@@ -17,8 +17,6 @@ goog.require('goog.messaging.PortNetwork');
 goog.require('goog.testing.messaging.MockMessageChannel');
 goog.requireType('goog.testing.MockControl');
 
-
-
 /**
  * The fake PortNetwork.
  *
@@ -28,8 +26,7 @@ goog.requireType('goog.testing.MockControl');
  * @implements {goog.messaging.PortNetwork}
  * @final
  */
-goog.testing.messaging.MockPortNetwork = function(mockControl) {
-  'use strict';
+goog.testing.messaging.MockPortNetwork = function (mockControl) {
   /**
    * The mock control for creating mock message channels.
    * @type {!goog.testing.MockControl}
@@ -45,18 +42,15 @@ goog.testing.messaging.MockPortNetwork = function(mockControl) {
   this.ports_ = {};
 };
 
-
 /**
  * Get the mock port with the given name.
  * @param {string} name The name of the port to get.
  * @return {!goog.testing.messaging.MockMessageChannel} The mock port.
  * @override
  */
-goog.testing.messaging.MockPortNetwork.prototype.dial = function(name) {
-  'use strict';
+goog.testing.messaging.MockPortNetwork.prototype.dial = function (name) {
   if (!(name in this.ports_)) {
-    this.ports_[name] =
-        new goog.testing.messaging.MockMessageChannel(this.mockControl_);
+    this.ports_[name] = new goog.testing.messaging.MockMessageChannel(this.mockControl_);
   }
   return this.ports_[name];
 };

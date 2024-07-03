@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.i18n.collationTest');
-goog.setTestOnly();
 
 const ExpectedFailures = goog.require('goog.testing.ExpectedFailures');
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
@@ -50,13 +49,13 @@ testSuite({
   },
 
   testGetNumericComparator() {
-    const compare = collation.createComparator('en', {numeric: true});
+    const compare = collation.createComparator('en', { numeric: true });
     if (!collation.hasNativeComparator()) return;
     assertTrue(compare('2', '10') < 0);
   },
 
   testGetNonNumericComparator() {
-    const compare = collation.createComparator('en', {numeric: false});
+    const compare = collation.createComparator('en', { numeric: false });
     if (!collation.hasNativeComparator()) return;
     assertTrue(compare('2', '10') > 0);
   },

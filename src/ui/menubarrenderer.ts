@@ -14,8 +14,6 @@ goog.require('goog.a11y.aria.Role');
 goog.require('goog.ui.Container');
 goog.require('goog.ui.ContainerRenderer');
 
-
-
 /**
  * Default renderer for {@link goog.ui.menuBar}s, based on {@link
  * goog.ui.ContainerRenderer}.
@@ -23,14 +21,11 @@ goog.require('goog.ui.ContainerRenderer');
  * @extends {goog.ui.ContainerRenderer}
  * @final
  */
-goog.ui.MenuBarRenderer = function() {
-  'use strict';
-  goog.ui.MenuBarRenderer.base(
-      this, 'constructor', goog.a11y.aria.Role.MENUBAR);
+goog.ui.MenuBarRenderer = function () {
+  goog.ui.MenuBarRenderer.base(this, 'constructor', goog.a11y.aria.Role.MENUBAR);
 };
 goog.inherits(goog.ui.MenuBarRenderer, goog.ui.ContainerRenderer);
 goog.addSingletonGetter(goog.ui.MenuBarRenderer);
-
 
 /**
  * Default CSS class to be applied to the root element of elements rendered
@@ -39,15 +34,10 @@ goog.addSingletonGetter(goog.ui.MenuBarRenderer);
  */
 goog.ui.MenuBarRenderer.CSS_CLASS = goog.getCssName('goog-menubar');
 
-
 /**
  * @override
  */
-goog.ui.MenuBarRenderer.prototype.getCssClass = function() {
-  'use strict';
-  return goog.ui.MenuBarRenderer.CSS_CLASS;
-};
-
+goog.ui.MenuBarRenderer.prototype.getCssClass = () => goog.ui.MenuBarRenderer.CSS_CLASS;
 
 /**
  * Returns the default orientation of containers rendered or decorated by this
@@ -56,7 +46,5 @@ goog.ui.MenuBarRenderer.prototype.getCssClass = function() {
  *     created or decorated by this renderer.
  * @override
  */
-goog.ui.MenuBarRenderer.prototype.getDefaultOrientation = function() {
-  'use strict';
-  return goog.ui.Container.Orientation.HORIZONTAL;
-};
+goog.ui.MenuBarRenderer.prototype.getDefaultOrientation = () =>
+  goog.ui.Container.Orientation.HORIZONTAL;

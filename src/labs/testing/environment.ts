@@ -11,11 +11,10 @@ const DebugConsole = goog.require('goog.debug.Console');
 const MockClock = goog.require('goog.testing.MockClock');
 const MockControl = goog.require('goog.testing.MockControl');
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
-const {EnvironmentBase} = goog.require('goog.labs.testing.EnvironmentBase');
+const { EnvironmentBase } = goog.require('goog.labs.testing.EnvironmentBase');
 
 /** @suppress {extraRequire} Declares globals */
 goog.require('goog.testing.jsunit');
-
 
 /**
  * JsUnit environments allow developers to customize the existing testing
@@ -70,7 +69,6 @@ class Environment extends EnvironmentBase {
       this.mockClock.uninstall();
     }
   }
-
 
   /**
    * Runs immediately after the tearDown phase of JsUnit tests.
@@ -143,10 +141,9 @@ class Environment extends EnvironmentBase {
    *     options Options about the mockClock.
    * @return {!Environment} For chaining.
    */
-  withMockClock({install = true, async = false} = {}) {
+  withMockClock({ install = true, async = false } = {}) {
     if (!this.hasMockClock() || this.mockClock.isSynchronous() === async) {
-      this.mockClock =
-          async ? MockClock.createAsyncMockClock() : new MockClock();
+      this.mockClock = async ? MockClock.createAsyncMockClock() : new MockClock();
       if (install) {
         this.mockClock.install();
       }
@@ -171,9 +168,10 @@ class Environment extends EnvironmentBase {
   mock(toMock) {
     if (!this.shouldMakeMockControl_) {
       throw new Error(
-          'MockControl not available on this environment. ' +
+        'MockControl not available on this environment. ' +
           'Call withMockControl if this environment is expected ' +
-          'to contain a MockControl.');
+          'to contain a MockControl.'
+      );
     }
     const mock = this.mockControl.createStrictMock(toMock);
     // Mocks are not type-checkable. To reduce burden on tests that are
@@ -193,12 +191,12 @@ class Environment extends EnvironmentBase {
   looseMock(toMock, ignoreUnexpectedCalls = false) {
     if (!this.shouldMakeMockControl_) {
       throw new Error(
-          'MockControl not available on this environment. ' +
+        'MockControl not available on this environment. ' +
           'Call withMockControl if this environment is expected ' +
-          'to contain a MockControl.');
+          'to contain a MockControl.'
+      );
     }
-    const mock =
-        this.mockControl.createLooseMock(toMock, ignoreUnexpectedCalls);
+    const mock = this.mockControl.createLooseMock(toMock, ignoreUnexpectedCalls);
     // Mocks are not type-checkable. To reduce burden on tests that are type
     // checked, this is typed as "?" to turn off JSCompiler checking.
     // TODO(user): Enable a type-checked mocking library.

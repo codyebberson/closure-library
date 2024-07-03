@@ -15,8 +15,6 @@ goog.provide('goog.dom.NodeOffset');
 goog.require('goog.Disposable');
 goog.require('goog.dom.TagName');
 
-
-
 /**
  * Object to store the offset from one node to another in a way that works on
  * any similar DOM structure regardless of whether it is the same actual nodes.
@@ -26,8 +24,7 @@ goog.require('goog.dom.TagName');
  * @constructor
  * @final
  */
-goog.dom.NodeOffset = function(node, baseNode) {
-  'use strict';
+goog.dom.NodeOffset = function (node, baseNode) {
   goog.Disposable.call(this);
 
   /**
@@ -60,21 +57,18 @@ goog.dom.NodeOffset = function(node, baseNode) {
 };
 goog.inherits(goog.dom.NodeOffset, goog.Disposable);
 
-
 /**
  * @return {string} A string representation of this object.
  * @override
  */
-goog.dom.NodeOffset.prototype.toString = function() {
-  'use strict';
+goog.dom.NodeOffset.prototype.toString = function () {
   var strs = [];
   var name;
-  for (var i = 0; name = this.nameStack_[i]; i++) {
+  for (var i = 0; (name = this.nameStack_[i]); i++) {
     strs.push(this.offsetStack_[i] + ',' + name);
   }
   return strs.join('\n');
 };
-
 
 /**
  * Walk the dom and find the node relative to baseNode.  Returns null on
@@ -84,11 +78,10 @@ goog.dom.NodeOffset.prototype.toString = function() {
  *     same contents.
  * @return {Node} The node relative to baseNode, or null on failure.
  */
-goog.dom.NodeOffset.prototype.findTargetNode = function(baseNode) {
-  'use strict';
+goog.dom.NodeOffset.prototype.findTargetNode = function (baseNode) {
   var name;
   var curNode = baseNode;
-  for (var i = 0; name = this.nameStack_[i]; ++i) {
+  for (var i = 0; (name = this.nameStack_[i]); ++i) {
     curNode = curNode.childNodes[this.offsetStack_[i]];
 
     // Sanity check and make sure the element names match.
@@ -99,10 +92,8 @@ goog.dom.NodeOffset.prototype.findTargetNode = function(baseNode) {
   return curNode;
 };
 
-
 /** @override */
-goog.dom.NodeOffset.prototype.disposeInternal = function() {
-  'use strict';
+goog.dom.NodeOffset.prototype.disposeInternal = function () {
   delete this.offsetStack_;
   delete this.nameStack_;
 };

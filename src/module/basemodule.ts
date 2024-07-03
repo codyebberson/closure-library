@@ -16,8 +16,6 @@ goog.require('goog.Disposable');
 /** @suppress {extraRequire} */
 goog.require('goog.module');
 
-
-
 /**
  * A basic module object that represents a module of JavaScript code that can
  * be dynamically loaded.
@@ -25,15 +23,13 @@ goog.require('goog.module');
  * @constructor
  * @extends {goog.Disposable}
  */
-goog.module.BaseModule = function() {
-  'use strict';
+goog.module.BaseModule = function () {
   goog.Disposable.call(this);
 };
 goog.inherits(goog.module.BaseModule, goog.Disposable);
-
 
 /**
  * Performs any load-time initialization that the module requires.
  * @param {Object} context The module context.
  */
-goog.module.BaseModule.prototype.initialize = function(context) {};
+goog.module.BaseModule.prototype.initialize = (context) => {};

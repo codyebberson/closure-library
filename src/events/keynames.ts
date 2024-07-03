@@ -10,7 +10,6 @@
 
 goog.provide('goog.events.KeyNames');
 
-
 /**
  * Key names for common characters. These should be used with keyup/keydown
  * events, since the .keyCode property on those is meant to indicate the
@@ -125,5 +124,5 @@ goog.events.KeyNames = {
   220: '\\',
   221: 'close-square-bracket',
   222: 'single-quote',
-  224: 'win'
+  224: 'win',
 };

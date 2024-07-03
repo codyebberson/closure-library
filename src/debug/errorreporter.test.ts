@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.debug.ErrorReporterTest');
-goog.setTestOnly();
 
 const DebugError = goog.require('goog.debug.Error');
 const ErrorReporter = goog.require('goog.debug.ErrorReporter');
@@ -24,8 +23,13 @@ class MockXhrIo {
   static protectEntryPoints() {}
 
   static send(
-      url, callback = undefined, method = undefined, content = undefined,
-      headers = undefined, timeInterval = undefined) {
+    url,
+    callback = undefined,
+    method = undefined,
+    content = undefined,
+    headers = undefined,
+    timeInterval = undefined
+  ) {
     MockXhrIo.lastUrl = url;
     MockXhrIo.lastContent = content;
     MockXhrIo.lastHeaders = headers;
@@ -48,15 +52,12 @@ const encodedUrl = 'http%3A%2F%2Fwww.your.tst%2Fmore%2Fbogus.js';
  * @param {*=} cause
  * @return {*}
  */
-function createError(
-    filename, line, message, stack = undefined, cause = undefined) {
+function createError(filename, line, message, stack = undefined, cause = undefined) {
   const error = {
     message: message,
     fileName: filename,
     lineNumber: line,
-    toString: function() {
-      return 'Error: ' + message;
-    }
+    toString: () => 'Error: ' + message,
   };
   if (stack) {
     error['stack'] = stack;
@@ -75,8 +76,7 @@ function createError(
  * @param {*=} stack
  * @param {*=} cause
  */
-function throwAnErrorWith(
-    script, line, message, stack = undefined, cause = undefined) {
+function throwAnErrorWith(script, line, message, stack = undefined, cause = undefined) {
   throw createError(script, line, message, stack, cause);
 }
 
@@ -97,8 +97,7 @@ testSuite({
     errorReporter = new ErrorReporter('/log');
     errorReporter.sendErrorReport('message', 'filename.js', 123, 'trace');
 
-    assertEquals(
-        '/log?script=filename.js&error=message&line=123', MockXhrIo.lastUrl);
+    assertEquals('/log?script=filename.js&error=message&line=123', MockXhrIo.lastUrl);
     assertEquals('trace=trace', MockXhrIo.lastContent);
   },
 
@@ -129,8 +128,7 @@ testSuite({
     errorReporter = new ErrorReporter('/log');
     errorReporter.sendErrorReport('message', 'filename.js', 123);
 
-    assertEquals(
-        '/log?script=filename.js&error=message&line=123', MockXhrIo.lastUrl);
+    assertEquals('/log?script=filename.js&error=message&line=123', MockXhrIo.lastUrl);
     assertEquals('', MockXhrIo.lastContent);
   },
 
@@ -157,12 +155,11 @@ testSuite({
     }
 
     assertEquals(
-        `/errorreporter?script=${encodedUrl}&error=Hello%20%3A)&line=5`,
-        MockXhrIo.lastUrl);
+      `/errorreporter?script=${encodedUrl}&error=Hello%20%3A)&line=5`,
+      MockXhrIo.lastUrl
+    );
     assertEquals('trace=Not%20available', MockXhrIo.lastContent);
   },
-
-
 
   test_nonInternetExplorerSendErrorReportWithTrace() {
     stubs.set(userAgent, 'IE', false);
@@ -172,12 +169,12 @@ testSuite({
 
     errorReporter = ErrorReporter.install('/errorreporter');
 
-    const trace = 'Error(\"Something Wrong\")@:0\n' +
-        '$MF$E$Nx$([object Object])@http://a.b.c:83/a/f.js:901\n' +
-        '([object Object])@http://a.b.c:813/a/f.js:37';
+    const trace =
+      'Error("Something Wrong")@:0\n' +
+      '$MF$E$Nx$([object Object])@http://a.b.c:83/a/f.js:901\n' +
+      '([object Object])@http://a.b.c:813/a/f.js:37';
 
-    const errorFunction =
-        goog.partial(throwAnErrorWith, url, 5, 'Hello :)', trace);
+    const errorFunction = goog.partial(throwAnErrorWith, url, 5, 'Hello :)', trace);
 
     try {
       globalThis.setTimeout(errorFunction, 0);
@@ -186,15 +183,17 @@ testSuite({
     }
 
     assertEquals(
-        `/errorreporter?script=${encodedUrl}&error=Hello%20%3A)&line=5`,
-        MockXhrIo.lastUrl);
+      `/errorreporter?script=${encodedUrl}&error=Hello%20%3A)&line=5`,
+      MockXhrIo.lastUrl
+    );
     assertEquals(
-        'trace=' +
-            'Error(%22Something%20Wrong%22)%40%3A0%0A' +
-            '%24MF%24E%24Nx%24(%5Bobject%20Object%5D)%40' +
-            'http%3A%2F%2Fa.b.c%3A83%2Fa%2Ff.js%3A901%0A' +
-            '(%5Bobject%20Object%5D)%40http%3A%2F%2Fa.b.c%3A813%2Fa%2Ff.js%3A37',
-        MockXhrIo.lastContent);
+      'trace=' +
+        'Error(%22Something%20Wrong%22)%40%3A0%0A' +
+        '%24MF%24E%24Nx%24(%5Bobject%20Object%5D)%40' +
+        'http%3A%2F%2Fa.b.c%3A83%2Fa%2Ff.js%3A901%0A' +
+        '(%5Bobject%20Object%5D)%40http%3A%2F%2Fa.b.c%3A813%2Fa%2Ff.js%3A37',
+      MockXhrIo.lastContent
+    );
   },
 
   test_nonInternetExplorerSendErrorReportWithTraceAndCauses() {
@@ -203,38 +202,37 @@ testSuite({
       fcn.call();
     });
 
-    const maintrace = 'Error(\"Something Wrong\")@:0\n' +
-        '$MF$E$Nx$([object Object])@http://a.b.c:83/a/f.js:901\n' +
-        '([object Object])@http://a.b.c:813/a/f.js:37';
+    const maintrace =
+      'Error("Something Wrong")@:0\n' +
+      '$MF$E$Nx$([object Object])@http://a.b.c:83/a/f.js:901\n' +
+      '([object Object])@http://a.b.c:813/a/f.js:37';
 
     // For this cause, the error message is part of the stacktrace.
-    const causetrace1 =
-        'Error: Cause1 Error\n([object Object])@http://a.b.c:813/b/d.js:35';
+    const causetrace1 = 'Error: Cause1 Error\n([object Object])@http://a.b.c:813/b/d.js:35';
     const causetrace2 =
-        '$AB$B$Wx$([object Object])@http://a.b.c:83/c/e.js:101\n' +
-        '([object Object])@http://a.b.c:813/c/d.js:3';
+      '$AB$B$Wx$([object Object])@http://a.b.c:83/c/e.js:101\n' +
+      '([object Object])@http://a.b.c:813/c/d.js:3';
 
-    const cause2 =
-        createError(url, 1, 'Cause2 Error', causetrace2, 'String cause');
+    const cause2 = createError(url, 1, 'Cause2 Error', causetrace2, 'String cause');
     const cause1 = createError(url, 12, 'Cause1 Error', causetrace1, cause2);
 
-    const expectedTrace = 'Error("Something Wrong")@:0\n' +
-        '$MF$E$Nx$([object Object])@http://a.b.c:83/a/f.js:901\n' +
-        '([object Object])@http://a.b.c:813/a/f.js:37\n' +
-        'Caused by: Error: Cause1 Error\n' +
-        '([object Object])@http://a.b.c:813/b/d.js:35\n' +
-        'Caused by: Cause2 Error\n' +
-        '$AB$B$Wx$([object Object])@http://a.b.c:83/c/e.js:101\n' +
-        '([object Object])@http://a.b.c:813/c/d.js:3\n' +
-        'Caused by: String cause';
+    const expectedTrace =
+      'Error("Something Wrong")@:0\n' +
+      '$MF$E$Nx$([object Object])@http://a.b.c:83/a/f.js:901\n' +
+      '([object Object])@http://a.b.c:813/a/f.js:37\n' +
+      'Caused by: Error: Cause1 Error\n' +
+      '([object Object])@http://a.b.c:813/b/d.js:35\n' +
+      'Caused by: Cause2 Error\n' +
+      '$AB$B$Wx$([object Object])@http://a.b.c:83/c/e.js:101\n' +
+      '([object Object])@http://a.b.c:813/c/d.js:3\n' +
+      'Caused by: String cause';
 
     errorReporter = ErrorReporter.install('/errorreporter');
     events.listen(errorReporter, ErrorReporter.ExceptionEvent.TYPE, (event) => {
       assertEquals(expectedTrace, event.error.stack);
     });
 
-    const errorFunction =
-        goog.partial(throwAnErrorWith, url, 5, 'MainError', maintrace, cause1);
+    const errorFunction = goog.partial(throwAnErrorWith, url, 5, 'MainError', maintrace, cause1);
 
     try {
       globalThis.setTimeout(errorFunction, 0);
@@ -242,11 +240,8 @@ testSuite({
       // Expected. The error is rethrown after sending.
     }
 
-    assertEquals(
-        `/errorreporter?script=${encodedUrl}&error=MainError&line=5`,
-        MockXhrIo.lastUrl);
-    assertEquals(
-        'trace=' + encodeURIComponent(expectedTrace), MockXhrIo.lastContent);
+    assertEquals(`/errorreporter?script=${encodedUrl}&error=MainError&line=5`, MockXhrIo.lastUrl);
+    assertEquals('trace=' + encodeURIComponent(expectedTrace), MockXhrIo.lastContent);
   },
 
   test_nonInternetExplorerSendErrorReportWithCyclicCauses() {
@@ -255,38 +250,38 @@ testSuite({
       fcn.call();
     });
 
-    const maintrace = 'Error(\"Something Wrong\")@:0\n' +
-        '$MF$E$Nx$([object Object])@http://a.b.c:83/a/f.js:901\n' +
-        '([object Object])@http://a.b.c:813/a/f.js:37';
+    const maintrace =
+      'Error("Something Wrong")@:0\n' +
+      '$MF$E$Nx$([object Object])@http://a.b.c:83/a/f.js:901\n' +
+      '([object Object])@http://a.b.c:813/a/f.js:37';
 
     // For this cause, the error message is part of the stacktrace.
-    const causetrace1 =
-        'Error: Cause1 Error\n([object Object])@http://a.b.c:813/b/d.js:35';
+    const causetrace1 = 'Error: Cause1 Error\n([object Object])@http://a.b.c:813/b/d.js:35';
     const causetrace2 =
-        '$AB$B$Wx$([object Object])@http://a.b.c:83/c/e.js:101\n' +
-        '([object Object])@http://a.b.c:813/c/d.js:3';
+      '$AB$B$Wx$([object Object])@http://a.b.c:83/c/e.js:101\n' +
+      '([object Object])@http://a.b.c:813/c/d.js:3';
 
     const cause2 = createError(url, 1, 'Cause2 Error', causetrace2);
     const cause1 = createError(url, 12, 'Cause1 Error', causetrace1, cause2);
     // introduce a cycle
     cause2['cause'] = cause1;
 
-    const expectedTrace = 'Error("Something Wrong")@:0\n' +
-        '$MF$E$Nx$([object Object])@http://a.b.c:83/a/f.js:901\n' +
-        '([object Object])@http://a.b.c:813/a/f.js:37\n' +
-        'Caused by: Error: Cause1 Error\n' +
-        '([object Object])@http://a.b.c:813/b/d.js:35\n' +
-        'Caused by: Cause2 Error\n' +
-        '$AB$B$Wx$([object Object])@http://a.b.c:83/c/e.js:101\n' +
-        '([object Object])@http://a.b.c:813/c/d.js:3';
+    const expectedTrace =
+      'Error("Something Wrong")@:0\n' +
+      '$MF$E$Nx$([object Object])@http://a.b.c:83/a/f.js:901\n' +
+      '([object Object])@http://a.b.c:813/a/f.js:37\n' +
+      'Caused by: Error: Cause1 Error\n' +
+      '([object Object])@http://a.b.c:813/b/d.js:35\n' +
+      'Caused by: Cause2 Error\n' +
+      '$AB$B$Wx$([object Object])@http://a.b.c:83/c/e.js:101\n' +
+      '([object Object])@http://a.b.c:813/c/d.js:3';
 
     errorReporter = ErrorReporter.install('/errorreporter');
     events.listen(errorReporter, ErrorReporter.ExceptionEvent.TYPE, (event) => {
       assertEquals(expectedTrace, event.error.stack);
     });
 
-    const errorFunction =
-        goog.partial(throwAnErrorWith, url, 5, 'MainError', maintrace, cause1);
+    const errorFunction = goog.partial(throwAnErrorWith, url, 5, 'MainError', maintrace, cause1);
 
     try {
       globalThis.setTimeout(errorFunction, 0);
@@ -294,11 +289,8 @@ testSuite({
       // Expected. The error is rethrown after sending.
     }
 
-    assertEquals(
-        `/errorreporter?script=${encodedUrl}&error=MainError&line=5`,
-        MockXhrIo.lastUrl);
-    assertEquals(
-        'trace=' + encodeURIComponent(expectedTrace), MockXhrIo.lastContent);
+    assertEquals(`/errorreporter?script=${encodedUrl}&error=MainError&line=5`, MockXhrIo.lastUrl);
+    assertEquals('trace=' + encodeURIComponent(expectedTrace), MockXhrIo.lastContent);
   },
 
   testProtectAdditionalEntryPoint_nonIE() {
@@ -331,73 +323,74 @@ testSuite({
     errorReporter.handleException(new Error());
     errorReporter.handleException(new Error());
     assertEquals(
-        'Expected 2 errors. ' +
-            '(Ensure an exception was not swallowed.)',
-        2, loggedErrors);
+      'Expected 2 errors. ' + '(Ensure an exception was not swallowed.)',
+      2,
+      loggedErrors
+    );
   },
 
   testHandleException_includesContext() {
     errorReporter = ErrorReporter.install('/errorreporter');
     let loggedErrors = 0;
     const testError = new Error('test error');
-    const testContext = {'contextParam': 'contextValue'};
+    const testContext = { contextParam: 'contextValue' };
     events.listen(errorReporter, ErrorReporter.ExceptionEvent.TYPE, (event) => {
       assertNotNullNorUndefined(event.error);
-      assertObjectEquals({contextParam: 'contextValue'}, event.context);
+      assertObjectEquals({ contextParam: 'contextValue' }, event.context);
       loggedErrors++;
     });
     errorReporter.handleException(testError, testContext);
     assertEquals(
-        'Expected 1 error. ' +
-            '(Ensure an exception was not swallowed.)',
-        1, loggedErrors);
+      'Expected 1 error. ' + '(Ensure an exception was not swallowed.)',
+      1,
+      loggedErrors
+    );
   },
 
   testContextProvider() {
-    errorReporter =
-        ErrorReporter.install('/errorreporter', (error, context) => {
-          /**
-           * @suppress {strictMissingProperties} suppression added to enable
-           * type checking
-           */
-          context.providedContext = 'value';
-        });
+    errorReporter = ErrorReporter.install('/errorreporter', (error, context) => {
+      /**
+       * @suppress {strictMissingProperties} suppression added to enable
+       * type checking
+       */
+      context.providedContext = 'value';
+    });
     let loggedErrors = 0;
     const testError = new Error('test error');
     events.listen(errorReporter, ErrorReporter.ExceptionEvent.TYPE, (event) => {
       assertNotNullNorUndefined(event.error);
-      assertObjectEquals({providedContext: 'value'}, event.context);
+      assertObjectEquals({ providedContext: 'value' }, event.context);
       loggedErrors++;
     });
     errorReporter.handleException(testError);
     assertEquals(
-        'Expected 1 error. ' +
-            '(Ensure an exception was not swallowed.)',
-        1, loggedErrors);
+      'Expected 1 error. ' + '(Ensure an exception was not swallowed.)',
+      1,
+      loggedErrors
+    );
   },
 
   testContextProvider_withOtherContext() {
-    errorReporter =
-        ErrorReporter.install('/errorreporter', (error, context) => {
-          /**
-           * @suppress {strictMissingProperties} suppression added to enable
-           * type checking
-           */
-          context.providedContext = 'value';
-        });
+    errorReporter = ErrorReporter.install('/errorreporter', (error, context) => {
+      /**
+       * @suppress {strictMissingProperties} suppression added to enable
+       * type checking
+       */
+      context.providedContext = 'value';
+    });
     let loggedErrors = 0;
     const testError = new Error('test error');
     events.listen(errorReporter, ErrorReporter.ExceptionEvent.TYPE, (event) => {
       assertNotNullNorUndefined(event.error);
-      assertObjectEquals(
-          {providedContext: 'value', otherContext: 'value'}, event.context);
+      assertObjectEquals({ providedContext: 'value', otherContext: 'value' }, event.context);
       loggedErrors++;
     });
-    errorReporter.handleException(testError, {'otherContext': 'value'});
+    errorReporter.handleException(testError, { otherContext: 'value' });
     assertEquals(
-        'Expected 1 error. ' +
-            '(Ensure an exception was not swallowed.)',
-        1, loggedErrors);
+      'Expected 1 error. ' + '(Ensure an exception was not swallowed.)',
+      1,
+      loggedErrors
+    );
   },
 
   testErrorWithContext() {
@@ -408,45 +401,48 @@ testSuite({
     errorcontext.addErrorContext(testError, 'animalType', 'dog');
     events.listen(errorReporter, ErrorReporter.ExceptionEvent.TYPE, (event) => {
       assertNotNullNorUndefined(event.error);
-      assertObjectEquals({key1: 'value1', animalType: 'dog'}, event.context);
+      assertObjectEquals({ key1: 'value1', animalType: 'dog' }, event.context);
       loggedErrors++;
     });
     errorReporter.handleException(testError);
     assertEquals(
-        'Expected 1 error. ' +
-            '(Ensure an exception was not swallowed.)',
-        1, loggedErrors);
+      'Expected 1 error. ' + '(Ensure an exception was not swallowed.)',
+      1,
+      loggedErrors
+    );
   },
 
   testErrorWithDifferentContextSources() {
-    errorReporter =
-        ErrorReporter.install('/errorreporter', (error, context) => {
-          /**
-           * @suppress {strictMissingProperties} suppression added to enable
-           * type checking
-           */
-          context.providedContext = 'provided ctx';
-        });
+    errorReporter = ErrorReporter.install('/errorreporter', (error, context) => {
+      /**
+       * @suppress {strictMissingProperties} suppression added to enable
+       * type checking
+       */
+      context.providedContext = 'provided ctx';
+    });
     let loggedErrors = 0;
     const testError = new Error('test error');
     errorcontext.addErrorContext(testError, 'addErrorContext', 'some value');
     events.listen(errorReporter, ErrorReporter.ExceptionEvent.TYPE, (event) => {
       assertNotNullNorUndefined(event.error);
       assertObjectEquals(
-          {
-            addErrorContext: 'some value',
-            providedContext: 'provided ctx',
-            handleExceptionContext: 'another value',
-          },
-          event.context);
+        {
+          addErrorContext: 'some value',
+          providedContext: 'provided ctx',
+          handleExceptionContext: 'another value',
+        },
+        event.context
+      );
       loggedErrors++;
     });
-    errorReporter.handleException(
-        testError, {handleExceptionContext: 'another value'});
+    errorReporter.handleException(testError, {
+      handleExceptionContext: 'another value',
+    });
     assertEquals(
-        'Expected 1 error. ' +
-            '(Ensure an exception was not swallowed.)',
-        1, loggedErrors);
+      'Expected 1 error. ' + '(Ensure an exception was not swallowed.)',
+      1,
+      loggedErrors
+    );
   },
 
   testHandleException_ignoresExceptionsDuringEventDispatch() {
@@ -476,32 +472,36 @@ testSuite({
   testSetContextPrefix() {
     errorReporter = new ErrorReporter('/log');
     errorReporter.setContextPrefix('baz.');
-    errorReporter.sendErrorReport(
-        'message', 'filename.js', 123, 'trace', {'foo': 'bar'});
+    errorReporter.sendErrorReport('message', 'filename.js', 123, 'trace', {
+      foo: 'bar',
+    });
     assertEquals('trace=trace&baz.foo=bar', MockXhrIo.lastContent);
   },
 
   testTruncationLimit() {
     errorReporter = new ErrorReporter('/log');
     errorReporter.setTruncationLimit(6);
-    errorReporter.sendErrorReport(
-        'message', 'filename.js', 123, 'trace', {'foo': 'bar'});
+    errorReporter.sendErrorReport('message', 'filename.js', 123, 'trace', {
+      foo: 'bar',
+    });
     assertEquals('trace=', MockXhrIo.lastContent);
   },
 
   testZeroTruncationLimit() {
     errorReporter = new ErrorReporter('/log');
     errorReporter.setTruncationLimit(0);
-    errorReporter.sendErrorReport(
-        'message', 'filename.js', 123, 'trace', {'foo': 'bar'});
+    errorReporter.sendErrorReport('message', 'filename.js', 123, 'trace', {
+      foo: 'bar',
+    });
     assertEquals('', MockXhrIo.lastContent);
   },
 
   testTruncationLimitLargerThanBody() {
     errorReporter = new ErrorReporter('/log');
     errorReporter.setTruncationLimit(9999);
-    errorReporter.sendErrorReport(
-        'message', 'filename.js', 123, 'trace', {'foo': 'bar'});
+    errorReporter.sendErrorReport('message', 'filename.js', 123, 'trace', {
+      foo: 'bar',
+    });
     assertEquals('trace=trace&context.foo=bar', MockXhrIo.lastContent);
   },
 
@@ -515,8 +515,9 @@ testSuite({
   testSetTruncationLimitNull() {
     errorReporter = new ErrorReporter('/log');
     errorReporter.setTruncationLimit(null);
-    errorReporter.sendErrorReport(
-        'message', 'filename.js', 123, 'trace', {'foo': 'bar'});
+    errorReporter.sendErrorReport('message', 'filename.js', 123, 'trace', {
+      foo: 'bar',
+    });
     assertEquals('trace=trace&context.foo=bar', MockXhrIo.lastContent);
   },
 
@@ -531,29 +532,30 @@ testSuite({
   testSetAdditionalArgumentsArgsEmptyObject() {
     errorReporter = new ErrorReporter('/log');
     errorReporter.setAdditionalArguments({});
-    errorReporter.sendErrorReport(
-        'message', 'filename.js', 123, 'trace', {'foo': 'bar'});
-    assertEquals(
-        '/log?script=filename.js&error=message&line=123', MockXhrIo.lastUrl);
+    errorReporter.sendErrorReport('message', 'filename.js', 123, 'trace', {
+      foo: 'bar',
+    });
+    assertEquals('/log?script=filename.js&error=message&line=123', MockXhrIo.lastUrl);
   },
 
   testSetAdditionalArgumentsSingleArgument() {
     errorReporter = new ErrorReporter('/log');
-    errorReporter.setAdditionalArguments({'extra': 'arg'});
-    errorReporter.sendErrorReport(
-        'message', 'filename.js', 123, 'trace', {'foo': 'bar'});
-    assertEquals(
-        '/log?script=filename.js&error=message&line=123&extra=arg',
-        MockXhrIo.lastUrl);
+    errorReporter.setAdditionalArguments({ extra: 'arg' });
+    errorReporter.sendErrorReport('message', 'filename.js', 123, 'trace', {
+      foo: 'bar',
+    });
+    assertEquals('/log?script=filename.js&error=message&line=123&extra=arg', MockXhrIo.lastUrl);
   },
 
   testSetAdditionalArgumentsMultipleArguments() {
     errorReporter = new ErrorReporter('/log');
-    errorReporter.setAdditionalArguments({'extra': 'arg', 'cat': 'dog'});
-    errorReporter.sendErrorReport(
-        'message', 'filename.js', 123, 'trace', {'foo': 'bar'});
+    errorReporter.setAdditionalArguments({ extra: 'arg', cat: 'dog' });
+    errorReporter.sendErrorReport('message', 'filename.js', 123, 'trace', {
+      foo: 'bar',
+    });
     assertEquals(
-        '/log?script=filename.js&error=message&line=123&extra=arg&cat=dog',
-        MockXhrIo.lastUrl);
+      '/log?script=filename.js&error=message&line=123&extra=arg&cat=dog',
+      MockXhrIo.lastUrl
+    );
   },
 });

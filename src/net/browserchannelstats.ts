@@ -35,7 +35,6 @@ const Stat = {
   /** Event indicating the start of test stage one. */
   TEST_STAGE_ONE_START: 3,
 
-
   /** Event indicating the channel is blocked by a network administrator. */
   CHANNEL_BLOCKED: 4,
 
@@ -117,7 +116,7 @@ exports.Stat = Stat;
  * Helper function to call the stat event callback.
  * @param {Stat} stat The stat.
  */
-const notifyStatEvent = function(stat) {
+const notifyStatEvent = (stat) => {
   statEventTarget.dispatchEvent(new StatEvent(statEventTarget, stat));
 };
 exports.notifyStatEvent = notifyStatEvent;
@@ -126,9 +125,7 @@ exports.notifyStatEvent = notifyStatEvent;
  * Returns the singleton event target for stat events.
  * @return {!EventTarget} The event target for stat events.
  */
-const getStatEventTarget = function() {
-  return statEventTarget;
-};
+const getStatEventTarget = () => statEventTarget;
 exports.getStatEventTarget = getStatEventTarget;
 
 /**
@@ -138,7 +135,6 @@ exports.getStatEventTarget = getStatEventTarget;
  */
 const statEventTarget = new EventTarget();
 
-
 /**
  * Stat Event that fires when things of interest happen that may be useful for
  * applications to know about for stats or debugging purposes. This event fires
@@ -146,7 +142,6 @@ const statEventTarget = new EventTarget();
  */
 const STAT_EVENT = 'statevent';
 exports.STAT_EVENT = STAT_EVENT;
-
 
 /**
  * Event class for goog.net.BrowserChannel.Event.STAT_EVENT

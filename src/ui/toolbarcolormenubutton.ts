@@ -18,8 +18,6 @@ goog.requireType('goog.ui.ColorMenuButtonRenderer');
 goog.requireType('goog.ui.ControlContent');
 goog.requireType('goog.ui.Menu');
 
-
-
 /**
  * A color menu button control for a toolbar.
  *
@@ -35,20 +33,19 @@ goog.requireType('goog.ui.Menu');
  * @constructor
  * @extends {goog.ui.ColorMenuButton}
  */
-goog.ui.ToolbarColorMenuButton = function(
-    content, opt_menu, opt_renderer, opt_domHelper) {
-  'use strict';
+goog.ui.ToolbarColorMenuButton = function (content, opt_menu, opt_renderer, opt_domHelper) {
   goog.ui.ColorMenuButton.call(
-      this, content, opt_menu,
-      opt_renderer || goog.ui.ToolbarColorMenuButtonRenderer.getInstance(),
-      opt_domHelper);
+    this,
+    content,
+    opt_menu,
+    opt_renderer || goog.ui.ToolbarColorMenuButtonRenderer.getInstance(),
+    opt_domHelper
+  );
 };
 goog.inherits(goog.ui.ToolbarColorMenuButton, goog.ui.ColorMenuButton);
 
-
 // Registers a decorator factory function for toolbar color menu buttons.
 goog.ui.registry.setDecoratorByClassName(
-    goog.getCssName('goog-toolbar-color-menu-button'), function() {
-      'use strict';
-      return new goog.ui.ToolbarColorMenuButton(null);
-    });
+  goog.getCssName('goog-toolbar-color-menu-button'),
+  () => new goog.ui.ToolbarColorMenuButton(null)
+);

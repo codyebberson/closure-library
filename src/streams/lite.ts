@@ -12,8 +12,13 @@ goog.module('goog.streams.lite');
 
 const liteImpl = goog.require('goog.streams.liteImpl');
 const liteNativeImpl = goog.require('goog.streams.liteNativeImpl');
-const {ReadableStream, ReadableStreamDefaultController, ReadableStreamDefaultReader, ReadableStreamUnderlyingSource} = goog.require('goog.streams.liteTypes');
-const {USE_NATIVE_IMPLEMENTATION} = goog.require('goog.streams.defines');
+const {
+  ReadableStream,
+  ReadableStreamDefaultController,
+  ReadableStreamDefaultReader,
+  ReadableStreamUnderlyingSource,
+} = goog.require('goog.streams.liteTypes');
+const { USE_NATIVE_IMPLEMENTATION } = goog.require('goog.streams.defines');
 
 /**
  * Creates and returns a new ReadableStream.
@@ -26,8 +31,10 @@ const {USE_NATIVE_IMPLEMENTATION} = goog.require('goog.streams.defines');
  * @template T
  */
 function newReadableStream(underlyingSource) {
-  if (USE_NATIVE_IMPLEMENTATION === 'true' ||
-      (USE_NATIVE_IMPLEMENTATION === 'detect' && goog.global.ReadableStream)) {
+  if (
+    USE_NATIVE_IMPLEMENTATION === 'true' ||
+    (USE_NATIVE_IMPLEMENTATION === 'detect' && goog.global.ReadableStream)
+  ) {
     return liteNativeImpl.newReadableStream(underlyingSource);
   } else {
     return liteImpl.newReadableStream(underlyingSource);

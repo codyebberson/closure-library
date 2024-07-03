@@ -10,8 +10,6 @@
 
 goog.provide('goog.debug.RelativeTimeProvider');
 
-
-
 /**
  * A simple object to keep track of a timestamp considered the start of
  * something. The main use is for the logger system to maintain a start time
@@ -23,8 +21,7 @@ goog.provide('goog.debug.RelativeTimeProvider');
  * @constructor
  * @final
  */
-goog.debug.RelativeTimeProvider = function() {
-  'use strict';
+goog.debug.RelativeTimeProvider = function () {
   /**
    * The start time.
    * @type {number}
@@ -33,7 +30,6 @@ goog.debug.RelativeTimeProvider = function() {
   this.relativeTimeStart_ = goog.now();
 };
 
-
 /**
  * Default instance.
  * @type {?goog.debug.RelativeTimeProvider}
@@ -41,43 +37,34 @@ goog.debug.RelativeTimeProvider = function() {
  */
 goog.debug.RelativeTimeProvider.defaultInstance_ = null;
 
-
 /**
  * Sets the start time to the specified time.
  * @param {number} timeStamp The start time.
  */
-goog.debug.RelativeTimeProvider.prototype.set = function(timeStamp) {
-  'use strict';
+goog.debug.RelativeTimeProvider.prototype.set = function (timeStamp) {
   this.relativeTimeStart_ = timeStamp;
 };
-
 
 /**
  * Resets the start time to now.
  */
-goog.debug.RelativeTimeProvider.prototype.reset = function() {
-  'use strict';
+goog.debug.RelativeTimeProvider.prototype.reset = function () {
   this.set(goog.now());
 };
-
 
 /**
  * @return {number} The start time.
  */
-goog.debug.RelativeTimeProvider.prototype.get = function() {
-  'use strict';
+goog.debug.RelativeTimeProvider.prototype.get = function () {
   return this.relativeTimeStart_;
 };
-
 
 /**
  * @return {!goog.debug.RelativeTimeProvider} The default instance.
  */
-goog.debug.RelativeTimeProvider.getDefaultInstance = function() {
-  'use strict';
+goog.debug.RelativeTimeProvider.getDefaultInstance = () => {
   if (!goog.debug.RelativeTimeProvider.defaultInstance_) {
-    goog.debug.RelativeTimeProvider.defaultInstance_ =
-        new goog.debug.RelativeTimeProvider();
+    goog.debug.RelativeTimeProvider.defaultInstance_ = new goog.debug.RelativeTimeProvider();
   }
   return goog.debug.RelativeTimeProvider.defaultInstance_;
 };

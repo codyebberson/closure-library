@@ -7,7 +7,6 @@
 /** @fileoverview Tests for {@link goog.html.sanitizer.ElementWeakMap} */
 
 goog.module('goog.html.sanitizer.ElementWeakMapTest');
-goog.setTestOnly();
 
 const ElementWeakMap = goog.require('goog.html.sanitizer.ElementWeakMap');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -59,5 +58,5 @@ testSuite({
     if (weakMap.clear) {
       weakMap.clear();
     }
-  }
+  },
 });

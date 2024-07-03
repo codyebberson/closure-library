@@ -19,8 +19,6 @@ goog.require('goog.array');
 goog.require('goog.asserts');
 goog.require('goog.crypt.Hash');
 
-
-
 /**
  * SHA-2 cryptographic hash constructor.
  * This constructor should not be used directly to create the object. Rather,
@@ -31,8 +29,7 @@ goog.require('goog.crypt.Hash');
  * @extends {goog.crypt.Hash}
  * @struct
  */
-goog.crypt.Sha2 = function(numHashBlocks, initHashBlocks) {
-  'use strict';
+goog.crypt.Sha2 = function (numHashBlocks, initHashBlocks) {
   goog.crypt.Sha2.base(this, 'constructor');
 
   /** @const {number} */
@@ -43,8 +40,9 @@ goog.crypt.Sha2 = function(numHashBlocks, initHashBlocks) {
    * 64 bytes, we feed it into computeChunk_ function and reset this.chunk_.
    * @private {!Array<number>|!Uint8Array}
    */
-  this.chunk_ = goog.global['Uint8Array'] ? new Uint8Array(this.blockSize) :
-                                            new Array(this.blockSize);
+  this.chunk_ = goog.global['Uint8Array']
+    ? new Uint8Array(this.blockSize)
+    : new Array(this.blockSize);
 
   /**
    * Current number of bytes in this.chunk_.
@@ -57,7 +55,6 @@ goog.crypt.Sha2 = function(numHashBlocks, initHashBlocks) {
    * @private {number}
    */
   this.total_ = 0;
-
 
   /**
    * Holds the previous values of accumulated hash a-h in the computeChunk_
@@ -101,39 +98,32 @@ goog.crypt.Sha2 = function(numHashBlocks, initHashBlocks) {
 };
 goog.inherits(goog.crypt.Sha2, goog.crypt.Hash);
 
-
 /**
  * The block size
  * @private {number}
  */
 goog.crypt.Sha2.BLOCKSIZE_ = 512 / 8;
 
-
 /**
  * Contains data needed to pad messages less than BLOCK_SIZE_ bytes.
  * @private {!Array<number>}
  */
-goog.crypt.Sha2.PADDING_ =
-    [].concat(128, goog.array.repeat(0, goog.crypt.Sha2.BLOCKSIZE_ - 1));
-
+goog.crypt.Sha2.PADDING_ = [].concat(128, goog.array.repeat(0, goog.crypt.Sha2.BLOCKSIZE_ - 1));
 
 /** @override */
-goog.crypt.Sha2.prototype.reset = function() {
-  'use strict';
+goog.crypt.Sha2.prototype.reset = function () {
   this.inChunk_ = 0;
   this.total_ = 0;
-  this.hash_ = goog.global['Int32Array'] ?
-      new Int32Array(this.initHashBlocks_) :
-      goog.array.clone(this.initHashBlocks_);
+  this.hash_ = goog.global['Int32Array']
+    ? new Int32Array(this.initHashBlocks_)
+    : goog.array.clone(this.initHashBlocks_);
 };
-
 
 /**
  * Helper function to compute the hashes for a given 512-bit message chunk.
  * @private
  */
-goog.crypt.Sha2.prototype.computeChunk_ = function() {
-  'use strict';
+goog.crypt.Sha2.prototype.computeChunk_ = function () {
   var chunk = this.chunk_;
   goog.asserts.assert(chunk.length == this.blockSize);
   var rounds = 64;
@@ -143,19 +133,20 @@ goog.crypt.Sha2.prototype.computeChunk_ = function() {
   var index = 0;
   var offset = 0;
   while (offset < chunk.length) {
-    w[index++] = (chunk[offset] << 24) | (chunk[offset + 1] << 16) |
-        (chunk[offset + 2] << 8) | (chunk[offset + 3]);
+    w[index++] =
+      (chunk[offset] << 24) |
+      (chunk[offset + 1] << 16) |
+      (chunk[offset + 2] << 8) |
+      chunk[offset + 3];
     offset = index * 4;
   }
 
   // Extend the w[] array to be the number of rounds.
   for (var i = 16; i < rounds; i++) {
     var w_15 = w[i - 15] | 0;
-    var s0 = ((w_15 >>> 7) | (w_15 << 25)) ^ ((w_15 >>> 18) | (w_15 << 14)) ^
-        (w_15 >>> 3);
+    var s0 = ((w_15 >>> 7) | (w_15 << 25)) ^ ((w_15 >>> 18) | (w_15 << 14)) ^ (w_15 >>> 3);
     var w_2 = w[i - 2] | 0;
-    var s1 = ((w_2 >>> 17) | (w_2 << 15)) ^ ((w_2 >>> 19) | (w_2 << 13)) ^
-        (w_2 >>> 10);
+    var s1 = ((w_2 >>> 17) | (w_2 << 15)) ^ ((w_2 >>> 19) | (w_2 << 13)) ^ (w_2 >>> 10);
 
     // As a performance optimization, construct the sum a pair at a time
     // with casting to integer (bitwise OR) to eliminate unnecessary
@@ -174,13 +165,11 @@ goog.crypt.Sha2.prototype.computeChunk_ = function() {
   var g = this.hash_[6] | 0;
   var h = this.hash_[7] | 0;
   for (var i = 0; i < rounds; i++) {
-    var S0 = ((a >>> 2) | (a << 30)) ^ ((a >>> 13) | (a << 19)) ^
-        ((a >>> 22) | (a << 10));
-    var maj = ((a & b) ^ (a & c) ^ (b & c));
+    var S0 = ((a >>> 2) | (a << 30)) ^ ((a >>> 13) | (a << 19)) ^ ((a >>> 22) | (a << 10));
+    var maj = (a & b) ^ (a & c) ^ (b & c);
     var t2 = (S0 + maj) | 0;
-    var S1 = ((e >>> 6) | (e << 26)) ^ ((e >>> 11) | (e << 21)) ^
-        ((e >>> 25) | (e << 7));
-    var ch = ((e & f) ^ ((~e) & g));
+    var S1 = ((e >>> 6) | (e << 26)) ^ ((e >>> 11) | (e << 21)) ^ ((e >>> 25) | (e << 7));
+    var ch = (e & f) ^ (~e & g);
 
     // As a performance optimization, construct the sum a pair at a time
     // with casting to integer (bitwise OR) to eliminate unnecessary
@@ -210,10 +199,8 @@ goog.crypt.Sha2.prototype.computeChunk_ = function() {
   this.hash_[7] = (this.hash_[7] + h) | 0;
 };
 
-
 /** @override */
-goog.crypt.Sha2.prototype.update = function(message, opt_length) {
-  'use strict';
+goog.crypt.Sha2.prototype.update = function (message, opt_length) {
   if (opt_length === undefined) {
     opt_length = message.length;
   }
@@ -258,10 +245,8 @@ goog.crypt.Sha2.prototype.update = function(message, opt_length) {
   this.total_ += opt_length;
 };
 
-
 /** @override */
-goog.crypt.Sha2.prototype.digest = function() {
-  'use strict';
+goog.crypt.Sha2.prototype.digest = function () {
   var digest = [];
   var totalBits = this.total_ * 8;
 
@@ -269,14 +254,13 @@ goog.crypt.Sha2.prototype.digest = function() {
   if (this.inChunk_ < 56) {
     this.update(goog.crypt.Sha2.PADDING_, 56 - this.inChunk_);
   } else {
-    this.update(
-        goog.crypt.Sha2.PADDING_, this.blockSize - (this.inChunk_ - 56));
+    this.update(goog.crypt.Sha2.PADDING_, this.blockSize - (this.inChunk_ - 56));
   }
 
   // Append # bits in the 64-bit big-endian format.
   for (var i = 63; i >= 56; i--) {
     this.chunk_[i] = totalBits & 255;
-    totalBits /= 256;  // Don't use bit-shifting here!
+    totalBits /= 256; // Don't use bit-shifting here!
   }
   this.computeChunk_();
 
@@ -284,12 +268,11 @@ goog.crypt.Sha2.prototype.digest = function() {
   var n = 0;
   for (var i = 0; i < this.numHashBlocks_; i++) {
     for (var j = 24; j >= 0; j -= 8) {
-      digest[n++] = ((this.hash_[i] >> j) & 255);
+      digest[n++] = (this.hash_[i] >> j) & 255;
     }
   }
   return digest;
 };
-
 
 /**
  * Constants used in SHA-2.
@@ -297,19 +280,15 @@ goog.crypt.Sha2.prototype.digest = function() {
  * @private {!Array<number>}
  */
 goog.crypt.Sha2.K_ = [
-  0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1,
-  0x923f82a4, 0xab1c5ed5, 0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
-  0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174, 0xe49b69c1, 0xefbe4786,
-  0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
-  0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147,
-  0x06ca6351, 0x14292967, 0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13,
-  0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85, 0xa2bfe8a1, 0xa81a664b,
-  0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
-  0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a,
-  0x5b9cca4f, 0x682e6ff3, 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
-  0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
+  0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+  0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+  0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+  0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+  0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+  0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+  0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+  0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2,
 ];
-
 
 /**
  * Sha2.K as an Int32Array if this JS supports typed arrays; otherwise,

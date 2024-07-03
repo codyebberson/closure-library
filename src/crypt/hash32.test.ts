@@ -11,7 +11,6 @@
  */
 
 goog.module('goog.crypt.hash32Test');
-goog.setTestOnly();
 
 const TestCase = goog.require('goog.testing.TestCase');
 const hash32 = goog.require('goog.crypt.hash32');
@@ -212,58 +211,63 @@ testSuite({
 
   testEncodeString_ascii() {
     assertEquals(
-        'For ascii characters UTF8 should be the same',
-        hash32.encodeText('abc123'), hash32.encodeBinaryString('abc123'));
+      'For ascii characters UTF8 should be the same',
+      hash32.encodeText('abc123'),
+      hash32.encodeBinaryString('abc123')
+    );
 
     assertEquals(
-        'For ascii characters UTF8 should be the same',
-        hash32.encodeText('The,quick.brown-fox'),
-        hash32.encodeBinaryString('The,quick.brown-fox'));
+      'For ascii characters UTF8 should be the same',
+      hash32.encodeText('The,quick.brown-fox'),
+      hash32.encodeBinaryString('The,quick.brown-fox')
+    );
 
     assertNotEquals(
-        'For non-ascii characters UTF-8 encoding is different',
-        hash32.encodeText('Sch\xF6n'), hash32.encodeBinaryString('Sch\xF6n'));
+      'For non-ascii characters UTF-8 encoding is different',
+      hash32.encodeText('Sch\xF6n'),
+      hash32.encodeBinaryString('Sch\xF6n')
+    );
   },
 
   testEncodeString_poe() {
     const poe =
-        'Once upon a midnight dreary, while I pondered weak and weary,' +
-        'Over many a quaint and curious volume of forgotten lore,' +
-        'While I nodded, nearly napping, suddenly there came a tapping,' +
-        'As of some one gently rapping, rapping at my chamber door.' +
-        '`\'Tis some visitor,\' I muttered, `tapping at my chamber door -' +
-        'Only this, and nothing more.\'' +
-        'Ah, distinctly I remember it was in the bleak December,' +
-        'And each separate dying ember wrought its ghost upon the floor.' +
-        'Eagerly I wished the morrow; - vainly I had sought to borrow' +
-        'From my books surcease of sorrow - sorrow for the lost Lenore -' +
-        'For the rare and radiant maiden whom the angels named Lenore -' +
-        'Nameless here for evermore.' +
-        'And the silken sad uncertain rustling of each purple curtain' +
-        'Thrilled me - filled me with fantastic terrors never felt before;' +
-        'So that now, to still the beating of my heart, I stood repeating' +
-        '`\'Tis some visitor entreating entrance at my chamber door -' +
-        'Some late visitor entreating entrance at my chamber door; -' +
-        'This it is, and nothing more,\'' +
-        'Presently my soul grew stronger; hesitating then no longer,' +
-        '`Sir,\' said I, `or Madam, truly your forgiveness I implore;' +
-        'But the fact is I was napping, and so gently you came rapping,' +
-        'And so faintly you came tapping, tapping at my chamber door,' +
-        'That I scarce was sure I heard you\' - here I opened wide the door; -' +
-        'Darkness there, and nothing more.' +
-        'Deep into that darkness peering, long I stood there wondering, ' +
-        'fearing,' +
-        'Doubting, dreaming dreams no mortal ever dared to dream before' +
-        'But the silence was unbroken, and the darkness gave no token,' +
-        'And the only word there spoken was the whispered word, `Lenore!\'' +
-        'This I whispered, and an echo murmured back the word, `Lenore!\'' +
-        'Merely this and nothing more.' +
-        'Back into the chamber turning, all my soul within me burning,' +
-        'Soon again I heard a tapping somewhat louder than before.' +
-        '`Surely,\' said I, `surely that is something at my window lattice;' +
-        'Let me see then, what thereat is, and this mystery explore -' +
-        'Let my heart be still a moment and this mystery explore; -' +
-        '\'Tis the wind and nothing more!\'';
+      'Once upon a midnight dreary, while I pondered weak and weary,' +
+      'Over many a quaint and curious volume of forgotten lore,' +
+      'While I nodded, nearly napping, suddenly there came a tapping,' +
+      'As of some one gently rapping, rapping at my chamber door.' +
+      "`'Tis some visitor,' I muttered, `tapping at my chamber door -" +
+      "Only this, and nothing more.'" +
+      'Ah, distinctly I remember it was in the bleak December,' +
+      'And each separate dying ember wrought its ghost upon the floor.' +
+      'Eagerly I wished the morrow; - vainly I had sought to borrow' +
+      'From my books surcease of sorrow - sorrow for the lost Lenore -' +
+      'For the rare and radiant maiden whom the angels named Lenore -' +
+      'Nameless here for evermore.' +
+      'And the silken sad uncertain rustling of each purple curtain' +
+      'Thrilled me - filled me with fantastic terrors never felt before;' +
+      'So that now, to still the beating of my heart, I stood repeating' +
+      "`'Tis some visitor entreating entrance at my chamber door -" +
+      'Some late visitor entreating entrance at my chamber door; -' +
+      "This it is, and nothing more,'" +
+      'Presently my soul grew stronger; hesitating then no longer,' +
+      "`Sir,' said I, `or Madam, truly your forgiveness I implore;" +
+      'But the fact is I was napping, and so gently you came rapping,' +
+      'And so faintly you came tapping, tapping at my chamber door,' +
+      "That I scarce was sure I heard you' - here I opened wide the door; -" +
+      'Darkness there, and nothing more.' +
+      'Deep into that darkness peering, long I stood there wondering, ' +
+      'fearing,' +
+      'Doubting, dreaming dreams no mortal ever dared to dream before' +
+      'But the silence was unbroken, and the darkness gave no token,' +
+      "And the only word there spoken was the whispered word, `Lenore!'" +
+      "This I whispered, and an echo murmured back the word, `Lenore!'" +
+      'Merely this and nothing more.' +
+      'Back into the chamber turning, all my soul within me burning,' +
+      'Soon again I heard a tapping somewhat louder than before.' +
+      "`Surely,' said I, `surely that is something at my window lattice;" +
+      'Let me see then, what thereat is, and this mystery explore -' +
+      'Let my heart be still a moment and this mystery explore; -' +
+      "'Tis the wind and nothing more!'";
 
     assertEquals(147608747, hash32.encodeBinaryString(poe));
     assertEquals(147608747, hash32.encodeText(poe));
@@ -278,8 +282,7 @@ testSuite({
       const hash = hash32.encodeBinaryString(str);
 
       const diff = Date.now() - start;
-      testCase.saveMessage(
-          `testBenchmarking_binary: hashing ${i} chars in ${diff}ms (${hash})`);
+      testCase.saveMessage(`testBenchmarking_binary: hashing ${i} chars in ${diff}ms (${hash})`);
     }
   },
 
@@ -287,12 +290,11 @@ testSuite({
     if (!testCase) return;
     // Not a real test, just outputs some timing
     for (let i = 0; i < 50000; i += 10000) {
-      const str = makeString(i, 0xd000);  // avoid unpaired surrogates
+      const str = makeString(i, 0xd000); // avoid unpaired surrogates
       const start = Date.now();
       const hash = hash32.encodeText(str);
       const diff = Date.now() - start;
-      testCase.saveMessage(
-          `testBenchmarking_text: hashing ${i} chars in ${diff}ms (${hash})`);
+      testCase.saveMessage(`testBenchmarking_text: hashing ${i} chars in ${diff}ms (${hash})`);
     }
   },
 });

@@ -21,8 +21,6 @@ goog.provide('goog.structs.StringSet');
 goog.require('goog.asserts');
 goog.require('goog.iter');
 
-
-
 /**
  * Creates a set of strings.
  * @param {!Array<?>=} opt_elements Elements to add to the set. The non-string
@@ -30,8 +28,7 @@ goog.require('goog.iter');
  * @constructor
  * @final
  */
-goog.structs.StringSet = function(opt_elements) {
-  'use strict';
+goog.structs.StringSet = function (opt_elements) {
   /**
    * An object storing the escaped elements of the set in its keys.
    * @type {!Object}
@@ -53,7 +50,6 @@ goog.structs.StringSet = function(opt_elements) {
   }
 };
 
-
 /**
  * Empty object. Referring to it is faster than creating a new empty object in
  * `goog.structs.StringSet.encode_`.
@@ -61,7 +57,6 @@ goog.structs.StringSet = function(opt_elements) {
  * @private
  */
 goog.structs.StringSet.EMPTY_OBJECT_ = {};
-
 
 /**
  * The '__proto__' and the '__count__' keys aren't enumerable in Firefox, and
@@ -73,14 +68,10 @@ goog.structs.StringSet.EMPTY_OBJECT_ = {};
  *     be escaped.
  * @private
  */
-goog.structs.StringSet.encode_ = function(element) {
-  'use strict';
-  return element in goog.structs.StringSet.EMPTY_OBJECT_ ||
-          String(element).charCodeAt(0) == 32 ?
-      ' ' + element :
-      element;
-};
-
+goog.structs.StringSet.encode_ = (element) =>
+  element in goog.structs.StringSet.EMPTY_OBJECT_ || String(element).charCodeAt(0) == 32
+    ? ' ' + element
+    : element;
 
 /**
  * Inverse function of `goog.structs.StringSet.encode_`.
@@ -90,33 +81,25 @@ goog.structs.StringSet.encode_ = function(element) {
  * @return {string} The unescaped element.
  * @private
  */
-goog.structs.StringSet.decode_ = function(key) {
-  'use strict';
-  return key.charCodeAt(0) == 32 ? key.slice(1) : key;
-};
-
+goog.structs.StringSet.decode_ = (key) => (key.charCodeAt(0) == 32 ? key.slice(1) : key);
 
 /**
  * Adds a single element to the set.
  * @param {*} element The element to add. It will be converted to string.
  */
-goog.structs.StringSet.prototype.add = function(element) {
-  'use strict';
+goog.structs.StringSet.prototype.add = function (element) {
   this.elements_[goog.structs.StringSet.encode_(element)] = null;
 };
-
 
 /**
  * Adds a the elements of an array to this set.
  * @param {!Array<?>} arr The array to add the elements of.
  */
-goog.structs.StringSet.prototype.addArray = function(arr) {
-  'use strict';
+goog.structs.StringSet.prototype.addArray = function (arr) {
   for (var i = 0; i < arr.length; i++) {
     this.elements_[goog.structs.StringSet.encode_(arr[i])] = null;
   }
 };
-
 
 /**
  * Adds the elements which are in `set1` but not in `set2` to this
@@ -125,8 +108,7 @@ goog.structs.StringSet.prototype.addArray = function(arr) {
  * @param {!goog.structs.StringSet} set2 Second set.
  * @private
  */
-goog.structs.StringSet.prototype.addDifference_ = function(set1, set2) {
-  'use strict';
+goog.structs.StringSet.prototype.addDifference_ = function (set1, set2) {
   for (var key in set1.elements_) {
     if (!(key in set2.elements_)) {
       this.elements_[key] = null;
@@ -134,38 +116,31 @@ goog.structs.StringSet.prototype.addDifference_ = function(set1, set2) {
   }
 };
 
-
 /**
  * Adds a the elements of a set to this set.
  * @param {!goog.structs.StringSet} stringSet The set to add the elements of.
  */
-goog.structs.StringSet.prototype.addSet = function(stringSet) {
-  'use strict';
+goog.structs.StringSet.prototype.addSet = function (stringSet) {
   for (var key in stringSet.elements_) {
     this.elements_[key] = null;
   }
 };
 
-
 /**
  * Removes all elements of the set.
  */
-goog.structs.StringSet.prototype.clear = function() {
-  'use strict';
+goog.structs.StringSet.prototype.clear = function () {
   this.elements_ = {};
 };
-
 
 /**
  * @return {!goog.structs.StringSet} Clone of the set.
  */
-goog.structs.StringSet.prototype.clone = function() {
-  'use strict';
-  var ret = new goog.structs.StringSet;
+goog.structs.StringSet.prototype.clone = function () {
+  var ret = new goog.structs.StringSet();
   ret.addSet(this);
   return ret;
 };
-
 
 /**
  * Tells if the set contains the given element.
@@ -173,8 +148,7 @@ goog.structs.StringSet.prototype.clone = function() {
  * @return {boolean} Whether it is in the set.
  * @deprecated Use `has`, for alignment with ES6 Set.
  */
-goog.structs.StringSet.prototype.contains = function(element) {
-  'use strict';
+goog.structs.StringSet.prototype.contains = function (element) {
   return goog.structs.StringSet.encode_(element) in this.elements_;
 };
 
@@ -183,19 +157,16 @@ goog.structs.StringSet.prototype.contains = function(element) {
  * @param {*} element The element to check.
  * @return {boolean} Whether it is in the set.
  */
-goog.structs.StringSet.prototype.has = function(element) {
-  'use strict';
+goog.structs.StringSet.prototype.has = function (element) {
   return this.contains(element);
 };
-
 
 /**
  * Tells if the set contains all elements of the array.
  * @param {!Array<?>} arr The elements to check.
  * @return {boolean} Whether they are in the set.
  */
-goog.structs.StringSet.prototype.containsArray = function(arr) {
-  'use strict';
+goog.structs.StringSet.prototype.containsArray = function (arr) {
   for (var i = 0; i < arr.length; i++) {
     if (!(goog.structs.StringSet.encode_(arr[i]) in this.elements_)) {
       return false;
@@ -204,17 +175,14 @@ goog.structs.StringSet.prototype.containsArray = function(arr) {
   return true;
 };
 
-
 /**
  * Tells if this set has the same elements as the given set.
  * @param {!goog.structs.StringSet} stringSet The other set.
  * @return {boolean} Whether they have the same elements.
  */
-goog.structs.StringSet.prototype.equals = function(stringSet) {
-  'use strict';
+goog.structs.StringSet.prototype.equals = function (stringSet) {
   return this.isSubsetOf(stringSet) && stringSet.isSubsetOf(this);
 };
-
 
 /**
  * Calls a function for each element in the set.
@@ -224,13 +192,11 @@ goog.structs.StringSet.prototype.equals = function(stringSet) {
  * @param {Object=} opt_obj The object to be used as the value of 'this'
  *     within `f`.
  */
-goog.structs.StringSet.prototype.forEach = function(f, opt_obj) {
-  'use strict';
+goog.structs.StringSet.prototype.forEach = function (f, opt_obj) {
   for (var key in this.elements_) {
     f.call(opt_obj, goog.structs.StringSet.decode_(key), undefined, this);
   }
 };
-
 
 /**
  * Counts the number of elements in the set in linear time.
@@ -244,21 +210,19 @@ goog.structs.StringSet.prototype.forEach = function(f, opt_obj) {
  * <li>if getCount is not called, adding and removing elements have no overhead.
  * @return {number} The number of elements in the set.
  */
-goog.structs.StringSet.prototype.getCount = Object.keys ?
-     /**
-      * @this {!goog.structs.StringSet}
-      * @return {number}
-      */
-     function() {
-      'use strict';
+goog.structs.StringSet.prototype.getCount = Object.keys
+  ? /**
+     * @this {!goog.structs.StringSet}
+     * @return {number}
+     */
+    function () {
       return Object.keys(this.elements_).length;
-    } :
-     /**
-      * @this {!goog.structs.StringSet}
-      * @return {number}
-      */
-     function() {
-      'use strict';
+    }
+  : /**
+     * @this {!goog.structs.StringSet}
+     * @return {number}
+     */
+    function () {
       var count = 0;
       for (var key in this.elements_) {
         count++;
@@ -266,19 +230,16 @@ goog.structs.StringSet.prototype.getCount = Object.keys ?
       return count;
     };
 
-
 /**
  * Calculates the difference of two sets.
  * @param {!goog.structs.StringSet} stringSet The set to subtract from this set.
  * @return {!goog.structs.StringSet} `this` minus `stringSet`.
  */
-goog.structs.StringSet.prototype.getDifference = function(stringSet) {
-  'use strict';
-  var ret = new goog.structs.StringSet;
+goog.structs.StringSet.prototype.getDifference = function (stringSet) {
+  var ret = new goog.structs.StringSet();
   ret.addDifference_(this, stringSet);
   return ret;
 };
-
 
 /**
  * Calculates the intersection of this set with another set.
@@ -286,9 +247,8 @@ goog.structs.StringSet.prototype.getDifference = function(stringSet) {
  *     with.
  * @return {!goog.structs.StringSet} A new set with the common elements.
  */
-goog.structs.StringSet.prototype.getIntersection = function(stringSet) {
-  'use strict';
-  var ret = new goog.structs.StringSet;
+goog.structs.StringSet.prototype.getIntersection = function (stringSet) {
+  var ret = new goog.structs.StringSet();
   for (var key in this.elements_) {
     if (key in stringSet.elements_) {
       ret.elements_[key] = null;
@@ -297,55 +257,47 @@ goog.structs.StringSet.prototype.getIntersection = function(stringSet) {
   return ret;
 };
 
-
 /**
  * Calculates the symmetric difference of two sets.
  * @param {!goog.structs.StringSet} stringSet The other set.
  * @return {!goog.structs.StringSet} A new set with the elements in exactly one
  *     of `this` and `stringSet`.
  */
-goog.structs.StringSet.prototype.getSymmetricDifference = function(stringSet) {
-  'use strict';
-  var ret = new goog.structs.StringSet;
+goog.structs.StringSet.prototype.getSymmetricDifference = function (stringSet) {
+  var ret = new goog.structs.StringSet();
   ret.addDifference_(this, stringSet);
   ret.addDifference_(stringSet, this);
   return ret;
 };
-
 
 /**
  * Calculates the union of this set and another set.
  * @param {!goog.structs.StringSet} stringSet The set to take the union with.
  * @return {!goog.structs.StringSet} A new set with the union of elements.
  */
-goog.structs.StringSet.prototype.getUnion = function(stringSet) {
-  'use strict';
+goog.structs.StringSet.prototype.getUnion = function (stringSet) {
   var ret = this.clone();
   ret.addSet(stringSet);
   return ret;
 };
 
-
 /**
  * @return {!Array<string>} The elements of the set.
  */
-goog.structs.StringSet.prototype.values = Object.keys ?
-    /**
+goog.structs.StringSet.prototype.values = Object.keys
+  ? /**
      * @this {!goog.structs.StringSet}
      * @return {!Array<string>}
      */
-    function() {
-      'use strict';
+    function () {
       // Object.keys was introduced in JavaScript 1.8.5, Array#map in 1.6.
-      return Object.keys(this.elements_)
-          .map(goog.structs.StringSet.decode_, this);
-    } :
-     /**
-      * @this {!goog.structs.StringSet}
-      * @return {!Array<string>}
-      */
-     function() {
-      'use strict';
+      return Object.keys(this.elements_).map(goog.structs.StringSet.decode_, this);
+    }
+  : /**
+     * @this {!goog.structs.StringSet}
+     * @return {!Array<string>}
+     */
+    function () {
       var ret = [];
       for (var key in this.elements_) {
         ret.push(goog.structs.StringSet.decode_(key));
@@ -357,7 +309,7 @@ goog.structs.StringSet.prototype.values = Object.keys ?
  * @return {!Array<string>} The elements of the set.
  * @deprecated Use `values()`, for alignment with ES6 Set.
  */
-goog.structs.StringSet.prototype.getValues = function() {
+goog.structs.StringSet.prototype.getValues = function () {
   return this.values();
 };
 
@@ -366,8 +318,7 @@ goog.structs.StringSet.prototype.getValues = function() {
  * @param {!goog.structs.StringSet} stringSet The other set.
  * @return {boolean} True iff they don't have common elements.
  */
-goog.structs.StringSet.prototype.isDisjoint = function(stringSet) {
-  'use strict';
+goog.structs.StringSet.prototype.isDisjoint = function (stringSet) {
   for (var key in this.elements_) {
     if (key in stringSet.elements_) {
       return false;
@@ -376,26 +327,22 @@ goog.structs.StringSet.prototype.isDisjoint = function(stringSet) {
   return true;
 };
 
-
 /**
  * @return {boolean} Whether the set is empty.
  */
-goog.structs.StringSet.prototype.isEmpty = function() {
-  'use strict';
+goog.structs.StringSet.prototype.isEmpty = function () {
   for (var key in this.elements_) {
     return false;
   }
   return true;
 };
 
-
 /**
  * Tells if this set is the subset of the given set.
  * @param {!goog.structs.StringSet} stringSet The other set.
  * @return {boolean} Whether this set if the subset of that.
  */
-goog.structs.StringSet.prototype.isSubsetOf = function(stringSet) {
-  'use strict';
+goog.structs.StringSet.prototype.isSubsetOf = function (stringSet) {
   for (var key in this.elements_) {
     if (!(key in stringSet.elements_)) {
       return false;
@@ -404,25 +351,21 @@ goog.structs.StringSet.prototype.isSubsetOf = function(stringSet) {
   return true;
 };
 
-
 /**
  * Tells if this set is the superset of the given set.
  * @param {!goog.structs.StringSet} stringSet The other set.
  * @return {boolean} Whether this set if the superset of that.
  */
-goog.structs.StringSet.prototype.isSupersetOf = function(stringSet) {
-  'use strict';
+goog.structs.StringSet.prototype.isSupersetOf = function (stringSet) {
   return stringSet.isSubsetOf(this);
 };
-
 
 /**
  * Removes a single element from the set.
  * @param {*} element The element to remove.
  * @return {boolean} Whether the element was in the set.
  */
-goog.structs.StringSet.prototype.delete = function(element) {
-  'use strict';
+goog.structs.StringSet.prototype.delete = function (element) {
   var key = goog.structs.StringSet.encode_(element);
   if (key in this.elements_) {
     delete this.elements_[key];
@@ -437,34 +380,29 @@ goog.structs.StringSet.prototype.delete = function(element) {
  * @return {boolean} Whether the element was in the set.
  * @deprecated Use `delete`, for alignment with ES6 Set.
  */
-goog.structs.StringSet.prototype.remove = function(element) {
+goog.structs.StringSet.prototype.remove = function (element) {
   return this.delete(element);
 };
-
 
 /**
  * Removes all elements of the given array from this set.
  * @param {!Array<?>} arr The elements to remove.
  */
-goog.structs.StringSet.prototype.removeArray = function(arr) {
-  'use strict';
+goog.structs.StringSet.prototype.removeArray = function (arr) {
   for (var i = 0; i < arr.length; i++) {
     delete this.elements_[goog.structs.StringSet.encode_(arr[i])];
   }
 };
 
-
 /**
  * Removes all elements of the given set from this set.
  * @param {!goog.structs.StringSet} stringSet The set of elements to remove.
  */
-goog.structs.StringSet.prototype.removeSet = function(stringSet) {
-  'use strict';
+goog.structs.StringSet.prototype.removeSet = function (stringSet) {
   for (var key in stringSet.elements_) {
     delete this.elements_[key];
   }
 };
-
 
 /**
  * Returns an iterator that iterates over the elements in the set.
@@ -473,7 +411,6 @@ goog.structs.StringSet.prototype.removeSet = function(stringSet) {
  * @param {boolean=} opt_keys Ignored for sets.
  * @return {!goog.iter.Iterator} An iterator over the elements in the set.
  */
-goog.structs.StringSet.prototype.__iterator__ = function(opt_keys) {
-  'use strict';
+goog.structs.StringSet.prototype.__iterator__ = function (opt_keys) {
   return goog.iter.toIterator(this.getValues());
 };

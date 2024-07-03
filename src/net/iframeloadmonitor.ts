@@ -15,8 +15,6 @@ goog.require('goog.events');
 goog.require('goog.events.EventTarget');
 goog.require('goog.events.EventType');
 
-
-
 /**
  * The correct way to determine whether a same-domain iframe has completed
  * loading is different in IE and Firefox.  This class abstracts above these
@@ -33,8 +31,7 @@ goog.require('goog.events.EventType');
  * @constructor
  * @final
  */
-goog.net.IframeLoadMonitor = function(iframe, opt_hasContent) {
-  'use strict';
+goog.net.IframeLoadMonitor = function (iframe, opt_hasContent) {
   goog.net.IframeLoadMonitor.base(this, 'constructor');
 
   /**
@@ -61,17 +58,22 @@ goog.net.IframeLoadMonitor = function(iframe, opt_hasContent) {
   if (!this.isLoaded_) {
     const loadEvtType = goog.events.EventType.LOAD;
     this.onloadListenerKey_ = goog.events.listen(
-        this.iframe_, loadEvtType, this.handleLoad_, false, this);
+      this.iframe_,
+      loadEvtType,
+      this.handleLoad_,
+      false,
+      this
+    );
 
     // Sometimes we still don't get the event callback, so we'll poll just to
     // be safe.
     this.intervalId_ = window.setInterval(
-        goog.bind(this.handleLoad_, this),
-        goog.net.IframeLoadMonitor.POLL_INTERVAL_MS_);
+      goog.bind(this.handleLoad_, this),
+      goog.net.IframeLoadMonitor.POLL_INTERVAL_MS_
+    );
   }
 };
 goog.inherits(goog.net.IframeLoadMonitor, goog.events.EventTarget);
-
 
 /**
  * Event type dispatched by a goog.net.IframeLoadMonitor when it internal iframe
@@ -81,14 +83,12 @@ goog.inherits(goog.net.IframeLoadMonitor, goog.events.EventTarget);
  */
 goog.net.IframeLoadMonitor.LOAD_EVENT = 'ifload';
 
-
 /**
  * Poll interval for polling iframe load states in milliseconds.
  * @type {number}
  * @private
  */
 goog.net.IframeLoadMonitor.POLL_INTERVAL_MS_ = 100;
-
 
 /**
  * Key for iframe load listener, or null if not currently listening on the
@@ -98,50 +98,41 @@ goog.net.IframeLoadMonitor.POLL_INTERVAL_MS_ = 100;
  */
 goog.net.IframeLoadMonitor.prototype.onloadListenerKey_ = null;
 
-
 /**
  * Returns whether or not the iframe is loaded.
  * @return {boolean} whether or not the iframe is loaded.
  */
-goog.net.IframeLoadMonitor.prototype.isLoaded = function() {
-  'use strict';
+goog.net.IframeLoadMonitor.prototype.isLoaded = function () {
   return this.isLoaded_;
 };
-
 
 /**
  * Stops the poll timer if this IframeLoadMonitor is currently polling.
  * @private
  */
-goog.net.IframeLoadMonitor.prototype.maybeStopTimer_ = function() {
-  'use strict';
+goog.net.IframeLoadMonitor.prototype.maybeStopTimer_ = function () {
   if (this.intervalId_) {
     window.clearInterval(this.intervalId_);
     this.intervalId_ = null;
   }
 };
 
-
 /**
  * Returns the iframe whose load state this IframeLoader monitors.
  * @return {HTMLIFrameElement} the iframe whose load state this IframeLoader
  *     monitors.
  */
-goog.net.IframeLoadMonitor.prototype.getIframe = function() {
-  'use strict';
+goog.net.IframeLoadMonitor.prototype.getIframe = function () {
   return this.iframe_;
 };
 
-
 /** @override */
-goog.net.IframeLoadMonitor.prototype.disposeInternal = function() {
-  'use strict';
+goog.net.IframeLoadMonitor.prototype.disposeInternal = function () {
   delete this.iframe_;
   this.maybeStopTimer_();
   goog.events.unlistenByKey(this.onloadListenerKey_);
   goog.net.IframeLoadMonitor.superClass_.disposeInternal.call(this);
 };
-
 
 /**
  * Returns whether or not the iframe is loaded.  Determines this by inspecting
@@ -149,8 +140,7 @@ goog.net.IframeLoadMonitor.prototype.disposeInternal = function() {
  * @return {boolean} whether or not the iframe is loaded.
  * @private
  */
-goog.net.IframeLoadMonitor.prototype.isLoadedHelper_ = function() {
-  'use strict';
+goog.net.IframeLoadMonitor.prototype.isLoadedHelper_ = function () {
   let isLoaded = false;
 
   try {
@@ -172,15 +162,13 @@ goog.net.IframeLoadMonitor.prototype.isLoadedHelper_ = function() {
   return isLoaded;
 };
 
-
 /**
  * Handles an event indicating that the loading status of the iframe has
  * changed.  In Firefox this is a goog.events.EventType.LOAD event, in IE
  * this is a goog.events.EventType.READYSTATECHANGED
  * @private
  */
-goog.net.IframeLoadMonitor.prototype.handleLoad_ = function() {
-  'use strict';
+goog.net.IframeLoadMonitor.prototype.handleLoad_ = function () {
   // Only do the handler if the iframe is loaded.
   if (this.isLoadedHelper_()) {
     this.maybeStopTimer_();

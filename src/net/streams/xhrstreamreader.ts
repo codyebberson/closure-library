@@ -34,7 +34,7 @@ const XhrIo = goog.require('goog.net.XhrIo');
 const XmlHttp = goog.require('goog.net.XmlHttp');
 const googLog = goog.require('goog.log');
 const googUserAgent = goog.require('goog.userAgent');
-const {getStreamParser} = goog.require('goog.net.streams.streamParsers');
+const { getStreamParser } = goog.require('goog.net.streams.streamParsers');
 
 /**
  * The XhrStreamReader class.
@@ -112,7 +112,10 @@ class XhrStreamReader {
 
     // register the XHR event handler
     this.eventHandler_.listen(
-        this.xhr_, EventType.READY_STATE_CHANGE, this.readyStateChangeHandler_);
+      this.xhr_,
+      EventType.READY_STATE_CHANGE,
+      this.readyStateChangeHandler_
+    );
   }
 
   /**
@@ -128,7 +131,6 @@ class XhrStreamReader {
 
     return true;
   }
-
 
   /**
    * Called from readyStateChangeHandler_.
@@ -152,20 +154,18 @@ class XhrStreamReader {
       }
     }
 
-
     // we get partial results in browsers that support ready state interactive.
     // We also make sure that getResponseText is not null in interactive mode
     // before we continue.
-    if (readyState < XmlHttp.ReadyState.INTERACTIVE ||
-        readyState == XmlHttp.ReadyState.INTERACTIVE && !responseText &&
-            responseChunks.length == 0) {
+    if (
+      readyState < XmlHttp.ReadyState.INTERACTIVE ||
+      (readyState == XmlHttp.ReadyState.INTERACTIVE && !responseText && responseChunks.length == 0)
+    ) {
       return;
     }
 
     // TODO(user): white-list other 2xx responses with application payload
-    const successful =
-        (statusCode == HttpStatus.OK ||
-         statusCode == HttpStatus.PARTIAL_CONTENT);
+    const successful = statusCode == HttpStatus.OK || statusCode == HttpStatus.PARTIAL_CONTENT;
 
     if (readyState == XmlHttp.ReadyState.COMPLETE) {
       if (errorCode == ErrorCode.TIMEOUT) {
@@ -179,9 +179,9 @@ class XhrStreamReader {
 
     if (successful && !responseText && responseChunks.length == 0) {
       googLog.warning(
-          this.logger_,
-          'No response text for xhr ' + this.xhr_.getLastUri() + ' status ' +
-              statusCode);
+        this.logger_,
+        'No response text for xhr ' + this.xhr_.getLastUri() + ' status ' + statusCode
+      );
     }
 
     if (!this.parser_) {
@@ -204,8 +204,7 @@ class XhrStreamReader {
         if (this.parser_.acceptsBinaryInput()) {
           // PbStreamParser.
           for (let i = 0; i < responseLength; i++) {
-            const newMessages =
-                this.parser_.parse(Array.from(responseChunks[i]));
+            const newMessages = this.parser_.parse(Array.from(responseChunks[i]));
             if (newMessages) {
               messages = messages.concat(newMessages);
             }
@@ -220,10 +219,9 @@ class XhrStreamReader {
             this.textDecoder_ = new TextDecoder();
           }
           for (let i = 0; i < responseLength; i++) {
-            const isLastChunk = readyState == XmlHttp.ReadyState.COMPLETE &&
-                i == responseLength - 1;
-            message += this.textDecoder_.decode(
-                responseChunks[i], {stream: isLastChunk});
+            const isLastChunk =
+              readyState == XmlHttp.ReadyState.COMPLETE && i == responseLength - 1;
+            message += this.textDecoder_.decode(responseChunks[i], { stream: isLastChunk });
           }
           messages = this.parser_.parse(message);
         }
@@ -249,8 +247,7 @@ class XhrStreamReader {
           }
         }
       } catch (ex) {
-        googLog.error(
-            this.logger_, 'Invalid response ' + ex + '\n' + responseText);
+        googLog.error(this.logger_, 'Invalid response ' + ex + '\n' + responseText);
         this.updateStatus_(XhrStreamReaderStatus.BAD_DATA);
         this.clear_();
         return;
@@ -293,7 +290,6 @@ class XhrStreamReader {
       }
     }
   }
-
 
   /**
    * Clears after the XHR terminal state is reached.
@@ -356,17 +352,13 @@ class XhrStreamReader {
         googLog.warning(this.logger_, 'Called back with an unexpected xhr.');
       }
     } catch (ex) {
-      googLog.error(
-          this.logger_,
-          'readyStateChangeHandler_ thrown exception' +
-              ' ' + ex);
+      googLog.error(this.logger_, 'readyStateChangeHandler_ thrown exception' + ' ' + ex);
       // no rethrow
       this.updateStatus_(XhrStreamReaderStatus.HANDLER_EXCEPTION);
       this.clear_();
     }
   }
 }
-
 
 /**
  * Enum type for current stream status.
@@ -421,5 +413,5 @@ const XhrStreamReaderStatus = {
 
 exports = {
   XhrStreamReader,
-  XhrStreamReaderStatus
+  XhrStreamReaderStatus,
 };

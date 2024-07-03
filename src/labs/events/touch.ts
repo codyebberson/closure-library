@@ -8,7 +8,6 @@
  * @fileoverview Utilities to abstract mouse and touch events.
  */
 
-
 goog.provide('goog.labs.events.touch');
 goog.provide('goog.labs.events.touch.TouchData');
 
@@ -16,7 +15,6 @@ goog.require('goog.array');
 goog.require('goog.asserts');
 goog.require('goog.events.EventType');
 goog.require('goog.string');
-
 
 /**
  * Description the geometry and target of an event.
@@ -31,38 +29,40 @@ goog.require('goog.string');
  */
 goog.labs.events.touch.TouchData;
 
-
 /**
  * Takes a mouse or touch event and returns the relevant geometry and target
  * data.
  * @param {!Event} e A mouse or touch event.
  * @return {!goog.labs.events.touch.TouchData}
  */
-goog.labs.events.touch.getTouchData = function(e) {
-  'use strict';
+goog.labs.events.touch.getTouchData = (e) => {
   let source = e;
   goog.asserts.assert(
-      goog.string.startsWith(e.type, 'touch') ||
-          goog.string.startsWith(e.type, 'mouse'),
-      'Event must be mouse or touch event.');
+    goog.string.startsWith(e.type, 'touch') || goog.string.startsWith(e.type, 'mouse'),
+    'Event must be mouse or touch event.'
+  );
 
   if (goog.string.startsWith(e.type, 'touch')) {
     goog.asserts.assert(
-        goog.array.contains(
-            [
-              goog.events.EventType.TOUCHCANCEL, goog.events.EventType.TOUCHEND,
-              goog.events.EventType.TOUCHMOVE, goog.events.EventType.TOUCHSTART
-            ],
-            e.type),
-        'Touch event not of valid type.');
+      goog.array.contains(
+        [
+          goog.events.EventType.TOUCHCANCEL,
+          goog.events.EventType.TOUCHEND,
+          goog.events.EventType.TOUCHMOVE,
+          goog.events.EventType.TOUCHSTART,
+        ],
+        e.type
+      ),
+      'Touch event not of valid type.'
+    );
 
     // If the event is end or cancel, take the first changed touch,
     // otherwise the first target touch.
     /** @suppress {strictMissingProperties} Added to tighten compiler checks */
-    source = (e.type == goog.events.EventType.TOUCHEND ||
-              e.type == goog.events.EventType.TOUCHCANCEL) ?
-        e.changedTouches[0] :
-        e.targetTouches[0];
+    source =
+      e.type == goog.events.EventType.TOUCHEND || e.type == goog.events.EventType.TOUCHCANCEL
+        ? e.changedTouches[0]
+        : e.targetTouches[0];
   }
 
   return {
@@ -70,6 +70,6 @@ goog.labs.events.touch.getTouchData = function(e) {
     clientY: source['clientY'],
     screenX: source['screenX'],
     screenY: source['screenY'],
-    target: source['target']
+    target: source['target'],
   };
 };

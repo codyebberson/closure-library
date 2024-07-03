@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.fx.easingTest');
-goog.setTestOnly();
 
 const easing = goog.require('goog.fx.easing');
 const testSuite = goog.require('goog.testing.testSuite');

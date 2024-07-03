@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dom.elementTest');
-goog.setTestOnly();
 
 const DomHelper = goog.require('goog.dom.DomHelper');
 const TagName = goog.require('goog.dom.TagName');

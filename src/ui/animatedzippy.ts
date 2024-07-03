@@ -23,8 +23,6 @@ goog.require('goog.ui.Zippy');
 goog.require('goog.ui.ZippyEvent');
 goog.requireType('goog.events.Event');
 
-
-
 /**
  * Zippy widget. Expandable/collapsible container, clicking the header toggles
  * the visibility of the content.
@@ -40,14 +38,11 @@ goog.requireType('goog.events.Event');
  * @constructor
  * @extends {goog.ui.Zippy}
  */
-goog.ui.AnimatedZippy = function(
-    header, content, opt_expanded, opt_domHelper, opt_role) {
-  'use strict';
+goog.ui.AnimatedZippy = function (header, content, opt_expanded, opt_domHelper, opt_role) {
   var domHelper = opt_domHelper || goog.dom.getDomHelper();
 
   // Create wrapper element and move content into it.
-  var elWrapper =
-      domHelper.createDom(goog.dom.TagName.DIV, {'style': 'overflow:hidden'});
+  var elWrapper = domHelper.createDom(goog.dom.TagName.DIV, { style: 'overflow:hidden' });
   var elContent = domHelper.getElement(content);
   elContent.parentNode.replaceChild(elWrapper, elContent);
   elWrapper.appendChild(elContent);
@@ -67,8 +62,7 @@ goog.ui.AnimatedZippy = function(
   this.anim_ = null;
 
   // Call constructor of super class.
-  goog.ui.Zippy.call(
-      this, header, elContent, opt_expanded, undefined, domHelper, opt_role);
+  goog.ui.Zippy.call(this, header, elContent, opt_expanded, undefined, domHelper, opt_role);
 
   // Set initial state.
   // NOTE: Set the class names as well otherwise animated zippys
@@ -78,7 +72,6 @@ goog.ui.AnimatedZippy = function(
   this.updateHeaderClassName(expanded);
 };
 goog.inherits(goog.ui.AnimatedZippy, goog.ui.Zippy);
-
 
 /**
  * Constants for event names.
@@ -96,9 +89,8 @@ goog.ui.AnimatedZippy.Events = {
    * The end of the animation when the zippy state toggles.
    * @const {string}
    */
-  TOGGLE_ANIMATION_END: goog.events.getUniqueId('toggleanimationend')
+  TOGGLE_ANIMATION_END: goog.events.getUniqueId('toggleanimationend'),
 };
-
 
 /**
  * Duration of expand/collapse animation, in milliseconds.
@@ -106,23 +98,19 @@ goog.ui.AnimatedZippy.Events = {
  */
 goog.ui.AnimatedZippy.prototype.animationDuration = 500;
 
-
 /**
  * Acceleration function for expand/collapse animation.
  * @type {!Function}
  */
 goog.ui.AnimatedZippy.prototype.animationAcceleration = goog.fx.easing.easeOut;
 
-
 /**
  * @return {boolean} Whether the zippy is in the process of being expanded or
  *     collapsed.
  */
-goog.ui.AnimatedZippy.prototype.isBusy = function() {
-  'use strict';
+goog.ui.AnimatedZippy.prototype.isBusy = function () {
   return this.anim_ != null;
 };
-
 
 /**
  * Sets expanded state.
@@ -130,8 +118,7 @@ goog.ui.AnimatedZippy.prototype.isBusy = function() {
  * @param {boolean} expanded Expanded/visibility state.
  * @override
  */
-goog.ui.AnimatedZippy.prototype.setExpanded = function(expanded) {
-  'use strict';
+goog.ui.AnimatedZippy.prototype.setExpanded = function (expanded) {
   if (this.isExpanded() == expanded && !this.anim_) {
     return;
   }
@@ -151,7 +138,7 @@ goog.ui.AnimatedZippy.prototype.setExpanded = function(expanded) {
     goog.events.removeAll(this.anim_);
     this.anim_.stop(false);
 
-    var marginTop = parseInt(this.getContentElement().style.marginTop, 10);
+    var marginTop = Number.parseInt(this.getContentElement().style.marginTop, 10);
     startH = h - Math.abs(marginTop);
   } else {
     startH = expanded ? 0 : h;
@@ -162,25 +149,32 @@ goog.ui.AnimatedZippy.prototype.setExpanded = function(expanded) {
 
   // Set up expand/collapse animation.
   this.anim_ = new goog.fx.Animation(
-      [0, startH], [0, expanded ? h : 0], this.animationDuration,
-      this.animationAcceleration);
+    [0, startH],
+    [0, expanded ? h : 0],
+    this.animationDuration,
+    this.animationAcceleration
+  );
 
   var events = [
-    goog.fx.Transition.EventType.BEGIN, goog.fx.Animation.EventType.ANIMATE,
-    goog.fx.Transition.EventType.END
+    goog.fx.Transition.EventType.BEGIN,
+    goog.fx.Animation.EventType.ANIMATE,
+    goog.fx.Transition.EventType.END,
   ];
   goog.events.listen(this.anim_, events, this.onAnimate_, false, this);
   goog.events.listen(
-      this.anim_, goog.fx.Transition.EventType.BEGIN,
-      goog.bind(this.onAnimationBegin_, this, expanded));
+    this.anim_,
+    goog.fx.Transition.EventType.BEGIN,
+    goog.bind(this.onAnimationBegin_, this, expanded)
+  );
   goog.events.listen(
-      this.anim_, goog.fx.Transition.EventType.END,
-      goog.bind(this.onAnimationCompleted_, this, expanded));
+    this.anim_,
+    goog.fx.Transition.EventType.END,
+    goog.bind(this.onAnimationCompleted_, this, expanded)
+  );
 
   // Start animation.
   this.anim_.play(false);
 };
-
 
 /**
  * Called during animation
@@ -188,14 +182,12 @@ goog.ui.AnimatedZippy.prototype.setExpanded = function(expanded) {
  * @param {goog.events.Event} e The event.
  * @private
  */
-goog.ui.AnimatedZippy.prototype.onAnimate_ = function(e) {
-  'use strict';
+goog.ui.AnimatedZippy.prototype.onAnimate_ = function (e) {
   var contentElement = this.getContentElement();
   var h = contentElement.offsetHeight;
   /** @suppress {strictMissingProperties} Added to tighten compiler checks */
-  contentElement.style.marginTop = (e.y - h) + 'px';
+  contentElement.style.marginTop = e.y - h + 'px';
 };
-
 
 /**
  * Called once the expand/collapse animation has started.
@@ -203,12 +195,11 @@ goog.ui.AnimatedZippy.prototype.onAnimate_ = function(e) {
  * @param {boolean} expanding Expanded/visibility state.
  * @private
  */
-goog.ui.AnimatedZippy.prototype.onAnimationBegin_ = function(expanding) {
-  'use strict';
-  this.dispatchEvent(new goog.ui.ZippyEvent(
-      goog.ui.AnimatedZippy.Events.TOGGLE_ANIMATION_BEGIN, this, expanding));
+goog.ui.AnimatedZippy.prototype.onAnimationBegin_ = function (expanding) {
+  this.dispatchEvent(
+    new goog.ui.ZippyEvent(goog.ui.AnimatedZippy.Events.TOGGLE_ANIMATION_BEGIN, this, expanding)
+  );
 };
-
 
 /**
  * Called once the expand/collapse animation has completed.
@@ -216,8 +207,7 @@ goog.ui.AnimatedZippy.prototype.onAnimationBegin_ = function(expanding) {
  * @param {boolean} expanded Expanded/visibility state.
  * @private
  */
-goog.ui.AnimatedZippy.prototype.onAnimationCompleted_ = function(expanded) {
-  'use strict';
+goog.ui.AnimatedZippy.prototype.onAnimationCompleted_ = function (expanded) {
   // Fix wrong end position if the content has changed during the animation.
   if (expanded) {
     this.getContentElement().style.marginTop = '0';
@@ -232,8 +222,8 @@ goog.ui.AnimatedZippy.prototype.onAnimationCompleted_ = function(expanded) {
   }
 
   // Fire toggle event.
+  this.dispatchEvent(new goog.ui.ZippyEvent(goog.ui.Zippy.Events.TOGGLE, this, expanded));
   this.dispatchEvent(
-      new goog.ui.ZippyEvent(goog.ui.Zippy.Events.TOGGLE, this, expanded));
-  this.dispatchEvent(new goog.ui.ZippyEvent(
-      goog.ui.AnimatedZippy.Events.TOGGLE_ANIMATION_END, this, expanded));
+    new goog.ui.ZippyEvent(goog.ui.AnimatedZippy.Events.TOGGLE_ANIMATION_END, this, expanded)
+  );
 };

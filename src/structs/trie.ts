@@ -13,13 +13,10 @@
  *     http://en.wikipedia.org/wiki/Trie
  */
 
-
 goog.provide('goog.structs.Trie');
 
 goog.require('goog.object');
 goog.require('goog.structs');
-
-
 
 /**
  * Class for a Trie datastructure.  Trie data structures are made out of trees
@@ -30,8 +27,7 @@ goog.require('goog.structs');
  * @constructor
  * @template VALUE
  */
-goog.structs.Trie = function(opt_trie) {
-  'use strict';
+goog.structs.Trie = function (opt_trie) {
   /**
    * This trie's value.  For the base trie, this will be the value of the
    * empty key, if defined.
@@ -50,18 +46,15 @@ goog.structs.Trie = function(opt_trie) {
   }
 };
 
-
 /**
  * Sets the given key/value pair in the trie.  O(L), where L is the length
  * of the key.
  * @param {string} key The key.
  * @param {VALUE} value The value.
  */
-goog.structs.Trie.prototype.set = function(key, value) {
-  'use strict';
+goog.structs.Trie.prototype.set = function (key, value) {
   this.setOrAdd_(key, value, false);
 };
-
 
 /**
  * Adds the given key/value pair in the trie.  Throw an exception if the key
@@ -69,11 +62,9 @@ goog.structs.Trie.prototype.set = function(key, value) {
  * @param {string} key The key.
  * @param {VALUE} value The value.
  */
-goog.structs.Trie.prototype.add = function(key, value) {
-  'use strict';
+goog.structs.Trie.prototype.add = function (key, value) {
   this.setOrAdd_(key, value, true);
 };
-
 
 /**
  * Helper function for set and add.  Adds the given key/value pair to
@@ -85,11 +76,9 @@ goog.structs.Trie.prototype.add = function(key, value) {
  * @param {boolean=} opt_add Throw exception if key is already in the trie.
  * @private
  */
-goog.structs.Trie.prototype.setOrAdd_ = function(key, value, opt_add) {
-  'use strict';
+goog.structs.Trie.prototype.setOrAdd_ = function (key, value, opt_add) {
   var node = this;
-  for (var characterPosition = 0; characterPosition < key.length;
-       characterPosition++) {
+  for (var characterPosition = 0; characterPosition < key.length; characterPosition++) {
     var currentCharacter = key.charAt(characterPosition);
     if (!node.childNodes_[currentCharacter]) {
       node.childNodes_[currentCharacter] = new goog.structs.Trie();
@@ -103,15 +92,13 @@ goog.structs.Trie.prototype.setOrAdd_ = function(key, value, opt_add) {
   }
 };
 
-
 /**
  * Adds multiple key/value pairs from another goog.structs.Trie or Object.
  * O(N) where N is the number of nodes in the trie.
  * @param {!Object<string, VALUE>|!goog.structs.Trie<VALUE>} trie Object
  *     containing the data to add.
  */
-goog.structs.Trie.prototype.setAll = function(trie) {
-  'use strict';
+goog.structs.Trie.prototype.setAll = function (trie) {
   var keys = goog.structs.getKeys(trie);
   var values = goog.structs.getValues(trie);
 
@@ -120,7 +107,6 @@ goog.structs.Trie.prototype.setAll = function(trie) {
   }
 };
 
-
 /**
  * Traverse along the given path, returns the child node at ending.
  * Returns undefined if node for the path doesn't exist.
@@ -128,11 +114,9 @@ goog.structs.Trie.prototype.setAll = function(trie) {
  * @return {!goog.structs.Trie<VALUE>|undefined}
  * @private
  */
-goog.structs.Trie.prototype.getChildNode_ = function(path) {
-  'use strict';
+goog.structs.Trie.prototype.getChildNode_ = function (path) {
   var node = this;
-  for (var characterPosition = 0; characterPosition < path.length;
-       characterPosition++) {
+  for (var characterPosition = 0; characterPosition < path.length; characterPosition++) {
     var currentCharacter = path.charAt(characterPosition);
     node = node.childNodes_[currentCharacter];
     if (!node) {
@@ -142,7 +126,6 @@ goog.structs.Trie.prototype.getChildNode_ = function(path) {
   return node;
 };
 
-
 /**
  * Retrieves a value from the trie given a key.  O(L), where L is the length of
  * the key.
@@ -150,12 +133,10 @@ goog.structs.Trie.prototype.getChildNode_ = function(path) {
  * @return {VALUE|undefined} The value of the key in the trie, or undefined if
  *     the trie does not contain this key.
  */
-goog.structs.Trie.prototype.get = function(key) {
-  'use strict';
+goog.structs.Trie.prototype.get = function (key) {
   var node = this.getChildNode_(key);
   return node ? node.value_ : undefined;
 };
-
 
 /**
  * Retrieves all values from the trie that correspond to prefixes of the given
@@ -171,9 +152,7 @@ goog.structs.Trie.prototype.get = function(key) {
  *     entries with a single character will clobber an empty-string entry with
  *     key '0'.
  */
-goog.structs.Trie.prototype.getKeyAndPrefixes = function(
-    key, opt_keyStartIndex) {
-  'use strict';
+goog.structs.Trie.prototype.getKeyAndPrefixes = function (key, opt_keyStartIndex) {
   /** @type {!goog.structs.Trie<VALUE>} */
   var node = this;
   var matches = {};
@@ -197,19 +176,16 @@ goog.structs.Trie.prototype.getKeyAndPrefixes = function(
   return matches;
 };
 
-
 /**
  * Gets the values of the trie.  Not returned in any reliable order.  O(N) where
  * N is the number of nodes in the trie.  Calls getValuesInternal_.
  * @return {!Array<VALUE>} The values in the trie.
  */
-goog.structs.Trie.prototype.getValues = function() {
-  'use strict';
+goog.structs.Trie.prototype.getValues = function () {
   var allValues = [];
   this.getValuesInternal_(allValues);
   return allValues;
 };
-
 
 /**
  * Gets the values of the trie.  Not returned in any reliable order.  O(N) where
@@ -217,8 +193,7 @@ goog.structs.Trie.prototype.getValues = function() {
  * @param {!Array<VALUE>} allValues Array to place values into.
  * @private
  */
-goog.structs.Trie.prototype.getValuesInternal_ = function(allValues) {
-  'use strict';
+goog.structs.Trie.prototype.getValuesInternal_ = function (allValues) {
   if (this.value_ !== undefined) {
     allValues.push(this.value_);
   }
@@ -227,22 +202,19 @@ goog.structs.Trie.prototype.getValuesInternal_ = function(allValues) {
   }
 };
 
-
 /**
  * Gets the keys of the trie.  Not returned in any reliable order.  O(N) where
  * N is the number of nodes in the trie (or prefix subtree).
  * @param {string=} opt_prefix Find only keys with this optional prefix.
  * @return {!Array<string>} The keys in the trie.
  */
-goog.structs.Trie.prototype.getKeys = function(opt_prefix) {
-  'use strict';
+goog.structs.Trie.prototype.getKeys = function (opt_prefix) {
   var allKeys = [];
   if (opt_prefix) {
     // Traverse to the given prefix, then call getKeysInternal_ to dump the
     // keys below that point.
     var node = this;
-    for (var characterPosition = 0; characterPosition < opt_prefix.length;
-         characterPosition++) {
+    for (var characterPosition = 0; characterPosition < opt_prefix.length; characterPosition++) {
       var currentCharacter = opt_prefix.charAt(characterPosition);
       if (!node.childNodes_[currentCharacter]) {
         return [];
@@ -256,7 +228,6 @@ goog.structs.Trie.prototype.getKeys = function(opt_prefix) {
   return allKeys;
 };
 
-
 /**
  * Private method to get keys from the trie.  Builds the keys as it goes.
  * @param {string} keySoFar The partial key (prefix) traversed so far.
@@ -264,8 +235,7 @@ goog.structs.Trie.prototype.getKeys = function(opt_prefix) {
  *     far.
  * @private
  */
-goog.structs.Trie.prototype.getKeysInternal_ = function(keySoFar, allKeys) {
-  'use strict';
+goog.structs.Trie.prototype.getKeysInternal_ = function (keySoFar, allKeys) {
   if (this.value_ !== undefined) {
     allKeys.push(keySoFar);
   }
@@ -274,18 +244,15 @@ goog.structs.Trie.prototype.getKeysInternal_ = function(keySoFar, allKeys) {
   }
 };
 
-
 /**
  * Checks to see if a certain key is in the trie.  O(L), where L is the length
  * of the key.
  * @param {string} key A key that may be in the trie.
  * @return {boolean} Whether the trie contains key.
  */
-goog.structs.Trie.prototype.containsKey = function(key) {
-  'use strict';
+goog.structs.Trie.prototype.containsKey = function (key) {
   return this.get(key) !== undefined;
 };
-
 
 /**
  * Checks to see if a certain prefix is in the trie. O(L), where L is the length
@@ -293,8 +260,7 @@ goog.structs.Trie.prototype.containsKey = function(key) {
  * @param {string} prefix A prefix that may be in the trie.
  * @return {boolean} Whether any key of the trie has the prefix.
  */
-goog.structs.Trie.prototype.containsPrefix = function(prefix) {
-  'use strict';
+goog.structs.Trie.prototype.containsPrefix = function (prefix) {
   // Empty string is any key's prefix.
   if (prefix.length == 0) {
     return !this.isEmpty();
@@ -302,15 +268,13 @@ goog.structs.Trie.prototype.containsPrefix = function(prefix) {
   return !!this.getChildNode_(prefix);
 };
 
-
 /**
  * Checks to see if a certain value is in the trie.  Worst case is O(N) where
  * N is the number of nodes in the trie.
  * @param {VALUE} value A value that may be in the trie.
  * @return {boolean} Whether the trie contains the value.
  */
-goog.structs.Trie.prototype.containsValue = function(value) {
-  'use strict';
+goog.structs.Trie.prototype.containsValue = function (value) {
   if (this.value_ === value) {
     return true;
   }
@@ -322,16 +286,13 @@ goog.structs.Trie.prototype.containsValue = function(value) {
   return false;
 };
 
-
 /**
  * Completely empties a trie of all keys and values.  ~O(1)
  */
-goog.structs.Trie.prototype.clear = function() {
-  'use strict';
+goog.structs.Trie.prototype.clear = function () {
   this.childNodes_ = {};
   this.value_ = undefined;
 };
-
 
 /**
  * Removes a key from the trie or throws an exception if the key is not in the
@@ -339,12 +300,10 @@ goog.structs.Trie.prototype.clear = function() {
  * @param {string} key A key that should be removed from the trie.
  * @return {VALUE} The value whose key was removed.
  */
-goog.structs.Trie.prototype.remove = function(key) {
-  'use strict';
+goog.structs.Trie.prototype.remove = function (key) {
   var node = this;
   var parents = [];
-  for (var characterPosition = 0; characterPosition < key.length;
-       characterPosition++) {
+  for (var characterPosition = 0; characterPosition < key.length; characterPosition++) {
     var currentCharacter = key.charAt(characterPosition);
     if (!node.childNodes_[currentCharacter]) {
       throw new Error('The collection does not have the key "' + key + '"');
@@ -375,18 +334,15 @@ goog.structs.Trie.prototype.remove = function(key) {
   return oldValue;
 };
 
-
 /**
  * Clones a trie and returns a new trie.  O(N), where N is the number of nodes
  * in the trie.
  * @return {!goog.structs.Trie<VALUE>} A new goog.structs.Trie with the same
  *     key value pairs.
  */
-goog.structs.Trie.prototype.clone = function() {
-  'use strict';
+goog.structs.Trie.prototype.clone = function () {
   return new goog.structs.Trie(this);
 };
-
 
 /**
  * Returns the number of key value pairs in the trie.  O(N), where N is the
@@ -395,17 +351,14 @@ goog.structs.Trie.prototype.clone = function() {
  * node.
  * @return {number} The number of pairs.
  */
-goog.structs.Trie.prototype.getCount = function() {
-  'use strict';
+goog.structs.Trie.prototype.getCount = function () {
   return goog.structs.getCount(this.getValues());
 };
-
 
 /**
  * Returns true if this trie contains no elements.  ~O(1).
  * @return {boolean} True iff this trie contains no elements.
  */
-goog.structs.Trie.prototype.isEmpty = function() {
-  'use strict';
+goog.structs.Trie.prototype.isEmpty = function () {
   return this.value_ === undefined && goog.object.isEmpty(this.childNodes_);
 };

@@ -13,11 +13,9 @@ goog.module('goog.storage.mechanism.IterableMechanism');
 goog.module.declareLegacyNamespace();
 
 const Mechanism = goog.require('goog.storage.mechanism.Mechanism');
-const {Iterator: GoogIterator} = goog.require('goog.iter');
-const {ShimIterable} = goog.require('goog.iter.es6');
-const {assertString} = goog.require('goog.asserts');
-
-
+const { Iterator: GoogIterator } = goog.require('goog.iter');
+const { ShimIterable } = goog.require('goog.iter.es6');
+const { assertString } = goog.require('goog.asserts');
 
 /**
  * Interface for all iterable storage mechanisms.
@@ -28,11 +26,10 @@ const {assertString} = goog.require('goog.asserts');
  * @implements {Iterable<!string>}
  * @abstract
  */
-const IterableMechanism = function() {
+const IterableMechanism = function () {
   IterableMechanism.base(this, 'constructor');
 };
 goog.inherits(IterableMechanism, Mechanism);
-
 
 /**
  * Get the number of stored key-value pairs.
@@ -42,7 +39,7 @@ goog.inherits(IterableMechanism, Mechanism);
  *
  * @return {number} Number of stored elements.
  */
-IterableMechanism.prototype.getCount = function() {
+IterableMechanism.prototype.getCount = function () {
   let count = 0;
   for (const key of this) {
     assertString(key);
@@ -50,7 +47,6 @@ IterableMechanism.prototype.getCount = function() {
   }
   return count;
 };
-
 
 /**
  * Returns an iterator that iterates over the elements in the storage. Will
@@ -63,16 +59,14 @@ IterableMechanism.prototype.getCount = function() {
  */
 IterableMechanism.prototype.__iterator__ = goog.abstractMethod;
 
-
 /**
  * Returns an interator that iterates over all the keys for elements in storage.
  *
  * @return {!IteratorIterable<string>}
  */
-IterableMechanism.prototype[Symbol.iterator] = function() {
+IterableMechanism.prototype[Symbol.iterator] = function () {
   return ShimIterable.of(this.__iterator__(true)).toEs6();
 };
-
 
 /**
  * Remove all key-value pairs.
@@ -80,7 +74,7 @@ IterableMechanism.prototype[Symbol.iterator] = function() {
  * Could be overridden in a subclass, as the default implementation is not
  * very efficient - it iterates over all keys.
  */
-IterableMechanism.prototype.clear = function() {
+IterableMechanism.prototype.clear = function () {
   // This converts the keys to an array first because otherwise
   // removing while iterating results in unstable ordering of keys and
   // can skip keys or terminate early.

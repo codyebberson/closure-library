@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Implements quaternions and their conversion functions. In this
  * implementation, quaternions are represented as 4 element vectors with the
@@ -18,12 +17,10 @@ goog.require('goog.vec');
 goog.require('goog.vec.Vec3');
 goog.require('goog.vec.Vec4');
 
-
 /** @typedef {!goog.vec.Float32} */ goog.vec.Quaternion.Float32;
 /** @typedef {!goog.vec.Float64} */ goog.vec.Quaternion.Float64;
 /** @typedef {!goog.vec.Number} */ goog.vec.Quaternion.Number;
 /** @typedef {!goog.vec.AnyType} */ goog.vec.Quaternion.AnyType;
-
 
 /**
  * Creates a Float32 quaternion, initialized to zero.
@@ -32,14 +29,12 @@ goog.require('goog.vec.Vec4');
  */
 goog.vec.Quaternion.createFloat32 = goog.vec.Vec4.createFloat32;
 
-
 /**
  * Creates a Float64 quaternion, initialized to zero.
  *
  * @return {!goog.vec.Quaternion.Float64} The new quaternion.
  */
 goog.vec.Quaternion.createFloat64 = goog.vec.Vec4.createFloat64;
-
 
 /**
  * Creates a Number quaternion, initialized to zero.
@@ -48,7 +43,6 @@ goog.vec.Quaternion.createFloat64 = goog.vec.Vec4.createFloat64;
  */
 goog.vec.Quaternion.createNumber = goog.vec.Vec4.createNumber;
 
-
 /**
  * Creates a new Float32 quaternion initialized with the values from the
  * supplied array.
@@ -56,9 +50,7 @@ goog.vec.Quaternion.createNumber = goog.vec.Vec4.createNumber;
  * @param {!goog.vec.AnyType} vec The source 4 element array.
  * @return {!goog.vec.Quaternion.Float32} The new quaternion.
  */
-goog.vec.Quaternion.createFloat32FromArray =
-    goog.vec.Vec4.createFloat32FromArray;
-
+goog.vec.Quaternion.createFloat32FromArray = goog.vec.Vec4.createFloat32FromArray;
 
 /**
  * Creates a new Float64 quaternion initialized with the values from the
@@ -67,9 +59,7 @@ goog.vec.Quaternion.createFloat32FromArray =
  * @param {!goog.vec.AnyType} vec The source 4 element array.
  * @return {!goog.vec.Quaternion.Float64} The new quaternion.
  */
-goog.vec.Quaternion.createFloat64FromArray =
-    goog.vec.Vec4.createFloat64FromArray;
-
+goog.vec.Quaternion.createFloat64FromArray = goog.vec.Vec4.createFloat64FromArray;
 
 /**
  * Creates a new Float32 quaternion initialized with the supplied values.
@@ -80,9 +70,7 @@ goog.vec.Quaternion.createFloat64FromArray =
  * @param {number} v3 The value for element at index 3.
  * @return {!goog.vec.Quaternion.Float32} The new quaternion.
  */
-goog.vec.Quaternion.createFloat32FromValues =
-    goog.vec.Vec4.createFloat32FromValues;
-
+goog.vec.Quaternion.createFloat32FromValues = goog.vec.Vec4.createFloat32FromValues;
 
 /**
  * Creates a new Float64 quaternion initialized with the supplied values.
@@ -93,9 +81,7 @@ goog.vec.Quaternion.createFloat32FromValues =
  * @param {number} v3 The value for element at index 3.
  * @return {!goog.vec.Quaternion.Float64} The new quaternion.
  */
-goog.vec.Quaternion.createFloat64FromValues =
-    goog.vec.Vec4.createFloat64FromValues;
-
+goog.vec.Quaternion.createFloat64FromValues = goog.vec.Vec4.createFloat64FromValues;
 
 /**
  * Creates a clone of the given Float32 quaternion.
@@ -105,7 +91,6 @@ goog.vec.Quaternion.createFloat64FromValues =
  */
 goog.vec.Quaternion.cloneFloat32 = goog.vec.Vec4.cloneFloat32;
 
-
 /**
  * Creates a clone of the given Float64 quaternion.
  *
@@ -114,32 +99,27 @@ goog.vec.Quaternion.cloneFloat32 = goog.vec.Vec4.cloneFloat32;
  */
 goog.vec.Quaternion.cloneFloat64 = goog.vec.Vec4.cloneFloat64;
 
-
 /**
  * Creates a Float32 quaternion, initialized to the identity.
  *
  * @return {!goog.vec.Quaternion.Float32} The new quaternion.
  */
-goog.vec.Quaternion.createIdentityFloat32 = function() {
-  'use strict';
+goog.vec.Quaternion.createIdentityFloat32 = () => {
   const quat = goog.vec.Quaternion.createFloat32();
   goog.vec.Quaternion.makeIdentity(quat);
   return quat;
 };
-
 
 /**
  * Creates a Float64 quaternion, initialized to the identity.
  *
  * @return {!goog.vec.Quaternion.Float64} The new quaternion.
  */
-goog.vec.Quaternion.createIdentityFloat64 = function() {
-  'use strict';
+goog.vec.Quaternion.createIdentityFloat64 = () => {
   const quat = goog.vec.Quaternion.createFloat64();
   goog.vec.Quaternion.makeIdentity(quat);
   return quat;
 };
-
 
 /**
  * Initializes the quaternion with the given values.
@@ -155,7 +135,6 @@ goog.vec.Quaternion.createIdentityFloat64 = function() {
  */
 goog.vec.Quaternion.setFromValues = goog.vec.Vec4.setFromValues;
 
-
 /**
  * Initializes the quaternion with the given array of values.
  *
@@ -167,7 +146,6 @@ goog.vec.Quaternion.setFromValues = goog.vec.Vec4.setFromValues;
  */
 goog.vec.Quaternion.setFromArray = goog.vec.Vec4.setFromArray;
 
-
 /**
  * Adds the two quaternions.
  *
@@ -178,7 +156,6 @@ goog.vec.Quaternion.setFromArray = goog.vec.Vec4.setFromArray;
  */
 goog.vec.Quaternion.add = goog.vec.Vec4.add;
 
-
 /**
  * Negates a quaternion, storing the result into resultQuat.
  *
@@ -187,7 +164,6 @@ goog.vec.Quaternion.add = goog.vec.Vec4.add;
  *     receive the result. May be quat0.
  */
 goog.vec.Quaternion.negate = goog.vec.Vec4.negate;
-
 
 /**
  * Multiplies each component of quat0 with scalar storing the product into
@@ -200,7 +176,6 @@ goog.vec.Quaternion.negate = goog.vec.Vec4.negate;
  */
 goog.vec.Quaternion.scale = goog.vec.Vec4.scale;
 
-
 /**
  * Returns the square magnitude of the given quaternion.
  *
@@ -209,7 +184,6 @@ goog.vec.Quaternion.scale = goog.vec.Vec4.scale;
  */
 goog.vec.Quaternion.magnitudeSquared = goog.vec.Vec4.magnitudeSquared;
 
-
 /**
  * Returns the magnitude of the given quaternion.
  *
@@ -217,7 +191,6 @@ goog.vec.Quaternion.magnitudeSquared = goog.vec.Vec4.magnitudeSquared;
  * @return {number} The magnitude of the quaternion.
  */
 goog.vec.Quaternion.magnitude = goog.vec.Vec4.magnitude;
-
 
 /**
  * Normalizes the given quaternion storing the result into resultVec.
@@ -229,7 +202,6 @@ goog.vec.Quaternion.magnitude = goog.vec.Vec4.magnitude;
  */
 goog.vec.Quaternion.normalize = goog.vec.Vec4.normalize;
 
-
 /**
  * Computes the dot (scalar) product of two quaternions.
  *
@@ -238,7 +210,6 @@ goog.vec.Quaternion.normalize = goog.vec.Vec4.normalize;
  * @return {number} The scalar product.
  */
 goog.vec.Quaternion.dot = goog.vec.Vec4.dot;
-
 
 /**
  * Computes the inverse of the quaternion in quat, storing the result into
@@ -253,8 +224,7 @@ goog.vec.Quaternion.dot = goog.vec.Vec4.dot;
  * @return {!goog.vec.Quaternion.AnyType} Return resultQuat so that
  *     operations can be chained together.
  */
-goog.vec.Quaternion.invert = function(quat, resultQuat) {
-  'use strict';
+goog.vec.Quaternion.invert = (quat, resultQuat) => {
   const a0 = quat[0];
   const a1 = quat[1];
   const a2 = quat[2];
@@ -270,7 +240,6 @@ goog.vec.Quaternion.invert = function(quat, resultQuat) {
   return resultQuat;
 };
 
-
 /**
  * Computes the conjugate of the quaternion in quat, storing the result into
  * resultQuat.
@@ -284,15 +253,13 @@ goog.vec.Quaternion.invert = function(quat, resultQuat) {
  * @return {!goog.vec.Quaternion.AnyType} Return resultQuat so that
  *     operations can be chained together.
  */
-goog.vec.Quaternion.conjugate = function(quat, resultQuat) {
-  'use strict';
+goog.vec.Quaternion.conjugate = (quat, resultQuat) => {
   resultQuat[0] = -quat[0];
   resultQuat[1] = -quat[1];
   resultQuat[2] = -quat[2];
   resultQuat[3] = quat[3];
   return resultQuat;
 };
-
 
 /**
  * Concatenates the two quaternions storing the result into resultQuat.
@@ -304,8 +271,7 @@ goog.vec.Quaternion.conjugate = function(quat, resultQuat) {
  * @return {!goog.vec.Quaternion.AnyType} Return resultQuat so that
  *     operations can be chained together.
  */
-goog.vec.Quaternion.concat = function(quat0, quat1, resultQuat) {
-  'use strict';
+goog.vec.Quaternion.concat = (quat0, quat1, resultQuat) => {
   const w0 = quat0[3];
   const x0 = quat0[0];
   const y0 = quat0[1];
@@ -323,7 +289,6 @@ goog.vec.Quaternion.concat = function(quat0, quat1, resultQuat) {
   return resultQuat;
 };
 
-
 /**
  * Makes the given quaternion the identity quaternion (0, 0, 0, 1).
  *
@@ -331,15 +296,13 @@ goog.vec.Quaternion.concat = function(quat0, quat1, resultQuat) {
  * @return {!goog.vec.Quaternion.AnyType} Return quat so that
  *     operations can be chained together.
  */
-goog.vec.Quaternion.makeIdentity = function(quat) {
-  'use strict';
+goog.vec.Quaternion.makeIdentity = (quat) => {
   quat[0] = 0;
   quat[1] = 0;
   quat[2] = 0;
   quat[3] = 1;
   return quat;
 };
-
 
 /**
  * Generates a unit quaternion from the given angle-axis rotation pair.
@@ -354,21 +317,24 @@ goog.vec.Quaternion.makeIdentity = function(quat) {
  * @return {!goog.vec.Quaternion.AnyType} Return quat so that
  *     operations can be chained together.
  */
-goog.vec.Quaternion.fromAngleAxis = function(angle, axis, quat) {
-  'use strict';
+goog.vec.Quaternion.fromAngleAxis = (angle, axis, quat) => {
   // Normalize the axis of rotation.
   goog.vec.Vec3.normalize(axis, axis);
 
   const halfAngle = 0.5 * angle;
   const sin = Math.sin(halfAngle);
   goog.vec.Quaternion.setFromValues(
-      quat, sin * axis[0], sin * axis[1], sin * axis[2], Math.cos(halfAngle));
+    quat,
+    sin * axis[0],
+    sin * axis[1],
+    sin * axis[2],
+    Math.cos(halfAngle)
+  );
 
   // Normalize the resulting quaternion.
   goog.vec.Quaternion.normalize(quat, quat);
   return quat;
 };
-
 
 /**
  * Generates an angle-axis rotation pair from a unit quaternion.
@@ -384,8 +350,7 @@ goog.vec.Quaternion.fromAngleAxis = function(angle, axis, quat) {
  * @return {number} angle Angle (in radians) to rotate about 'axis'.
  *     The range of the returned angle is [-PI, +PI].
  */
-goog.vec.Quaternion.toAngleAxis = function(quat, axis) {
-  'use strict';
+goog.vec.Quaternion.toAngleAxis = (quat, axis) => {
   let angle = 2 * Math.acos(quat[3]);
   const magnitude = Math.min(Math.max(1 - quat[3] * quat[3], 0), 1);
   if (magnitude < goog.vec.EPSILON) {
@@ -404,7 +369,6 @@ goog.vec.Quaternion.toAngleAxis = function(quat, axis) {
   return angle;
 };
 
-
 /**
  * Generates the quaternion from the given 3x3 rotation matrix.
  *
@@ -416,8 +380,7 @@ goog.vec.Quaternion.toAngleAxis = function(quat, axis) {
  * @return {!goog.vec.Quaternion.AnyType} Return quat so that
  *     operations can be chained together.
  */
-goog.vec.Quaternion.fromRotationMatrix3 = function(matrix, quat) {
-  'use strict';
+goog.vec.Quaternion.fromRotationMatrix3 = (matrix, quat) => {
   // Algorithm in Ken Shoemake's article in 1987 SIGGRAPH course notes
   // article "Quaternion Calculus and Fast Animation".
   const fTrace = matrix[0] + matrix[4] + matrix[8];
@@ -425,9 +388,9 @@ goog.vec.Quaternion.fromRotationMatrix3 = function(matrix, quat) {
 
   if (fTrace > 0.0) {
     // |w| > 1/2, may as well choose w > 1/2
-    fRoot = Math.sqrt(fTrace + 1.0);  // 2w
+    fRoot = Math.sqrt(fTrace + 1.0); // 2w
     quat[3] = 0.5 * fRoot;
-    fRoot = 0.5 / fRoot;  // 1 / (4w)
+    fRoot = 0.5 / fRoot; // 1 / (4w)
     quat[0] = (matrix[5] - matrix[7]) * fRoot;
     quat[1] = (matrix[6] - matrix[2]) * fRoot;
     quat[2] = (matrix[1] - matrix[3]) * fRoot;
@@ -439,8 +402,7 @@ goog.vec.Quaternion.fromRotationMatrix3 = function(matrix, quat) {
     const j = (i + 1) % 3;
     const k = (i + 2) % 3;
 
-    fRoot = Math.sqrt(
-        matrix[i * 3 + i] - matrix[j * 3 + j] - matrix[k * 3 + k] + 1.0);
+    fRoot = Math.sqrt(matrix[i * 3 + i] - matrix[j * 3 + j] - matrix[k * 3 + k] + 1.0);
     quat[i] = 0.5 * fRoot;
     fRoot = 0.5 / fRoot;
     quat[3] = (matrix[j * 3 + k] - matrix[k * 3 + j]) * fRoot;
@@ -458,7 +420,6 @@ goog.vec.Quaternion.fromRotationMatrix3 = function(matrix, quat) {
   return quat;
 };
 
-
 /**
  * Generates the quaternion from the given 4x4 rotation matrix.
  *
@@ -472,16 +433,15 @@ goog.vec.Quaternion.fromRotationMatrix3 = function(matrix, quat) {
  * @return {!goog.vec.Quaternion.AnyType} Return quat so that
  *     operations can be chained together.
  */
-goog.vec.Quaternion.fromRotationMatrix4 = function(matrix, quat) {
-  'use strict';
+goog.vec.Quaternion.fromRotationMatrix4 = (matrix, quat) => {
   const fTrace = matrix[0] + matrix[5] + matrix[10];
   let fRoot;
 
   if (fTrace > 0.0) {
     // |w| > 1/2, may as well choose w > 1/2
-    fRoot = Math.sqrt(fTrace + 1.0);  // 2w
+    fRoot = Math.sqrt(fTrace + 1.0); // 2w
     quat[3] = 0.5 * fRoot;
-    fRoot = 0.5 / fRoot;  // 1 / (4w)
+    fRoot = 0.5 / fRoot; // 1 / (4w)
     quat[0] = (matrix[6] - matrix[9]) * fRoot;
     quat[1] = (matrix[8] - matrix[2]) * fRoot;
     quat[2] = (matrix[1] - matrix[4]) * fRoot;
@@ -493,8 +453,7 @@ goog.vec.Quaternion.fromRotationMatrix4 = function(matrix, quat) {
     const j = (i + 1) % 3;
     const k = (i + 2) % 3;
 
-    fRoot = Math.sqrt(
-        matrix[i * 4 + i] - matrix[j * 4 + j] - matrix[k * 4 + k] + 1.0);
+    fRoot = Math.sqrt(matrix[i * 4 + i] - matrix[j * 4 + j] - matrix[k * 4 + k] + 1.0);
     quat[i] = 0.5 * fRoot;
     fRoot = 0.5 / fRoot;
     quat[3] = (matrix[j * 4 + k] - matrix[k * 4 + j]) * fRoot;
@@ -512,7 +471,6 @@ goog.vec.Quaternion.fromRotationMatrix4 = function(matrix, quat) {
   return quat;
 };
 
-
 /**
  * Generates the 3x3 rotation matrix from the given quaternion.
  *
@@ -521,8 +479,7 @@ goog.vec.Quaternion.fromRotationMatrix4 = function(matrix, quat) {
  * @return {!goog.vec.AnyType} Return resulting matrix so that
  *     operations can be chained together.
  */
-goog.vec.Quaternion.toRotationMatrix3 = function(quat, matrix) {
-  'use strict';
+goog.vec.Quaternion.toRotationMatrix3 = (quat, matrix) => {
   const w = quat[3];
   const x = quat[0];
   const y = quat[1];
@@ -554,7 +511,6 @@ goog.vec.Quaternion.toRotationMatrix3 = function(quat, matrix) {
   return matrix;
 };
 
-
 /**
  * Generates the 4x4 rotation matrix from the given quaternion.
  *
@@ -563,8 +519,7 @@ goog.vec.Quaternion.toRotationMatrix3 = function(quat, matrix) {
  * @return {!goog.vec.AnyType} Return resulting matrix so that
  *     operations can be chained together.
  */
-goog.vec.Quaternion.toRotationMatrix4 = function(quat, matrix) {
-  'use strict';
+goog.vec.Quaternion.toRotationMatrix4 = (quat, matrix) => {
   const w = quat[3];
   const x = quat[0];
   const y = quat[1];
@@ -603,7 +558,6 @@ goog.vec.Quaternion.toRotationMatrix4 = function(quat, matrix) {
   return matrix;
 };
 
-
 /**
  * Rotates a quaternion by the given angle about the X axis.
  *
@@ -614,8 +568,7 @@ goog.vec.Quaternion.toRotationMatrix4 = function(quat, matrix) {
  * @return {!goog.vec.Quaternion.AnyType} Return resultQuat so that
  *     operations can be chained together.
  */
-goog.vec.Quaternion.rotateX = function(quat, angle, resultQuat) {
-  'use strict';
+goog.vec.Quaternion.rotateX = (quat, angle, resultQuat) => {
   angle *= 0.5;
   const aw = quat[3];
   const ax = quat[0];
@@ -625,14 +578,12 @@ goog.vec.Quaternion.rotateX = function(quat, angle, resultQuat) {
   const bw = Math.cos(angle);
   const bx = Math.sin(angle);
 
-
   resultQuat[0] = ax * bw + aw * bx;
   resultQuat[1] = ay * bw + az * bx;
   resultQuat[2] = az * bw - ay * bx;
   resultQuat[3] = aw * bw - ax * bx;
   return resultQuat;
 };
-
 
 /**
  * Rotates a quaternion by the given angle about the Y axis.
@@ -644,8 +595,7 @@ goog.vec.Quaternion.rotateX = function(quat, angle, resultQuat) {
  * @return {!goog.vec.Quaternion.AnyType} Return resultQuat so that
  *     operations can be chained together.
  */
-goog.vec.Quaternion.rotateY = function(quat, angle, resultQuat) {
-  'use strict';
+goog.vec.Quaternion.rotateY = (quat, angle, resultQuat) => {
   angle *= 0.5;
   const aw = quat[3];
   const ax = quat[0];
@@ -655,14 +605,12 @@ goog.vec.Quaternion.rotateY = function(quat, angle, resultQuat) {
   const bw = Math.cos(angle);
   const by = Math.sin(angle);
 
-
   resultQuat[0] = ax * bw - az * by;
   resultQuat[1] = ay * bw + aw * by;
   resultQuat[2] = az * bw + ax * by;
   resultQuat[3] = aw * bw - ay * by;
   return resultQuat;
 };
-
 
 /**
  * Rotates a quaternion by the given angle about the Z axis.
@@ -674,8 +622,7 @@ goog.vec.Quaternion.rotateY = function(quat, angle, resultQuat) {
  * @return {!goog.vec.Quaternion.AnyType} Return resultQuat so that
  *     operations can be chained together.
  */
-goog.vec.Quaternion.rotateZ = function(quat, angle, resultQuat) {
-  'use strict';
+goog.vec.Quaternion.rotateZ = (quat, angle, resultQuat) => {
   angle *= 0.5;
   const aw = quat[3];
   const ax = quat[0];
@@ -685,14 +632,12 @@ goog.vec.Quaternion.rotateZ = function(quat, angle, resultQuat) {
   const bw = Math.cos(angle);
   const bz = Math.sin(angle);
 
-
   resultQuat[0] = ax * bw + ay * bz;
   resultQuat[1] = ay * bw - ax * bz;
   resultQuat[2] = az * bw + aw * bz;
   resultQuat[3] = aw * bw - az * bz;
   return resultQuat;
 };
-
 
 /**
  * Transforms a vec with a quaternion. Works on both vec3s and vec4s.
@@ -703,8 +648,7 @@ goog.vec.Quaternion.rotateZ = function(quat, angle, resultQuat) {
  * @return {!goog.vec.AnyType} Return resultVec so that operations can be
  *     chained together. Note that the caller is responsible for type-casting.
  */
-goog.vec.Quaternion.transformVec = function(vec, quat, resultVec) {
-  'use strict';
+goog.vec.Quaternion.transformVec = (vec, quat, resultVec) => {
   const x = vec[0];
   const y = vec[1];
   const z = vec[2];
@@ -726,7 +670,6 @@ goog.vec.Quaternion.transformVec = function(vec, quat, resultVec) {
   return resultVec;
 };
 
-
 /**
  * Computes the spherical linear interpolated value from the given quaternions
  * q0 and q1 according to the coefficient t. The resulting quaternion is stored
@@ -740,8 +683,7 @@ goog.vec.Quaternion.transformVec = function(vec, quat, resultVec) {
  * @return {!goog.vec.Quaternion.AnyType} Return resultQuat so that
  *     operations can be chained together.
  */
-goog.vec.Quaternion.slerp = function(q0, q1, t, resultQuat) {
-  'use strict';
+goog.vec.Quaternion.slerp = (q0, q1, t, resultQuat) => {
   // Compute the dot product between q0 and q1 (cos of the angle between q0 and
   // q1). If it's outside the interval [-1,1], then the arccos is not defined.
   // The usual reason for this is that q0 and q1 are colinear. In this case
@@ -781,7 +723,6 @@ goog.vec.Quaternion.slerp = function(q0, q1, t, resultQuat) {
   resultQuat[3] = q0[3] * c0 + q1[3] * c1;
   return resultQuat;
 };
-
 
 /**
  * Compute the simple linear interpolation of the two quaternions q0 and q1

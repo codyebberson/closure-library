@@ -14,8 +14,6 @@ goog.require('goog.events');
 goog.require('goog.net.IframeLoadMonitor');
 goog.requireType('goog.events.Event');
 
-
-
 /**
  * Provides a wrapper around IframeLoadMonitor, to allow the caller to wait for
  * multiple iframes to load.
@@ -29,8 +27,7 @@ goog.requireType('goog.events.Event');
  * @constructor
  * @final
  */
-goog.net.MultiIframeLoadMonitor = function(iframes, callback, opt_hasContent) {
-  'use strict';
+goog.net.MultiIframeLoadMonitor = function (iframes, callback, opt_hasContent) {
   /**
    * Array of IframeLoadMonitors we use to track the loaded status of any
    * currently unloaded iframes.
@@ -47,8 +44,7 @@ goog.net.MultiIframeLoadMonitor = function(iframes, callback, opt_hasContent) {
   this.callback_ = callback;
 
   for (let i = 0; i < iframes.length; i++) {
-    const iframeLoadMonitor =
-        new goog.net.IframeLoadMonitor(iframes[i], opt_hasContent);
+    const iframeLoadMonitor = new goog.net.IframeLoadMonitor(iframes[i], opt_hasContent);
     if (iframeLoadMonitor.isLoaded()) {
       // Already loaded - don't need to wait
       iframeLoadMonitor.dispose();
@@ -57,8 +53,7 @@ goog.net.MultiIframeLoadMonitor = function(iframes, callback, opt_hasContent) {
       // loaded, and track this monitor so we can dispose later as
       // required.
       this.pendingIframeLoadMonitors_.push(iframeLoadMonitor);
-      goog.events.listen(
-          iframeLoadMonitor, goog.net.IframeLoadMonitor.LOAD_EVENT, this);
+      goog.events.listen(iframeLoadMonitor, goog.net.IframeLoadMonitor.LOAD_EVENT, this);
     }
   }
   if (!this.pendingIframeLoadMonitors_.length) {
@@ -67,14 +62,12 @@ goog.net.MultiIframeLoadMonitor = function(iframes, callback, opt_hasContent) {
   }
 };
 
-
 /**
  * Handles a pending iframe load monitor load event.
  * @param {goog.events.Event} e The goog.net.IframeLoadMonitor.LOAD_EVENT event.
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.net.MultiIframeLoadMonitor.prototype.handleEvent = function(e) {
-  'use strict';
+goog.net.MultiIframeLoadMonitor.prototype.handleEvent = function (e) {
   const iframeLoadMonitor = e.target;
   // iframeLoadMonitor is now loaded, remove it from the array of
   // pending iframe load monitors.
@@ -97,7 +90,6 @@ goog.net.MultiIframeLoadMonitor.prototype.handleEvent = function(e) {
   }
 };
 
-
 /**
  * Stops monitoring the iframes, cleaning up any associated resources. In
  * general, the object cleans up its own resources before invoking the
@@ -105,8 +97,7 @@ goog.net.MultiIframeLoadMonitor.prototype.handleEvent = function(e) {
  * monitoring before the iframes are loaded (for example, if the caller is
  * implementing a timeout).
  */
-goog.net.MultiIframeLoadMonitor.prototype.stopMonitoring = function() {
-  'use strict';
+goog.net.MultiIframeLoadMonitor.prototype.stopMonitoring = function () {
   for (let i = 0; i < this.pendingIframeLoadMonitors_.length; i++) {
     this.pendingIframeLoadMonitors_[i].dispose();
   }

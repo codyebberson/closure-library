@@ -6,8 +6,6 @@
 
 goog.provide('goog.pubsub.TopicId');
 
-
-
 /**
  * A templated class that is used to register `goog.pubsub.PubSub`
  * subscribers.
@@ -38,8 +36,7 @@ goog.provide('goog.pubsub.TopicId');
  * @final
  * @struct
  */
-goog.pubsub.TopicId = function(topicId) {
-  'use strict';
+goog.pubsub.TopicId = function (topicId) {
   /**
    * @const
    * @private
@@ -47,9 +44,7 @@ goog.pubsub.TopicId = function(topicId) {
   this.topicId_ = topicId;
 };
 
-
 /** @override */
-goog.pubsub.TopicId.prototype.toString = function() {
-  'use strict';
+goog.pubsub.TopicId.prototype.toString = function () {
   return this.topicId_;
 };

@@ -14,8 +14,6 @@ goog.require('goog.dom.TagName');
 goog.require('goog.style');
 goog.require('goog.ui.emoji.EmojiPaletteRenderer');
 
-
-
 /**
  * Progressively renders an emoji palette. The progressive renderer tries to
  * use img tags instead of background-image for sprited emoji, since most
@@ -29,43 +27,40 @@ goog.require('goog.ui.emoji.EmojiPaletteRenderer');
  * @extends {goog.ui.emoji.EmojiPaletteRenderer}
  * @final
  */
-goog.ui.emoji.ProgressiveEmojiPaletteRenderer = function(defaultImgUrl) {
-  'use strict';
+goog.ui.emoji.ProgressiveEmojiPaletteRenderer = function (defaultImgUrl) {
   goog.ui.emoji.EmojiPaletteRenderer.call(this, defaultImgUrl);
 };
-goog.inherits(
-    goog.ui.emoji.ProgressiveEmojiPaletteRenderer,
-    goog.ui.emoji.EmojiPaletteRenderer);
-
+goog.inherits(goog.ui.emoji.ProgressiveEmojiPaletteRenderer, goog.ui.emoji.EmojiPaletteRenderer);
 
 /** @override */
-goog.ui.emoji.ProgressiveEmojiPaletteRenderer.prototype
-    .buildElementFromSpriteMetadata = function(dom, spriteInfo, displayUrl) {
-  'use strict';
+goog.ui.emoji.ProgressiveEmojiPaletteRenderer.prototype.buildElementFromSpriteMetadata = (
+  dom,
+  spriteInfo,
+  displayUrl
+) => {
   const width = spriteInfo.getWidthCssValue();
   const height = spriteInfo.getHeightCssValue();
   const x = spriteInfo.getXOffsetCssValue();
   const y = spriteInfo.getYOffsetCssValue();
   // Need this extra div for proper vertical centering.
-  const inner = dom.createDom(goog.dom.TagName.IMG, {'src': displayUrl});
-  const el = dom.createDom(
-      goog.dom.TagName.DIV, goog.getCssName('goog-palette-cell-extra'), inner);
+  const inner = dom.createDom(goog.dom.TagName.IMG, { src: displayUrl });
+  const el = dom.createDom(goog.dom.TagName.DIV, goog.getCssName('goog-palette-cell-extra'), inner);
   goog.style.setStyle(el, {
-    'width': width,
-    'height': height,
-    'overflow': 'hidden',
-    'position': 'relative'
+    width: width,
+    height: height,
+    overflow: 'hidden',
+    position: 'relative',
   });
-  goog.style.setStyle(inner, {'left': x, 'top': y, 'position': 'absolute'});
+  goog.style.setStyle(inner, { left: x, top: y, position: 'absolute' });
 
   return el;
 };
 
-
 /** @override */
-goog.ui.emoji.ProgressiveEmojiPaletteRenderer.prototype
-    .updateAnimatedPaletteItem = function(item, animatedImg) {
-  'use strict';
+goog.ui.emoji.ProgressiveEmojiPaletteRenderer.prototype.updateAnimatedPaletteItem = (
+  item,
+  animatedImg
+) => {
   // Just to be safe, we check for the existence of the img element within this
   // palette item before attempting to modify it.
   /** @type {!HTMLImageElement|undefined} */
@@ -84,6 +79,6 @@ goog.ui.emoji.ProgressiveEmojiPaletteRenderer.prototype
 
   img.width = animatedImg.width;
   img.height = animatedImg.height;
-  goog.style.setStyle(img, {'left': 0, 'top': 0});
+  goog.style.setStyle(img, { left: 0, top: 0 });
   img.src = animatedImg.src;
 };

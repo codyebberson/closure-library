@@ -8,7 +8,6 @@
  * @fileoverview Description of this file.
  */
 goog.module('goog.labs.userAgent.extraTest');
-goog.setTestOnly();
 
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
 const browser = goog.require('goog.labs.userAgent.browser');
@@ -25,29 +24,29 @@ const stubs = new PropertyReplacer();
  */
 function setGlobalNavigator(navigatorObj) {
   const mockGlobal = {
-    'navigator': navigatorObj,
+    navigator: navigatorObj,
   };
   stubs.set(goog, 'global', mockGlobal);
 }
 
 testSuite({
-  tearDown: function() {
+  tearDown: () => {
     stubs.reset();
   },
-  testSafariDesktopOnMobile: function() {
+  testSafariDesktopOnMobile: () => {
     util.setUserAgent(testAgents.SAFARI_13);
-    setGlobalNavigator({'maxTouchPoints': 5});
+    setGlobalNavigator({ maxTouchPoints: 5 });
     assertTrue(browser.isSafari());
     assertFalse(browser.isChrome());
     assertTrue(extra.isSafariDesktopOnMobile());
 
     util.setUserAgent(testAgents.CHROME_IPAD_DESKTOP);
-    setGlobalNavigator({'maxTouchPoints': 5});
+    setGlobalNavigator({ maxTouchPoints: 5 });
     assertTrue(browser.isChrome());
     assertFalse(browser.isSafari());
     assertTrue(extra.isSafariDesktopOnMobile());
 
-    setGlobalNavigator({'maxTouchPoints': 0});
+    setGlobalNavigator({ maxTouchPoints: 0 });
     assertFalse(extra.isSafariDesktopOnMobile());
 
     setGlobalNavigator({});

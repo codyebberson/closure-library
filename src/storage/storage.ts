@@ -15,8 +15,6 @@ goog.require('goog.json');
 goog.require('goog.storage.ErrorCode');
 goog.requireType('goog.storage.mechanism.Mechanism');
 
-
-
 /**
  * The base implementation for all storage APIs.
  *
@@ -25,8 +23,7 @@ goog.requireType('goog.storage.mechanism.Mechanism');
  * @constructor
  * @struct
  */
-goog.storage.Storage = function(mechanism) {
-  'use strict';
+goog.storage.Storage = function (mechanism) {
   /**
    * The mechanism used to persist key-value pairs.
    *
@@ -35,15 +32,13 @@ goog.storage.Storage = function(mechanism) {
   this.mechanism = mechanism;
 };
 
-
 /**
  * Sets an item in the data storage.
  *
  * @param {string} key The key to set.
  * @param {*} value The value to serialize to a string and save.
  */
-goog.storage.Storage.prototype.set = function(key, value) {
-  'use strict';
+goog.storage.Storage.prototype.set = function (key, value) {
   if (value === undefined) {
     this.mechanism.remove(key);
     return;
@@ -51,15 +46,13 @@ goog.storage.Storage.prototype.set = function(key, value) {
   this.mechanism.set(key, goog.json.serialize(value));
 };
 
-
 /**
  * Gets an item from the data storage.
  *
  * @param {string} key The key to get.
  * @return {*} Deserialized value or undefined if not found.
  */
-goog.storage.Storage.prototype.get = function(key) {
-  'use strict';
+goog.storage.Storage.prototype.get = function (key) {
   let json;
   try {
     json = this.mechanism.get(key);
@@ -81,13 +74,11 @@ goog.storage.Storage.prototype.get = function(key) {
   }
 };
 
-
 /**
  * Removes an item from the data storage.
  *
  * @param {string} key The key to remove.
  */
-goog.storage.Storage.prototype.remove = function(key) {
-  'use strict';
+goog.storage.Storage.prototype.remove = function (key) {
   this.mechanism.remove(key);
 };

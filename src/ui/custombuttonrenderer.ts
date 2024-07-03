@@ -24,8 +24,6 @@ goog.requireType('goog.ui.Button');
 goog.requireType('goog.ui.Control');
 goog.requireType('goog.ui.ControlContent');
 
-
-
 /**
  * Custom renderer for {@link goog.ui.Button}s.  Custom buttons can contain
  * almost arbitrary HTML content, will flow like inline elements, but can be
@@ -34,13 +32,11 @@ goog.requireType('goog.ui.ControlContent');
  * @constructor
  * @extends {goog.ui.ButtonRenderer}
  */
-goog.ui.CustomButtonRenderer = function() {
-  'use strict';
+goog.ui.CustomButtonRenderer = function () {
   goog.ui.ButtonRenderer.call(this);
 };
 goog.inherits(goog.ui.CustomButtonRenderer, goog.ui.ButtonRenderer);
 goog.addSingletonGetter(goog.ui.CustomButtonRenderer);
-
 
 /**
  * Default CSS class to be applied to the root element of components rendered
@@ -48,7 +44,6 @@ goog.addSingletonGetter(goog.ui.CustomButtonRenderer);
  * @type {string}
  */
 goog.ui.CustomButtonRenderer.CSS_CLASS = goog.getCssName('goog-custom-button');
-
 
 /**
  * Returns the button's contents wrapped in the following DOM structure:
@@ -66,30 +61,27 @@ goog.ui.CustomButtonRenderer.CSS_CLASS = goog.getCssName('goog-custom-button');
  * @return {!Element} Root element for the button.
  * @override
  */
-goog.ui.CustomButtonRenderer.prototype.createDom = function(control) {
-  'use strict';
+goog.ui.CustomButtonRenderer.prototype.createDom = function (control) {
   var button = /** @type {goog.ui.Button} */ (control);
   var classNames = this.getClassNames(button);
-  var buttonElement = button.getDomHelper().createDom(
+  var buttonElement = button
+    .getDomHelper()
+    .createDom(
       goog.dom.TagName.DIV,
       goog.ui.INLINE_BLOCK_CLASSNAME + ' ' + classNames.join(' '),
-      this.createButton(button.getContent(), button.getDomHelper()));
+      this.createButton(button.getContent(), button.getDomHelper())
+    );
   this.setTooltip(buttonElement, /** @type {string}*/ (button.getTooltip()));
 
   return buttonElement;
 };
-
 
 /**
  * Returns the ARIA role to be applied to custom buttons.
  * @return {goog.a11y.aria.Role|undefined} ARIA role.
  * @override
  */
-goog.ui.CustomButtonRenderer.prototype.getAriaRole = function() {
-  'use strict';
-  return goog.a11y.aria.Role.BUTTON;
-};
-
+goog.ui.CustomButtonRenderer.prototype.getAriaRole = () => goog.a11y.aria.Role.BUTTON;
 
 /**
  * Takes the button's root element and returns the parent element of the
@@ -100,12 +92,8 @@ goog.ui.CustomButtonRenderer.prototype.getAriaRole = function() {
  * @return {Element} The button's content element (if any).
  * @override
  */
-goog.ui.CustomButtonRenderer.prototype.getContentElement = function(element) {
-  'use strict';
-  return element && element.firstChild &&
-      /** @type {Element} */ (element.firstChild.firstChild);
-};
-
+goog.ui.CustomButtonRenderer.prototype.getContentElement = (element) =>
+  element && element.firstChild && /** @type {Element} */ (element.firstChild.firstChild);
 
 /**
  * Takes a text caption or existing DOM structure, and returns the content
@@ -124,19 +112,17 @@ goog.ui.CustomButtonRenderer.prototype.getContentElement = function(element) {
  * @param {goog.dom.DomHelper} dom DOM helper, used for document interaction.
  * @return {!Element} Pseudo-rounded-corner box containing the content.
  */
-goog.ui.CustomButtonRenderer.prototype.createButton = function(content, dom) {
-  'use strict';
+goog.ui.CustomButtonRenderer.prototype.createButton = function (content, dom) {
   return dom.createDom(
+    goog.dom.TagName.DIV,
+    goog.ui.INLINE_BLOCK_CLASSNAME + ' ' + goog.getCssName(this.getCssClass(), 'outer-box'),
+    dom.createDom(
       goog.dom.TagName.DIV,
-      goog.ui.INLINE_BLOCK_CLASSNAME + ' ' +
-          goog.getCssName(this.getCssClass(), 'outer-box'),
-      dom.createDom(
-          goog.dom.TagName.DIV,
-          goog.ui.INLINE_BLOCK_CLASSNAME + ' ' +
-              goog.getCssName(this.getCssClass(), 'inner-box'),
-          content));
+      goog.ui.INLINE_BLOCK_CLASSNAME + ' ' + goog.getCssName(this.getCssClass(), 'inner-box'),
+      content
+    )
+  );
 };
-
 
 /**
  * Returns true if this renderer can decorate the element.  Overrides
@@ -146,11 +132,8 @@ goog.ui.CustomButtonRenderer.prototype.createButton = function(content, dom) {
  * @return {boolean} Whether the renderer can decorate the element.
  * @override
  */
-goog.ui.CustomButtonRenderer.prototype.canDecorate = function(element) {
-  'use strict';
-  return element.tagName == goog.dom.TagName.DIV;
-};
-
+goog.ui.CustomButtonRenderer.prototype.canDecorate = (element) =>
+  element.tagName == goog.dom.TagName.DIV;
 
 /**
  * Check if the button's element has a box structure.
@@ -160,9 +143,7 @@ goog.ui.CustomButtonRenderer.prototype.canDecorate = function(element) {
  * @return {boolean} Whether the element has a box structure.
  * @protected
  */
-goog.ui.CustomButtonRenderer.prototype.hasBoxStructure = function(
-    button, element) {
-  'use strict';
+goog.ui.CustomButtonRenderer.prototype.hasBoxStructure = function (button, element) {
   var outer = button.getDomHelper().getFirstElementChild(element);
   var outerClassName = goog.getCssName(this.getCssClass(), 'outer-box');
   if (outer && goog.dom.classlist.contains(outer, outerClassName)) {
@@ -176,7 +157,6 @@ goog.ui.CustomButtonRenderer.prototype.hasBoxStructure = function(
   return false;
 };
 
-
 /**
  * Takes an existing element and decorates it with the custom button control.
  * Initializes the control's ID, content, tooltip, value, and state based
@@ -187,8 +167,7 @@ goog.ui.CustomButtonRenderer.prototype.hasBoxStructure = function(
  * @return {Element} Decorated element.
  * @override
  */
-goog.ui.CustomButtonRenderer.prototype.decorate = function(control, element) {
-  'use strict';
+goog.ui.CustomButtonRenderer.prototype.decorate = function (control, element) {
   goog.asserts.assert(element);
 
   var button = /** @type {goog.ui.Button} */ (control);
@@ -200,16 +179,13 @@ goog.ui.CustomButtonRenderer.prototype.decorate = function(control, element) {
   // Create the buttom dom if it has not been created.
   if (!this.hasBoxStructure(button, element)) {
     element.appendChild(
-        /** @type {!Node} */ (
-            this.createButton(element.childNodes, button.getDomHelper())));
+      /** @type {!Node} */ (this.createButton(element.childNodes, button.getDomHelper()))
+    );
   }
 
-  goog.dom.classlist.addAll(
-      element, [goog.ui.INLINE_BLOCK_CLASSNAME, this.getCssClass()]);
-  return goog.ui.CustomButtonRenderer.superClass_.decorate.call(
-      this, button, element);
+  goog.dom.classlist.addAll(element, [goog.ui.INLINE_BLOCK_CLASSNAME, this.getCssClass()]);
+  return goog.ui.CustomButtonRenderer.superClass_.decorate.call(this, button, element);
 };
-
 
 /**
  * Returns the CSS class to be applied to the root element of components
@@ -217,11 +193,7 @@ goog.ui.CustomButtonRenderer.prototype.decorate = function(control, element) {
  * @return {string} Renderer-specific CSS class.
  * @override
  */
-goog.ui.CustomButtonRenderer.prototype.getCssClass = function() {
-  'use strict';
-  return goog.ui.CustomButtonRenderer.CSS_CLASS;
-};
-
+goog.ui.CustomButtonRenderer.prototype.getCssClass = () => goog.ui.CustomButtonRenderer.CSS_CLASS;
 
 /**
  * Takes an element and removes leading or trailing whitespace from the start
@@ -254,10 +226,10 @@ goog.ui.CustomButtonRenderer.prototype.getCssClass = function() {
  * @param {boolean} fromStart Whether to trim from the start or from the end.
  * @private
  */
-goog.ui.CustomButtonRenderer.trimTextNodes_ = function(element, fromStart) {
-  'use strict';
+goog.ui.CustomButtonRenderer.trimTextNodes_ = (element, fromStart) => {
   if (element) {
-    var node = fromStart ? element.firstChild : element.lastChild, next;
+    var node = fromStart ? element.firstChild : element.lastChild,
+      next;
     // Tag soup HTML may result in a DOM where siblings have different parents.
     while (node && node.parentNode == element) {
       // Get the next/previous sibling here, since the node may be removed.
@@ -270,8 +242,7 @@ goog.ui.CustomButtonRenderer.trimTextNodes_ = function(element, fromStart) {
           element.removeChild(node);
         } else {
           // Found a non-empty text node; trim from the start/end, then exit.
-          node.nodeValue = fromStart ? goog.string.trimLeft(text) :
-                                       goog.string.trimRight(text);
+          node.nodeValue = fromStart ? goog.string.trimLeft(text) : goog.string.trimRight(text);
           break;
         }
       } else {

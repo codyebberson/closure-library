@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.TestRunnerTest');
-goog.setTestOnly();
 
 const TestCase = goog.require('goog.testing.TestCase');
 const TestRunner = goog.require('goog.testing.TestRunner');

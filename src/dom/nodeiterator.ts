@@ -13,8 +13,6 @@ goog.provide('goog.dom.NodeIterator');
 goog.require('goog.dom.TagIterator');
 goog.require('goog.iter');
 
-
-
 /**
  * A DOM tree traversal iterator.
  *
@@ -55,22 +53,17 @@ goog.require('goog.iter');
  * @extends {goog.dom.TagIterator}
  * @final
  */
-goog.dom.NodeIterator = function(
-    opt_node, opt_reversed, opt_unconstrained, opt_depth) {
-  'use strict';
-  goog.dom.TagIterator.call(
-      this, opt_node, opt_reversed, opt_unconstrained, null, opt_depth);
+goog.dom.NodeIterator = function (opt_node, opt_reversed, opt_unconstrained, opt_depth) {
+  goog.dom.TagIterator.call(this, opt_node, opt_reversed, opt_unconstrained, null, opt_depth);
 };
 goog.inherits(goog.dom.NodeIterator, goog.dom.TagIterator);
-
 
 /**
  * Moves to the next position in the DOM tree.
  * @return {!IIterableResult<!Node>}
  * @override
  */
-goog.dom.NodeIterator.prototype.next = function() {
-  'use strict';
+goog.dom.NodeIterator.prototype.next = function () {
   do {
     // also updates `this.node` reference on iteration.
     const it = goog.dom.NodeIterator.superClass_.next.call(this);

@@ -5,12 +5,11 @@
  */
 
 goog.module('goog.async.FreeListTest');
-goog.setTestOnly();
 
 const FreeList = goog.require('goog.async.FreeList');
 const testSuite = goog.require('goog.testing.testSuite');
 
-let id = 0;
+const id = 0;
 let list = null;
 
 testSuite({
@@ -18,14 +17,15 @@ testSuite({
     let id = 0;
     let data = 1;
     list = new FreeList(
-        () => {
-          data *= 2;
-          return {id: id++, data: data, next: null};
-        },
-        (item) => {
-          item.data = null;
-        },
-        2);  // max occupancy
+      () => {
+        data *= 2;
+        return { id: id++, data: data, next: null };
+      },
+      (item) => {
+        item.data = null;
+      },
+      2
+    ); // max occupancy
   },
 
   tearDown() {

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.math.LineTest');
-goog.setTestOnly();
 
 const Coordinate = goog.require('goog.math.Coordinate');
 const Line = goog.require('goog.math.Line');

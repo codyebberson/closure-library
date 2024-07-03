@@ -16,7 +16,6 @@ goog.provide('goog.color.Rgb');
 goog.require('goog.color.names');
 goog.require('goog.math');
 
-
 /**
  * RGB color representation. An array containing three elements [r, g, b],
  * each an integer in [0, 255], representing the red, green, and blue components
@@ -24,7 +23,6 @@ goog.require('goog.math');
  * @typedef {Array<number>}
  */
 goog.color.Rgb;
-
 
 /**
  * HSV color representation. An array containing three elements [h, s, v]:
@@ -35,7 +33,6 @@ goog.color.Rgb;
  */
 goog.color.Hsv;
 
-
 /**
  * HSL color representation. An array containing three elements [h, s, l]:
  * h (hue) must be an integer in [0, 360], cyclic.
@@ -45,7 +42,6 @@ goog.color.Hsv;
  */
 goog.color.Hsl;
 
-
 /**
  * Parses a color out of a string.
  * @param {string} str Color in some format.
@@ -53,8 +49,7 @@ goog.color.Hsl;
  *     representation of the color, 'type' is a string containing the type
  *     of color format passed in ('hex', 'rgb', 'named').
  */
-goog.color.parse = function(str) {
-  'use strict';
+goog.color.parse = (str) => {
   const result = {};
   str = String(str);
 
@@ -81,22 +76,20 @@ goog.color.parse = function(str) {
   throw Error(str + ' is not a valid color string');
 };
 
-
 /**
  * Determines if the given string can be parsed as a color.
  *     {@see goog.color.parse}.
  * @param {string} str Potential color string.
  * @return {boolean} True if str is in a format that can be parsed to a color.
  */
-goog.color.isValidColor = function(str) {
-  'use strict';
+goog.color.isValidColor = (str) => {
   const maybeHex = goog.color.prependHashIfNecessaryHelper(str);
   return !!(
-      goog.color.isValidHexColor_(maybeHex) ||
-      goog.color.isValidRgbColor_(str).length ||
-      goog.color.names && goog.color.names[str.toLowerCase()]);
+    goog.color.isValidHexColor_(maybeHex) ||
+    goog.color.isValidRgbColor_(str).length ||
+    (goog.color.names && goog.color.names[str.toLowerCase()])
+  );
 };
-
 
 /**
  * Parses red, green, blue components out of a valid rgb color string.
@@ -105,8 +98,7 @@ goog.color.isValidColor = function(str) {
  *    {@see goog.color.isValidRgbColor_}.
  * @return {!goog.color.Rgb} rgb representation of the color.
  */
-goog.color.parseRgb = function(str) {
-  'use strict';
+goog.color.parseRgb = (str) => {
   const rgb = goog.color.isValidRgbColor_(str);
   if (!rgb.length) {
     throw Error(str + ' is not a valid RGB color');
@@ -114,18 +106,13 @@ goog.color.parseRgb = function(str) {
   return rgb;
 };
 
-
 /**
  * Converts a hex representation of a color to RGB.
  * @param {string} hexColor Color to convert.
  * @return {string} string of the form 'rgb(R,G,B)' which can be used in
  *    styles.
  */
-goog.color.hexToRgbStyle = function(hexColor) {
-  'use strict';
-  return goog.color.rgbStyle_(goog.color.hexToRgb(hexColor));
-};
-
+goog.color.hexToRgbStyle = (hexColor) => goog.color.rgbStyle_(goog.color.hexToRgb(hexColor));
 
 /**
  * Regular expression for extracting the digits in a hex color triplet.
@@ -134,41 +121,37 @@ goog.color.hexToRgbStyle = function(hexColor) {
  */
 goog.color.hexTripletRe_ = /#(.)(.)(.)/;
 
-
 /**
  * Normalize an hex representation of a color
  * @param {string} hexColor an hex color string.
  * @return {string} hex color in the format '#rrggbb' with all lowercase
  *     literals.
  */
-goog.color.normalizeHex = function(hexColor) {
-  'use strict';
+goog.color.normalizeHex = (hexColor) => {
   if (!goog.color.isValidHexColor_(hexColor)) {
     throw Error("'" + hexColor + "' is not a valid hex color");
   }
-  if (hexColor.length == 4) {  // of the form #RGB
+  if (hexColor.length == 4) {
+    // of the form #RGB
     hexColor = hexColor.replace(goog.color.hexTripletRe_, '#$1$1$2$2$3$3');
   }
   return hexColor.toLowerCase();
 };
-
 
 /**
  * Converts a hex representation of a color to RGB.
  * @param {string} hexColor Color to convert.
  * @return {!goog.color.Rgb} rgb representation of the color.
  */
-goog.color.hexToRgb = function(hexColor) {
-  'use strict';
+goog.color.hexToRgb = (hexColor) => {
   hexColor = goog.color.normalizeHex(hexColor);
-  const rgb = parseInt(hexColor.slice(1), 16);
+  const rgb = Number.parseInt(hexColor.slice(1), 16);
   const r = rgb >> 16;
   const g = (rgb >> 8) & 255;
   const b = rgb & 255;
 
   return [r, g, b];
 };
-
 
 /**
  * Converts a color from RGB to hex representation.
@@ -177,8 +160,7 @@ goog.color.hexToRgb = function(hexColor) {
  * @param {number} b Amount of blue, int between 0 and 255.
  * @return {string} hex representation of the color.
  */
-goog.color.rgbToHex = function(r, g, b) {
-  'use strict';
+goog.color.rgbToHex = (r, g, b) => {
   r = Number(r);
   g = Number(g);
   b = Number(b);
@@ -192,17 +174,12 @@ goog.color.rgbToHex = function(r, g, b) {
   return '#' + rgb.toString(16);
 };
 
-
 /**
  * Converts a color from RGB to hex representation.
  * @param {goog.color.Rgb} rgb rgb representation of the color.
  * @return {string} hex representation of the color.
  */
-goog.color.rgbArrayToHex = function(rgb) {
-  'use strict';
-  return goog.color.rgbToHex(rgb[0], rgb[1], rgb[2]);
-};
-
+goog.color.rgbArrayToHex = (rgb) => goog.color.rgbToHex(rgb[0], rgb[1], rgb[2]);
 
 /**
  * Converts a color from RGB color space to HSL color space.
@@ -212,8 +189,7 @@ goog.color.rgbArrayToHex = function(rgb) {
  * @param {number} b Value of blue, in [0, 255].
  * @return {!goog.color.Hsl} hsl representation of the color.
  */
-goog.color.rgbToHsl = function(r, g, b) {
-  'use strict';
+goog.color.rgbToHsl = (r, g, b) => {
   // First must normalize r, g, b to be between 0 and 1.
   const normR = r / 255;
   const normG = g / 255;
@@ -230,11 +206,11 @@ goog.color.rgbToHsl = function(r, g, b) {
   // If max and min are equal, the color is gray and h and s should be 0.
   if (max != min) {
     if (max == normR) {
-      h = 60 * (normG - normB) / (max - min);
+      h = (60 * (normG - normB)) / (max - min);
     } else if (max == normG) {
-      h = 60 * (normB - normR) / (max - min) + 120;
+      h = (60 * (normB - normR)) / (max - min) + 120;
     } else if (max == normB) {
-      h = 60 * (normR - normG) / (max - min) + 240;
+      h = (60 * (normR - normG)) / (max - min) + 240;
     }
 
     if (0 < l && l <= 0.5) {
@@ -248,17 +224,12 @@ goog.color.rgbToHsl = function(r, g, b) {
   return [Math.round(h + 360) % 360, s, l];
 };
 
-
 /**
  * Converts a color from RGB color space to HSL color space.
  * @param {goog.color.Rgb} rgb rgb representation of the color.
  * @return {!goog.color.Hsl} hsl representation of the color.
  */
-goog.color.rgbArrayToHsl = function(rgb) {
-  'use strict';
-  return goog.color.rgbToHsl(rgb[0], rgb[1], rgb[2]);
-};
-
+goog.color.rgbArrayToHsl = (rgb) => goog.color.rgbToHsl(rgb[0], rgb[1], rgb[2]);
 
 /**
  * Helper for hslToRgb.
@@ -268,23 +239,21 @@ goog.color.rgbArrayToHsl = function(rgb) {
  * @return {number} Appropriate RGB value, given the above.
  * @private
  */
-goog.color.hueToRgb_ = function(v1, v2, vH) {
-  'use strict';
+goog.color.hueToRgb_ = (v1, v2, vH) => {
   if (vH < 0) {
     vH += 1;
   } else if (vH > 1) {
     vH -= 1;
   }
-  if ((6 * vH) < 1) {
-    return (v1 + (v2 - v1) * 6 * vH);
+  if (6 * vH < 1) {
+    return v1 + (v2 - v1) * 6 * vH;
   } else if (2 * vH < 1) {
     return v2;
   } else if (3 * vH < 2) {
-    return (v1 + (v2 - v1) * ((2 / 3) - vH) * 6);
+    return v1 + (v2 - v1) * (2 / 3 - vH) * 6;
   }
   return v1;
 };
-
 
 /**
  * Converts a color from HSL color space to RGB color space.
@@ -294,12 +263,11 @@ goog.color.hueToRgb_ = function(v1, v2, vH) {
  * @param {number} l Luminosity, in [0, 1].
  * @return {!goog.color.Rgb} rgb representation of the color.
  */
-goog.color.hslToRgb = function(h, s, l) {
-  'use strict';
+goog.color.hslToRgb = (h, s, l) => {
   let r = 0;
   let g = 0;
   let b = 0;
-  const normH = h / 360;  // normalize h to fall in [0, 1]
+  const normH = h / 360; // normalize h to fall in [0, 1]
 
   if (s == 0) {
     r = g = b = l * 255;
@@ -309,28 +277,23 @@ goog.color.hslToRgb = function(h, s, l) {
     if (l < 0.5) {
       temp2 = l * (1 + s);
     } else {
-      temp2 = l + s - (s * l);
+      temp2 = l + s - s * l;
     }
     temp1 = 2 * l - temp2;
-    r = 255 * goog.color.hueToRgb_(temp1, temp2, normH + (1 / 3));
+    r = 255 * goog.color.hueToRgb_(temp1, temp2, normH + 1 / 3);
     g = 255 * goog.color.hueToRgb_(temp1, temp2, normH);
-    b = 255 * goog.color.hueToRgb_(temp1, temp2, normH - (1 / 3));
+    b = 255 * goog.color.hueToRgb_(temp1, temp2, normH - 1 / 3);
   }
 
   return [Math.round(r), Math.round(g), Math.round(b)];
 };
-
 
 /**
  * Converts a color from HSL color space to RGB color space.
  * @param {goog.color.Hsl} hsl hsl representation of the color.
  * @return {!goog.color.Rgb} rgb representation of the color.
  */
-goog.color.hslArrayToRgb = function(hsl) {
-  'use strict';
-  return goog.color.hslToRgb(hsl[0], hsl[1], hsl[2]);
-};
-
+goog.color.hslArrayToRgb = (hsl) => goog.color.hslToRgb(hsl[0], hsl[1], hsl[2]);
 
 /**
  * Helper for isValidHexColor_.
@@ -339,7 +302,6 @@ goog.color.hslArrayToRgb = function(hsl) {
  */
 goog.color.validHexColorRe_ = /^#(?:[0-9a-f]{3}){1,2}$/i;
 
-
 /**
  * Checks if a string is a valid hex color.  We expect strings of the format
  * #RRGGBB (ex: #1b3d5f) or #RGB (ex: #3CA == #33CCAA).
@@ -347,11 +309,7 @@ goog.color.validHexColorRe_ = /^#(?:[0-9a-f]{3}){1,2}$/i;
  * @return {boolean} Whether the string is a valid hex color.
  * @private
  */
-goog.color.isValidHexColor_ = function(str) {
-  'use strict';
-  return goog.color.validHexColorRe_.test(str);
-};
-
+goog.color.isValidHexColor_ = (str) => goog.color.validHexColorRe_.test(str);
 
 /**
  * Regular expression for matching and capturing RGB style strings. Helper for
@@ -359,9 +317,7 @@ goog.color.isValidHexColor_ = function(str) {
  * @type {!RegExp}
  * @private
  */
-goog.color.rgbColorRe_ =
-    /^(?:rgb)?\((0|[1-9]\d{0,2}),\s?(0|[1-9]\d{0,2}),\s?(0|[1-9]\d{0,2})\)$/i;
-
+goog.color.rgbColorRe_ = /^(?:rgb)?\((0|[1-9]\d{0,2}),\s?(0|[1-9]\d{0,2}),\s?(0|[1-9]\d{0,2})\)$/i;
 
 /**
  * Checks if a string is a valid rgb color.  We expect strings of the format
@@ -372,8 +328,7 @@ goog.color.rgbColorRe_ =
  *     a valid color, or the empty array otherwise.
  * @private
  */
-goog.color.isValidRgbColor_ = function(str) {
-  'use strict';
+goog.color.isValidRgbColor_ = (str) => {
   // Each component is separate (rather than using a repeater) so we can
   // capture the match. Also, we explicitly set each component to be either 0,
   // or start with a non-zero, to prevent octal numbers from slipping through.
@@ -389,7 +344,6 @@ goog.color.isValidRgbColor_ = function(str) {
   return [];
 };
 
-
 /**
  * Takes a hex value and prepends a zero if it's a single digit.
  * Small helper method for use by goog.color and friends.
@@ -397,11 +351,7 @@ goog.color.isValidRgbColor_ = function(str) {
  * @return {string} hex value prepended with zero if it was single digit,
  *     otherwise the same value that was passed in.
  */
-goog.color.prependZeroIfNecessaryHelper = function(hex) {
-  'use strict';
-  return hex.length == 1 ? '0' + hex : hex;
-};
-
+goog.color.prependZeroIfNecessaryHelper = (hex) => (hex.length == 1 ? '0' + hex : hex);
 
 /**
  * Takes a string a prepends a '#' sign if one doesn't exist.
@@ -410,11 +360,7 @@ goog.color.prependZeroIfNecessaryHelper = function(hex) {
  * @return {string} The value passed in, prepended with a '#' if it didn't
  *     already have one.
  */
-goog.color.prependHashIfNecessaryHelper = function(str) {
-  'use strict';
-  return str.charAt(0) == '#' ? str : '#' + str;
-};
-
+goog.color.prependHashIfNecessaryHelper = (str) => (str.charAt(0) == '#' ? str : '#' + str);
 
 /**
  * Takes an array of [r, g, b] and converts it into a string appropriate for
@@ -423,11 +369,7 @@ goog.color.prependHashIfNecessaryHelper = function(str) {
  * @return {string} string of the form 'rgb(r,g,b)'.
  * @private
  */
-goog.color.rgbStyle_ = function(rgb) {
-  'use strict';
-  return 'rgb(' + rgb.join(',') + ')';
-};
-
+goog.color.rgbStyle_ = (rgb) => 'rgb(' + rgb.join(',') + ')';
 
 /**
  * Converts an HSV triplet to an RGB array.  V is brightness because b is
@@ -437,8 +379,7 @@ goog.color.rgbStyle_ = function(rgb) {
  * @param {number} brightness brightness in [0, 255].
  * @return {!goog.color.Rgb} rgb representation of the color.
  */
-goog.color.hsvToRgb = function(h, s, brightness) {
-  'use strict';
+goog.color.hsvToRgb = (h, s, brightness) => {
   let red = 0;
   let green = 0;
   let blue = 0;
@@ -448,10 +389,10 @@ goog.color.hsvToRgb = function(h, s, brightness) {
     blue = brightness;
   } else {
     const sextant = Math.floor(h / 60);
-    const remainder = (h / 60) - sextant;
+    const remainder = h / 60 - sextant;
     const val1 = brightness * (1 - s);
-    const val2 = brightness * (1 - (s * remainder));
-    const val3 = brightness * (1 - (s * (1 - remainder)));
+    const val2 = brightness * (1 - s * remainder);
+    const val3 = brightness * (1 - s * (1 - remainder));
     switch (sextant) {
       case 1:
         red = val2;
@@ -490,7 +431,6 @@ goog.color.hsvToRgb = function(h, s, brightness) {
   return [Math.round(red), Math.round(green), Math.round(blue)];
 };
 
-
 /**
  * Converts from RGB values to an array of HSV values.
  * @param {number} red Red value in [0, 255].
@@ -498,8 +438,7 @@ goog.color.hsvToRgb = function(h, s, brightness) {
  * @param {number} blue Blue value in [0, 255].
  * @return {!goog.color.Hsv} hsv representation of the color.
  */
-goog.color.rgbToHsv = function(red, green, blue) {
-  'use strict';
+goog.color.rgbToHsv = (red, green, blue) => {
   const max = Math.max(Math.max(red, green), blue);
   const min = Math.min(Math.min(red, green), blue);
   let hue;
@@ -509,15 +448,15 @@ goog.color.rgbToHsv = function(red, green, blue) {
     hue = 0;
     saturation = 0;
   } else {
-    const delta = (max - min);
+    const delta = max - min;
     saturation = delta / max;
 
     if (red == max) {
       hue = (green - blue) / delta;
     } else if (green == max) {
-      hue = 2 + ((blue - red) / delta);
+      hue = 2 + (blue - red) / delta;
     } else {
-      hue = 4 + ((red - green) / delta);
+      hue = 4 + (red - green) / delta;
     }
     hue *= 60;
     if (hue < 0) {
@@ -531,40 +470,29 @@ goog.color.rgbToHsv = function(red, green, blue) {
   return [hue, saturation, value];
 };
 
-
 /**
  * Converts from an array of RGB values to an array of HSV values.
  * @param {goog.color.Rgb} rgb rgb representation of the color.
  * @return {!goog.color.Hsv} hsv representation of the color.
  */
-goog.color.rgbArrayToHsv = function(rgb) {
-  'use strict';
-  return goog.color.rgbToHsv(rgb[0], rgb[1], rgb[2]);
-};
-
+goog.color.rgbArrayToHsv = (rgb) => goog.color.rgbToHsv(rgb[0], rgb[1], rgb[2]);
 
 /**
  * Converts an HSV triplet to an RGB array.
  * @param {goog.color.Hsv} hsv hsv representation of the color.
  * @return {!goog.color.Rgb} rgb representation of the color.
  */
-goog.color.hsvArrayToRgb = function(hsv) {
-  'use strict';
-  return goog.color.hsvToRgb(hsv[0], hsv[1], hsv[2]);
-};
-
+goog.color.hsvArrayToRgb = (hsv) => goog.color.hsvToRgb(hsv[0], hsv[1], hsv[2]);
 
 /**
  * Converts a hex representation of a color to HSL.
  * @param {string} hex Color to convert.
  * @return {!goog.color.Hsl} hsl representation of the color.
  */
-goog.color.hexToHsl = function(hex) {
-  'use strict';
+goog.color.hexToHsl = (hex) => {
   const rgb = goog.color.hexToRgb(hex);
   return goog.color.rgbToHsl(rgb[0], rgb[1], rgb[2]);
 };
-
 
 /**
  * Converts from h,s,l values to a hex string
@@ -573,33 +501,22 @@ goog.color.hexToHsl = function(hex) {
  * @param {number} l Luminosity, in [0, 1].
  * @return {string} hex representation of the color.
  */
-goog.color.hslToHex = function(h, s, l) {
-  'use strict';
-  return goog.color.rgbArrayToHex(goog.color.hslToRgb(h, s, l));
-};
-
+goog.color.hslToHex = (h, s, l) => goog.color.rgbArrayToHex(goog.color.hslToRgb(h, s, l));
 
 /**
  * Converts from an hsl array to a hex string
  * @param {goog.color.Hsl} hsl hsl representation of the color.
  * @return {string} hex representation of the color.
  */
-goog.color.hslArrayToHex = function(hsl) {
-  'use strict';
-  return goog.color.rgbArrayToHex(goog.color.hslToRgb(hsl[0], hsl[1], hsl[2]));
-};
-
+goog.color.hslArrayToHex = (hsl) =>
+  goog.color.rgbArrayToHex(goog.color.hslToRgb(hsl[0], hsl[1], hsl[2]));
 
 /**
  * Converts a hex representation of a color to HSV
  * @param {string} hex Color to convert.
  * @return {!goog.color.Hsv} hsv representation of the color.
  */
-goog.color.hexToHsv = function(hex) {
-  'use strict';
-  return goog.color.rgbArrayToHsv(goog.color.hexToRgb(hex));
-};
-
+goog.color.hexToHsv = (hex) => goog.color.rgbArrayToHsv(goog.color.hexToRgb(hex));
 
 /**
  * Converts from h,s,v values to a hex string
@@ -608,22 +525,14 @@ goog.color.hexToHsv = function(hex) {
  * @param {number} v Value, in [0, 255].
  * @return {string} hex representation of the color.
  */
-goog.color.hsvToHex = function(h, s, v) {
-  'use strict';
-  return goog.color.rgbArrayToHex(goog.color.hsvToRgb(h, s, v));
-};
-
+goog.color.hsvToHex = (h, s, v) => goog.color.rgbArrayToHex(goog.color.hsvToRgb(h, s, v));
 
 /**
  * Converts from an HSV array to a hex string
  * @param {goog.color.Hsv} hsv hsv representation of the color.
  * @return {string} hex representation of the color.
  */
-goog.color.hsvArrayToHex = function(hsv) {
-  'use strict';
-  return goog.color.hsvToHex(hsv[0], hsv[1], hsv[2]);
-};
-
+goog.color.hsvArrayToHex = (hsv) => goog.color.hsvToHex(hsv[0], hsv[1], hsv[2]);
 
 /**
  * Calculates the Euclidean distance between two color vectors on an HSL sphere.
@@ -636,8 +545,7 @@ goog.color.hsvArrayToHex = function(hsv) {
  * @param {goog.color.Hsl} hsl2 Second color in hsl representation.
  * @return {number} Distance between the two colors, in the range [0, 1].
  */
-goog.color.hslDistance = function(hsl1, hsl2) {
-  'use strict';
+goog.color.hslDistance = (hsl1, hsl2) => {
   let sl1;
   let sl2;
 
@@ -656,10 +564,10 @@ goog.color.hslDistance = function(hsl1, hsl2) {
   const h1 = hsl1[0] / 360.0;
   const h2 = hsl2[0] / 360.0;
   const dh = (h1 - h2) * 2.0 * Math.PI;
-  return (hsl1[2] - hsl2[2]) * (hsl1[2] - hsl2[2]) + sl1 * sl1 + sl2 * sl2 -
-      2 * sl1 * sl2 * Math.cos(dh);
+  return (
+    (hsl1[2] - hsl2[2]) * (hsl1[2] - hsl2[2]) + sl1 * sl1 + sl2 * sl2 - 2 * sl1 * sl2 * Math.cos(dh)
+  );
 };
-
 
 /**
  * Blend two colors together, using the specified factor to indicate the weight
@@ -671,17 +579,15 @@ goog.color.hslDistance = function(hsl1, hsl2) {
  *     If greater than 1, factor will be set to 1.
  * @return {!goog.color.Rgb} Combined color represented in rgb.
  */
-goog.color.blend = function(rgb1, rgb2, factor) {
-  'use strict';
+goog.color.blend = (rgb1, rgb2, factor) => {
   factor = goog.math.clamp(factor, 0, 1);
 
   return [
     Math.round(rgb2[0] + factor * (rgb1[0] - rgb2[0])),
     Math.round(rgb2[1] + factor * (rgb1[1] - rgb2[1])),
-    Math.round(rgb2[2] + factor * (rgb1[2] - rgb2[2]))
+    Math.round(rgb2[2] + factor * (rgb1[2] - rgb2[2])),
   ];
 };
-
 
 /**
  * Adds black to the specified color, darkening it
@@ -691,12 +597,10 @@ goog.color.blend = function(rgb1, rgb2, factor) {
  *     than 1, factor will be set to 1.
  * @return {!goog.color.Rgb} Combined rgb color.
  */
-goog.color.darken = function(rgb, factor) {
-  'use strict';
+goog.color.darken = (rgb, factor) => {
   const black = [0, 0, 0];
   return goog.color.blend(black, rgb, factor);
 };
-
 
 /**
  * Adds white to the specified color, lightening it
@@ -706,12 +610,10 @@ goog.color.darken = function(rgb, factor) {
  *     than 1, factor will be set to 1.
  * @return {!goog.color.Rgb} Combined rgb color.
  */
-goog.color.lighten = function(rgb, factor) {
-  'use strict';
+goog.color.lighten = (rgb, factor) => {
   const white = [255, 255, 255];
   return goog.color.blend(white, rgb, factor);
 };
-
 
 /**
  * Find the "best" (highest-contrast) of the suggested colors for the prime
@@ -722,23 +624,19 @@ goog.color.lighten = function(rgb, factor) {
  *     each representing a rgb array.
  * @return {!goog.color.Rgb} Highest-contrast color represented by an array..
  */
-goog.color.highContrast = function(prime, suggestions) {
-  'use strict';
+goog.color.highContrast = (prime, suggestions) => {
   const suggestionsWithDiff = [];
   for (let i = 0; i < suggestions.length; i++) {
     suggestionsWithDiff.push({
       color: suggestions[i],
-      diff: goog.color.yiqBrightnessDiff_(suggestions[i], prime) +
-          goog.color.colorDiff_(suggestions[i], prime)
+      diff:
+        goog.color.yiqBrightnessDiff_(suggestions[i], prime) +
+        goog.color.colorDiff_(suggestions[i], prime),
     });
   }
-  suggestionsWithDiff.sort(function(a, b) {
-    'use strict';
-    return b.diff - a.diff;
-  });
+  suggestionsWithDiff.sort((a, b) => b.diff - a.diff);
   return suggestionsWithDiff[0].color;
 };
-
 
 /**
  * Calculate brightness of a color according to YIQ formula (brightness is Y).
@@ -748,11 +646,8 @@ goog.color.highContrast = function(prime, suggestions) {
  * @return {number} brightness (Y).
  * @private
  */
-goog.color.yiqBrightness_ = function(rgb) {
-  'use strict';
-  return Math.round((rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000);
-};
-
+goog.color.yiqBrightness_ = (rgb) =>
+  Math.round((rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000);
 
 /**
  * Calculate difference in brightness of two colors. Helper method for
@@ -762,12 +657,8 @@ goog.color.yiqBrightness_ = function(rgb) {
  * @return {number} Brightness difference.
  * @private
  */
-goog.color.yiqBrightnessDiff_ = function(rgb1, rgb2) {
-  'use strict';
-  return Math.abs(
-      goog.color.yiqBrightness_(rgb1) - goog.color.yiqBrightness_(rgb2));
-};
-
+goog.color.yiqBrightnessDiff_ = (rgb1, rgb2) =>
+  Math.abs(goog.color.yiqBrightness_(rgb1) - goog.color.yiqBrightness_(rgb2));
 
 /**
  * Calculate color difference between two colors. Helper method for
@@ -777,8 +668,5 @@ goog.color.yiqBrightnessDiff_ = function(rgb1, rgb2) {
  * @return {number} Color difference.
  * @private
  */
-goog.color.colorDiff_ = function(rgb1, rgb2) {
-  'use strict';
-  return Math.abs(rgb1[0] - rgb2[0]) + Math.abs(rgb1[1] - rgb2[1]) +
-      Math.abs(rgb1[2] - rgb2[2]);
-};
+goog.color.colorDiff_ = (rgb1, rgb2) =>
+  Math.abs(rgb1[0] - rgb2[0]) + Math.abs(rgb1[1] - rgb2[1]) + Math.abs(rgb1[2] - rgb2[2]);

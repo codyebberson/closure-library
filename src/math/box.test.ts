@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.math.BoxTest');
-goog.setTestOnly();
 
 const Box = goog.require('goog.math.Box');
 const Coordinate = goog.require('goog.math.Coordinate');
@@ -90,8 +89,7 @@ testSuite({
     }
 
     function assertNotContains(boxB) {
-      assertFalse(
-          `${box} expected to not contain ${boxB}`, Box.contains(box, boxB));
+      assertFalse(`${box} expected to not contain ${boxB}`, Box.contains(box, boxB));
     }
 
     assertContains(new Box(60, 90, 90, 60));
@@ -106,13 +104,10 @@ testSuite({
     const box = new Box(50, 100, 100, 50);
 
     function assertIntersects(boxB) {
-      assertTrue(
-          `${box} expected to intersect ${boxB}`, Box.intersects(box, boxB));
+      assertTrue(`${box} expected to intersect ${boxB}`, Box.intersects(box, boxB));
     }
     function assertNotIntersects(boxB) {
-      assertFalse(
-          `${box} expected to not intersect ${boxB}`,
-          Box.intersects(box, boxB));
+      assertFalse(`${box} expected to not intersect ${boxB}`, Box.intersects(box, boxB));
     }
 
     assertIntersects(box);
@@ -149,13 +144,15 @@ testSuite({
 
     function assertIntersects(boxB, padding) {
       assertTrue(
-          `${box} expected to intersect ${boxB} with padding ${padding}`,
-          Box.intersectsWithPadding(box, boxB, padding));
+        `${box} expected to intersect ${boxB} with padding ${padding}`,
+        Box.intersectsWithPadding(box, boxB, padding)
+      );
     }
     function assertNotIntersects(boxB, padding) {
       assertFalse(
-          `${box} expected to not intersect ${boxB} with padding ${padding}`,
-          Box.intersectsWithPadding(box, boxB, padding));
+        `${box} expected to not intersect ${boxB} with padding ${padding}`,
+        Box.intersectsWithPadding(box, boxB, padding)
+      );
     }
 
     assertIntersects(box, 10);
@@ -253,69 +250,63 @@ testSuite({
 
   testBoundingBox() {
     assertObjectEquals(
-        new Box(1, 10, 11, 0),
-        Box.boundingBox(
-            new Coordinate(5, 5), new Coordinate(5, 11), new Coordinate(0, 5),
-            new Coordinate(5, 1), new Coordinate(10, 5)));
+      new Box(1, 10, 11, 0),
+      Box.boundingBox(
+        new Coordinate(5, 5),
+        new Coordinate(5, 11),
+        new Coordinate(0, 5),
+        new Coordinate(5, 1),
+        new Coordinate(10, 5)
+      )
+    );
   },
 
   testBoxCeil() {
     const box = new Box(11.4, 26.6, 17.8, 9.2);
-    assertEquals(
-        'The function should return the target instance', box, box.ceil());
+    assertEquals('The function should return the target instance', box, box.ceil());
     assertObjectEquals(new Box(12, 27, 18, 10), box);
   },
 
   testBoxFloor() {
     const box = new Box(11.4, 26.6, 17.8, 9.2);
-    assertEquals(
-        'The function should return the target instance', box, box.floor());
+    assertEquals('The function should return the target instance', box, box.floor());
     assertObjectEquals(new Box(11, 26, 17, 9), box);
   },
 
   testBoxRound() {
     const box = new Box(11.4, 26.6, 17.8, 9.2);
-    assertEquals(
-        'The function should return the target instance', box, box.round());
+    assertEquals('The function should return the target instance', box, box.round());
     assertObjectEquals(new Box(11, 27, 18, 9), box);
   },
 
   testBoxTranslateCoordinate() {
     const box = new Box(10, 30, 20, 5);
     const c = new Coordinate(10, 5);
-    assertEquals(
-        'The function should return the target instance', box,
-        box.translate(c));
+    assertEquals('The function should return the target instance', box, box.translate(c));
     assertObjectEquals(new Box(15, 40, 25, 15), box);
   },
 
   testBoxTranslateXY() {
     const box = new Box(10, 30, 20, 5);
-    assertEquals(
-        'The function should return the target instance', box,
-        box.translate(5, 2));
+    assertEquals('The function should return the target instance', box, box.translate(5, 2));
     assertObjectEquals(new Box(12, 35, 22, 10), box);
   },
 
   testBoxTranslateX() {
     const box = new Box(10, 30, 20, 5);
-    assertEquals(
-        'The function should return the target instance', box,
-        box.translate(3));
+    assertEquals('The function should return the target instance', box, box.translate(3));
     assertObjectEquals(new Box(10, 33, 20, 8), box);
   },
 
   testBoxScaleXY() {
     const box = new Box(10, 20, 30, 5);
-    assertEquals(
-        'The function should return the target instance', box, box.scale(2, 3));
+    assertEquals('The function should return the target instance', box, box.scale(2, 3));
     assertObjectEquals(new Box(30, 40, 90, 10), box);
   },
 
   testBoxScaleFactor() {
     const box = new Box(10, 20, 30, 5);
-    assertEquals(
-        'The function should return the target instance', box, box.scale(2));
+    assertEquals('The function should return the target instance', box, box.scale(2));
     assertObjectEquals(new Box(20, 40, 60, 10), box);
   },
 });

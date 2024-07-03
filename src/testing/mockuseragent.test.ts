@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.MockUserAgentTest');
-goog.setTestOnly();
 
 const MockUserAgent = goog.require('goog.testing.MockUserAgent');
 const dispose = goog.require('goog.dispose');
@@ -42,9 +41,10 @@ testSuite({
 
   /** @suppress {visibility} suppression added to enable type checking */
   testMockUserAgentGetAgent() {
-    const uaString = 'Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US) ' +
-        'AppleWebKit/525.13 (KHTML, like Gecko) ' +
-        'Chrome/0.2.149.27 Safari/525.13';
+    const uaString =
+      'Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US) ' +
+      'AppleWebKit/525.13 (KHTML, like Gecko) ' +
+      'Chrome/0.2.149.27 Safari/525.13';
 
     mockUserAgent = new MockUserAgent();
     mockUserAgent.setUserAgentString(uaString);

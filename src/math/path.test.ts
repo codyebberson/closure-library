@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.math.PathTest');
-goog.setTestOnly();
 
 const AffineTransform = goog.require('goog.math.AffineTransform');
 const Path = goog.require('goog.math.Path');
@@ -15,7 +14,7 @@ const testSuite = goog.require('goog.testing.testSuite');
  * Array mapping numeric segment constant to a descriptive character.
  * @type {!Array<string>}
  */
-const SEGMENT_NAMES = function() {
+const SEGMENT_NAMES = (() => {
   const arr = [];
   arr[Path.Segment.MOVETO] = 'M';
   arr[Path.Segment.LINETO] = 'L';
@@ -23,7 +22,7 @@ const SEGMENT_NAMES = function() {
   arr[Path.Segment.ARCTO] = 'A';
   arr[Path.Segment.CLOSE] = 'X';
   return arr;
-}();
+})();
 
 /**
  * Test if the given path matches the expected array of commands and parameters.
@@ -57,10 +56,16 @@ testSuite({
   },
 
   testGetSegmentCount() {
-    assertArrayEquals([2, 2, 6, 6, 0], [
-      Path.Segment.MOVETO, Path.Segment.LINETO, Path.Segment.CURVETO,
-      Path.Segment.ARCTO, Path.Segment.CLOSE
-    ].map(Path.getSegmentCount));
+    assertArrayEquals(
+      [2, 2, 6, 6, 0],
+      [
+        Path.Segment.MOVETO,
+        Path.Segment.LINETO,
+        Path.Segment.CURVETO,
+        Path.Segment.ARCTO,
+        Path.Segment.CLOSE,
+      ].map(Path.getSegmentCount)
+    );
   },
 
   testSimpleMoveTo() {
@@ -176,9 +181,7 @@ testSuite({
     path.curveTo(10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120);
     assertTrue(path.isSimple());
     assertObjectEquals([110, 120], path.getCurrentPoint());
-    assertPathEquals(
-        ['M', 0, 0, 'C', 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
-        path);
+    assertPathEquals(['M', 0, 0, 'C', 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120], path);
   },
 
   testMultiCurveTo_fromArray() {
@@ -187,9 +190,7 @@ testSuite({
     path.curveToFromArray([10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]);
     assertTrue(path.isSimple());
     assertObjectEquals([110, 120], path.getCurrentPoint());
-    assertPathEquals(
-        ['M', 0, 0, 'C', 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
-        path);
+    assertPathEquals(['M', 0, 0, 'C', 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120], path);
   },
 
   testRepeatedCurveTo_fromArgs() {
@@ -199,9 +200,7 @@ testSuite({
     path.curveTo(70, 80, 90, 100, 110, 120);
     assertTrue(path.isSimple());
     assertObjectEquals([110, 120], path.getCurrentPoint());
-    assertPathEquals(
-        ['M', 0, 0, 'C', 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
-        path);
+    assertPathEquals(['M', 0, 0, 'C', 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120], path);
   },
 
   testRepeatedCurveTo_fromArray() {
@@ -211,9 +210,7 @@ testSuite({
     path.curveToFromArray([70, 80, 90, 100, 110, 120]);
     assertTrue(path.isSimple());
     assertObjectEquals([110, 120], path.getCurrentPoint());
-    assertPathEquals(
-        ['M', 0, 0, 'C', 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
-        path);
+    assertPathEquals(['M', 0, 0, 'C', 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120], path);
   },
 
   testSimpleArc() {
@@ -242,11 +239,9 @@ testSuite({
     assertFalse(path.isSimple());
     assertObjectEquals([50, 80], path.getCurrentPoint());
     assertPathEquals(
-        [
-          'M', 58.66, 70,    'A', 10, 20, 30, 30, 55, 77.32,
-          'M', 55,    77.32, 'A', 10, 20, 60, 30, 50, 80,
-        ],
-        path);
+      ['M', 58.66, 70, 'A', 10, 20, 30, 30, 55, 77.32, 'M', 55, 77.32, 'A', 10, 20, 60, 30, 50, 80],
+      path
+    );
   },
 
   testRepeatedArc2() {
@@ -254,26 +249,9 @@ testSuite({
     path.arc(50, 60, 10, 20, 30, 30, false);
     path.arc(50, 60, 10, 20, 60, 30, true);
     assertPathEquals(
-        [
-          'M',
-          58.66,
-          70,
-          'A',
-          10,
-          20,
-          30,
-          30,
-          55,
-          77.32,
-          'A',
-          10,
-          20,
-          60,
-          30,
-          50,
-          80,
-        ],
-        path);
+      ['M', 58.66, 70, 'A', 10, 20, 30, 30, 55, 77.32, 'A', 10, 20, 60, 30, 50, 80],
+      path
+    );
   },
 
   testCompleteCircle() {
@@ -320,8 +298,7 @@ testSuite({
     const p = path.getCurrentPoint();
     assertEquals(55, p[0]);
     assertRoughlyEquals(77.32, p[1], 0.01);
-    assertPathEquals(
-        ['M', 58.66, 70, 'C', 57.78, 73.04, 56.52, 75.57, 55, 77.32], path);
+    assertPathEquals(['M', 58.66, 70, 'C', 57.78, 73.04, 56.52, 75.57, 55, 77.32], path);
   },
 
   testCreateSimplifiedPath2() {
@@ -332,11 +309,30 @@ testSuite({
     path = Path.createSimplifiedPath(path);
     assertTrue(path.isSimple());
     assertPathEquals(
-        [
-          'M', 58.66, 70,    'C', 57.78, 73.04, 56.52, 75.57, 55, 77.32,
-          'M', 55,    77.32, 'C', 53.48, 79.08, 51.76, 80,    50, 80,
-        ],
-        path);
+      [
+        'M',
+        58.66,
+        70,
+        'C',
+        57.78,
+        73.04,
+        56.52,
+        75.57,
+        55,
+        77.32,
+        'M',
+        55,
+        77.32,
+        'C',
+        53.48,
+        79.08,
+        51.76,
+        80,
+        50,
+        80,
+      ],
+      path
+    );
   },
 
   testCreateSimplifiedPath3() {
@@ -346,26 +342,27 @@ testSuite({
     path.close();
     path = Path.createSimplifiedPath(path);
     assertPathEquals(
-        [
-          'M',
-          58.66,
-          70,
-          'C',
-          57.78,
-          73.04,
-          56.52,
-          75.57,
-          55,
-          77.32,
-          53.48,
-          79.08,
-          51.76,
-          80,
-          50,
-          80,
-          'X',
-        ],
-        path);
+      [
+        'M',
+        58.66,
+        70,
+        'C',
+        57.78,
+        73.04,
+        56.52,
+        75.57,
+        55,
+        77.32,
+        53.48,
+        79.08,
+        51.76,
+        80,
+        50,
+        80,
+        'X',
+      ],
+      path
+    );
     const p = path.getCurrentPoint();
     assertRoughlyEquals(58.66, p[0], 0.01);
     assertRoughlyEquals(70, p[1], 0.01);
@@ -375,8 +372,7 @@ testSuite({
     const path = new Path();
     path.moveTo(58.66, 70);
     path.arcToAsCurves(10, 20, 30, 30);
-    assertPathEquals(
-        ['M', 58.66, 70, 'C', 57.78, 73.04, 56.52, 75.57, 55, 77.32], path);
+    assertPathEquals(['M', 58.66, 70, 'C', 57.78, 73.04, 56.52, 75.57, 55, 77.32], path);
   },
 
   testCreateTransformedPath() {
@@ -433,11 +429,9 @@ testSuite({
     path1.appendPath(path2);
     assertFalse(path1.isSimple());
     assertPathEquals(
-        [
-          'M', 0,     0,  'L', 0,  10, 10, 10, 10, 0,     'X',
-          'M', 58.66, 70, 'A', 10, 20, 30, 30, 55, 77.32,
-        ],
-        path1);
+      ['M', 0, 0, 'L', 0, 10, 10, 10, 10, 0, 'X', 'M', 58.66, 70, 'A', 10, 20, 30, 30, 55, 77.32],
+      path1
+    );
   },
 
   testIsEmpty() {
@@ -460,14 +454,17 @@ testSuite({
     const Segment = Path.Segment;
     const segmentTypes = path.getSegmentTypes();
     assertArrayEquals(
-        'The returned segment types do not match the expected values',
-        [Segment.MOVETO, Segment.LINETO, Segment.CLOSE], segmentTypes);
+      'The returned segment types do not match the expected values',
+      [Segment.MOVETO, Segment.LINETO, Segment.CLOSE],
+      segmentTypes
+    );
 
     segmentTypes[2] = Segment.LINETO;
     assertArrayEquals(
-        'Modifying the returned segment types changed the path',
-        [Segment.MOVETO, Segment.LINETO, Segment.CLOSE],
-        path.getSegmentTypes());
+      'Modifying the returned segment types changed the path',
+      [Segment.MOVETO, Segment.LINETO, Segment.CLOSE],
+      path.getSegmentTypes()
+    );
   },
 
   testGetSegmentCounts() {
@@ -478,13 +475,17 @@ testSuite({
 
     const segmentTypes = path.getSegmentCounts();
     assertArrayEquals(
-        'The returned segment counts do not match the expected values',
-        [1, 2, 1], segmentTypes);
+      'The returned segment counts do not match the expected values',
+      [1, 2, 1],
+      segmentTypes
+    );
 
     segmentTypes[1] = 3;
     assertArrayEquals(
-        'Modifying the returned segment counts changed the path', [1, 2, 1],
-        path.getSegmentCounts());
+      'Modifying the returned segment counts changed the path',
+      [1, 2, 1],
+      path.getSegmentCounts()
+    );
   },
 
   testGetSegmentArgs() {
@@ -495,12 +496,16 @@ testSuite({
 
     const segmentTypes = path.getSegmentArgs();
     assertArrayEquals(
-        'The returned segment args do not match the expected values',
-        [0, 0, 10, 20, 30, 40], segmentTypes);
+      'The returned segment args do not match the expected values',
+      [0, 0, 10, 20, 30, 40],
+      segmentTypes
+    );
 
     segmentTypes[1] = -10;
     assertArrayEquals(
-        'Modifying the returned segment args changed the path',
-        [0, 0, 10, 20, 30, 40], path.getSegmentArgs());
+      'Modifying the returned segment args changed the path',
+      [0, 0, 10, 20, 30, 40],
+      path.getSegmentArgs()
+    );
   },
 });

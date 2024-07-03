@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.MockControlTest');
-goog.setTestOnly();
 
 const Mock = goog.require('goog.testing.Mock');
 const MockControl = goog.require('goog.testing.MockControl');
@@ -21,15 +20,15 @@ class MockMock {
   }
 }
 
-MockMock.prototype.$replay = function() {
+MockMock.prototype.$replay = function () {
   this.replayCalled = true;
 };
 
-MockMock.prototype.$reset = function() {
+MockMock.prototype.$reset = function () {
   this.resetCalled = true;
 };
 
-MockMock.prototype.$verify = function() {
+MockMock.prototype.$verify = function () {
   this.verifyCalled = true;
 };
 
@@ -102,11 +101,11 @@ testSuite({
 
     // $tearDown is optional.
     /** @suppress {checkTypes} suppression added to enable type checking */
-    mockMock2.$tearDown = function() {
+    mockMock2.$tearDown = function () {
       this.tearDownCalled = true;
     };
     /** @suppress {checkTypes} suppression added to enable type checking */
-    mockMockExcluded.$tearDown = function() {
+    mockMockExcluded.$tearDown = function () {
       this.tearDownCalled = true;
     };
 

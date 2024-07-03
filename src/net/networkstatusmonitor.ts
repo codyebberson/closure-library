@@ -13,15 +13,12 @@ goog.provide('goog.net.NetworkStatusMonitor');
 
 goog.require('goog.events.Listenable');
 
-
-
 /**
  * Base class for network status information providers.
  * @interface
  * @extends {goog.events.Listenable}
  */
-goog.net.NetworkStatusMonitor = function() {};
-
+goog.net.NetworkStatusMonitor = () => {};
 
 /**
  * Enum for the events dispatched by the OnlineHandler.
@@ -31,7 +28,6 @@ goog.net.NetworkStatusMonitor.EventType = {
   ONLINE: 'online',
   OFFLINE: 'offline',
 };
-
 
 /**
  * @return {boolean} Whether the system is online or otherwise.

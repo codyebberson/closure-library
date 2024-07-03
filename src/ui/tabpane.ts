@@ -27,8 +27,6 @@ goog.require('goog.html.SafeStyleSheet');
 goog.require('goog.style');
 goog.requireType('goog.events.BrowserEvent');
 
-
-
 /**
  * TabPane widget. All children already inside the tab pane container element
  * will be be converted to tabs. Each tab is represented by a goog.ui.TabPane.
@@ -46,9 +44,7 @@ goog.requireType('goog.events.BrowserEvent');
  * @see ../demos/tabpane.html
  * @deprecated Use goog.ui.TabBar instead.
  */
-goog.ui.TabPane = function(
-    el, opt_tabLocation, opt_domHelper, opt_useMouseDown) {
-  'use strict';
+goog.ui.TabPane = function (el, opt_tabLocation, opt_domHelper, opt_useMouseDown) {
   goog.events.EventTarget.call(this);
 
   /**
@@ -80,8 +76,7 @@ goog.ui.TabPane = function(
    * @type {goog.ui.TabPane.TabLocation}
    * @private
    */
-  this.tabLocation_ =
-      opt_tabLocation ? opt_tabLocation : goog.ui.TabPane.TabLocation.TOP;
+  this.tabLocation_ = opt_tabLocation ? opt_tabLocation : goog.ui.TabPane.TabLocation.TOP;
 
   /**
    * Whether to use MOUSEDOWN instead of CLICK for tab change events. This
@@ -95,14 +90,12 @@ goog.ui.TabPane = function(
 };
 goog.inherits(goog.ui.TabPane, goog.events.EventTarget);
 
-
 /**
  * Element containing the tab buttons.
  * @type {Element}
  * @private
  */
 goog.ui.TabPane.prototype.elButtonBar_;
-
 
 /**
  * Element containing the tab pages.
@@ -111,14 +104,12 @@ goog.ui.TabPane.prototype.elButtonBar_;
  */
 goog.ui.TabPane.prototype.elContent_;
 
-
 /**
  * Selected page.
  * @type {goog.ui.TabPane.TabPage?}
  * @private
  */
 goog.ui.TabPane.prototype.selected_;
-
 
 /**
  * Constants for event names
@@ -127,9 +118,8 @@ goog.ui.TabPane.prototype.selected_;
  */
 goog.ui.TabPane.Events = {
   /** @const {string} */
-  CHANGE: 'change'
+  CHANGE: 'change',
 };
-
 
 /**
  * Enum for representing the location of the tabs in relation to the content.
@@ -140,29 +130,27 @@ goog.ui.TabPane.TabLocation = {
   TOP: 0,
   BOTTOM: 1,
   LEFT: 2,
-  RIGHT: 3
+  RIGHT: 3,
 };
-
 
 /**
  * Creates HTML nodes for tab pane.
  *
  * @private
  */
-goog.ui.TabPane.prototype.create_ = function() {
-  'use strict';
+goog.ui.TabPane.prototype.create_ = function () {
   this.el_.className = goog.getCssName('goog-tabpane');
 
   var nodes = this.getChildNodes_();
 
   // Create tab strip
-  this.elButtonBar_ = this.dom_.createDom(
-      goog.dom.TagName.UL,
-      {'className': goog.getCssName('goog-tabpane-tabs'), 'tabIndex': '0'});
+  this.elButtonBar_ = this.dom_.createDom(goog.dom.TagName.UL, {
+    className: goog.getCssName('goog-tabpane-tabs'),
+    tabIndex: '0',
+  });
 
   // Create content area
-  this.elContent_ = this.dom_.createDom(
-      goog.dom.TagName.DIV, goog.getCssName('goog-tabpane-cont'));
+  this.elContent_ = this.dom_.createDom(goog.dom.TagName.DIV, goog.getCssName('goog-tabpane-cont'));
   this.el_.appendChild(this.elContent_);
 
   var element = goog.asserts.assertElement(this.el_);
@@ -193,16 +181,22 @@ goog.ui.TabPane.prototype.create_ = function() {
   // Listen for click and keydown events on header
   this.elButtonBar_.tabIndex = 0;
   goog.events.listen(
-      this.elButtonBar_, this.useMouseDown_ ? goog.events.EventType.MOUSEDOWN :
-                                              goog.events.EventType.CLICK,
-      this.onHeaderClick_, false, this);
+    this.elButtonBar_,
+    this.useMouseDown_ ? goog.events.EventType.MOUSEDOWN : goog.events.EventType.CLICK,
+    this.onHeaderClick_,
+    false,
+    this
+  );
   goog.events.listen(
-      this.elButtonBar_, goog.events.EventType.KEYDOWN, this.onHeaderKeyDown_,
-      false, this);
+    this.elButtonBar_,
+    goog.events.EventType.KEYDOWN,
+    this.onHeaderKeyDown_,
+    false,
+    this
+  );
 
   this.createPages_(nodes);
 };
-
 
 /**
  * Creates the HTML node for the clearing div, and associated style in
@@ -211,40 +205,42 @@ goog.ui.TabPane.prototype.create_ = function() {
  * @return {!Element} Reference to a DOM div node.
  * @private
  */
-goog.ui.TabPane.prototype.createClear_ = function() {
-  'use strict';
+goog.ui.TabPane.prototype.createClear_ = function () {
   var clearFloatStyle = goog.html.SafeStyleSheet.createRule(
-      '.' + goog.getCssName('goog-tabpane-clear'),
-      {'clear': 'both', 'height': '0', 'overflow': 'hidden'});
+    '.' + goog.getCssName('goog-tabpane-clear'),
+    { clear: 'both', height: '0', overflow: 'hidden' }
+  );
   goog.style.installSafeStyleSheet(clearFloatStyle);
-  return this.dom_.createDom(
-      goog.dom.TagName.DIV, goog.getCssName('goog-tabpane-clear'));
+  return this.dom_.createDom(goog.dom.TagName.DIV, goog.getCssName('goog-tabpane-clear'));
 };
 
-
 /** @override */
-goog.ui.TabPane.prototype.disposeInternal = function() {
-  'use strict';
+goog.ui.TabPane.prototype.disposeInternal = function () {
   goog.ui.TabPane.superClass_.disposeInternal.call(this);
   goog.events.unlisten(
-      this.elButtonBar_, this.useMouseDown_ ? goog.events.EventType.MOUSEDOWN :
-                                              goog.events.EventType.CLICK,
-      this.onHeaderClick_, false, this);
+    this.elButtonBar_,
+    this.useMouseDown_ ? goog.events.EventType.MOUSEDOWN : goog.events.EventType.CLICK,
+    this.onHeaderClick_,
+    false,
+    this
+  );
   goog.events.unlisten(
-      this.elButtonBar_, goog.events.EventType.KEYDOWN, this.onHeaderKeyDown_,
-      false, this);
+    this.elButtonBar_,
+    goog.events.EventType.KEYDOWN,
+    this.onHeaderKeyDown_,
+    false,
+    this
+  );
   delete this.el_;
   this.elButtonBar_ = null;
   this.elContent_ = null;
 };
 
-
 /**
  * @return {!Array<Element>} The element child nodes of tab pane container.
  * @private
  */
-goog.ui.TabPane.prototype.getChildNodes_ = function() {
-  'use strict';
+goog.ui.TabPane.prototype.getChildNodes_ = function () {
   var nodes = [];
 
   var child = goog.dom.getFirstElementChild(this.el_);
@@ -256,20 +252,17 @@ goog.ui.TabPane.prototype.getChildNodes_ = function() {
   return nodes;
 };
 
-
 /**
  * Creates pages out of a collection of elements.
  *
  * @param {Array<Element>} nodes Array of elements to create pages out of.
  * @private
  */
-goog.ui.TabPane.prototype.createPages_ = function(nodes) {
-  'use strict';
-  for (var node, i = 0; node = nodes[i]; i++) {
+goog.ui.TabPane.prototype.createPages_ = function (nodes) {
+  for (var node, i = 0; (node = nodes[i]); i++) {
     this.addPage(new goog.ui.TabPane.TabPage(node));
   }
 };
-
 
 /**
  * Adds a page to the tab pane.
@@ -278,12 +271,10 @@ goog.ui.TabPane.prototype.createPages_ = function(nodes) {
  * @param {number=} opt_index Zero based index to insert tab at. Inserted at the
  *                           end if not specified.
  */
-goog.ui.TabPane.prototype.addPage = function(page, opt_index) {
-  'use strict';
+goog.ui.TabPane.prototype.addPage = function (page, opt_index) {
   // If page is already in another tab pane it's removed from that one before it
   // can be added to this one.
-  if (page.parent_ && page.parent_ != this &&
-      page.parent_ instanceof goog.ui.TabPane) {
+  if (page.parent_ && page.parent_ != this && page.parent_ instanceof goog.ui.TabPane) {
     page.parent_.removePage(page);
   }
 
@@ -293,8 +284,9 @@ goog.ui.TabPane.prototype.addPage = function(page, opt_index) {
     index = opt_index;
     this.pages_.splice(index, 0, page);
     this.elButtonBar_.insertBefore(
-        /** @type {!Node} */ (page.elTitle_),
-        this.elButtonBar_.childNodes[index]);
+      /** @type {!Node} */ (page.elTitle_),
+      this.elButtonBar_.childNodes[index]
+    );
   }
 
   // Append page to end
@@ -308,8 +300,9 @@ goog.ui.TabPane.prototype.addPage = function(page, opt_index) {
   // Select first page and fire change event
   if (!this.selected_) {
     this.selected_ = page;
-    this.dispatchEvent(new goog.ui.TabPaneEvent(
-        goog.ui.TabPane.Events.CHANGE, this, this.selected_));
+    this.dispatchEvent(
+      new goog.ui.TabPaneEvent(goog.ui.TabPane.Events.CHANGE, this, this.selected_)
+    );
   }
 
   // Move page content to the tab pane and update visibility.
@@ -317,11 +310,10 @@ goog.ui.TabPane.prototype.addPage = function(page, opt_index) {
   page.setVisible_(page == this.selected_);
 
   // Update index for following pages
-  for (var pg, i = index + 1; pg = this.pages_[i]; i++) {
+  for (var pg, i = index + 1; (pg = this.pages_[i]); i++) {
     pg.index_ = i;
   }
 };
-
 
 /**
  * Removes the specified page from the tab pane.
@@ -329,8 +321,7 @@ goog.ui.TabPane.prototype.addPage = function(page, opt_index) {
  * @param {goog.ui.TabPane.TabPage|number} page Reference to tab page or zero
  *     based index.
  */
-goog.ui.TabPane.prototype.removePage = function(page) {
-  'use strict';
+goog.ui.TabPane.prototype.removePage = function (page) {
   if (typeof page === 'number') {
     page = this.pages_[page];
   }
@@ -340,11 +331,10 @@ goog.ui.TabPane.prototype.removePage = function(page) {
   goog.dom.removeNode(page.elTitle_);
   goog.dom.removeNode(page.elContent_);
 
-  for (var pg, i = 0; pg = this.pages_[i]; i++) {
+  for (var pg, i = 0; (pg = this.pages_[i]); i++) {
     pg.setParent_(this, i);
   }
 };
-
 
 /**
  * Gets the tab page by zero based index.
@@ -352,19 +342,16 @@ goog.ui.TabPane.prototype.removePage = function(page) {
  * @param {number} index Index of page to return.
  * @return {goog.ui.TabPane.TabPage?} page The tab page.
  */
-goog.ui.TabPane.prototype.getPage = function(index) {
-  'use strict';
+goog.ui.TabPane.prototype.getPage = function (index) {
   return this.pages_[index];
 };
-
 
 /**
  * Sets the selected tab page by object reference.
  *
  * @param {goog.ui.TabPane.TabPage} page Tab page to select.
  */
-goog.ui.TabPane.prototype.setSelectedPage = function(page) {
-  'use strict';
+goog.ui.TabPane.prototype.setSelectedPage = function (page) {
   if (page.isEnabled() && (!this.selected_ || page != this.selected_)) {
     this.selected_.setVisible_(false);
     page.setVisible_(true);
@@ -372,61 +359,50 @@ goog.ui.TabPane.prototype.setSelectedPage = function(page) {
 
     // Fire changed event
     this.dispatchEvent(
-        new goog.ui.TabPaneEvent(
-            goog.ui.TabPane.Events.CHANGE, this, this.selected_));
+      new goog.ui.TabPaneEvent(goog.ui.TabPane.Events.CHANGE, this, this.selected_)
+    );
   }
 };
-
 
 /**
  * Sets the selected tab page by zero based index.
  *
  * @param {number} index Index of page to select.
  */
-goog.ui.TabPane.prototype.setSelectedIndex = function(index) {
-  'use strict';
+goog.ui.TabPane.prototype.setSelectedIndex = function (index) {
   if (index >= 0 && index < this.pages_.length) {
     this.setSelectedPage(this.pages_[index]);
   }
 };
 
-
 /**
  * @return {number} The index for the selected tab page or -1 if no page is
  *     selected.
  */
-goog.ui.TabPane.prototype.getSelectedIndex = function() {
-  'use strict';
+goog.ui.TabPane.prototype.getSelectedIndex = function () {
   return this.selected_ ? /** @type {number} */ (this.selected_.index_) : -1;
 };
-
 
 /**
  * @return {goog.ui.TabPane.TabPage?} The selected tab page.
  */
-goog.ui.TabPane.prototype.getSelectedPage = function() {
-  'use strict';
+goog.ui.TabPane.prototype.getSelectedPage = function () {
   return this.selected_ || null;
 };
-
 
 /**
  * @return {Element} The element that contains the tab pages.
  */
-goog.ui.TabPane.prototype.getContentElement = function() {
-  'use strict';
+goog.ui.TabPane.prototype.getContentElement = function () {
   return this.elContent_ || null;
 };
-
 
 /**
  * @return {Element} The main element for the tabpane.
  */
-goog.ui.TabPane.prototype.getElement = function() {
-  'use strict';
+goog.ui.TabPane.prototype.getElement = function () {
   return this.el_ || null;
 };
-
 
 /**
  * Click event handler for header element, handles clicks on tabs.
@@ -434,8 +410,7 @@ goog.ui.TabPane.prototype.getElement = function() {
  * @private
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.ui.TabPane.prototype.onHeaderClick_ = function(event) {
-  'use strict';
+goog.ui.TabPane.prototype.onHeaderClick_ = function (event) {
   var el = event.target;
 
   // Determine index if a tab (li element) was clicked.
@@ -443,8 +418,7 @@ goog.ui.TabPane.prototype.onHeaderClick_ = function(event) {
     if (el.tagName == goog.dom.TagName.LI) {
       var i;
       // {} prevents compiler warning
-      for (i = 0; el = el.previousSibling; i++) {
-      }
+      for (i = 0; (el = el.previousSibling); i++) {}
       this.setSelectedIndex(i);
       break;
     }
@@ -453,7 +427,6 @@ goog.ui.TabPane.prototype.onHeaderClick_ = function(event) {
   event.preventDefault();
 };
 
-
 /**
  * KeyDown event handler for header element. Arrow keys moves between pages.
  * Home and end selects the first/last page.
@@ -461,8 +434,7 @@ goog.ui.TabPane.prototype.onHeaderClick_ = function(event) {
  * @private
  * @suppress {strictPrimitiveOperators} Part of the go/strict_warnings_migration
  */
-goog.ui.TabPane.prototype.onHeaderKeyDown_ = function(event) {
-  'use strict';
+goog.ui.TabPane.prototype.onHeaderKeyDown_ = function (event) {
   if (event.altKey || event.metaKey || event.ctrlKey) {
     return;
   }
@@ -485,8 +457,6 @@ goog.ui.TabPane.prototype.onHeaderKeyDown_ = function(event) {
   }
 };
 
-
-
 /**
  * Object representing an individual tab pane.
  *
@@ -498,8 +468,7 @@ goog.ui.TabPane.prototype.onHeaderKeyDown_ = function(event) {
  * The first parameter can be omitted.
  * @constructor
  */
-goog.ui.TabPane.TabPage = function(opt_el, opt_title, opt_domHelper) {
-  'use strict';
+goog.ui.TabPane.TabPage = function (opt_el, opt_title, opt_domHelper) {
   /** @type {!Element|string|null} */
   var title = null;
   var el;
@@ -561,97 +530,78 @@ goog.ui.TabPane.TabPage = function(opt_el, opt_title, opt_domHelper) {
   this.enabled_ = true;
 };
 
-
 /**
  * @return {string} The title for tab page.
  */
-goog.ui.TabPane.TabPage.prototype.getTitle = function() {
-  'use strict';
+goog.ui.TabPane.TabPage.prototype.getTitle = function () {
   return goog.dom.getTextContent(this.elTitle_);
 };
-
 
 /**
  * Sets title for tab page.
  *
  * @param {string} title Title for tab page.
  */
-goog.ui.TabPane.TabPage.prototype.setTitle = function(title) {
-  'use strict';
+goog.ui.TabPane.TabPage.prototype.setTitle = function (title) {
   goog.dom.setTextContent(this.elTitle_, title);
 };
-
 
 /**
  * @return {Element} The title element.
  */
-goog.ui.TabPane.TabPage.prototype.getTitleElement = function() {
-  'use strict';
+goog.ui.TabPane.TabPage.prototype.getTitleElement = function () {
   return this.elTitle_;
 };
-
 
 /**
  * @return {Element} The content element.
  */
-goog.ui.TabPane.TabPage.prototype.getContentElement = function() {
-  'use strict';
+goog.ui.TabPane.TabPage.prototype.getContentElement = function () {
   return this.elContent_;
 };
-
 
 /**
  * @return {?number} The index of page in tab pane.
  */
-goog.ui.TabPane.TabPage.prototype.getIndex = function() {
-  'use strict';
+goog.ui.TabPane.TabPage.prototype.getIndex = function () {
   return this.index_;
 };
-
 
 /**
  * @return {goog.ui.TabPane?} The parent tab pane for page.
  */
-goog.ui.TabPane.TabPage.prototype.getParent = function() {
-  'use strict';
+goog.ui.TabPane.TabPage.prototype.getParent = function () {
   return this.parent_;
 };
-
 
 /**
  * Selects page in the associated tab pane.
  */
-goog.ui.TabPane.TabPage.prototype.select = function() {
-  'use strict';
+goog.ui.TabPane.TabPage.prototype.select = function () {
   if (this.parent_) {
     this.parent_.setSelectedPage(this);
   }
 };
-
 
 /**
  * Sets the enabled state.
  *
  * @param {boolean} enabled Enabled state.
  */
-goog.ui.TabPane.TabPage.prototype.setEnabled = function(enabled) {
-  'use strict';
+goog.ui.TabPane.TabPage.prototype.setEnabled = function (enabled) {
   this.enabled_ = enabled;
-  this.elTitle_.className = enabled ?
-      goog.getCssName('goog-tabpane-tab') :
-      goog.getCssName('goog-tabpane-tab-disabled');
+  this.elTitle_.className = enabled
+    ? goog.getCssName('goog-tabpane-tab')
+    : goog.getCssName('goog-tabpane-tab-disabled');
 };
-
 
 /**
  * Returns if the page is enabled.
  * @return {boolean} Whether the page is enabled or not.
  */
-goog.ui.TabPane.TabPage.prototype.isEnabled = function() {
-  'use strict';
+goog.ui.TabPane.TabPage.prototype.isEnabled = function () {
   return this.enabled_;
 };
-
 
 /**
  * Sets visible state for page content and updates style of tab.
@@ -659,16 +609,14 @@ goog.ui.TabPane.TabPage.prototype.isEnabled = function() {
  * @param {boolean} visible Visible state.
  * @private
  */
-goog.ui.TabPane.TabPage.prototype.setVisible_ = function(visible) {
-  'use strict';
+goog.ui.TabPane.TabPage.prototype.setVisible_ = function (visible) {
   if (this.isEnabled()) {
     this.elContent_.style.display = visible ? '' : 'none';
-    this.elTitle_.className = visible ?
-        goog.getCssName('goog-tabpane-tab-selected') :
-        goog.getCssName('goog-tabpane-tab');
+    this.elTitle_.className = visible
+      ? goog.getCssName('goog-tabpane-tab-selected')
+      : goog.getCssName('goog-tabpane-tab');
   }
 };
-
 
 /**
  * Sets parent tab pane for tab page.
@@ -677,13 +625,10 @@ goog.ui.TabPane.TabPage.prototype.setVisible_ = function(visible) {
  * @param {number=} opt_index Index of page in pane.
  * @private
  */
-goog.ui.TabPane.TabPage.prototype.setParent_ = function(tabPane, opt_index) {
-  'use strict';
+goog.ui.TabPane.TabPage.prototype.setParent_ = function (tabPane, opt_index) {
   this.parent_ = tabPane;
-  this.index_ = (opt_index !== undefined) ? opt_index : null;
+  this.index_ = opt_index !== undefined ? opt_index : null;
 };
-
-
 
 /**
  * Object representing a tab pane page changed event.
@@ -695,8 +640,7 @@ goog.ui.TabPane.TabPage.prototype.setParent_ = function(tabPane, opt_index) {
  * @constructor
  * @final
  */
-goog.ui.TabPaneEvent = function(type, target, page) {
-  'use strict';
+goog.ui.TabPaneEvent = function (type, target, page) {
   goog.events.Event.call(this, type, target);
 
   /**

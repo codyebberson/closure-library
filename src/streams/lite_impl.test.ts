@@ -5,11 +5,10 @@
  */
 
 goog.module('goog.streams.liteImplTest');
-goog.setTestOnly();
 
 const testSuite = goog.require('goog.testing.testSuite');
-const {TestCases: LiteTestCases} = goog.require('goog.streams.liteTestCases');
-const {newReadableStream} = goog.require('goog.streams.liteImpl');
+const { TestCases: LiteTestCases } = goog.require('goog.streams.liteTestCases');
+const { newReadableStream } = goog.require('goog.streams.liteImpl');
 
 class TestCases extends LiteTestCases {
   constructor() {

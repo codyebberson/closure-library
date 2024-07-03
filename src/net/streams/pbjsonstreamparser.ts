@@ -31,7 +31,6 @@ const StreamParser = goog.require('goog.net.streams.StreamParser');
 const asserts = goog.require('goog.asserts');
 const utils = goog.require('goog.net.streams.utils');
 
-
 /**
  * A stream parser of StreamBody message in Protobuf-JSON format.
  *
@@ -40,7 +39,7 @@ const utils = goog.require('goog.net.streams.utils');
  * @implements {StreamParser}
  * @final
  */
-const PbJsonStreamParser = function() {
+const PbJsonStreamParser = function () {
   /**
    * Protobuf raw bytes stream parser
    * @private {?JsonStreamParser}
@@ -78,30 +77,27 @@ const PbJsonStreamParser = function() {
   this.statusParsed_ = false;
 };
 
-
 /**
  * The parser state.
  * @enum {number}
  */
 const State = {
-  INIT: 0,           // expecting the beginning "["
-  ARRAY_OPEN: 1,     // expecting the message array or the msg-status separator
-  MESSAGES: 2,       // expecting the message array
-  MESSAGES_DONE: 3,  // expecting the msg-status separator or the ending "]"
-  STATUS: 4,         // expecting the status
-  ARRAY_END: 5,      // expecting NO more non-whitespace input
-  INVALID: 6,        // the stream has become invalid
+  INIT: 0, // expecting the beginning "["
+  ARRAY_OPEN: 1, // expecting the message array or the msg-status separator
+  MESSAGES: 2, // expecting the message array
+  MESSAGES_DONE: 3, // expecting the msg-status separator or the ending "]"
+  STATUS: 4, // expecting the status
+  ARRAY_END: 5, // expecting NO more non-whitespace input
+  INVALID: 6, // the stream has become invalid
 };
 
-
 /** @override */
-PbJsonStreamParser.prototype.isInputValid = function() {
+PbJsonStreamParser.prototype.isInputValid = function () {
   return this.errorMessage_ === null;
 };
 
-
 /** @override */
-PbJsonStreamParser.prototype.getErrorMessage = function() {
+PbJsonStreamParser.prototype.getErrorMessage = function () {
   return this.errorMessage_;
 };
 
@@ -109,18 +105,16 @@ PbJsonStreamParser.prototype.getErrorMessage = function() {
  * @override
  * @return {boolean}
  */
-PbJsonStreamParser.prototype.acceptsBinaryInput = function() {
-  return false;
-};
+PbJsonStreamParser.prototype.acceptsBinaryInput = () => false;
 
 /** @override */
-PbJsonStreamParser.prototype.parse = function(input) {
+PbJsonStreamParser.prototype.parse = function (input) {
   asserts.assertString(input);
 
   const parser = this;
   let pos = 0;
   while (pos < input.length) {
-    if ((parser.state_ !== State.MESSAGES) && !readMore()) {
+    if (parser.state_ !== State.MESSAGES && !readMore()) {
       return null;
     }
 
@@ -162,7 +156,7 @@ PbJsonStreamParser.prototype.parse = function(input) {
 
         if (!parser.jsonStreamParser_.done()) {
           parser.streamPos_ += input.length - pos;
-          pos = input.length;  // end the loop
+          pos = input.length; // end the loop
         } else {
           parser.state_ = State.MESSAGES_DONE;
           const extra = parser.jsonStreamParser_.getExtraInput();
@@ -178,7 +172,7 @@ PbJsonStreamParser.prototype.parse = function(input) {
           resetJsonStreamParser();
           // Feed a dummy "[" to match the ending "]".
           parser.jsonStreamParser_.parse('[');
-          pos += (input[pos] === ',' ? 1 : 5);
+          pos += input[pos] === ',' ? 1 : 5;
           parser.streamPos_++;
         } else if (input[pos] === ']') {
           parser.state_ = State.ARRAY_END;
@@ -193,7 +187,7 @@ PbJsonStreamParser.prototype.parse = function(input) {
 
         if (!parser.jsonStreamParser_.done()) {
           parser.streamPos_ += input.length - pos;
-          pos = input.length;  // end the loop
+          pos = input.length; // end the loop
         } else {
           parser.state_ = State.ARRAY_END;
           const extra = parser.jsonStreamParser_.getExtraInput();
@@ -217,18 +211,22 @@ PbJsonStreamParser.prototype.parse = function(input) {
   }
   return null;
 
-
   /**
    * @param {string} errorMessage Additional error message
    * @throws {!Error} Throws an error indicating where the stream is broken
    */
   function reportError(errorMessage) {
     parser.state_ = State.INVALID;
-    parser.errorMessage_ = 'The stream is broken @' + parser.streamPos_ + '/' +
-        pos + '. Error: ' + errorMessage + '. With input:\n';
+    parser.errorMessage_ =
+      'The stream is broken @' +
+      parser.streamPos_ +
+      '/' +
+      pos +
+      '. Error: ' +
+      errorMessage +
+      '. With input:\n';
     throw new Error(parser.errorMessage_);
   }
-
 
   /**
    * Advances to the first non-whitespace input character.
@@ -248,8 +246,10 @@ PbJsonStreamParser.prototype.parse = function(input) {
   }
 
   function resetJsonStreamParser() {
-    parser.jsonStreamParser_ = new JsonStreamParser(
-        {allowCompactJsonArrayFormat: true, deliverMessageAsRawString: true});
+    parser.jsonStreamParser_ = new JsonStreamParser({
+      allowCompactJsonArrayFormat: true,
+      deliverMessageAsRawString: true,
+    });
   }
 
   /** @param {?Array<string>} messages Parsed messages */
@@ -277,6 +277,5 @@ PbJsonStreamParser.prototype.parse = function(input) {
     }
   }
 };
-
 
 exports = PbJsonStreamParser;

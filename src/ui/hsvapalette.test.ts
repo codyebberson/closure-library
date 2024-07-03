@@ -10,7 +10,6 @@
  */
 
 goog.module('goog.ui.HsvaPaletteTest');
-goog.setTestOnly();
 
 const Coordinate = goog.require('goog.math.Coordinate');
 const GoogEvent = goog.require('goog.events.Event');
@@ -51,11 +50,9 @@ testSuite({
   testCustomClassName() {
     const customClassName = 'custom-plouf';
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const customClassPalette =
-        new HsvaPalette(null, null, null, customClassName);
+    const customClassPalette = new HsvaPalette(null, null, null, customClassName);
     customClassPalette.createDom();
-    assertTrue(
-        classlist.contains(customClassPalette.getElement(), customClassName));
+    assertTrue(classlist.contains(customClassPalette.getElement(), customClassName));
   },
 
   testSetColor() {
@@ -64,8 +61,7 @@ testSuite({
     assertEquals(color, colorAlpha.parse(samplePalette.getColorRgbaHex()).hex);
     color = 'abcdef01';
     samplePalette.setColorRgbaHex(color);
-    assertEquals(
-        `#${color}`, colorAlpha.parse(samplePalette.getColorRgbaHex()).hex);
+    assertEquals(`#${color}`, colorAlpha.parse(samplePalette.getColorRgbaHex()).hex);
   },
 
   testRender() {
@@ -77,9 +73,7 @@ testSuite({
     assertNotNull(elem);
     assertEquals(String(TagName.DIV), elem.tagName);
 
-    assertEquals(
-        'The noalpha class must not be present', 'goog-hsva-palette',
-        elem.className);
+    assertEquals('The noalpha class must not be present', 'goog-hsva-palette', elem.className);
   },
 
   /** @suppress {visibility} suppression added to enable type checking */

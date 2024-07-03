@@ -12,7 +12,6 @@
 
 /** @suppress {extraProvide} */
 goog.module('goog.editor.field_test');
-goog.setTestOnly();
 
 const BrowserEvent = goog.require('goog.events.BrowserEvent');
 const BrowserFeature = goog.require('goog.editor.BrowserFeature');
@@ -105,17 +104,21 @@ function createEditableFieldWithListeners(followLinkInNewWindow) {
 function getListenerTarget(editableField) {
   const elt = editableField.getElement();
   const listenerTarget =
-      BrowserFeature.USE_DOCUMENT_FOR_KEY_EVENTS && editableField.usesIframe() ?
-      elt.ownerDocument :
-      elt;
+    BrowserFeature.USE_DOCUMENT_FOR_KEY_EVENTS && editableField.usesIframe()
+      ? elt.ownerDocument
+      : elt;
   return listenerTarget;
 }
 
 function assertClickDefaultActionIsCanceled(editableField) {
   /** @suppress {visibility} suppression added to enable type checking */
   const cancelClickDefaultActionListener = events.getListener(
-      getListenerTarget(editableField), EventType.CLICK, Field.cancelLinkClick_,
-      undefined, editableField);
+    getListenerTarget(editableField),
+    EventType.CLICK,
+    Field.cancelLinkClick_,
+    undefined,
+    editableField
+  );
 
   assertNotNull(cancelClickDefaultActionListener);
 }
@@ -123,8 +126,12 @@ function assertClickDefaultActionIsCanceled(editableField) {
 function assertClickDefaultActionIsNotCanceled(editableField) {
   /** @suppress {visibility} suppression added to enable type checking */
   const cancelClickDefaultActionListener = events.getListener(
-      getListenerTarget(editableField), EventType.CLICK, Field.cancelLinkClick_,
-      undefined, editableField);
+    getListenerTarget(editableField),
+    EventType.CLICK,
+    Field.cancelLinkClick_,
+    undefined,
+    editableField
+  );
 
   assertNull(cancelClickDefaultActionListener);
 }
@@ -159,18 +166,17 @@ function doTestPlaceCursorAtStart(html = undefined, parentId = undefined) {
 
   editableField.placeCursorAtStart();
   const range = editableField.getRange();
-  assertNotNull(
-      'Placing the cursor should result in a range object being available',
-      range);
+  assertNotNull('Placing the cursor should result in a range object being available', range);
   assertTrue('The range should be collapsed', range.isCollapsed());
   textNode = editableField.getElement().firstChild;
 
   // We check whether getAttribute exist because textNode may be an actual
   // TextNode, which does not have getAttribute.
-  const hasBogusNode = textNode &&
-      ((textNode.getAttribute &&
-        textNode.getAttribute('_moz_editor_bogus_node')) ||
-       (userAgent.GECKO && textNode.tagName === TagName.BR &&
+  const hasBogusNode =
+    textNode &&
+    ((textNode.getAttribute && textNode.getAttribute('_moz_editor_bogus_node')) ||
+      (userAgent.GECKO &&
+        textNode.tagName === TagName.BR &&
         textNode.parentNode.children.length === 1));
   if (hasBogusNode) {
     // At least in FF >= 6, assigning '' to innerHTML of a contentEditable
@@ -181,16 +187,17 @@ function doTestPlaceCursorAtStart(html = undefined, parentId = undefined) {
     textNode = null;
   }
 
-  let startNode = parentId ?
-      editableField.getEditableDomHelper().getElement(parentId).firstChild :
-      textNode ? textNode :
-                 editableField.getElement();
+  const startNode = parentId
+    ? editableField.getEditableDomHelper().getElement(parentId).firstChild
+    : textNode
+      ? textNode
+      : editableField.getElement();
   assertEquals(
-      'The range should start at the specified expected node', startNode,
-      range.getStartNode());
-  assertEquals(
-      'The range should start at the beginning of the node', 0,
-      range.getStartOffset());
+    'The range should start at the specified expected node',
+    startNode,
+    range.getStartNode()
+  );
+  assertEquals('The range should start at the beginning of the node', 0, range.getStartOffset());
 }
 
 /**
@@ -204,8 +211,7 @@ function doTestPlaceCursorAtStart(html = undefined, parentId = undefined) {
  *     field element itself).
  * @param {number=} opt_offset The offset to expect for the end position.
  */
-function doTestPlaceCursorAtEnd(
-    html = undefined, parentId = undefined, opt_offset) {
+function doTestPlaceCursorAtEnd(html = undefined, parentId = undefined, opt_offset) {
   const editableField = new FieldConstructor('testField', document);
   editableField.makeEditable();
 
@@ -218,18 +224,17 @@ function doTestPlaceCursorAtEnd(
 
   editableField.placeCursorAtEnd();
   const range = editableField.getRange();
-  assertNotNull(
-      'Placing the cursor should result in a range object being available',
-      range);
+  assertNotNull('Placing the cursor should result in a range object being available', range);
   assertTrue('The range should be collapsed', range.isCollapsed());
   textNode = editableField.getElement().firstChild;
 
   // We check whether getAttribute exist because textNode may be an actual
   // TextNode, which does not have getAttribute.
-  const hasBogusNode = textNode &&
-      ((textNode.getAttribute &&
-        textNode.getAttribute('_moz_editor_bogus_node')) ||
-       (userAgent.GECKO && textNode.tagName === TagName.BR &&
+  const hasBogusNode =
+    textNode &&
+    ((textNode.getAttribute && textNode.getAttribute('_moz_editor_bogus_node')) ||
+      (userAgent.GECKO &&
+        textNode.tagName === TagName.BR &&
         textNode.parentNode.children.length === 1));
   if (hasBogusNode) {
     // At least in FF >= 6, assigning '' to innerHTML of a contentEditable
@@ -240,25 +245,26 @@ function doTestPlaceCursorAtEnd(
     textNode = null;
   }
 
-  const endNode = parentId ?
-      editableField.getEditableDomHelper().getElement(parentId).lastChild :
-      textNode ? textNode :
-                 editableField.getElement();
-  assertEquals(
-      'The range should end at the specified expected node', endNode,
-      range.getEndNode());
-  const offset = (opt_offset != null) ? opt_offset :
-      textNode                        ? endNode.nodeValue.length :
-                                        endNode.childNodes.length - 1;
+  const endNode = parentId
+    ? editableField.getEditableDomHelper().getElement(parentId).lastChild
+    : textNode
+      ? textNode
+      : editableField.getElement();
+  assertEquals('The range should end at the specified expected node', endNode, range.getEndNode());
+  const offset =
+    opt_offset != null
+      ? opt_offset
+      : textNode
+        ? endNode.nodeValue.length
+        : endNode.childNodes.length - 1;
   if (hasBogusNode) {
     assertEquals(
-        'The range should end at the ending of the bogus node ' +
-            'added by FF',
-        offset + 1, range.getEndOffset());
+      'The range should end at the ending of the bogus node ' + 'added by FF',
+      offset + 1,
+      range.getEndOffset()
+    );
   } else {
-    assertEquals(
-        'The range should end at the ending of the node', offset,
-        range.getEndOffset());
+    assertEquals('The range should end at the ending of the node', offset, range.getEndOffset());
   }
 }
 
@@ -266,8 +272,9 @@ testSuite({
   setUp() {
     googDom.getElement('parent').innerHTML = HTML;
     assertTrue(
-        'FieldConstructor should be set by the test HTML file',
-        typeof FieldConstructor === 'function');
+      'FieldConstructor should be set by the test HTML file',
+      typeof FieldConstructor === 'function'
+    );
   },
 
   /** @suppress {uselessCode} suppression added to enable type checking */
@@ -276,8 +283,7 @@ testSuite({
     // it is lame. It manifests its lameness by throwing an exception.
     // Kudos to XT for helping me to figure this out.
     try {
-    } catch (e) {
-    }
+    } catch (e) {}
   },
 
   /**
@@ -291,44 +297,60 @@ testSuite({
     editableField.registerPlugin(plugin);
 
     assertEquals(
-        'Registered plugin must be in protected plugin map.', plugin,
-        editableField.plugins_[plugin.getTrogClassId()]);
+      'Registered plugin must be in protected plugin map.',
+      plugin,
+      editableField.plugins_[plugin.getTrogClassId()]
+    );
     assertEquals(
-        'Plugin has a keydown handler, should be in keydown map', plugin,
-        editableField.indexedPlugins_[Plugin.Op.KEYDOWN][0]);
+      'Plugin has a keydown handler, should be in keydown map',
+      plugin,
+      editableField.indexedPlugins_[Plugin.Op.KEYDOWN][0]
+    );
     assertEquals(
-        'Plugin has a keypress handler, should be in keypress map', plugin,
-        editableField.indexedPlugins_[Plugin.Op.KEYPRESS][0]);
+      'Plugin has a keypress handler, should be in keypress map',
+      plugin,
+      editableField.indexedPlugins_[Plugin.Op.KEYPRESS][0]
+    );
     assertEquals(
-        'Plugin has a keyup handler, should be in keuup map', plugin,
-        editableField.indexedPlugins_[Plugin.Op.KEYUP][0]);
+      'Plugin has a keyup handler, should be in keuup map',
+      plugin,
+      editableField.indexedPlugins_[Plugin.Op.KEYUP][0]
+    );
     assertEquals(
-        'Plugin has a selectionchange handler, should be in selectionchange map',
-        plugin, editableField.indexedPlugins_[Plugin.Op.SELECTION][0]);
+      'Plugin has a selectionchange handler, should be in selectionchange map',
+      plugin,
+      editableField.indexedPlugins_[Plugin.Op.SELECTION][0]
+    );
     assertEquals(
-        'Plugin has a shortcut handler, should be in shortcut map', plugin,
-        editableField.indexedPlugins_[Plugin.Op.SHORTCUT][0]);
+      'Plugin has a shortcut handler, should be in shortcut map',
+      plugin,
+      editableField.indexedPlugins_[Plugin.Op.SHORTCUT][0]
+    );
     assertEquals(
-        'Plugin has a execCommand, should be in execCommand map', plugin,
-        editableField.indexedPlugins_[Plugin.Op.EXEC_COMMAND][0]);
+      'Plugin has a execCommand, should be in execCommand map',
+      plugin,
+      editableField.indexedPlugins_[Plugin.Op.EXEC_COMMAND][0]
+    );
     assertEquals(
-        'Plugin has a queryCommand, should be in queryCommand map', plugin,
-        editableField.indexedPlugins_[Plugin.Op.QUERY_COMMAND][0]);
+      'Plugin has a queryCommand, should be in queryCommand map',
+      plugin,
+      editableField.indexedPlugins_[Plugin.Op.QUERY_COMMAND][0]
+    );
     assertEquals(
-        'Plugin does not have a prepareContentsHtml,' +
-            'should not be in prepareContentsHtml map',
-        undefined,
-        editableField.indexedPlugins_[Plugin.Op.PREPARE_CONTENTS_HTML][0]);
+      'Plugin does not have a prepareContentsHtml,' + 'should not be in prepareContentsHtml map',
+      undefined,
+      editableField.indexedPlugins_[Plugin.Op.PREPARE_CONTENTS_HTML][0]
+    );
     assertEquals(
-        'Plugin does not have a cleanContentsDom,' +
-            'should not be in cleanContentsDom map',
-        undefined,
-        editableField.indexedPlugins_[Plugin.Op.CLEAN_CONTENTS_DOM][0]);
+      'Plugin does not have a cleanContentsDom,' + 'should not be in cleanContentsDom map',
+      undefined,
+      editableField.indexedPlugins_[Plugin.Op.CLEAN_CONTENTS_DOM][0]
+    );
     assertEquals(
-        'Plugin does not have a cleanContentsHtml,' +
-            'should not be in cleanContentsHtml map',
-        undefined,
-        editableField.indexedPlugins_[Plugin.Op.CLEAN_CONTENTS_HTML][0]);
+      'Plugin does not have a cleanContentsHtml,' + 'should not be in cleanContentsHtml map',
+      undefined,
+      editableField.indexedPlugins_[Plugin.Op.CLEAN_CONTENTS_HTML][0]
+    );
 
     editableField.dispose();
   },
@@ -345,8 +367,9 @@ testSuite({
     editableField.unregisterPlugin(plugin);
 
     assertUndefined(
-        'Unregistered plugin must not be in protected plugin map.',
-        editableField.plugins_[plugin.getTrogClassId()]);
+      'Unregistered plugin must not be in protected plugin map.',
+      editableField.plugins_[plugin.getTrogClassId()]
+    );
 
     editableField.dispose();
   },
@@ -357,13 +380,16 @@ testSuite({
     const plugin = new TestPlugin();
 
     assertNull(
-        'Must not be able to get unregistered plugins by class id.',
-        editableField.getPluginByClassId(plugin.getTrogClassId()));
+      'Must not be able to get unregistered plugins by class id.',
+      editableField.getPluginByClassId(plugin.getTrogClassId())
+    );
 
     editableField.registerPlugin(plugin);
     assertEquals(
-        'Must be able to get registered plugins by class id.', plugin,
-        editableField.getPluginByClassId(plugin.getTrogClassId()));
+      'Must be able to get registered plugins by class id.',
+      plugin,
+      editableField.getPluginByClassId(plugin.getTrogClassId())
+    );
     editableField.dispose();
   },
 
@@ -419,8 +445,7 @@ testSuite({
   testClickDefaultActionIsCanceledWhenBrowserFollowsClick() {
     // Simulate a browser that will open a new page when activating a link
     // in a content editable element.
-    const editableField =
-        createEditableFieldWithListeners(true /* followLinkInNewWindow */);
+    const editableField = createEditableFieldWithListeners(true /* followLinkInNewWindow */);
     assertClickDefaultActionIsCanceled(editableField);
 
     editableField.dispose();
@@ -433,8 +458,7 @@ testSuite({
   testClickDefaultActionIsNotCanceledWhenBrowserDontFollowsClick() {
     // Simulate a browser that will NOT open a new page when activating a
     // link in a content editable element.
-    const editableField =
-        createEditableFieldWithListeners(false /* followLinkInNewWindow */);
+    const editableField = createEditableFieldWithListeners(false /* followLinkInNewWindow */);
     assertClickDefaultActionIsNotCanceled(editableField);
 
     editableField.dispose();
@@ -563,23 +587,23 @@ testSuite({
 
     editableField.makeEditable();
 
-    testingEvents.fireBrowserEvent(
-        new GoogTestingEvent('cut', editableField.getElement()));
-    assertEquals(
-        'Cut event should be on a timer', 0, delayedChanges.getCallCount());
+    testingEvents.fireBrowserEvent(new GoogTestingEvent('cut', editableField.getElement()));
+    assertEquals('Cut event should be on a timer', 0, delayedChanges.getCallCount());
     clock.tick(1000);
     assertEquals(
-        'delayed change event should fire within 1s after cut', 1,
-        delayedChanges.getCallCount());
+      'delayed change event should fire within 1s after cut',
+      1,
+      delayedChanges.getCallCount()
+    );
 
-    testingEvents.fireBrowserEvent(
-        new GoogTestingEvent('paste', editableField.getElement()));
-    assertEquals(
-        'Paste event should be on a timer', 1, delayedChanges.getCallCount());
+    testingEvents.fireBrowserEvent(new GoogTestingEvent('paste', editableField.getElement()));
+    assertEquals('Paste event should be on a timer', 1, delayedChanges.getCallCount());
     clock.tick(1000);
     assertEquals(
-        'delayed change event should fire within 1s after paste', 2,
-        delayedChanges.getCallCount());
+      'delayed change event should fire within 1s after paste',
+      2,
+      delayedChanges.getCallCount()
+    );
 
     clock.dispose();
     editableField.dispose();
@@ -832,14 +856,15 @@ testSuite({
     mockPlugin1.isEnabled(editableField).$anyTimes().$returns(true);
     mockPlugin1.isSupportedCommand('+indent').$returns(true);
     mockPlugin1.execCommandInternal('+indent').$returns(true);
-    mockPlugin1.execCommand('+indent')
-        .$does(/**
+    mockPlugin1.execCommand('+indent').$does(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 mockPlugin1.execCommandInternal('+indent');
-               });
+      () => {
+        mockPlugin1.execCommandInternal('+indent');
+      }
+    );
     mockPlugin1.$replay();
 
     const mockPlugin2 = new LooseMock(plugin);
@@ -880,14 +905,15 @@ testSuite({
     mockPlugin2.isEnabled(editableField).$anyTimes().$returns(true);
     mockPlugin2.isSupportedCommand('+indent').$returns(true);
     mockPlugin2.execCommandInternal('+indent').$returns(true);
-    mockPlugin2.execCommand('+indent')
-        .$does(/**
+    mockPlugin2.execCommand('+indent').$does(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 mockPlugin2.execCommandInternal('+indent');
-               });
+      () => {
+        mockPlugin2.execCommandInternal('+indent');
+      }
+    );
     mockPlugin2.$replay();
 
     editableField.registerPlugin(mockPlugin1);
@@ -1037,35 +1063,29 @@ testSuite({
     const editableField = new FieldConstructor('testField', document);
     const clock = new MockClock(true);
     const beforeSelectionChanges = recordFunction();
-    events.listen(
-        editableField, Field.EventType.BEFORESELECTIONCHANGE,
-        beforeSelectionChanges);
+    events.listen(editableField, Field.EventType.BEFORESELECTIONCHANGE, beforeSelectionChanges);
     const selectionChanges = recordFunction();
-    events.listen(
-        editableField, Field.EventType.SELECTIONCHANGE, selectionChanges);
+    events.listen(editableField, Field.EventType.SELECTIONCHANGE, selectionChanges);
 
     editableField.makeEditable();
 
     // Emulate pressing left arrow key, this should result in a
     // BEFORESELECTIONCHANGE event immediately, and a SELECTIONCHANGE event
     // after a short timeout.
-    editableField.handleKeyUp_({keyCode: KeyCodes.LEFT});
+    editableField.handleKeyUp_({ keyCode: KeyCodes.LEFT });
     assertEquals(
-        'Before selection change should fire immediately', 1,
-        beforeSelectionChanges.getCallCount());
-    assertEquals(
-        'Selection change should be on a timer', 0,
-        selectionChanges.getCallCount());
+      'Before selection change should fire immediately',
+      1,
+      beforeSelectionChanges.getCallCount()
+    );
+    assertEquals('Selection change should be on a timer', 0, selectionChanges.getCallCount());
     clock.tick(1000);
-    assertEquals(
-        'Selection change should fire within 1s', 1,
-        selectionChanges.getCallCount());
+    assertEquals('Selection change should fire within 1s', 1, selectionChanges.getCallCount());
 
     // Programically place cursor at start. SELECTIONCHANGE event should be
     // fired.
     editableField.placeCursorAtStart();
-    assertEquals(
-        'Selection change should fire', 2, selectionChanges.getCallCount());
+    assertEquals('Selection change should fire', 2, selectionChanges.getCallCount());
 
     clock.dispose();
     editableField.dispose();
@@ -1077,16 +1097,16 @@ testSuite({
    */
   testSelectionChangeOnMouseUp() {
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const fakeEvent = new BrowserEvent({type: 'mouseup', target: 'fakeTarget'});
+    const fakeEvent = new BrowserEvent({
+      type: 'mouseup',
+      target: 'fakeTarget',
+    });
     const editableField = new FieldConstructor('testField', document);
     const clock = new MockClock(true);
     const beforeSelectionChanges = recordFunction();
-    events.listen(
-        editableField, Field.EventType.BEFORESELECTIONCHANGE,
-        beforeSelectionChanges);
+    events.listen(editableField, Field.EventType.BEFORESELECTIONCHANGE, beforeSelectionChanges);
     const selectionChanges = recordFunction();
-    events.listen(
-        editableField, Field.EventType.SELECTIONCHANGE, selectionChanges);
+    events.listen(editableField, Field.EventType.SELECTIONCHANGE, selectionChanges);
 
     const plugin = new TestPlugin();
     plugin.handleSelectionChange = recordFunction();
@@ -1099,56 +1119,73 @@ testSuite({
     // SELECTIONCHANGE in IE after a short timeout.
     editableField.handleMouseUp_(fakeEvent);
     assertEquals(
-        'Before selection change should fire immediately', 1,
-        beforeSelectionChanges.getCallCount());
+      'Before selection change should fire immediately',
+      1,
+      beforeSelectionChanges.getCallCount()
+    );
+    assertEquals('Selection change should fire immediately', 1, selectionChanges.getCallCount());
     assertEquals(
-        'Selection change should fire immediately', 1,
-        selectionChanges.getCallCount());
+      'Plugin should have handled selection change immediately',
+      1,
+      plugin.handleSelectionChange.getCallCount()
+    );
     assertEquals(
-        'Plugin should have handled selection change immediately', 1,
-        plugin.handleSelectionChange.getCallCount());
-    assertEquals(
-        'Plugin should have received original browser event to handle',
-        fakeEvent,
-        plugin.handleSelectionChange.getLastCall().getArguments()[0]);
+      'Plugin should have received original browser event to handle',
+      fakeEvent,
+      plugin.handleSelectionChange.getLastCall().getArguments()[0]
+    );
 
     // Pretend another plugin fired a SELECTIONCHANGE in the meantime.
     editableField.dispatchSelectionChangeEvent();
     assertEquals(
-        'Second selection change should fire immediately', 2,
-        selectionChanges.getCallCount());
+      'Second selection change should fire immediately',
+      2,
+      selectionChanges.getCallCount()
+    );
     assertEquals(
-        'Plugin should have handled second selection change immediately', 2,
-        plugin.handleSelectionChange.getCallCount());
+      'Plugin should have handled second selection change immediately',
+      2,
+      plugin.handleSelectionChange.getCallCount()
+    );
     /**
      * @suppress {missingProperties} suppression added to enable type
      * checking
      */
     const args = plugin.handleSelectionChange.getLastCall().getArguments();
     assertTrue(
-        'Plugin should not have received data from extra firing',
-        args.length == 0 || !args[0] && (args.length == 1 || !args[1]));
+      'Plugin should not have received data from extra firing',
+      args.length == 0 || (!args[0] && (args.length == 1 || !args[1]))
+    );
 
     // Now check for the extra call in IE.
     clock.tick(1000);
     if (userAgent.IE) {
       assertEquals(
-          'Additional selection change should fire within 1s', 3,
-          selectionChanges.getCallCount());
+        'Additional selection change should fire within 1s',
+        3,
+        selectionChanges.getCallCount()
+      );
       assertEquals(
-          'Plugin should have handled selection change within 1s', 3,
-          plugin.handleSelectionChange.getCallCount());
+        'Plugin should have handled selection change within 1s',
+        3,
+        plugin.handleSelectionChange.getCallCount()
+      );
       assertEquals(
-          'Plugin should have received target of original browser event',
-          fakeEvent.target,
-          plugin.handleSelectionChange.getLastCall().getArguments().pop());
+        'Plugin should have received target of original browser event',
+        fakeEvent.target,
+        plugin.handleSelectionChange.getLastCall().getArguments().pop()
+      );
     } else {
       assertEquals(
-          'No additional selection change should fire', 2,
-          selectionChanges.getCallCount());
+        'No additional selection change should fire',
+        2,
+        selectionChanges.getCallCount()
+      );
       assertEquals(
-          'Plugin should not have handled selection change again', 2,
-          plugin.handleSelectionChange.getCallCount());
+        'Plugin should not have handled selection change again',
+        2,
+        plugin.handleSelectionChange.getCallCount()
+      );
     }
 
     clock.dispose();
@@ -1159,22 +1196,19 @@ testSuite({
     const editableField = new FieldConstructor('testField', document);
     const clock = new MockClock(true);
     const selectionChanges = recordFunction();
-    events.listen(
-        editableField, Field.EventType.SELECTIONCHANGE, selectionChanges);
+    events.listen(editableField, Field.EventType.SELECTIONCHANGE, selectionChanges);
 
     editableField.makeEditable();
-    editableField.handleKeyUp_({keyCode: KeyCodes.LEFT});
-    assertEquals(
-        'Selection change should be on a timer', 0,
-        selectionChanges.getCallCount());
+    editableField.handleKeyUp_({ keyCode: KeyCodes.LEFT });
+    assertEquals('Selection change should be on a timer', 0, selectionChanges.getCallCount());
     editableField.makeUneditable();
     assertEquals(
-        'Selection change should fire during make uneditable', 1,
-        selectionChanges.getCallCount());
+      'Selection change should fire during make uneditable',
+      1,
+      selectionChanges.getCallCount()
+    );
     clock.tick(1000);
-    assertEquals(
-        'No additional selection change should fire', 1,
-        selectionChanges.getCallCount());
+    assertEquals('No additional selection change should fire', 1, selectionChanges.getCallCount());
 
     clock.dispose();
     editableField.dispose();
@@ -1183,16 +1217,19 @@ testSuite({
   testGetEditableDomHelper() {
     const editableField = new FieldConstructor('testField', document);
     assertNull(
-        'Before being made editable, we do not know the dom helper',
-        editableField.getEditableDomHelper());
+      'Before being made editable, we do not know the dom helper',
+      editableField.getEditableDomHelper()
+    );
     editableField.makeEditable();
     assertNotNull(
-        'After being made editable, we know the dom helper',
-        editableField.getEditableDomHelper());
+      'After being made editable, we know the dom helper',
+      editableField.getEditableDomHelper()
+    );
     assertEquals(
-        'Document from domHelper should be the editable elements doc',
-        googDom.getOwnerDocument(editableField.getElement()),
-        editableField.getEditableDomHelper().getDocument());
+      'Document from domHelper should be the editable elements doc',
+      googDom.getOwnerDocument(editableField.getElement()),
+      editableField.getEditableDomHelper().getDocument()
+    );
     editableField.dispose();
   },
 
@@ -1200,8 +1237,9 @@ testSuite({
     const editableField = new FieldConstructor('testField', document);
     assertFalse(editableField.queryCommandValue('boo'));
     assertObjectEquals(
-        {'boo': false, 'aieee': false},
-        editableField.queryCommandValue(['boo', 'aieee']));
+      { boo: false, aieee: false },
+      editableField.queryCommandValue(['boo', 'aieee'])
+    );
 
     editableField.makeEditable();
     assertFalse(editableField.queryCommandValue('boo'));
@@ -1209,8 +1247,9 @@ testSuite({
     focusFieldSync(editableField);
     assertNull(editableField.queryCommandValue('boo'));
     assertObjectEquals(
-        {'boo': null, 'aieee': null},
-        editableField.queryCommandValue(['boo', 'aieee']));
+      { boo: null, aieee: null },
+      editableField.queryCommandValue(['boo', 'aieee'])
+    );
     editableField.dispose();
   },
 
@@ -1226,25 +1265,24 @@ testSuite({
 
       editableField.makeEditable();
       clock.tick(1000);
-      assertFalse(
-          'Make editable must not fire delayed change.', delayedChangeCalled);
+      assertFalse('Make editable must not fire delayed change.', delayedChangeCalled);
 
       editableField.setSafeHtml(
-          false, SafeHtml.htmlEscape('bar'),
-          true /* Don't fire delayed change */);
+        false,
+        SafeHtml.htmlEscape('bar'),
+        true /* Don't fire delayed change */
+      );
       testingDom.assertHtmlContentsMatch('bar', editableField.getElement());
       clock.tick(1000);
       assertFalse(
-          'setSafeHtml must not fire delayed change if so configured.',
-          delayedChangeCalled);
+        'setSafeHtml must not fire delayed change if so configured.',
+        delayedChangeCalled
+      );
 
-      editableField.setSafeHtml(
-          false, SafeHtml.htmlEscape('foo'), false /* Fire delayed change */);
+      editableField.setSafeHtml(false, SafeHtml.htmlEscape('foo'), false /* Fire delayed change */);
       testingDom.assertHtmlContentsMatch('foo', editableField.getElement());
       clock.tick(1000);
-      assertTrue(
-          'setSafeHtml must fire delayed change by default',
-          delayedChangeCalled);
+      assertTrue('setSafeHtml must fire delayed change by default', delayedChangeCalled);
     } finally {
       clock.dispose();
       editableField.dispose();
@@ -1263,27 +1301,29 @@ testSuite({
 
       editableField.makeEditable();
       clock.tick(1000);
-      assertFalse(
-          'Make editable must not fire delayed change.', delayedChangeCalled);
+      assertFalse('Make editable must not fire delayed change.', delayedChangeCalled);
 
-      let shouldWrapInParagraphTag = false;
+      const shouldWrapInParagraphTag = false;
       editableField.setSafeHtml(
-          shouldWrapInParagraphTag, SafeHtml.htmlEscape('foo'),
-          false /* Fire delayed change */);
+        shouldWrapInParagraphTag,
+        SafeHtml.htmlEscape('foo'),
+        false /* Fire delayed change */
+      );
       testingDom.assertHtmlContentsMatch('foo', editableField.getElement());
       clock.tick(100);
-      assertFalse(
-          'delayedChange should not fire after only 100ms.',
-          delayedChangeCalled);
+      assertFalse('delayedChange should not fire after only 100ms.', delayedChangeCalled);
 
       editableField.setSafeHtml(
-          shouldWrapInParagraphTag, SafeHtml.htmlEscape('bar'),
-          true /* Don't fire delayed change */);
+        shouldWrapInParagraphTag,
+        SafeHtml.htmlEscape('bar'),
+        true /* Don't fire delayed change */
+      );
       testingDom.assertHtmlContentsMatch('bar', editableField.getElement());
       clock.tick(1000);
       assertFalse(
-          'setSafeHtml must not fire pending delayed change if so configured.',
-          delayedChangeCalled);
+        'setSafeHtml must not fire pending delayed change if so configured.',
+        delayedChangeCalled
+      );
     } finally {
       clock.dispose();
       editableField.dispose();
@@ -1301,7 +1341,7 @@ testSuite({
     const doc = googDom.getOwnerDocument(editableField.getElement());
     const dom = googDom.getDomHelper(editableField.getElement());
     const otherElem = dom.createElement(TagName.DIV);
-    otherElem.tabIndex = 1;  // Make it focusable.
+    otherElem.tabIndex = 1; // Make it focusable.
     editableField.getElement().parentNode.appendChild(otherElem);
 
     // Initially place selection not at the start of the editable field.
@@ -1318,8 +1358,10 @@ testSuite({
 
     // Verify that we have focus and the range is restored.
     assertEquals(
-        'Field should be focused', editableField.getElement(),
-        googDom.getActiveElement(doc));
+      'Field should be focused',
+      editableField.getElement(),
+      googDom.getActiveElement(doc)
+    );
     const newRange = editableField.getRange();
     assertEquals('Range startNode', textNode, newRange.getStartNode());
     assertEquals('Range startOffset', 1, newRange.getStartOffset());
@@ -1336,8 +1378,7 @@ testSuite({
   },
 
   testPlaceCursorAtStartNonImportantTextNode() {
-    doTestPlaceCursorAtStart(
-        '\n<span id="important">important text</span>', 'important');
+    doTestPlaceCursorAtStart('\n<span id="important">important text</span>', 'important');
   },
 
   testPlaceCursorAtEnd() {
@@ -1350,8 +1391,7 @@ testSuite({
   },
 
   testPlaceCursorAtEndNonImportantTextNode() {
-    doTestPlaceCursorAtStart(
-        '\n<span id="important">important text</span>', 'important');
+    doTestPlaceCursorAtStart('\n<span id="important">important text</span>', 'important');
   },
 
   // Tests related to change/delayed change events.
@@ -1434,8 +1474,7 @@ testSuite({
     ctrlKeyEvent.charCode = KeyCodes.A;
 
     const imeKeyEvent = new BrowserEvent();
-    imeKeyEvent.keyCode =
-        229;  // indicates from an IME - see KEYS_CAUSING_CHANGES
+    imeKeyEvent.keyCode = 229; // indicates from an IME - see KEYS_CAUSING_CHANGES
 
     assertTrue(Field.isGeneratingKey_(regularKeyEvent, true));
     assertFalse(Field.isGeneratingKey_(ctrlKeyEvent, true));
@@ -1468,8 +1507,10 @@ testSuite({
 
     if (!(userAgent.WINDOWS || platform.isAndroid()) || userAgent.GECKO) {
       assertEquals(
-          'Delayed change event should\'ve been dispatched', 1,
-          delayedChanges.getCallCount());
+        "Delayed change event should've been dispatched",
+        1,
+        delayedChanges.getCallCount()
+      );
     }
 
     clock.dispose();
@@ -1492,9 +1533,10 @@ testSuite({
     clock.tick(1000);
 
     assertEquals(
-        'Delayed change event should\'ve been dispatched', 1,
-        delayedChanges.getCallCount());
-
+      "Delayed change event should've been dispatched",
+      1,
+      delayedChanges.getCallCount()
+    );
 
     clock.dispose();
     editableField.dispose();
@@ -1514,13 +1556,14 @@ testSuite({
     // - accepting a word prediction (on iOS)
     // - using speech to text (on iOS)
     // - accepting a spellcheck suggestion (on iOS, Android or Desktop)
-    testingEvents.fireBrowserEvent(
-        new TestEvent(EventType.INPUT, editableField.getElement()));
+    testingEvents.fireBrowserEvent(new TestEvent(EventType.INPUT, editableField.getElement()));
     clock.tick(1000);
 
     assertEquals(
-        'Delayed change event should\'ve been dispatched', 1,
-        delayedChanges.getCallCount());
+      "Delayed change event should've been dispatched",
+      1,
+      delayedChanges.getCallCount()
+    );
 
     clock.dispose();
     editableField.dispose();
@@ -1534,10 +1577,9 @@ testSuite({
     editableField.makeEditable();
     assertTrue(classlist.contains(element, 'editable'));
     assertEquals(
-        1,
-        Array.prototype.filter
-            .call(classlist.get(element), functions.equalTo('editable'))
-            .length);
+      1,
+      Array.prototype.filter.call(classlist.get(element), functions.equalTo('editable')).length
+    );
 
     // Skip restore won't reset the original element's CSS classes.
     editableField.makeUneditable(true /* opt_skipRestore */);
@@ -1545,9 +1587,8 @@ testSuite({
     editableField.makeEditable();
     assertTrue(classlist.contains(element, 'editable'));
     assertEquals(
-        1,
-        Array.prototype.filter
-            .call(classlist.get(element), functions.equalTo('editable'))
-            .length);
+      1,
+      Array.prototype.filter.call(classlist.get(element), functions.equalTo('editable')).length
+    );
   },
 });

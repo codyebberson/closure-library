@@ -7,7 +7,6 @@
 /** @fileoverview Unit tests for ChannelRequest. */
 
 goog.module('goog.labs.net.webChannel.channelRequestTest');
-goog.setTestOnly();
 
 const ChannelRequest = goog.require('goog.labs.net.webChannel.ChannelRequest');
 const MockClock = goog.require('goog.testing.MockClock');
@@ -52,7 +51,7 @@ class MockWebChannelBase {
     this.usesFetchStreams = () => false;
     this.shouldUseSecondaryDomains = () => false;
     this.completedRequests = [];
-    this.onRequestComplete = function(request) {
+    this.onRequestComplete = function (request) {
       this.completedRequests.push(request);
     };
     this.onRequestData = (request, data) => {};
@@ -71,7 +70,11 @@ class MockWebChannelBase {
  */
 function createChannelRequest() {
   xhrIo = new XhrIo();
-  xhrIo.abort = xhrIo.abort || function() { this.active_ = false; };
+  xhrIo.abort =
+    xhrIo.abort ||
+    function () {
+      this.active_ = false;
+    };
 
   // Install mock channel and no-op debug logger.
   mockChannel = new MockWebChannelBase();
@@ -94,7 +97,7 @@ function createChannelRequest() {
    * @suppress {visibility,checkTypes,missingProperties} suppression added to
    * enable type checking
    */
-  channelRequest.onWatchDogTimeout_ = function() {
+  channelRequest.onWatchDogTimeout_ = () => {
     channelRequest.watchdogTimeoutCallCount++;
     return channelRequest.originalOnWatchDogTimeout();
   };
@@ -103,16 +106,10 @@ function createChannelRequest() {
 }
 
 function checkReachabilityEvents(reqMade, reqSucceeded, reqFail, backChannel) {
-  assertEquals(
-      reqMade, reachabilityEvents[ServerReachability.REQUEST_MADE] || 0);
-  assertEquals(
-      reqSucceeded,
-      reachabilityEvents[ServerReachability.REQUEST_SUCCEEDED] || 0);
-  assertEquals(
-      reqFail, reachabilityEvents[ServerReachability.REQUEST_FAILED] || 0);
-  assertEquals(
-      backChannel,
-      reachabilityEvents[ServerReachability.BACK_CHANNEL_ACTIVITY] || 0);
+  assertEquals(reqMade, reachabilityEvents[ServerReachability.REQUEST_MADE] || 0);
+  assertEquals(reqSucceeded, reachabilityEvents[ServerReachability.REQUEST_SUCCEEDED] || 0);
+  assertEquals(reqFail, reachabilityEvents[ServerReachability.REQUEST_FAILED] || 0);
+  assertEquals(backChannel, reachabilityEvents[ServerReachability.BACK_CHANNEL_ACTIVITY] || 0);
 }
 
 testSuite({
@@ -129,9 +126,7 @@ testSuite({
       }
       reachabilityEvents[reachabilityType]++;
     };
-    stubs.set(
-        requestStats, 'notifyServerReachabilityEvent',
-        notifyServerReachabilityEvent);
+    stubs.set(requestStats, 'notifyServerReachabilityEvent', notifyServerReachabilityEvent);
   },
 
   tearDown() {

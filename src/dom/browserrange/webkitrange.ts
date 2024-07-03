@@ -11,12 +11,9 @@
  * DO NOT USE THIS FILE DIRECTLY.  Use goog.dom.Range instead.
  */
 
-
 goog.provide('goog.dom.browserrange.WebKitRange');
 
 goog.require('goog.dom.browserrange.W3cRange');
-
-
 
 /**
  * The constructor for WebKit specific browser ranges.
@@ -25,25 +22,20 @@ goog.require('goog.dom.browserrange.W3cRange');
  * @extends {goog.dom.browserrange.W3cRange}
  * @final
  */
-goog.dom.browserrange.WebKitRange = function(range) {
-  'use strict';
+goog.dom.browserrange.WebKitRange = function (range) {
   goog.dom.browserrange.W3cRange.call(this, range);
 };
-goog.inherits(
-    goog.dom.browserrange.WebKitRange, goog.dom.browserrange.W3cRange);
-
+goog.inherits(goog.dom.browserrange.WebKitRange, goog.dom.browserrange.W3cRange);
 
 /**
  * Creates a range object that selects the given node's text.
  * @param {Node} node The node to select.
  * @return {!goog.dom.browserrange.WebKitRange} A WebKit range wrapper object.
  */
-goog.dom.browserrange.WebKitRange.createFromNodeContents = function(node) {
-  'use strict';
-  return new goog.dom.browserrange.WebKitRange(
-      goog.dom.browserrange.W3cRange.getBrowserRangeForNode(node));
-};
-
+goog.dom.browserrange.WebKitRange.createFromNodeContents = (node) =>
+  new goog.dom.browserrange.WebKitRange(
+    goog.dom.browserrange.W3cRange.getBrowserRangeForNode(node)
+  );
 
 /**
  * Creates a range object that selects between the given nodes.
@@ -53,36 +45,45 @@ goog.dom.browserrange.WebKitRange.createFromNodeContents = function(node) {
  * @param {number} endOffset The offset within the end node.
  * @return {!goog.dom.browserrange.WebKitRange} A wrapper object.
  */
-goog.dom.browserrange.WebKitRange.createFromNodes = function(
-    startNode, startOffset, endNode, endOffset) {
-  'use strict';
-  return new goog.dom.browserrange.WebKitRange(
-      goog.dom.browserrange.W3cRange.getBrowserRangeForNodes(
-          startNode, startOffset, endNode, endOffset));
-};
-
-
-/** @override */
-goog.dom.browserrange.WebKitRange.prototype.compareBrowserRangeEndpoints =
-    function(range, thisEndpoint, otherEndpoint) {
-  'use strict';
-  return (
-      goog.dom.browserrange.WebKitRange.superClass_.compareBrowserRangeEndpoints
-          .call(this, range, thisEndpoint, otherEndpoint));
-};
-
+goog.dom.browserrange.WebKitRange.createFromNodes = (startNode, startOffset, endNode, endOffset) =>
+  new goog.dom.browserrange.WebKitRange(
+    goog.dom.browserrange.W3cRange.getBrowserRangeForNodes(
+      startNode,
+      startOffset,
+      endNode,
+      endOffset
+    )
+  );
 
 /** @override */
-goog.dom.browserrange.WebKitRange.prototype.selectInternal = function(
-    selection, reversed) {
-  'use strict';
+goog.dom.browserrange.WebKitRange.prototype.compareBrowserRangeEndpoints = function (
+  range,
+  thisEndpoint,
+  otherEndpoint
+) {
+  return goog.dom.browserrange.WebKitRange.superClass_.compareBrowserRangeEndpoints.call(
+    this,
+    range,
+    thisEndpoint,
+    otherEndpoint
+  );
+};
+
+/** @override */
+goog.dom.browserrange.WebKitRange.prototype.selectInternal = function (selection, reversed) {
   if (reversed) {
     selection.setBaseAndExtent(
-        this.getEndNode(), this.getEndOffset(), this.getStartNode(),
-        this.getStartOffset());
+      this.getEndNode(),
+      this.getEndOffset(),
+      this.getStartNode(),
+      this.getStartOffset()
+    );
   } else {
     selection.setBaseAndExtent(
-        this.getStartNode(), this.getStartOffset(), this.getEndNode(),
-        this.getEndOffset());
+      this.getStartNode(),
+      this.getStartOffset(),
+      this.getEndNode(),
+      this.getEndOffset()
+    );
   }
 };

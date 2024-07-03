@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.storage.mechanism.HTML5SessionStorageTest');
-goog.setTestOnly();
 
 const HTML5SessionStorage = goog.require('goog.storage.mechanism.HTML5SessionStorage');
 const iterableMechanismTests = goog.require('goog.storage.mechanism.iterableMechanismTests');
@@ -53,9 +52,11 @@ testSuite({
      checking
    */
   testAvailability() {
-    if (userAgent.WEBKIT ||
-        userAgent.GECKO && window.location.protocol != 'file:' ||
-        userAgent.IE) {
+    if (
+      userAgent.WEBKIT ||
+      (userAgent.GECKO && window.location.protocol != 'file:') ||
+      userAgent.IE
+    ) {
       assertNotNull(mechanism);
       assertTrue(mechanism.isAvailable());
       assertNotNull(mechanismShared);
@@ -64,26 +65,16 @@ testSuite({
   },
 
   ...mechanismTests.register({
-    getMechanism: function() {
-      return mechanism;
-    },
-    getMinimumQuota: function() {
-      return minimumQuota;
-    },
+    getMechanism: () => mechanism,
+    getMinimumQuota: () => minimumQuota,
   }),
 
   ...iterableMechanismTests.register({
-    getMechanism: function() {
-      return mechanism;
-    },
+    getMechanism: () => mechanism,
   }),
 
   ...mechanismSharingTests.register({
-    getMechanism: function() {
-      return mechanism;
-    },
-    getMechanismShared: function() {
-      return mechanismShared;
-    },
+    getMechanism: () => mechanism,
+    getMechanismShared: () => mechanismShared,
   }),
 });

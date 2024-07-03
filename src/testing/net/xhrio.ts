@@ -34,8 +34,7 @@ goog.requireType('goog.net.XhrLike');
  * @constructor
  * @extends {goog.net.XhrIo}
  */
-goog.testing.net.XhrIo = function(opt_testQueue) {
-  'use strict';
+goog.testing.net.XhrIo = function (opt_testQueue) {
   goog.testing.net.XhrIo.base.call(this);
 
   /**
@@ -68,7 +67,6 @@ goog.testing.net.XhrIo.base = goog.net.XhrIo;
  */
 goog.testing.net.XhrIo.allowUnsafeAccessToXhrIoOutsideCallbacks = false;
 
-
 /**
  * Alias this enum here to make mocking of goog.net.XhrIo easier.
  * @enum {string}
@@ -79,9 +77,7 @@ goog.testing.net.XhrIo.ResponseType = goog.net.XhrIo.ResponseType;
  * Alias this array here to make mocking of goog.net.XhrIo easier.
  * @type {!Array<string>}
  */
-goog.testing.net.XhrIo.METHODS_WITH_FORM_DATA =
-    goog.net.XhrIo.METHODS_WITH_FORM_DATA;
-
+goog.testing.net.XhrIo.METHODS_WITH_FORM_DATA = goog.net.XhrIo.METHODS_WITH_FORM_DATA;
 
 /**
  * All non-disposed instances of goog.testing.net.XhrIo created
@@ -92,32 +88,25 @@ goog.testing.net.XhrIo.METHODS_WITH_FORM_DATA =
  */
 goog.testing.net.XhrIo.sendInstances_ = [];
 
-
 /**
  * Returns an Array containing all non-disposed instances of
  * goog.testing.net.XhrIo created by {@link goog.testing.net.XhrIo.send}.
  * @return {!Array<!goog.testing.net.XhrIo>} Array of goog.testing.net.XhrIo
  *     instances.
  */
-goog.testing.net.XhrIo.getSendInstances = function() {
-  'use strict';
-  return goog.testing.net.XhrIo.sendInstances_;
-};
-
+goog.testing.net.XhrIo.getSendInstances = () => goog.testing.net.XhrIo.sendInstances_;
 
 /**
  * Disposes all non-disposed instances of goog.testing.net.XhrIo created by
  * {@link goog.testing.net.XhrIo.send}.
  * @see goog.net.XhrIo.cleanup
  */
-goog.testing.net.XhrIo.cleanup = function() {
-  'use strict';
+goog.testing.net.XhrIo.cleanup = () => {
   var instances = goog.testing.net.XhrIo.sendInstances_;
   while (instances.length) {
     instances.pop().dispose();
   }
 };
-
 
 /**
  * Simulates the static XhrIo send method.
@@ -135,18 +124,25 @@ goog.testing.net.XhrIo.cleanup = function() {
  *     request. Default to false. See {@link goog.net.XhrIo#setWithCredentials}.
  * @return {!goog.testing.net.XhrIo} The mocked sent XhrIo.
  */
-goog.testing.net.XhrIo.send = function(
-    url, opt_callback, opt_method, opt_content, opt_headers,
-    opt_timeoutInterval, opt_withCredentials) {
-  'use strict';
+goog.testing.net.XhrIo.send = (
+  url,
+  opt_callback,
+  opt_method,
+  opt_content,
+  opt_headers,
+  opt_timeoutInterval,
+  opt_withCredentials
+) => {
   var x = new goog.testing.net.XhrIo();
   goog.testing.net.XhrIo.sendInstances_.push(x);
   if (opt_callback) {
     goog.events.listen(x, goog.net.EventType.COMPLETE, opt_callback);
   }
   goog.events.listen(
-      x, goog.net.EventType.READY,
-      goog.partial(goog.testing.net.XhrIo.cleanupSend_, x));
+    x,
+    goog.net.EventType.READY,
+    goog.partial(goog.testing.net.XhrIo.cleanupSend_, x)
+  );
   if (opt_timeoutInterval) {
     x.setTimeoutInterval(opt_timeoutInterval);
   }
@@ -156,7 +152,6 @@ goog.testing.net.XhrIo.send = function(
   return x;
 };
 
-
 /**
  * Disposes of the specified goog.testing.net.XhrIo created by
  * {@link goog.testing.net.XhrIo.send} and removes it from
@@ -165,12 +160,10 @@ goog.testing.net.XhrIo.send = function(
  *     {@link goog.testing.net.XhrIo.send}.
  * @private
  */
-goog.testing.net.XhrIo.cleanupSend_ = function(XhrIo) {
-  'use strict';
+goog.testing.net.XhrIo.cleanupSend_ = (XhrIo) => {
   XhrIo.dispose();
   goog.array.remove(goog.testing.net.XhrIo.sendInstances_, XhrIo);
 };
-
 
 /**
  * Stores the simulated response headers for the requests which are sent through
@@ -180,7 +173,6 @@ goog.testing.net.XhrIo.cleanupSend_ = function(XhrIo) {
  */
 goog.testing.net.XhrIo.prototype.responseHeaders_;
 
-
 /**
  * Last POST content that was requested.
  * @private {
@@ -188,13 +180,11 @@ goog.testing.net.XhrIo.prototype.responseHeaders_;
  */
 goog.testing.net.XhrIo.prototype.lastContent_;
 
-
 /**
  * Additional headers that were requested in the last query.
  * @private {?Object|?goog.collections.maps.MapLike<string,string>|undefined}
  */
 goog.testing.net.XhrIo.prototype.lastHeaders_;
-
 
 /**
  * The response object.
@@ -202,21 +192,17 @@ goog.testing.net.XhrIo.prototype.lastHeaders_;
  */
 goog.testing.net.XhrIo.prototype.response_ = '';
 
-
 /**
  * The status code.
  * @private {number}
  */
 goog.testing.net.XhrIo.prototype.statusCode_ = 0;
 
-
 /**
  * Mock ready state.
  * @private {number}
  */
-goog.testing.net.XhrIo.prototype.readyState_ =
-    goog.net.XmlHttp.ReadyState.UNINITIALIZED;
-
+goog.testing.net.XhrIo.prototype.readyState_ = goog.net.XmlHttp.ReadyState.UNINITIALIZED;
 
 /**
  * Whether there's currently an underlying XHR object.
@@ -224,18 +210,15 @@ goog.testing.net.XhrIo.prototype.readyState_ =
  */
 goog.testing.net.XhrIo.prototype.hasXhr_ = false;
 
-
 /**
  * Returns the number of milliseconds after which an incomplete request will be
  * aborted, or 0 if no timeout is set.
  * @return {number} Timeout interval in milliseconds.
  * @override
  */
-goog.testing.net.XhrIo.prototype.getTimeoutInterval = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getTimeoutInterval = function () {
   return this.timeoutInterval_;
 };
-
 
 /**
  * Sets the number of milliseconds after which an incomplete request will be
@@ -244,22 +227,18 @@ goog.testing.net.XhrIo.prototype.getTimeoutInterval = function() {
  * @param {number} ms Timeout interval in milliseconds; 0 means none.
  * @override
  */
-goog.testing.net.XhrIo.prototype.setTimeoutInterval = function(ms) {
-  'use strict';
+goog.testing.net.XhrIo.prototype.setTimeoutInterval = function (ms) {
   this.timeoutInterval_ = Math.max(0, ms);
 };
-
 
 /**
  * Causes timeout events to be fired.
  */
-goog.testing.net.XhrIo.prototype.simulateTimeout = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.simulateTimeout = function () {
   this.lastErrorCode_ = goog.net.ErrorCode.TIMEOUT;
   this.dispatchEvent(goog.net.EventType.TIMEOUT);
   this.abort(goog.net.ErrorCode.TIMEOUT);
 };
-
 
 /**
  * Sets the desired type for the response. At time of writing, this is only
@@ -270,22 +249,18 @@ goog.testing.net.XhrIo.prototype.simulateTimeout = function() {
  * @param {goog.net.XhrIo.ResponseType} type The desired type for the response.
  * @override
  */
-goog.testing.net.XhrIo.prototype.setResponseType = function(type) {
-  'use strict';
+goog.testing.net.XhrIo.prototype.setResponseType = function (type) {
   this.responseType_ = type;
 };
-
 
 /**
  * Gets the desired type for the response.
  * @return {!goog.net.XhrIo.ResponseType} The desired type for the response.
  * @override
  */
-goog.testing.net.XhrIo.prototype.getResponseType = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getResponseType = function () {
   return this.responseType_;
 };
-
 
 /**
  * Sets whether a "credentialed" request that is aware of cookie and
@@ -297,20 +272,16 @@ goog.testing.net.XhrIo.prototype.getResponseType = function() {
  *     request.
  * @override
  */
-goog.testing.net.XhrIo.prototype.setWithCredentials = function(
-    withCredentials) {
-  'use strict';
+goog.testing.net.XhrIo.prototype.setWithCredentials = function (withCredentials) {
   this.withCredentials_ = withCredentials;
 };
-
 
 /**
  * Gets whether a "credentialed" request is to be sent.
  * @return {boolean} The desired type for the response.
  * @override
  */
-goog.testing.net.XhrIo.prototype.getWithCredentials = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getWithCredentials = function () {
   return this.withCredentials_;
 };
 /**
@@ -319,8 +290,7 @@ goog.testing.net.XhrIo.prototype.getWithCredentials = function() {
  *     execute.
  * @override
  */
-goog.testing.net.XhrIo.prototype.setTrustToken = function(trustToken) {
-  'use strict';
+goog.testing.net.XhrIo.prototype.setTrustToken = function (trustToken) {
   this.trustToken_ = trustToken;
 };
 
@@ -332,22 +302,18 @@ goog.testing.net.XhrIo.prototype.setTrustToken = function(trustToken) {
  * @param {boolean} enabled Whether progress events should be enabled.
  * @override
  */
-goog.testing.net.XhrIo.prototype.setProgressEventsEnabled = function(enabled) {
-  'use strict';
+goog.testing.net.XhrIo.prototype.setProgressEventsEnabled = function (enabled) {
   this.progressEventsEnabled_ = enabled;
 };
-
 
 /**
  * Gets whether progress events are enabled.
  * @return {boolean} Whether progress events are enabled for this request.
  * @override
  */
-goog.testing.net.XhrIo.prototype.getProgressEventsEnabled = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getProgressEventsEnabled = function () {
   return this.progressEventsEnabled_;
 };
-
 
 /**
  * Abort the current XMLHttpRequest
@@ -355,8 +321,7 @@ goog.testing.net.XhrIo.prototype.getProgressEventsEnabled = function() {
  *     defaults to ABORT.
  * @override
  */
-goog.testing.net.XhrIo.prototype.abort = function(opt_failureCode) {
-  'use strict';
+goog.testing.net.XhrIo.prototype.abort = function (opt_failureCode) {
   if (this.active_) {
     try {
       this.active_ = false;
@@ -371,7 +336,6 @@ goog.testing.net.XhrIo.prototype.abort = function(opt_failureCode) {
   }
 };
 
-
 /**
  * Simulates the XhrIo send.
  * @param {?goog.Uri|string} url Uri to make request too.
@@ -382,9 +346,7 @@ goog.testing.net.XhrIo.prototype.abort = function(opt_failureCode) {
  *     Map of headers to add to the request.
  * @override
  */
-goog.testing.net.XhrIo.prototype.send = function(
-    url, opt_method, opt_content, opt_headers) {
-  'use strict';
+goog.testing.net.XhrIo.prototype.send = function (url, opt_method, opt_content, opt_headers) {
   if (this.hasXhr_) {
     throw new Error('[goog.net.XhrIo] Object is active with another request');
   }
@@ -397,18 +359,15 @@ goog.testing.net.XhrIo.prototype.send = function(
     // Add headers specific to this request
     if (opt_headers) {
       if (Object.getPrototypeOf(opt_headers) === Object.prototype) {
-        for (let key in opt_headers) {
+        for (const key in opt_headers) {
           this.lastHeaders_[key] = opt_headers[key];
         }
-      } else if (
-          typeof opt_headers.keys === 'function' &&
-          typeof opt_headers.get === 'function') {
+      } else if (typeof opt_headers.keys === 'function' && typeof opt_headers.get === 'function') {
         for (const key of opt_headers.keys()) {
           this.lastHeaders_[key] = opt_headers.get(key);
         }
       } else {
-        throw new Error(
-            'Unknown input type for opt_headers: ' + String(opt_headers));
+        throw new Error('Unknown input type for opt_headers: ' + String(opt_headers));
       }
     }
   } else {
@@ -424,32 +383,24 @@ goog.testing.net.XhrIo.prototype.send = function(
   this.simulateReadyStateChange(goog.net.XmlHttp.ReadyState.LOADING);
 };
 
-
 /**
  * Creates a new XHR object.
  * @return {!goog.net.XhrLike.OrNative} The newly created XHR object.
  * @override
  */
-goog.testing.net.XhrIo.prototype.createXhr = function() {
-  'use strict';
-  return goog.net.XmlHttp();
-};
-
+goog.testing.net.XhrIo.prototype.createXhr = () => goog.net.XmlHttp();
 
 /**
  * Simulates changing to the new ready state.
  * @param {number} readyState Ready state to change to.
  */
-goog.testing.net.XhrIo.prototype.simulateReadyStateChange = function(
-    readyState) {
-  'use strict';
+goog.testing.net.XhrIo.prototype.simulateReadyStateChange = function (readyState) {
   if (readyState < this.readyState_) {
     throw new Error('Readystate cannot go backwards');
   }
 
   // INTERACTIVE can be dispatched repeatedly as more data is reported.
-  if (readyState == goog.net.XmlHttp.ReadyState.INTERACTIVE &&
-      readyState == this.readyState_) {
+  if (readyState == goog.net.XmlHttp.ReadyState.INTERACTIVE && readyState == this.readyState_) {
     this.dispatchEvent(goog.net.EventType.READY_STATE_CHANGE);
     return;
   }
@@ -465,22 +416,18 @@ goog.testing.net.XhrIo.prototype.simulateReadyStateChange = function(
   }
 };
 
-
 /**
  * Simulate receiving some bytes but the request not fully completing, and
  * the XHR entering the 'INTERACTIVE' state.
  * @param {string} partialResponse A string to append to the response text.
  * @param {Object=} opt_headers Simulated response headers.
  */
-goog.testing.net.XhrIo.prototype.simulatePartialResponse = function(
-    partialResponse, opt_headers) {
-  'use strict';
+goog.testing.net.XhrIo.prototype.simulatePartialResponse = function (partialResponse, opt_headers) {
   this.response_ += partialResponse;
   this.responseHeaders_ = opt_headers || {};
   this.statusCode_ = 200;
   this.simulateReadyStateChange(goog.net.XmlHttp.ReadyState.INTERACTIVE);
 };
-
 
 /**
  * Simulates receiving a response.
@@ -489,14 +436,14 @@ goog.testing.net.XhrIo.prototype.simulatePartialResponse = function(
  *     response.
  * @param {Object=} opt_headers Simulated response headers.
  */
-goog.testing.net.XhrIo.prototype.simulateResponse = function(
-    statusCode, response, opt_headers) {
-  'use strict';
+goog.testing.net.XhrIo.prototype.simulateResponse = function (statusCode, response, opt_headers) {
   // This library allows a response to be simulated without send ever being
   // called. If there are no send instances, then just pretend that xhr_ and
   // active_ have been set to true.
-  if (!goog.testing.net.XhrIo.allowUnsafeAccessToXhrIoOutsideCallbacks &&
-      !goog.testing.net.XhrIo.sendInstances_.length) {
+  if (
+    !goog.testing.net.XhrIo.allowUnsafeAccessToXhrIoOutsideCallbacks &&
+    !goog.testing.net.XhrIo.sendInstances_.length
+  ) {
     this.hasXhr_ = true;
     this.active_ = true;
   }
@@ -519,17 +466,14 @@ goog.testing.net.XhrIo.prototype.simulateResponse = function(
   }
 };
 
-
 /**
  * Simulates the Xhr is ready for the next request.
  */
-goog.testing.net.XhrIo.prototype.simulateReady = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.simulateReady = function () {
   this.active_ = false;
   this.hasXhr_ = false;
   this.dispatchEvent(goog.net.EventType.READY);
 };
-
 
 /**
  * Simulates the Xhr progress event.
@@ -539,9 +483,12 @@ goog.testing.net.XhrIo.prototype.simulateReady = function() {
  * @param {boolean=} opt_isDownload Whether the progress is from a download or
  *     upload.
  */
-goog.testing.net.XhrIo.prototype.simulateProgress = function(
-    lengthComputable, loaded, total, opt_isDownload) {
-  'use strict';
+goog.testing.net.XhrIo.prototype.simulateProgress = function (
+  lengthComputable,
+  loaded,
+  total,
+  opt_isDownload
+) {
   /**
    * @typedef {{
    *   type: goog.net.EventType,
@@ -553,66 +500,57 @@ goog.testing.net.XhrIo.prototype.simulateProgress = function(
   var ProgressEventType;
 
   var /** ProgressEventType */ progressEvent = {
-    type: goog.net.EventType.PROGRESS,
-    lengthComputable: lengthComputable,
-    loaded: loaded,
-    total: total
-  };
+      type: goog.net.EventType.PROGRESS,
+      lengthComputable: lengthComputable,
+      loaded: loaded,
+      total: total,
+    };
   this.dispatchEvent(progressEvent);
-  var specificProgress =
-      /** @type {ProgressEventType} */ (goog.object.clone(progressEvent));
-  specificProgress.type = opt_isDownload ?
-      goog.net.EventType.DOWNLOAD_PROGRESS :
-      goog.net.EventType.UPLOAD_PROGRESS;
+  var specificProgress = /** @type {ProgressEventType} */ (goog.object.clone(progressEvent));
+  specificProgress.type = opt_isDownload
+    ? goog.net.EventType.DOWNLOAD_PROGRESS
+    : goog.net.EventType.UPLOAD_PROGRESS;
   this.dispatchEvent(specificProgress);
 };
-
 
 /**
  * @return {boolean} Whether there is an active request.
  * @override
  */
-goog.testing.net.XhrIo.prototype.isActive = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.isActive = function () {
   return !!this.hasXhr_;
 };
-
 
 /**
  * Has the request completed.
  * @return {boolean} Whether the request has completed.
  * @override
  */
-goog.testing.net.XhrIo.prototype.isComplete = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.isComplete = function () {
   return this.readyState_ == goog.net.XmlHttp.ReadyState.COMPLETE;
 };
-
 
 /**
  * Has the request compeleted with a success.
  * @return {boolean} Whether the request compeleted successfully.
  * @override
  */
-goog.testing.net.XhrIo.prototype.isSuccess = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.isSuccess = function () {
   var status = this.getStatus();
   // A zero status code is considered successful for local files.
-  return goog.net.HttpStatus.isSuccess(status) ||
-      status === 0 && !this.isLastUriEffectiveSchemeHttp_();
+  return (
+    goog.net.HttpStatus.isSuccess(status) || (status === 0 && !this.isLastUriEffectiveSchemeHttp_())
+  );
 };
-
 
 /**
  * Returns the readystate.
  * @return {!goog.net.XmlHttp.ReadyState} goog.net.XmlHttp.ReadyState.*.
  * @override
  */
-goog.testing.net.XhrIo.prototype.getReadyState = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getReadyState = function () {
   return /** @type {!goog.net.XmlHttp.ReadyState} */ (this.readyState_);
 };
-
 
 /**
  * Get the status from the Xhr object.  Will only return correct result when
@@ -620,11 +558,9 @@ goog.testing.net.XhrIo.prototype.getReadyState = function() {
  * @return {number} Http status.
  * @override
  */
-goog.testing.net.XhrIo.prototype.getStatus = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getStatus = function () {
   return this.statusCode_;
 };
-
 
 /**
  * Get the status text from the Xhr object.  Will only return correct result
@@ -632,30 +568,23 @@ goog.testing.net.XhrIo.prototype.getStatus = function() {
  * @return {string} Status text.
  * @override
  */
-goog.testing.net.XhrIo.prototype.getStatusText = function() {
-  'use strict';
-  return '';
-};
-
+goog.testing.net.XhrIo.prototype.getStatusText = () => '';
 
 /**
  * Gets the last error message.
  * @return {!goog.net.ErrorCode} Last error code.
  * @override
  */
-goog.testing.net.XhrIo.prototype.getLastErrorCode = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getLastErrorCode = function () {
   return this.lastErrorCode_;
 };
-
 
 /**
  * Gets the last URI that was requested.
  * @return {string} Last URI.
  * @override
  */
-goog.testing.net.XhrIo.prototype.getLastUri = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getLastUri = function () {
   // A few tests depend on this returning a goog.Uri object, even though
   // goog.net.XhrIo only ever returns a string from getLastUri.
   // TODO(closure-team): Update the tests that are using getLastUri for
@@ -663,27 +592,22 @@ goog.testing.net.XhrIo.prototype.getLastUri = function() {
   return /** @type {string} */ (this.lastUri_);
 };
 
-
 /**
  * Gets the last HTTP method that was requested.
  * @return {string|undefined} Last HTTP method used by send.
  */
-goog.testing.net.XhrIo.prototype.getLastMethod = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getLastMethod = function () {
   return this.lastMethod_;
 };
-
 
 /**
  * Gets the last POST content that was requested.
  * @return {ArrayBuffer|ArrayBufferView|Blob|Document|FormData|string|undefined}
  *     Last POST content or undefined if last request was a GET.
  */
-goog.testing.net.XhrIo.prototype.getLastContent = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getLastContent = function () {
   return this.lastContent_;
 };
-
 
 /**
  * Gets the headers of the last request.
@@ -691,11 +615,9 @@ goog.testing.net.XhrIo.prototype.getLastContent = function() {
  *     Last headers manually set in send
  *      call or undefined if no additional headers were specified.
  */
-goog.testing.net.XhrIo.prototype.getLastRequestHeaders = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getLastRequestHeaders = function () {
   return this.lastHeaders_;
 };
-
 
 /**
  * Returns true if there is a valid xhr, or if
@@ -703,13 +625,9 @@ goog.testing.net.XhrIo.prototype.getLastRequestHeaders = function() {
  * @return {boolean}
  * @private
  */
-goog.testing.net.XhrIo.prototype.checkXhr_ = function() {
-  'use strict';
-  return (
-      goog.testing.net.XhrIo.allowUnsafeAccessToXhrIoOutsideCallbacks ||
-      !!this.hasXhr_);
+goog.testing.net.XhrIo.prototype.checkXhr_ = function () {
+  return goog.testing.net.XhrIo.allowUnsafeAccessToXhrIoOutsideCallbacks || !!this.hasXhr_;
 };
-
 
 /**
  * Gets the response text from the Xhr object.  Will only return correct result
@@ -717,20 +635,17 @@ goog.testing.net.XhrIo.prototype.checkXhr_ = function() {
  * @return {string} Result from the server.
  * @override
  */
-goog.testing.net.XhrIo.prototype.getResponseText = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getResponseText = function () {
   if (!this.checkXhr_()) {
     return '';
   } else if (typeof this.response_ === 'string') {
     return this.response_;
-  } else if (
-      goog.global['ArrayBuffer'] && this.response_ instanceof ArrayBuffer) {
+  } else if (goog.global['ArrayBuffer'] && this.response_ instanceof ArrayBuffer) {
     return '';
   } else {
     return goog.dom.xml.serialize(/** @type {Document} */ (this.response_));
   }
 };
-
 
 /**
  * Gets the response body from the Xhr object. Will only return correct result
@@ -738,11 +653,7 @@ goog.testing.net.XhrIo.prototype.getResponseText = function() {
  * @return {Object} Binary result from the server or null.
  * @override
  */
-goog.testing.net.XhrIo.prototype.getResponseBody = function() {
-  'use strict';
-  return null;
-};
-
+goog.testing.net.XhrIo.prototype.getResponseBody = () => null;
 
 /**
  * Gets the response and evaluates it as JSON from the Xhr object.  Will only
@@ -754,8 +665,7 @@ goog.testing.net.XhrIo.prototype.getResponseBody = function() {
  * @throws Error if s is invalid JSON.
  * @override
  */
-goog.testing.net.XhrIo.prototype.getResponseJson = function(opt_xssiPrefix) {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getResponseJson = function (opt_xssiPrefix) {
   if (!this.checkXhr_()) {
     return undefined;
   }
@@ -768,27 +678,23 @@ goog.testing.net.XhrIo.prototype.getResponseJson = function(opt_xssiPrefix) {
   return /** @type {!Object} */ (JSON.parse(responseText));
 };
 
-
 /**
  * Gets the response XML from the Xhr object.  Will only return correct result
  * when called from the context of a callback.
  * @return {Document} Result from the server if it was XML.
  * @override
  */
-goog.testing.net.XhrIo.prototype.getResponseXml = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getResponseXml = function () {
   if (!this.checkXhr_()) {
     return null;
   }
   // NOTE(user): I haven't found out how to check in Internet Explorer
   // whether the response is XML document, so I do it the other way around.
   return typeof this.response_ === 'string' ||
-          (goog.global['ArrayBuffer'] &&
-           this.response_ instanceof ArrayBuffer) ?
-      null :
-      /** @type {Document} */ (this.response_);
+    (goog.global['ArrayBuffer'] && this.response_ instanceof ArrayBuffer)
+    ? null
+    : /** @type {Document} */ (this.response_);
 };
-
 
 /**
  * Get the response as the type specificed by {@link #setResponseType}. At time
@@ -798,11 +704,9 @@ goog.testing.net.XhrIo.prototype.getResponseXml = function() {
  * @return {*} The response.
  * @override
  */
-goog.testing.net.XhrIo.prototype.getResponse = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getResponse = function () {
   return this.checkXhr_() ? this.response_ : null;
 };
-
 
 /**
  * Get the value of the response-header with the given name from the Xhr object
@@ -812,14 +716,12 @@ goog.testing.net.XhrIo.prototype.getResponse = function() {
  * @return {string|undefined} The value of the response-header named key.
  * @override
  */
-goog.testing.net.XhrIo.prototype.getResponseHeader = function(key) {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getResponseHeader = function (key) {
   if (!this.checkXhr_() || !this.isComplete()) {
     return undefined;
   }
   return this.responseHeaders_[key];
 };
-
 
 /**
  * Gets the text of all the headers in the response.
@@ -828,14 +730,12 @@ goog.testing.net.XhrIo.prototype.getResponseHeader = function(key) {
  * @return {string} The string containing all the response headers.
  * @override
  */
-goog.testing.net.XhrIo.prototype.getAllResponseHeaders = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getAllResponseHeaders = function () {
   if (!this.checkXhr_() || !this.isComplete()) {
     return '';
   }
   return this.getAllStreamingResponseHeaders();
 };
-
 
 /**
  * Returns all response headers as a key-value map.
@@ -850,14 +750,12 @@ goog.testing.net.XhrIo.prototype.getAllResponseHeaders = function() {
  *     and header values as values.
  * @override
  */
-goog.testing.net.XhrIo.prototype.getResponseHeaders = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getResponseHeaders = function () {
   if (!this.checkXhr_() || !this.isComplete()) {
     return {};
   }
   var headersObject = {};
-  goog.object.forEach(this.responseHeaders_, function(value, key) {
-    'use strict';
+  goog.object.forEach(this.responseHeaders_, (value, key) => {
     if (headersObject[key]) {
       headersObject[key] += ', ' + value;
     } else {
@@ -866,7 +764,6 @@ goog.testing.net.XhrIo.prototype.getResponseHeaders = function() {
   });
   return headersObject;
 };
-
 
 /**
  * Get the value of the response-header with the given name from the Xhr object.
@@ -877,8 +774,7 @@ goog.testing.net.XhrIo.prototype.getResponseHeaders = function() {
  *     unavailable.
  * @override
  */
-goog.testing.net.XhrIo.prototype.getStreamingResponseHeader = function(key) {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getStreamingResponseHeader = function (key) {
   if (!this.checkXhr_()) {
     return null;
   }
@@ -888,7 +784,6 @@ goog.testing.net.XhrIo.prototype.getStreamingResponseHeader = function(key) {
   return key in this.responseHeaders_ ? this.responseHeaders_[key] : null;
 };
 
-
 /**
  * Gets the text of all the headers in the response. As opposed to
  * {@link #getAllResponseHeaders}, this method does not require that the request
@@ -896,14 +791,12 @@ goog.testing.net.XhrIo.prototype.getStreamingResponseHeader = function(key) {
  * @return {string} The value of the response headers or empty string.
  * @override
  */
-goog.testing.net.XhrIo.prototype.getAllStreamingResponseHeaders = function() {
-  'use strict';
+goog.testing.net.XhrIo.prototype.getAllStreamingResponseHeaders = function () {
   if (!this.checkXhr_()) {
     return '';
   }
   var headers = [];
-  goog.object.forEach(this.responseHeaders_, function(value, name) {
-    'use strict';
+  goog.object.forEach(this.responseHeaders_, (value, name) => {
     headers.push(name + ': ' + value);
   });
   return headers.join('\r\n');

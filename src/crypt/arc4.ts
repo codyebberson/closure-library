@@ -25,16 +25,13 @@ goog.provide('goog.crypt.Arc4');
 
 goog.require('goog.asserts');
 
-
-
 /**
  * ARC4 streamcipher implementation.
  * @constructor
  * @final
  * @struct
  */
-goog.crypt.Arc4 = function() {
-  'use strict';
+goog.crypt.Arc4 = function () {
   /**
    * A permutation of all 256 possible bytes.
    * @type {Array<number>}
@@ -57,14 +54,12 @@ goog.crypt.Arc4 = function() {
   this.index2_ = 0;
 };
 
-
 /**
  * Initialize the cipher for use with new key.
  * @param {Array<number>} key A byte array containing the key.
  * @param {number=} opt_length Indicates # of bytes to take from the key.
  */
-goog.crypt.Arc4.prototype.setKey = function(key, opt_length) {
-  'use strict';
+goog.crypt.Arc4.prototype.setKey = function (key, opt_length) {
   goog.asserts.assertArray(key, 'Key parameter must be a byte array');
 
   if (!opt_length) {
@@ -90,7 +85,6 @@ goog.crypt.Arc4.prototype.setKey = function(key, opt_length) {
   this.index2_ = 0;
 };
 
-
 /**
  * Discards n bytes of the keystream.
  * These days 1536 is considered a decent amount to drop to get the key state
@@ -109,8 +103,7 @@ goog.crypt.Arc4.prototype.setKey = function(key, opt_length) {
  *    perf hit for crypt.
  * @param {number} length Number of bytes to disregard from the stream.
  */
-goog.crypt.Arc4.prototype.discard = function(length) {
-  'use strict';
+goog.crypt.Arc4.prototype.discard = function (length) {
   var i = this.index1_;
   var j = this.index2_;
   var state = this.state_;
@@ -128,14 +121,12 @@ goog.crypt.Arc4.prototype.discard = function(length) {
   this.index2_ = j;
 };
 
-
 /**
  * En- or decrypt (same operation for streamciphers like ARC4)
  * @param {Array<number>|Uint8Array} data The data to be xor-ed in place.
  * @param {number=} opt_length The number of bytes to crypt.
  */
-goog.crypt.Arc4.prototype.crypt = function(data, opt_length) {
-  'use strict';
+goog.crypt.Arc4.prototype.crypt = function (data, opt_length) {
   if (!opt_length) {
     opt_length = data.length;
   }

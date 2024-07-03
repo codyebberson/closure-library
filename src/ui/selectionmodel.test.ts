@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.SelectionModelTest');
-goog.setTestOnly();
 
 const SelectionModel = goog.require('goog.ui.SelectionModel');
 const dispose = goog.require('goog.dispose');
@@ -139,8 +138,7 @@ testSuite({
 
     selectionModel.addItems(addedItems);
 
-    assertEquals(
-        items.length + addedItems.length, selectionModel.getItemCount());
+    assertEquals(items.length + addedItems.length, selectionModel.getItemCount());
 
     const resultArray = items.concat(addedItems);
     assertArrayEquals(resultArray, selectionModel.getItems());

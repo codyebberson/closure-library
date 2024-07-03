@@ -10,7 +10,6 @@
  */
 
 goog.module('goog.ui.DatePickerTest');
-goog.setTestOnly();
 
 const DateDate = goog.require('goog.date.Date');
 const DatePicker = goog.require('goog.ui.DatePicker');
@@ -56,9 +55,10 @@ testSuite({
     /** @suppress {checkTypes} suppression added to enable type checking */
     const month = $$('button', 'goog-date-picker-month', head.firstChild)[0];
     assertSameElements(
-        'Button element must have expected class names',
-        ['goog-date-picker-btn', 'goog-date-picker-month'],
-        classlist.get(month));
+      'Button element must have expected class names',
+      ['goog-date-picker-btn', 'goog-date-picker-month'],
+      classlist.get(month)
+    );
   },
 
   testIsYearOnLeft() {
@@ -69,8 +69,10 @@ testSuite({
     /** @suppress {checkTypes} suppression added to enable type checking */
     const year = $$('button', 'goog-date-picker-year', head.firstChild)[0];
     assertSameElements(
-        'Button element must have expected class names',
-        ['goog-date-picker-btn', 'goog-date-picker-year'], classlist.get(year));
+      'Button element must have expected class names',
+      ['goog-date-picker-btn', 'goog-date-picker-year'],
+      classlist.get(year)
+    );
   },
 
   testHidingOfTableFoot0() {
@@ -162,8 +164,10 @@ testSuite({
 
     month.setMonth(10);
     assertObjectEquals(
-        'modifying the returned object is safe', new DateDate(2000, 5, 1),
-        picker.getActiveMonth());
+      'modifying the returned object is safe',
+      new DateDate(2000, 5, 1),
+      picker.getActiveMonth()
+    );
   },
 
   testGetActiveMonthBeforeYear100() {
@@ -181,8 +185,10 @@ testSuite({
 
     month.setMonth(10);
     assertObjectEquals(
-        'modifying the returned object is safe', expectedMonth,
-        picker.getActiveMonth());
+      'modifying the returned object is safe',
+      expectedMonth,
+      picker.getActiveMonth()
+    );
   },
 
   testGetDate() {
@@ -192,8 +198,10 @@ testSuite({
 
     date.setMonth(1);
     assertObjectEquals(
-        'modifying the returned date is safe', new DateDate(2000, 0, 1),
-        picker.getDate());
+      'modifying the returned date is safe',
+      new DateDate(2000, 0, 1),
+      picker.getDate()
+    );
 
     picker.setDate(null);
     assertNull('no date is selected', picker.getDate());
@@ -340,31 +348,26 @@ testSuite({
     picker.setDate(new Date(2010, 1, 26));
     assertEquals('no select event dispatched', 1, selectEvents);
     assertEquals('no change event dispatched', 1, changeEvents);
-    assertEquals(
-        'no change active month event dispatched', 1, changeActiveMonthEvents);
-    assertTrue(
-        'date is set', new DateDate(2010, 1, 26).equals(picker.getDate()));
+    assertEquals('no change active month event dispatched', 1, changeActiveMonthEvents);
+    assertTrue('date is set', new DateDate(2010, 1, 26).equals(picker.getDate()));
 
     // Set date to same date.
     picker.setDate(new Date(2010, 1, 26));
     assertEquals('1 select event dispatched', 2, selectEvents);
     assertEquals('no change event dispatched', 1, changeEvents);
-    assertEquals(
-        'no change active month event dispatched', 1, changeActiveMonthEvents);
+    assertEquals('no change active month event dispatched', 1, changeActiveMonthEvents);
 
     // Set date to different date.
     picker.setDate(new Date(2010, 1, 27));
     assertEquals('another select event dispatched', 3, selectEvents);
     assertEquals('1 change event dispatched', 2, changeEvents);
-    assertEquals(
-        '2 change active month events dispatched', 1, changeActiveMonthEvents);
+    assertEquals('2 change active month events dispatched', 1, changeActiveMonthEvents);
 
     // Set date to a date in a different month.
     picker.setDate(new Date(2010, 2, 27));
     assertEquals('another select event dispatched', 4, selectEvents);
     assertEquals('another change event dispatched', 3, changeEvents);
-    assertEquals(
-        '3 change active month event dispatched', 2, changeActiveMonthEvents);
+    assertEquals('3 change active month event dispatched', 2, changeActiveMonthEvents);
 
     // Set date to none.
     picker.setDate(null);
@@ -382,33 +385,25 @@ testSuite({
 
     // Set date.
     picker.setDate(new Date(2010, 1, 26));
-    assertEquals(
-        'change active month events dispatched', 1, changeActiveMonthEvents);
-    assertTrue(
-        'date is set', new DateDate(2010, 1, 26).equals(picker.getDate()));
+    assertEquals('change active month events dispatched', 1, changeActiveMonthEvents);
+    assertTrue('date is set', new DateDate(2010, 1, 26).equals(picker.getDate()));
 
     // Change to next month.
     picker.nextMonth();
-    assertEquals(
-        '1 change active month event dispatched', 2, changeActiveMonthEvents);
-    assertTrue(
-        'date should still be the same',
-        new DateDate(2010, 1, 26).equals(picker.getDate()));
+    assertEquals('1 change active month event dispatched', 2, changeActiveMonthEvents);
+    assertTrue('date should still be the same', new DateDate(2010, 1, 26).equals(picker.getDate()));
 
     // Change to next year.
     picker.nextYear();
-    assertEquals(
-        '2 change active month events dispatched', 3, changeActiveMonthEvents);
+    assertEquals('2 change active month events dispatched', 3, changeActiveMonthEvents);
 
     // Change to previous month.
     picker.previousMonth();
-    assertEquals(
-        '3 change active month events dispatched', 4, changeActiveMonthEvents);
+    assertEquals('3 change active month events dispatched', 4, changeActiveMonthEvents);
 
     // Change to previous year.
     picker.previousYear();
-    assertEquals(
-        '4 change active month events dispatched', 5, changeActiveMonthEvents);
+    assertEquals('4 change active month events dispatched', 5, changeActiveMonthEvents);
   },
 
   testChangeActiveMonth_whenGridGrows_dispatchesGridIncreaseEvent() {
@@ -417,8 +412,10 @@ testSuite({
     picker.render();
     let gridSizeIncreaseEvents = 0;
     events.listen(
-        picker, DatePicker.Events.GRID_SIZE_INCREASE,
-        () => void gridSizeIncreaseEvents++);
+      picker,
+      DatePicker.Events.GRID_SIZE_INCREASE,
+      () => void gridSizeIncreaseEvents++
+    );
 
     // Feb 2015 has only four rows of dates.
     picker.setDate(new Date(2015, 1, 1));
@@ -426,28 +423,23 @@ testSuite({
 
     // Mar 2015 has 5 rows.
     picker.nextMonth();
-    assertEquals(
-        '1 grid size increase events dispatched', 1, gridSizeIncreaseEvents);
+    assertEquals('1 grid size increase events dispatched', 1, gridSizeIncreaseEvents);
 
     // Going back to Feb is a size decrease, so no dispatch.
     picker.previousMonth();
-    assertEquals(
-        '1 grid size increase events dispatched', 1, gridSizeIncreaseEvents);
+    assertEquals('1 grid size increase events dispatched', 1, gridSizeIncreaseEvents);
 
     // Going forward to Mar again should dispatch again.
     picker.nextMonth();
-    assertEquals(
-        '2 grid size increase events dispatched', 2, gridSizeIncreaseEvents);
+    assertEquals('2 grid size increase events dispatched', 2, gridSizeIncreaseEvents);
 
     // Apr 2015 has 5 rows also.
     picker.nextMonth();
-    assertEquals(
-        '2 grid size increase events dispatched', 2, gridSizeIncreaseEvents);
+    assertEquals('2 grid size increase events dispatched', 2, gridSizeIncreaseEvents);
 
     // May 2015 has 6 rows.
     picker.nextMonth();
-    assertEquals(
-        '3 grid size increase events dispatched', 3, gridSizeIncreaseEvents);
+    assertEquals('3 grid size increase events dispatched', 3, gridSizeIncreaseEvents);
   },
 
   testChangeActiveMonth_withFixedNumWeeks_dispatchesNoGridIncreaseEvent() {
@@ -456,8 +448,10 @@ testSuite({
     picker.render();
     let gridSizeIncreaseEvents = 0;
     events.listen(
-        picker, DatePicker.Events.GRID_SIZE_INCREASE,
-        () => void gridSizeIncreaseEvents++);
+      picker,
+      DatePicker.Events.GRID_SIZE_INCREASE,
+      () => void gridSizeIncreaseEvents++
+    );
 
     // Feb 2015 has only four rows of dates.
     picker.setDate(new Date(2015, 1, 1));
@@ -471,47 +465,45 @@ testSuite({
 
   /** @suppress {visibility} suppression added to enable type checking */
   testUserSelectableDates() {
-    const dateRange =
-        new DateRange(new DateDate(2010, 1, 25), new DateDate(2010, 1, 27));
+    const dateRange = new DateRange(new DateDate(2010, 1, 25), new DateDate(2010, 1, 27));
     picker = new DatePicker();
     picker.setUserSelectableDateRange(dateRange);
     assertFalse(
-        'should not be selectable date',
-        picker.isUserSelectableDate_(new DateDate(2010, 1, 24)));
+      'should not be selectable date',
+      picker.isUserSelectableDate_(new DateDate(2010, 1, 24))
+    );
     assertTrue(
-        'should be a selectable date',
-        picker.isUserSelectableDate_(new DateDate(2010, 1, 25)));
+      'should be a selectable date',
+      picker.isUserSelectableDate_(new DateDate(2010, 1, 25))
+    );
     assertTrue(
-        'should be a selectable date',
-        picker.isUserSelectableDate_(new DateDate(2010, 1, 26)));
+      'should be a selectable date',
+      picker.isUserSelectableDate_(new DateDate(2010, 1, 26))
+    );
     assertTrue(
-        'should be a selectable date',
-        picker.isUserSelectableDate_(new DateDate(2010, 1, 27)));
+      'should be a selectable date',
+      picker.isUserSelectableDate_(new DateDate(2010, 1, 27))
+    );
     assertFalse(
-        'should not be selectable date',
-        picker.isUserSelectableDate_(new DateDate(2010, 1, 28)));
+      'should not be selectable date',
+      picker.isUserSelectableDate_(new DateDate(2010, 1, 28))
+    );
   },
 
   testGetUserSelectableDateRange() {
     picker = new DatePicker();
     let dateRange = picker.getUserSelectableDateRange();
-    assertTrue(
-        'default date range is all time',
-        DateRange.equals(dateRange, DateRange.allTime()));
-    const newDateRange =
-        new DateRange(new DateDate(2010, 1, 25), new DateDate(2010, 1, 27));
+    assertTrue('default date range is all time', DateRange.equals(dateRange, DateRange.allTime()));
+    const newDateRange = new DateRange(new DateDate(2010, 1, 25), new DateDate(2010, 1, 27));
     picker.setUserSelectableDateRange(newDateRange);
     dateRange = picker.getUserSelectableDateRange();
-    assertTrue(
-        'should be equal to updated date range',
-        DateRange.equals(dateRange, newDateRange));
+    assertTrue('should be equal to updated date range', DateRange.equals(dateRange, newDateRange));
   },
 
   testUniqueCellIds() {
     picker = new DatePicker();
     picker.render();
-    const cells = dom.getElementsByTagNameAndClass(
-        TagName.TD, undefined, picker.getElement());
+    const cells = dom.getElementsByTagNameAndClass(TagName.TD, undefined, picker.getElement());
     const existingIds = {};
     const numCells = cells.length;
     for (let i = 0; i < numCells; i++) {
@@ -544,8 +536,7 @@ testSuite({
     events.listen(picker, DatePicker.Events.SELECT, selectEvents);
     events.listen(picker, DatePicker.Events.CHANGE, changeEvents);
 
-    testingEvents.fireNonAsciiKeySequence(
-        picker.getElement(), KeyCodes.DOWN, KeyCodes.DOWN);
+    testingEvents.fireNonAsciiKeySequence(picker.getElement(), KeyCodes.DOWN, KeyCodes.DOWN);
     changeEvents.assertCallCount(1);
     selectEvents.assertCallCount(0);
 
@@ -553,8 +544,7 @@ testSuite({
     // week day headers, so +1 starts at the first row of days.
     assertEquals(picker.elTable_[1 + 1][1], document.activeElement);
 
-    testingEvents.fireNonAsciiKeySequence(
-        picker.getElement(), KeyCodes.ENTER, KeyCodes.ENTER);
+    testingEvents.fireNonAsciiKeySequence(picker.getElement(), KeyCodes.ENTER, KeyCodes.ENTER);
     changeEvents.assertCallCount(1);
     selectEvents.assertCallCount(1);
   },
@@ -571,8 +561,7 @@ testSuite({
     events.listen(picker, DatePicker.Events.SELECT, selectEvents);
     events.listen(picker, DatePicker.Events.CHANGE, changeEvents);
 
-    testingEvents.fireNonAsciiKeySequence(
-        picker.getElement(), KeyCodes.HOME, KeyCodes.HOME);
+    testingEvents.fireNonAsciiKeySequence(picker.getElement(), KeyCodes.HOME, KeyCodes.HOME);
     changeEvents.assertCallCount(1);
     selectEvents.assertCallCount(1);
 
@@ -593,10 +582,10 @@ testSuite({
     events.listen(picker, DatePicker.Events.SELECT, selectEvents);
     events.listen(picker, DatePicker.Events.CHANGE, changeEvents);
     picker.setUserSelectableDateRange(
-        new DateRange(new DateDate(200, 1, 1), new DateDate(300, 1, 1)));
+      new DateRange(new DateDate(200, 1, 1), new DateDate(300, 1, 1))
+    );
 
-    testingEvents.fireNonAsciiKeySequence(
-        picker.getElement(), KeyCodes.HOME, KeyCodes.HOME);
+    testingEvents.fireNonAsciiKeySequence(picker.getElement(), KeyCodes.HOME, KeyCodes.HOME);
 
     changeEvents.assertCallCount(0);
     selectEvents.assertCallCount(0);
@@ -606,15 +595,15 @@ testSuite({
     picker = new DatePicker(new Date(2017, 8, 9));
     picker.render(dom.getElement('sandbox'));
 
-    const cells = dom.getElementsByTagNameAndClass(
-        TagName.TD, undefined, picker.getElement());
+    const cells = dom.getElementsByTagNameAndClass(TagName.TD, undefined, picker.getElement());
     const numCells = cells.length;
     for (let i = 0; i < numCells; i++) {
       assertNotNull(cells[i]);
       if (aria.getRole(cells[i]) == Role.GRIDCELL) {
         assertNonEmptyString(
-            'Aria label in date cell should not be empty',
-            aria.getLabel(cells[i]));
+          'Aria label in date cell should not be empty',
+          aria.getLabel(cells[i])
+        );
       }
     }
   },

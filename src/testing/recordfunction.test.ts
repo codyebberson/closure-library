@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.recordFunctionTest');
-goog.setTestOnly();
 
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
 const functions = goog.require('goog.functions');
@@ -32,8 +31,7 @@ testSuite({
     assertUndefined('f(1)', f(1));
     assertEquals('call count', 1, f.getCallCount());
     const lastCall = f.getLastCall();
-    assertEquals(
-        'original function', functions.UNDEFINED, lastCall.getFunction());
+    assertEquals('original function', functions.UNDEFINED, lastCall.getFunction());
     assertEquals('this context', undefined, lastCall.getThis());
     assertArrayEquals('arguments', [1], lastCall.getArguments());
     assertEquals('arguments[0]', 1, lastCall.getArgument(0));
@@ -52,16 +50,12 @@ testSuite({
     const lastCall = f.getLastCall();
     assertEquals('call count', 2, f.getCallCount());
     assertEquals('last call', calls[1], lastCall);
-    assertEquals(
-        'original function', functions.identity, lastCall.getFunction());
+    assertEquals('original function', functions.identity, lastCall.getFunction());
     assertEquals('this context of first call', undefined, firstCall.getThis());
     assertEquals('this context of last call', dummyThis, lastCall.getThis());
-    assertArrayEquals(
-        'arguments of the first call', [1], firstCall.getArguments());
-    assertArrayEquals(
-        'arguments of the last call', [2], lastCall.getArguments());
-    assertEquals(
-        'return value of the first call', 1, firstCall.getReturnValue());
+    assertArrayEquals('arguments of the first call', [1], firstCall.getArguments());
+    assertArrayEquals('arguments of the last call', [2], lastCall.getArguments());
+    assertEquals('return value of the first call', 1, firstCall.getReturnValue());
     assertEquals('return value of the last call', 2, lastCall.getReturnValue());
     assertNull('error thrown by the first call', firstCall.getError());
     assertNull('error thrown by the last call', lastCall.getError());
@@ -83,18 +77,17 @@ testSuite({
     assertEquals('this context', undefined, lastCall.getThis());
     assertArrayEquals('arguments', [1], lastCall.getArguments());
     assertUndefined('return value', lastCall.getReturnValue());
-    assertEquals(
-        'recorded error message', 'error', lastCall.getError().message);
+    assertEquals('recorded error message', 'error', lastCall.getError().message);
   },
 
   /** @suppress {missingProperties} suppression added to enable type checking */
   testWithClass() {
     const ns = {};
     /** @constructor @struct */
-    ns.TestClass = function(num) {
+    ns.TestClass = function (num) {
       this.setX(ns.TestClass.identity(1) + num);
     };
-    ns.TestClass.prototype.setX = function(x) {
+    ns.TestClass.prototype.setX = function (x) {
       /**
        * @suppress {checkTypes,missingProperties} suppression added to enable
        * type checking
@@ -105,9 +98,7 @@ testSuite({
     const originalNsTestClass = ns.TestClass;
 
     stubs.set(ns, 'TestClass', recordConstructor(ns.TestClass));
-    stubs.set(
-        ns.TestClass.prototype, 'setX',
-        recordFunction(ns.TestClass.prototype.setX));
+    stubs.set(ns.TestClass.prototype, 'setX', recordFunction(ns.TestClass.prototype.setX));
     stubs.set(ns.TestClass, 'identity', recordFunction(ns.TestClass.identity));
 
     const obj = new ns.TestClass(2);
@@ -116,22 +107,20 @@ testSuite({
      * @suppress {missingProperties} suppression added to enable type checking
      */
     const lastConstructorCall = ns.TestClass.getLastCall();
-    assertArrayEquals(
-        '... with argument 2', [2], lastConstructorCall.getArguments());
+    assertArrayEquals('... with argument 2', [2], lastConstructorCall.getArguments());
     assertEquals('the created object', obj, lastConstructorCall.getThis());
-    assertEquals(
-        'type of the created object', originalNsTestClass, obj.constructor);
+    assertEquals('type of the created object', originalNsTestClass, obj.constructor);
 
     assertEquals('setX is called once', 1, obj.setX.getCallCount());
-    assertArrayEquals(
-        '... with argument 3', [3], obj.setX.getLastCall().getArguments());
+    assertArrayEquals('... with argument 3', [3], obj.setX.getLastCall().getArguments());
     assertEquals('The x field is properly set', 3, obj.x);
 
-    assertEquals(
-        'identity is called once', 1, ns.TestClass.identity.getCallCount());
+    assertEquals('identity is called once', 1, ns.TestClass.identity.getCallCount());
     assertArrayEquals(
-        '... with argument 1', [1],
-        ns.TestClass.identity.getLastCall().getArguments());
+      '... with argument 1',
+      [1],
+      ns.TestClass.identity.getLastCall().getArguments()
+    );
   },
 
   testPopLastCall() {
@@ -143,8 +132,7 @@ testSuite({
     const lastCall = f.getCalls()[1];
     assertEquals('return value of popLastCall', lastCall, f.popLastCall());
     assertArrayEquals('1 call remains', [firstCall], f.getCalls());
-    assertEquals(
-        'next return value of popLastCall', firstCall, f.popLastCall());
+    assertEquals('next return value of popLastCall', firstCall, f.popLastCall());
     assertArrayEquals('0 calls remain', [], f.getCalls());
     assertNull('no more calls to pop', f.popLastCall());
   },
@@ -186,8 +174,7 @@ testSuite({
     assertEquals(error.comment, 'Expected 11 call(s), but was 1.');
 
     const comment =
-        'This application has requested the Runtime to terminate it ' +
-        'in an unusual way.';
+      'This application has requested the Runtime to terminate it ' + 'in an unusual way.';
     const error2 = assertThrowsJsUnitException(() => {
       f.assertCallCount(comment, 12);
     });

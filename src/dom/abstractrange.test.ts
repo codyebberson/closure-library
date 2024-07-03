@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dom.AbstractRangeTest');
-goog.setTestOnly();
 
 const AbstractRange = goog.require('goog.dom.AbstractRange');
 const Const = goog.require('goog.string.Const');
@@ -16,9 +15,7 @@ const dom = goog.require('goog.dom');
 const safe = goog.require('goog.dom.safe');
 const testSuite = goog.require('goog.testing.testSuite');
 
-
 testSuite({
-
   testCorrectDocument() {
     const aFrame = createTestFrame();
     document.body.appendChild(aFrame);
@@ -38,15 +35,16 @@ testSuite({
       /** @suppress {checkTypes} suppression added to enable type checking */
       let range = Range.createFromBrowserSelection(selection);
       assertEquals(
-          'getBrowserSelectionForWindow must return selection in the ' +
-              'correct document',
-          a.document, range.getDocument());
+        'getBrowserSelectionForWindow must return selection in the ' + 'correct document',
+        a.document,
+        range.getDocument()
+      );
 
       // This is intended to trip up Internet Explorer --
       // see http://b/2048934
       b.document.body.focus();
-      selection = /** @type {?{rangeCount: number}} */ (
-          AbstractRange.getBrowserSelectionForWindow(a));
+      selection =
+        /** @type {?{rangeCount: number}} */ AbstractRange.getBrowserSelectionForWindow(a);
       // Some (non-IE) browsers keep a separate selection state for each
       // document in the same browser window. That's fine, as long as the
       // selection object requested from the window object is correctly
@@ -54,9 +52,10 @@ testSuite({
       if (selection != null && selection.rangeCount != 0) {
         range = Range.createFromBrowserSelection(selection);
         assertEquals(
-            'getBrowserSelectionForWindow must return selection in ' +
-                'the correct document',
-            a.document, range.getDocument());
+          'getBrowserSelectionForWindow must return selection in ' + 'the correct document',
+          a.document,
+          range.getDocument()
+        );
       } else {
         assertTrue(selection == null || selection.rangeCount == 0);
       }
@@ -93,7 +92,6 @@ testSuite({
  */
 function createTestFrame() {
   const frame = dom.createDom(TagName.IFRAME);
-  safe.setIframeSrc(
-      frame, TrustedResourceUrl.fromConstant(Const.from('about:blank')));
+  safe.setIframeSrc(frame, TrustedResourceUrl.fromConstant(Const.from('about:blank')));
   return frame;
 }

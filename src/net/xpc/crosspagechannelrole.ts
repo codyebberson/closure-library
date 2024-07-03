@@ -10,7 +10,6 @@
 
 goog.provide('goog.net.xpc.CrossPageChannelRole');
 
-
 /**
  * The role of the peer.
  * @enum {number}

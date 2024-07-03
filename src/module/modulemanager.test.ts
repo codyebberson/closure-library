@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.module.ModuleManagerTest');
-goog.setTestOnly();
 
 const BaseModule = goog.require('goog.module.BaseModule');
 const MockClock = goog.require('goog.testing.MockClock');
@@ -28,7 +27,7 @@ function getModuleManager(infoMap) {
    * @suppress {globalThis,checkTypes} suppression added to enable type
    * checking
    */
-  mm.isModuleLoaded = function(id) {
+  mm.isModuleLoaded = function (id) {
     return this.getModuleInfo(id).isLoaded();
   };
   return mm;
@@ -36,31 +35,31 @@ function getModuleManager(infoMap) {
 
 function createSuccessfulBatchLoader(moduleMgr) {
   return {
-    loadModules: /**
+    /**
                     @suppress {globalThis} suppression added to enable type
                     checking
                   */
-        function(ids, moduleInfoMap, {onError, onSuccess, onTimeout}) {
-          requestCount++;
-          setTimeout(goog.bind(this.onLoad, this, ids.concat(), 0), 5);
-        },
-    onLoad: /**
+    loadModules: function (ids, moduleInfoMap, { onError, onSuccess, onTimeout }) {
+      requestCount++;
+      setTimeout(goog.bind(this.onLoad, this, ids.concat(), 0), 5);
+    },
+    /**
                @suppress {globalThis} suppression added to enable type checking
              */
-        function(ids, idxLoaded) {
-          moduleMgr.beforeLoadModuleCode(ids[idxLoaded]);
-          moduleMgr.setLoaded();
-          const idx = idxLoaded + 1;
-          if (idx < ids.length) {
-            setTimeout(goog.bind(this.onLoad, this, ids, idx), 2);
-          }
-        },
+    onLoad: function (ids, idxLoaded) {
+      moduleMgr.beforeLoadModuleCode(ids[idxLoaded]);
+      moduleMgr.setLoaded();
+      const idx = idxLoaded + 1;
+      if (idx < ids.length) {
+        setTimeout(goog.bind(this.onLoad, this, ids, idx), 2);
+      }
+    },
   };
 }
 
 function createSuccessfulNonBatchLoader(moduleMgr) {
   return {
-    loadModules: function(ids, moduleInfoMap, {onError, onSuccess, onTimeout}) {
+    loadModules: (ids, moduleInfoMap, { onError, onSuccess, onTimeout }) => {
       requestCount++;
       setTimeout(() => {
         moduleMgr.beforeLoadModuleCode(ids[0]);
@@ -75,7 +74,7 @@ function createSuccessfulNonBatchLoader(moduleMgr) {
 
 function createUnsuccessfulLoader(moduleMgr, status) {
   return {
-    loadModules: function(ids, moduleInfoMap, {onError, onSuccess, onTimeout}) {
+    loadModules: (ids, moduleInfoMap, { onError, onSuccess, onTimeout }) => {
       moduleMgr.beforeLoadModuleCode(ids[0]);
       setTimeout(() => {
         onError(status);
@@ -86,7 +85,7 @@ function createUnsuccessfulLoader(moduleMgr, status) {
 
 function createUnsuccessfulBatchLoader(moduleMgr, status) {
   return {
-    loadModules: function(ids, moduleInfoMap, {onError, onSuccess, onTimeout}) {
+    loadModules: (ids, moduleInfoMap, { onError, onSuccess, onTimeout }) => {
       setTimeout(() => {
         onError(status);
       }, 5);
@@ -96,7 +95,7 @@ function createUnsuccessfulBatchLoader(moduleMgr, status) {
 
 function createTimeoutLoader(moduleMgr, status) {
   return {
-    loadModules: function(ids, moduleInfoMap, {onError, onSuccess, onTimeout}) {
+    loadModules: (ids, moduleInfoMap, { onError, onSuccess, onTimeout }) => {
       setTimeout(() => {
         onTimeout(status);
       }, 5);
@@ -142,9 +141,15 @@ function execOnLoad(mm) {
 
   // When module is unloaded, execOnLoad is async (user active).
   let execCalled5 = false;
-  mm.execOnLoad('c', () => {
-    execCalled5 = true;
-  }, null, null, true);
+  mm.execOnLoad(
+    'c',
+    () => {
+      execCalled5 = true;
+    },
+    null,
+    null,
+    true
+  );
   assertFalse('module "c" should not be loaded', mm.isModuleLoaded('c'));
   assertTrue('module "c" should be loading', mm.isModuleLoading('c'));
   assertFalse('execCalled1 should not be set yet', execCalled5);
@@ -160,9 +165,16 @@ function execOnLoad(mm) {
   // When module is already loaded, execOnLoad is still synchronous when
   // so specified
   let execCalled6 = false;
-  mm.execOnLoad('c', () => {
-    execCalled6 = true;
-  }, undefined, undefined, undefined, true);
+  mm.execOnLoad(
+    'c',
+    () => {
+      execCalled6 = true;
+    },
+    undefined,
+    undefined,
+    undefined,
+    true
+  );
   assertTrue('module "c" should be loaded', mm.isModuleLoaded('c'));
   assertFalse('module "c" should not be loading', mm.isModuleLoading('c'));
   assertTrue('execCalled6 should be set', execCalled6);
@@ -176,7 +188,7 @@ function execOnLoad(mm) {
  * @suppress {missingProperties} suppression added to enable type checking
  */
 function execOnLoadWhilePreloadingAndViceVersa(mm) {
-  mm = getModuleManager({'c': [], 'd': []});
+  mm = getModuleManager({ c: [], d: [] });
   mm.setLoader(createSuccessfulNonBatchLoader(mm));
 
   const origBeforeLoadModuleCode = mm.beforeLoadModuleCode;
@@ -221,15 +233,16 @@ function assertDependencyOrder(list, mm) {
     for (let j = 0; j < deps.length; j++) {
       const dep = deps[j];
       assertTrue(
-          `Unresolved dependency [${dep}] for [${id}].`,
-          seen[dep] || mm.getModuleInfo(dep).isLoaded());
+        `Unresolved dependency [${dep}] for [${id}].`,
+        seen[dep] || mm.getModuleInfo(dep).isLoaded()
+      );
     }
   }
 }
 
 function createSuccessfulNonBatchLoaderWithRegisterInitCallback(moduleMgr, fn) {
   return {
-    loadModules: function(ids, moduleInfoMap, {onError, onSuccess, onTimeout}) {
+    loadModules: (ids, moduleInfoMap, { onError, onSuccess, onTimeout }) => {
       moduleMgr.beforeLoadModuleCode(ids[0]);
       moduleMgr.registerInitializationCallback(fn);
       setTimeout(() => {
@@ -246,14 +259,14 @@ function createModulesFor(var_args) {
   const result = {};
   for (let i = 0; i < arguments.length; i++) {
     const key = arguments[i];
-    result[key] = {ctor: BaseModule};
+    result[key] = { ctor: BaseModule };
   }
   return result;
 }
 
 function createSuccessfulNonBatchLoaderWithConstructor(moduleMgr, info) {
   return {
-    loadModules: function(ids, moduleInfoMap, {onError, onSuccess, onTimeout}) {
+    loadModules: (ids, moduleInfoMap, { onError, onSuccess, onTimeout }) => {
       setTimeout(() => {
         moduleMgr.beforeLoadModuleCode(ids[0]);
         moduleMgr.setModuleConstructor(info[ids[0]].ctor);
@@ -295,11 +308,10 @@ function createModuleLoaderWithExtraEdgesSupport(loaderCalls) {
  * @return {{loadModules: function(), syntheticModuleCallbackCalled: boolean}}
  * @suppress {checkTypes} suppression added to enable type checking
  */
-function createExcludingSyntheticModuleOverheadLoader(
-    moduleMgr, modulesToMarkAsLoaded) {
+function createExcludingSyntheticModuleOverheadLoader(moduleMgr, modulesToMarkAsLoaded) {
   return {
     syntheticModuleCallbackCalled: false,
-    loadModules: function(ids, moduleInfoMap, {onError, onSuccess, onTimeout}) {
+    loadModules: function (ids, moduleInfoMap, { onError, onSuccess, onTimeout }) {
       const cb = () => {
         this.syntheticModuleCallbackCalled = true;
       };
@@ -328,10 +340,12 @@ function createExcludingSyntheticModuleOverheadLoader(
  * @return {{loadModules: function(), constructorSet: boolean}}
  */
 function createExcludingSyntheticModuleOverheadLoaderWithConstructor(
-    moduleMgr, modulesToMarkAsLoaded) {
+  moduleMgr,
+  modulesToMarkAsLoaded
+) {
   return {
     constructorSet: false,
-    loadModules: function(ids, moduleInfoMap, {onError, onSuccess, onTimeout}) {
+    loadModules: (ids, moduleInfoMap, { onError, onSuccess, onTimeout }) => {
       requestCount++;
       setTimeout(() => {
         // Simulate a synthetic module loading first, and registering a cb.
@@ -372,11 +386,11 @@ testSuite({
    * loaded. Test both batch and non-batch loaders.
    */
   testExecOnLoad() {
-    let mm = getModuleManager({'a': [], 'b': [], 'c': []});
+    let mm = getModuleManager({ a: [], b: [], c: [] });
     mm.setLoader(createSuccessfulNonBatchLoader(mm));
     execOnLoad(mm);
 
-    mm = getModuleManager({'a': [], 'b': [], 'c': []});
+    mm = getModuleManager({ a: [], b: [], c: [] });
     mm.setLoader(createSuccessfulBatchLoader(mm));
     mm.setBatchModeEnabled(true);
     execOnLoad(mm);
@@ -387,7 +401,7 @@ testSuite({
      @suppress {missingProperties} suppression added to enable type checking
    */
   testExecOnLoadAbort() {
-    const mm = getModuleManager({'a': [], 'b': [], 'c': []});
+    const mm = getModuleManager({ a: [], b: [], c: [] });
     mm.setLoader(createSuccessfulNonBatchLoader(mm));
 
     // When module is unloaded and abort is called, module still gets
@@ -417,11 +431,11 @@ testSuite({
    * and set load called are called only once per module.
    */
   testExecOnLoadWhilePreloadingAndViceVersa() {
-    let mm = getModuleManager({'c': [], 'd': []});
+    let mm = getModuleManager({ c: [], d: [] });
     mm.setLoader(createSuccessfulNonBatchLoader(mm));
     execOnLoadWhilePreloadingAndViceVersa(mm);
 
-    mm = getModuleManager({'c': [], 'd': []});
+    mm = getModuleManager({ c: [], d: [] });
     mm.setLoader(createSuccessfulBatchLoader(mm));
     mm.setBatchModeEnabled(true);
     execOnLoadWhilePreloadingAndViceVersa(mm);
@@ -432,35 +446,44 @@ testSuite({
    * confusion about the active state after the module is finally loaded.
    */
   testUserInitiatedExecOnLoadEventuallyLeavesManagerIdle() {
-    const mm = getModuleManager({'c': [], 'd': []});
+    const mm = getModuleManager({ c: [], d: [] });
     mm.setLoader(createSuccessfulNonBatchLoader(mm));
 
     let calledBack1 = false;
     let calledBack2 = false;
 
-    mm.execOnLoad('c', () => {
-      calledBack1 = true;
-    }, undefined, undefined, true);
-    mm.execOnLoad('c', () => {
-      calledBack2 = true;
-    }, undefined, undefined, true);
+    mm.execOnLoad(
+      'c',
+      () => {
+        calledBack1 = true;
+      },
+      undefined,
+      undefined,
+      true
+    );
+    mm.execOnLoad(
+      'c',
+      () => {
+        calledBack2 = true;
+      },
+      undefined,
+      undefined,
+      true
+    );
     mm.load('c');
 
-    assertTrue(
-        'Manager should be active while waiting for load', mm.isUserActive());
+    assertTrue('Manager should be active while waiting for load', mm.isUserActive());
 
     clock.tick(5);
 
     assertTrue('First callback should be called', calledBack1);
     assertTrue('Second callback should be called', calledBack2);
-    assertFalse(
-        'Manager should be inactive after loading is complete',
-        mm.isUserActive());
+    assertFalse('Manager should be inactive after loading is complete', mm.isUserActive());
   },
 
   /** Tests loading a module by requesting a Deferred object. */
   testLoad() {
-    const mm = getModuleManager({'a': [], 'b': [], 'c': []});
+    const mm = getModuleManager({ a: [], b: [], c: [] });
     mm.setLoader(createSuccessfulNonBatchLoader(mm));
 
     let calledBack = false;
@@ -468,12 +491,13 @@ testSuite({
 
     const d = mm.load('a');
     d.then(
-        (ctx) => {
-          calledBack = true;
-        },
-        (err) => {
-          error = err;
-        });
+      (ctx) => {
+        calledBack = true;
+      },
+      (err) => {
+        error = err;
+      }
+    );
 
     assertFalse(calledBack);
     assertNull(error);
@@ -490,7 +514,7 @@ testSuite({
    * in one unit of time.
    */
   testLoad_concurrent() {
-    const mm = getModuleManager({'a': [], 'b': [], 'c': []});
+    const mm = getModuleManager({ a: [], b: [], c: [] });
     mm.setConcurrentLoadingEnabled(true);
     mm.setLoader(createSuccessfulNonBatchLoader(mm));
 
@@ -508,7 +532,7 @@ testSuite({
   },
 
   testLoad_concurrentSecondIsDepOfFist() {
-    const mm = getModuleManager({'a': [], 'b': [], 'c': []});
+    const mm = getModuleManager({ a: [], b: [], c: [] });
     mm.setBatchModeEnabled(true);
     mm.setConcurrentLoadingEnabled(true);
     mm.setLoader(createSuccessfulBatchLoader(mm));
@@ -521,14 +545,14 @@ testSuite({
     assertEquals('No 2nd request expected', 1, requestCount);
     // Only time for one serialized download.
     clock.tick(5);
-    clock.tick(2);  // Makes second module come in from batch requst.
+    clock.tick(2); // Makes second module come in from batch requst.
 
     assertTrue(mm.getModuleInfo('a').isLoaded());
     assertTrue(mm.getModuleInfo('b').isLoaded());
   },
 
   testLoad_nonConcurrent() {
-    const mm = getModuleManager({'a': [], 'b': [], 'c': []});
+    const mm = getModuleManager({ a: [], b: [], c: [] });
     mm.setLoader(createSuccessfulNonBatchLoader(mm));
 
     const calledBack = false;
@@ -545,7 +569,7 @@ testSuite({
   },
 
   testLoadUnknown() {
-    const mm = getModuleManager({'a': [], 'b': [], 'c': []});
+    const mm = getModuleManager({ a: [], b: [], c: [] });
     mm.setLoader(createSuccessfulNonBatchLoader(mm));
     const e = assertThrows(() => {
       mm.load('DoesNotExist');
@@ -558,7 +582,7 @@ testSuite({
      @suppress {missingProperties} suppression added to enable type checking
    */
   testLoadMultiple() {
-    const mm = getModuleManager({'a': [], 'b': [], 'c': []});
+    const mm = getModuleManager({ a: [], b: [], c: [] });
     mm.setBatchModeEnabled(true);
     mm.setLoader(createSuccessfulBatchLoader(mm));
 
@@ -569,19 +593,21 @@ testSuite({
 
     const dMap = mm.loadMultiple(['a', 'b']);
     dMap['a'].then(
-        (ctx) => {
-          calledBack = true;
-        },
-        (err) => {
-          error = err;
-        });
+      (ctx) => {
+        calledBack = true;
+      },
+      (err) => {
+        error = err;
+      }
+    );
     dMap['b'].then(
-        (ctx) => {
-          calledBack2 = true;
-        },
-        (err) => {
-          error2 = err;
-        });
+      (ctx) => {
+        calledBack2 = true;
+      },
+      (err) => {
+        error2 = err;
+      }
+    );
 
     assertFalse(calledBack);
     assertFalse(calledBack2);
@@ -610,7 +636,7 @@ testSuite({
    * @suppress {missingProperties} suppression added to enable type checking
    */
   testLoadMultipleWithDeps() {
-    const mm = getModuleManager({'a': [], 'b': ['c'], 'c': []});
+    const mm = getModuleManager({ a: [], b: ['c'], c: [] });
     mm.setBatchModeEnabled(true);
     mm.setLoader(createSuccessfulBatchLoader(mm));
 
@@ -621,19 +647,21 @@ testSuite({
 
     const dMap = mm.loadMultiple(['a', 'b']);
     dMap['a'].then(
-        (ctx) => {
-          calledBack = true;
-        },
-        (err) => {
-          error = err;
-        });
+      (ctx) => {
+        calledBack = true;
+      },
+      (err) => {
+        error = err;
+      }
+    );
     dMap['b'].then(
-        (ctx) => {
-          calledBack2 = true;
-        },
-        (err) => {
-          error2 = err;
-        });
+      (ctx) => {
+        calledBack2 = true;
+      },
+      (err) => {
+        error2 = err;
+      }
+    );
 
     assertFalse(calledBack);
     assertFalse(calledBack2);
@@ -668,7 +696,7 @@ testSuite({
    * @suppress {missingProperties} suppression added to enable type checking
    */
   testLoadMultipleWithErrors() {
-    const mm = getModuleManager({'a': [], 'b': [], 'c': []});
+    const mm = getModuleManager({ a: [], b: [], c: [] });
     mm.setBatchModeEnabled(true);
     mm.setLoader(createUnsuccessfulLoader(mm, 500));
 
@@ -681,26 +709,29 @@ testSuite({
 
     const dMap = mm.loadMultiple(['a', 'b', 'c']);
     dMap['a'].then(
-        (ctx) => {
-          calledBack = true;
-        },
-        (err) => {
-          error = err;
-        });
+      (ctx) => {
+        calledBack = true;
+      },
+      (err) => {
+        error = err;
+      }
+    );
     dMap['b'].then(
-        (ctx) => {
-          calledBack2 = true;
-        },
-        (err) => {
-          error2 = err;
-        });
+      (ctx) => {
+        calledBack2 = true;
+      },
+      (err) => {
+        error2 = err;
+      }
+    );
     dMap['c'].then(
-        (ctx) => {
-          calledBack3 = true;
-        },
-        (err) => {
-          error3 = err;
-        });
+      (ctx) => {
+        calledBack3 = true;
+      },
+      (err) => {
+        error3 = err;
+      }
+    );
 
     assertFalse(calledBack);
     assertFalse(calledBack2);
@@ -753,7 +784,7 @@ testSuite({
    * @suppress {missingProperties} suppression added to enable type checking
    */
   testLoadMultipleWithErrorsFallbackOnSerial() {
-    const mm = getModuleManager({'a': [], 'b': [], 'c': []});
+    const mm = getModuleManager({ a: [], b: [], c: [] });
     mm.setBatchModeEnabled(true);
     mm.setLoader(createUnsuccessfulLoader(mm, 500));
 
@@ -766,26 +797,29 @@ testSuite({
 
     const dMap = mm.loadMultiple(['a', 'b', 'c']);
     dMap['a'].then(
-        (ctx) => {
-          calledBack = true;
-        },
-        (err) => {
-          error = err;
-        });
+      (ctx) => {
+        calledBack = true;
+      },
+      (err) => {
+        error = err;
+      }
+    );
     dMap['b'].then(
-        (ctx) => {
-          calledBack2 = true;
-        },
-        (err) => {
-          error2 = err;
-        });
+      (ctx) => {
+        calledBack2 = true;
+      },
+      (err) => {
+        error2 = err;
+      }
+    );
     dMap['c'].then(
-        (ctx) => {
-          calledBack3 = true;
-        },
-        (err) => {
-          error3 = err;
-        });
+      (ctx) => {
+        calledBack3 = true;
+      },
+      (err) => {
+        error3 = err;
+      }
+    );
 
     assertFalse(calledBack);
     assertFalse(calledBack2);
@@ -854,7 +888,7 @@ testSuite({
      Tests loading a module by user action by requesting a Deferred object.
    */
   testLoadForUser() {
-    const mm = getModuleManager({'a': [], 'b': [], 'c': []});
+    const mm = getModuleManager({ a: [], b: [], c: [] });
     mm.setLoader(createSuccessfulNonBatchLoader(mm));
 
     let calledBack = false;
@@ -862,12 +896,13 @@ testSuite({
 
     const d = mm.load('a', true);
     d.then(
-        (ctx) => {
-          calledBack = true;
-        },
-        (err) => {
-          error = err;
-        });
+      (ctx) => {
+        calledBack = true;
+      },
+      (err) => {
+        error = err;
+      }
+    );
 
     assertFalse(calledBack);
     assertNull(error);
@@ -884,9 +919,11 @@ testSuite({
    * calls to beforeLoadModuleCode() and setLoaded().
    */
   testLoadWithoutSyntheticModuleOverhead() {
-    const mm = getModuleManager({'a': []});
+    const mm = getModuleManager({ a: [] });
     const loader = createExcludingSyntheticModuleOverheadLoader(
-        mm, /* modulesToMarkAsLoaded= */['a']);
+      mm,
+      /* modulesToMarkAsLoaded= */ ['a']
+    );
     mm.setLoader(loader);
 
     let calledBack = false;
@@ -894,12 +931,13 @@ testSuite({
 
     const d = mm.load('a');
     d.then(
-        (ctx) => {
-          calledBack = true;
-        },
-        (err) => {
-          error = err;
-        });
+      (ctx) => {
+        calledBack = true;
+      },
+      (err) => {
+        error = err;
+      }
+    );
 
     assertFalse(calledBack);
     assertNull(error);
@@ -919,9 +957,11 @@ testSuite({
    * Testing setModuleConstructor fails for synthetic modules
    */
   testSetModuleConstructorFailsForSyntheticModules() {
-    const mm = getModuleManager({'a': []});
+    const mm = getModuleManager({ a: [] });
     const loader = createExcludingSyntheticModuleOverheadLoaderWithConstructor(
-        mm, /* modulesToMarkAsLoaded= */['a']);
+      mm,
+      /* modulesToMarkAsLoaded= */ ['a']
+    );
     mm.setLoader(loader);
     mm.load('a');
     assertFalse(mm.getModuleInfo('a').isLoaded());
@@ -938,9 +978,11 @@ testSuite({
    * of synthetic modules.
    */
   testLoadWithoutSyntheticModuleOverhead_MarksSyntheticModulesAsLoaded() {
-    const mm = getModuleManager({'sy0': [], 'a': [], 'b': ['sy0', 'a']});
+    const mm = getModuleManager({ sy0: [], a: [], b: ['sy0', 'a'] });
     const loader = createExcludingSyntheticModuleOverheadLoader(
-        mm, /* modulesToMarkAsLoaded= */['a', 'b']);
+      mm,
+      /* modulesToMarkAsLoaded= */ ['a', 'b']
+    );
     mm.setLoader(loader);
 
     let calledBack = false;
@@ -948,12 +990,13 @@ testSuite({
 
     const d = mm.load('a');
     d.then(
-        (ctx) => {
-          calledBack = true;
-        },
-        (err) => {
-          error = err;
-        });
+      (ctx) => {
+        calledBack = true;
+      },
+      (err) => {
+        error = err;
+      }
+    );
 
     assertFalse(calledBack);
     assertNull(error);
@@ -978,11 +1021,12 @@ testSuite({
    * calls to beforeLoadModuleCode() and setLoaded().
    */
   testLoadWithoutSyntheticModuleOverheadSetsSyntheticModuleDepsAsLoaded() {
-    const mm =
-        getModuleManager({'sy0': [], 'sy1': [], 'a': [], 'b': ['sy0', 'a']});
+    const mm = getModuleManager({ sy0: [], sy1: [], a: [], b: ['sy0', 'a'] });
     mm.setAllModuleInfoString('', ['sy0', 'a']);
     const loader = createExcludingSyntheticModuleOverheadLoader(
-        mm, /* modulesToMarkAsLoaded= */[]);
+      mm,
+      /* modulesToMarkAsLoaded= */ []
+    );
     mm.setLoader(loader);
     mm.beforeLoadModuleCode('b');
 
@@ -997,8 +1041,7 @@ testSuite({
   },
 
   testExtraEdges() {
-    const mm =
-        getModuleManager({'modA': [], 'modB': [], 'modC': [], 'modD': []});
+    const mm = getModuleManager({ modA: [], modB: [], modC: [], modD: [] });
     const loaderCalls = [];
     mm.setLoader(createModuleLoaderWithExtraEdgesSupport(loaderCalls));
     mm.addExtraEdge('modA', 'modB');
@@ -1006,8 +1049,8 @@ testSuite({
     mm.addExtraEdge('modC', 'modD');
 
     const expectedExtraEdges = {
-      'modA': {'modB': true, 'modC': true},
-      'modC': {'modD': true},
+      modA: { modB: true, modC: true },
+      modC: { modD: true },
     };
 
     mm.load('modA');
@@ -1016,8 +1059,7 @@ testSuite({
   },
 
   testAddExtraEdge_managerDoesNotSupportExtraEdges() {
-    const mm =
-        getModuleManager({'modA': [], 'modB': [], 'modC': [], 'modD': []});
+    const mm = getModuleManager({ modA: [], modB: [], modC: [], modD: [] });
     mm.setLoader({
       loadModules(ids, moduleInfoMap, loadOptions) {},
     });
@@ -1026,7 +1068,7 @@ testSuite({
   },
 
   testAddExtraEdge_loadedFromModuleLoadsToModule() {
-    const mm = getModuleManager({'modA': [], 'modB': []});
+    const mm = getModuleManager({ modA: [], modB: [] });
 
     const loaderCalls = [];
     mm.setLoader(createModuleLoaderWithExtraEdgesSupport(loaderCalls));
@@ -1041,7 +1083,7 @@ testSuite({
   },
 
   testSetLoaded_extraEdgeFromAlreadyRequestedModuleLoadsMissingModule() {
-    const mm = getModuleManager({'modA': [], 'modB': [], 'modC': []});
+    const mm = getModuleManager({ modA: [], modB: [], modC: [] });
 
     const loaderCalls = [];
     mm.setLoader(createModuleLoaderWithExtraEdgesSupport(loaderCalls));
@@ -1058,8 +1100,7 @@ testSuite({
   },
 
   testRemoveExtraEdge() {
-    const mm =
-        getModuleManager({'modA': [], 'modB': [], 'modC': [], 'modD': []});
+    const mm = getModuleManager({ modA: [], modB: [], modC: [], modD: [] });
     const loaderCalls = [];
     mm.setLoader(createModuleLoaderWithExtraEdgesSupport(loaderCalls));
     mm.addExtraEdge('modA', 'modB');
@@ -1068,8 +1109,8 @@ testSuite({
     mm.removeExtraEdge('modA', 'modB');
 
     const expectedExtraEdges = {
-      'modA': {'modC': true},
-      'modC': {'modD': true},
+      modA: { modC: true },
+      modC: { modD: true },
     };
 
     mm.load('modA');
@@ -1078,8 +1119,7 @@ testSuite({
   },
 
   testRemoveEdge_nonexistentEdge() {
-    const mm =
-        getModuleManager({'modA': [], 'modB': [], 'modC': [], 'modD': []});
+    const mm = getModuleManager({ modA: [], modB: [], modC: [], modD: [] });
     const loaderCalls = [];
     mm.setLoader(createModuleLoaderWithExtraEdgesSupport(loaderCalls));
     mm.addExtraEdge('modA', 'modC');
@@ -1087,8 +1127,8 @@ testSuite({
     mm.removeExtraEdge('modA', 'modB');
 
     const expectedExtraEdges = {
-      'modA': {'modC': true},
-      'modC': {'modD': true},
+      modA: { modC: true },
+      modC: { modD: true },
     };
 
     mm.load('modA');
@@ -1097,8 +1137,7 @@ testSuite({
   },
 
   testRemoveEdge_allEdgesRemoved() {
-    const mm =
-        getModuleManager({'modA': [], 'modB': [], 'modC': [], 'modD': []});
+    const mm = getModuleManager({ modA: [], modB: [], modC: [], modD: [] });
     const loaderCalls = [];
     mm.setLoader(createModuleLoaderWithExtraEdgesSupport(loaderCalls));
     mm.addExtraEdge('modA', 'modC');
@@ -1106,7 +1145,7 @@ testSuite({
     mm.removeExtraEdge('modA', 'modC');
 
     const expectedExtraEdges = {
-      'modC': {'modD': true},
+      modC: { modD: true },
     };
 
     mm.load('modA');
@@ -1116,7 +1155,7 @@ testSuite({
 
   /** Tests that preloading a module calls back the deferred object. */
   testPreloadDeferredWhenNotLoaded() {
-    const mm = getModuleManager({'a': []});
+    const mm = getModuleManager({ a: [] });
     mm.setLoader(createSuccessfulNonBatchLoader(mm));
 
     let calledBack = false;
@@ -1134,7 +1173,7 @@ testSuite({
 
   /** Tests preloading an already loaded module. */
   testPreloadDeferredWhenLoaded() {
-    const mm = getModuleManager({'a': []});
+    const mm = getModuleManager({ a: [] });
     mm.setLoader(createSuccessfulNonBatchLoader(mm));
 
     let calledBack = false;
@@ -1156,7 +1195,7 @@ testSuite({
 
   /** Tests preloading a module that is currently loading. */
   testPreloadDeferredWhenLoading() {
-    const mm = getModuleManager({'a': []});
+    const mm = getModuleManager({ a: [] });
     mm.setLoader(createSuccessfulNonBatchLoader(mm));
 
     mm.preloadModule('a');
@@ -1180,7 +1219,7 @@ testSuite({
    * preloading.
    */
   testLoadWhenPreloading() {
-    const mm = getModuleManager({'a': [], 'b': [], 'c': []});
+    const mm = getModuleManager({ a: [], b: [], c: [] });
     mm.setLoader(createSuccessfulNonBatchLoader(mm));
 
     const origBeforeLoadModuleCode = mm.beforeLoadModuleCode;
@@ -1199,19 +1238,19 @@ testSuite({
     let error = null;
 
     mm.preloadModule('c', 2);
-    assertFalse(
-        'module "c" should not be loading yet', mm.isModuleLoading('c'));
+    assertFalse('module "c" should not be loading yet', mm.isModuleLoading('c'));
     clock.tick(2);
     assertTrue('module "c" should now be loading', mm.isModuleLoading('c'));
 
     const d = mm.load('c');
     d.then(
-        (ctx) => {
-          calledBack = true;
-        },
-        (err) => {
-          error = err;
-        });
+      (ctx) => {
+        calledBack = true;
+      },
+      (err) => {
+        error = err;
+      }
+    );
 
     assertTrue('module "c" should still be loading', mm.isModuleLoading('c'));
     clock.tick(5);
@@ -1228,13 +1267,13 @@ testSuite({
    * preloading.
    */
   testLoadMultipleWhenPreloading() {
-    const mm = getModuleManager({'a': [], 'b': ['d'], 'c': [], 'd': []});
+    const mm = getModuleManager({ a: [], b: ['d'], c: [], d: [] });
     mm.setLoader(createSuccessfulBatchLoader(mm));
     mm.setBatchModeEnabled(true);
 
     const origBeforeLoadModuleCode = mm.beforeLoadModuleCode;
     const origSetLoaded = mm.setLoaded;
-    const calls = {'a': 0, 'b': 0, 'c': 0, 'd': 0};
+    const calls = { a: 0, b: 0, c: 0, d: 0 };
     mm.beforeLoadModuleCode = (id) => {
       calls[id]++;
       origBeforeLoadModuleCode.call(mm, id);
@@ -1254,10 +1293,8 @@ testSuite({
 
     mm.preloadModule('c', 2);
     mm.preloadModule('d', 3);
-    assertFalse(
-        'module "c" should not be loading yet', mm.isModuleLoading('c'));
-    assertFalse(
-        'module "d" should not be loading yet', mm.isModuleLoading('d'));
+    assertFalse('module "c" should not be loading yet', mm.isModuleLoading('c'));
+    assertFalse('module "d" should not be loading yet', mm.isModuleLoading('d'));
     clock.tick(2);
     assertTrue('module "c" should now be loading', mm.isModuleLoading('c'));
     clock.tick(1);
@@ -1265,26 +1302,29 @@ testSuite({
 
     const dMap = mm.loadMultiple(['a', 'b', 'c']);
     dMap['a'].then(
-        (ctx) => {
-          calledBack = true;
-        },
-        (err) => {
-          error = err;
-        });
+      (ctx) => {
+        calledBack = true;
+      },
+      (err) => {
+        error = err;
+      }
+    );
     dMap['b'].then(
-        (ctx) => {
-          calledBack2 = true;
-        },
-        (err) => {
-          error2 = err;
-        });
+      (ctx) => {
+        calledBack2 = true;
+      },
+      (err) => {
+        error2 = err;
+      }
+    );
     dMap['c'].then(
-        (ctx) => {
-          calledBack3 = true;
-        },
-        (err) => {
-          error3 = err;
-        });
+      (ctx) => {
+        calledBack3 = true;
+      },
+      (err) => {
+        error3 = err;
+      }
+    );
 
     assertTrue('module "a" should be loading', mm.isModuleLoading('a'));
     assertTrue('module "b" should be loading', mm.isModuleLoading('b'));
@@ -1308,16 +1348,11 @@ testSuite({
     assertFalse('module "a" should be done loading', mm.isModuleLoading('a'));
     assertFalse('module "b" should be done loading', mm.isModuleLoading('b'));
 
-    assertEquals(
-        'beforeLoad should only be called once for "a"', 1, calls['a']);
-    assertEquals(
-        'beforeLoad should only be called once for "b"', 1, calls['b']);
-    assertEquals(
-        'beforeLoad should only be called once for "c"', 1, calls['c']);
-    assertEquals(
-        'beforeLoad should only be called once for "d"', 1, calls['d']);
-    assertEquals(
-        'setLoaded should have been called 4 times', 4, setLoadedCalls);
+    assertEquals('beforeLoad should only be called once for "a"', 1, calls['a']);
+    assertEquals('beforeLoad should only be called once for "b"', 1, calls['b']);
+    assertEquals('beforeLoad should only be called once for "c"', 1, calls['c']);
+    assertEquals('beforeLoad should only be called once for "d"', 1, calls['d']);
+    assertEquals('setLoaded should have been called 4 times', 4, setLoadedCalls);
 
     assertNull(error);
     assertNull(error2);
@@ -1329,13 +1364,13 @@ testSuite({
    * that are already preloading.
    */
   testLoadMultipleWhenPreloadingSameModules() {
-    const mm = getModuleManager({'a': [], 'b': ['d'], 'c': [], 'd': []});
+    const mm = getModuleManager({ a: [], b: ['d'], c: [], d: [] });
     mm.setLoader(createSuccessfulBatchLoader(mm));
     mm.setBatchModeEnabled(true);
 
     const origBeforeLoadModuleCode = mm.beforeLoadModuleCode;
     const origSetLoaded = mm.setLoaded;
-    const calls = {'c': 0, 'd': 0};
+    const calls = { c: 0, d: 0 };
     mm.beforeLoadModuleCode = (id) => {
       calls[id]++;
       origBeforeLoadModuleCode.call(mm, id);
@@ -1353,10 +1388,8 @@ testSuite({
 
     mm.preloadModule('c', 2);
     mm.preloadModule('d', 3);
-    assertFalse(
-        'module "c" should not be loading yet', mm.isModuleLoading('c'));
-    assertFalse(
-        'module "d" should not be loading yet', mm.isModuleLoading('d'));
+    assertFalse('module "c" should not be loading yet', mm.isModuleLoading('c'));
+    assertFalse('module "d" should not be loading yet', mm.isModuleLoading('d'));
     clock.tick(2);
     assertTrue('module "c" should now be loading', mm.isModuleLoading('c'));
     clock.tick(1);
@@ -1364,19 +1397,21 @@ testSuite({
 
     const dMap = mm.loadMultiple(['c', 'd']);
     dMap['c'].then(
-        (ctx) => {
-          calledBack = true;
-        },
-        (err) => {
-          error = err;
-        });
+      (ctx) => {
+        calledBack = true;
+      },
+      (err) => {
+        error = err;
+      }
+    );
     dMap['d'].then(
-        (ctx) => {
-          calledBack2 = true;
-        },
-        (err) => {
-          error2 = err;
-        });
+      (ctx) => {
+        calledBack2 = true;
+      },
+      (err) => {
+        error2 = err;
+      }
+    );
 
     assertTrue('module "c" should still be loading', mm.isModuleLoading('c'));
     clock.tick(4);
@@ -1388,10 +1423,8 @@ testSuite({
     assertTrue(calledBack);
     assertTrue(calledBack2);
 
-    assertEquals(
-        'beforeLoad should only be called once for "c"', 1, calls['c']);
-    assertEquals(
-        'beforeLoad should only be called once for "d"', 1, calls['d']);
+    assertEquals('beforeLoad should only be called once for "c"', 1, calls['c']);
+    assertEquals('beforeLoad should only be called once for "d"', 1, calls['d']);
     assertEquals('setLoaded should have been called twice', 2, setLoadedCalls);
 
     assertNull(error);
@@ -1403,7 +1436,7 @@ testSuite({
    * loaded.  The deferred's callback should be called immediately.
    */
   testLoadWhenLoaded() {
-    const mm = getModuleManager({'a': [], 'b': [], 'c': []});
+    const mm = getModuleManager({ a: [], b: [], c: [] });
     mm.setLoader(createSuccessfulNonBatchLoader(mm));
 
     let calledBack = false;
@@ -1416,12 +1449,13 @@ testSuite({
 
     const d = mm.load('b');
     d.then(
-        (ctx) => {
-          calledBack = true;
-        },
-        (err) => {
-          error = err;
-        });
+      (ctx) => {
+        calledBack = true;
+      },
+      (err) => {
+        error = err;
+      }
+    );
 
     clock.tick(1);
     assertTrue(calledBack);
@@ -1433,26 +1467,28 @@ testSuite({
      load.
    */
   testLoadWithFailingModule() {
-    const mm = getModuleManager({'a': [], 'b': [], 'c': []});
+    const mm = getModuleManager({ a: [], b: [], c: [] });
     mm.setLoader(createUnsuccessfulLoader(mm, 401));
-    mm.registerCallback(
-        ModuleManager.CallbackType.ERROR, (callbackType, id, cause) => {
-          assertEquals(
-              'Failure cause was not as expected',
-              ModuleLoadFailure.Type.UNAUTHORIZED, cause.type);
-          assertEquals('Failure status was not as expected', 401, cause.status);
-        });
+    mm.registerCallback(ModuleManager.CallbackType.ERROR, (callbackType, id, cause) => {
+      assertEquals(
+        'Failure cause was not as expected',
+        ModuleLoadFailure.Type.UNAUTHORIZED,
+        cause.type
+      );
+      assertEquals('Failure status was not as expected', 401, cause.status);
+    });
     let calledBack = false;
     let error = null;
 
     const d = mm.load('a');
     d.then(
-        (ctx) => {
-          calledBack = true;
-        },
-        (err) => {
-          error = err;
-        });
+      (ctx) => {
+        calledBack = true;
+      },
+      (err) => {
+        error = err;
+      }
+    );
 
     assertFalse(calledBack);
     assertNull(error);
@@ -1465,13 +1501,16 @@ testSuite({
     // failure type enum is present as error.failureType, while the error
     // message is human readable and contains the module id.
     assertEquals(
-        'Failure cause was not as expected',
-        ModuleLoadFailure.Type.UNAUTHORIZED, error.failureType.type);
+      'Failure cause was not as expected',
+      ModuleLoadFailure.Type.UNAUTHORIZED,
+      error.failureType.type
+    );
+    assertEquals('Failure status was not as expected', 401, error.failureType.status);
     assertEquals(
-        'Failure status was not as expected', 401, error.failureType.status);
-    assertEquals(
-        'Error message was not as expected',
-        'Error loading a: Unauthorized (401)', error.message);
+      'Error message was not as expected',
+      'Error loading a: Unauthorized (401)',
+      error.message
+    );
   },
 
   /**
@@ -1479,15 +1518,16 @@ testSuite({
      load.
    */
   testLoadMultipleWithFailingModule() {
-    const mm = getModuleManager({'a': [], 'b': [], 'c': []});
+    const mm = getModuleManager({ a: [], b: [], c: [] });
     mm.setLoader(createUnsuccessfulLoader(mm, 401));
     mm.setBatchModeEnabled(true);
-    mm.registerCallback(
-        ModuleManager.CallbackType.ERROR, (callbackType, id, cause) => {
-          assertEquals(
-              'Failure cause was not as expected',
-              ModuleLoadFailure.Type.UNAUTHORIZED, cause.type);
-        });
+    mm.registerCallback(ModuleManager.CallbackType.ERROR, (callbackType, id, cause) => {
+      assertEquals(
+        'Failure cause was not as expected',
+        ModuleLoadFailure.Type.UNAUTHORIZED,
+        cause.type
+      );
+    });
     let calledBack11 = false;
     let error11 = null;
     let calledBack12 = false;
@@ -1499,35 +1539,39 @@ testSuite({
 
     const dMap = mm.loadMultiple(['a', 'b']);
     dMap['a'].then(
-        (ctx) => {
-          calledBack11 = true;
-        },
-        (err) => {
-          error11 = err;
-        });
+      (ctx) => {
+        calledBack11 = true;
+      },
+      (err) => {
+        error11 = err;
+      }
+    );
     dMap['b'].then(
-        (ctx) => {
-          calledBack12 = true;
-        },
-        (err) => {
-          error12 = err;
-        });
+      (ctx) => {
+        calledBack12 = true;
+      },
+      (err) => {
+        error12 = err;
+      }
+    );
 
     const dMap2 = mm.loadMultiple(['b', 'c']);
     dMap2['b'].then(
-        (ctx) => {
-          calledBack21 = true;
-        },
-        (err) => {
-          error21 = err;
-        });
+      (ctx) => {
+        calledBack21 = true;
+      },
+      (err) => {
+        error21 = err;
+      }
+    );
     dMap2['c'].then(
-        (ctx) => {
-          calledBack22 = true;
-        },
-        (err) => {
-          error22 = err;
-        });
+      (ctx) => {
+        calledBack22 = true;
+      },
+      (err) => {
+        error22 = err;
+      }
+    );
 
     assertFalse(calledBack11);
     assertFalse(calledBack12);
@@ -1549,26 +1593,38 @@ testSuite({
     // failure type enum is present as error.failureType, while the error
     // message is human readable and contains the module id.
     assertEquals(
-        'Failure cause was not as expected',
-        ModuleLoadFailure.Type.UNAUTHORIZED, error11.failureType.type);
+      'Failure cause was not as expected',
+      ModuleLoadFailure.Type.UNAUTHORIZED,
+      error11.failureType.type
+    );
     assertEquals(
-        'Error message was not as expected',
-        'Error loading a: Unauthorized (401)', error11.message);
+      'Error message was not as expected',
+      'Error loading a: Unauthorized (401)',
+      error11.message
+    );
     assertEquals(
-        'Failure cause was not as expected',
-        ModuleLoadFailure.Type.UNAUTHORIZED, error12.failureType.type);
+      'Failure cause was not as expected',
+      ModuleLoadFailure.Type.UNAUTHORIZED,
+      error12.failureType.type
+    );
     assertEquals(
-        'Error message was not as expected',
-        'Error loading b: Unauthorized (401)', error12.message);
+      'Error message was not as expected',
+      'Error loading b: Unauthorized (401)',
+      error12.message
+    );
 
     // The first deferred of the second load should be called since it asks
     // for one of the failed modules.
     assertEquals(
-        'Failure cause was not as expected',
-        ModuleLoadFailure.Type.UNAUTHORIZED, Number(error21.failureType.type));
+      'Failure cause was not as expected',
+      ModuleLoadFailure.Type.UNAUTHORIZED,
+      Number(error21.failureType.type)
+    );
     assertEquals(
-        'Error message was not as expected',
-        'Error loading b: Unauthorized (401)', error21.message);
+      'Error message was not as expected',
+      'Error loading b: Unauthorized (401)',
+      error21.message
+    );
 
     // The last deferred should be dropped so it is neither called back nor
     // an error.
@@ -1581,19 +1637,19 @@ testSuite({
      failure.
    */
   testLoadMultipleWithFailingModuleDependencies() {
-    const mm =
-        getModuleManager({'a': [], 'b': [], 'c': ['b'], 'd': ['c'], 'e': []});
+    const mm = getModuleManager({ a: [], b: [], c: ['b'], d: ['c'], e: [] });
     mm.setLoader(createUnsuccessfulLoader(mm, 401));
     mm.setBatchModeEnabled(true);
     const cancelledIds = [];
 
-    mm.registerCallback(
-        ModuleManager.CallbackType.ERROR, (callbackType, id, cause) => {
-          assertEquals(
-              'Failure cause was not as expected',
-              ModuleLoadFailure.Type.UNAUTHORIZED, cause.type);
-          cancelledIds.push(id);
-        });
+    mm.registerCallback(ModuleManager.CallbackType.ERROR, (callbackType, id, cause) => {
+      assertEquals(
+        'Failure cause was not as expected',
+        ModuleLoadFailure.Type.UNAUTHORIZED,
+        cause.type
+      );
+      cancelledIds.push(id);
+    });
     let calledBack11 = false;
     let error11 = null;
     let calledBack12 = false;
@@ -1607,42 +1663,47 @@ testSuite({
 
     const dMap = mm.loadMultiple(['a', 'b']);
     dMap['a'].then(
-        (ctx) => {
-          calledBack11 = true;
-        },
-        (err) => {
-          error11 = err;
-        });
+      (ctx) => {
+        calledBack11 = true;
+      },
+      (err) => {
+        error11 = err;
+      }
+    );
     dMap['b'].then(
-        (ctx) => {
-          calledBack12 = true;
-        },
-        (err) => {
-          error12 = err;
-        });
+      (ctx) => {
+        calledBack12 = true;
+      },
+      (err) => {
+        error12 = err;
+      }
+    );
 
     const dMap2 = mm.loadMultiple(['c', 'd', 'e']);
     dMap2['c'].then(
-        (ctx) => {
-          calledBack21 = true;
-        },
-        (err) => {
-          error21 = err;
-        });
+      (ctx) => {
+        calledBack21 = true;
+      },
+      (err) => {
+        error21 = err;
+      }
+    );
     dMap2['d'].then(
-        (ctx) => {
-          calledBack22 = true;
-        },
-        (err) => {
-          error22 = err;
-        });
+      (ctx) => {
+        calledBack22 = true;
+      },
+      (err) => {
+        error22 = err;
+      }
+    );
     dMap2['e'].then(
-        (ctx) => {
-          calledBack23 = true;
-        },
-        (err) => {
-          error23 = err;
-        });
+      (ctx) => {
+        calledBack23 = true;
+      },
+      (err) => {
+        error23 = err;
+      }
+    );
 
     assertFalse(calledBack11);
     assertFalse(calledBack12);
@@ -1667,17 +1728,25 @@ testSuite({
     // failure type enum is present as error.failureType, while the error
     // message is human readable and contains the module id.
     assertEquals(
-        'Failure cause was not as expected',
-        ModuleLoadFailure.Type.UNAUTHORIZED, error11.failureType.type);
+      'Failure cause was not as expected',
+      ModuleLoadFailure.Type.UNAUTHORIZED,
+      error11.failureType.type
+    );
     assertEquals(
-        'Error message was not as expected',
-        'Error loading a: Unauthorized (401)', error11.message);
+      'Error message was not as expected',
+      'Error loading a: Unauthorized (401)',
+      error11.message
+    );
     assertEquals(
-        'Failure cause was not as expected',
-        ModuleLoadFailure.Type.UNAUTHORIZED, error12.failureType.type);
+      'Failure cause was not as expected',
+      ModuleLoadFailure.Type.UNAUTHORIZED,
+      error12.failureType.type
+    );
     assertEquals(
-        'Error message was not as expected',
-        'Error loading b: Unauthorized (401)', error12.message);
+      'Error message was not as expected',
+      'Error loading b: Unauthorized (401)',
+      error12.message
+    );
 
     // Check that among the failed modules, 'c' and 'd' are also cancelled
     // due to dependencies.
@@ -1689,15 +1758,17 @@ testSuite({
    * modified when it has duplicates.
    */
   testLoadMultipleWithDuplicates() {
-    const mm = getModuleManager({'a': [], 'b': []});
+    const mm = getModuleManager({ a: [], b: [] });
     mm.setBatchModeEnabled(true);
     mm.setLoader(createSuccessfulBatchLoader(mm));
 
     const listWithDuplicates = ['a', 'a', 'b'];
     mm.loadMultiple(listWithDuplicates);
     assertArrayEquals(
-        'loadMultiple should not modify its input', ['a', 'a', 'b'],
-        listWithDuplicates);
+      'loadMultiple should not modify its input',
+      ['a', 'a', 'b'],
+      listWithDuplicates
+    );
   },
 
   /**
@@ -1705,8 +1776,7 @@ testSuite({
    * @suppress {missingProperties} suppression added to enable type checking
    */
   testLoadingDepsInNonBatchMode1() {
-    const mm =
-        getModuleManager({'i': [], 'j': [], 'k': ['j'], 'l': ['i', 'j', 'k']});
+    const mm = getModuleManager({ i: [], j: [], k: ['j'], l: ['i', 'j', 'k'] });
     mm.setLoader(createSuccessfulNonBatchLoader(mm));
 
     mm.preloadModule('j');
@@ -1736,12 +1806,12 @@ testSuite({
    */
   testLoadingDepsInNonBatchMode2() {
     const mm = getModuleManager({
-      'h': [],
-      'i': ['h'],
-      'j': ['i'],
-      'k': ['j'],
-      'l': ['i', 'j', 'k'],
-      'm': ['l'],
+      h: [],
+      i: ['h'],
+      j: ['i'],
+      k: ['j'],
+      l: ['i', 'j', 'k'],
+      m: ['l'],
     });
     mm.setLoader(createSuccessfulNonBatchLoader(mm));
 
@@ -1788,8 +1858,7 @@ testSuite({
      checking
    */
   testLoadingDepsInBatchMode() {
-    const mm =
-        getModuleManager({'e': [], 'f': [], 'g': ['f'], 'h': ['e', 'f', 'g']});
+    const mm = getModuleManager({ e: [], f: [], g: ['f'], h: ['e', 'f', 'g'] });
     mm.setLoader(createSuccessfulBatchLoader(mm));
     mm.setBatchModeEnabled(true);
 
@@ -1819,24 +1888,24 @@ testSuite({
      @suppress {missingProperties} suppression added to enable type checking
    */
   testUnauthorizedLoading() {
-    const mm = getModuleManager({'m': [], 'n': [], 'o': ['n']});
+    const mm = getModuleManager({ m: [], n: [], o: ['n'] });
     mm.setLoader(createUnsuccessfulLoader(mm, 401));
 
     // Callback checks for an unauthorized error
     let firedLoadFailed = false;
-    mm.registerCallback(
-        ModuleManager.CallbackType.ERROR, (callbackType, id, cause) => {
-          assertEquals(
-              'Failure cause was not as expected',
-              ModuleLoadFailure.Type.UNAUTHORIZED, cause.type);
-          firedLoadFailed = true;
-        });
+    mm.registerCallback(ModuleManager.CallbackType.ERROR, (callbackType, id, cause) => {
+      assertEquals(
+        'Failure cause was not as expected',
+        ModuleLoadFailure.Type.UNAUTHORIZED,
+        cause.type
+      );
+      firedLoadFailed = true;
+    });
     mm.execOnLoad('o', () => {});
     assertTrue('module "o" should be loading', mm.isModuleLoading('o'));
     assertTrue('module "n" should be loading', mm.isModuleLoading('n'));
     clock.tick(5);
-    assertTrue(
-        'should have called unauthorized module callback', firedLoadFailed);
+    assertTrue('should have called unauthorized module callback', firedLoadFailed);
     assertFalse('module "o" should not be loaded', mm.isModuleLoaded('o'));
     assertFalse('module "o" should not be loading', mm.isModuleLoading('o'));
     assertFalse('module "n" should not be loaded', mm.isModuleLoaded('n'));
@@ -1848,7 +1917,7 @@ testSuite({
      @suppress {missingProperties} suppression added to enable type checking
    */
   testErrorLoadingModule() {
-    const mm = getModuleManager({'p': ['q'], 'q': [], 'r': ['q', 'p']});
+    const mm = getModuleManager({ p: ['q'], q: [], r: ['q', 'p'] });
     mm.setLoader(createUnsuccessfulLoader(mm, 500));
 
     mm.preloadModule('r');
@@ -1881,7 +1950,7 @@ testSuite({
      @suppress {missingProperties} suppression added to enable type checking
    */
   testErrorLoadingModule_batchMode() {
-    const mm = getModuleManager({'p': ['q'], 'q': [], 'r': ['q', 'p']});
+    const mm = getModuleManager({ p: ['q'], q: [], r: ['q', 'p'] });
     mm.setLoader(createUnsuccessfulBatchLoader(mm, 500));
     mm.setBatchModeEnabled(true);
 
@@ -1910,18 +1979,19 @@ testSuite({
      @suppress {missingProperties} suppression added to enable type checking
    */
   testConsecutiveErrors() {
-    const mm = getModuleManager({'s': []});
+    const mm = getModuleManager({ s: [] });
     mm.setLoader(createUnsuccessfulLoader(mm, 500));
 
     // Register an error callback for consecutive failures.
     let firedLoadFailed = false;
-    mm.registerCallback(
-        ModuleManager.CallbackType.ERROR, (callbackType, id, cause) => {
-          assertEquals(
-              'Failure cause was not as expected',
-              ModuleLoadFailure.Type.CONSECUTIVE_FAILURES, cause.type);
-          firedLoadFailed = true;
-        });
+    mm.registerCallback(ModuleManager.CallbackType.ERROR, (callbackType, id, cause) => {
+      assertEquals(
+        'Failure cause was not as expected',
+        ModuleLoadFailure.Type.CONSECUTIVE_FAILURES,
+        cause.type
+      );
+      firedLoadFailed = true;
+    });
 
     mm.preloadModule('s');
     assertFalse('module "s" should not be loaded (0)', mm.isModuleLoaded('s'));
@@ -1929,8 +1999,7 @@ testSuite({
     // Fail twice.
     for (let i = 0; i < 2; i++) {
       clock.tick(5 + mm.getBackOff_());
-      assertFalse(
-          'module "s" should not be loaded (1)', mm.isModuleLoaded('s'));
+      assertFalse('module "s" should not be loaded (1)', mm.isModuleLoaded('s'));
       assertFalse('should not fire failed callback (1)', firedLoadFailed);
     }
 
@@ -1943,7 +2012,7 @@ testSuite({
     // failed.
     let triedLoad = false;
     mm.setLoader({
-      loadModules: function(ids, moduleInfoMap, {onError, onSuccess}) {
+      loadModules: (ids, moduleInfoMap, { onError, onSuccess }) => {
         triedLoad = true;
       },
     });
@@ -1954,8 +2023,7 @@ testSuite({
     clock.tick(10 + mm.getBackOff_());
     assertFalse('module "s" should not be loaded (3)', mm.isModuleLoaded('s'));
     assertFalse('No more loads should have been tried', triedLoad);
-    assertFalse(
-        'The load failed callback should be fired only once', firedLoadFailed);
+    assertFalse('The load failed callback should be fired only once', firedLoadFailed);
   },
 
   /**
@@ -1963,18 +2031,19 @@ testSuite({
    * @suppress {missingProperties} suppression added to enable type checking
    */
   testOldCodeGoneError() {
-    const mm = getModuleManager({'s': []});
+    const mm = getModuleManager({ s: [] });
     mm.setLoader(createUnsuccessfulLoader(mm, 410));
 
     // Callback checks for an old code failure
     let firedLoadFailed = false;
-    mm.registerCallback(
-        ModuleManager.CallbackType.ERROR, (callbackType, id, cause) => {
-          assertEquals(
-              'Failure cause was not as expected',
-              ModuleLoadFailure.Type.OLD_CODE_GONE, cause.type);
-          firedLoadFailed = true;
-        });
+    mm.registerCallback(ModuleManager.CallbackType.ERROR, (callbackType, id, cause) => {
+      assertEquals(
+        'Failure cause was not as expected',
+        ModuleLoadFailure.Type.OLD_CODE_GONE,
+        cause.type
+      );
+      firedLoadFailed = true;
+    });
 
     mm.preloadModule('s', 0);
     assertFalse('module "s" should not be loaded (0)', mm.isModuleLoaded('s'));
@@ -1989,18 +2058,15 @@ testSuite({
    *      added to enable type checking
    */
   testTimeout() {
-    const mm = getModuleManager({'s': []});
+    const mm = getModuleManager({ s: [] });
     mm.setLoader(createTimeoutLoader(mm, undefined));
 
     // Callback checks for timeout
     let firedTimeout = false;
-    mm.registerCallback(
-        ModuleManager.CallbackType.ERROR, (callbackType, id, cause) => {
-          assertEquals(
-              'Failure cause was not as expected',
-              ModuleLoadFailure.Type.TIMEOUT, cause.type);
-          firedTimeout = true;
-        });
+    mm.registerCallback(ModuleManager.CallbackType.ERROR, (callbackType, id, cause) => {
+      assertEquals('Failure cause was not as expected', ModuleLoadFailure.Type.TIMEOUT, cause.type);
+      firedTimeout = true;
+    });
 
     mm.preloadModule('s', 0);
     assertFalse('module "s" should not be loaded (0)', mm.isModuleLoaded('s'));
@@ -2018,13 +2084,17 @@ testSuite({
     // ERROR, the right module id and failure type INIT_ERROR.
     const errorCallback1 = testing.createFunctionMock('callback1');
     errorCallback1(
-        ModuleManager.CallbackType.ERROR, 'b',
-        new ModuleLoadFailure(ModuleLoadFailure.Type.INIT_ERROR));
+      ModuleManager.CallbackType.ERROR,
+      'b',
+      new ModuleLoadFailure(ModuleLoadFailure.Type.INIT_ERROR)
+    );
 
     const errorCallback2 = testing.createFunctionMock('callback2');
     errorCallback2(
-        ModuleManager.CallbackType.ERROR, 'b',
-        new ModuleLoadFailure(ModuleLoadFailure.Type.INIT_ERROR));
+      ModuleManager.CallbackType.ERROR,
+      'b',
+      new ModuleLoadFailure(ModuleLoadFailure.Type.INIT_ERROR)
+    );
 
     errorCallback1.$replay();
     errorCallback2.$replay();
@@ -2035,7 +2105,7 @@ testSuite({
     // Register the first callback before setting the module info map.
     mm.registerCallback(ModuleManager.CallbackType.ERROR, errorCallback1);
 
-    mm.setAllModuleInfo({'a': [], 'b': [], 'c': []});
+    mm.setAllModuleInfo({ a: [], b: [], c: [] });
 
     // Register the second callback after setting the module info map.
     mm.registerCallback(ModuleManager.CallbackType.ERROR, errorCallback2);
@@ -2050,8 +2120,7 @@ testSuite({
       clock.tick(5);
     });
 
-    assertTrue(
-        'execOnLoad should have been called on module b.', execOnLoadBCalled);
+    assertTrue('execOnLoad should have been called on module b.', execOnLoadBCalled);
     errorCallback1.$verify();
     errorCallback2.$verify();
   },
@@ -2066,8 +2135,10 @@ testSuite({
     // module id and failure type INIT_ERROR.
     const errorCallback = testing.createFunctionMock('callback');
     errorCallback(
-        ModuleManager.CallbackType.ERROR, 'b',
-        new ModuleLoadFailure(ModuleLoadFailure.Type.INIT_ERROR));
+      ModuleManager.CallbackType.ERROR,
+      'b',
+      new ModuleLoadFailure(ModuleLoadFailure.Type.INIT_ERROR)
+    );
 
     errorCallback.$replay();
 
@@ -2089,14 +2160,13 @@ testSuite({
       clock.tick(5);
     });
 
-    assertTrue(
-        'execOnLoad should have been called on module b.', execOnLoadBCalled);
+    assertTrue('execOnLoad should have been called on module b.', execOnLoadBCalled);
     errorCallback.$verify();
   },
 
   /** Make sure ModuleInfo objects in moduleInfoMap_ get disposed. */
   testDispose() {
-    const mm = getModuleManager({'a': [], 'b': [], 'c': []});
+    const mm = getModuleManager({ a: [], b: [], c: [] });
 
     const moduleInfoA = mm.getModuleInfo('a');
     assertNotNull(moduleInfoA);
@@ -2113,12 +2183,12 @@ testSuite({
 
   testDependencyOrderingWithSimpleDeps() {
     const mm = getModuleManager({
-      'a': ['b', 'c'],
-      'b': ['d'],
-      'c': ['e', 'f'],
-      'd': [],
-      'e': [],
-      'f': [],
+      a: ['b', 'c'],
+      b: ['d'],
+      c: ['e', 'f'],
+      d: [],
+      e: [],
+      f: [],
     });
     const ids = mm.getNotYetLoadedTransitiveDepIds_('a');
     assertDependencyOrder(ids, mm);
@@ -2127,12 +2197,12 @@ testSuite({
 
   testDependencyOrderingWithRequestedDep() {
     const mm = getModuleManager({
-      'a': ['b', 'c'],
-      'b': ['d'],
-      'c': ['e', 'f'],
-      'd': [],
-      'e': [],
-      'f': [],
+      a: ['b', 'c'],
+      b: ['d'],
+      c: ['e', 'f'],
+      d: [],
+      e: [],
+      f: [],
     });
     mm.requestedModuleIds_ = ['a', 'b'];
     const ids = mm.getNotYetLoadedTransitiveDepIds_('a');
@@ -2143,8 +2213,7 @@ testSuite({
   testDependencyOrderingWithCommonDepsInDeps() {
     // Tests to make sure that if dependencies of the root are loaded before
     // their common dependencies.
-    const mm =
-        getModuleManager({'a': ['b', 'c'], 'b': ['d'], 'c': ['d'], 'd': []});
+    const mm = getModuleManager({ a: ['b', 'c'], b: ['d'], c: ['d'], d: [] });
     const ids = mm.getNotYetLoadedTransitiveDepIds_('a');
     assertDependencyOrder(ids, mm);
     assertArrayEquals(['d', 'b', 'c', 'a'], ids);
@@ -2154,7 +2223,7 @@ testSuite({
     // Tests the case where a dependency of the root depends on another
     // dependency of the root.  Regardless of ordering in the root's
     // deps.
-    const mm = getModuleManager({'a': ['b', 'c'], 'b': ['c'], 'c': []});
+    const mm = getModuleManager({ a: ['b', 'c'], b: ['c'], c: [] });
     const ids = mm.getNotYetLoadedTransitiveDepIds_('a');
     assertDependencyOrder(ids, mm);
     assertArrayEquals(['c', 'b', 'a'], ids);
@@ -2164,7 +2233,7 @@ testSuite({
     // Tests the case where a dependency of the root depends on another
     // dependency of the root.  Regardless of ordering in the root's
     // deps.
-    const mm = getModuleManager({'a': ['b', 'c'], 'b': [], 'c': ['b']});
+    const mm = getModuleManager({ a: ['b', 'c'], b: [], c: ['b'] });
     const ids = mm.getNotYetLoadedTransitiveDepIds_('a');
     assertDependencyOrder(ids, mm);
     assertArrayEquals(['b', 'c', 'a'], ids);
@@ -2173,16 +2242,16 @@ testSuite({
   testDependencyOrderingWithGmailExample() {
     // Real dependency graph taken from gmail.
     const mm = getModuleManager({
-      's': ['dp', 'ml', 'md'],
-      'dp': ['a'],
-      'ml': ['ld', 'm'],
-      'ld': ['a'],
-      'm': ['ad', 'mh', 'n'],
-      'md': ['mh', 'ld'],
-      'a': [],
-      'mh': [],
-      'ad': [],
-      'n': [],
+      s: ['dp', 'ml', 'md'],
+      dp: ['a'],
+      ml: ['ld', 'm'],
+      ld: ['a'],
+      m: ['ad', 'mh', 'n'],
+      md: ['mh', 'ld'],
+      a: [],
+      mh: [],
+      ad: [],
+      n: [],
     });
 
     mm.beforeLoadModuleCode('a');
@@ -2203,11 +2272,12 @@ testSuite({
 
   testRegisterInitializationCallback() {
     let initCalled = 0;
-    const mm = getModuleManager({'a': [], 'b': [], 'c': []});
+    const mm = getModuleManager({ a: [], b: [], c: [] });
     mm.setLoader(
-        createSuccessfulNonBatchLoaderWithRegisterInitCallback(mm, () => {
-          ++initCalled;
-        }));
+      createSuccessfulNonBatchLoaderWithRegisterInitCallback(mm, () => {
+        ++initCalled;
+      })
+    );
     execOnLoad(mm);
     // execOnLoad_ loads modules a and c
     assertTrue(initCalled == 2);
@@ -2215,11 +2285,11 @@ testSuite({
 
   testSetModuleConstructor() {
     const initCalled = 0;
-    const mm = getModuleManager({'a': [], 'b': [], 'c': []});
+    const mm = getModuleManager({ a: [], b: [], c: [] });
     const info = {
-      'a': {ctor: AModule, count: 0},
-      'b': {ctor: BModule, count: 0},
-      'c': {ctor: CModule, count: 0},
+      a: { ctor: AModule, count: 0 },
+      b: { ctor: BModule, count: 0 },
+      c: { ctor: CModule, count: 0 },
     };
     function AModule() {
       ++info['a'].count;
@@ -2251,10 +2321,10 @@ testSuite({
    * initialization doesn't trigger a second load.
    */
   testLoadWhenInitializing() {
-    const mm = getModuleManager({'a': []});
+    const mm = getModuleManager({ a: [] });
     mm.setLoader(createSuccessfulNonBatchLoader(mm));
 
-    const info = {'a': {ctor: AModule, count: 0}};
+    const info = { a: { ctor: AModule, count: 0 } };
     function AModule() {
       ++info['a'].count;
       BaseModule.call(this);
@@ -2272,13 +2342,12 @@ testSuite({
   testErrorInEarlyCallback() {
     const errback = recordFunction();
     const callback = recordFunction();
-    const mm = getModuleManager({'a': [], 'b': ['a']});
+    const mm = getModuleManager({ a: [], b: ['a'] });
     mm.getModuleInfo('a').registerEarlyCallback(functions.error('error'));
     mm.getModuleInfo('a').registerCallback(callback);
     mm.getModuleInfo('a').registerErrback(errback);
 
-    mm.setLoader(createSuccessfulNonBatchLoaderWithConstructor(
-        mm, createModulesFor('a', 'b')));
+    mm.setLoader(createSuccessfulNonBatchLoaderWithConstructor(mm, createModulesFor('a', 'b')));
     mm.preloadModule('b');
     const e = assertThrows(() => {
       clock.tick(5);
@@ -2287,9 +2356,7 @@ testSuite({
     assertEquals('error', e.message);
     assertEquals(0, callback.getCallCount());
     assertEquals(1, errback.getCallCount());
-    assertEquals(
-        ModuleLoadFailure.Type.INIT_ERROR,
-        errback.getLastCall().getArguments()[0].type);
+    assertEquals(ModuleLoadFailure.Type.INIT_ERROR, errback.getLastCall().getArguments()[0].type);
     assertTrue(mm.getModuleInfo('a').isLoaded());
     assertFalse(mm.getModuleInfo('b').isLoaded());
 
@@ -2300,13 +2367,12 @@ testSuite({
   testErrorInNormalCallback() {
     const earlyCallback = recordFunction();
     const errback = recordFunction();
-    const mm = getModuleManager({'a': [], 'b': ['a']});
+    const mm = getModuleManager({ a: [], b: ['a'] });
     mm.getModuleInfo('a').registerEarlyCallback(earlyCallback);
     mm.getModuleInfo('a').registerCallback(functions.error('error'));
     mm.getModuleInfo('a').registerErrback(errback);
 
-    mm.setLoader(createSuccessfulNonBatchLoaderWithConstructor(
-        mm, createModulesFor('a', 'b')));
+    mm.setLoader(createSuccessfulNonBatchLoaderWithConstructor(mm, createModulesFor('a', 'b')));
     mm.preloadModule('b');
     const e = assertThrows(() => {
       clock.tick(10);
@@ -2315,20 +2381,17 @@ testSuite({
 
     assertEquals('error', e.message);
     assertEquals(1, errback.getCallCount());
-    assertEquals(
-        ModuleLoadFailure.Type.INIT_ERROR,
-        errback.getLastCall().getArguments()[0].type);
+    assertEquals(ModuleLoadFailure.Type.INIT_ERROR, errback.getLastCall().getArguments()[0].type);
     assertTrue(mm.getModuleInfo('a').isLoaded());
     assertTrue(mm.getModuleInfo('b').isLoaded());
   },
 
   testErrorInErrback() {
-    const mm = getModuleManager({'a': [], 'b': ['a']});
+    const mm = getModuleManager({ a: [], b: ['a'] });
     mm.getModuleInfo('a').registerCallback(functions.error('error1'));
     mm.getModuleInfo('a').registerErrback(functions.error('error2'));
 
-    mm.setLoader(createSuccessfulNonBatchLoaderWithConstructor(
-        mm, createModulesFor('a', 'b')));
+    mm.setLoader(createSuccessfulNonBatchLoaderWithConstructor(mm, createModulesFor('a', 'b')));
     mm.preloadModule('a');
     let e = assertThrows(() => {
       clock.tick(10);
@@ -2349,7 +2412,7 @@ testSuite({
       called = true;
       context = mcontext;
     });
-    mm.setAllModuleInfo({'a': [], 'b': ['a']});
+    mm.setAllModuleInfo({ a: [], b: ['a'] });
     assertTrue('Base initialization not called', called);
     assertNull('Context should still be null', context);
 
@@ -2368,13 +2431,14 @@ testSuite({
   testSetAllModuleInfo() {
     const callback = recordFunction();
     const errback = recordFunction();
-    const moduleInfo = {'base': [], 'one': ['base'], 'two': ['one']};
+    const moduleInfo = { base: [], one: ['base'], two: ['one'] };
     const mm = getModuleManager(moduleInfo);
     mm.getModuleInfo('one').registerEarlyCallback(callback);
     mm.getModuleInfo('one').registerCallback(functions.error('error'));
     mm.getModuleInfo('one').registerErrback(errback);
-    mm.setLoader(createSuccessfulNonBatchLoaderWithConstructor(
-        mm, createModulesFor('base', 'one', 'two')));
+    mm.setLoader(
+      createSuccessfulNonBatchLoaderWithConstructor(mm, createModulesFor('base', 'one', 'two'))
+    );
     mm.preloadModule('base');
     clock.tick(10);
     // Module 'base' is now loaded.
@@ -2382,7 +2446,7 @@ testSuite({
     // Re-init all modules using same instance.
     mm.setAllModuleInfo(moduleInfo);
     // Re-init all modules using new instance.
-    mm.setAllModuleInfo({'base': [], 'one': ['base'], 'two': ['one']});
+    mm.setAllModuleInfo({ base: [], one: ['base'], two: ['one'] });
     // Module 'base' is still loaded.
     assertTrue(mm.getModuleInfo('base').isLoaded());
 
@@ -2400,13 +2464,14 @@ testSuite({
   testSetAllModuleInfoString() {
     const callback = recordFunction();
     const errback = recordFunction();
-    const moduleInfo = {'base': [], 'one': ['base'], 'two': ['one']};
+    const moduleInfo = { base: [], one: ['base'], two: ['one'] };
     const mm = getModuleManager(moduleInfo);
     mm.getModuleInfo('one').registerEarlyCallback(callback);
     mm.getModuleInfo('one').registerCallback(functions.error('error'));
     mm.getModuleInfo('one').registerErrback(errback);
-    mm.setLoader(createSuccessfulNonBatchLoaderWithConstructor(
-        mm, createModulesFor('base', 'one', 'two')));
+    mm.setLoader(
+      createSuccessfulNonBatchLoaderWithConstructor(mm, createModulesFor('base', 'one', 'two'))
+    );
     mm.preloadModule('base');
     clock.tick(10);
     // Module 'base' is now loaded.
@@ -2423,10 +2488,8 @@ testSuite({
     assertNotNull('Four should exist', mm.getModuleInfo('four'));
     assertNotNull('Five should exist', mm.getModuleInfo('five'));
 
-    assertArrayEquals(
-        ['base', 'one', 'two'], mm.getModuleInfo('three').getDependencies());
-    assertArrayEquals(
-        ['base', 'three'], mm.getModuleInfo('four').getDependencies());
+    assertArrayEquals(['base', 'one', 'two'], mm.getModuleInfo('three').getDependencies());
+    assertArrayEquals(['base', 'three'], mm.getModuleInfo('four').getDependencies());
     assertArrayEquals([], mm.getModuleInfo('five').getDependencies());
 
     // Callbacks are still registered.

@@ -12,9 +12,7 @@
  * @see ../demos/bidiinput.html
  */
 
-
 goog.provide('goog.ui.BidiInput');
-
 
 goog.require('goog.dom');
 goog.require('goog.dom.InputType');
@@ -24,8 +22,6 @@ goog.require('goog.events.InputHandler');
 goog.require('goog.i18n.bidi');
 goog.require('goog.ui.Component');
 
-
-
 /**
  * Default implementation of BidiInput.
  *
@@ -33,12 +29,10 @@ goog.require('goog.ui.Component');
  * @constructor
  * @extends {goog.ui.Component}
  */
-goog.ui.BidiInput = function(opt_domHelper) {
-  'use strict';
+goog.ui.BidiInput = function (opt_domHelper) {
   goog.ui.Component.call(this, opt_domHelper);
 };
 goog.inherits(goog.ui.BidiInput, goog.ui.Component);
-
 
 /**
  * The input handler that provides the input event.
@@ -46,7 +40,6 @@ goog.inherits(goog.ui.BidiInput, goog.ui.Component);
  * @private
  */
 goog.ui.BidiInput.prototype.inputHandler_ = null;
-
 
 /**
  * Decorates the given HTML element as a BidiInput. The HTML element can be an
@@ -56,35 +49,30 @@ goog.ui.BidiInput.prototype.inputHandler_ = null;
  * @protected
  * @override
  */
-goog.ui.BidiInput.prototype.decorateInternal = function(element) {
-  'use strict';
+goog.ui.BidiInput.prototype.decorateInternal = function (element) {
   goog.ui.BidiInput.superClass_.decorateInternal.call(this, element);
   this.init_();
 };
-
 
 /**
  * @return {?HTMLInputElement}
  * @override
  */
-goog.ui.BidiInput.prototype.getElement = function() {
-  return /** @type {?HTMLInputElement} */ (
-      goog.ui.BidiInput.superClass_.getElement.call(this));
+goog.ui.BidiInput.prototype.getElement = function () {
+  return /** @type {?HTMLInputElement} */ (goog.ui.BidiInput.superClass_.getElement.call(this));
 };
-
 
 /**
  * Creates the element for the text input.
  * @protected
  * @override
  */
-goog.ui.BidiInput.prototype.createDom = function() {
-  'use strict';
-  this.setElementInternal(this.getDomHelper().createDom(
-      goog.dom.TagName.INPUT, {'type': goog.dom.InputType.TEXT}));
+goog.ui.BidiInput.prototype.createDom = function () {
+  this.setElementInternal(
+    this.getDomHelper().createDom(goog.dom.TagName.INPUT, { type: goog.dom.InputType.TEXT })
+  );
   this.init_();
 };
-
 
 /**
  * Initializes the events and initial text direction.
@@ -92,18 +80,20 @@ goog.ui.BidiInput.prototype.createDom = function() {
  * been created.
  * @private
  */
-goog.ui.BidiInput.prototype.init_ = function() {
-  'use strict';
+goog.ui.BidiInput.prototype.init_ = function () {
   // Set initial direction by current text
   this.setDirection_();
 
   // Listen to value change events
   this.inputHandler_ = new goog.events.InputHandler(this.getElement());
   goog.events.listen(
-      this.inputHandler_, goog.events.InputHandler.EventType.INPUT,
-      this.setDirection_, false, this);
+    this.inputHandler_,
+    goog.events.InputHandler.EventType.INPUT,
+    this.setDirection_,
+    false,
+    this
+  );
 };
-
 
 /**
  * Set the direction of the input element based on the current value. If the
@@ -114,15 +104,13 @@ goog.ui.BidiInput.prototype.init_ = function() {
  * {@link goog.ui.BidiInput#setValue}
  * @private
  */
-goog.ui.BidiInput.prototype.setDirection_ = function() {
-  'use strict';
+goog.ui.BidiInput.prototype.setDirection_ = function () {
   var element = this.getElement();
   if (element) {
     var text = this.getValue();
     goog.i18n.bidi.setElementDirByTextDirectionality(element, text);
   }
 };
-
 
 /**
  * Returns the direction of the input element.
@@ -133,8 +121,7 @@ goog.ui.BidiInput.prototype.setDirection_ = function() {
  *     element).
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.ui.BidiInput.prototype.getDirection = function() {
-  'use strict';
+goog.ui.BidiInput.prototype.getDirection = function () {
   var dir = this.getElement().dir;
   if (dir == '') {
     dir = null;
@@ -142,15 +129,13 @@ goog.ui.BidiInput.prototype.getDirection = function() {
   return dir;
 };
 
-
 /**
  * Sets the value of the underlying input field, and sets the direction
  * according to the given value.
  * @param {string} value  The Value to set in the underlying input field.
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.ui.BidiInput.prototype.setValue = function(value) {
-  'use strict';
+goog.ui.BidiInput.prototype.setValue = function (value) {
   var element = this.getElement();
   if (element.value != null) {
     element.value = value;
@@ -160,23 +145,18 @@ goog.ui.BidiInput.prototype.setValue = function(value) {
   this.setDirection_();
 };
 
-
 /**
  * Returns the value of the underlying input field.
  * @return {string} Value of the underlying input field.
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.ui.BidiInput.prototype.getValue = function() {
-  'use strict';
+goog.ui.BidiInput.prototype.getValue = function () {
   var element = this.getElement();
-  return element.value != null ? element.value :
-                                 goog.dom.getRawTextContent(element);
+  return element.value != null ? element.value : goog.dom.getRawTextContent(element);
 };
 
-
 /** @override */
-goog.ui.BidiInput.prototype.disposeInternal = function() {
-  'use strict';
+goog.ui.BidiInput.prototype.disposeInternal = function () {
   if (this.inputHandler_) {
     goog.events.removeAll(this.inputHandler_);
     this.inputHandler_.dispose();

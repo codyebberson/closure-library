@@ -15,16 +15,13 @@ goog.require('goog.async.Delay');
 goog.require('goog.dispose');
 goog.require('goog.object');
 
-
-
 /**
  * An interface for programatically animated objects. I.e. rendered in
  * javascript frame by frame.
  *
  * @interface
  */
-goog.fx.anim.Animated = function() {};
-
+goog.fx.anim.Animated = () => {};
 
 /**
  * Function called when a frame is requested for the animation.
@@ -32,7 +29,6 @@ goog.fx.anim.Animated = function() {};
  * @param {number} now Current time in milliseconds.
  */
 goog.fx.anim.Animated.prototype.onAnimationFrame;
-
 
 /**
  * Default wait timeout for animations (in milliseconds).  Only used for timed
@@ -43,7 +39,6 @@ goog.fx.anim.Animated.prototype.onAnimationFrame;
  */
 goog.fx.anim.TIMEOUT = goog.async.AnimationDelay.TIMEOUT;
 
-
 /**
  * A map of animations which should be cycled on the global timer.
  *
@@ -52,14 +47,12 @@ goog.fx.anim.TIMEOUT = goog.async.AnimationDelay.TIMEOUT;
  */
 goog.fx.anim.activeAnimations_ = {};
 
-
 /**
  * An optional animation window.
  * @type {?Window}
  * @private
  */
 goog.fx.anim.animationWindow_ = null;
-
 
 /**
  * An interval ID for the global timer or event handler uid.
@@ -68,13 +61,11 @@ goog.fx.anim.animationWindow_ = null;
  */
 goog.fx.anim.animationDelay_ = null;
 
-
 /**
  * Registers an animation to be cycled on the global timer.
  * @param {goog.fx.anim.Animated} animation The animation to register.
  */
-goog.fx.anim.registerAnimation = function(animation) {
-  'use strict';
+goog.fx.anim.registerAnimation = (animation) => {
   var uid = goog.getUid(animation);
   if (!(uid in goog.fx.anim.activeAnimations_)) {
     goog.fx.anim.activeAnimations_[uid] = animation;
@@ -84,14 +75,12 @@ goog.fx.anim.registerAnimation = function(animation) {
   goog.fx.anim.requestAnimationFrame_();
 };
 
-
 /**
  * Removes an animation from the list of animations which are cycled on the
  * global timer.
  * @param {goog.fx.anim.Animated} animation The animation to unregister.
  */
-goog.fx.anim.unregisterAnimation = function(animation) {
-  'use strict';
+goog.fx.anim.unregisterAnimation = (animation) => {
   var uid = goog.getUid(animation);
   delete goog.fx.anim.activeAnimations_[uid];
 
@@ -102,19 +91,16 @@ goog.fx.anim.unregisterAnimation = function(animation) {
   }
 };
 
-
 /**
  * Tears down this module. Useful for testing.
  */
 // TODO(nicksantos): Wow, this api is pretty broken. This should be fixed.
-goog.fx.anim.tearDown = function() {
-  'use strict';
+goog.fx.anim.tearDown = () => {
   goog.fx.anim.animationWindow_ = null;
   goog.dispose(goog.fx.anim.animationDelay_);
   goog.fx.anim.animationDelay_ = null;
   goog.fx.anim.activeAnimations_ = {};
 };
-
 
 /**
  * Registers an animation window. This allows usage of the timing control API
@@ -125,16 +111,14 @@ goog.fx.anim.tearDown = function() {
  *
  * @param {Window} animationWindow The window in which to animate elements.
  */
-goog.fx.anim.setAnimationWindow = function(animationWindow) {
-  'use strict';
+goog.fx.anim.setAnimationWindow = (animationWindow) => {
   // If a timer is currently running, reset it and restart with new functions
   // after a timeout. This is to avoid mismatching timer UIDs if we change the
   // animation window during a running animation.
   //
   // In practice this cannot happen before some animation window and timer
   // control functions has already been set.
-  var hasTimer =
-      goog.fx.anim.animationDelay_ && goog.fx.anim.animationDelay_.isActive();
+  var hasTimer = goog.fx.anim.animationDelay_ && goog.fx.anim.animationDelay_.isActive();
 
   goog.dispose(goog.fx.anim.animationDelay_);
   goog.fx.anim.animationDelay_ = null;
@@ -146,14 +130,12 @@ goog.fx.anim.setAnimationWindow = function(animationWindow) {
   }
 };
 
-
 /**
  * Requests an animation frame based on the requestAnimationFrame and
  * cancelRequestAnimationFrame function pair.
  * @private
  */
-goog.fx.anim.requestAnimationFrame_ = function() {
-  'use strict';
+goog.fx.anim.requestAnimationFrame_ = () => {
   if (!goog.fx.anim.animationDelay_) {
     // We cannot guarantee that the global window will be one that fires
     // requestAnimationFrame events (consider off-screen chrome extension
@@ -162,14 +144,11 @@ goog.fx.anim.requestAnimationFrame_ = function() {
     if (goog.fx.anim.animationWindow_) {
       // requestAnimationFrame will call cycleAnimations_ with the current
       // time in ms, as returned from goog.now().
-      goog.fx.anim.animationDelay_ =
-          new goog.async.AnimationDelay(function(now) {
-            'use strict';
-            goog.fx.anim.cycleAnimations_(now);
-          }, goog.fx.anim.animationWindow_);
+      goog.fx.anim.animationDelay_ = new goog.async.AnimationDelay((now) => {
+        goog.fx.anim.cycleAnimations_(now);
+      }, goog.fx.anim.animationWindow_);
     } else {
-      goog.fx.anim.animationDelay_ = new goog.async.Delay(function() {
-        'use strict';
+      goog.fx.anim.animationDelay_ = new goog.async.Delay(() => {
         goog.fx.anim.cycleAnimations_(goog.now());
       }, goog.fx.anim.TIMEOUT);
     }
@@ -181,28 +160,23 @@ goog.fx.anim.requestAnimationFrame_ = function() {
   }
 };
 
-
 /**
  * Cancels an animation frame created by requestAnimationFrame_().
  * @private
  */
-goog.fx.anim.cancelAnimationFrame_ = function() {
-  'use strict';
+goog.fx.anim.cancelAnimationFrame_ = () => {
   if (goog.fx.anim.animationDelay_) {
     goog.fx.anim.animationDelay_.stop();
   }
 };
-
 
 /**
  * Cycles through all registered animations.
  * @param {number} now Current time in milliseconds.
  * @private
  */
-goog.fx.anim.cycleAnimations_ = function(now) {
-  'use strict';
-  goog.object.forEach(goog.fx.anim.activeAnimations_, function(anim) {
-    'use strict';
+goog.fx.anim.cycleAnimations_ = (now) => {
+  goog.object.forEach(goog.fx.anim.activeAnimations_, (anim) => {
     anim.onAnimationFrame(now);
   });
 

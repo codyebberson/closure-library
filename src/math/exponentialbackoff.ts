@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Utility class to manage the mathematics behind computing an
  * exponential backoff model.  Given an initial backoff value and a maximum
@@ -12,12 +11,9 @@
  * backoff value is reached.
  */
 
-
 goog.provide('goog.math.ExponentialBackoff');
 
 goog.require('goog.asserts');
-
-
 
 /**
  * @struct
@@ -33,30 +29,32 @@ goog.require('goog.asserts');
  * @param {number=} opt_decayFactor The factor to decay by. Defaults to 2.
  *     Should be a number greater than one.
  */
-goog.math.ExponentialBackoff = function(
-    initialValue, maxValue, opt_randomFactor, opt_backoffFactor,
-    opt_decayFactor) {
-  'use strict';
+goog.math.ExponentialBackoff = function (
+  initialValue,
+  maxValue,
+  opt_randomFactor,
+  opt_backoffFactor,
+  opt_decayFactor
+) {
+  goog.asserts.assert(initialValue > 0, 'Initial value must be greater than zero.');
   goog.asserts.assert(
-      initialValue > 0, 'Initial value must be greater than zero.');
-  goog.asserts.assert(
-      maxValue >= initialValue,
-      'Max value should be at least as large as initial value.');
+    maxValue >= initialValue,
+    'Max value should be at least as large as initial value.'
+  );
 
   if (opt_randomFactor !== undefined) {
     goog.asserts.assert(
-        opt_randomFactor >= 0 && opt_randomFactor <= 1,
-        'Randomness factor should be between 0 and 1.');
+      opt_randomFactor >= 0 && opt_randomFactor <= 1,
+      'Randomness factor should be between 0 and 1.'
+    );
   }
 
   if (opt_backoffFactor !== undefined) {
-    goog.asserts.assert(
-        opt_backoffFactor > 1, 'Backoff factor should be greater than 1');
+    goog.asserts.assert(opt_backoffFactor > 1, 'Backoff factor should be greater than 1');
   }
 
   if (opt_decayFactor !== undefined) {
-    goog.asserts.assert(
-        opt_decayFactor >= 1, 'Decay factor should be greater than 1');
+    goog.asserts.assert(opt_decayFactor >= 1, 'Decay factor should be greater than 1');
   }
 
   /**
@@ -109,14 +107,12 @@ goog.math.ExponentialBackoff = function(
   this.decayFactor_ = opt_decayFactor || 2;
 };
 
-
 /**
  * The number of backoffs that have happened.
  * @type {number}
  * @private
  */
 goog.math.ExponentialBackoff.prototype.currBackoffCount_ = 0;
-
 
 /**
  * The number of decays that have happened.
@@ -125,80 +121,61 @@ goog.math.ExponentialBackoff.prototype.currBackoffCount_ = 0;
  */
 goog.math.ExponentialBackoff.prototype.currDecayCount_ = 0;
 
-
 /**
  * Resets the backoff value to its initial value.
  */
-goog.math.ExponentialBackoff.prototype.reset = function() {
-  'use strict';
+goog.math.ExponentialBackoff.prototype.reset = function () {
   this.currValue_ = this.initialValue_;
   this.currBaseValue_ = this.initialValue_;
   this.currBackoffCount_ = 0;
   this.currDecayCount_ = 0;
 };
 
-
 /**
  * @return {number} The current backoff value.
  */
-goog.math.ExponentialBackoff.prototype.getValue = function() {
-  'use strict';
+goog.math.ExponentialBackoff.prototype.getValue = function () {
   return this.currValue_;
 };
-
 
 /**
  * @return {number} The number of times this class has backed off.
  */
-goog.math.ExponentialBackoff.prototype.getBackoffCount = function() {
-  'use strict';
+goog.math.ExponentialBackoff.prototype.getBackoffCount = function () {
   return this.currBackoffCount_;
 };
-
 
 /**
  * @return {number} The number of times this class has decayed.
  */
-goog.math.ExponentialBackoff.prototype.getDecayCount = function() {
-  'use strict';
+goog.math.ExponentialBackoff.prototype.getDecayCount = function () {
   return this.currDecayCount_;
 };
-
 
 /**
  * Initiates a backoff.
  */
-goog.math.ExponentialBackoff.prototype.backoff = function() {
-  'use strict';
+goog.math.ExponentialBackoff.prototype.backoff = function () {
   // If we haven't hit the maximum value yet, keep increasing the base value.
-  this.currBaseValue_ =
-      Math.min(this.maxValue_, this.currBaseValue_ * this.backoffFactor_);
+  this.currBaseValue_ = Math.min(this.maxValue_, this.currBaseValue_ * this.backoffFactor_);
 
-  var randomWait = this.randomFactor_ ?
-      Math.round(
-          this.randomFactor_ * (Math.random() - 0.5) * 2 *
-          this.currBaseValue_) :
-      0;
+  var randomWait = this.randomFactor_
+    ? Math.round(this.randomFactor_ * (Math.random() - 0.5) * 2 * this.currBaseValue_)
+    : 0;
   this.currValue_ = Math.min(this.maxValue_, this.currBaseValue_ + randomWait);
   this.currBackoffCount_++;
 };
 
-
 /**
  * Initiates a decay.
  */
-goog.math.ExponentialBackoff.prototype.decay = function() {
-  'use strict';
+goog.math.ExponentialBackoff.prototype.decay = function () {
   // If we haven't hit the initial value yet, keep decreasing the base value.
-  this.currBaseValue_ =
-      Math.max(this.initialValue_, this.currBaseValue_ / this.decayFactor_);
+  this.currBaseValue_ = Math.max(this.initialValue_, this.currBaseValue_ / this.decayFactor_);
 
-  var randomWait = this.randomFactor_ ?
-      Math.round(
-          this.randomFactor_ * (Math.random() - 0.5) * 2 *
-          this.currBaseValue_) :
-      0;
-  this.currValue_ =
-      Math.max(this.initialValue_, this.currBaseValue_ + randomWait);
+  var randomWait = this.randomFactor_
+    ? Math.round(this.randomFactor_ * (Math.random() - 0.5) * 2 * this.currBaseValue_)
+    : 0;
+  this.currValue_ = Math.max(this.initialValue_, this.currBaseValue_ + randomWait);
   this.currDecayCount_++;
 };

@@ -14,8 +14,6 @@ goog.provide('goog.testing.events.OnlineHandler');
 goog.require('goog.events.EventTarget');
 goog.require('goog.net.NetworkStatusMonitor');
 
-
-
 /**
  * NetworkStatusMonitor test double.
  * @param {boolean} initialState The initial online state of the mock.
@@ -24,8 +22,7 @@ goog.require('goog.net.NetworkStatusMonitor');
  * @implements {goog.net.NetworkStatusMonitor}
  * @final
  */
-goog.testing.events.OnlineHandler = function(initialState) {
-  'use strict';
+goog.testing.events.OnlineHandler = function (initialState) {
   goog.testing.events.OnlineHandler.base(this, 'constructor');
 
   /**
@@ -36,25 +33,22 @@ goog.testing.events.OnlineHandler = function(initialState) {
 };
 goog.inherits(goog.testing.events.OnlineHandler, goog.events.EventTarget);
 
-
 /** @override */
-goog.testing.events.OnlineHandler.prototype.isOnline = function() {
-  'use strict';
+goog.testing.events.OnlineHandler.prototype.isOnline = function () {
   return this.online_;
 };
-
 
 /**
  * Sets the online state.
  * @param {boolean} newOnlineState The new online state.
  */
-goog.testing.events.OnlineHandler.prototype.setOnline = function(
-    newOnlineState) {
-  'use strict';
+goog.testing.events.OnlineHandler.prototype.setOnline = function (newOnlineState) {
   if (newOnlineState != this.online_) {
     this.online_ = newOnlineState;
     this.dispatchEvent(
-        newOnlineState ? goog.net.NetworkStatusMonitor.EventType.ONLINE :
-                         goog.net.NetworkStatusMonitor.EventType.OFFLINE);
+      newOnlineState
+        ? goog.net.NetworkStatusMonitor.EventType.ONLINE
+        : goog.net.NetworkStatusMonitor.EventType.OFFLINE
+    );
   }
 };

@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Represents a cubic Bezier curve.
  *
@@ -21,8 +20,6 @@ goog.provide('goog.math.Bezier');
 goog.require('goog.math');
 goog.require('goog.math.Coordinate');
 
-
-
 /**
  * Object representing a cubic bezier curve.
  * @param {number} x0 X coordinate of the start point.
@@ -37,8 +34,7 @@ goog.require('goog.math.Coordinate');
  * @constructor
  * @final
  */
-goog.math.Bezier = function(x0, y0, x1, y1, x2, y2, x3, y3) {
-  'use strict';
+goog.math.Bezier = function (x0, y0, x1, y1, x2, y2, x3, y3) {
   /**
    * X coordinate of the first point.
    * @type {number}
@@ -88,43 +84,51 @@ goog.math.Bezier = function(x0, y0, x1, y1, x2, y2, x3, y3) {
   this.y3 = y3;
 };
 
-
 /**
  * Constant used to approximate ellipses.
  * See: http://canvaspaint.org/blog/2006/12/ellipse/
  * @type {number}
  */
-goog.math.Bezier.KAPPA = 4 * (Math.sqrt(2) - 1) / 3;
-
+goog.math.Bezier.KAPPA = (4 * (Math.sqrt(2) - 1)) / 3;
 
 /**
  * @return {!goog.math.Bezier} A copy of this curve.
  */
-goog.math.Bezier.prototype.clone = function() {
-  'use strict';
+goog.math.Bezier.prototype.clone = function () {
   return new goog.math.Bezier(
-      this.x0, this.y0, this.x1, this.y1, this.x2, this.y2, this.x3, this.y3);
+    this.x0,
+    this.y0,
+    this.x1,
+    this.y1,
+    this.x2,
+    this.y2,
+    this.x3,
+    this.y3
+  );
 };
-
 
 /**
  * Test if the given curve is exactly the same as this one.
  * @param {goog.math.Bezier} other The other curve.
  * @return {boolean} Whether the given curve is the same as this one.
  */
-goog.math.Bezier.prototype.equals = function(other) {
-  'use strict';
-  return this.x0 == other.x0 && this.y0 == other.y0 && this.x1 == other.x1 &&
-      this.y1 == other.y1 && this.x2 == other.x2 && this.y2 == other.y2 &&
-      this.x3 == other.x3 && this.y3 == other.y3;
+goog.math.Bezier.prototype.equals = function (other) {
+  return (
+    this.x0 == other.x0 &&
+    this.y0 == other.y0 &&
+    this.x1 == other.x1 &&
+    this.y1 == other.y1 &&
+    this.x2 == other.x2 &&
+    this.y2 == other.y2 &&
+    this.x3 == other.x3 &&
+    this.y3 == other.y3
+  );
 };
-
 
 /**
  * Modifies the curve in place to progress in the opposite direction.
  */
-goog.math.Bezier.prototype.flip = function() {
-  'use strict';
+goog.math.Bezier.prototype.flip = function () {
   var temp = this.x0;
   this.x0 = this.x3;
   this.x3 = temp;
@@ -140,14 +144,12 @@ goog.math.Bezier.prototype.flip = function() {
   this.y2 = temp;
 };
 
-
 /**
  * Computes the curve's X coordinate at a point between 0 and 1.
  * @param {number} t The point on the curve to find.
  * @return {number} The computed coordinate.
  */
-goog.math.Bezier.prototype.getPointX = function(t) {
-  'use strict';
+goog.math.Bezier.prototype.getPointX = function (t) {
   // Special case start and end.
   if (t == 0) {
     return this.x0;
@@ -168,14 +170,12 @@ goog.math.Bezier.prototype.getPointX = function(t) {
   return goog.math.lerp(ix0, ix1, t);
 };
 
-
 /**
  * Computes the curve's Y coordinate at a point between 0 and 1.
  * @param {number} t The point on the curve to find.
  * @return {number} The computed coordinate.
  */
-goog.math.Bezier.prototype.getPointY = function(t) {
-  'use strict';
+goog.math.Bezier.prototype.getPointY = function (t) {
   // Special case start and end.
   if (t == 0) {
     return this.y0;
@@ -196,24 +196,20 @@ goog.math.Bezier.prototype.getPointY = function(t) {
   return goog.math.lerp(iy0, iy1, t);
 };
 
-
 /**
  * Computes the curve at a point between 0 and 1.
  * @param {number} t The point on the curve to find.
  * @return {!goog.math.Coordinate} The computed coordinate.
  */
-goog.math.Bezier.prototype.getPoint = function(t) {
-  'use strict';
+goog.math.Bezier.prototype.getPoint = function (t) {
   return new goog.math.Coordinate(this.getPointX(t), this.getPointY(t));
 };
-
 
 /**
  * Changes this curve in place to be the portion of itself from [t, 1].
  * @param {number} t The start of the desired portion of the curve.
  */
-goog.math.Bezier.prototype.subdivideLeft = function(t) {
-  'use strict';
+goog.math.Bezier.prototype.subdivideLeft = function (t) {
   if (t == 1) {
     return;
   }
@@ -248,30 +244,25 @@ goog.math.Bezier.prototype.subdivideLeft = function(t) {
   this.y3 = goog.math.lerp(iy0, iy1, t);
 };
 
-
 /**
  * Changes this curve in place to be the portion of itself from [0, t].
  * @param {number} t The end of the desired portion of the curve.
  */
-goog.math.Bezier.prototype.subdivideRight = function(t) {
-  'use strict';
+goog.math.Bezier.prototype.subdivideRight = function (t) {
   this.flip();
   this.subdivideLeft(1 - t);
   this.flip();
 };
-
 
 /**
  * Changes this curve in place to be the portion of itself from [s, t].
  * @param {number} s The start of the desired portion of the curve.
  * @param {number} t The end of the desired portion of the curve.
  */
-goog.math.Bezier.prototype.subdivide = function(s, t) {
-  'use strict';
+goog.math.Bezier.prototype.subdivide = function (s, t) {
   this.subdivideRight(s);
   this.subdivideLeft((t - s) / (1 - s));
 };
-
 
 /**
  * Computes the position t of a point on the curve given its x coordinate.
@@ -281,8 +272,7 @@ goog.math.Bezier.prototype.subdivide = function(s, t) {
  * @param {number} xVal The x coordinate of the point to find on the curve.
  * @return {number} The position t.
  */
-goog.math.Bezier.prototype.solvePositionFromXValue = function(xVal) {
-  'use strict';
+goog.math.Bezier.prototype.solvePositionFromXValue = function (xVal) {
   // Desired precision on the computation.
   var epsilon = 1e-6;
 
@@ -331,13 +321,11 @@ goog.math.Bezier.prototype.solvePositionFromXValue = function(xVal) {
   return t;
 };
 
-
 /**
  * Computes the y coordinate of a point on the curve given its x coordinate.
  * @param {number} xVal The x coordinate of the point on the curve.
  * @return {number} The y coordinate of the point on the curve.
  */
-goog.math.Bezier.prototype.solveYValueFromXValue = function(xVal) {
-  'use strict';
+goog.math.Bezier.prototype.solveYValueFromXValue = function (xVal) {
   return this.getPointY(this.solvePositionFromXValue(xVal));
 };

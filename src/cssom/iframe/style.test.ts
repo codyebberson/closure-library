@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.cssom.iframe.styleTest');
-goog.setTestOnly();
 
 const DomHelper = goog.require('goog.dom.DomHelper');
 const TagName = goog.require('goog.dom.TagName');
@@ -46,17 +45,20 @@ function getCurrentCssProperties(node, propList) {
   }
   for (let i = 0; i < propList.length; i++) {
     const prop = propList[i];
-    if (node.currentStyle) {  // IE
+    if (node.currentStyle) {
+      // IE
       let propCamelCase = '';
       const propParts = prop.split('-');
       for (let j = 0; j < propParts.length; j++) {
-        propCamelCase += propParts[j].charAt(0).toUpperCase() +
-            propParts[j].substring(1, propParts[j].length);
+        propCamelCase +=
+          propParts[j].charAt(0).toUpperCase() + propParts[j].substring(1, propParts[j].length);
       }
       props[prop] = node.currentStyle[propCamelCase];
-    } else {  // standards-compliant browsers
-      props[prop] = node.ownerDocument.defaultView.getComputedStyle(node, '')
-                        .getPropertyValue(prop);
+    } else {
+      // standards-compliant browsers
+      props[prop] = node.ownerDocument.defaultView
+        .getComputedStyle(node, '')
+        .getPropertyValue(prop);
     }
   }
   return props;
@@ -142,17 +144,16 @@ testSuite({
       const input = expectedResults[i][0];
       const expectedResult = expectedResults[i][1];
       const selector = new style.CssSelector_(input);
-      const result =
-          /** @type {?} */ (selector.matchElementAncestry(elementAncestry));
+      const result = /** @type {?} */ selector.matchElementAncestry(elementAncestry);
       if (expectedResult == null) {
         assertEquals('Expected null result', expectedResult, result);
       } else {
+        assertEquals(`Expected element index for ${input}`, expectedResult[0], result.elementIndex);
         assertEquals(
-            `Expected element index for ${input}`, expectedResult[0],
-            result.elementIndex);
-        assertEquals(
-            `Expected selector part index for ${input}`, expectedResult[1],
-            result.selectorPartIndex);
+          `Expected selector part index for ${input}`,
+          expectedResult[1],
+          result.selectorPartIndex
+        );
       }
     }
     document.body.removeChild(container);
@@ -163,11 +164,9 @@ testSuite({
       const sourceElement = document.getElementById(`source${i}`);
       const newFrame = dom.createElement(TagName.IFRAME);
       newFrame.allowTransparency = true;
-      sourceElement.parentNode.insertBefore(
-          newFrame, sourceElement.nextSibling);
+      sourceElement.parentNode.insertBefore(newFrame, sourceElement.nextSibling);
       const doc = makeIframeDocument(newFrame);
-      cssom.addCssText(
-          style.getElementContext(sourceElement), new DomHelper(doc));
+      cssom.addCssText(style.getElementContext(sourceElement), new DomHelper(doc));
       doc.body.innerHTML = sourceElement.innerHTML;
 
       const oldProps = recursivelyListCssProperties(sourceElement);
@@ -177,9 +176,10 @@ testSuite({
       for (let j = 0; j < oldProps.length; j++) {
         for (let k = 0; k < propertiesToTest.length; k++) {
           assertEquals(
-              'testing property ' + propertiesToTest[k],
-              oldProps[j][0][propertiesToTest[k]],
-              newProps[j][0][propertiesToTest[k]]);
+            'testing property ' + propertiesToTest[k],
+            oldProps[j][0][propertiesToTest[k]],
+            newProps[j][0][propertiesToTest[k]]
+          );
         }
       }
     }
@@ -209,12 +209,13 @@ testSuite({
     doc.body.innerHTML = testDiv.innerHTML;
     const normalizedCssText = normalizeCssText(cssText);
     assertTrue(
-        'Background color should be copied from parent element',
-        /body{[^{]*background-color:(?:rgb\(128,0,128\)|#800080)/.test(
-            normalizedCssText));
+      'Background color should be copied from parent element',
+      /body{[^{]*background-color:(?:rgb\(128,0,128\)|#800080)/.test(normalizedCssText)
+    );
     assertTrue(
-        'Background image should be copied from ancestor element',
-        /body{[^{]*background-image:url\(/.test(normalizedCssText));
+      'Background image should be copied from ancestor element',
+      /body{[^{]*background-image:url\(/.test(normalizedCssText)
+    );
     // Expected x position is:
     // originalBackgroundPositionX - elementOffsetLeft
     // 40px - (1px + 8px) == 31px
@@ -222,8 +223,9 @@ testSuite({
     // originalBackgroundPositionY - elementOffsetLeft
     // 70px - (1px + 10px + 5px) == 54px;
     assertTrue(
-        'Background image position should be adjusted correctly',
-        /body{[^{]*background-position:31px54px/.test(normalizedCssText));
+      'Background image position should be adjusted correctly',
+      /body{[^{]*background-position:31px54px/.test(normalizedCssText)
+    );
   },
 
   testCopyBackgroundContextFromIframe() {
@@ -242,16 +244,18 @@ testSuite({
     doc.body.style.padding = '0';
     doc.body.innerHTML = '<p style="margin: 0">I am transparent!</p>';
     const normalizedCssText = normalizeCssText(
-        style.getElementContext(doc.body.firstChild, undefined, true));
+      style.getElementContext(doc.body.firstChild, undefined, true)
+    );
     // Background properties should get copied through from the parent
     // document since the iframe is transparent
     assertTrue(
-        'Background color should be copied from parent element',
-        /body{[^{]*background-color:(?:rgb\(128,0,128\)|#800080)/.test(
-            normalizedCssText));
+      'Background color should be copied from parent element',
+      /body{[^{]*background-color:(?:rgb\(128,0,128\)|#800080)/.test(normalizedCssText)
+    );
     assertTrue(
-        'Background image should be copied from ancestor element',
-        /body{[^{]*background-image:url\(/.test(normalizedCssText));
+      'Background image should be copied from ancestor element',
+      /body{[^{]*background-image:url\(/.test(normalizedCssText)
+    );
     // Image offset should have been calculated to be the same as the
     // above example, but adding iframe offset and borderWidth.
     // Expected x position is:
@@ -261,8 +265,9 @@ testSuite({
     // originalBackgroundPositionY - elementOffsetLeft
     // 70px - (1px + 10px + 5px + 5px + 2px) == 47px;
     assertTrue(
-        'Background image position should be adjusted correctly',
-        !!/body{[^{]*background-position:24px47px/.exec(normalizedCssText));
+      'Background image position should be adjusted correctly',
+      !!/body{[^{]*background-position:24px47px/.exec(normalizedCssText)
+    );
 
     iframe.parentNode.removeChild(iframe);
   },
@@ -273,11 +278,11 @@ testSuite({
     // brings in CSS which causes the background context tests to fail
     // in IE6.
     if (isFontFaceCssomSupported) {
-      const cssText =
-          style.getElementContext(document.getElementById('cavalier'));
+      const cssText = style.getElementContext(document.getElementById('cavalier'));
       assertTrue(
-          'The font face rule should have been copied correctly',
-          /@font-face/.test(cssText));
+        'The font face rule should have been copied correctly',
+        /@font-face/.test(cssText)
+      );
     }
   },
 });

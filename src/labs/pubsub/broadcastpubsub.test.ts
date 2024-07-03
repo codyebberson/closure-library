@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.labs.pubsub.BroadcastPubSubTest');
-goog.setTestOnly();
 
 const ArgumentMatcher = goog.require('goog.testing.mockmatchers.ArgumentMatcher');
 const BroadcastPubSub = goog.require('goog.labs.pubsub.BroadcastPubSub');
@@ -80,14 +79,17 @@ function remoteStorageEvent(data) {
     if (ie8Events != null) {
       ie8Events = JSON.parse(ie8Events);
       // Events should never overlap in IE8 mode.
-      if (ie8Events.length > 0 &&
-          ie8Events[ie8Events.length - 1]['timestamp'] >= data['timestamp']) {
+      if (
+        ie8Events.length > 0 &&
+        ie8Events[ie8Events.length - 1]['timestamp'] >= data['timestamp']
+      ) {
         /**
          * @suppress {strictMissingProperties,visibility} suppression added to
          * enable type checking
          */
-        data['timestamp'] = ie8Events[ie8Events.length - 1]['timestamp'] +
-            BroadcastPubSub.IE8_TIMESTAMP_UNIQUE_OFFSET_MS_;
+        data['timestamp'] =
+          ie8Events[ie8Events.length - 1]['timestamp'] +
+          BroadcastPubSub.IE8_TIMESTAMP_UNIQUE_OFFSET_MS_;
       }
     } else {
       ie8Events = [];
@@ -107,13 +109,14 @@ testSuite({
     mockClock.tick();
     /** @suppress {missingRequire} */
     mockHTML5LocalStorageCtor = mockControl.createConstructorMock(
-        goog.storage.mechanism, 'HTML5LocalStorage');
+      goog.storage.mechanism,
+      'HTML5LocalStorage'
+    );
 
     mockHtml5LocalStorage = new StructsMap();
 
     // The builtin localStorage returns null instead of undefined.
-    const originalGetFn =
-        goog.bind(mockHtml5LocalStorage.get, mockHtml5LocalStorage);
+    const originalGetFn = goog.bind(mockHtml5LocalStorage.get, mockHtml5LocalStorage);
     mockHtml5LocalStorage.get = (key) => {
       const value = originalGetFn(key);
       if (value === undefined) {
@@ -137,8 +140,7 @@ testSuite({
     // "set" on localStorage we simulate for the appropriate browser.
     if (userAgent.IE) {
       const target = isIe8 ? document : window;
-      const originalSetFn =
-          goog.bind(mockHtml5LocalStorage.set, mockHtml5LocalStorage);
+      const originalSetFn = goog.bind(mockHtml5LocalStorage.set, mockHtml5LocalStorage);
       mockHtml5LocalStorage.set = (key, value) => {
         originalSetFn(key, value);
         const event = new GoogTestingEvent('storage', target);
@@ -175,17 +177,18 @@ testSuite({
     mockControl.$replayAll();
     broadcastPubSub = new BroadcastPubSub();
     log.setLevel(broadcastPubSub.logger_, Level.OFF);
-    assertNotNullNorUndefined(
-        'BroadcastChannel instance must not be null', broadcastPubSub);
+    assertNotNullNorUndefined('BroadcastChannel instance must not be null', broadcastPubSub);
     assertTrue(
-        'BroadcastChannel instance must have the expected type',
-        broadcastPubSub instanceof BroadcastPubSub);
+      'BroadcastChannel instance must have the expected type',
+      broadcastPubSub instanceof BroadcastPubSub
+    );
     assertArrayEquals(BroadcastPubSub.instances_, [broadcastPubSub]);
     broadcastPubSub.dispose();
     mockControl.$verifyAll();
     assertNotNullNorUndefined(
-        'Storage should not be undefined or null in broadcastPubSub.',
-        broadcastPubSub.storage_);
+      'Storage should not be undefined or null in broadcastPubSub.',
+      broadcastPubSub.storage_
+    );
     assertArrayEquals(BroadcastPubSub.instances_, []);
   },
 
@@ -195,23 +198,20 @@ testSuite({
    */
   testConstructor_noLocalStorage() {
     mockHTML5LocalStorageCtor().$returns({
-      isAvailable: function() {
-        return false;
-      },
+      isAvailable: () => false,
     });
     mockControl.$replayAll();
     broadcastPubSub = new BroadcastPubSub();
     log.setLevel(broadcastPubSub.logger_, Level.OFF);
-    assertNotNullNorUndefined(
-        'BroadcastChannel instance must not be null', broadcastPubSub);
+    assertNotNullNorUndefined('BroadcastChannel instance must not be null', broadcastPubSub);
     assertTrue(
-        'BroadcastChannel instance must have the expected type',
-        broadcastPubSub instanceof BroadcastPubSub);
+      'BroadcastChannel instance must have the expected type',
+      broadcastPubSub instanceof BroadcastPubSub
+    );
     assertArrayEquals(BroadcastPubSub.instances_, [broadcastPubSub]);
     broadcastPubSub.dispose();
     mockControl.$verifyAll();
-    assertNull(
-        'Storage should be null in broadcastPubSub.', broadcastPubSub.storage_);
+    assertNull('Storage should be null in broadcastPubSub.', broadcastPubSub.storage_);
     assertArrayEquals(BroadcastPubSub.instances_, []);
   },
 
@@ -225,8 +225,7 @@ testSuite({
     mockHTML5LocalStorageCtor().$returns(mockHtml5LocalStorage);
     const mockStorage = mockControl.createLooseMock(StorageStorage);
 
-    const mockStorageCtor =
-        mockControl.createConstructorMock(goog.storage, 'Storage');
+    const mockStorageCtor = mockControl.createConstructorMock(goog.storage, 'Storage');
 
     mockStorageCtor(mockHtml5LocalStorage).$returns(mockStorage);
     mockStorageCtor(mockHtml5LocalStorage).$returns(mockStorage);
@@ -240,28 +239,32 @@ testSuite({
     log.setLevel(broadcastPubSub.logger_, Level.OFF);
 
     const broadcastPubSubExtra = new BroadcastPubSub();
-    assertArrayEquals(
-        BroadcastPubSub.instances_, [broadcastPubSub, broadcastPubSubExtra]);
+    assertArrayEquals(BroadcastPubSub.instances_, [broadcastPubSub, broadcastPubSubExtra]);
 
     assertFalse(
-        'BroadcastChannel extra instance must not have been disposed of',
-        broadcastPubSubExtra.isDisposed());
+      'BroadcastChannel extra instance must not have been disposed of',
+      broadcastPubSubExtra.isDisposed()
+    );
     broadcastPubSubExtra.dispose();
     assertTrue(
-        'BroadcastChannel extra instance must have been disposed of',
-        broadcastPubSubExtra.isDisposed());
+      'BroadcastChannel extra instance must have been disposed of',
+      broadcastPubSubExtra.isDisposed()
+    );
     assertFalse(
-        'BroadcastChannel instance must not have been disposed of',
-        broadcastPubSub.isDisposed());
+      'BroadcastChannel instance must not have been disposed of',
+      broadcastPubSub.isDisposed()
+    );
 
     assertArrayEquals(BroadcastPubSub.instances_, [broadcastPubSub]);
     assertFalse(
-        'BroadcastChannel instance must not have been disposed of',
-        broadcastPubSub.isDisposed());
+      'BroadcastChannel instance must not have been disposed of',
+      broadcastPubSub.isDisposed()
+    );
     broadcastPubSub.dispose();
     assertTrue(
-        'BroadcastChannel instance must have been disposed of',
-        broadcastPubSub.isDisposed());
+      'BroadcastChannel instance must have been disposed of',
+      broadcastPubSub.isDisposed()
+    );
     assertArrayEquals(BroadcastPubSub.instances_, []);
     mockControl.$verifyAll();
   },
@@ -276,15 +279,15 @@ testSuite({
     const foo = mockControl.createFunctionMock();
     foo('x', 'y').$times(2);
 
-    const context = {'foo': 'bar'};
+    const context = { foo: 'bar' };
     const bar = recordFunction();
 
     mockControl.$replayAll();
     broadcastPubSub = new BroadcastPubSub();
     log.setLevel(broadcastPubSub.logger_, Level.OFF);
     const eventData = {
-      'args': ['someTopic', 'x', 'y'],
-      'timestamp': Date.now()
+      args: ['someTopic', 'x', 'y'],
+      timestamp: Date.now(),
     };
 
     broadcastPubSub.subscribe('someTopic', foo);
@@ -331,17 +334,19 @@ testSuite({
     log.setLevel(broadcastPubSub.logger_, Level.OFF);
 
     broadcastPubSub.subscribeOnce('someTopic', foo);
-    assertEquals(
-        'BroadcastChannel must have one subscriber', 1,
-        broadcastPubSub.getCount());
+    assertEquals('BroadcastChannel must have one subscriber', 1, broadcastPubSub.getCount());
 
-    remoteStorageEvent(
-        {'args': ['someTopic', 'x', 'y'], 'timestamp': Date.now()});
+    remoteStorageEvent({
+      args: ['someTopic', 'x', 'y'],
+      timestamp: Date.now(),
+    });
     mockClock.tick();
 
     assertEquals(
-        'BroadcastChannel must have no subscribers after receiving the event',
-        0, broadcastPubSub.getCount());
+      'BroadcastChannel must have no subscribers after receiving the event',
+      0,
+      broadcastPubSub.getCount()
+    );
     broadcastPubSub.dispose();
     mockControl.$verifyAll();
   },
@@ -365,10 +370,10 @@ testSuite({
     broadcastPubSub.subscribe('fooTopic', foo);
     broadcastPubSub.subscribe('barTopic', bar);
 
-    let eventData = {'args': ['fooTopic', 'x', 'y'], 'timestamp': Date.now()};
+    let eventData = { args: ['fooTopic', 'x', 'y'], timestamp: Date.now() };
     remoteStorageEvent(eventData);
 
-    eventData = {'args': ['barTopic', 'd', 'c'], 'timestamp': Date.now()};
+    eventData = { args: ['barTopic', 'd', 'c'], timestamp: Date.now() };
     remoteStorageEvent(eventData);
     mockClock.tick();
 
@@ -385,13 +390,15 @@ testSuite({
     const foo = mockControl.createFunctionMock();
     const bar = mockControl.createFunctionMock();
 
-    foo('x', 'y').$does(/**
+    foo('x', 'y').$does(
+      /**
                            @suppress {checkTypes} suppression added to enable
                            type checking
                          */
-                        () => {
-                          broadcastPubSub.unsubscribe('barTopic', bar);
-                        });
+      () => {
+        broadcastPubSub.unsubscribe('barTopic', bar);
+      }
+    );
 
     mockControl.$replayAll();
 
@@ -400,11 +407,11 @@ testSuite({
     broadcastPubSub.subscribe('fooTopic', foo);
     broadcastPubSub.subscribe('barTopic', bar);
 
-    let eventData = {'args': ['fooTopic', 'x', 'y'], 'timestamp': Date.now()};
+    let eventData = { args: ['fooTopic', 'x', 'y'], timestamp: Date.now() };
     remoteStorageEvent(eventData);
     mockClock.tick();
 
-    eventData = {'args': ['barTopic', 'd', 'c'], 'timestamp': Date.now()};
+    eventData = { args: ['barTopic', 'd', 'c'], timestamp: Date.now() };
     remoteStorageEvent(eventData);
     mockClock.tick();
 
@@ -427,11 +434,11 @@ testSuite({
     log.setLevel(broadcastPubSub.logger_, Level.OFF);
     broadcastPubSub.subscribeOnce('someTopic', foo);
 
-    let eventData = {'args': ['someTopic', 'x', 'y'], 'timestamp': Date.now()};
+    let eventData = { args: ['someTopic', 'x', 'y'], timestamp: Date.now() };
     remoteStorageEvent(eventData);
     mockClock.tick();
 
-    eventData = {'args': ['someTopic', 'x', 'y'], 'timestamp': Date.now()};
+    eventData = { args: ['someTopic', 'x', 'y'], timestamp: Date.now() };
     remoteStorageEvent(eventData);
     mockClock.tick();
 
@@ -447,7 +454,7 @@ testSuite({
     mockHTML5LocalStorageCtor().$returns(mockHtml5LocalStorage);
     const foo1 = mockControl.createFunctionMock();
     foo1().$does(() => {
-      remoteStorageEvent({'args': ['bar'], 'timestamp': Date.now()});
+      remoteStorageEvent({ args: ['bar'], timestamp: Date.now() });
     });
     const foo2 = mockControl.createFunctionMock();
     foo2();
@@ -473,7 +480,7 @@ testSuite({
     broadcastPubSub.subscribe('baz', baz1);
     broadcastPubSub.subscribe('baz', baz2);
 
-    remoteStorageEvent({'args': ['foo'], 'timestamp': Date.now()});
+    remoteStorageEvent({ args: ['foo'], timestamp: Date.now() });
     mockClock.tick();
     broadcastPubSub.dispose();
     mockControl.$verifyAll();
@@ -488,7 +495,7 @@ testSuite({
     mockHTML5LocalStorageCtor().$returns(mockHtml5LocalStorage).$times(2);
     const foo = mockControl.createFunctionMock();
     foo('x', 'y');
-    const context = {'foo': 'bar'};
+    const context = { foo: 'bar' };
     const bar = recordFunction();
 
     mockControl.$replayAll();
@@ -552,46 +559,50 @@ testSuite({
     mockHTML5LocalStorageCtor().$returns(mockHtml5LocalStorage);
     const mockStorage = mockControl.createLooseMock(StorageStorage);
 
-    const mockStorageCtor =
-        mockControl.createConstructorMock(goog.storage, 'Storage');
+    const mockStorageCtor = mockControl.createConstructorMock(goog.storage, 'Storage');
 
     mockStorageCtor(mockHtml5LocalStorage).$returns(mockStorage);
     if (!isIe8) {
-      mockStorage.set(
-          BroadcastPubSub.STORAGE_KEY_,
-          {'args': [topic, '10'], 'timestamp': now});
+      mockStorage.set(BroadcastPubSub.STORAGE_KEY_, {
+        args: [topic, '10'],
+        timestamp: now,
+      });
       mockStorage.remove(BroadcastPubSub.STORAGE_KEY_);
-      mockStorage.set(
-          BroadcastPubSub.STORAGE_KEY_,
-          {'args': [anotherTopic, '13'], 'timestamp': now});
+      mockStorage.set(BroadcastPubSub.STORAGE_KEY_, {
+        args: [anotherTopic, '13'],
+        timestamp: now,
+      });
       mockStorage.remove(BroadcastPubSub.STORAGE_KEY_);
     } else {
-      const firstEventArray = [{'args': [topic, '10'], 'timestamp': now}];
+      const firstEventArray = [{ args: [topic, '10'], timestamp: now }];
       /** @suppress {visibility} suppression added to enable type checking */
       const secondEventArray = [
-        {'args': [topic, '10'], 'timestamp': now},
+        { args: [topic, '10'], timestamp: now },
         {
-          'args': [anotherTopic, '13'],
-          'timestamp': now + BroadcastPubSub.IE8_TIMESTAMP_UNIQUE_OFFSET_MS_,
+          args: [anotherTopic, '13'],
+          timestamp: now + BroadcastPubSub.IE8_TIMESTAMP_UNIQUE_OFFSET_MS_,
         },
       ];
 
       mockStorage.get(BroadcastPubSub.IE8_EVENTS_KEY_).$returns(null);
       mockStorage.set(
-          BroadcastPubSub.IE8_EVENTS_KEY_,
-          new ArgumentMatcher(
-              (val) => mockmatchers.flexibleArrayMatcher(firstEventArray, val),
-              'First event array'));
+        BroadcastPubSub.IE8_EVENTS_KEY_,
+        new ArgumentMatcher(
+          (val) => mockmatchers.flexibleArrayMatcher(firstEventArray, val),
+          'First event array'
+        )
+      );
 
       // Make sure to clone or you're going to have a bad time.
-      mockStorage.get(BroadcastPubSub.IE8_EVENTS_KEY_)
-          .$returns(googArray.clone(firstEventArray));
+      mockStorage.get(BroadcastPubSub.IE8_EVENTS_KEY_).$returns(googArray.clone(firstEventArray));
 
       mockStorage.set(
-          BroadcastPubSub.IE8_EVENTS_KEY_,
-          new ArgumentMatcher(
-              (val) => mockmatchers.flexibleArrayMatcher(secondEventArray, val),
-              'Second event array'));
+        BroadcastPubSub.IE8_EVENTS_KEY_,
+        new ArgumentMatcher(
+          (val) => mockmatchers.flexibleArrayMatcher(secondEventArray, val),
+          'Second event array'
+        )
+      );
 
       mockStorage.remove(BroadcastPubSub.IE8_EVENTS_KEY_);
     }
@@ -627,7 +638,7 @@ testSuite({
 
     broadcastPubSub.subscribe('someTopic', fn);
 
-    remoteStorageEvent({'args': 'WAT?', 'timestamp': 'wat?'});
+    remoteStorageEvent({ args: 'WAT?', timestamp: 'wat?' });
     mockClock.tick();
 
     broadcastPubSub.dispose();
@@ -658,7 +669,7 @@ testSuite({
        * @suppress {strictMissingProperties} suppression added to enable type
        * checking
        */
-      event.newValue = googJson.serialize({'keyby': 'word'});
+      event.newValue = googJson.serialize({ keyby: 'word' });
       events.fireBrowserEvent(event);
     } else {
       /** @suppress {visibility} suppression added to enable type checking */
@@ -682,7 +693,7 @@ testSuite({
     const foo = mockControl.createFunctionMock();
     foo('x', 'y');
 
-    const context = {'foo': 'bar'};
+    const context = { foo: 'bar' };
     const bar = recordFunction();
 
     const baz = mockControl.createFunctionMock();
@@ -711,7 +722,7 @@ testSuite({
     mockClock.tick();
 
     assertEquals(3, bar.getCallCount());
-    bar.getCalls().forEach(call => {
+    bar.getCalls().forEach((call) => {
       assertArrayEquals(['x', 'y'], call.getArguments());
       assertEquals(context, call.getThis());
     });
@@ -760,14 +771,16 @@ testSuite({
     const fn1 = mockControl.createFunctionMock();
     const fn2 = mockControl.createFunctionMock();
     fn1()
-        .$does(/**
+      .$does(
+        /**
                   @suppress {checkTypes} suppression added to enable type
                   checking
                 */
-               () => {
-                 broadcastPubSub.subscribe('someTopic', fn2);
-               })
-        .$times(2);
+        () => {
+          broadcastPubSub.subscribe('someTopic', fn2);
+        }
+      )
+      .$times(2);
     fn2();
 
     mockControl.$replayAll();
@@ -775,23 +788,17 @@ testSuite({
     log.setLevel(broadcastPubSub.logger_, Level.OFF);
 
     broadcastPubSub.subscribe('someTopic', fn1);
-    assertEquals(
-        'Topic must have one subscriber', 1,
-        broadcastPubSub.getCount('someTopic'));
+    assertEquals('Topic must have one subscriber', 1, broadcastPubSub.getCount('someTopic'));
 
     broadcastPubSub.publish('someTopic');
     mockClock.tick();
 
-    assertEquals(
-        'Topic must have two subscribers', 2,
-        broadcastPubSub.getCount('someTopic'));
+    assertEquals('Topic must have two subscribers', 2, broadcastPubSub.getCount('someTopic'));
 
     broadcastPubSub.publish('someTopic');
     mockClock.tick();
 
-    assertEquals(
-        'Topic must have three subscribers', 3,
-        broadcastPubSub.getCount('someTopic'));
+    assertEquals('Topic must have three subscribers', 3, broadcastPubSub.getCount('someTopic'));
     broadcastPubSub.dispose();
     mockControl.$verifyAll();
   },
@@ -810,31 +817,33 @@ testSuite({
     const fn2 = mockControl.createFunctionMock();
     const fn3 = mockControl.createFunctionMock();
 
-    fn1().$does(/**
+    fn1().$does(
+      /**
                    @suppress {checkTypes} suppression added to enable type
                    checking
                  */
-                () => {
-                  assertTrue(
-                      'unsubscribe() must return true when removing a topic',
-                      broadcastPubSub.unsubscribe('X', fn2));
-                  assertEquals(
-                      'Topic "X" must still have 3 subscribers', 3,
-                      broadcastPubSub.getCount('X'));
-                });
+      () => {
+        assertTrue(
+          'unsubscribe() must return true when removing a topic',
+          broadcastPubSub.unsubscribe('X', fn2)
+        );
+        assertEquals('Topic "X" must still have 3 subscribers', 3, broadcastPubSub.getCount('X'));
+      }
+    );
     fn2().$times(0);
-    fn3().$does(/**
+    fn3().$does(
+      /**
                    @suppress {checkTypes} suppression added to enable type
                    checking
                  */
-                () => {
-                  assertTrue(
-                      'unsubscribe() must return true when removing a topic',
-                      broadcastPubSub.unsubscribe('X', fn1));
-                  assertEquals(
-                      'Topic "X" must still have 3 subscribers', 3,
-                      broadcastPubSub.getCount('X'));
-                });
+      () => {
+        assertTrue(
+          'unsubscribe() must return true when removing a topic',
+          broadcastPubSub.unsubscribe('X', fn1)
+        );
+        assertEquals('Topic "X" must still have 3 subscribers', 3, broadcastPubSub.getCount('X'));
+      }
+    );
 
     mockControl.$replayAll();
     broadcastPubSub = new BroadcastPubSub();
@@ -844,18 +853,21 @@ testSuite({
     broadcastPubSub.subscribe('X', fn2);
     broadcastPubSub.subscribe('X', fn3);
 
-    assertEquals(
-        'Topic "X" must have 3 subscribers', 3, broadcastPubSub.getCount('X'));
+    assertEquals('Topic "X" must have 3 subscribers', 3, broadcastPubSub.getCount('X'));
 
     broadcastPubSub.publish('X');
     mockClock.tick();
 
     assertEquals(
-        'Topic "X" must have 1 subscriber after publishing', 1,
-        broadcastPubSub.getCount('X'));
+      'Topic "X" must have 1 subscriber after publishing',
+      1,
+      broadcastPubSub.getCount('X')
+    );
     assertEquals(
-        'BroadcastChannel must not have any subscriptions pending removal', 0,
-        broadcastPubSub.pubSub_.pendingKeys_.length);
+      'BroadcastChannel must not have any subscriptions pending removal',
+      0,
+      broadcastPubSub.pubSub_.pendingKeys_.length
+    );
     broadcastPubSub.dispose();
     mockControl.$verifyAll();
   },
@@ -870,37 +882,44 @@ testSuite({
     // be removed until after publishing is complete.
 
     const fn = mockControl.createFunctionMock();
-    fn().$does(/**
+    fn().$does(
+      /**
                   @suppress {checkTypes} suppression added to enable type
                   checking
                 */
-               () => {
-                 assertTrue(
-                     'unsubscribe() must return true when removing a topic',
-                     broadcastPubSub.unsubscribe('someTopic', fn));
-                 assertEquals(
-                     'Topic must still have 1 subscriber', 1,
-                     broadcastPubSub.getCount('someTopic'));
-               });
+      () => {
+        assertTrue(
+          'unsubscribe() must return true when removing a topic',
+          broadcastPubSub.unsubscribe('someTopic', fn)
+        );
+        assertEquals(
+          'Topic must still have 1 subscriber',
+          1,
+          broadcastPubSub.getCount('someTopic')
+        );
+      }
+    );
 
     mockControl.$replayAll();
     broadcastPubSub = new BroadcastPubSub();
     log.setLevel(broadcastPubSub.logger_, Level.OFF);
 
     broadcastPubSub.subscribe('someTopic', fn);
-    assertEquals(
-        'Topic must have 1 subscriber', 1,
-        broadcastPubSub.getCount('someTopic'));
+    assertEquals('Topic must have 1 subscriber', 1, broadcastPubSub.getCount('someTopic'));
 
     broadcastPubSub.publish('someTopic');
     mockClock.tick();
 
     assertEquals(
-        'Topic must have no subscribers after publishing', 0,
-        broadcastPubSub.getCount('someTopic'));
+      'Topic must have no subscribers after publishing',
+      0,
+      broadcastPubSub.getCount('someTopic')
+    );
     assertEquals(
-        'BroadcastChannel must not have any subscriptions pending removal', 0,
-        broadcastPubSub.pubSub_.pendingKeys_.length);
+      'BroadcastChannel must not have any subscriptions pending removal',
+      0,
+      broadcastPubSub.pubSub_.pendingKeys_.length
+    );
     broadcastPubSub.dispose();
     mockControl.$verifyAll();
   },
@@ -912,7 +931,7 @@ testSuite({
   testNestedPublish() {
     mockHTML5LocalStorageCtor().$returns(mockHtml5LocalStorage);
     const xFn1 = mockControl.createFunctionMock();
-    const callback1 = function() {
+    const callback1 = () => {
       broadcastPubSub.publish('Y');
       broadcastPubSub.unsubscribe('X', callback1);
     };
@@ -920,7 +939,7 @@ testSuite({
     const xFn2 = mockControl.createFunctionMock();
     xFn2();
 
-    const callback2 = function() {
+    const callback2 = () => {
       broadcastPubSub.unsubscribe('Y', callback2);
     };
     const yFn1 = mockControl.createFunctionMock();
@@ -957,48 +976,35 @@ testSuite({
     log.setLevel(broadcastPubSub.logger_, Level.OFF);
     broadcastPubSub.subscribeOnce('someTopic', fn);
 
-    assertEquals(
-        'Topic must have one subscriber', 1,
-        broadcastPubSub.getCount('someTopic'));
+    assertEquals('Topic must have one subscriber', 1, broadcastPubSub.getCount('someTopic'));
 
     broadcastPubSub.publish('someTopic');
     mockClock.tick();
 
-    assertEquals(
-        'Topic must have no subscribers', 0,
-        broadcastPubSub.getCount('someTopic'));
+    assertEquals('Topic must have no subscribers', 0, broadcastPubSub.getCount('someTopic'));
 
-    let context = {'foo': 'bar'};
+    let context = { foo: 'bar' };
     broadcastPubSub.subscribeOnce('someTopic', fn, context);
-    assertEquals(
-        'Topic must have one subscriber', 1,
-        broadcastPubSub.getCount('someTopic'));
-    assertEquals(
-        'Subscriber must not have been called yet', 1, fn.getCallCount());
+    assertEquals('Topic must have one subscriber', 1, broadcastPubSub.getCount('someTopic'));
+    assertEquals('Subscriber must not have been called yet', 1, fn.getCallCount());
 
     broadcastPubSub.publish('someTopic');
     mockClock.tick();
 
-    assertEquals(
-        'Topic must have no subscribers', 0,
-        broadcastPubSub.getCount('someTopic'));
+    assertEquals('Topic must have no subscribers', 0, broadcastPubSub.getCount('someTopic'));
     assertEquals('Subscriber must have been called', 2, fn.getCallCount());
     assertEquals(context, fn.getLastCall().getThis());
     assertArrayEquals([], fn.getLastCall().getArguments());
 
-    context = {'foo': 'bar'};
+    context = { foo: 'bar' };
     broadcastPubSub.subscribeOnce('someTopic', fn, context);
-    assertEquals(
-        'Topic must have one subscriber', 1,
-        broadcastPubSub.getCount('someTopic'));
+    assertEquals('Topic must have one subscriber', 1, broadcastPubSub.getCount('someTopic'));
     assertEquals('Subscriber must not have been called', 2, fn.getCallCount());
 
     broadcastPubSub.publish('someTopic', '17');
     mockClock.tick();
 
-    assertEquals(
-        'Topic must have no subscribers', 0,
-        broadcastPubSub.getCount('someTopic'));
+    assertEquals('Topic must have no subscribers', 0, broadcastPubSub.getCount('someTopic'));
     assertEquals(context, fn.getLastCall().getThis());
     assertEquals('Subscriber must have been called', 3, fn.getCallCount());
     assertArrayEquals(['17'], fn.getLastCall().getArguments());
@@ -1013,29 +1019,22 @@ testSuite({
   testSubscribeOnce_boundFn() {
     mockHTML5LocalStorageCtor().$returns(mockHtml5LocalStorage);
     const fn = recordFunction();
-    const context = {'foo': 'bar'};
+    const context = { foo: 'bar' };
 
     mockControl.$replayAll();
     broadcastPubSub = new BroadcastPubSub();
     log.setLevel(broadcastPubSub.logger_, Level.OFF);
 
     broadcastPubSub.subscribeOnce('someTopic', goog.bind(fn, context));
-    assertEquals(
-        'Topic must have one subscriber', 1,
-        broadcastPubSub.getCount('someTopic'));
+    assertEquals('Topic must have one subscriber', 1, broadcastPubSub.getCount('someTopic'));
     assertNull('Subscriber must not have been called yet', fn.getLastCall());
 
     broadcastPubSub.publish('someTopic', '17');
     mockClock.tick();
-    assertEquals(
-        'Topic must have no subscribers', 0,
-        broadcastPubSub.getCount('someTopic'));
+    assertEquals('Topic must have no subscribers', 0, broadcastPubSub.getCount('someTopic'));
     assertEquals('Subscriber must have been called', 1, fn.getCallCount());
-    assertEquals(
-        'Must receive correct argument.', '17',
-        fn.getLastCall().getArgument(0));
-    assertEquals(
-        'Must have appropriate context.', context, fn.getLastCall().getThis());
+    assertEquals('Must receive correct argument.', '17', fn.getLastCall().getArgument(0));
+    assertEquals('Must have appropriate context.', context, fn.getLastCall().getThis());
 
     broadcastPubSub.dispose();
     mockControl.$verifyAll();
@@ -1055,16 +1054,12 @@ testSuite({
     log.setLevel(broadcastPubSub.logger_, Level.OFF);
 
     broadcastPubSub.subscribeOnce('someTopic', goog.partial(fullFn, true));
-    assertEquals(
-        'Topic must have one subscriber', 1,
-        broadcastPubSub.getCount('someTopic'));
+    assertEquals('Topic must have one subscriber', 1, broadcastPubSub.getCount('someTopic'));
 
     broadcastPubSub.publish('someTopic', '17');
     mockClock.tick();
 
-    assertEquals(
-        'Topic must have no subscribers', 0,
-        broadcastPubSub.getCount('someTopic'));
+    assertEquals('Topic must have no subscribers', 0, broadcastPubSub.getCount('someTopic'));
     broadcastPubSub.dispose();
     mockControl.$verifyAll();
   },
@@ -1089,36 +1084,34 @@ testSuite({
     log.setLevel(broadcastPubSub.logger_, Level.OFF);
 
     broadcastPubSub.subscribeOnce('someTopic', resubscribeFn);
-    assertEquals(
-        'Topic must have 1 subscriber', 1,
-        broadcastPubSub.getCount('someTopic'));
+    assertEquals('Topic must have 1 subscriber', 1, broadcastPubSub.getCount('someTopic'));
 
     broadcastPubSub.publish('someTopic', 'foo');
     mockClock.tick();
+    assertEquals('Topic must have 1 subscriber', 1, broadcastPubSub.getCount('someTopic'));
     assertEquals(
-        'Topic must have 1 subscriber', 1,
-        broadcastPubSub.getCount('someTopic'));
-    assertEquals(
-        'BroadcastChannel must not have any pending unsubscribe keys', 0,
-        broadcastPubSub.pubSub_.pendingKeys_.length);
+      'BroadcastChannel must not have any pending unsubscribe keys',
+      0,
+      broadcastPubSub.pubSub_.pendingKeys_.length
+    );
 
     broadcastPubSub.publish('someTopic', 'bar');
     mockClock.tick();
+    assertEquals('Topic must have 1 subscriber', 1, broadcastPubSub.getCount('someTopic'));
     assertEquals(
-        'Topic must have 1 subscriber', 1,
-        broadcastPubSub.getCount('someTopic'));
-    assertEquals(
-        'BroadcastChannel must not have any pending unsubscribe keys', 0,
-        broadcastPubSub.pubSub_.pendingKeys_.length);
+      'BroadcastChannel must not have any pending unsubscribe keys',
+      0,
+      broadcastPubSub.pubSub_.pendingKeys_.length
+    );
 
     broadcastPubSub.publish('someTopic', 'baz');
     mockClock.tick();
+    assertEquals('Topic must have 1 subscriber', 1, broadcastPubSub.getCount('someTopic'));
     assertEquals(
-        'Topic must have 1 subscriber', 1,
-        broadcastPubSub.getCount('someTopic'));
-    assertEquals(
-        'BroadcastChannel must not have any pending unsubscribe keys', 0,
-        broadcastPubSub.pubSub_.pendingKeys_.length);
+      'BroadcastChannel must not have any pending unsubscribe keys',
+      0,
+      broadcastPubSub.pubSub_.pendingKeys_.length
+    );
     broadcastPubSub.dispose();
     mockControl.$verifyAll();
   },
@@ -1135,32 +1128,25 @@ testSuite({
     log.setLevel(broadcastPubSub.logger_, Level.OFF);
 
     ['V', 'W', 'X', 'Y', 'Z'].forEach(
-        /**
+      /**
            @suppress {checkTypes} suppression added to enable type checking
          */
-        topic => {
-          broadcastPubSub.subscribe(topic, fn);
-        });
-    assertEquals(
-        'BroadcastChannel must have 5 subscribers', 5,
-        broadcastPubSub.getCount());
+      (topic) => {
+        broadcastPubSub.subscribe(topic, fn);
+      }
+    );
+    assertEquals('BroadcastChannel must have 5 subscribers', 5, broadcastPubSub.getCount());
 
     broadcastPubSub.clear('W');
-    assertEquals(
-        'BroadcastChannel must have 4 subscribers', 4,
-        broadcastPubSub.getCount());
+    assertEquals('BroadcastChannel must have 4 subscribers', 4, broadcastPubSub.getCount());
 
-    ['X', 'Y'].forEach(topic => {
+    ['X', 'Y'].forEach((topic) => {
       broadcastPubSub.clear(topic);
     });
-    assertEquals(
-        'BroadcastChannel must have 2 subscriber', 2,
-        broadcastPubSub.getCount());
+    assertEquals('BroadcastChannel must have 2 subscriber', 2, broadcastPubSub.getCount());
 
     broadcastPubSub.clear();
-    assertEquals(
-        'BroadcastChannel must have no subscribers', 0,
-        broadcastPubSub.getCount());
+    assertEquals('BroadcastChannel must have no subscribers', 0, broadcastPubSub.getCount());
     broadcastPubSub.dispose();
     mockControl.$verifyAll();
   },

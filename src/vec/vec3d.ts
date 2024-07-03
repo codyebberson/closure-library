@@ -4,14 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 ////////////////////////// NOTE ABOUT EDITING THIS FILE ///////////////////////
 //                                                                           //
 // Any edits to this file must be applied to vec3f.js by running:            //
 //   swap_type.sh vec3d.js > vec3f.js                                        //
 //                                                                           //
 ////////////////////////// NOTE ABOUT EDITING THIS FILE ///////////////////////
-
 
 /**
  * @fileoverview Provides functions for operating on 3 element double (64bit)
@@ -32,17 +30,12 @@ goog.require('goog.vec');
 
 /** @typedef {!goog.vec.Float64} */ goog.vec.vec3d.Type;
 
-
 /**
  * Creates a vec3d with all elements initialized to zero.
  *
  * @return {!goog.vec.vec3d.Type} The new vec3d.
  */
-goog.vec.vec3d.create = function() {
-  'use strict';
-  return new Float64Array(3);
-};
-
+goog.vec.vec3d.create = () => new Float64Array(3);
 
 /**
  * Creates a new vec3d initialized with the value from the given array.
@@ -50,13 +43,11 @@ goog.vec.vec3d.create = function() {
  * @param {!Array<number>} vec The source 3 element array.
  * @return {!goog.vec.vec3d.Type} The new vec3d.
  */
-goog.vec.vec3d.createFromArray = function(vec) {
-  'use strict';
+goog.vec.vec3d.createFromArray = (vec) => {
   const newVec = goog.vec.vec3d.create();
   goog.vec.vec3d.setFromArray(newVec, vec);
   return newVec;
 };
-
 
 /**
  * Creates a new vec3d initialized with the supplied values.
@@ -66,13 +57,11 @@ goog.vec.vec3d.createFromArray = function(vec) {
  * @param {number} v2 The value for element at index 2.
  * @return {!goog.vec.vec3d.Type} The new vector.
  */
-goog.vec.vec3d.createFromValues = function(v0, v1, v2) {
-  'use strict';
+goog.vec.vec3d.createFromValues = (v0, v1, v2) => {
   const vec = goog.vec.vec3d.create();
   goog.vec.vec3d.setFromValues(vec, v0, v1, v2);
   return vec;
 };
-
 
 /**
  * Creates a clone of the given vec3d.
@@ -80,13 +69,11 @@ goog.vec.vec3d.createFromValues = function(v0, v1, v2) {
  * @param {!goog.vec.vec3d.Type} vec The source vec3d.
  * @return {!goog.vec.vec3d.Type} The new cloned vec3d.
  */
-goog.vec.vec3d.clone = function(vec) {
-  'use strict';
+goog.vec.vec3d.clone = (vec) => {
   const newVec = goog.vec.vec3d.create();
   goog.vec.vec3d.setFromVec3d(newVec, vec);
   return newVec;
 };
-
 
 /**
  * Initializes the vector with the given values.
@@ -98,14 +85,12 @@ goog.vec.vec3d.clone = function(vec) {
  * @return {!goog.vec.vec3d.Type} Return vec so that operations can be
  *     chained together.
  */
-goog.vec.vec3d.setFromValues = function(vec, v0, v1, v2) {
-  'use strict';
+goog.vec.vec3d.setFromValues = (vec, v0, v1, v2) => {
   vec[0] = v0;
   vec[1] = v1;
   vec[2] = v2;
   return vec;
 };
-
 
 /**
  * Initializes vec3d vec from vec3d src.
@@ -115,14 +100,12 @@ goog.vec.vec3d.setFromValues = function(vec, v0, v1, v2) {
  * @return {!goog.vec.vec3d.Type} Return vec so that operations can be
  *     chained together.
  */
-goog.vec.vec3d.setFromVec3d = function(vec, src) {
-  'use strict';
+goog.vec.vec3d.setFromVec3d = (vec, src) => {
   vec[0] = src[0];
   vec[1] = src[1];
   vec[2] = src[2];
   return vec;
 };
-
 
 /**
  * Initializes vec3d vec from vec3f src (typed as a Float32Array to
@@ -133,14 +116,12 @@ goog.vec.vec3d.setFromVec3d = function(vec, src) {
  * @return {!goog.vec.vec3d.Type} Return vec so that operations can be
  *     chained together.
  */
-goog.vec.vec3d.setFromVec3f = function(vec, src) {
-  'use strict';
+goog.vec.vec3d.setFromVec3f = (vec, src) => {
   vec[0] = src[0];
   vec[1] = src[1];
   vec[2] = src[2];
   return vec;
 };
-
 
 /**
  * Initializes vec3d vec from Array src.
@@ -150,14 +131,12 @@ goog.vec.vec3d.setFromVec3f = function(vec, src) {
  * @return {!goog.vec.vec3d.Type} Return vec so that operations can be
  *     chained together.
  */
-goog.vec.vec3d.setFromArray = function(vec, src) {
-  'use strict';
+goog.vec.vec3d.setFromArray = (vec, src) => {
   vec[0] = src[0];
   vec[1] = src[1];
   vec[2] = src[2];
   return vec;
 };
-
 
 /**
  * Performs a component-wise addition of vec0 and vec1 together storing the
@@ -170,14 +149,12 @@ goog.vec.vec3d.setFromArray = function(vec, src) {
  * @return {!goog.vec.vec3d.Type} Return resultVec so that operations can be
  *     chained together.
  */
-goog.vec.vec3d.add = function(vec0, vec1, resultVec) {
-  'use strict';
+goog.vec.vec3d.add = (vec0, vec1, resultVec) => {
   resultVec[0] = vec0[0] + vec1[0];
   resultVec[1] = vec0[1] + vec1[1];
   resultVec[2] = vec0[2] + vec1[2];
   return resultVec;
 };
-
 
 /**
  * Performs a component-wise subtraction of vec1 from vec0 storing the
@@ -190,14 +167,12 @@ goog.vec.vec3d.add = function(vec0, vec1, resultVec) {
  * @return {!goog.vec.vec3d.Type} Return resultVec so that operations can be
  *     chained together.
  */
-goog.vec.vec3d.subtract = function(vec0, vec1, resultVec) {
-  'use strict';
+goog.vec.vec3d.subtract = (vec0, vec1, resultVec) => {
   resultVec[0] = vec0[0] - vec1[0];
   resultVec[1] = vec0[1] - vec1[1];
   resultVec[2] = vec0[2] - vec1[2];
   return resultVec;
 };
-
 
 /**
  * Negates vec0, storing the result into resultVec.
@@ -208,14 +183,12 @@ goog.vec.vec3d.subtract = function(vec0, vec1, resultVec) {
  * @return {!goog.vec.vec3d.Type} Return resultVec so that operations can be
  *     chained together.
  */
-goog.vec.vec3d.negate = function(vec0, resultVec) {
-  'use strict';
+goog.vec.vec3d.negate = (vec0, resultVec) => {
   resultVec[0] = -vec0[0];
   resultVec[1] = -vec0[1];
   resultVec[2] = -vec0[2];
   return resultVec;
 };
-
 
 /**
  * Takes the absolute value of each component of vec0 storing the result in
@@ -227,14 +200,12 @@ goog.vec.vec3d.negate = function(vec0, resultVec) {
  * @return {!goog.vec.vec3d.Type} Return resultVec so that operations can be
  *     chained together.
  */
-goog.vec.vec3d.abs = function(vec0, resultVec) {
-  'use strict';
+goog.vec.vec3d.abs = (vec0, resultVec) => {
   resultVec[0] = Math.abs(vec0[0]);
   resultVec[1] = Math.abs(vec0[1]);
   resultVec[2] = Math.abs(vec0[2]);
   return resultVec;
 };
-
 
 /**
  * Multiplies each component of vec0 with scalar storing the product into
@@ -247,14 +218,12 @@ goog.vec.vec3d.abs = function(vec0, resultVec) {
  * @return {!goog.vec.vec3d.Type} Return resultVec so that operations can be
  *     chained together.
  */
-goog.vec.vec3d.scale = function(vec0, scalar, resultVec) {
-  'use strict';
+goog.vec.vec3d.scale = (vec0, scalar, resultVec) => {
   resultVec[0] = vec0[0] * scalar;
   resultVec[1] = vec0[1] * scalar;
   resultVec[2] = vec0[2] * scalar;
   return resultVec;
 };
-
 
 /**
  * Returns the magnitudeSquared of the given vector.
@@ -262,8 +231,7 @@ goog.vec.vec3d.scale = function(vec0, scalar, resultVec) {
  * @param {!goog.vec.vec3d.Type} vec0 The vector.
  * @return {number} The magnitude of the vector.
  */
-goog.vec.vec3d.magnitudeSquared = function(vec0) {
-  'use strict';
+goog.vec.vec3d.magnitudeSquared = (vec0) => {
   const x = vec0[0];
   const y = vec0[1];
   const z = vec0[2];
@@ -271,22 +239,19 @@ goog.vec.vec3d.magnitudeSquared = function(vec0) {
   return x * x + y * y + z * z;
 };
 
-
 /**
  * Returns the magnitude of the given vector.
  *
  * @param {!goog.vec.vec3d.Type} vec0 The vector.
  * @return {number} The magnitude of the vector.
  */
-goog.vec.vec3d.magnitude = function(vec0) {
-  'use strict';
+goog.vec.vec3d.magnitude = (vec0) => {
   const x = vec0[0];
   const y = vec0[1];
   const z = vec0[2];
 
   return Math.sqrt(x * x + y * y + z * z);
 };
-
 
 /**
  * Normalizes the given vector storing the result into resultVec.
@@ -297,8 +262,7 @@ goog.vec.vec3d.magnitude = function(vec0) {
  * @return {!goog.vec.vec3d.Type} Return resultVec so that operations can be
  *     chained together.
  */
-goog.vec.vec3d.normalize = function(vec0, resultVec) {
-  'use strict';
+goog.vec.vec3d.normalize = (vec0, resultVec) => {
   const x = vec0[0];
   const y = vec0[1];
   const z = vec0[2];
@@ -310,7 +274,6 @@ goog.vec.vec3d.normalize = function(vec0, resultVec) {
   return resultVec;
 };
 
-
 /**
  * Returns the scalar product of vectors v0 and v1.
  *
@@ -318,11 +281,7 @@ goog.vec.vec3d.normalize = function(vec0, resultVec) {
  * @param {!goog.vec.vec3d.Type} v1 The second vector.
  * @return {number} The scalar product.
  */
-goog.vec.vec3d.dot = function(v0, v1) {
-  'use strict';
-  return v0[0] * v1[0] + v0[1] * v1[1] + v0[2] * v1[2];
-};
-
+goog.vec.vec3d.dot = (v0, v1) => v0[0] * v1[0] + v0[1] * v1[1] + v0[2] * v1[2];
 
 /**
  * Computes the vector (cross) product of v0 and v1 storing the result into
@@ -335,8 +294,7 @@ goog.vec.vec3d.dot = function(v0, v1) {
  * @return {!goog.vec.vec3d.Type} Return resultVec so that operations can be
  *     chained together.
  */
-goog.vec.vec3d.cross = function(v0, v1, resultVec) {
-  'use strict';
+goog.vec.vec3d.cross = (v0, v1, resultVec) => {
   const x0 = v0[0];
   const y0 = v0[1];
   const z0 = v0[2];
@@ -351,7 +309,6 @@ goog.vec.vec3d.cross = function(v0, v1, resultVec) {
   return resultVec;
 };
 
-
 /**
  * Returns the squared distance between two points.
  *
@@ -359,14 +316,12 @@ goog.vec.vec3d.cross = function(v0, v1, resultVec) {
  * @param {!goog.vec.vec3d.Type} vec1 Second point.
  * @return {number} The squared distance between the points.
  */
-goog.vec.vec3d.distanceSquared = function(vec0, vec1) {
-  'use strict';
+goog.vec.vec3d.distanceSquared = (vec0, vec1) => {
   const x = vec0[0] - vec1[0];
   const y = vec0[1] - vec1[1];
   const z = vec0[2] - vec1[2];
   return x * x + y * y + z * z;
 };
-
 
 /**
  * Returns the distance between two points.
@@ -375,11 +330,7 @@ goog.vec.vec3d.distanceSquared = function(vec0, vec1) {
  * @param {!goog.vec.vec3d.Type} vec1 Second point.
  * @return {number} The distance between the points.
  */
-goog.vec.vec3d.distance = function(vec0, vec1) {
-  'use strict';
-  return Math.sqrt(goog.vec.vec3d.distanceSquared(vec0, vec1));
-};
-
+goog.vec.vec3d.distance = (vec0, vec1) => Math.sqrt(goog.vec.vec3d.distanceSquared(vec0, vec1));
 
 /**
  * Returns a unit vector pointing from one point to another.
@@ -392,8 +343,7 @@ goog.vec.vec3d.distance = function(vec0, vec1) {
  * @return {!goog.vec.vec3d.Type} Return resultVec so that operations can be
  *     chained together.
  */
-goog.vec.vec3d.direction = function(vec0, vec1, resultVec) {
-  'use strict';
+goog.vec.vec3d.direction = (vec0, vec1, resultVec) => {
   const x = vec1[0] - vec0[0];
   const y = vec1[1] - vec0[1];
   const z = vec1[2] - vec0[2];
@@ -409,7 +359,6 @@ goog.vec.vec3d.direction = function(vec0, vec1, resultVec) {
   return resultVec;
 };
 
-
 /**
  * Linearly interpolate from vec0 to v1 according to f. The value of f should be
  * in the range [0..1] otherwise the results are undefined.
@@ -422,8 +371,7 @@ goog.vec.vec3d.direction = function(vec0, vec1, resultVec) {
  * @return {!goog.vec.vec3d.Type} Return resultVec so that operations can be
  *     chained together.
  */
-goog.vec.vec3d.lerp = function(v0, v1, f, resultVec) {
-  'use strict';
+goog.vec.vec3d.lerp = (v0, v1, f, resultVec) => {
   const x = v0[0];
   const y = v0[1];
   const z = v0[2];
@@ -433,7 +381,6 @@ goog.vec.vec3d.lerp = function(v0, v1, f, resultVec) {
   resultVec[2] = (v1[2] - z) * f + z;
   return resultVec;
 };
-
 
 /**
  * Perform a spherical linear interpolation from v0 to v1 according to f. The
@@ -456,8 +403,7 @@ goog.vec.vec3d.lerp = function(v0, v1, f, resultVec) {
  * @return {!goog.vec.vec3d.Type} Return resultVec so that operations can be
  *     chained together.
  */
-goog.vec.vec3d.slerp = function(v0, v1, f, resultVec) {
-  'use strict';
+goog.vec.vec3d.slerp = (v0, v1, f, resultVec) => {
   const v0Magnitude = goog.vec.vec3d.magnitude(v0);
   let v1Magnitude = goog.vec.vec3d.magnitude(v1);
 
@@ -476,12 +422,14 @@ goog.vec.vec3d.slerp = function(v0, v1, f, resultVec) {
   if (cosAngle < -1 + goog.vec.EPSILON) {
     const mid = goog.vec.vec3d.create();
     let magnitudeFactor = (v0Magnitude + v1Magnitude) / 2;
-    if (v0[0]) {  // v0 not parallel to [0,0,1].
+    if (v0[0]) {
+      // v0 not parallel to [0,0,1].
       magnitudeFactor /= Math.sqrt(v0[0] * v0[0] + v0[1] + v0[1]);
       mid[0] = -v0[1] * magnitudeFactor;
       mid[1] = v0[0] * magnitudeFactor;
       mid[2] = 0;
-    } else {  // v0 not parallel to [1,0,0].
+    } else {
+      // v0 not parallel to [1,0,0].
       magnitudeFactor /= Math.sqrt(v0[2] * v0[2] + v0[1] + v0[1]);
       mid[0] = 0;
       mid[1] = -v0[2] * magnitudeFactor;
@@ -506,8 +454,8 @@ goog.vec.vec3d.slerp = function(v0, v1, f, resultVec) {
     sinAngle = Math.sqrt(1 - cosAngle * cosAngle);
   }
 
-  const coeff0 = (Math.sin((1 - f) * angle) / sinAngle) / v0Magnitude;
-  const coeff1 = (Math.sin(f * angle) / sinAngle) / v1Magnitude;
+  const coeff0 = Math.sin((1 - f) * angle) / sinAngle / v0Magnitude;
+  const coeff1 = Math.sin(f * angle) / sinAngle / v1Magnitude;
   const magnitude = (1 - f) * v0Magnitude + f * v1Magnitude;
 
   resultVec[0] = (v0[0] * coeff0 + v1[0] * coeff1) * magnitude;
@@ -515,7 +463,6 @@ goog.vec.vec3d.slerp = function(v0, v1, f, resultVec) {
   resultVec[2] = (v0[2] * coeff0 + v1[2] * coeff1) * magnitude;
   return resultVec;
 };
-
 
 /**
  * Compares the components of vec0 with the components of another vector or
@@ -528,8 +475,7 @@ goog.vec.vec3d.slerp = function(v0, v1, f, resultVec) {
  * @return {!goog.vec.vec3d.Type} Return resultVec so that operations can be
  *     chained together.
  */
-goog.vec.vec3d.max = function(vec0, limit, resultVec) {
-  'use strict';
+goog.vec.vec3d.max = (vec0, limit, resultVec) => {
   if (typeof limit === 'number') {
     resultVec[0] = Math.max(vec0[0], limit);
     resultVec[1] = Math.max(vec0[1], limit);
@@ -542,7 +488,6 @@ goog.vec.vec3d.max = function(vec0, limit, resultVec) {
   return resultVec;
 };
 
-
 /**
  * Compares the components of vec0 with the components of another vector or
  * scalar, storing the smaller values in resultVec.
@@ -554,8 +499,7 @@ goog.vec.vec3d.max = function(vec0, limit, resultVec) {
  * @return {!goog.vec.vec3d.Type} Return resultVec so that operations can be
  *     chained together.
  */
-goog.vec.vec3d.min = function(vec0, limit, resultVec) {
-  'use strict';
+goog.vec.vec3d.min = (vec0, limit, resultVec) => {
   if (typeof limit === 'number') {
     resultVec[0] = Math.min(vec0[0], limit);
     resultVec[1] = Math.min(vec0[1], limit);
@@ -568,7 +512,6 @@ goog.vec.vec3d.min = function(vec0, limit, resultVec) {
   return resultVec;
 };
 
-
 /**
  * Returns true if the components of v0 are equal to the components of v1.
  *
@@ -576,8 +519,5 @@ goog.vec.vec3d.min = function(vec0, limit, resultVec) {
  * @param {!goog.vec.vec3d.Type} v1 The second vector.
  * @return {boolean} True if the vectors are equal, false otherwise.
  */
-goog.vec.vec3d.equals = function(v0, v1) {
-  'use strict';
-  return v0.length == v1.length && v0[0] == v1[0] && v0[1] == v1[1] &&
-      v0[2] == v1[2];
-};
+goog.vec.vec3d.equals = (v0, v1) =>
+  v0.length == v1.length && v0[0] == v1[0] && v0[1] == v1[1] && v0[2] == v1[2];

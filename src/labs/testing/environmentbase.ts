@@ -10,7 +10,6 @@ const TestCase = goog.require('goog.testing.TestCase');
 const Thenable = goog.require('goog.Thenable');
 const asserts = goog.require('goog.asserts');
 
-
 /**
  * JsUnit environments allow developers to customize the existing testing
  * lifecycle by hitching additional setUp and tearDown behaviors to tests.
@@ -68,9 +67,7 @@ EnvironmentBase.activeTestCase_ = null;
  * @return {?TestCase}
  * @nocollapse
  */
-EnvironmentBase.getTestCaseIfActive = function() {
-  return EnvironmentBase.activeTestCase_;
-};
+EnvironmentBase.getTestCaseIfActive = () => EnvironmentBase.activeTestCase_;
 
 /**
  * An internal TestCase used to hook environments into the JsUnit test runner.
@@ -85,7 +82,7 @@ function EnvironmentTestCase() {
   this.environments_ = [];
 
   /** @private {!Object} */
-  this.testobj_ = goog.global;  // default
+  this.testobj_ = goog.global; // default
 
   // Automatically install this TestCase when any environment is used in a test.
   TestCase.initializeTestRunner(this);
@@ -99,11 +96,11 @@ goog.inherits(EnvironmentTestCase, TestCase);
  * @param {!Object} obj
  * @override
  */
-EnvironmentTestCase.prototype.setLifecycleObj = function(obj) {
+EnvironmentTestCase.prototype.setLifecycleObj = function (obj) {
   asserts.assert(
-      this.testobj_ == goog.global,
-      'A test method object has already been provided ' +
-          'and only one is supported.');
+    this.testobj_ == goog.global,
+    'A test method object has already been provided ' + 'and only one is supported.'
+  );
 
   // Store the test object so we can call lifecyle methods when needed.
   this.testobj_ = obj;
@@ -120,17 +117,15 @@ EnvironmentTestCase.prototype.setLifecycleObj = function(obj) {
  * @override
  * @return {!TestCase.Test}
  */
-EnvironmentTestCase.prototype.createTest = function(
-    name, ref, scope, objChain) {
-  return new EnvironmentTest(name, ref, scope, objChain);
-};
+EnvironmentTestCase.prototype.createTest = (name, ref, scope, objChain) =>
+  new EnvironmentTest(name, ref, scope, objChain);
 
 /**
  * Adds an environment to the JsUnit test.
  * @param {!EnvironmentBase} env
  * @private
  */
-EnvironmentTestCase.prototype.registerEnvironment_ = function(env) {
+EnvironmentTestCase.prototype.registerEnvironment_ = function (env) {
   this.environments_.push(env);
 };
 
@@ -138,8 +133,8 @@ EnvironmentTestCase.prototype.registerEnvironment_ = function(env) {
  * @override
  * @return {!IThenable<*>|undefined}
  */
-EnvironmentTestCase.prototype.setUpPage = function() {
-  const setUpPageFns = this.environments_.map(env => {
+EnvironmentTestCase.prototype.setUpPage = function () {
+  const setUpPageFns = this.environments_.map((env) => {
     return () => env.setUpPage();
   });
 
@@ -154,7 +149,7 @@ EnvironmentTestCase.prototype.setUpPage = function() {
  * @override
  * @return {!IThenable<*>|undefined}
  */
-EnvironmentTestCase.prototype.setUp = function() {
+EnvironmentTestCase.prototype.setUp = function () {
   const setUpFns = [];
   // User defined configure method.
   if (this.testobj_['configureEnvironment']) {
@@ -165,7 +160,7 @@ EnvironmentTestCase.prototype.setUp = function() {
     setUpFns.push(...test.configureEnvironments);
   }
 
-  this.environments_.forEach(env => {
+  this.environments_.forEach((env) => {
     setUpFns.push(() => env.setUp());
   }, this);
 
@@ -187,15 +182,14 @@ EnvironmentTestCase.prototype.setUp = function() {
  * @return {!IThenable<*>|undefined}
  * @private
  */
-EnvironmentTestCase.prototype.callAndChainPromises_ = function(
-    fns, ensureAllFnsCalled) {
+EnvironmentTestCase.prototype.callAndChainPromises_ = (fns, ensureAllFnsCalled) => {
   // Using await here (and making callAndChainPromises_ an async method)
   // causes many tests across google3 to start failing with errors like this:
   // "Timed out while waiting for a promise returned from setUp to resolve".
 
-  const isThenable = (v) => Thenable.isImplementedBy(v) ||
-      (typeof goog.global['Promise'] === 'function' &&
-       v instanceof goog.global['Promise']);
+  const isThenable = (v) =>
+    Thenable.isImplementedBy(v) ||
+    (typeof goog.global['Promise'] === 'function' && v instanceof goog.global['Promise']);
 
   // Record the first error that occurs so that it can be rethrown in the case
   // where ensureAllFnsCalled is set.
@@ -211,10 +205,12 @@ EnvironmentTestCase.prototype.callAndChainPromises_ = function(
   for (const fn of fns) {
     if (isThenable(lastFnResult)) {
       // The previous fn was async, so chain the next fn.
-      const rejectedHandler = ensureAllFnsCalled ? (e) => {
-        recordFirstError(e);
-        return fn();
-      } : undefined;
+      const rejectedHandler = ensureAllFnsCalled
+        ? (e) => {
+            recordFirstError(e);
+            return fn();
+          }
+        : undefined;
       lastFnResult = lastFnResult.then(() => fn(), rejectedHandler);
     } else {
       // The previous fn was not async, so simply call the next fn.
@@ -237,15 +233,14 @@ EnvironmentTestCase.prototype.callAndChainPromises_ = function(
     }
     return lastFnResult;
   };
-  return isThenable(lastFnResult) ? lastFnResult.then(resultFn, resultFn) :
-                                    resultFn();
+  return isThenable(lastFnResult) ? lastFnResult.then(resultFn, resultFn) : resultFn();
 };
 
 /**
  * @override
  * @return {!IThenable<*>|undefined}
  */
-EnvironmentTestCase.prototype.tearDown = function() {
+EnvironmentTestCase.prototype.tearDown = function () {
   const tearDownFns = [];
   // User defined tearDown method.
   if (this.testobj_['tearDown']) {
@@ -255,24 +250,23 @@ EnvironmentTestCase.prototype.tearDown = function() {
   // Execute the tearDown methods for the environment in the reverse order
   // in which they were registered to "unfold" the setUp.
   const reverseEnvironments = [...this.environments_].reverse();
-  reverseEnvironments.forEach(env => {
+  reverseEnvironments.forEach((env) => {
     tearDownFns.push(() => env.tearDown());
   });
   // For tearDowns between tests make sure they run as much as possible to avoid
   // interference between tests.
-  return this.callAndChainPromises_(
-      tearDownFns, /* ensureAllFnsCalled= */ true);
+  return this.callAndChainPromises_(tearDownFns, /* ensureAllFnsCalled= */ true);
 };
 
 /** @override */
-EnvironmentTestCase.prototype.tearDownPage = function() {
+EnvironmentTestCase.prototype.tearDownPage = function () {
   // User defined tearDownPage method.
   if (this.testobj_['tearDownPage']) {
     this.testobj_['tearDownPage']();
   }
 
   const reverseEnvironments = [...this.environments_].reverse();
-  reverseEnvironments.forEach(env => {
+  reverseEnvironments.forEach((env) => {
     env.tearDownPage();
   });
 };
@@ -296,17 +290,16 @@ function EnvironmentTest(name, ref, scope, objChain) {
   /**
    * @type {!Array<function()>}
    */
-  this.configureEnvironments =
-      (objChain || [])
-          .filter((obj) => typeof obj.configureEnvironment === 'function')
-          .map(/**
-                * @param  {{configureEnvironment: function()}} obj
-                * @return {function()}
-                */
-               function(obj) {
-                 return obj.configureEnvironment.bind(obj);
-               });
+  this.configureEnvironments = (objChain || [])
+    .filter((obj) => typeof obj.configureEnvironment === 'function')
+    .map(
+      /**
+       * @param  {{configureEnvironment: function()}} obj
+       * @return {function()}
+       */
+      (obj) => obj.configureEnvironment.bind(obj)
+    );
 }
 goog.inherits(EnvironmentTest, TestCase.Test);
 
-exports = {EnvironmentBase};
+exports = { EnvironmentBase };

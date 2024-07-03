@@ -31,8 +31,6 @@ goog.require('goog.ui.ServerChart');
 goog.require('goog.ui.TableSorter');
 goog.requireType('goog.events.BrowserEvent');
 
-
-
 /**
  * A component for running multiple tests within the browser.
  * @param {goog.dom.DomHelper=} opt_domHelper A DOM helper.
@@ -40,8 +38,7 @@ goog.requireType('goog.events.BrowserEvent');
  * @constructor
  * @final
  */
-goog.testing.MultiTestRunner = function(opt_domHelper) {
-  'use strict';
+goog.testing.MultiTestRunner = function (opt_domHelper) {
   goog.ui.Component.call(this, opt_domHelper);
 
   /**
@@ -89,29 +86,27 @@ goog.testing.MultiTestRunner = function(opt_domHelper) {
 };
 goog.inherits(goog.testing.MultiTestRunner, goog.ui.Component);
 
-
 /**
  * Default maximimum amount of time to spend at each stage of the test.
  * @type {number}
  */
 goog.testing.MultiTestRunner.DEFAULT_TIMEOUT_MS = 45 * 1000;
 
-
 /**
  * Messages corresponding to the numeric states.
  * @type {Array<string>}
  */
 goog.testing.MultiTestRunner.STATES = [
-  'waiting for test runner', 'initializing tests', 'waiting for tests to finish'
+  'waiting for test runner',
+  'initializing tests',
+  'waiting for tests to finish',
 ];
-
 
 /**
  * Event type dispatched when tests are completed.
  * @const
  */
 goog.testing.MultiTestRunner.TESTS_FINISHED = 'testsFinished';
-
 
 /**
  * The test suite's name.
@@ -120,14 +115,12 @@ goog.testing.MultiTestRunner.TESTS_FINISHED = 'testsFinished';
  */
 goog.testing.MultiTestRunner.prototype.name_ = '';
 
-
 /**
  * The base path used to resolve files within the allTests_ array.
  * @type {string}
  * @private
  */
 goog.testing.MultiTestRunner.prototype.basePath_ = '';
-
 
 /**
  * A set of tests that have finished.  All extant keys map to true.
@@ -136,14 +129,12 @@ goog.testing.MultiTestRunner.prototype.basePath_ = '';
  */
 goog.testing.MultiTestRunner.prototype.finished_ = null;
 
-
 /**
  * Whether the report should contain verbose information about the passes.
  * @type {boolean}
  * @private
  */
 goog.testing.MultiTestRunner.prototype.verbosePasses_ = false;
-
 
 /**
  * Whether to hide passing tests completely in the report, makes verbosePasses_
@@ -153,14 +144,12 @@ goog.testing.MultiTestRunner.prototype.verbosePasses_ = false;
  */
 goog.testing.MultiTestRunner.prototype.hidePasses_ = false;
 
-
 /**
  * Flag used to tell the test runner to stop after the current test.
  * @type {boolean}
  * @private
  */
 goog.testing.MultiTestRunner.prototype.stopped_ = false;
-
 
 /**
  * Flag indicating whether the test runner is active.
@@ -169,14 +158,12 @@ goog.testing.MultiTestRunner.prototype.stopped_ = false;
  */
 goog.testing.MultiTestRunner.prototype.active_ = false;
 
-
 /**
  * Index of the next test to run.
  * @type {number}
  * @private
  */
 goog.testing.MultiTestRunner.prototype.startedCount_ = 0;
-
 
 /**
  * Count of the results received so far.
@@ -185,7 +172,6 @@ goog.testing.MultiTestRunner.prototype.startedCount_ = 0;
  */
 goog.testing.MultiTestRunner.prototype.resultCount_ = 0;
 
-
 /**
  * Number of passes so far.
  * @type {number}
@@ -193,14 +179,12 @@ goog.testing.MultiTestRunner.prototype.resultCount_ = 0;
  */
 goog.testing.MultiTestRunner.prototype.passes_ = 0;
 
-
 /**
  * Timestamp for the current start time.
  * @type {number}
  * @private
  */
 goog.testing.MultiTestRunner.prototype.startTime_ = 0;
-
 
 /**
  * Only tests whose paths patch this filter function will be
@@ -210,15 +194,12 @@ goog.testing.MultiTestRunner.prototype.startTime_ = 0;
  */
 goog.testing.MultiTestRunner.prototype.filterFn_ = goog.functions.TRUE;
 
-
 /**
  * Number of milliseconds to wait for loading and initialization steps.
  * @type {number}
  * @private
  */
-goog.testing.MultiTestRunner.prototype.timeoutMs_ =
-    goog.testing.MultiTestRunner.DEFAULT_TIMEOUT_MS;
-
+goog.testing.MultiTestRunner.prototype.timeoutMs_ = goog.testing.MultiTestRunner.DEFAULT_TIMEOUT_MS;
 
 /**
  * @typedef {{
@@ -232,14 +213,12 @@ goog.testing.MultiTestRunner.prototype.timeoutMs_ =
  */
 goog.testing.MultiTestRunner.StatsType_;
 
-
 /**
  * An array of objects containing stats about the tests.
  * @type {?Array<!goog.testing.MultiTestRunner.StatsType_>}
  * @private
  */
 goog.testing.MultiTestRunner.prototype.stats_ = null;
-
 
 /**
  * Reference to the start button element.
@@ -248,14 +227,12 @@ goog.testing.MultiTestRunner.prototype.stats_ = null;
  */
 goog.testing.MultiTestRunner.prototype.startButtonEl_ = null;
 
-
 /**
  * Reference to the stop button element.
  * @type {?HTMLButtonElement}
  * @private
  */
 goog.testing.MultiTestRunner.prototype.stopButtonEl_ = null;
-
 
 /**
  * Reference to the log element.
@@ -264,14 +241,12 @@ goog.testing.MultiTestRunner.prototype.stopButtonEl_ = null;
  */
 goog.testing.MultiTestRunner.prototype.logEl_ = null;
 
-
 /**
  * Reference to the report element.
  * @type {?Element}
  * @private
  */
 goog.testing.MultiTestRunner.prototype.reportEl_ = null;
-
 
 /**
  * Reference to the stats element.
@@ -280,14 +255,12 @@ goog.testing.MultiTestRunner.prototype.reportEl_ = null;
  */
 goog.testing.MultiTestRunner.prototype.statsEl_ = null;
 
-
 /**
  * Reference to the progress bar's element.
  * @type {?Element}
  * @private
  */
 goog.testing.MultiTestRunner.prototype.progressEl_ = null;
-
 
 /**
  * Reference to the progress bar's inner row element.
@@ -296,14 +269,12 @@ goog.testing.MultiTestRunner.prototype.progressEl_ = null;
  */
 goog.testing.MultiTestRunner.prototype.progressRow_ = null;
 
-
 /**
  * Reference to the log tab.
  * @type {?Element}
  * @private
  */
 goog.testing.MultiTestRunner.prototype.logTabEl_ = null;
-
 
 /**
  * Reference to the report tab.
@@ -312,14 +283,12 @@ goog.testing.MultiTestRunner.prototype.logTabEl_ = null;
  */
 goog.testing.MultiTestRunner.prototype.reportTabEl_ = null;
 
-
 /**
  * Reference to the stats tab.
  * @type {?Element}
  * @private
  */
 goog.testing.MultiTestRunner.prototype.statsTabEl_ = null;
-
 
 /**
  * The number of tests to run at a time.
@@ -328,14 +297,12 @@ goog.testing.MultiTestRunner.prototype.statsTabEl_ = null;
  */
 goog.testing.MultiTestRunner.prototype.poolSize_ = 1;
 
-
 /**
  * The size of the stats bucket for the number of files loaded histogram.
  * @type {number}
  * @private
  */
 goog.testing.MultiTestRunner.prototype.numFilesStatsBucketSize_ = 20;
-
 
 /**
  * The size of the stats bucket in ms for the run time histogram.
@@ -344,51 +311,42 @@ goog.testing.MultiTestRunner.prototype.numFilesStatsBucketSize_ = 20;
  */
 goog.testing.MultiTestRunner.prototype.runTimeStatsBucketSize_ = 500;
 
-
 /**
  * Sets the name for the test suite.
  * @param {string} name The suite's name.
  * @return {!goog.testing.MultiTestRunner} Instance for chaining.
  */
-goog.testing.MultiTestRunner.prototype.setName = function(name) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.setName = function (name) {
   this.name_ = name;
   return this;
 };
-
 
 /**
  * Returns the name for the test suite.
  * @return {string} The name for the test suite.
  */
-goog.testing.MultiTestRunner.prototype.getName = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.getName = function () {
   return this.name_;
 };
-
 
 /**
  * Sets the basepath that tests added using addTests are resolved with.
  * @param {string} path The relative basepath.
  * @return {!goog.testing.MultiTestRunner} Instance for chaining.
  */
-goog.testing.MultiTestRunner.prototype.setBasePath = function(path) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.setBasePath = function (path) {
   this.basePath_ = path;
   return this;
 };
-
 
 /**
  * Returns the basepath that tests added using addTests are resolved with.
  * @return {string} The basepath that tests added using addTests are resolved
  *     with.
  */
-goog.testing.MultiTestRunner.prototype.getBasePath = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.getBasePath = function () {
   return this.basePath_;
 };
-
 
 /**
  * Sets whether the report should contain verbose information for tests that
@@ -396,12 +354,10 @@ goog.testing.MultiTestRunner.prototype.getBasePath = function() {
  * @param {boolean} verbose Whether report should be verbose.
  * @return {!goog.testing.MultiTestRunner} Instance for chaining.
  */
-goog.testing.MultiTestRunner.prototype.setVerbosePasses = function(verbose) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.setVerbosePasses = function (verbose) {
   this.verbosePasses_ = verbose;
   return this;
 };
-
 
 /**
  * Returns whether the report should contain verbose information for tests that
@@ -409,11 +365,9 @@ goog.testing.MultiTestRunner.prototype.setVerbosePasses = function(verbose) {
  * @return {boolean} Whether the report should contain verbose information for
  *     tests that pass.
  */
-goog.testing.MultiTestRunner.prototype.getVerbosePasses = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.getVerbosePasses = function () {
   return this.verbosePasses_;
 };
-
 
 /**
  * Sets whether the report should contain passing tests at all, makes
@@ -421,12 +375,10 @@ goog.testing.MultiTestRunner.prototype.getVerbosePasses = function() {
  * @param {boolean} hide Whether report should not contain passing tests.
  * @return {!goog.testing.MultiTestRunner} Instance for chaining.
  */
-goog.testing.MultiTestRunner.prototype.setHidePasses = function(hide) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.setHidePasses = function (hide) {
   this.hidePasses_ = hide;
   return this;
 };
-
 
 /**
  * Returns whether the report should contain passing tests at all, makes
@@ -434,11 +386,9 @@ goog.testing.MultiTestRunner.prototype.setHidePasses = function(hide) {
  * @return {boolean} Whether the report should contain passing tests at all,
  *     makes setVerbosePasses obsolete.
  */
-goog.testing.MultiTestRunner.prototype.getHidePasses = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.getHidePasses = function () {
   return this.hidePasses_;
 };
-
 
 /**
  * Sets the bucket sizes for the histograms.
@@ -446,13 +396,11 @@ goog.testing.MultiTestRunner.prototype.getHidePasses = function() {
  * @param {number} t Bucket size for run time histogram.
  * @return {!goog.testing.MultiTestRunner} Instance for chaining.
  */
-goog.testing.MultiTestRunner.prototype.setStatsBucketSizes = function(f, t) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.setStatsBucketSizes = function (f, t) {
   this.numFilesStatsBucketSize_ = f;
   this.runTimeStatsBucketSize_ = t;
   return this;
 };
-
 
 /**
  * Sets the number of milliseconds to wait for the page to load, initialize and
@@ -460,12 +408,10 @@ goog.testing.MultiTestRunner.prototype.setStatsBucketSizes = function(f, t) {
  * @param {number} timeout Time in milliseconds.
  * @return {!goog.testing.MultiTestRunner} Instance for chaining.
  */
-goog.testing.MultiTestRunner.prototype.setTimeout = function(timeout) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.setTimeout = function (timeout) {
   this.timeoutMs_ = timeout;
   return this;
 };
-
 
 /**
  * Returns the number of milliseconds to wait for the page to load, initialize
@@ -473,11 +419,9 @@ goog.testing.MultiTestRunner.prototype.setTimeout = function(timeout) {
  * @return {number} The number of milliseconds to wait for the page to load,
  *     initialize and run the tests.
  */
-goog.testing.MultiTestRunner.prototype.getTimeout = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.getTimeout = function () {
   return this.timeoutMs_;
 };
-
 
 /**
  * Sets the number of tests that can be run at the same time. This only improves
@@ -485,12 +429,10 @@ goog.testing.MultiTestRunner.prototype.getTimeout = function() {
  * @param {number} size The number of tests to run at a time.
  * @return {!goog.testing.MultiTestRunner} Instance for chaining.
  */
-goog.testing.MultiTestRunner.prototype.setPoolSize = function(size) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.setPoolSize = function (size) {
   this.poolSize_ = size;
   return this;
 };
-
 
 /**
  * Returns the number of tests that can be run at the same time. This only
@@ -499,11 +441,9 @@ goog.testing.MultiTestRunner.prototype.setPoolSize = function(size) {
  *     only improves performance due to the amount of time spent loading the
  *     tests.
  */
-goog.testing.MultiTestRunner.prototype.getPoolSize = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.getPoolSize = function () {
   return this.poolSize_;
 };
-
 
 /**
  * Sets a filter function. Only test paths that match the filter function
@@ -511,12 +451,10 @@ goog.testing.MultiTestRunner.prototype.getPoolSize = function() {
  * @param {function(string): boolean} filterFn Filters test paths.
  * @return {!goog.testing.MultiTestRunner} Instance for chaining.
  */
-goog.testing.MultiTestRunner.prototype.setFilterFunction = function(filterFn) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.setFilterFunction = function (filterFn) {
   this.filterFn_ = filterFn;
   return this;
 };
-
 
 /**
  * Returns a filter function. Only test paths that match the filter function
@@ -525,56 +463,47 @@ goog.testing.MultiTestRunner.prototype.setFilterFunction = function(filterFn) {
  *     match the filter function will be executed.
 
  */
-goog.testing.MultiTestRunner.prototype.getFilterFunction = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.getFilterFunction = function () {
   return this.filterFn_;
 };
-
 
 /**
  * Adds an array of tests to the tests that the test runner should execute.
  * @param {Array<string>} tests Adds tests to the test runner.
  * @return {!goog.testing.MultiTestRunner} Instance for chaining.
  */
-goog.testing.MultiTestRunner.prototype.addTests = function(tests) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.addTests = function (tests) {
   goog.array.extend(this.allTests_, tests);
   return this;
 };
-
 
 /**
  * Returns the list of all tests added to the runner.
  * @return {Array<string>} The list of all tests added to the runner.
  */
-goog.testing.MultiTestRunner.prototype.getAllTests = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.getAllTests = function () {
   return this.allTests_;
 };
-
 
 /**
  * Returns the list of tests that will be run when start() is called.
  * @return {!Array<string>} The list of tests that will be run when start() is
  *     called.
  */
-goog.testing.MultiTestRunner.prototype.getTestsToRun = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.getTestsToRun = function () {
   return this.allTests_.filter(this.filterFn_);
 };
-
 
 /**
  * Returns a list of tests from runner that have been marked as failed.
  * @return {!Array<string>} A list of tests from runner that have been marked
  *     as failed.
  */
-goog.testing.MultiTestRunner.prototype.getTestsThatFailed = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.getTestsThatFailed = function () {
   var stats = this.stats_;
   var failedTests = [];
   if (stats) {
-    for (var i = 0, stat; stat = stats[i]; i++) {
+    for (var i = 0, stat; (stat = stats[i]); i++) {
       if (!stat.success) {
         failedTests.push(stat.testFile);
       }
@@ -583,33 +512,27 @@ goog.testing.MultiTestRunner.prototype.getTestsThatFailed = function() {
   return failedTests;
 };
 
-
 /**
  * Returns a list of reports for tests that have finished since last "start".
  * @return {!Array<string>} A list of tests reports.
  */
-goog.testing.MultiTestRunner.prototype.getFailureReports = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.getFailureReports = function () {
   return this.failureReports_;
 };
-
 
 /**
  * Returns list of each frame's test results.
  * @return {!Array<!Object<string,!Array<!goog.testing.TestCase.IResult>>>}
  */
-goog.testing.MultiTestRunner.prototype.getAllTestResults = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.getAllTestResults = function () {
   return this.allTestResults_;
 };
-
 
 /**
  * Deletes and re-creates the progress table inside the progess element.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.resetProgressDom_ = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.resetProgressDom_ = function () {
   goog.dom.removeChildren(this.progressEl_);
   var progressTable = this.dom_.createDom(goog.dom.TagName.TABLE);
   var progressTBody = this.dom_.createDom(goog.dom.TagName.TBODY);
@@ -623,10 +546,8 @@ goog.testing.MultiTestRunner.prototype.resetProgressDom_ = function() {
   this.progressEl_.appendChild(progressTable);
 };
 
-
 /** @override */
-goog.testing.MultiTestRunner.prototype.createDom = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.createDom = function () {
   goog.testing.MultiTestRunner.superClass_.createDom.call(this);
   var el = this.getElement();
   el.className = goog.getCssName('goog-testrunner');
@@ -637,10 +558,8 @@ goog.testing.MultiTestRunner.prototype.createDom = function() {
 
   var buttons = this.dom_.createDom(goog.dom.TagName.DIV);
   buttons.className = goog.getCssName('goog-testrunner-buttons');
-  this.startButtonEl_ =
-      this.dom_.createDom(goog.dom.TagName.BUTTON, null, 'Start');
-  this.stopButtonEl_ =
-      this.dom_.createDom(goog.dom.TagName.BUTTON, {'disabled': true}, 'Stop');
+  this.startButtonEl_ = this.dom_.createDom(goog.dom.TagName.BUTTON, null, 'Start');
+  this.stopButtonEl_ = this.dom_.createDom(goog.dom.TagName.BUTTON, { disabled: true }, 'Stop');
   buttons.appendChild(this.startButtonEl_);
   buttons.appendChild(this.stopButtonEl_);
   el.appendChild(buttons);
@@ -663,8 +582,8 @@ goog.testing.MultiTestRunner.prototype.createDom = function() {
   el.appendChild(this.statsEl_);
 
   this.logTabEl_ = this.dom_.createDom(goog.dom.TagName.DIV, null, 'Log');
-  this.logTabEl_.className = goog.getCssName('goog-testrunner-logtab') + ' ' +
-      goog.getCssName('goog-testrunner-activetab');
+  this.logTabEl_.className =
+    goog.getCssName('goog-testrunner-logtab') + ' ' + goog.getCssName('goog-testrunner-activetab');
   el.appendChild(this.logTabEl_);
 
   this.reportTabEl_ = this.dom_.createDom(goog.dom.TagName.DIV, null, 'Report');
@@ -680,10 +599,8 @@ goog.testing.MultiTestRunner.prototype.createDom = function() {
   this.eh_.listen(this.statsTabEl_, 'click', this.onStatsTabClicked_);
 };
 
-
 /** @override */
-goog.testing.MultiTestRunner.prototype.disposeInternal = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.disposeInternal = function () {
   goog.testing.MultiTestRunner.superClass_.disposeInternal.call(this);
   this.tableSorter_.dispose();
   this.eh_.dispose();
@@ -698,12 +615,10 @@ goog.testing.MultiTestRunner.prototype.disposeInternal = function() {
   this.statsEl_ = null;
 };
 
-
 /**
  * Starts executing the tests.
  */
-goog.testing.MultiTestRunner.prototype.start = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.start = function () {
   this.startButtonEl_.disabled = true;
   this.stopButtonEl_.disabled = false;
   this.stopped_ = false;
@@ -739,22 +654,25 @@ goog.testing.MultiTestRunner.prototype.start = function() {
   for (var i = 0; i < this.poolSize_; i++) {
     if (i >= this.getChildCount()) {
       var testFrame = new goog.testing.MultiTestRunner.TestFrame(
-          this.basePath_, this.timeoutMs_, this.verbosePasses_, this.dom_);
+        this.basePath_,
+        this.timeoutMs_,
+        this.verbosePasses_,
+        this.dom_
+      );
       this.addChild(testFrame, true);
     }
     this.runNextTest_(
-        /** @type {goog.testing.MultiTestRunner.TestFrame} */
-        (this.getChildAt(i)));
+      /** @type {goog.testing.MultiTestRunner.TestFrame} */
+      (this.getChildAt(i))
+    );
   }
 };
-
 
 /**
  * Logs a message to the log window.
  * @param {string} msg A message to log.
  */
-goog.testing.MultiTestRunner.prototype.log = function(msg) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.log = function (msg) {
   if (msg != '.') {
     msg = this.getTimeStamp_() + ' : ' + msg;
   }
@@ -763,13 +681,13 @@ goog.testing.MultiTestRunner.prototype.log = function(msg) {
 
   // Autoscroll if we're near the bottom.
   var top = this.logEl_.scrollTop;
-  var height = /** @type {!HTMLElement} */ (this.logEl_).scrollHeight -
-      /** @type {!HTMLElement} */ (this.logEl_).offsetHeight;
+  var height =
+    /** @type {!HTMLElement} */ (this.logEl_).scrollHeight -
+    /** @type {!HTMLElement} */ (this.logEl_).offsetHeight;
   if (top == 0 || top > height - 50) {
     this.logEl_.scrollTop = height;
   }
 };
-
 
 /**
  * Processes a result returned from a TestFrame.  If there are tests remaining
@@ -778,8 +696,7 @@ goog.testing.MultiTestRunner.prototype.log = function(msg) {
  * @param {goog.testing.MultiTestRunner.TestFrame} frame The frame that just
  *     finished.
  */
-goog.testing.MultiTestRunner.prototype.processResult = function(frame) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.processResult = function (frame) {
   var success = frame.isSuccess();
   var report = frame.getReport();
   var test = frame.getTestFile();
@@ -794,9 +711,7 @@ goog.testing.MultiTestRunner.prototype.processResult = function(frame) {
   this.finished_[test] = true;
 
   var prefix = success ? '' : '*** FAILURE *** ';
-  this.log(
-      prefix + this.trimFileName_(test) + ' : ' +
-      (success ? 'Passed' : 'Failed'));
+  this.log(prefix + this.trimFileName_(test) + ' : ' + (success ? 'Passed' : 'Failed'));
 
   this.resultCount_++;
 
@@ -817,14 +732,12 @@ goog.testing.MultiTestRunner.prototype.processResult = function(frame) {
   }
 };
 
-
 /**
  * Runs the next available test, if there are any left.
  * @param {goog.testing.MultiTestRunner.TestFrame} frame Where to run the test.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.runNextTest_ = function(frame) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.runNextTest_ = function (frame) {
   if (this.startedCount_ < this.activeTests_.length) {
     var nextTest = this.activeTests_[this.startedCount_++];
     this.log(this.trimFileName_(nextTest) + ' : Loading');
@@ -832,13 +745,11 @@ goog.testing.MultiTestRunner.prototype.runNextTest_ = function(frame) {
   }
 };
 
-
 /**
  * Handles the test finishing, processing the results and rendering the report.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.finish_ = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.finish_ = function () {
   if (this.stopped_) {
     this.log('Stopped');
   } else {
@@ -868,24 +779,25 @@ goog.testing.MultiTestRunner.prototype.finish_ = function() {
 
   if (unfinished.length) {
     this.reportEl_.appendChild(
-        goog.dom.createDom(
-            goog.dom.TagName.PRE, undefined,
-            'These tests did not finish:\n' + unfinished.join('\n')));
+      goog.dom.createDom(
+        goog.dom.TagName.PRE,
+        undefined,
+        'These tests did not finish:\n' + unfinished.join('\n')
+      )
+    );
   }
 
   this.dispatchEvent({
-    'type': goog.testing.MultiTestRunner.TESTS_FINISHED,
-    'allTestResults': this.getAllTestResults()
+    type: goog.testing.MultiTestRunner.TESTS_FINISHED,
+    allTestResults: this.getAllTestResults(),
   });
 };
-
 
 /**
  * Resets the report, clearing out all children and drawing the initial summary.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.resetReport_ = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.resetReport_ = function () {
   goog.dom.removeChildren(this.reportEl_);
   var summary = this.dom_.createDom(goog.dom.TagName.DIV);
   summary.className = goog.getCssName('goog-testrunner-progress-summary');
@@ -893,13 +805,11 @@ goog.testing.MultiTestRunner.prototype.resetReport_ = function() {
   this.writeCurrentSummary_();
 };
 
-
 /**
  * Draws the stats for the test run.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.drawStats_ = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.drawStats_ = function () {
   this.drawFilesHistogram_();
 
   // Only show time stats if pool size is 1, otherwise times are wrong.
@@ -911,35 +821,33 @@ goog.testing.MultiTestRunner.prototype.drawStats_ = function() {
   this.drawWorstTestsTable_();
 };
 
-
 /**
  * Draws the histogram showing number of files loaded.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.drawFilesHistogram_ = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.drawFilesHistogram_ = function () {
   this.drawStatsHistogram_(
-      'numFilesLoaded', this.numFilesStatsBucketSize_, goog.functions.identity,
-      500,
-      'Histogram showing distribution of\nnumber of files loaded per test');
+    'numFilesLoaded',
+    this.numFilesStatsBucketSize_,
+    goog.functions.identity,
+    500,
+    'Histogram showing distribution of\nnumber of files loaded per test'
+  );
 };
-
 
 /**
  * Draws the histogram showing how long each test took to complete.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.drawTimeHistogram_ = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.drawTimeHistogram_ = function () {
   this.drawStatsHistogram_(
-      'totalTime', this.runTimeStatsBucketSize_,
-      function(x) {
-        'use strict';
-        return x / 1000;
-      },
-      500, 'Histogram showing distribution of\ntime spent running tests in s');
+    'totalTime',
+    this.runTimeStatsBucketSize_,
+    (x) => x / 1000,
+    500,
+    'Histogram showing distribution of\ntime spent running tests in s'
+  );
 };
-
 
 /**
  * Draws a stats histogram.
@@ -951,10 +859,17 @@ goog.testing.MultiTestRunner.prototype.drawTimeHistogram_ = function() {
  * @param {string} title The graph's title.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.drawStatsHistogram_ = function(
-    statsField, bucketSize, valueTransformFn, width, title) {
-  'use strict';
-  var hist = {}, data = [], xlabels = [], ylabels = [];
+goog.testing.MultiTestRunner.prototype.drawStatsHistogram_ = function (
+  statsField,
+  bucketSize,
+  valueTransformFn,
+  width,
+  title
+) {
+  var hist = {},
+    data = [],
+    xlabels = [],
+    ylabels = [];
   var max = 0;
   for (var i = 0; i < this.stats_.length; i++) {
     var num = this.stats_[i][statsField];
@@ -982,8 +897,12 @@ goog.testing.MultiTestRunner.prototype.drawStatsHistogram_ = function(
     ylabels.push(i);
   }
   var chart = new goog.ui.ServerChart(
-      goog.ui.ServerChart.ChartType.VERTICAL_STACKED_BAR, width, 250, null,
-      goog.ui.ServerChart.CHART_SERVER_HTTPS_URI);
+    goog.ui.ServerChart.ChartType.VERTICAL_STACKED_BAR,
+    width,
+    250,
+    null,
+    goog.ui.ServerChart.CHART_SERVER_HTTPS_URI
+  );
   chart.setTitle(title);
   chart.addDataSet(data, 'ff9900');
   chart.setLeftLabels(ylabels);
@@ -992,15 +911,14 @@ goog.testing.MultiTestRunner.prototype.drawStatsHistogram_ = function(
   chart.render(this.statsEl_);
 };
 
-
 /**
  * Draws a pie chart showing the percentage of time spent running the tests
  * compared to loading them etc.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.drawRunTimePie_ = function() {
-  'use strict';
-  var totalTime = 0, runTime = 0;
+goog.testing.MultiTestRunner.prototype.drawRunTimePie_ = function () {
+  var totalTime = 0,
+    runTime = 0;
   for (var i = 0; i < this.stats_.length; i++) {
     var stat = this.stats_[i];
     totalTime += stat.totalTime;
@@ -1008,28 +926,26 @@ goog.testing.MultiTestRunner.prototype.drawRunTimePie_ = function() {
   }
   var loadTime = totalTime - runTime;
   var pie = new goog.ui.ServerChart(
-      goog.ui.ServerChart.ChartType.PIE, 500, 250, null,
-      goog.ui.ServerChart.CHART_SERVER_HTTPS_URI);
+    goog.ui.ServerChart.ChartType.PIE,
+    500,
+    250,
+    null,
+    goog.ui.ServerChart.CHART_SERVER_HTTPS_URI
+  );
   pie.setMinValue(0);
   pie.setMaxValue(totalTime);
   pie.addDataSet([runTime, loadTime], 'ff9900');
-  pie.setXLabels(
-      ['Test execution (' + runTime + 'ms)', 'Loading (' + loadTime + 'ms)']);
+  pie.setXLabels(['Test execution (' + runTime + 'ms)', 'Loading (' + loadTime + 'ms)']);
   pie.render(this.statsEl_);
 };
-
 
 /**
  * Draws a pie chart showing the percentage of time spent running the tests
  * compared to loading them etc.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.drawWorstTestsTable_ = function() {
-  'use strict';
-  this.stats_.sort(function(a, b) {
-    'use strict';
-    return b['numFilesLoaded'] - a['numFilesLoaded'];
-  });
+goog.testing.MultiTestRunner.prototype.drawWorstTestsTable_ = function () {
+  this.stats_.sort((a, b) => b['numFilesLoaded'] - a['numFilesLoaded']);
 
   var tbody = goog.bind(this.dom_.createDom, this.dom_, 'tbody');
   var thead = goog.bind(this.dom_.createDom, this.dom_, 'thead');
@@ -1039,61 +955,75 @@ goog.testing.MultiTestRunner.prototype.drawWorstTestsTable_ = function() {
   var a = goog.bind(this.dom_.createDom, this.dom_, 'a');
 
   var head = thead(
-      {'style': 'cursor: pointer'},
-      tr(null, th(null, ' '), th(null, 'Test file'),
-         th('center', 'Num files loaded'), th('center', 'Run time (ms)'),
-         th('center', 'Total time (ms)')));
+    { style: 'cursor: pointer' },
+    tr(
+      null,
+      th(null, ' '),
+      th(null, 'Test file'),
+      th('center', 'Num files loaded'),
+      th('center', 'Run time (ms)'),
+      th('center', 'Total time (ms)')
+    )
+  );
   var body = tbody();
   var table = this.dom_.createDom(goog.dom.TagName.TABLE, null, head, body);
 
   for (var i = 0; i < this.stats_.length; i++) {
     var stat = this.stats_[i];
     body.appendChild(
-        tr(null, td('center', String(i + 1)),
-           td(null,
-              a({'href': this.basePath_ + stat['testFile'], 'target': '_blank'},
-                stat['testFile'])),
-           td('center', String(stat['numFilesLoaded'])),
-           td('center', String(stat['runTime'])),
-           td('center', String(stat['totalTime']))));
+      tr(
+        null,
+        td('center', String(i + 1)),
+        td(
+          null,
+          a({ href: this.basePath_ + stat['testFile'], target: '_blank' }, stat['testFile'])
+        ),
+        td('center', String(stat['numFilesLoaded'])),
+        td('center', String(stat['runTime'])),
+        td('center', String(stat['totalTime']))
+      )
+    );
   }
 
   this.statsEl_.appendChild(table);
 
   this.tableSorter_.setDefaultSortFunction(goog.ui.TableSorter.numericSort);
-  this.tableSorter_.setSortFunction(
-      1 /* test file name */, goog.ui.TableSorter.alphaSort);
+  this.tableSorter_.setSortFunction(1 /* test file name */, goog.ui.TableSorter.alphaSort);
   this.tableSorter_.decorate(table);
 };
-
 
 /**
  * Clears the stats page.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.clearStats_ = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.clearStats_ = function () {
   goog.dom.removeChildren(this.statsEl_);
   this.tableSorter_.exitDocument();
 };
-
 
 /**
  * Updates the report's summary.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.writeCurrentSummary_ = function() {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.writeCurrentSummary_ = function () {
   var total = this.activeTests_.length;
   var executed = this.resultCount_;
   var passes = this.passes_;
   var duration = Math.round((goog.now() - this.startTime_) / 1000);
-  var text = executed + ' of ' + total + ' tests executed.<br>' + passes +
-      ' passed, ' + (executed - passes) + ' failed.<br>' +
-      'Duration: ' + duration + 's.';
+  var text =
+    executed +
+    ' of ' +
+    total +
+    ' tests executed.<br>' +
+    passes +
+    ' passed, ' +
+    (executed - passes) +
+    ' failed.<br>' +
+    'Duration: ' +
+    duration +
+    's.';
   goog.dom.getFirstElementChild(this.reportEl_).innerHTML = text;
 };
-
 
 /**
  * Adds a segment to the progress bar.
@@ -1101,14 +1031,11 @@ goog.testing.MultiTestRunner.prototype.writeCurrentSummary_ = function() {
  * @param {*} success Whether the segment should indicate a success.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.drawProgressSegment_ = function(
-    title, success) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.drawProgressSegment_ = function (title, success) {
   var part = this.progressRow_.cells[this.resultCount_ - 1];
   part.title = title + ' : ' + (success ? 'SUCCESS' : 'FAILURE');
   part.style.backgroundColor = success ? '#090' : '#900';
 };
-
 
 /**
  * Draws a test result in the report pane.
@@ -1117,39 +1044,35 @@ goog.testing.MultiTestRunner.prototype.drawProgressSegment_ = function(
  * @param {string} report The report.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.drawTestResult_ = function(
-    test, success, report) {
-  'use strict';
-  var text = goog.string.isEmptyOrWhitespace(report) ?
-      'No report for ' + test + '\n' :
-      report;
+goog.testing.MultiTestRunner.prototype.drawTestResult_ = function (test, success, report) {
+  var text = goog.string.isEmptyOrWhitespace(report) ? 'No report for ' + test + '\n' : report;
   var el = this.dom_.createDom(goog.dom.TagName.DIV);
   text = goog.string.htmlEscape(text).replace(/\n/g, '<br>');
   if (success) {
     el.className = goog.getCssName('goog-testrunner-report-success');
   } else {
-    text += '<a href="' + this.basePath_ + test +
-        '">Run individually &raquo;</a><br>&nbsp;';
+    text += '<a href="' + this.basePath_ + test + '">Run individually &raquo;</a><br>&nbsp;';
     el.className = goog.getCssName('goog-testrunner-report-failure');
   }
   el.innerHTML = text;
   this.reportEl_.appendChild(el);
 };
 
-
 /**
  * Returns the current timestamp.
  * @return {string} HH:MM:SS.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.getTimeStamp_ = function() {
-  'use strict';
-  var d = new Date;
-  return goog.string.padNumber(d.getHours(), 2) + ':' +
-      goog.string.padNumber(d.getMinutes(), 2) + ':' +
-      goog.string.padNumber(d.getSeconds(), 2);
+goog.testing.MultiTestRunner.prototype.getTimeStamp_ = () => {
+  var d = new Date();
+  return (
+    goog.string.padNumber(d.getHours(), 2) +
+    ':' +
+    goog.string.padNumber(d.getMinutes(), 2) +
+    ':' +
+    goog.string.padNumber(d.getSeconds(), 2)
+  );
 };
-
 
 /**
  * Trims a filename to be less than 35-characters, ensuring that we do not break
@@ -1158,8 +1081,7 @@ goog.testing.MultiTestRunner.prototype.getTimeStamp_ = function() {
  * @return {string} The shortened name.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.trimFileName_ = function(name) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.trimFileName_ = (name) => {
   if (name.length < 35) {
     return name;
   }
@@ -1171,14 +1093,12 @@ goog.testing.MultiTestRunner.prototype.trimFileName_ = function(name) {
   return '...' + result;
 };
 
-
 /**
  * Shows the report and hides the log if the argument is true.
  * @param {number} tab Which tab to show.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.showTab_ = function(tab) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.showTab_ = function (tab) {
   var activeTabCssClass = goog.getCssName('goog-testrunner-activetab');
 
   var logTabElement = goog.asserts.assert(this.logTabEl_);
@@ -1210,63 +1130,51 @@ goog.testing.MultiTestRunner.prototype.showTab_ = function(tab) {
   }
 };
 
-
 /**
  * Handles the start button being clicked.
  * @param {goog.events.BrowserEvent} e The click event.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.onStartClicked_ = function(e) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.onStartClicked_ = function (e) {
   this.start();
 };
-
 
 /**
  * Handles the stop button being clicked.
  * @param {goog.events.BrowserEvent} e The click event.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.onStopClicked_ = function(e) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.onStopClicked_ = function (e) {
   this.stopped_ = true;
   this.finish_();
 };
 
-
 /**
  * Handles the log tab being clicked.
  * @param {goog.events.BrowserEvent} e The click event.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.onLogTabClicked_ = function(e) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.onLogTabClicked_ = function (e) {
   this.showTab_(0);
 };
 
-
 /**
  * Handles the log tab being clicked.
  * @param {goog.events.BrowserEvent} e The click event.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.onReportTabClicked_ = function(e) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.onReportTabClicked_ = function (e) {
   this.showTab_(1);
 };
-
 
 /**
  * Handles the stats tab being clicked.
  * @param {goog.events.BrowserEvent} e The click event.
  * @private
  */
-goog.testing.MultiTestRunner.prototype.onStatsTabClicked_ = function(e) {
-  'use strict';
+goog.testing.MultiTestRunner.prototype.onStatsTabClicked_ = function (e) {
   this.showTab_(2);
 };
-
-
 
 /**
  * Class used to manage the interaction with a single iframe.
@@ -1278,9 +1186,12 @@ goog.testing.MultiTestRunner.prototype.onStatsTabClicked_ = function(e) {
  * @extends {goog.ui.Component}
  * @final
  */
-goog.testing.MultiTestRunner.TestFrame = function(
-    basePath, timeoutMs, verbosePasses, opt_domHelper) {
-  'use strict';
+goog.testing.MultiTestRunner.TestFrame = function (
+  basePath,
+  timeoutMs,
+  verbosePasses,
+  opt_domHelper
+) {
   goog.ui.Component.call(this, opt_domHelper);
 
   /**
@@ -1320,14 +1231,12 @@ goog.testing.MultiTestRunner.TestFrame = function(
 };
 goog.inherits(goog.testing.MultiTestRunner.TestFrame, goog.ui.Component);
 
-
 /**
  * Reference to the iframe.
  * @type {?HTMLIFrameElement}
  * @private
  */
 goog.testing.MultiTestRunner.TestFrame.prototype.iframeEl_ = null;
-
 
 /**
  * Whether the iframe for the current test has loaded.
@@ -1336,14 +1245,12 @@ goog.testing.MultiTestRunner.TestFrame.prototype.iframeEl_ = null;
  */
 goog.testing.MultiTestRunner.TestFrame.prototype.iframeLoaded_ = false;
 
-
 /**
  * The test file being run.
  * @type {string}
  * @private
  */
 goog.testing.MultiTestRunner.TestFrame.prototype.testFile_ = '';
-
 
 /**
  * The report returned from the test.
@@ -1352,14 +1259,12 @@ goog.testing.MultiTestRunner.TestFrame.prototype.testFile_ = '';
  */
 goog.testing.MultiTestRunner.TestFrame.prototype.report_ = '';
 
-
 /**
  * The total time loading and running the test in milliseconds.
  * @type {number}
  * @private
  */
 goog.testing.MultiTestRunner.TestFrame.prototype.totalTime_ = 0;
-
 
 /**
  * The actual runtime of the test in milliseconds.
@@ -1368,14 +1273,12 @@ goog.testing.MultiTestRunner.TestFrame.prototype.totalTime_ = 0;
  */
 goog.testing.MultiTestRunner.TestFrame.prototype.runTime_ = 0;
 
-
 /**
  * The number of files loaded by the test.
  * @type {number}
  * @private
  */
 goog.testing.MultiTestRunner.TestFrame.prototype.numFilesLoaded_ = 0;
-
 
 /**
  * Whether the test was successful, null if no result has been returned yet.
@@ -1384,14 +1287,12 @@ goog.testing.MultiTestRunner.TestFrame.prototype.numFilesLoaded_ = 0;
  */
 goog.testing.MultiTestRunner.TestFrame.prototype.isSuccess_ = null;
 
-
 /**
  * Timestamp for the when the test was started.
  * @type {number}
  * @private
  */
 goog.testing.MultiTestRunner.TestFrame.prototype.startTime_ = 0;
-
 
 /**
  * Timestamp for the last state, used to determine timeouts.
@@ -1400,7 +1301,6 @@ goog.testing.MultiTestRunner.TestFrame.prototype.startTime_ = 0;
  */
 goog.testing.MultiTestRunner.TestFrame.prototype.lastStateTime_ = 0;
 
-
 /**
  * The state of the active test.
  * @type {number}
@@ -1408,23 +1308,19 @@ goog.testing.MultiTestRunner.TestFrame.prototype.lastStateTime_ = 0;
  */
 goog.testing.MultiTestRunner.TestFrame.prototype.currentState_ = 0;
 
-
 /** @override */
-goog.testing.MultiTestRunner.TestFrame.prototype.disposeInternal = function() {
-  'use strict';
+goog.testing.MultiTestRunner.TestFrame.prototype.disposeInternal = function () {
   goog.testing.MultiTestRunner.TestFrame.superClass_.disposeInternal.call(this);
   this.dom_.removeNode(this.iframeEl_);
   this.eh_.dispose();
   this.iframeEl_ = null;
 };
 
-
 /**
  * Runs a test file in this test frame.
  * @param {string} testFile The test to run.
  */
-goog.testing.MultiTestRunner.TestFrame.prototype.runTest = function(testFile) {
-  'use strict';
+goog.testing.MultiTestRunner.TestFrame.prototype.runTest = function (testFile) {
   this.lastStateTime_ = this.startTime_ = goog.now();
 
   if (!this.iframeEl_) {
@@ -1451,47 +1347,39 @@ goog.testing.MultiTestRunner.TestFrame.prototype.runTest = function(testFile) {
   this.checkForCompletion_();
 };
 
-
 /**
  * @return {string} The test file the TestFrame is running.
  */
-goog.testing.MultiTestRunner.TestFrame.prototype.getTestFile = function() {
-  'use strict';
+goog.testing.MultiTestRunner.TestFrame.prototype.getTestFile = function () {
   return this.testFile_;
 };
-
 
 /**
  * @return {!goog.testing.MultiTestRunner.StatsType_} Stats about the test run.
  */
-goog.testing.MultiTestRunner.TestFrame.prototype.getStats = function() {
-  'use strict';
+goog.testing.MultiTestRunner.TestFrame.prototype.getStats = function () {
   return {
-    'testFile': this.testFile_,
-    'success': this.isSuccess_,
-    'runTime': this.runTime_,
-    'totalTime': this.totalTime_,
-    'numFilesLoaded': this.numFilesLoaded_
+    testFile: this.testFile_,
+    success: this.isSuccess_,
+    runTime: this.runTime_,
+    totalTime: this.totalTime_,
+    numFilesLoaded: this.numFilesLoaded_,
   };
 };
-
 
 /**
  * @return {string} The report for the test run.
  */
-goog.testing.MultiTestRunner.TestFrame.prototype.getReport = function() {
-  'use strict';
+goog.testing.MultiTestRunner.TestFrame.prototype.getReport = function () {
   return this.report_;
 };
-
 
 /**
  * @return {!Object<string,!Array<!goog.testing.TestCase.IResult>>} The results
  *     per individual test in the file. Key is the test filename concatenated
  *     with the test name, and the array holds failures.
  */
-goog.testing.MultiTestRunner.TestFrame.prototype.getTestResults = function() {
-  'use strict';
+goog.testing.MultiTestRunner.TestFrame.prototype.getTestResults = function () {
   var results = {};
   for (var testName in this.testResults_) {
     var testKey = this.testFile_.replace(/\.html$/, '');
@@ -1506,22 +1394,18 @@ goog.testing.MultiTestRunner.TestFrame.prototype.getTestResults = function() {
   return results;
 };
 
-
 /**
  * @return {?boolean} Whether the test frame had a success.
  */
-goog.testing.MultiTestRunner.TestFrame.prototype.isSuccess = function() {
-  'use strict';
+goog.testing.MultiTestRunner.TestFrame.prototype.isSuccess = function () {
   return this.isSuccess_;
 };
-
 
 /**
  * Handles the TestFrame finishing a single test.
  * @private
  */
-goog.testing.MultiTestRunner.TestFrame.prototype.finish_ = function() {
-  'use strict';
+goog.testing.MultiTestRunner.TestFrame.prototype.finish_ = function () {
   this.totalTime_ = goog.now() - this.startTime_;
   var parent = this.getParent();
   if (parent instanceof goog.testing.MultiTestRunner) {
@@ -1529,38 +1413,31 @@ goog.testing.MultiTestRunner.TestFrame.prototype.finish_ = function() {
   }
 };
 
-
 /**
  * Creates an iframe to run the tests in.  For overriding in unit tests.
  * @private
  */
-goog.testing.MultiTestRunner.TestFrame.prototype.createIframe_ = function() {
-  'use strict';
+goog.testing.MultiTestRunner.TestFrame.prototype.createIframe_ = function () {
   this.iframeEl_ = this.dom_.createDom(goog.dom.TagName.IFRAME);
   this.getElement().appendChild(this.iframeEl_);
   this.eh_.listen(this.iframeEl_, 'load', this.onIframeLoaded_);
 };
-
 
 /**
  * Handles the iframe loading.
  * @param {goog.events.BrowserEvent} e The load event.
  * @private
  */
-goog.testing.MultiTestRunner.TestFrame.prototype.onIframeLoaded_ = function(e) {
-  'use strict';
+goog.testing.MultiTestRunner.TestFrame.prototype.onIframeLoaded_ = function (e) {
   this.iframeLoaded_ = true;
 };
-
 
 /**
  * Checks the active test for completion, keeping track of the tests' various
  * execution stages.
  * @private
  */
-goog.testing.MultiTestRunner.TestFrame.prototype.checkForCompletion_ =
-    function() {
-  'use strict';
+goog.testing.MultiTestRunner.TestFrame.prototype.checkForCompletion_ = function () {
   var js = goog.dom.getFrameContentWindow(this.iframeEl_);
   switch (this.currentState_) {
     case 0:
@@ -1587,11 +1464,15 @@ goog.testing.MultiTestRunner.TestFrame.prototype.checkForCompletion_ =
         if (goog.object.isEmpty(this.testResults_)) {
           // Existence of a report is a signal of a test failure by the test
           // runner.
-          this.testResults_[this.testFile_] = this.isSuccess_ ? [] : [{
-            'message': this.report_,
-            'source': this.testFile_,
-            'stacktrace': ''
-          }];
+          this.testResults_[this.testFile_] = this.isSuccess_
+            ? []
+            : [
+                {
+                  message: this.report_,
+                  source: this.testFile_,
+                  stacktrace: '',
+                },
+              ];
         }
         this.runTime_ = tr['getRunTime']();
         this.numFilesLoaded_ = tr['getNumFilesLoaded']();
@@ -1602,10 +1483,11 @@ goog.testing.MultiTestRunner.TestFrame.prototype.checkForCompletion_ =
 
   // Check to see if the test has timed out.
   if (goog.now() - this.lastStateTime_ > this.timeoutMs_) {
-    this.report_ = this.testFile_ + ' timed out  ' +
-        goog.testing.MultiTestRunner.STATES[this.currentState_];
-    this.testResults_[this.testFile_] =
-        [{'message': this.report_, 'source': this.testFile_, 'stacktrace': ''}];
+    this.report_ =
+      this.testFile_ + ' timed out  ' + goog.testing.MultiTestRunner.STATES[this.currentState_];
+    this.testResults_[this.testFile_] = [
+      { message: this.report_, source: this.testFile_, stacktrace: '' },
+    ];
     this.isSuccess_ = false;
     this.finish_();
     return;

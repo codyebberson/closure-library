@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.plugins.ListTabHandlerTest');
-goog.setTestOnly();
 
 const BrowserEvent = goog.require('goog.events.BrowserEvent');
 const Command = goog.require('goog.editor.Command');
@@ -51,7 +50,7 @@ testSuite({
   testListIndentInLi() {
     field.innerHTML = '<ul><li>Text</li></ul>';
 
-    const testText = field.firstChild.firstChild.firstChild;  // div ul li Test
+    const testText = field.firstChild.firstChild.firstChild; // div ul li Test
     testHelper.select(testText, 0, testText, 4);
 
     const event = new StrictMock(BrowserEvent);
@@ -72,9 +71,7 @@ testSuite({
     editableField.$replay();
     event.$replay();
 
-    assertTrue(
-        'Event must be handled',
-        tabHandler.handleKeyboardShortcut(event, '', false));
+    assertTrue('Event must be handled', tabHandler.handleKeyboardShortcut(event, '', false));
 
     editableField.$verify();
     event.$verify();
@@ -84,7 +81,7 @@ testSuite({
   testListIndentContainLi() {
     field.innerHTML = '<ul><li>Text</li></ul>';
 
-    const testText = field.firstChild.firstChild.firstChild;  // div ul li Test
+    const testText = field.firstChild.firstChild.firstChild; // div ul li Test
     testHelper.select(field.firstChild, 0, testText, 4);
 
     const event = new StrictMock(BrowserEvent);
@@ -105,9 +102,7 @@ testSuite({
     editableField.$replay();
     event.$replay();
 
-    assertTrue(
-        'Event must be handled',
-        tabHandler.handleKeyboardShortcut(event, '', false));
+    assertTrue('Event must be handled', tabHandler.handleKeyboardShortcut(event, '', false));
 
     editableField.$verify();
     event.$verify();
@@ -117,7 +112,7 @@ testSuite({
   testListOutdentInLi() {
     field.innerHTML = '<ul><li>Text</li></ul>';
 
-    const testText = field.firstChild.firstChild.firstChild;  // div ul li Test
+    const testText = field.firstChild.firstChild.firstChild; // div ul li Test
     testHelper.select(testText, 0, testText, 4);
 
     const event = new StrictMock(BrowserEvent);
@@ -138,9 +133,7 @@ testSuite({
     editableField.$replay();
     event.$replay();
 
-    assertTrue(
-        'Event must be handled',
-        tabHandler.handleKeyboardShortcut(event, '', false));
+    assertTrue('Event must be handled', tabHandler.handleKeyboardShortcut(event, '', false));
 
     editableField.$verify();
     event.$verify();
@@ -150,7 +143,7 @@ testSuite({
   testListOutdentContainLi() {
     field.innerHTML = '<ul><li>Text</li></ul>';
 
-    const testText = field.firstChild.firstChild.firstChild;  // div ul li Test
+    const testText = field.firstChild.firstChild.firstChild; // div ul li Test
     testHelper.select(field.firstChild, 0, testText, 4);
 
     const event = new StrictMock(BrowserEvent);
@@ -171,9 +164,7 @@ testSuite({
     editableField.$replay();
     event.$replay();
 
-    assertTrue(
-        'Event must be handled',
-        tabHandler.handleKeyboardShortcut(event, '', false));
+    assertTrue('Event must be handled', tabHandler.handleKeyboardShortcut(event, '', false));
 
     editableField.$verify();
     event.$verify();
@@ -200,9 +191,7 @@ testSuite({
     editableField.$replay();
     event.$replay();
 
-    assertFalse(
-        'Event must not be handled',
-        tabHandler.handleKeyboardShortcut(event, '', false));
+    assertFalse('Event must not be handled', tabHandler.handleKeyboardShortcut(event, '', false));
 
     editableField.$verify();
     event.$verify();

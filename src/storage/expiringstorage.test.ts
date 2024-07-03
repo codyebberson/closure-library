@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.storage.ExpiringStorageTest');
-goog.setTestOnly();
 
 const ExpiringStorage = goog.require('goog.storage.ExpiringStorage');
 const FakeMechanism = goog.require('goog.testing.storage.FakeMechanism');

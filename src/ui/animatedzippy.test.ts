@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.AnimatedZippyTest');
-goog.setTestOnly();
 
 const AnimatedZippy = goog.require('goog.ui.AnimatedZippy');
 const Animation = goog.require('goog.fx.Animation');
@@ -30,8 +29,7 @@ testSuite({
   setUp() {
     animatedZippyHeaderEl = dom.getElement('t1');
     asserts.assert(animatedZippyHeaderEl);
-    animatedZippy =
-        new AnimatedZippy(animatedZippyHeaderEl, dom.getElement('c1'));
+    animatedZippy = new AnimatedZippy(animatedZippyHeaderEl, dom.getElement('c1'));
 
     propertyReplacer = new PropertyReplacer();
   },
@@ -51,7 +49,12 @@ testSuite({
   testConstructorAriaRoleOverride() {
     /** @suppress {checkTypes} suppression added to enable type checking */
     animatedZippy = new AnimatedZippy(
-        animatedZippyHeaderEl, dom.getElement('c1'), null, null, Role.BUTTON);
+      animatedZippyHeaderEl,
+      dom.getElement('c1'),
+      null,
+      null,
+      Role.BUTTON
+    );
     assertEquals(aria.getRole(animatedZippyHeaderEl), Role.BUTTON);
   },
 
@@ -59,46 +62,49 @@ testSuite({
     let animationsPlayed = 0;
     let toggleEventsFired = 0;
 
-    propertyReplacer.replace(Animation.prototype, 'play', function() {
+    propertyReplacer.replace(Animation.prototype, 'play', function () {
       animationsPlayed++;
       this.dispatchAnimationEvent(Transition.EventType.END);
     });
-    propertyReplacer.replace(
-        AnimatedZippy.prototype, 'onAnimate_', functions.NULL);
+    propertyReplacer.replace(AnimatedZippy.prototype, 'onAnimate_', functions.NULL);
 
     events.listenOnce(
-        animatedZippy,
-        Zippy.Events.TOGGLE, /**
+      animatedZippy,
+      Zippy.Events.TOGGLE /**
                                 @suppress {checkTypes} suppression added to
                                 enable type checking
-                              */
-        (e) => {
-          toggleEventsFired++;
-          assertTrue('TOGGLE event must be for expansion', e.expanded);
-          assertEquals(
-              'expanded must be true', true, animatedZippy.isExpanded());
-          assertEquals(
-              'aria-expanded must be true', 'true',
-              aria.getState(animatedZippyHeaderEl, State.EXPANDED));
-        });
+                              */,
+      (e) => {
+        toggleEventsFired++;
+        assertTrue('TOGGLE event must be for expansion', e.expanded);
+        assertEquals('expanded must be true', true, animatedZippy.isExpanded());
+        assertEquals(
+          'aria-expanded must be true',
+          'true',
+          aria.getState(animatedZippyHeaderEl, State.EXPANDED)
+        );
+      }
+    );
 
     animatedZippy.expand();
 
     events.listenOnce(
-        animatedZippy,
-        Zippy.Events.TOGGLE, /**
+      animatedZippy,
+      Zippy.Events.TOGGLE /**
                                 @suppress {checkTypes} suppression added to
                                 enable type checking
-                              */
-        (e) => {
-          toggleEventsFired++;
-          assertFalse('TOGGLE event must be for collapse', e.expanded);
-          assertEquals(
-              'expanded must be false', false, animatedZippy.isExpanded());
-          assertEquals(
-              'aria-expanded must be false', 'false',
-              aria.getState(animatedZippyHeaderEl, State.EXPANDED));
-        });
+                              */,
+      (e) => {
+        toggleEventsFired++;
+        assertFalse('TOGGLE event must be for collapse', e.expanded);
+        assertEquals('expanded must be false', false, animatedZippy.isExpanded());
+        assertEquals(
+          'aria-expanded must be false',
+          'false',
+          aria.getState(animatedZippyHeaderEl, State.EXPANDED)
+        );
+      }
+    );
 
     animatedZippy.collapse();
 
@@ -110,16 +116,15 @@ testSuite({
     let animationsRunning = 0;
     let lastAnimation = null;
 
-    propertyReplacer.replace(Animation.prototype, 'play', function() {
+    propertyReplacer.replace(Animation.prototype, 'play', function () {
       animationsRunning++;
       lastAnimation = this;
     });
-    propertyReplacer.replace(Animation.prototype, 'stop', function() {
+    propertyReplacer.replace(Animation.prototype, 'stop', function () {
       animationsRunning--;
       this.dispatchAnimationEvent(Transition.EventType.END);
     });
-    propertyReplacer.replace(
-        AnimatedZippy.prototype, 'onAnimate_', functions.NULL);
+    propertyReplacer.replace(AnimatedZippy.prototype, 'onAnimate_', functions.NULL);
 
     // Expand when expanding animation is playing.
     animatedZippy.expand();
@@ -163,57 +168,55 @@ testSuite({
     let animationsPlayed = 0;
     let toggleEventsFired = 0;
 
-    propertyReplacer.replace(Animation.prototype, 'play', function() {
+    propertyReplacer.replace(Animation.prototype, 'play', function () {
       animationsPlayed++;
       this.dispatchAnimationEvent(Transition.EventType.BEGIN);
       this.dispatchAnimationEvent(Transition.EventType.END);
     });
-    propertyReplacer.replace(
-        AnimatedZippy.prototype, 'onAnimate_', functions.NULL);
+    propertyReplacer.replace(AnimatedZippy.prototype, 'onAnimate_', functions.NULL);
 
     events.listenOnce(
-        animatedZippy,
-        AnimatedZippy.Events
-            .TOGGLE_ANIMATION_BEGIN, /**
+      animatedZippy,
+      AnimatedZippy.Events.TOGGLE_ANIMATION_BEGIN /**
                                         @suppress {checkTypes} suppression added
                                         to enable type checking
-                                      */
-        (e) => {
-          toggleEventsFired++;
-          assertTrue(
-              'TOGGLE_ANIMATION_BEGIN event must be for expansion', e.expanded);
-          assertEquals(
-              'expanded must be false', false, animatedZippy.isExpanded());
-          assertEquals(
-              'aria-expanded must be true', 'true',
-              aria.getState(animatedZippyHeaderEl, State.EXPANDED));
-        });
+                                      */,
+      (e) => {
+        toggleEventsFired++;
+        assertTrue('TOGGLE_ANIMATION_BEGIN event must be for expansion', e.expanded);
+        assertEquals('expanded must be false', false, animatedZippy.isExpanded());
+        assertEquals(
+          'aria-expanded must be true',
+          'true',
+          aria.getState(animatedZippyHeaderEl, State.EXPANDED)
+        );
+      }
+    );
 
     animatedZippy.expand();
 
     events.listenOnce(
-        animatedZippy,
-        AnimatedZippy.Events
-            .TOGGLE_ANIMATION_BEGIN, /**
+      animatedZippy,
+      AnimatedZippy.Events.TOGGLE_ANIMATION_BEGIN /**
                                         @suppress {checkTypes} suppression added
                                         to enable type checking
-                                      */
-        (e) => {
-          toggleEventsFired++;
-          assertFalse(
-              'TOGGLE_ANIMATION_BEGIN event must be for collapse', e.expanded);
-          assertEquals(
-              'expanded must be true', true, animatedZippy.isExpanded());
-          assertEquals(
-              'aria-expanded must be false', 'false',
-              aria.getState(animatedZippyHeaderEl, State.EXPANDED));
-        });
+                                      */,
+      (e) => {
+        toggleEventsFired++;
+        assertFalse('TOGGLE_ANIMATION_BEGIN event must be for collapse', e.expanded);
+        assertEquals('expanded must be true', true, animatedZippy.isExpanded());
+        assertEquals(
+          'aria-expanded must be false',
+          'false',
+          aria.getState(animatedZippyHeaderEl, State.EXPANDED)
+        );
+      }
+    );
 
     animatedZippy.collapse();
 
     assertEquals('animations must play', 2, animationsPlayed);
-    assertEquals(
-        'TOGGLE_ANIMATION_BEGIN events must fire', 2, toggleEventsFired);
+    assertEquals('TOGGLE_ANIMATION_BEGIN events must fire', 2, toggleEventsFired);
   },
 
   /**
@@ -225,50 +228,49 @@ testSuite({
     let animationsPlayed = 0;
     let toggleEventsFired = 0;
 
-    propertyReplacer.replace(Animation.prototype, 'play', function() {
+    propertyReplacer.replace(Animation.prototype, 'play', function () {
       animationsPlayed++;
       this.dispatchAnimationEvent(Transition.EventType.END);
     });
-    propertyReplacer.replace(
-        AnimatedZippy.prototype, 'onAnimate_', functions.NULL);
+    propertyReplacer.replace(AnimatedZippy.prototype, 'onAnimate_', functions.NULL);
 
     events.listenOnce(
-        animatedZippy,
-        AnimatedZippy.Events
-            .TOGGLE_ANIMATION_END, /**
+      animatedZippy,
+      AnimatedZippy.Events.TOGGLE_ANIMATION_END /**
                                       @suppress {checkTypes} suppression added
                                       to enable type checking
-                                    */
-        (e) => {
-          toggleEventsFired++;
-          assertTrue(
-              'TOGGLE_ANIMATION_END event must be for expansion', e.expanded);
-          assertEquals(
-              'expanded must be true', true, animatedZippy.isExpanded());
-          assertEquals(
-              'aria-expanded must be true', 'true',
-              aria.getState(animatedZippyHeaderEl, State.EXPANDED));
-        });
+                                    */,
+      (e) => {
+        toggleEventsFired++;
+        assertTrue('TOGGLE_ANIMATION_END event must be for expansion', e.expanded);
+        assertEquals('expanded must be true', true, animatedZippy.isExpanded());
+        assertEquals(
+          'aria-expanded must be true',
+          'true',
+          aria.getState(animatedZippyHeaderEl, State.EXPANDED)
+        );
+      }
+    );
 
     animatedZippy.expand();
 
     events.listenOnce(
-        animatedZippy,
-        AnimatedZippy.Events
-            .TOGGLE_ANIMATION_END, /**
+      animatedZippy,
+      AnimatedZippy.Events.TOGGLE_ANIMATION_END /**
                                       @suppress {checkTypes} suppression added
                                       to enable type checking
-                                    */
-        (e) => {
-          toggleEventsFired++;
-          assertFalse(
-              'TOGGLE_ANIMATION_END event must be for collapse', e.expanded);
-          assertEquals(
-              'expanded must be false', false, animatedZippy.isExpanded());
-          assertEquals(
-              'aria-expanded must be false', 'false',
-              aria.getState(animatedZippyHeaderEl, State.EXPANDED));
-        });
+                                    */,
+      (e) => {
+        toggleEventsFired++;
+        assertFalse('TOGGLE_ANIMATION_END event must be for collapse', e.expanded);
+        assertEquals('expanded must be false', false, animatedZippy.isExpanded());
+        assertEquals(
+          'aria-expanded must be false',
+          'false',
+          aria.getState(animatedZippyHeaderEl, State.EXPANDED)
+        );
+      }
+    );
 
     animatedZippy.collapse();
 

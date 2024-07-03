@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.tree.TreeControlTest');
-goog.setTestOnly();
 
 const TreeControl = goog.require('goog.ui.tree.TreeControl');
 const dom = goog.require('goog.dom');
@@ -15,7 +14,22 @@ function makeATree() {
   const tree = new TreeControl('root');
   const testData = [
     'A',
-    [['AA', [['AAA', []], ['AAB', []]]], ['AB', [['ABA', []], ['ABB', []]]]],
+    [
+      [
+        'AA',
+        [
+          ['AAA', []],
+          ['AAB', []],
+        ],
+      ],
+      [
+        'AB',
+        [
+          ['ABA', []],
+          ['ABB', []],
+        ],
+      ],
+    ],
   ];
 
   createTreeFromTestData(tree, testData, 3);

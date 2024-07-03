@@ -25,13 +25,11 @@ goog.require('goog.userAgent.product.isVersion');
 
 goog.setTestOnly('goog.userAgentTestUtil');
 
-
 /**
  * Rerun the initialization code to set all of the goog.userAgent constants.
  * @suppress {accessControls}
  */
-goog.userAgentTestUtil.reinitializeUserAgent = function() {
-  'use strict';
+goog.userAgentTestUtil.reinitializeUserAgent = () => {
   // Unfortunately we can't isolate the useragent setting in a function
   // we can call, because things rely on it compiling to nothing when
   // one of the ASSUME flags is set, and the compiler isn't smart enough
@@ -62,8 +60,7 @@ goog.userAgentTestUtil.reinitializeUserAgent = function() {
   goog.userAgent.platform.VERSION = goog.userAgent.platform.determineVersion_();
 
   // Update goog.userAgent.product
-  goog.userAgent.product.ANDROID =
-      goog.labs.userAgent.browser.isAndroidBrowser();
+  goog.userAgent.product.ANDROID = goog.labs.userAgent.browser.isAndroidBrowser();
   goog.userAgent.product.CHROME = goog.labs.userAgent.browser.isChrome();
   goog.userAgent.product.EDGE = goog.labs.userAgent.browser.isEdge();
   goog.userAgent.product.FIREFOX = goog.labs.userAgent.browser.isFirefox();
@@ -77,13 +74,11 @@ goog.userAgentTestUtil.reinitializeUserAgent = function() {
   goog.userAgent.product.VERSION = goog.userAgent.product.determineVersion_();
 
   // goog.userAgent.keyboard
-  goog.userAgent.keyboard.MAC_KEYBOARD =
-      goog.userAgent.keyboard.determineMacKeyboard_();
+  goog.userAgent.keyboard.MAC_KEYBOARD = goog.userAgent.keyboard.determineMacKeyboard_();
 
   // Reset cache so calls to isVersionOrHigher don't use cached version.
   goog.object.clear(goog.userAgent.isVersionOrHigherCache_);
 };
-
 
 /**
  * Browser definitions.
@@ -94,17 +89,15 @@ goog.userAgentTestUtil.UserAgents = {
   IE: 'IE',
   OPERA: 'OPERA',
   WEBKIT: 'WEBKIT',
-  EDGE: 'EDGE'
+  EDGE: 'EDGE',
 };
-
 
 /**
  * Return whether a given user agent has been detected.
  * @param {string} agent Value in UserAgents.
  * @return {boolean} Whether the user agent has been detected.
  */
-goog.userAgentTestUtil.getUserAgentDetected = function(agent) {
-  'use strict';
+goog.userAgentTestUtil.getUserAgentDetected = (agent) => {
   switch (agent) {
     case goog.userAgentTestUtil.UserAgents.GECKO:
       return goog.userAgent.GECKO;

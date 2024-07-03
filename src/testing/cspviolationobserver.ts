@@ -12,7 +12,7 @@ goog.setTestOnly('goog.testing.CspViolationObserver');
  *
  * @constructor
  */
-goog.testing.CspViolationObserver = function() {
+goog.testing.CspViolationObserver = function () {
   if (!window.ReportingObserver) {
     return;
   }
@@ -27,11 +27,10 @@ goog.testing.CspViolationObserver = function() {
   this.reports_ = [];
 };
 
-
 /**
  * Starts listening for CSP reports.
  */
-goog.testing.CspViolationObserver.prototype.start = function() {
+goog.testing.CspViolationObserver.prototype.start = function () {
   if (!window.ReportingObserver || !this.enabled_) {
     return;
   }
@@ -49,14 +48,13 @@ goog.testing.CspViolationObserver.prototype.start = function() {
   this.reportingObserver_.observe();
 };
 
-
 /**
  * Returns CSP reports collected so far and empties the collection buffer.
  *
  * @return {!Array<!Report>}
  * @private
  */
-goog.testing.CspViolationObserver.prototype.take_ = function() {
+goog.testing.CspViolationObserver.prototype.take_ = function () {
   const newReports = this.reportingObserver_.takeRecords();
   this.reports_.push(...newReports);
 
@@ -66,14 +64,13 @@ goog.testing.CspViolationObserver.prototype.take_ = function() {
   return results;
 };
 
-
 /**
  * Stops listening for violation reports and returns all reports captured so
  * far.
  *
  * @return {!Array<!Report>}
  */
-goog.testing.CspViolationObserver.prototype.stop = function() {
+goog.testing.CspViolationObserver.prototype.stop = function () {
   if (!window.ReportingObserver) {
     return [];
   }
@@ -89,14 +86,13 @@ goog.testing.CspViolationObserver.prototype.stop = function() {
   return results;
 };
 
-
 /**
  * If called with false, violation reports will no longer be captured and empty
  * arrays will be returned from stop().
  *
  * @param {boolean} enabled
  */
-goog.testing.CspViolationObserver.prototype.setEnabled = function(enabled) {
+goog.testing.CspViolationObserver.prototype.setEnabled = function (enabled) {
   if (!window.ReportingObserver) {
     return;
   }
@@ -116,7 +112,6 @@ goog.testing.CspViolationObserver.prototype.setEnabled = function(enabled) {
   this.enabled_ = enabled;
 };
 
-
 /**
  * ReportingObserver callback.
  *
@@ -124,23 +119,21 @@ goog.testing.CspViolationObserver.prototype.setEnabled = function(enabled) {
  * @param {!ReportingObserver} observer
  * @private
  */
-goog.testing.CspViolationObserver.prototype.onReport_ = function(
-    reports, observer) {
+goog.testing.CspViolationObserver.prototype.onReport_ = function (reports, observer) {
   this.reports_.push(...reports);
 };
-
 
 /**
  * Returns previously generated reports.
  *
  * @return {!Array<!Report>}
  */
-goog.testing.CspViolationObserver.getBufferedReports = function() {
+goog.testing.CspViolationObserver.getBufferedReports = () => {
   if (!window.ReportingObserver) {
     return [];
   }
 
-  const reportingObserver = new ReportingObserver(function() {}, {
+  const reportingObserver = new ReportingObserver(() => {}, {
     types: ['csp-violation'],
     buffered: true,
   });
@@ -153,17 +146,11 @@ goog.testing.CspViolationObserver.getBufferedReports = function() {
   return reports;
 };
 
-
 /**
  * Formats the given list of reports as a string.
  *
  * @param {!Array<!Report>} reports
  * @return {string}
  */
-goog.testing.CspViolationObserver.formatReports = function(reports) {
-  return reports
-      .map(function(report) {
-        return JSON.stringify(report.body.toJSON(), null, '    ');
-      })
-      .join(', ');
-};
+goog.testing.CspViolationObserver.formatReports = (reports) =>
+  reports.map((report) => JSON.stringify(report.body.toJSON(), null, '    ')).join(', ');

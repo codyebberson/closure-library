@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.tweak.BaseEntryTest');
-goog.setTestOnly();
 
 const MockControl = goog.require('goog.testing.MockControl');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -55,11 +54,8 @@ testSuite({
     strEntry.setValue('foo');
     numEntry.setValue(5);
     assertTrue('wrong value for boolean', boolEntry.getValue());
-    assertEquals(
-        'wrong value for string', strEntry.getDefaultValue(),
-        strEntry.getValue());
-    assertEquals(
-        'wrong value for num', numEntry.getDefaultValue(), numEntry.getValue());
+    assertEquals('wrong value for string', strEntry.getDefaultValue(), strEntry.getValue());
+    assertEquals('wrong value for num', numEntry.getDefaultValue(), numEntry.getValue());
 
     // These do not have the restartRequired option set.
     strEnumEntry.setValue('B');

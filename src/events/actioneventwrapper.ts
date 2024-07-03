@@ -20,8 +20,6 @@ goog.require('goog.events.EventType');
 goog.require('goog.events.EventWrapper');
 goog.require('goog.events.KeyCodes');
 
-
-
 /**
  * Event wrapper for action handling. Fires when an element is activated either
  * by clicking it or by focusing it and pressing Enter.
@@ -30,13 +28,13 @@ goog.require('goog.events.KeyCodes');
  * @implements {goog.events.EventWrapper}
  * @private
  */
-goog.events.ActionEventWrapper_ = function() {};
+goog.events.ActionEventWrapper_ = () => {};
 
 /**
  * @interface
  * @private
  */
-goog.events.ActionEventWrapper_.FunctionExtension_ = function() {};
+goog.events.ActionEventWrapper_.FunctionExtension_ = () => {};
 
 /** @private {!Object|undefined} */
 goog.events.ActionEventWrapper_.FunctionExtension_.prototype.scope_;
@@ -44,13 +42,11 @@ goog.events.ActionEventWrapper_.FunctionExtension_.prototype.scope_;
 /** @private {function(?):?|{handleEvent:function(?):?}|null} */
 goog.events.ActionEventWrapper_.FunctionExtension_.prototype.listener_;
 
-
 /**
  * Singleton instance of ActionEventWrapper_.
  * @type {goog.events.ActionEventWrapper_}
  */
 goog.events.actionEventWrapper = new goog.events.ActionEventWrapper_();
-
 
 /**
  * Event types used by the wrapper.
@@ -59,10 +55,10 @@ goog.events.actionEventWrapper = new goog.events.ActionEventWrapper_();
  * @private
  */
 goog.events.ActionEventWrapper_.EVENT_TYPES_ = [
-  goog.events.EventType.CLICK, goog.events.EventType.KEYDOWN,
-  goog.events.EventType.KEYUP
+  goog.events.EventType.CLICK,
+  goog.events.EventType.KEYDOWN,
+  goog.events.EventType.KEYUP,
 ];
-
 
 /**
  * Adds an event listener using the wrapper on a DOM Node or an object that has
@@ -79,29 +75,33 @@ goog.events.ActionEventWrapper_.EVENT_TYPES_ = [
  *     listener to.
  * @override
  */
-goog.events.ActionEventWrapper_.prototype.listen = function(
-    target, listener, opt_capt, opt_scope, opt_eventHandler) {
-  'use strict';
-  var callback = function(e) {
-    'use strict';
+goog.events.ActionEventWrapper_.prototype.listen = (
+  target,
+  listener,
+  opt_capt,
+  opt_scope,
+  opt_eventHandler
+) => {
+  var callback = (e) => {
     var listenerFn = goog.events.wrapListener(listener);
-    var role = goog.dom.isElement(e.target) ?
-        goog.a11y.aria.getRole(/** @type {!Element} */ (e.target)) :
-        null;
+    var role = goog.dom.isElement(e.target)
+      ? goog.a11y.aria.getRole(/** @type {!Element} */ (e.target))
+      : null;
     if (e.type == goog.events.EventType.CLICK && e.isMouseActionButton()) {
       listenerFn.call(opt_scope, e);
     } else if (
-        (e.keyCode == goog.events.KeyCodes.ENTER ||
-         e.keyCode == goog.events.KeyCodes.MAC_ENTER) &&
-        e.type != goog.events.EventType.KEYUP) {
+      (e.keyCode == goog.events.KeyCodes.ENTER || e.keyCode == goog.events.KeyCodes.MAC_ENTER) &&
+      e.type != goog.events.EventType.KEYUP
+    ) {
       // convert keydown to keypress for backward compatibility.
       e.type = goog.events.EventType.KEYPRESS;
       listenerFn.call(opt_scope, e);
     } else if (
-        e.keyCode == goog.events.KeyCodes.SPACE &&
-        (role == goog.a11y.aria.Role.BUTTON ||
-         role == goog.a11y.aria.Role.TAB ||
-         role == goog.a11y.aria.Role.RADIO)) {
+      e.keyCode == goog.events.KeyCodes.SPACE &&
+      (role == goog.a11y.aria.Role.BUTTON ||
+        role == goog.a11y.aria.Role.TAB ||
+        role == goog.a11y.aria.Role.RADIO)
+    ) {
       if (e.type == goog.events.EventType.KEYUP) {
         listenerFn.call(opt_scope, e);
       }
@@ -115,15 +115,15 @@ goog.events.ActionEventWrapper_.prototype.listen = function(
 
   if (opt_eventHandler) {
     opt_eventHandler.listen(
-        target, goog.events.ActionEventWrapper_.EVENT_TYPES_, callback,
-        opt_capt);
+      target,
+      goog.events.ActionEventWrapper_.EVENT_TYPES_,
+      callback,
+      opt_capt
+    );
   } else {
-    goog.events.listen(
-        target, goog.events.ActionEventWrapper_.EVENT_TYPES_, callback,
-        opt_capt);
+    goog.events.listen(target, goog.events.ActionEventWrapper_.EVENT_TYPES_, callback, opt_capt);
   }
 };
-
 
 /**
  * Removes an event listener added using goog.events.EventWrapper.listen.
@@ -138,21 +138,22 @@ goog.events.ActionEventWrapper_.prototype.listen = function(
  *     listener from.
  * @override
  */
-goog.events.ActionEventWrapper_.prototype.unlisten = function(
-    target, listener, opt_capt, opt_scope, opt_eventHandler) {
-  'use strict';
-  for (var type, j = 0; type = goog.events.ActionEventWrapper_.EVENT_TYPES_[j];
-       j++) {
+goog.events.ActionEventWrapper_.prototype.unlisten = (
+  target,
+  listener,
+  opt_capt,
+  opt_scope,
+  opt_eventHandler
+) => {
+  for (var type, j = 0; (type = goog.events.ActionEventWrapper_.EVENT_TYPES_[j]); j++) {
     var listeners = goog.events.getListeners(target, type, !!opt_capt);
-    for (var obj, i = 0; obj = listeners[i]; i++) {
-      var objListener =
-          /** @type {!goog.events.ActionEventWrapper_.FunctionExtension_} */ (
-              obj.listener);
-      if (objListener.listener_ == listener &&
-          objListener.scope_ == opt_scope) {
+    for (var obj, i = 0; (obj = listeners[i]); i++) {
+      var objListener = /** @type {!goog.events.ActionEventWrapper_.FunctionExtension_} */ (
+        obj.listener
+      );
+      if (objListener.listener_ == listener && objListener.scope_ == opt_scope) {
         if (opt_eventHandler) {
-          opt_eventHandler.unlisten(
-              target, type, obj.listener, opt_capt, opt_scope);
+          opt_eventHandler.unlisten(target, type, obj.listener, opt_capt, opt_scope);
         } else {
           goog.events.unlisten(target, type, obj.listener, opt_capt, opt_scope);
         }

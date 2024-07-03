@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.RangeModelTest');
-goog.setTestOnly();
 
 const RangeModel = goog.require('goog.ui.RangeModel');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -19,13 +18,12 @@ function reset(rm, step) {
 }
 
 function getDescriptiveString(rm) {
-  return rm.getMinimum() + ' < ' + rm.getValue() + '[' + rm.getExtent() +
-      '] < ' + rm.getMaximum();
+  return rm.getMinimum() + ' < ' + rm.getValue() + '[' + rm.getExtent() + '] < ' + rm.getMaximum();
 }
 
 testSuite({
   testValue() {
-    const rm = new RangeModel;
+    const rm = new RangeModel();
 
     assertEquals(0, rm.getValue());
     rm.setValue(50);
@@ -66,7 +64,7 @@ testSuite({
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testMinium() {
-    const rm = new RangeModel;
+    const rm = new RangeModel();
 
     rm.setValue(50);
     rm.setMinimum(10);
@@ -121,8 +119,8 @@ testSuite({
     reset(rm, 3);
 
     // should change extent
-    rm.setExtent(10);   // 0 < 0[9] < 99
-    rm.setMinimum(95);  // 95 < 95[3] < 98
+    rm.setExtent(10); // 0 < 0[9] < 99
+    rm.setMinimum(95); // 95 < 95[3] < 98
     assertEquals(95, rm.getMinimum());
     assertEquals(95, rm.getValue());
     assertEquals(98, rm.getMaximum());
@@ -131,7 +129,7 @@ testSuite({
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testMaximum() {
-    const rm = new RangeModel;
+    const rm = new RangeModel();
 
     rm.setMaximum(50);
     assertEquals(50, rm.getMaximum());
@@ -172,16 +170,16 @@ testSuite({
     // Change step
     reset(rm, 3);
 
-    rm.setMaximum(50);  // 0 < 0[0] < 51
+    rm.setMaximum(50); // 0 < 0[0] < 51
     assertEquals(51, rm.getMaximum());
 
     reset(rm, 3);
 
     // setting to smaller than minimum should change minimum, value and extent
-    rm.setValue(5);     // 0 < 6[0] < 99
-    rm.setExtent(10);   // 0 < 6[9] < 99
-    rm.setMinimum(50);  // 50 < 50[9] < 98
-    rm.setMaximum(40);  // 41 < 41[0] < 41
+    rm.setValue(5); // 0 < 6[0] < 99
+    rm.setExtent(10); // 0 < 6[9] < 99
+    rm.setMinimum(50); // 50 < 50[9] < 98
+    rm.setMaximum(40); // 41 < 41[0] < 41
     assertEquals(41, rm.getMaximum());
     assertEquals(0, rm.getExtent());
     assertEquals(41, rm.getValue());
@@ -190,9 +188,9 @@ testSuite({
     reset(rm, 3);
 
     // setting smaller than value should change value to max - extent
-    rm.setExtent(10);   // 0 < 0[9] < 99
-    rm.setValue(50);    // 0 < 51[9] < 99
-    rm.setMaximum(40);  // 0 < 30[9] < 39
+    rm.setExtent(10); // 0 < 0[9] < 99
+    rm.setValue(50); // 0 < 51[9] < 99
+    rm.setMaximum(40); // 0 < 30[9] < 39
     assertEquals(39, rm.getMaximum());
     assertEquals(30, rm.getValue());
 
@@ -200,16 +198,16 @@ testSuite({
 
     // should change value, and keep extent constant,
     // unless extent is > max - min.
-    rm.setExtent(10);   // 0 < 0[9] < 99
-    rm.setValue(90);    // 0 < 90[9] < 99
-    rm.setMaximum(95);  // 0 < 90[6] < 96
+    rm.setExtent(10); // 0 < 0[9] < 99
+    rm.setValue(90); // 0 < 90[9] < 99
+    rm.setMaximum(95); // 0 < 90[6] < 96
     assertEquals(96, rm.getMaximum());
     assertEquals(87, rm.getValue());
     assertEquals(9, rm.getExtent());
   },
 
   testExtent() {
-    const rm = new RangeModel;
+    const rm = new RangeModel();
 
     rm.setExtent(10);
     assertEquals(10, rm.getExtent());
@@ -226,20 +224,20 @@ testSuite({
     // Change step
     reset(rm, 3);
 
-    rm.setExtent(10);  // 0 < 0[9] < 99
+    rm.setExtent(10); // 0 < 0[9] < 99
     assertEquals(9, rm.getExtent());
 
     rm.setExtent(-10);
     assertEquals(0, rm.getExtent());
 
-    rm.setValue(50);    // 0 < 51[9] < 99
-    rm.setExtent(100);  // 0 < 51[48] < 99
+    rm.setValue(50); // 0 < 51[9] < 99
+    rm.setExtent(100); // 0 < 51[48] < 99
     assertEquals(48, rm.getExtent());
     assertEquals(51, rm.getValue());
   },
 
   testRoundToStep() {
-    const rm = new RangeModel;
+    const rm = new RangeModel();
     rm.setStep(0.5);
 
     assertEquals(1, rm.roundToStep(1));
@@ -249,7 +247,7 @@ testSuite({
   },
 
   testRoundToStepWithMin() {
-    const rm = new RangeModel;
+    const rm = new RangeModel();
     rm.setStep(0.5);
     rm.setMinimum(0.25);
 

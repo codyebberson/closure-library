@@ -19,35 +19,27 @@ goog.require('goog.proto2.Message');
 goog.require('goog.proto2.Serializer');
 goog.requireType('goog.proto2.FieldDescriptor');
 
-
-
 /**
  * Base class for all lazy deserializers.
  *
  * @constructor
  * @extends {goog.proto2.Serializer}
  */
-goog.proto2.LazyDeserializer = function() {};
+goog.proto2.LazyDeserializer = () => {};
 goog.inherits(goog.proto2.LazyDeserializer, goog.proto2.Serializer);
 
-
 /** @override */
-goog.proto2.LazyDeserializer.prototype.deserialize = function(
-    descriptor, data) {
-  'use strict';
+goog.proto2.LazyDeserializer.prototype.deserialize = function (descriptor, data) {
   var message = descriptor.createMessageInstance();
   message.initializeForLazyDeserializer(this, data);
   goog.asserts.assert(message instanceof goog.proto2.Message);
   return message;
 };
 
-
 /** @override */
-goog.proto2.LazyDeserializer.prototype.deserializeTo = function(message, data) {
-  'use strict';
+goog.proto2.LazyDeserializer.prototype.deserializeTo = (message, data) => {
   throw new Error('Unimplemented');
 };
-
 
 /**
  * Deserializes a message field from the expected format and places the

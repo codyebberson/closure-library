@@ -26,8 +26,7 @@ goog.requireType('goog.crypt.BlockCipher');
  * @final
  * @struct
  */
-goog.crypt.Ctr = function(cipher) {
-  'use strict';
+goog.crypt.Ctr = function (cipher) {
   /**
    * Block cipher.
    * @type {!goog.crypt.BlockCipher}
@@ -46,11 +45,11 @@ goog.crypt.Ctr = function(cipher) {
  *     should be not reused when using the same key.
  * @return {!Array<number>} Encrypted message.
  */
-goog.crypt.Ctr.prototype.encrypt = function(plainText, initialVector) {
-  'use strict';
+goog.crypt.Ctr.prototype.encrypt = function (plainText, initialVector) {
   goog.asserts.assert(
-      initialVector.length == this.cipher_.BLOCK_SIZE,
-      'Initial vector must be size of one block.');
+    initialVector.length == this.cipher_.BLOCK_SIZE,
+    'Initial vector must be size of one block.'
+  );
 
   // Copy the IV, so it's not modified.
   var counter = goog.array.clone(initialVector);
@@ -64,17 +63,18 @@ goog.crypt.Ctr.prototype.encrypt = function(plainText, initialVector) {
     goog.crypt.Ctr.incrementBigEndianCounter_(counter);
 
     plainTextBlock = Array.prototype.slice.call(
-        plainText, encryptedArray.length,
-        encryptedArray.length + this.cipher_.BLOCK_SIZE);
+      plainText,
+      encryptedArray.length,
+      encryptedArray.length + this.cipher_.BLOCK_SIZE
+    );
     goog.array.extend(
-        encryptedArray,
-        goog.crypt.xorByteArray(
-            plainTextBlock, keyStreamBlock.slice(0, plainTextBlock.length)));
+      encryptedArray,
+      goog.crypt.xorByteArray(plainTextBlock, keyStreamBlock.slice(0, plainTextBlock.length))
+    );
   }
 
   return encryptedArray;
 };
-
 
 /**
  * Decrypts a message. In CTR, this is the same as encrypting.
@@ -93,16 +93,15 @@ goog.crypt.Ctr.prototype.decrypt = goog.crypt.Ctr.prototype.encrypt;
  * @param {!Array<number>|!Uint8Array} counter The array of bytes to modify.
  * @private
  */
-goog.crypt.Ctr.incrementBigEndianCounter_ = function(counter) {
-  'use strict';
+goog.crypt.Ctr.incrementBigEndianCounter_ = (counter) => {
   for (var i = counter.length - 1; i >= 0; i--) {
     var currentByte = counter[i];
-    currentByte = (currentByte + 1) & 0xFF;  // Allow wrapping around.
+    currentByte = (currentByte + 1) & 0xff; // Allow wrapping around.
     counter[i] = currentByte;
     if (currentByte != 0) {
       // This iteration hasn't wrapped around, which means there is
       // no carry to add to the next byte.
       return;
-    }  // else, repeat with next byte.
+    } // else, repeat with next byte.
   }
 };

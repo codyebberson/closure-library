@@ -8,17 +8,12 @@
  * @fileoverview Protocol buffer serializer.
  */
 
-
 // TODO(arv): Serialize booleans as 0 and 1
-
 
 goog.provide('goog.proto.Serializer');
 
-
 goog.require('goog.json.Serializer');
 goog.require('goog.string');
-
-
 
 /**
  * Object that can serialize objects or values to a protocol buffer string.
@@ -26,12 +21,10 @@ goog.require('goog.string');
  * @extends {goog.json.Serializer}
  * @final
  */
-goog.proto.Serializer = function() {
-  'use strict';
+goog.proto.Serializer = function () {
   goog.json.Serializer.call(this);
 };
 goog.inherits(goog.proto.Serializer, goog.json.Serializer);
-
 
 /**
  * Serializes an array to a protocol buffer string. This overrides the JSON
@@ -40,14 +33,14 @@ goog.inherits(goog.proto.Serializer, goog.json.Serializer);
  * @param {Array<string>} sb Array used as a string builder.
  * @override
  */
-goog.proto.Serializer.prototype.serializeArray = function(arr, sb) {
-  'use strict';
+goog.proto.Serializer.prototype.serializeArray = function (arr, sb) {
   const l = arr.length;
   sb.push('[');
   let emptySlots = 0;
   let sep = '';
   for (let i = 0; i < l; i++) {
-    if (arr[i] == null) {  // catches undefined as well
+    if (arr[i] == null) {
+      // catches undefined as well
       emptySlots++;
     } else {
       sb.push(sep);

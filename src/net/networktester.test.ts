@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.net.NetworkTesterTest');
-goog.setTestOnly();
 
 const GoogUri = goog.require('goog.Uri');
 const MockClock = goog.require('goog.testing.MockClock');

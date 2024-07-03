@@ -15,8 +15,6 @@ goog.provide('goog.net.BulkLoaderHelper');
 goog.require('goog.Disposable');
 goog.requireType('goog.Uri');
 
-
-
 /**
  * Helper class used to load multiple URIs.
  * @param {Array<string|goog.Uri>} uris The URIs to load.
@@ -24,8 +22,7 @@ goog.requireType('goog.Uri');
  * @extends {goog.Disposable}
  * @final
  */
-goog.net.BulkLoaderHelper = function(uris) {
-  'use strict';
+goog.net.BulkLoaderHelper = function (uris) {
   goog.Disposable.call(this);
 
   /**
@@ -44,57 +41,45 @@ goog.net.BulkLoaderHelper = function(uris) {
 };
 goog.inherits(goog.net.BulkLoaderHelper, goog.Disposable);
 
-
-
 /**
  * Gets the URI by id.
  * @param {number} id The id.
  * @return {string|goog.Uri} The URI specified by the id.
  */
-goog.net.BulkLoaderHelper.prototype.getUri = function(id) {
-  'use strict';
+goog.net.BulkLoaderHelper.prototype.getUri = function (id) {
   return this.uris_[id];
 };
-
 
 /**
  * Gets the URIs.
  * @return {Array<string|goog.Uri>} The URIs.
  */
-goog.net.BulkLoaderHelper.prototype.getUris = function() {
-  'use strict';
+goog.net.BulkLoaderHelper.prototype.getUris = function () {
   return this.uris_;
 };
-
 
 /**
  * Gets the response texts.
  * @return {Array<string>} The response texts.
  */
-goog.net.BulkLoaderHelper.prototype.getResponseTexts = function() {
-  'use strict';
+goog.net.BulkLoaderHelper.prototype.getResponseTexts = function () {
   return this.responseTexts_;
 };
-
 
 /**
  * Sets the response text by id.
  * @param {number} id The id.
  * @param {string} responseText The response texts.
  */
-goog.net.BulkLoaderHelper.prototype.setResponseText = function(
-    id, responseText) {
-  'use strict';
+goog.net.BulkLoaderHelper.prototype.setResponseText = function (id, responseText) {
   this.responseTexts_[id] = responseText;
 };
-
 
 /**
  * Determines if the load of the URIs is complete.
  * @return {boolean} TRUE iff the load is complete.
  */
-goog.net.BulkLoaderHelper.prototype.isLoadComplete = function() {
-  'use strict';
+goog.net.BulkLoaderHelper.prototype.isLoadComplete = function () {
   const responseTexts = this.responseTexts_;
   if (responseTexts.length == this.uris_.length) {
     for (let i = 0; i < responseTexts.length; i++) {
@@ -107,10 +92,8 @@ goog.net.BulkLoaderHelper.prototype.isLoadComplete = function() {
   return false;
 };
 
-
 /** @override */
-goog.net.BulkLoaderHelper.prototype.disposeInternal = function() {
-  'use strict';
+goog.net.BulkLoaderHelper.prototype.disposeInternal = function () {
   goog.net.BulkLoaderHelper.superClass_.disposeInternal.call(this);
 
   this.uris_ = null;

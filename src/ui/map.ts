@@ -12,14 +12,13 @@
 goog.module('goog.ui.Map');
 goog.module.declareLegacyNamespace();
 
-
 /**
  * Class for Hash Map datastructure.
  * @param {*=} map Map or Object to initialize the map with.
  * @constructor
  * @template K, V
  */
-const UiMap = function(map = undefined) {
+const UiMap = function (map = undefined) {
   /** @private @const {!Map<K, V>} */
   this.map_ = new Map();
 
@@ -37,20 +36,18 @@ const UiMap = function(map = undefined) {
   }
 };
 
-
 /**
  * @return {number} The number of key-value pairs in the map.
  */
-UiMap.prototype.getCount = function() {
+UiMap.prototype.getCount = function () {
   return this.map_.size;
 };
-
 
 /**
  * Returns the values of the map.
  * @return {!Array<V>} The values in the map.
  */
-UiMap.prototype.getValues = function() {
+UiMap.prototype.getValues = function () {
   return Array.from(this.map_.values());
 };
 
@@ -58,7 +55,7 @@ UiMap.prototype.getValues = function() {
  * Returns the keys of the map.
  * @return {!Array<K>} Array of string values.
  */
-UiMap.prototype.getKeys = function() {
+UiMap.prototype.getKeys = function () {
   return Array.from(this.map_.keys());
 };
 
@@ -67,17 +64,16 @@ UiMap.prototype.getKeys = function() {
  * @param {K} key The key to check for.
  * @return {boolean} Whether the map contains the key.
  */
-UiMap.prototype.containsKey = function(key) {
+UiMap.prototype.containsKey = function (key) {
   return this.map_.has(key);
 };
-
 
 /**
  * Whether the map contains the given value. This is O(n).
  * @param {V} val The value to check for.
  * @return {boolean} Whether the map contains the value.
  */
-UiMap.prototype.containsValue = function(val) {
+UiMap.prototype.containsValue = function (val) {
   // NOTE: goog.structs.Map uses == instead of ===.
   return this.getValues().some((v) => v == val);
 };
@@ -90,8 +86,7 @@ UiMap.prototype.containsValue = function(val) {
  *     the values contained in each map are identical objects.
  * @return {boolean} Whether the maps are equal.
  */
-UiMap.prototype.equals = function(
-    otherMap, equalityFn = (a, b) => a === b) {
+UiMap.prototype.equals = function (otherMap, equalityFn = (a, b) => a === b) {
   if (this === otherMap) {
     return true;
   }
@@ -104,22 +99,19 @@ UiMap.prototype.equals = function(
   });
 };
 
-
 /**
  * @return {boolean} Whether the map is empty.
  */
-UiMap.prototype.isEmpty = function() {
+UiMap.prototype.isEmpty = function () {
   return this.map_.size == 0;
 };
-
 
 /**
  * Removes all key-value pairs from the map.
  */
-UiMap.prototype.clear = function() {
+UiMap.prototype.clear = function () {
   this.map_.clear();
 };
-
 
 /**
  * Removes a key-value pair based on the key. This is O(logN) amortized due to
@@ -128,10 +120,9 @@ UiMap.prototype.clear = function() {
  * @param {K} key  The key to remove.
  * @return {boolean} Whether object was removed.
  */
-UiMap.prototype.remove = function(key) {
+UiMap.prototype.remove = function (key) {
   return this.map_.delete(key);
 };
-
 
 /**
  * Returns the value for the given key.  If the key is not found and the default
@@ -142,13 +133,12 @@ UiMap.prototype.remove = function(key) {
  * @return {V|DEFAULT} The value for the given key.
  * @template DEFAULT
  */
-UiMap.prototype.get = function(key, defaultValue = undefined) {
+UiMap.prototype.get = function (key, defaultValue = undefined) {
   if (this.map_.has(key)) {
     return this.map_.get(key);
   }
   return defaultValue;
 };
-
 
 /**
  * Adds a key-value pair to the map.
@@ -158,18 +148,16 @@ UiMap.prototype.get = function(key, defaultValue = undefined) {
  * @this {THIS}
  * @template THIS
  */
-UiMap.prototype.set = function(key, value) {
-  const self = /** @type {!UiMap} */ (this);
-  self.map_.set(key, value);
-  return self;
+UiMap.prototype.set = function (key, value) {
+  this.map_.set(key, value);
+  return this;
 };
-
 
 /**
  * Adds multiple key-value pairs from another goog.ui.Map or Object.
  * @param {!Object<K, V>} map Object containing the data to add.
  */
-UiMap.prototype.addAll = function(map) {
+UiMap.prototype.addAll = function (map) {
   if (map instanceof UiMap) {
     for (const [key, val] of map.map_) {
       this.map_.set(key, val);
@@ -181,31 +169,28 @@ UiMap.prototype.addAll = function(map) {
   }
 };
 
-
 /**
  * Calls the given function on each entry in the map.
  * @param {function(this:T, V, K, (!Map|!UiMap<K,V>|null))} callbackFn
  * @param {T=} thisArg The value of "this" inside callbackFn.
  * @template T
  */
-UiMap.prototype.forEach = function(callbackFn, thisArg = this) {
+UiMap.prototype.forEach = function (callbackFn, thisArg = this) {
   this.map_.forEach((val, key) => callbackFn.call(thisArg, val, key, this));
 };
-
 
 /**
  * Clones a map and returns a new map.
  * @return {!UiMap} A new map with the same key-value pairs.
  */
-UiMap.prototype.clone = function() {
+UiMap.prototype.clone = function () {
   return new UiMap(this);
 };
-
 
 /**
  * @return {!Object} Object representation of the map.
  */
-UiMap.prototype.toObject = function() {
+UiMap.prototype.toObject = function () {
   const obj = {};
   for (const [key, val] of this.map_) {
     obj[key] = val;

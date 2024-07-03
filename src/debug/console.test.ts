@@ -5,12 +5,11 @@
  */
 
 goog.module('goog.debug.ConsoleTest');
-goog.setTestOnly();
 
 const DebugConsole = goog.require('goog.debug.Console');
 const recordFunction = goog.require('goog.testing.recordFunction');
 const testSuite = goog.require('goog.testing.testSuite');
-const {Level, LogRecord} = goog.require('goog.log');
+const { Level, LogRecord } = goog.require('goog.log');
 
 let debugConsole;
 let mockConsole;
@@ -52,13 +51,12 @@ testSuite({
     debugConsole = new DebugConsole();
 
     // Set up a recorder for mockConsole.log
-    mockConsole = {log: recordFunction()};
+    mockConsole = { log: recordFunction() };
     /** @suppress {visibility} suppression added to enable type checking */
     DebugConsole.console_ = mockConsole;
 
     loggerName0 = 'debug.logger';
-    logRecord0 =
-        new LogRecord(Level.FINE, 'blah blah blah no one cares', loggerName0);
+    logRecord0 = new LogRecord(Level.FINE, 'blah blah blah no one cares', loggerName0);
 
     // Test logger 1.
     loggerName1 = 'this.is.a.logger';
@@ -66,13 +64,11 @@ testSuite({
 
     // Test logger 2.
     loggerName2 = 'name.of.logger';
-    logRecord2 =
-        new LogRecord(Level.WARNING, 'hey, this is a warning', loggerName2);
+    logRecord2 = new LogRecord(Level.WARNING, 'hey, this is a warning', loggerName2);
 
     // Test logger 3.
     loggerName3 = 'third.logger';
-    logRecord3 = new LogRecord(
-        Level.SEVERE, 'seriously, this statement is serious', loggerName3);
+    logRecord3 = new LogRecord(Level.SEVERE, 'seriously, this statement is serious', loggerName3);
   },
 
   testLoggingWithSimpleConsole() {
@@ -168,7 +164,7 @@ testSuite({
   },
 
   testSetConsole() {
-    const fakeConsole = {log: recordFunction()};
+    const fakeConsole = { log: recordFunction() };
 
     logAtLevel(Level.INFO, 'test message 1');
     logAtAllLevels('test message 1');

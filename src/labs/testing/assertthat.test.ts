@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.labs.testing.assertThatTest');
-goog.setTestOnly();
 
 const MatcherError = goog.require('goog.labs.testing.MatcherError');
 const assertThat = goog.require('goog.labs.testing.assertThat');
@@ -28,10 +27,14 @@ testSuite({
     /** @suppress {checkTypes} suppression added to enable type checking */
     describeFn = new recordFunction();
 
-    successTestMatcher = () =>
-        ({matches: successMatchesFn, describe: describeFn});
-    failureTestMatcher = () =>
-        ({matches: failureMatchesFn, describe: describeFn});
+    successTestMatcher = () => ({
+      matches: successMatchesFn,
+      describe: describeFn,
+    });
+    failureTestMatcher = () => ({
+      matches: failureMatchesFn,
+      describe: describeFn,
+    });
   },
 
   testAssertthatAlwaysCallsMatches() {
@@ -42,9 +45,9 @@ testSuite({
     const matchesCall = successMatchesFn.popLastCall();
     assertEquals(value, matchesCall.getArgument(0));
 
-    const e = assertThrows(goog.bind(
-        assertThat, null, value, failureTestMatcher(),
-        'matches is called on failure'));
+    const e = assertThrows(
+      goog.bind(assertThat, null, value, failureTestMatcher(), 'matches is called on failure')
+    );
 
     assertTrue(e instanceof MatcherError);
 
@@ -53,9 +56,9 @@ testSuite({
 
   testAssertthatCallsDescribeOnFailure() {
     const value = 7;
-    const e = assertThrows(goog.bind(
-        assertThat, null, value, failureTestMatcher(),
-        'describe is called on failure'));
+    const e = assertThrows(
+      goog.bind(assertThat, null, value, failureTestMatcher(), 'describe is called on failure')
+    );
 
     assertTrue(e instanceof MatcherError);
 

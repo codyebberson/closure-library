@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.plugins.LinkBubbleTest');
-goog.setTestOnly();
 
 const BrowserEvent = goog.require('goog.events.BrowserEvent');
 const Command = goog.require('goog.editor.Command');
@@ -41,8 +40,7 @@ let stubs;
 let testHelper;
 
 function closeBox() {
-  const closeBox =
-      dom.getElementsByTagNameAndClass(TagName.DIV, 'tr_bubble_closebox');
+  const closeBox = dom.getElementsByTagNameAndClass(TagName.DIV, 'tr_bubble_closebox');
   assertEquals('Should find only one close box', 1, closeBox.length);
   assertNotNull('Found close box', closeBox[0]);
   events.fireClickSequence(closeBox[0]);
@@ -157,11 +155,15 @@ testSuite({
   testChangeClicked() {
     FIELDMOCK.execCommand(Command.MODAL_LINK_EDITOR, new Link(link, false));
     FIELDMOCK.$registerArgumentListVerifier(
-        'execCommand',
-        (arr1, arr2) => arr1.length == arr2.length && arr1.length == 2 &&
-            arr1[0] == Command.MODAL_LINK_EDITOR &&
-            arr2[0] == Command.MODAL_LINK_EDITOR && arr1[1] instanceof Link &&
-            arr2[1] instanceof Link);
+      'execCommand',
+      (arr1, arr2) =>
+        arr1.length == arr2.length &&
+        arr1.length == 2 &&
+        arr1[0] == Command.MODAL_LINK_EDITOR &&
+        arr2[0] == Command.MODAL_LINK_EDITOR &&
+        arr1[1] instanceof Link &&
+        arr2[1] instanceof Link
+    );
     FIELDMOCK.$times(1);
     FIELDMOCK.$returns(true);
     FIELDMOCK.$replay();
@@ -179,11 +181,15 @@ testSuite({
   testChangePressed() {
     FIELDMOCK.execCommand(Command.MODAL_LINK_EDITOR, new Link(link, false));
     FIELDMOCK.$registerArgumentListVerifier(
-        'execCommand',
-        (arr1, arr2) => arr1.length == arr2.length && arr1.length == 2 &&
-            arr1[0] == Command.MODAL_LINK_EDITOR &&
-            arr2[0] == Command.MODAL_LINK_EDITOR && arr1[1] instanceof Link &&
-            arr2[1] instanceof Link);
+      'execCommand',
+      (arr1, arr2) =>
+        arr1.length == arr2.length &&
+        arr1.length == 2 &&
+        arr1[0] == Command.MODAL_LINK_EDITOR &&
+        arr2[0] == Command.MODAL_LINK_EDITOR &&
+        arr1[1] instanceof Link &&
+        arr2[1] instanceof Link
+    );
     FIELDMOCK.$times(1);
     FIELDMOCK.$returns(true);
     FIELDMOCK.$replay();
@@ -194,7 +200,9 @@ testSuite({
 
     /** @suppress {visibility} suppression added to enable type checking */
     const defaultPrevented = !events.fireKeySequence(
-        dom.$(LinkBubble.CHANGE_LINK_ID_), KeyCodes.ENTER);
+      dom.$(LinkBubble.CHANGE_LINK_ID_),
+      KeyCodes.ENTER
+    );
     assertTrue(defaultPrevented);
     assertNoBubble();
     FIELDMOCK.$verify();
@@ -220,14 +228,15 @@ testSuite({
 
     events.fireClickSequence(dom.$(LinkBubble.DELETE_LINK_ID_));
     const element = userAgent.GECKO ? document.body : fieldDiv;
-    assertNotEquals(
-        'Link removed', element.firstChild.nodeName, String(TagName.A));
+    assertNotEquals('Link removed', element.firstChild.nodeName, String(TagName.A));
     assertNoBubble();
     const range = Range.createFromWindow();
     assertEquals('Link selection on link text', linkChild, range.getEndNode());
     assertEquals(
-        'Link selection on link text end',
-        dom.getRawTextContent(linkChild).length, range.getEndOffset());
+      'Link selection on link text end',
+      dom.getRawTextContent(linkChild).length,
+      range.getEndOffset()
+    );
     FIELDMOCK.$verify();
   },
 
@@ -248,17 +257,20 @@ testSuite({
 
     /** @suppress {visibility} suppression added to enable type checking */
     const defaultPrevented = !events.fireKeySequence(
-        dom.$(LinkBubble.DELETE_LINK_ID_), KeyCodes.ENTER);
+      dom.$(LinkBubble.DELETE_LINK_ID_),
+      KeyCodes.ENTER
+    );
     assertTrue(defaultPrevented);
     const element = userAgent.GECKO ? document.body : fieldDiv;
-    assertNotEquals(
-        'Link removed', element.firstChild.nodeName, String(TagName.A));
+    assertNotEquals('Link removed', element.firstChild.nodeName, String(TagName.A));
     assertNoBubble();
     const range = Range.createFromWindow();
     assertEquals('Link selection on link text', linkChild, range.getEndNode());
     assertEquals(
-        'Link selection on link text end',
-        dom.getRawTextContent(linkChild).length, range.getEndOffset());
+      'Link selection on link text end',
+      dom.getRawTextContent(linkChild).length,
+      range.getEndOffset()
+    );
     FIELDMOCK.$verify();
   },
 
@@ -288,9 +300,12 @@ testSuite({
 
     assertEquals(1, sayFunction.getCallCount());
 
-    assertTrue(googArray.equals(
+    assertTrue(
+      googArray.equals(
         ['Removed link.', LivePriority.ASSERTIVE],
-        sayFunction.getLastCall().getArguments()));
+        sayFunction.getLastCall().getArguments()
+      )
+    );
     FIELDMOCK.$verify();
   },
 
@@ -302,14 +317,17 @@ testSuite({
     let actionCount = 0;
 
     const linkAction = new LinkBubble.Action(
-        SPAN, LINK, 'message',
-        () => {
-          toShowCount++;
-          return toShowCount == 1;  // Show it the first time.
-        },
-        () => {
-          actionCount++;
-        });
+      SPAN,
+      LINK,
+      'message',
+      () => {
+        toShowCount++;
+        return toShowCount == 1; // Show it the first time.
+      },
+      () => {
+        actionCount++;
+      }
+    );
 
     linkBubble = new LinkBubble(linkAction);
     /**
@@ -326,8 +344,7 @@ testSuite({
     assertEquals('Should check showing the action', 1, toShowCount);
     assertEquals('Action should not have fired yet', 0, actionCount);
 
-    assertTrue(
-        'Action should be visible 1st time', style.isElementShown(dom.$(SPAN)));
+    assertTrue('Action should be visible 1st time', style.isElementShown(dom.$(SPAN)));
     events.fireClickSequence(dom.$(LINK));
 
     assertEquals('Should not check showing again yet', 1, toShowCount);
@@ -341,18 +358,14 @@ testSuite({
     assertBubble();
     assertEquals('Should check showing again', 2, toShowCount);
     assertEquals('Action should not fire again', 1, actionCount);
-    assertFalse(
-        'Action should not be shown 2nd time',
-        style.isElementShown(dom.$(SPAN)));
+    assertFalse('Action should not be shown 2nd time', style.isElementShown(dom.$(SPAN)));
 
     FIELDMOCK.$verify();
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
   testLinkTextClicked() {
-    mockWindowOpen(
-        'http://www.google.com/', {'target': '_blank', 'noreferrer': false},
-        window);
+    mockWindowOpen('http://www.google.com/', { target: '_blank', noreferrer: false }, window);
     mockWindowOpen.$replay();
     FIELDMOCK.$replay();
     linkBubble.enable(FIELDMOCK);
@@ -369,9 +382,7 @@ testSuite({
 
   /** @suppress {visibility} suppression added to enable type checking */
   testLinkTextClickedCustomUrlFn() {
-    mockWindowOpen(
-        'http://images.google.com/', {'target': '_blank', 'noreferrer': false},
-        window);
+    mockWindowOpen('http://images.google.com/', { target: '_blank', noreferrer: false }, window);
     mockWindowOpen.$replay();
     FIELDMOCK.$replay();
     linkBubble.enable(FIELDMOCK);
@@ -434,21 +445,17 @@ testSuite({
       'javascript:google.com',
       'httpp://google.com',
       'data:foo',
-      'javascript:alert(\'hi\');',
+      "javascript:alert('hi');",
       'abc:def',
     ];
 
     let i;
     for (i = 0; i < good.length; i++) {
-      assertTrue(
-          good[i] + ' should have a safe scheme',
-          linkBubble.isSafeSchemeToOpen_(good[i]));
+      assertTrue(good[i] + ' should have a safe scheme', linkBubble.isSafeSchemeToOpen_(good[i]));
     }
 
     for (i = 0; i < bad.length; i++) {
-      assertFalse(
-          bad[i] + ' should have an unsafe scheme',
-          linkBubble.isSafeSchemeToOpen_(bad[i]));
+      assertFalse(bad[i] + ' should have an unsafe scheme', linkBubble.isSafeSchemeToOpen_(bad[i]));
     }
   },
 
@@ -456,16 +463,14 @@ testSuite({
   testShouldOpenWithWhitelist() {
     linkBubble.setSafeToOpenSchemes(['abc']);
 
-    assertTrue(
-        'Scheme should be safe', linkBubble.shouldOpenUrl('abc://google.com'));
-    assertFalse(
-        'Scheme should be unsafe',
-        linkBubble.shouldOpenUrl('http://google.com'));
+    assertTrue('Scheme should be safe', linkBubble.shouldOpenUrl('abc://google.com'));
+    assertFalse('Scheme should be unsafe', linkBubble.shouldOpenUrl('http://google.com'));
 
     linkBubble.setBlockOpeningUnsafeSchemes(false);
     assertTrue(
-        'Non-whitelisted should now be safe after disabling blocking',
-        linkBubble.shouldOpenUrl('http://google.com'));
+      'Non-whitelisted should now be safe after disabling blocking',
+      linkBubble.shouldOpenUrl('http://google.com')
+    );
   },
 
   /**
@@ -476,8 +481,7 @@ testSuite({
     FIELDMOCK.$replay();
     linkBubble.enable(FIELDMOCK);
 
-    const longUrl = 'http://www.reallylonglinkthatshouldbetruncated' +
-        'becauseitistoolong.com';
+    const longUrl = 'http://www.reallylonglinkthatshouldbetruncated' + 'becauseitistoolong.com';
     const truncatedLongUrl = googString.truncateMiddle(longUrl, 48);
 
     const longLink = dom.createElement(TagName.A);
@@ -491,8 +495,10 @@ testSuite({
     /** @suppress {visibility} suppression added to enable type checking */
     const testLinkEl = dom.$(LinkBubble.TEST_LINK_ID_);
     assertEquals(
-        'The test link\'s anchor text should be the truncated URL.',
-        truncatedLongUrl, testLinkEl.innerHTML);
+      "The test link's anchor text should be the truncated URL.",
+      truncatedLongUrl,
+      testLinkEl.innerHTML
+    );
 
     fieldDiv.removeChild(longLink);
     FIELDMOCK.$verify();
@@ -504,20 +510,20 @@ testSuite({
     linkBubble.enable(FIELDMOCK);
 
     stubs.set(
-        linkBubble,
-        'createBubbleContents', /**
+      linkBubble,
+      'createBubbleContents' /**
                                    @suppress {visibility} suppression added to
                                    enable type checking
-                                 */
-        (elem) => {
-          // getTargetUrl would cause an NPE if urlUtil_ wasn't defined yet.
-          linkBubble.getTargetUrl();
-        });
+                                 */,
+      (elem) => {
+        // getTargetUrl would cause an NPE if urlUtil_ wasn't defined yet.
+        linkBubble.getTargetUrl();
+      }
+    );
     assertNotThrows(
-        'Accessing this.urlUtil_ should not NPE',
-        goog.bind(
-            linkBubble.handleSelectionChange, linkBubble,
-            createMouseEvent(link)));
+      'Accessing this.urlUtil_ should not NPE',
+      goog.bind(linkBubble.handleSelectionChange, linkBubble, createMouseEvent(link))
+    );
 
     FIELDMOCK.$verify();
   },
@@ -534,12 +540,11 @@ testSuite({
     // At this point, the bubble was not created yet using its createBubble
     // public method.
     assertNotThrows(
-        'Executing goog.editor.Command.UPDATE_LINK_BUBBLE should not trigger ' +
-            'an exception even if the bubble was not created yet using its ' +
-            'createBubble method.',
-        goog.bind(
-            linkBubble.execCommandInternal, linkBubble,
-            Command.UPDATE_LINK_BUBBLE));
+      'Executing goog.editor.Command.UPDATE_LINK_BUBBLE should not trigger ' +
+        'an exception even if the bubble was not created yet using its ' +
+        'createBubble method.',
+      goog.bind(linkBubble.execCommandInternal, linkBubble, Command.UPDATE_LINK_BUBBLE)
+    );
 
     FIELDMOCK.$verify();
   },

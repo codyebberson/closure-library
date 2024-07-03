@@ -9,10 +9,8 @@
  * interface.
  */
 
-
 goog.setTestOnly('goog.testing.MockStorage');
 goog.provide('goog.testing.MockStorage');
-
 
 /**
  * A JS storage instance, implementing the HTML5 Storage interface.
@@ -22,8 +20,7 @@ goog.provide('goog.testing.MockStorage');
  * @implements {Storage}
  * @final
  */
-goog.testing.MockStorage = function() {
-  'use strict';
+goog.testing.MockStorage = function () {
   /**
    * The underlying storage object.
    * @type {!Map}
@@ -38,19 +35,16 @@ goog.testing.MockStorage = function() {
   this.length = 0;
 };
 
-
 /**
  * Sets an item to the storage.
  * @param {string} key Storage key.
  * @param {*} value Storage value. Must be convertible to string.
  * @override
  */
-goog.testing.MockStorage.prototype.setItem = function(key, value) {
-  'use strict';
+goog.testing.MockStorage.prototype.setItem = function (key, value) {
   this.store_.set(key, String(value));
   this.length = this.store_.size;
 };
-
 
 /**
  * Gets an item from the storage.  The item returned is the "structured clone"
@@ -60,36 +54,30 @@ goog.testing.MockStorage.prototype.setItem = function(key, value) {
  * @return {?string} Storage value for key; null if does not exist.
  * @override
  */
-goog.testing.MockStorage.prototype.getItem = function(key) {
-  'use strict';
+goog.testing.MockStorage.prototype.getItem = function (key) {
   var val = this.store_.get(key);
   // Enforce that getItem returns string values.
-  return (val != null) ? /** @type {string} */ (val) : null;
+  return val != null ? /** @type {string} */ (val) : null;
 };
-
 
 /**
  * Removes and item from the storage.
  * @param {string} key Storage key.
  * @override
  */
-goog.testing.MockStorage.prototype.removeItem = function(key) {
-  'use strict';
+goog.testing.MockStorage.prototype.removeItem = function (key) {
   this.store_.delete(key);
   this.length = this.store_.size;
 };
-
 
 /**
  * Clears the storage.
  * @override
  */
-goog.testing.MockStorage.prototype.clear = function() {
-  'use strict';
+goog.testing.MockStorage.prototype.clear = function () {
   this.store_.clear();
   this.length = 0;
 };
-
 
 /**
  * Returns the key at the given index.
@@ -97,8 +85,7 @@ goog.testing.MockStorage.prototype.clear = function() {
  * @return {?string} Key at the given index, null if not found.
  * @override
  */
-goog.testing.MockStorage.prototype.key = function(index) {
-  'use strict';
+goog.testing.MockStorage.prototype.key = function (index) {
   let i = 0;
   for (const key of this.store_.keys()) {
     if (i == index) return key;

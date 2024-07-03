@@ -5,14 +5,13 @@
  */
 
 goog.module('goog.messaging.LoggerClientTest');
-goog.setTestOnly();
 
 const LoggerClient = goog.require('goog.messaging.LoggerClient');
 const MockControl = goog.require('goog.testing.MockControl');
 const MockMessageChannel = goog.require('goog.testing.messaging.MockMessageChannel');
 const debug = goog.require('goog.debug');
 const testSuite = goog.require('goog.testing.testSuite');
-const {Level, getLogger, warning} = goog.require('goog.log');
+const { Level, getLogger, warning } = goog.require('goog.log');
 
 let mockControl;
 let channel;

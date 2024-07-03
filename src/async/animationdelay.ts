@@ -15,14 +15,10 @@ goog.require('goog.Disposable');
 goog.require('goog.events');
 goog.require('goog.functions');
 
-
-
 // TODO(nicksantos): Should we factor out the common code between this and
 // goog.async.Delay? I'm not sure if there's enough code for this to really
 // make sense. Subclassing seems like the wrong approach for a variety of
 // reasons. Maybe there should be a common interface?
-
-
 
 /**
  * A delayed callback that pegs to the next animation frame
@@ -48,8 +44,7 @@ goog.require('goog.functions');
  * @extends {goog.Disposable}
  * @final
  */
-goog.async.AnimationDelay = function(listener, opt_window, opt_handler) {
-  'use strict';
+goog.async.AnimationDelay = function (listener, opt_window, opt_handler) {
   goog.async.AnimationDelay.base(this, 'constructor');
 
   /**
@@ -92,7 +87,6 @@ goog.async.AnimationDelay = function(listener, opt_window, opt_handler) {
 };
 goog.inherits(goog.async.AnimationDelay, goog.Disposable);
 
-
 /**
  * Default wait timeout for animations (in milliseconds).  Only used for timed
  * animation, which uses a timer (setTimeout) to schedule animation.
@@ -101,7 +95,6 @@ goog.inherits(goog.async.AnimationDelay, goog.Disposable);
  * @const
  */
 goog.async.AnimationDelay.TIMEOUT = 20;
-
 
 /**
  * Name of event received from the requestAnimationFrame in Firefox.
@@ -112,13 +105,11 @@ goog.async.AnimationDelay.TIMEOUT = 20;
  */
 goog.async.AnimationDelay.MOZ_BEFORE_PAINT_EVENT_ = 'MozBeforePaint';
 
-
 /**
  * Starts the delay timer. The provided listener function will be called
  * before the next animation frame.
  */
-goog.async.AnimationDelay.prototype.start = function() {
-  'use strict';
+goog.async.AnimationDelay.prototype.start = function () {
   this.stop();
   this.usingListeners_ = false;
 
@@ -137,38 +128,38 @@ goog.async.AnimationDelay.prototype.start = function() {
     // but not the W3C requestAnimationFrame function (as in draft) or the
     // equivalent cancel functions.
     this.id_ = goog.events.listen(
-        this.win_, goog.async.AnimationDelay.MOZ_BEFORE_PAINT_EVENT_,
-        this.callback_);
+      this.win_,
+      goog.async.AnimationDelay.MOZ_BEFORE_PAINT_EVENT_,
+      this.callback_
+    );
     this.win_.mozRequestAnimationFrame(null);
     this.usingListeners_ = true;
   } else if (raf && cancelRaf) {
     this.id_ = raf.call(this.win_, this.callback_);
   } else {
     this.id_ = this.win_.setTimeout(
-        // Prior to Firefox 13, Gecko passed a non-standard parameter
-        // to the callback that we want to ignore.
-        goog.functions.lock(this.callback_), goog.async.AnimationDelay.TIMEOUT);
+      // Prior to Firefox 13, Gecko passed a non-standard parameter
+      // to the callback that we want to ignore.
+      goog.functions.lock(this.callback_),
+      goog.async.AnimationDelay.TIMEOUT
+    );
   }
 };
-
 
 /**
  * Starts the delay timer if it's not already active.
  */
-goog.async.AnimationDelay.prototype.startIfNotActive = function() {
-  'use strict';
+goog.async.AnimationDelay.prototype.startIfNotActive = function () {
   if (!this.isActive()) {
     this.start();
   }
 };
 
-
 /**
  * Stops the delay timer if it is active. No action is taken if the timer is not
  * in use.
  */
-goog.async.AnimationDelay.prototype.stop = function() {
-  'use strict';
+goog.async.AnimationDelay.prototype.stop = function () {
   if (this.isActive()) {
     var raf = this.getRaf_();
     var cancelRaf = this.getCancelRaf_();
@@ -183,45 +174,37 @@ goog.async.AnimationDelay.prototype.stop = function() {
   this.id_ = null;
 };
 
-
 /**
  * Fires delay's action even if timer has already gone off or has not been
  * started yet; guarantees action firing. Stops the delay timer.
  */
-goog.async.AnimationDelay.prototype.fire = function() {
-  'use strict';
+goog.async.AnimationDelay.prototype.fire = function () {
   this.stop();
   this.doAction_();
 };
-
 
 /**
  * Fires delay's action only if timer is currently active. Stops the delay
  * timer.
  */
-goog.async.AnimationDelay.prototype.fireIfActive = function() {
-  'use strict';
+goog.async.AnimationDelay.prototype.fireIfActive = function () {
   if (this.isActive()) {
     this.fire();
   }
 };
 
-
 /**
  * @return {boolean} True if the delay is currently active, false otherwise.
  */
-goog.async.AnimationDelay.prototype.isActive = function() {
-  'use strict';
+goog.async.AnimationDelay.prototype.isActive = function () {
   return this.id_ != null;
 };
-
 
 /**
  * Invokes the callback function after the delay successfully completes.
  * @private
  */
-goog.async.AnimationDelay.prototype.doAction_ = function() {
-  'use strict';
+goog.async.AnimationDelay.prototype.doAction_ = function () {
   if (this.usingListeners_ && this.id_) {
     goog.events.unlistenByKey(this.id_);
   }
@@ -235,39 +218,43 @@ goog.async.AnimationDelay.prototype.doAction_ = function() {
   this.listener_.call(this.handler_, goog.now());
 };
 
-
 /** @override */
-goog.async.AnimationDelay.prototype.disposeInternal = function() {
-  'use strict';
+goog.async.AnimationDelay.prototype.disposeInternal = function () {
   this.stop();
   goog.async.AnimationDelay.base(this, 'disposeInternal');
 };
-
 
 /**
  * @return {?function(function(number)): number} The requestAnimationFrame
  *     function, or null if not available on this browser.
  * @private
  */
-goog.async.AnimationDelay.prototype.getRaf_ = function() {
-  'use strict';
+goog.async.AnimationDelay.prototype.getRaf_ = function () {
   var win = this.win_;
-  return win.requestAnimationFrame || win.webkitRequestAnimationFrame ||
-      win.mozRequestAnimationFrame || win.oRequestAnimationFrame ||
-      win.msRequestAnimationFrame || null;
+  return (
+    win.requestAnimationFrame ||
+    win.webkitRequestAnimationFrame ||
+    win.mozRequestAnimationFrame ||
+    win.oRequestAnimationFrame ||
+    win.msRequestAnimationFrame ||
+    null
+  );
 };
-
 
 /**
  * @return {?function(number): undefined} The cancelAnimationFrame function,
  *     or null if not available on this browser.
  * @private
  */
-goog.async.AnimationDelay.prototype.getCancelRaf_ = function() {
-  'use strict';
+goog.async.AnimationDelay.prototype.getCancelRaf_ = function () {
   var win = this.win_;
-  return win.cancelAnimationFrame || win.cancelRequestAnimationFrame ||
-      win.webkitCancelRequestAnimationFrame ||
-      win.mozCancelRequestAnimationFrame || win.oCancelRequestAnimationFrame ||
-      win.msCancelRequestAnimationFrame || null;
+  return (
+    win.cancelAnimationFrame ||
+    win.cancelRequestAnimationFrame ||
+    win.webkitCancelRequestAnimationFrame ||
+    win.mozCancelRequestAnimationFrame ||
+    win.oCancelRequestAnimationFrame ||
+    win.msCancelRequestAnimationFrame ||
+    null
+  );
 };

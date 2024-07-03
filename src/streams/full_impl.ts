@@ -12,7 +12,7 @@ goog.module('goog.streams.fullImpl');
 const NativeResolver = goog.require('goog.promise.NativeResolver');
 const fullTypes = goog.require('goog.streams.fullTypes');
 const liteImpl = goog.require('goog.streams.liteImpl');
-const {assert, assertNumber} = goog.require('goog.asserts');
+const { assert, assertNumber } = goog.require('goog.asserts');
 
 /**
  * @typedef {function(!ReadableStreamDefaultController):
@@ -57,7 +57,7 @@ class ReadableStream extends liteImpl.ReadableStream {
    * @override
    */
   getReader() {
-    return this.reader = new ReadableStreamDefaultReader(this);
+    return (this.reader = new ReadableStreamDefaultReader(this));
   }
 
   /**
@@ -85,7 +85,7 @@ class ReadableStream extends liteImpl.ReadableStream {
    * @return {!AsyncIterator<T>}
    * @override
    */
-  getIterator({preventCancel = false} = {}) {
+  getIterator({ preventCancel = false } = {}) {
     return new ReadableStreamAsyncIterator(this.getReader(), preventCancel);
   }
 
@@ -112,26 +112,27 @@ class ReadableStream extends liteImpl.ReadableStream {
         return Promise.resolve();
       }
       reading = true;
-      reader.read()
-          .then(({value, done}) => {
-            reading = false;
-            if (done) {
-              if (!canceled1) {
-                branch1.readableStreamController.close();
-              }
-              if (!canceled2) {
-                branch2.readableStreamController.close();
-              }
-              return;
-            }
+      reader
+        .read()
+        .then(({ value, done }) => {
+          reading = false;
+          if (done) {
             if (!canceled1) {
-              branch1.readableStreamController.enqueue(value);
+              branch1.readableStreamController.close();
             }
             if (!canceled2) {
-              branch2.readableStreamController.enqueue(value);
+              branch2.readableStreamController.close();
             }
-          })
-          .catch(() => {});
+            return;
+          }
+          if (!canceled1) {
+            branch1.readableStreamController.enqueue(value);
+          }
+          if (!canceled2) {
+            branch2.readableStreamController.enqueue(value);
+          }
+        })
+        .catch(() => {});
       return Promise.resolve();
     };
     const cancel1Algorithm = (reason) => {
@@ -155,14 +156,22 @@ class ReadableStream extends liteImpl.ReadableStream {
     const startAlgorithm = () => {};
     branch1 = new ReadableStream();
     const controller1 = new ReadableStreamDefaultController(
-        branch1, cancel1Algorithm, pullAlgorithm, /* highWaterMark= */ 1,
-        /* size= */ undefined);
+      branch1,
+      cancel1Algorithm,
+      pullAlgorithm,
+      /* highWaterMark= */ 1,
+      /* size= */ undefined
+    );
     branch1.readableStreamController = controller1;
     controller1.start(startAlgorithm);
     branch2 = new ReadableStream();
     const controller2 = new ReadableStreamDefaultController(
-        branch2, cancel2Algorithm, pullAlgorithm, /* highWatermark= */ 1,
-        /* size= */ undefined);
+      branch2,
+      cancel2Algorithm,
+      pullAlgorithm,
+      /* highWatermark= */ 1,
+      /* size= */ undefined
+    );
     branch2.readableStreamController = controller2;
     controller2.start(startAlgorithm);
     reader.closed.catch((reason) => {
@@ -186,10 +195,9 @@ class ReadableStream extends liteImpl.ReadableStream {
       return Promise.reject(this.storedError);
     }
     this.close();
-    return /** @type {!ReadableStreamDefaultController} */ (
-               this.readableStreamController)
-        .cancelSteps(reason)
-        .then(() => {});
+    return /** @type {!ReadableStreamDefaultController} */ (this.readableStreamController)
+      .cancelSteps(reason)
+      .then(() => {});
   }
 }
 
@@ -205,41 +213,47 @@ class ReadableStream extends liteImpl.ReadableStream {
  * @template T
  */
 function newReadableStream(underlyingSource = {}, strategy = {}) {
-  const verifyObject =
-      /** @type {!Object} */ (underlyingSource);
+  const verifyObject = /** @type {!Object} */ (underlyingSource);
   assert(
-      !(verifyObject.type),
-      `'type' property not allowed on an underlying source for a ` +
-          'liteImpl ReadableStream');
+    !verifyObject.type,
+    `'type' property not allowed on an underlying source for a ` + 'liteImpl ReadableStream'
+  );
   assert(
-      !(verifyObject.autoAllocateChunkSize),
-      `'autoAllocateChunkSize' property not allowed on an underlying ` +
-          'source for a liteImpl ReadableStream');
-  const startAlgorithm = underlyingSource.start ?
-      (controller) => underlyingSource.start(controller) :
-      () => {};
-  const cancelAlgorithm = underlyingSource.cancel ? (reason) => {
-    try {
-      return Promise.resolve(underlyingSource.cancel(reason));
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  } : undefined;
-  const pullAlgorithm = underlyingSource.pull ? (controller) => {
-    try {
-      return Promise.resolve(underlyingSource.pull(controller));
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  } : undefined;
-  const highWaterMark =
-      strategy.highWaterMark === undefined ? 1 : strategy.highWaterMark;
-  const sizeAlgorithm = strategy.size ?
-      (chunk) => strategy.size.call(undefined, chunk) :
-      undefined;
+    !verifyObject.autoAllocateChunkSize,
+    `'autoAllocateChunkSize' property not allowed on an underlying ` +
+      'source for a liteImpl ReadableStream'
+  );
+  const startAlgorithm = underlyingSource.start
+    ? (controller) => underlyingSource.start(controller)
+    : () => {};
+  const cancelAlgorithm = underlyingSource.cancel
+    ? (reason) => {
+        try {
+          return Promise.resolve(underlyingSource.cancel(reason));
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      }
+    : undefined;
+  const pullAlgorithm = underlyingSource.pull
+    ? (controller) => {
+        try {
+          return Promise.resolve(underlyingSource.pull(controller));
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      }
+    : undefined;
+  const highWaterMark = strategy.highWaterMark === undefined ? 1 : strategy.highWaterMark;
+  const sizeAlgorithm = strategy.size ? (chunk) => strategy.size.call(undefined, chunk) : undefined;
   const stream = new ReadableStream();
   const controller = new ReadableStreamDefaultController(
-      stream, cancelAlgorithm, pullAlgorithm, highWaterMark, sizeAlgorithm);
+    stream,
+    cancelAlgorithm,
+    pullAlgorithm,
+    highWaterMark,
+    sizeAlgorithm
+  );
   stream.readableStreamController = controller;
   controller.start(startAlgorithm);
   return stream;
@@ -261,12 +275,14 @@ class ReadableStreamDefaultReader extends liteImpl.ReadableStreamDefaultReader {
    */
   cancel(reason) {
     if (!this.ownerReadableStream) {
-      return Promise.reject(new TypeError(
+      return Promise.reject(
+        new TypeError(
           'This readable stream reader has been released and cannot be used ' +
-          'to cancel its previous owner stream'));
+            'to cancel its previous owner stream'
+        )
+      );
     }
-    return /** @type {!ReadableStream} */ (this.ownerReadableStream)
-        .cancelInternal(reason);
+    return /** @type {!ReadableStream} */ (this.ownerReadableStream).cancelInternal(reason);
   }
 }
 
@@ -295,14 +311,13 @@ class ReadableStreamAsyncIterator {
    */
   next() {
     if (!this.asyncIteratorReader.ownerReadableStream) {
-      return Promise.reject(
-          new TypeError('There is no more data left in the ReadableStream'));
+      return Promise.reject(new TypeError('There is no more data left in the ReadableStream'));
     }
-    return this.asyncIteratorReader.read().then(({value, done}) => {
+    return this.asyncIteratorReader.read().then(({ value, done }) => {
       if (done) {
         this.asyncIteratorReader.release();
       }
-      return {value, done};
+      return { value, done };
     });
   }
 
@@ -314,20 +329,18 @@ class ReadableStreamAsyncIterator {
    */
   return(value) {
     if (!this.asyncIteratorReader.ownerReadableStream) {
-      return Promise.reject(
-          new TypeError('There is no more data left in the ReadableStream'));
+      return Promise.reject(new TypeError('There is no more data left in the ReadableStream'));
     }
     if (this.asyncIteratorReader.readRequests.length) {
-      return Promise.reject(new TypeError(
-          'There are pending read requests in the ReadableStream'));
+      return Promise.reject(new TypeError('There are pending read requests in the ReadableStream'));
     }
     if (!this.preventCancel) {
       const result = this.asyncIteratorReader.cancel(value);
       this.asyncIteratorReader.release();
-      return result.then(() => ({done: true, value}));
+      return result.then(() => ({ done: true, value }));
     }
     this.asyncIteratorReader.release();
-    return Promise.resolve({done: true, value});
+    return Promise.resolve({ done: true, value });
   }
 }
 
@@ -337,8 +350,7 @@ class ReadableStreamAsyncIterator {
  * @template T
  * @implements {fullTypes.ReadableStreamDefaultController}
  */
-class ReadableStreamDefaultController extends
-    liteImpl.ReadableStreamDefaultController {
+class ReadableStreamDefaultController extends liteImpl.ReadableStreamDefaultController {
   /**
    * @param {!ReadableStream} stream
    * @param {!CancelAlgorithm|undefined} cancelAlgorithm
@@ -347,9 +359,7 @@ class ReadableStreamDefaultController extends
    * @param {(function(T): number)|undefined} strategySizeAlgorithm
    * @package
    */
-  constructor(
-      stream, cancelAlgorithm, pullAlgorithm, strategyHWM,
-      strategySizeAlgorithm) {
+  constructor(stream, cancelAlgorithm, pullAlgorithm, strategyHWM, strategySizeAlgorithm) {
     super(stream);
 
     /** @private {!CancelAlgorithm|undefined} */
@@ -408,16 +418,17 @@ class ReadableStreamDefaultController extends
     }
     this.pulling_ = true;
     this.pullAlgorithm_(this).then(
-        () => {
-          this.pulling_ = false;
-          if (this.pullAgain_) {
-            this.pullAgain_ = false;
-            this.callPullIfNeeded();
-          }
-        },
-        (error) => {
-          this.error(error);
-        });
+      () => {
+        this.pulling_ = false;
+        if (this.pullAgain_) {
+          this.pullAgain_ = false;
+          this.callPullIfNeeded();
+        }
+      },
+      (error) => {
+        this.error(error);
+      }
+    );
   }
 
   /**
@@ -431,8 +442,10 @@ class ReadableStreamDefaultController extends
     if (!this.started_) {
       return false;
     }
-    if (this.controlledReadableStream.locked &&
-        this.controlledReadableStream.getNumReadRequests() > 0) {
+    if (
+      this.controlledReadableStream.locked &&
+      this.controlledReadableStream.getNumReadRequests() > 0
+    ) {
       return true;
     }
     return assertNumber(this.getDesiredSize_()) > 0;
@@ -452,8 +465,7 @@ class ReadableStreamDefaultController extends
    */
   cancelSteps(reason) {
     this.queue.resetQueue();
-    const cancelResult = this.cancelAlgorithm_ ? this.cancelAlgorithm_(reason) :
-                                                 Promise.resolve();
+    const cancelResult = this.cancelAlgorithm_ ? this.cancelAlgorithm_(reason) : Promise.resolve();
     this.clearAlgorithms();
     return cancelResult;
   }
@@ -463,17 +475,21 @@ class ReadableStreamDefaultController extends
     let size;
     try {
       // Default to size of 1 if no algorithm is specified.
-      size = Number(
-          this.strategySizeAlgorithm_ ? this.strategySizeAlgorithm_(chunk) : 1);
+      size = Number(this.strategySizeAlgorithm_ ? this.strategySizeAlgorithm_(chunk) : 1);
     } catch (e) {
       this.error(e);
       throw e;
     }
-    if (typeof size !== 'number' || Number.isNaN(size) || size < 0 ||
-        size === Infinity) {
+    if (
+      typeof size !== 'number' ||
+      Number.isNaN(size) ||
+      size < 0 ||
+      size === Number.POSITIVE_INFINITY
+    ) {
       throw new RangeError(
-          `The return value of a queuing strategy's size function must be a` +
-          ' finite, non-NaN, non-negative number');
+        `The return value of a queuing strategy's size function must be a` +
+          ' finite, non-NaN, non-negative number'
+      );
     }
     this.queueTotalSize_ += size;
     this.queueWithSizes_.enqueueValueWithSize(chunk, size);
@@ -481,7 +497,7 @@ class ReadableStreamDefaultController extends
 
   /** @override */
   dequeueFromQueue() {
-    const {value, size} = this.queueWithSizes_.dequeueValueWithSize();
+    const { value, size } = this.queueWithSizes_.dequeueValueWithSize();
     this.queueTotalSize_ -= size;
     if (this.queueTotalSize_ < 0) {
       // This might be less than zero due to rounding errors.
@@ -500,12 +516,10 @@ class ReadableStreamDefaultController extends
    * @private
    */
   getDesiredSize_() {
-    if (this.controlledReadableStream.state ===
-        liteImpl.ReadableStream.State.ERRORED) {
+    if (this.controlledReadableStream.state === liteImpl.ReadableStream.State.ERRORED) {
       return null;
     }
-    if (this.controlledReadableStream.state ===
-        liteImpl.ReadableStream.State.CLOSED) {
+    if (this.controlledReadableStream.state === liteImpl.ReadableStream.State.CLOSED) {
       return 0;
     }
     return this.strategyHWM_ - this.queueTotalSize_;

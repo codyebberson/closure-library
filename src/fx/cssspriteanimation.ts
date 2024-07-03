@@ -17,8 +17,6 @@ goog.require('goog.fx.Animation');
 goog.requireType('goog.math.Box');
 goog.requireType('goog.math.Size');
 
-
-
 /**
  * This animation class is used to animate a CSS sprite (moving a background
  * image).  This moves through a series of images in a single image sprite. By
@@ -47,14 +45,11 @@ goog.requireType('goog.math.Size');
  * @extends {goog.fx.Animation}
  * @final
  */
-goog.fx.CssSpriteAnimation = function(
-    element, size, box, time, opt_acc, opt_disableLoop) {
-  'use strict';
+goog.fx.CssSpriteAnimation = function (element, size, box, time, opt_acc, opt_disableLoop) {
   var start = [box.left, box.top];
   // We never draw for the end so we do not need to subtract for the size
   var end = [box.right, box.bottom];
-  goog.fx.CssSpriteAnimation.base(
-      this, 'constructor', start, end, time, opt_acc);
+  goog.fx.CssSpriteAnimation.base(this, 'constructor', start, end, time, opt_acc);
 
   /**
    * HTML element that will be used in the animation.
@@ -80,10 +75,8 @@ goog.fx.CssSpriteAnimation = function(
 };
 goog.inherits(goog.fx.CssSpriteAnimation, goog.fx.Animation);
 
-
 /** @override */
-goog.fx.CssSpriteAnimation.prototype.onAnimate = function() {
-  'use strict';
+goog.fx.CssSpriteAnimation.prototype.onAnimate = function () {
   // Round to nearest sprite.
   var x = -Math.floor(this.coords[0] / this.size_.width) * this.size_.width;
   var y = -Math.floor(this.coords[1] / this.size_.height) * this.size_.height;
@@ -92,24 +85,20 @@ goog.fx.CssSpriteAnimation.prototype.onAnimate = function() {
   goog.fx.CssSpriteAnimation.base(this, 'onAnimate');
 };
 
-
 /** @override */
-goog.fx.CssSpriteAnimation.prototype.onFinish = function() {
-  'use strict';
+goog.fx.CssSpriteAnimation.prototype.onFinish = function () {
   if (!this.disableLoop_) {
     this.play(true);
   }
   goog.fx.CssSpriteAnimation.base(this, 'onFinish');
 };
 
-
 /**
  * Clears the background position style set directly on the element
  * by the animation. Allows to apply CSS styling for background position on the
  * same element when the sprite animation is not runniing.
  */
-goog.fx.CssSpriteAnimation.prototype.clearSpritePosition = function() {
-  'use strict';
+goog.fx.CssSpriteAnimation.prototype.clearSpritePosition = function () {
   var style = this.element_.style;
   style.backgroundPosition = '';
 
@@ -120,10 +109,8 @@ goog.fx.CssSpriteAnimation.prototype.clearSpritePosition = function() {
   }
 };
 
-
 /** @override */
-goog.fx.CssSpriteAnimation.prototype.disposeInternal = function() {
-  'use strict';
+goog.fx.CssSpriteAnimation.prototype.disposeInternal = function () {
   goog.fx.CssSpriteAnimation.superClass_.disposeInternal.call(this);
   this.element_ = null;
 };

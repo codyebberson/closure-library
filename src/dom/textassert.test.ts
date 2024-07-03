@@ -5,31 +5,30 @@
  */
 
 goog.module('goog.dom.textassert_test');
-goog.setTestOnly();
 
 const testSuite = goog.require('goog.testing.testSuite');
 const textAssert = goog.require('goog.dom.textAssert');
 
 testSuite({
-  testAssertIsTextThrowsWithHtmlTags: function() {
+  testAssertIsTextThrowsWithHtmlTags: () => {
     const e = assertThrows(() => textAssert.assertHtmlFree('<b>a<\\b>'));
     assertEquals(
-        'Assertion failed: String has HTML original: ' +
-            '<b>a<\\b>, escaped: &lt;b&gt;a&lt;\\b&gt;',
-        e.message);
+      'Assertion failed: String has HTML original: ' + '<b>a<\\b>, escaped: &lt;b&gt;a&lt;\\b&gt;',
+      e.message
+    );
   },
 
-  testAssertIsTextThrowsWithHtmlEntities: function() {
+  testAssertIsTextThrowsWithHtmlEntities: () => {
     const e = assertThrows(() => {
       textAssert.assertHtmlFree('a&amp;b');
     });
     assertEquals(
-        'Assertion failed: String has HTML original: ' +
-            'a&amp;b, escaped: a&amp;amp;b',
-        e.message);
+      'Assertion failed: String has HTML original: ' + 'a&amp;b, escaped: a&amp;amp;b',
+      e.message
+    );
   },
 
-  testAssertIsTextDoesNotChangeText: function() {
+  testAssertIsTextDoesNotChangeText: () => {
     const plain = 'text';
     assertEquals(plain, textAssert.assertHtmlFree(plain));
   },

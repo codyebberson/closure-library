@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.IframeMaskTest');
-goog.setTestOnly();
 
 const IframeMask = goog.require('goog.ui.IframeMask');
 const MockClock = goog.require('goog.testing.MockClock');
@@ -25,15 +24,16 @@ let mockClock;
 
 function findOneAndOnlyIframe() {
   const iframes = dom.getElementsByTagName(TagName.IFRAME);
-  assertEquals(
-      'There should be exactly 1 iframe in the document', 1, iframes.length);
+  assertEquals('There should be exactly 1 iframe in the document', 1, iframes.length);
   return iframes[0];
 }
 
 function assertNoIframes() {
   assertEquals(
-      'Expected no iframes in the document', 0,
-      dom.getElementsByTagNameAndClass(TagName.IFRAME).length);
+    'Expected no iframes in the document',
+    0,
+    dom.getElementsByTagNameAndClass(TagName.IFRAME).length
+  );
 }
 
 testSuite({
@@ -71,12 +71,16 @@ testSuite({
 
     if (userAgent.IE && !userAgent.isDocumentModeOrHigher(9)) {
       assertContains(
-          'Expected opactity to be set in the CSS style', '30',
-          findOneAndOnlyIframe().style.cssText);
+        'Expected opactity to be set in the CSS style',
+        '30',
+        findOneAndOnlyIframe().style.cssText
+      );
     } else {
       assertContains(
-          'Expected opactity to be set in the CSS style', '0.3',
-          findOneAndOnlyIframe().style.cssText);
+        'Expected opactity to be set in the CSS style',
+        '0.3',
+        findOneAndOnlyIframe().style.cssText
+      );
     }
   },
 
@@ -102,15 +106,17 @@ testSuite({
     iframeMask.setSnapElement(document.documentElement);
 
     // Make sure that snapping to a different element changes the bounds.
-    assertNotEquals(
-        'Snap element not updated', 400, style.getBounds(iframe).height);
+    assertNotEquals('Snap element not updated', 400, style.getBounds(iframe).height);
   },
 
   testAttachToPopup() {
     const popup = new Popup(dom.getElement('popup'));
     iframeMask.listenOnTarget(
-        popup, PopupBase.EventType.SHOW, PopupBase.EventType.HIDE,
-        dom.getElement('popup'));
+      popup,
+      PopupBase.EventType.SHOW,
+      PopupBase.EventType.HIDE,
+      dom.getElement('popup')
+    );
 
     assertNoIframes();
     popup.setVisible(true);
@@ -133,8 +139,7 @@ testSuite({
 
   testQuickHidingPopup() {
     const popup = new Popup(dom.getElement('popup'));
-    iframeMask.listenOnTarget(
-        popup, PopupBase.EventType.SHOW, PopupBase.EventType.HIDE);
+    iframeMask.listenOnTarget(popup, PopupBase.EventType.SHOW, PopupBase.EventType.HIDE);
 
     assertNoIframes();
     popup.setVisible(true);
@@ -151,8 +156,7 @@ testSuite({
 
   testRemoveHandlers() {
     const popup = new Popup(dom.getElement('popup'));
-    iframeMask.listenOnTarget(
-        popup, PopupBase.EventType.SHOW, PopupBase.EventType.HIDE);
+    iframeMask.listenOnTarget(popup, PopupBase.EventType.SHOW, PopupBase.EventType.HIDE);
     iframeMask.removeHandlers();
     popup.setVisible(true);
 

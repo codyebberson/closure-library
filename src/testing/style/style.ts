@@ -17,7 +17,6 @@ goog.require('goog.dom');
 goog.require('goog.math.Rect');
 goog.require('goog.style');
 
-
 /**
  * Determines whether the bounding rectangles of the given elements intersect.
  * @param {Element} element The first element.
@@ -25,21 +24,18 @@ goog.require('goog.style');
  * @return {boolean} Whether the bounding rectangles of the given elements
  *     intersect.
  */
-goog.testing.style.intersects = function(element, otherElement) {
-  'use strict';
+goog.testing.style.intersects = (element, otherElement) => {
   const elementRect = goog.style.getBounds(element);
   const otherElementRect = goog.style.getBounds(otherElement);
   return goog.math.Rect.intersects(elementRect, otherElementRect);
 };
-
 
 /**
  * Determines whether the element has visible dimensions, i.e. x > 0 && y > 0.
  * @param {Element} element The element to check.
  * @return {boolean} Whether the element has visible dimensions.
  */
-goog.testing.style.hasVisibleDimensions = function(element) {
-  'use strict';
+goog.testing.style.hasVisibleDimensions = (element) => {
   const elSize = goog.style.getSize(element);
   const shortest = elSize.getShortest();
   if (shortest <= 0) {
@@ -49,15 +45,13 @@ goog.testing.style.hasVisibleDimensions = function(element) {
   return true;
 };
 
-
 /**
  * Determines whether the CSS style of the element renders it visible.
  * Elements detached from the document are considered invisible.
  * @param {!Element} element The element to check.
  * @return {boolean} Whether the CSS style of the element renders it visible.
  */
-goog.testing.style.isVisible = function(element) {
-  'use strict';
+goog.testing.style.isVisible = (element) => {
   if (!goog.dom.isInDocument(element)) {
     return false;
   }
@@ -65,17 +59,14 @@ goog.testing.style.isVisible = function(element) {
   return style.visibility != 'hidden' && style.display != 'none';
 };
 
-
 /**
  * Test whether the given element is on screen.
  * @param {!Element} el The element to test.
  * @return {boolean} Whether the element is on the screen.
  */
-goog.testing.style.isOnScreen = function(el) {
-  'use strict';
+goog.testing.style.isOnScreen = (el) => {
   const doc = goog.dom.getDomHelper(el).getDocument();
   const viewport = goog.style.getVisibleRectForElement(doc.body);
   const viewportRect = goog.math.Rect.createFromBox(viewport);
-  return goog.dom.contains(doc, el) &&
-      goog.style.getBounds(el).intersects(viewportRect);
+  return goog.dom.contains(doc, el) && goog.style.getBounds(el).intersects(viewportRect);
 };

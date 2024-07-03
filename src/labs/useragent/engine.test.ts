@@ -7,7 +7,6 @@
 /** @fileoverview Unit tests for engine. */
 
 goog.module('goog.labs.userAgent.engineTest');
-goog.setTestOnly();
 
 const engine = goog.require('goog.labs.userAgent.engine');
 const testAgents = goog.require('goog.labs.userAgent.testAgents');

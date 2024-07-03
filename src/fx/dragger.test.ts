@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.fx.DraggerTest');
-goog.setTestOnly();
 
 const BrowserEvent = goog.require('goog.events.BrowserEvent');
 const Dragger = goog.require('goog.fx.Dragger');
@@ -63,32 +62,24 @@ function runStartDragTest(handleId, targetElement) {
 
   dragger.startDrag(e);
 
-  assertTrue(
-      'Start drag with no hysteresis must actually start the drag.',
-      dragger.isDragging());
+  assertTrue('Start drag with no hysteresis must actually start the drag.', dragger.isDragging());
   if (handleId == 'handle_rtl') {
     assertEquals(10, bidi.getOffsetStart(targetElement));
   }
-  assertEquals(
-      'Dragger startX must match event\'s clientX.', 1, dragger.startX);
-  assertEquals(
-      'Dragger clientX must match event\'s clientX', 1, dragger.clientX);
-  assertEquals(
-      'Dragger startY must match event\'s clientY.', 2, dragger.startY);
-  assertEquals(
-      'Dragger clientY must match event\'s clientY', 2, dragger.clientY);
-  assertEquals(
-      'Dragger deltaX must match target\'s offsetLeft', 10, dragger.deltaX);
-  assertEquals(
-      'Dragger deltaY must match target\'s offsetTop', 15, dragger.deltaY);
+  assertEquals("Dragger startX must match event's clientX.", 1, dragger.startX);
+  assertEquals("Dragger clientX must match event's clientX", 1, dragger.clientX);
+  assertEquals("Dragger startY must match event's clientY.", 2, dragger.startY);
+  assertEquals("Dragger clientY must match event's clientY", 2, dragger.clientY);
+  assertEquals("Dragger deltaX must match target's offsetLeft", 10, dragger.deltaX);
+  assertEquals("Dragger deltaY must match target's offsetTop", 15, dragger.deltaY);
 
   dragger = new Dragger(targetElement, dom.getElement(handleId));
   dragger.setHysteresis(1);
   dragger.startDrag(e);
   assertFalse(
-      'Start drag with a valid non-zero hysteresis should not start ' +
-          'the drag.',
-      dragger.isDragging());
+    'Start drag with a valid non-zero hysteresis should not start ' + 'the drag.',
+    dragger.isDragging()
+  );
   e.$verify();
 }
 
@@ -96,24 +87,27 @@ testSuite({
   setUp() {
     const sandbox = dom.getElement('sandbox');
     target = dom.createDom(TagName.DIV, {
-      'id': 'target',
-      'style': 'display:none;position:absolute;top:15px;left:10px',
+      id: 'target',
+      style: 'display:none;position:absolute;top:15px;left:10px',
     });
     sandbox.appendChild(target);
-    sandbox.appendChild(dom.createDom(TagName.DIV, {id: 'handle'}));
+    sandbox.appendChild(dom.createDom(TagName.DIV, { id: 'handle' }));
 
     const sandboxRtl = dom.getElement('sandbox_rtl');
     targetRtl = dom.createDom(TagName.DIV, {
-      'id': 'target_rtl',
-      'style': 'position:absolute; top:15px; right:10px; width:10px; ' +
-          'height: 10px; background: green;',
+      id: 'target_rtl',
+      style:
+        'position:absolute; top:15px; right:10px; width:10px; ' +
+        'height: 10px; background: green;',
     });
     sandboxRtl.appendChild(targetRtl);
-    sandboxRtl.appendChild(dom.createDom(TagName.DIV, {
-      'id': 'background_rtl',
-      'style': 'width: 10000px;height:50px;position:absolute;color:blue;',
-    }));
-    sandboxRtl.appendChild(dom.createDom(TagName.DIV, {id: 'handle_rtl'}));
+    sandboxRtl.appendChild(
+      dom.createDom(TagName.DIV, {
+        id: 'background_rtl',
+        style: 'width: 10000px;height:50px;position:absolute;color:blue;',
+      })
+    );
+    sandboxRtl.appendChild(dom.createDom(TagName.DIV, { id: 'handle_rtl' }));
   },
 
   tearDown() {
@@ -166,13 +160,13 @@ testSuite({
 
     assertFalse('Start drag must have been cancelled.', dragger.isDragging());
     assertFalse(
-        'Dragger must not have registered mousemove handlers.',
-        events.hasListener(
-            dragger.document_, EventType.MOUSEMOVE, !HAS_SET_CAPTURE));
+      'Dragger must not have registered mousemove handlers.',
+      events.hasListener(dragger.document_, EventType.MOUSEMOVE, !HAS_SET_CAPTURE)
+    );
     assertFalse(
-        'Dragger must not have registered mouseup handlers.',
-        events.hasListener(
-            dragger.document_, EventType.MOUSEUP, !HAS_SET_CAPTURE));
+      'Dragger must not have registered mouseup handlers.',
+      events.hasListener(dragger.document_, EventType.MOUSEUP, !HAS_SET_CAPTURE)
+    );
     e.$verify();
   },
 
@@ -211,11 +205,13 @@ testSuite({
 
     assertFalse('Start drag must have been cancelled.', dragger.isDragging());
     assertFalse(
-        'Dragger must not have registered mousemove handlers.',
-        events.hasListener(dragger.document_, EventType.MOUSEMOVE, true));
+      'Dragger must not have registered mousemove handlers.',
+      events.hasListener(dragger.document_, EventType.MOUSEMOVE, true)
+    );
     assertFalse(
-        'Dragger must not have registered mouseup handlers.',
-        events.hasListener(dragger.document_, EventType.MOUSEUP, true));
+      'Dragger must not have registered mouseup handlers.',
+      events.hasListener(dragger.document_, EventType.MOUSEUP, true)
+    );
     e.$verify();
   },
 
@@ -255,13 +251,13 @@ testSuite({
     assertTrue('Dragging should be in progress.', dragger.isDragging());
     assertTrue('Start drag event should have fired.', startDragFired);
     assertTrue(
-        'Dragger must have registered mousemove handlers.',
-        events.hasListener(
-            dragger.document_, EventType.MOUSEMOVE, !HAS_SET_CAPTURE));
+      'Dragger must have registered mousemove handlers.',
+      events.hasListener(dragger.document_, EventType.MOUSEMOVE, !HAS_SET_CAPTURE)
+    );
     assertTrue(
-        'Dragger must have registered mouseup handlers.',
-        events.hasListener(
-            dragger.document_, EventType.MOUSEUP, !HAS_SET_CAPTURE));
+      'Dragger must have registered mouseup handlers.',
+      events.hasListener(dragger.document_, EventType.MOUSEUP, !HAS_SET_CAPTURE)
+    );
     e.$verify();
   },
 
@@ -291,9 +287,9 @@ testSuite({
     assertTrue('Dragging should be in progress.', dragger.isDragging());
     assertTrue('Start drag event should have fired.', startDragFired);
     assertTrue(
-        'Dragger must have registered touchstart listener.',
-        events.hasListener(
-            dragger.handle, EventType.TOUCHSTART, false /*opt_cap*/));
+      'Dragger must have registered touchstart listener.',
+      events.hasListener(dragger.handle, EventType.TOUCHSTART, false /*opt_cap*/)
+    );
     e.$verify();
   },
 
@@ -321,13 +317,11 @@ testSuite({
 
     dragger.startDrag(e);
 
-    assertFalse(
-        'Start drag must not start drag because of hysterisis.',
-        dragger.isDragging());
+    assertFalse('Start drag must not start drag because of hysterisis.', dragger.isDragging());
     assertTrue(
-        'Dragger must have registered touchstart listener.',
-        events.hasListener(
-            dragger.handle, EventType.TOUCHSTART, false /*opt_cap*/));
+      'Dragger must have registered touchstart listener.',
+      events.hasListener(dragger.handle, EventType.TOUCHSTART, false /*opt_cap*/)
+    );
     e.$verify();
   },
 
@@ -360,17 +354,15 @@ testSuite({
     // preventDefault is not called.
     e.$replay();
     dragger.startDrag(e);
-    assertFalse(
-        'Start drag must not start drag because of hysterisis.',
-        dragger.isDragging());
+    assertFalse('Start drag must not start drag because of hysterisis.', dragger.isDragging());
     assertTrue(
-        'Dragger must have registered mousemove handlers.',
-        events.hasListener(
-            dragger.document_, EventType.MOUSEMOVE, !HAS_SET_CAPTURE));
+      'Dragger must have registered mousemove handlers.',
+      events.hasListener(dragger.document_, EventType.MOUSEMOVE, !HAS_SET_CAPTURE)
+    );
     assertTrue(
-        'Dragger must have registered mouseup handlers.',
-        events.hasListener(
-            dragger.document_, EventType.MOUSEUP, !HAS_SET_CAPTURE));
+      'Dragger must have registered mouseup handlers.',
+      events.hasListener(dragger.document_, EventType.MOUSEUP, !HAS_SET_CAPTURE)
+    );
 
     /**
      * @suppress {strictMissingProperties} suppression added to enable type
@@ -385,11 +377,13 @@ testSuite({
     dragger.handleMove_(e);
     assertFalse('Drag must be cancelled.', dragger.isDragging());
     assertFalse(
-        'Dragger must unregistered mousemove handlers.',
-        events.hasListener(dragger.document_, EventType.MOUSEMOVE, true));
+      'Dragger must unregistered mousemove handlers.',
+      events.hasListener(dragger.document_, EventType.MOUSEMOVE, true)
+    );
     assertFalse(
-        'Dragger must unregistered mouseup handlers.',
-        events.hasListener(dragger.document_, EventType.MOUSEUP, true));
+      'Dragger must unregistered mouseup handlers.',
+      events.hasListener(dragger.document_, EventType.MOUSEUP, true)
+    );
     e.$verify();
   },
 
@@ -533,9 +527,14 @@ testSuite({
     // Blur events do not bubble but the test event system does not emulate that
     // part so we add a capturing listener on the target and stops the
     // propagation at the target, preventing any event from bubbling.
-    events.listen(document.body, EventType.BLUR, (e) => {
-      e.propagationStopped_ = true;
-    }, true);
+    events.listen(
+      document.body,
+      EventType.BLUR,
+      (e) => {
+        e.propagationStopped_ = true;
+      },
+      true
+    );
     testingEvents.fireBrowserEvent(e);
 
     assertFalse(dragEnded);
@@ -547,9 +546,8 @@ testSuite({
    */
   testCloneNode() {
     const element = dom.createDom(TagName.DIV);
-    element.innerHTML = '<input type="hidden" value="v0">' +
-        '<textarea>v1</textarea>' +
-        '<textarea>v2</textarea>';
+    element.innerHTML =
+      '<input type="hidden" value="v0">' + '<textarea>v1</textarea>' + '<textarea>v2</textarea>';
     /**
      * @suppress {strictMissingProperties} suppression added to enable type
      * checking
@@ -559,14 +557,12 @@ testSuite({
      * @suppress {strictMissingProperties} suppression added to enable type
      * checking
      */
-    element.childNodes[1].value = '<' +
-        '/textarea>&lt;3';
+    element.childNodes[1].value = '<' + '/textarea>&lt;3';
     /**
      * @suppress {strictMissingProperties} suppression added to enable type
      * checking
      */
-    element.childNodes[2].value = '<script>\n\talert("oops!");<' +
-        '/script>';
+    element.childNodes[2].value = '<script>\n\talert("oops!");<' + '/script>';
     let clone = Dragger.cloneNode(element);
     assertEquals(element.childNodes[0].value, clone.childNodes[0].value);
     assertEquals(element.childNodes[1].value, clone.childNodes[1].value);

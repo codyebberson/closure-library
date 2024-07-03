@@ -9,8 +9,8 @@ goog.module('goog.dom.uri');
 const Const = goog.require('goog.string.Const');
 const TagName = goog.require('goog.dom.TagName');
 const uncheckedconversions = goog.require('goog.html.uncheckedconversions');
-const {createElement} = goog.require('goog.dom');
-const {setAnchorHref} = goog.require('goog.dom.safe');
+const { createElement } = goog.require('goog.dom');
+const { setAnchorHref } = goog.require('goog.dom.safe');
 
 /**
  * Normalizes a URL by assigning it to an anchor element and reading back href.
@@ -25,9 +25,10 @@ function normalizeUri(uri) {
   // The SafeURL is only used to set the href of an HTMLAnchorElement
   // that is never added to the DOM. Therefore, the user cannot navigate
   // to this URL.
-  const safeUrl =
-      uncheckedconversions.safeUrlFromStringKnownToSatisfyTypeContract(
-          Const.from('This URL is never added to the DOM'), uri);
+  const safeUrl = uncheckedconversions.safeUrlFromStringKnownToSatisfyTypeContract(
+    Const.from('This URL is never added to the DOM'),
+    uri
+  );
   setAnchorHref(anchor, safeUrl);
   return anchor.href;
 }

@@ -19,8 +19,6 @@ goog.require('goog.dom');
 goog.require('goog.fx.AbstractDragDrop');
 goog.require('goog.fx.DragDropItem');
 
-
-
 /**
  * Drag/drop implementation for creating drag sources/drop targets consisting of
  * multiple HTML Elements (items). All items share the same drop target(s) but
@@ -30,12 +28,10 @@ goog.require('goog.fx.DragDropItem');
  * @constructor
  * @struct
  */
-goog.fx.DragDropGroup = function() {
-  'use strict';
+goog.fx.DragDropGroup = function () {
   goog.fx.AbstractDragDrop.call(this);
 };
 goog.inherits(goog.fx.DragDropGroup, goog.fx.AbstractDragDrop);
-
 
 /**
  * Add item to drag object.
@@ -48,12 +44,10 @@ goog.inherits(goog.fx.DragDropGroup, goog.fx.AbstractDragDrop);
  * @template DRAG_DROP_DATA
  * @override
  */
-goog.fx.DragDropGroup.prototype.addItem = function(element, opt_data) {
-  'use strict';
+goog.fx.DragDropGroup.prototype.addItem = function (element, opt_data) {
   var item = new goog.fx.DragDropItem(element, opt_data);
   this.addDragDropItem(item);
 };
-
 
 /**
  * Add DragDropItem to drag object.
@@ -63,8 +57,7 @@ goog.fx.DragDropGroup.prototype.addItem = function(element, opt_data) {
  * @throws Error If no element argument is provided or if the type is
  *     invalid
  */
-goog.fx.DragDropGroup.prototype.addDragDropItem = function(item) {
-  'use strict';
+goog.fx.DragDropGroup.prototype.addDragDropItem = function (item) {
   item.setParent(this);
   this.items_.push(item);
   if (this.isInitialized()) {
@@ -72,17 +65,15 @@ goog.fx.DragDropGroup.prototype.addDragDropItem = function(item) {
   }
 };
 
-
 /**
  * Remove item from drag object.
  *
  * @param {Element|string} element Dom Node, or string representation of node
  *     id, that was previously added with addItem().
  */
-goog.fx.DragDropGroup.prototype.removeItem = function(element) {
-  'use strict';
+goog.fx.DragDropGroup.prototype.removeItem = function (element) {
   element = goog.dom.getElement(element);
-  for (var item, i = 0; item = this.items_[i]; i++) {
+  for (var item, i = 0; (item = this.items_[i]); i++) {
     if (item.element == element) {
       this.items_.splice(i, 1);
       this.disposeItem(item);
@@ -90,7 +81,6 @@ goog.fx.DragDropGroup.prototype.removeItem = function(element) {
     }
   }
 };
-
 
 /**
  * Marks the supplied list of items as selected. A drag operation for any of the
@@ -101,6 +91,4 @@ goog.fx.DragDropGroup.prototype.removeItem = function(element) {
  *
  * TODO(eae): Not yet implemented.
  */
-goog.fx.DragDropGroup.prototype.setSelection = function(list) {
-
-};
+goog.fx.DragDropGroup.prototype.setSelection = (list) => {};

@@ -34,8 +34,7 @@ class AbstractModuleLoader {
    *     from module id to ModuleInfo object.
    * @param {!AbstractModuleLoader.LoadOptions=} loadOptions
    */
-  loadModules(ids, moduleInfoMap, loadOptions) {};
-
+  loadModules(ids, moduleInfoMap, loadOptions) {}
 
   /**
    * Pre-fetches a JavaScript module.
@@ -43,7 +42,7 @@ class AbstractModuleLoader {
    * @param {string} id The module id.
    * @param {!ModuleInfo} moduleInfo The module info.
    */
-  prefetchModule(id, moduleInfo) {};
+  prefetchModule(id, moduleInfo) {}
 }
 
 /**

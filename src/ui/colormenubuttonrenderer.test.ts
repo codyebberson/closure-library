@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.ColorMenuButtonTest');
-goog.setTestOnly();
 
 const ColorMenuButton = goog.require('goog.ui.ColorMenuButton');
 const ColorMenuButtonRenderer = goog.require('goog.ui.ColorMenuButtonRenderer');
@@ -21,8 +20,10 @@ let harness;
 testSuite({
   setUp() {
     harness = new RendererHarness(
-        ColorMenuButtonRenderer.getInstance(), dom.getElement('parent'),
-        dom.getElement('decoratedButton'));
+      ColorMenuButtonRenderer.getInstance(),
+      dom.getElement('parent'),
+      dom.getElement('decoratedButton')
+    );
   },
 
   tearDown() {
@@ -38,29 +39,26 @@ testSuite({
 
   testWrapCaption() {
     const caption = dom.createDom(TagName.DIV, null, 'Foo');
-    const wrappedCaption =
-        ColorMenuButtonRenderer.wrapCaption(caption, dom.getDomHelper());
-    assertNotEquals(
-        'Caption should have been wrapped', caption, wrappedCaption);
+    const wrappedCaption = ColorMenuButtonRenderer.wrapCaption(caption, dom.getDomHelper());
+    assertNotEquals('Caption should have been wrapped', caption, wrappedCaption);
     assertEquals(
-        'Wrapped caption should have indicator css class',
-        'goog-color-menu-button-indicator', wrappedCaption.className);
+      'Wrapped caption should have indicator css class',
+      'goog-color-menu-button-indicator',
+      wrappedCaption.className
+    );
   },
 
   testSetCaptionValue() {
     const caption = dom.createDom(TagName.DIV, null, 'Foo');
-    const wrappedCaption =
-        ColorMenuButtonRenderer.wrapCaption(caption, dom.getDomHelper());
+    const wrappedCaption = ColorMenuButtonRenderer.wrapCaption(caption, dom.getDomHelper());
     ColorMenuButtonRenderer.setCaptionValue(wrappedCaption, 'red');
 
-    const expectedColor = userAgent.IE && !userAgent.isDocumentModeOrHigher(9) ?
-        '#ff0000' :
-        'rgb(255, 0, 0)';
+    const expectedColor =
+      userAgent.IE && !userAgent.isDocumentModeOrHigher(9) ? '#ff0000' : 'rgb(255, 0, 0)';
     assertEquals(expectedColor, caption.style.borderBottomColor);
   },
 
   testDoesntCallGetCssClassInConstructor() {
-    rendererasserts.assertNoGetCssClassCallsInConstructor(
-        ColorMenuButtonRenderer);
+    rendererasserts.assertNoGetCssClassCallsInConstructor(ColorMenuButtonRenderer);
   },
 });

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.async.MockControlTest');
-goog.setTestOnly();
 
 const AsyncMockControl = goog.require('goog.testing.async.MockControl');
 const Deferred = goog.require('goog.async.Deferred');
@@ -42,32 +41,32 @@ testSuite({
   },
 
   testCreateCallbackMockSuccess() {
-    const callback =
-        asyncMockControl.createCallbackMock('succeedingCallbackMock', () => {});
+    const callback = asyncMockControl.createCallbackMock('succeedingCallbackMock', () => {});
     callback();
     mockControl.$verifyAll();
   },
 
   testCreateCallbackMockSuccessWithArg() {
     const callback = asyncMockControl.createCallbackMock(
-        'succeedingCallbackMockWithArg',
-        asyncMockControl.createCallbackMock('metaCallbackMock', (val) => {
-          assertEquals(10, val);
-        }));
+      'succeedingCallbackMockWithArg',
+      asyncMockControl.createCallbackMock('metaCallbackMock', (val) => {
+        assertEquals(10, val);
+      })
+    );
     callback(10);
     mockControl.$verifyAll();
   },
 
   testCreateCallbackMockSuccessWithArgs() {
     const callback = asyncMockControl.createCallbackMock(
-        'succeedingCallbackMockWithArgs',
-        asyncMockControl.createCallbackMock(
-            'metaCallbackMock', (val1, val2, val3) => {
-              assertEquals(10, val1);
-              assertEquals('foo', val2);
-              assertObjectEquals({foo: 'bar'}, val3);
-            }));
-    callback(10, 'foo', {foo: 'bar'});
+      'succeedingCallbackMockWithArgs',
+      asyncMockControl.createCallbackMock('metaCallbackMock', (val1, val2, val3) => {
+        assertEquals(10, val1);
+        assertEquals('foo', val2);
+        assertObjectEquals({ foo: 'bar' }, val3);
+      })
+    );
+    callback(10, 'foo', { foo: 'bar' });
     mockControl.$verifyAll();
   },
 
@@ -90,8 +89,7 @@ testSuite({
 
   testAsyncAssertEqualsFailureThreeArgs() {
     assertThrowsJsUnitException(() => {
-      asyncMockControl.asyncAssertEquals('wrong arg values', 1, 2, 15)(
-          2, 2, 15);
+      asyncMockControl.asyncAssertEquals('wrong arg values', 1, 2, 15)(2, 2, 15);
     });
   },
 
@@ -121,7 +119,7 @@ testSuite({
 
   testAssertDeferredEqualsFailureActualDeferredNeverResolves() {
     const actual = new Deferred();
-    asyncMockControl.assertDeferredEquals('doesn\'t resolve', 12, actual);
+    asyncMockControl.assertDeferredEquals("doesn't resolve", 12, actual);
     assertVerifyFails();
   },
 
@@ -129,14 +127,13 @@ testSuite({
     const actualDeferred = new Deferred();
     const expectedDeferred = new Deferred();
     expectedDeferred.callback(12);
-    asyncMockControl.assertDeferredEquals(
-        'doesn\'t resolve', expectedDeferred, actualDeferred);
+    asyncMockControl.assertDeferredEquals("doesn't resolve", expectedDeferred, actualDeferred);
     assertVerifyFails();
   },
 
   testAssertDeferredEqualsFailureExpectedDeferredNeverResolves() {
     const expected = new Deferred();
-    asyncMockControl.assertDeferredEquals('doesn\'t resolve', expected, 12);
+    asyncMockControl.assertDeferredEquals("doesn't resolve", expected, 12);
     assertVerifyFails();
   },
 
@@ -144,15 +141,14 @@ testSuite({
     const actualDeferred = new Deferred();
     const expectedDeferred = new Deferred();
     actualDeferred.callback(12);
-    asyncMockControl.assertDeferredEquals(
-        'doesn\'t resolve', expectedDeferred, actualDeferred);
+    asyncMockControl.assertDeferredEquals("doesn't resolve", expectedDeferred, actualDeferred);
     assertVerifyFails();
   },
 
   // TODO: rework this test.
   disable_testAssertDeferredEqualsFailureWrongValueActualDeferred() {
     const actual = new Deferred();
-    asyncMockControl.assertDeferredEquals('doesn\'t resolve', 12, actual);
+    asyncMockControl.assertDeferredEquals("doesn't resolve", 12, actual);
     asyncMockControl2.assertDeferredError(actual, () => {
       actual.callback(13);
     });
@@ -162,7 +158,7 @@ testSuite({
   // TODO: rework this test.
   disable_testAssertDeferredEqualsFailureWrongValueExpectedDeferred() {
     const expected = new Deferred();
-    asyncMockControl.assertDeferredEquals('doesn\'t resolve', expected, 12);
+    asyncMockControl.assertDeferredEquals("doesn't resolve", expected, 12);
     asyncMockControl2.assertDeferredError(expected, () => {
       expected.callback(13);
     });
@@ -172,8 +168,7 @@ testSuite({
   testAssertDeferredEqualsFailureWongValueBothDeferred() {
     const actualDeferred = new Deferred();
     const expectedDeferred = new Deferred();
-    asyncMockControl.assertDeferredEquals(
-        'different values', expectedDeferred, actualDeferred);
+    asyncMockControl.assertDeferredEquals('different values', expectedDeferred, actualDeferred);
     expectedDeferred.callback(12);
     asyncMockControl2.assertDeferredError(actualDeferred, () => {
       actualDeferred.callback(13);
@@ -185,8 +180,7 @@ testSuite({
   testAssertDeferredEqualsFailureNeitherDeferredEverResolves() {
     const actualDeferred = new Deferred();
     const expectedDeferred = new Deferred();
-    asyncMockControl.assertDeferredEquals(
-        'doesn\'t resolve', expectedDeferred, actualDeferred);
+    asyncMockControl.assertDeferredEquals("doesn't resolve", expectedDeferred, actualDeferred);
     assertVerifyFails();
   },
 
@@ -207,8 +201,7 @@ testSuite({
   testAssertDeferredEqualsSuccessBothDeferred() {
     const actualDeferred = new Deferred();
     const expectedDeferred = new Deferred();
-    asyncMockControl.assertDeferredEquals(
-        'should succeed', expectedDeferred, actualDeferred);
+    asyncMockControl.assertDeferredEquals('should succeed', expectedDeferred, actualDeferred);
     expectedDeferred.callback(12);
     actualDeferred.callback(12);
     mockControl.$verifyAll();

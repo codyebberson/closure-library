@@ -15,8 +15,6 @@
 goog.module('goog.debug.Error');
 goog.module.declareLegacyNamespace();
 
-
-
 /**
  * Base class for custom error objects.
  * @param {*=} msg The message associated with the error.
@@ -64,9 +62,7 @@ function DebugError(msg = undefined, cause = undefined) {
 }
 goog.inherits(DebugError, Error);
 
-
 /** @override @type {string} */
 DebugError.prototype.name = 'CustomError';
-
 
 exports = DebugError;

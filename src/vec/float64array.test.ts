@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.vec.Float64ArrayTest');
-goog.setTestOnly();
 
 const VecFloat64Array = goog.require('goog.vec.Float64Array');
 const testSuite = goog.require('goog.testing.testSuite');

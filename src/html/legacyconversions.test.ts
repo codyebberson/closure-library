@@ -7,7 +7,6 @@
 /** @fileoverview Unit tests for legacyconversions. */
 
 goog.module('goog.html.legacyconversionsTest');
-goog.setTestOnly();
 
 const SafeHtml = goog.require('goog.html.SafeHtml');
 const SafeScript = goog.require('goog.html.SafeScript');
@@ -60,10 +59,8 @@ testSuite({
   },
 
   testSafeStyleSheetFromString() {
-    const styleSheet =
-        'P.special { color: red; background: url(http://test); }';
-    const safeStyleSheet =
-        legacyconversions.safeStyleSheetFromString(styleSheet);
+    const styleSheet = 'P.special { color: red; background: url(http://test); }';
+    const safeStyleSheet = legacyconversions.safeStyleSheetFromString(styleSheet);
     assertEquals(styleSheet, SafeStyleSheet.unwrap(safeStyleSheet));
 
     assertFunctionReports(legacyconversions.safeStyleSheetFromString);
@@ -79,8 +76,7 @@ testSuite({
 
   testTrustedResourceUrlFromString() {
     const url = 'https://www.google.com/script.js';
-    const trustedResourceUrl =
-        legacyconversions.trustedResourceUrlFromString(url);
+    const trustedResourceUrl = legacyconversions.trustedResourceUrlFromString(url);
     assertEquals(url, TrustedResourceUrl.unwrap(trustedResourceUrl));
 
     assertFunctionReports(legacyconversions.trustedResourceUrlFromString);

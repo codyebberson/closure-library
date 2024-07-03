@@ -10,7 +10,6 @@
 
 /** @suppress {extraProvide} */
 goog.module('goog.proto2.TextFormatSerializerTest');
-goog.setTestOnly();
 
 const ObjectSerializer = goog.require('goog.proto2.ObjectSerializer');
 const TestAllTypes = goog.require('proto2.TestAllTypes');
@@ -27,16 +26,13 @@ const testSuite = goog.require('goog.testing.testSuite');
  */
 function assertTokens(value, tokens, ignoreWhitespace = undefined) {
   /** @suppress {visibility} suppression added to enable type checking */
-  const tokenizer =
-      new TextFormatSerializer.Tokenizer_(value, ignoreWhitespace);
+  const tokenizer = new TextFormatSerializer.Tokenizer_(value, ignoreWhitespace);
   const tokensFound = [];
 
   while (tokenizer.next()) {
     tokensFound.push(tokenizer.getCurrent());
   }
-  assertEquals(
-      TextFormatSerializer.Tokenizer_.TokenTypes.END,
-      tokenizer.getCurrent().type);
+  assertEquals(TextFormatSerializer.Tokenizer_.TokenTypes.END, tokenizer.getCurrent().type);
 
   if (!Array.isArray(tokens)) {
     tokens = [tokens];
@@ -57,13 +53,9 @@ function assertTokens(value, tokens, ignoreWhitespace = undefined) {
  */
 function assertEventuallyBadToken(value, ignoreWhitespace = undefined) {
   /** @suppress {visibility} suppression added to enable type checking */
-  const tokenizer =
-      new TextFormatSerializer.Tokenizer_(value, ignoreWhitespace);
-  while (tokenizer.next()) {
-  }
-  assertEquals(
-      TextFormatSerializer.Tokenizer_.TokenTypes.BAD,
-      tokenizer.getCurrent().type);
+  const tokenizer = new TextFormatSerializer.Tokenizer_(value, ignoreWhitespace);
+  while (tokenizer.next()) {}
+  assertEquals(TextFormatSerializer.Tokenizer_.TokenTypes.BAD, tokenizer.getCurrent().type);
 }
 
 function assertToken(expected, found) {
@@ -75,39 +67,39 @@ function assertToken(expected, found) {
 
 function assertIdentifier(identifier) {
   const types = TextFormatSerializer.Tokenizer_.TokenTypes;
-  assertTokens(identifier, {type: types.IDENTIFIER, value: identifier});
+  assertTokens(identifier, { type: types.IDENTIFIER, value: identifier });
 }
 
 function assertComment(comment) {
   const types = TextFormatSerializer.Tokenizer_.TokenTypes;
-  assertTokens(comment, {type: types.COMMENT, value: comment});
+  assertTokens(comment, { type: types.COMMENT, value: comment });
 }
 
 function assertString(str) {
   const types = TextFormatSerializer.Tokenizer_.TokenTypes;
-  assertTokens(str, {type: types.STRING, value: str});
+  assertTokens(str, { type: types.STRING, value: str });
 }
 
 function assertNumber(num) {
   num = num.toString();
   const types = TextFormatSerializer.Tokenizer_.TokenTypes;
-  assertTokens(num, {type: types.NUMBER, value: num});
+  assertTokens(num, { type: types.NUMBER, value: num });
 }
 
 const floatFormatCases = [
-  {given: '1.69e+06', expect: 1.69e+06},
-  {given: '1.69e6', expect: 1.69e+06},
-  {given: '2.468e-2', expect: 0.02468},
-  {given: '.1', expect: 0.1},
-  {given: '-.1', expect: -0.1},
-  {given: '1.', expect: 1},
-  {given: '-1.', expect: -1},
-  {given: '2e2', expect: 200},
-  {given: '-2e2', expect: -200},
-  {given: '3E002', expect: 300},
-  {given: '-3E002', expect: -300},
-  {given: '.1e2', expect: 10},
-  {given: '-.1e2', expect: -10},
+  { given: '1.69e+06', expect: 1.69e6 },
+  { given: '1.69e6', expect: 1.69e6 },
+  { given: '2.468e-2', expect: 0.02468 },
+  { given: '.1', expect: 0.1 },
+  { given: '-.1', expect: -0.1 },
+  { given: '1.', expect: 1 },
+  { given: '-1.', expect: -1 },
+  { given: '2e2', expect: 200 },
+  { given: '-2e2', expect: -200 },
+  { given: '3E002', expect: 300 },
+  { given: '-3E002', expect: -300 },
+  { given: '.1e2', expect: 10 },
+  { given: '-.1e2', expect: -10 },
 ];
 
 testSuite({
@@ -146,26 +138,27 @@ testSuite({
 
     // Serialize to a simplified text format.
     const simplified = new TextFormatSerializer().serialize(message);
-    const expected = 'optional_int32: 101\n' +
-        'optional_int64: 102\n' +
-        'optional_uint32: 103\n' +
-        'optional_sint32: 105\n' +
-        'optional_fixed32: 107\n' +
-        'optional_sfixed32: 109\n' +
-        'optional_float: 111.5\n' +
-        'optional_double: 112.5\n' +
-        'optional_bool: true\n' +
-        'optional_string: "test"\n' +
-        'optional_bytes: "abcd"\n' +
-        'optionalgroup {\n' +
-        '  a: 111\n' +
-        '}\n' +
-        'optional_nested_message {\n' +
-        '  b: 112\n' +
-        '}\n' +
-        'optional_nested_enum: FOO\n' +
-        'repeated_int32: 201\n' +
-        'repeated_int32: 202\n';
+    const expected =
+      'optional_int32: 101\n' +
+      'optional_int64: 102\n' +
+      'optional_uint32: 103\n' +
+      'optional_sint32: 105\n' +
+      'optional_fixed32: 107\n' +
+      'optional_sfixed32: 109\n' +
+      'optional_float: 111.5\n' +
+      'optional_double: 112.5\n' +
+      'optional_bool: true\n' +
+      'optional_string: "test"\n' +
+      'optional_bytes: "abcd"\n' +
+      'optionalgroup {\n' +
+      '  a: 111\n' +
+      '}\n' +
+      'optional_nested_message {\n' +
+      '  b: 112\n' +
+      '}\n' +
+      'optional_nested_enum: FOO\n' +
+      'repeated_int32: 201\n' +
+      'repeated_int32: 202\n';
 
     assertEquals(expected, simplified);
   },
@@ -193,16 +186,17 @@ testSuite({
 
     // Serialize.
     const simplified = new TextFormatSerializer().serialize(message);
-    const expected = 'optional_int32: 101\n' +
-        'repeated_int32: 201\n' +
-        'repeated_int32: 202\n' +
-        '1000: 301\n' +
-        '1001: 302\n' +
-        '1002 {\n' +
-        '  repeated_int32: 301\n' +
-        '  repeated_int32: 302\n' +
-        '  2000: 401\n' +
-        '}\n';
+    const expected =
+      'optional_int32: 101\n' +
+      'repeated_int32: 201\n' +
+      'repeated_int32: 202\n' +
+      '1000: 301\n' +
+      '1001: 302\n' +
+      '1002 {\n' +
+      '  repeated_int32: 301\n' +
+      '  repeated_int32: 302\n' +
+      '  2000: 401\n' +
+      '}\n';
 
     assertEquals(expected, simplified);
   },
@@ -215,7 +209,7 @@ testSuite({
       31: [201, 202],
       1000: 301,
       1001: 302,
-      1002: {31: [301, 302], 2000: 401},
+      1002: { 31: [301, 302], 2000: 401 },
     };
 
     // Deserialize that representation into a TestAllTypes message.
@@ -226,85 +220,88 @@ testSuite({
     // Check that the text format matches what we expect.
     const simplified = new TextFormatSerializer().serialize(message);
     const expected =
-        ('optional_int32: 101\n' +
-         'repeated_int32: 201\n' +
-         'repeated_int32: 202\n' +
-         '1000: 301\n' +
-         '1001: 302\n' +
-         '1002 {\n' +
-         '  31: 301\n' +
-         '  31: 302\n' +
-         '  2000: 401\n' +
-         '}\n');
+      'optional_int32: 101\n' +
+      'repeated_int32: 201\n' +
+      'repeated_int32: 202\n' +
+      '1000: 301\n' +
+      '1001: 302\n' +
+      '1002 {\n' +
+      '  31: 301\n' +
+      '  31: 302\n' +
+      '  2000: 401\n' +
+      '}\n';
     assertEquals(expected, simplified);
   },
 
   testTokenizer() {
     const types = TextFormatSerializer.Tokenizer_.TokenTypes;
     assertTokens('{ 123 }', [
-      {type: types.OPEN_BRACE},
-      {type: types.WHITESPACE, value: ' '},
-      {type: types.NUMBER, value: '123'},
-      {type: types.WHITESPACE, value: ' '},
-      {type: types.CLOSE_BRACE},
+      { type: types.OPEN_BRACE },
+      { type: types.WHITESPACE, value: ' ' },
+      { type: types.NUMBER, value: '123' },
+      { type: types.WHITESPACE, value: ' ' },
+      { type: types.CLOSE_BRACE },
     ]);
     // The c++ proto serializer might represent a float in exponential
     // notation:
     assertTokens('{ 1.2345e+3 }', [
-      {type: types.OPEN_BRACE},
-      {type: types.WHITESPACE, value: ' '},
-      {type: types.NUMBER, value: '1.2345e+3'},
-      {type: types.WHITESPACE, value: ' '},
-      {type: types.CLOSE_BRACE},
+      { type: types.OPEN_BRACE },
+      { type: types.WHITESPACE, value: ' ' },
+      { type: types.NUMBER, value: '1.2345e+3' },
+      { type: types.WHITESPACE, value: ' ' },
+      { type: types.CLOSE_BRACE },
     ]);
   },
 
   testTokenizerExponentialFloatProblem() {
-    const input = 'merchant: {              # blah blah\n' +
-        '    total_price: 3.2186e+06      # 3_218_600; 3.07Mi\n' +
-        '    taxes      : 2.17199e+06\n' +
-        '}';
+    const input =
+      'merchant: {              # blah blah\n' +
+      '    total_price: 3.2186e+06      # 3_218_600; 3.07Mi\n' +
+      '    taxes      : 2.17199e+06\n' +
+      '}';
     const types = TextFormatSerializer.Tokenizer_.TokenTypes;
     assertTokens(
-        input,
-        [
-          {type: types.IDENTIFIER, value: 'merchant'},
-          {type: types.COLON, value: ':'},
-          {type: types.OPEN_BRACE, value: '{'},
-          {type: types.COMMENT, value: '# blah blah'},
-          {type: types.IDENTIFIER, value: 'total_price'},
-          {type: types.COLON, value: ':'},
-          {type: types.NUMBER, value: '3.2186e+06'},
-          {type: types.COMMENT, value: '# 3_218_600; 3.07Mi'},
-          {type: types.IDENTIFIER, value: 'taxes'},
-          {type: types.COLON, value: ':'},
-          {type: types.NUMBER, value: '2.17199e+06'},
-          {type: types.CLOSE_BRACE, value: '}'},
-        ],
-        true);
+      input,
+      [
+        { type: types.IDENTIFIER, value: 'merchant' },
+        { type: types.COLON, value: ':' },
+        { type: types.OPEN_BRACE, value: '{' },
+        { type: types.COMMENT, value: '# blah blah' },
+        { type: types.IDENTIFIER, value: 'total_price' },
+        { type: types.COLON, value: ':' },
+        { type: types.NUMBER, value: '3.2186e+06' },
+        { type: types.COMMENT, value: '# 3_218_600; 3.07Mi' },
+        { type: types.IDENTIFIER, value: 'taxes' },
+        { type: types.COLON, value: ':' },
+        { type: types.NUMBER, value: '2.17199e+06' },
+        { type: types.CLOSE_BRACE, value: '}' },
+      ],
+      true
+    );
   },
 
   testTokenizerNoWhitespace() {
     const types = TextFormatSerializer.Tokenizer_.TokenTypes;
     assertTokens(
-        '{ "hello world" }',
-        [
-          {type: types.OPEN_BRACE},
-          {type: types.STRING, value: '"hello world"'},
-          {type: types.CLOSE_BRACE},
-        ],
-        true);
+      '{ "hello world" }',
+      [
+        { type: types.OPEN_BRACE },
+        { type: types.STRING, value: '"hello world"' },
+        { type: types.CLOSE_BRACE },
+      ],
+      true
+    );
   },
 
   testTokenizerSingleTokens() {
     const types = TextFormatSerializer.Tokenizer_.TokenTypes;
-    assertTokens('{', {type: types.OPEN_BRACE});
-    assertTokens('}', {type: types.CLOSE_BRACE});
-    assertTokens('<', {type: types.OPEN_TAG});
-    assertTokens('>', {type: types.CLOSE_TAG});
-    assertTokens(':', {type: types.COLON});
-    assertTokens(',', {type: types.COMMA});
-    assertTokens(';', {type: types.SEMI});
+    assertTokens('{', { type: types.OPEN_BRACE });
+    assertTokens('}', { type: types.CLOSE_BRACE });
+    assertTokens('<', { type: types.OPEN_TAG });
+    assertTokens('>', { type: types.CLOSE_TAG });
+    assertTokens(':', { type: types.COLON });
+    assertTokens(',', { type: types.COMMA });
+    assertTokens(';', { type: types.SEMI });
 
     assertIdentifier('abcd');
     assertIdentifier('Abcd');
@@ -358,9 +355,10 @@ testSuite({
     assertNumber('-1e12f');
 
     // Non-numbers.
-    assertTokens(
-        '09',
-        [{type: types.NUMBER, value: '0'}, {type: types.NUMBER, value: '9'}]);
+    assertTokens('09', [
+      { type: types.NUMBER, value: '0' },
+      { type: types.NUMBER, value: '9' },
+    ]);
     assertEventuallyBadToken('010f');
     assertEventuallyBadToken('.f');
 
@@ -392,10 +390,11 @@ testSuite({
 
   testDeserialization() {
     const message = new TestAllTypes();
-    const value = 'optional_int32: 101\n' +
-        'repeated_int32: 201\n' +
-        'repeated_int32: 202\n' +
-        'optional_float: 123.4';
+    const value =
+      'optional_int32: 101\n' +
+      'repeated_int32: 201\n' +
+      'repeated_int32: 202\n' +
+      'optional_float: 123.4';
 
     new TextFormatSerializer().deserializeTo(message, value);
 
@@ -407,9 +406,8 @@ testSuite({
 
   testDeserializationOfList() {
     const message = new TestAllTypes();
-    const value = 'optional_int32: 101\n' +
-        'repeated_int32: [201, 202]\n' +
-        'optional_float: 123.4';
+    const value =
+      'optional_int32: 101\n' + 'repeated_int32: [201, 202]\n' + 'optional_float: 123.4';
 
     new TextFormatSerializer().deserializeTo(message, value);
 
@@ -420,10 +418,11 @@ testSuite({
 
   testDeserializationOfIntegerAsHexadecimalString() {
     const message = new TestAllTypes();
-    const value = 'optional_int32: 0x1\n' +
-        'optional_sint32: 0xf\n' +
-        'optional_uint32: 0xffffffff\n' +
-        'repeated_int32: [0x0, 0xff]\n';
+    const value =
+      'optional_int32: 0x1\n' +
+      'optional_sint32: 0xf\n' +
+      'optional_uint32: 0xffffffff\n' +
+      'repeated_int32: [0x0, 0xff]\n';
 
     new TextFormatSerializer().deserializeTo(message, value);
 
@@ -436,13 +435,14 @@ testSuite({
 
   testDeserializationOfInt64AsNonDecimalString() {
     const message = new TestAllTypes();
-    const value = 'optional_int64: -0xf\n' +
-        'optional_uint64: 0XF\n' +
-        'repeated_int64: -0X1cbe991a14\n' +
-        'repeated_int64: 0x1cBe991a14\n' +
-        'repeated_int64: -01627646215024\n' +
-        'repeated_int64: 01627646215024\n' +
-        'repeated_int64: 1205\n';
+    const value =
+      'optional_int64: -0xf\n' +
+      'optional_uint64: 0XF\n' +
+      'repeated_int64: -0X1cbe991a14\n' +
+      'repeated_int64: 0x1cBe991a14\n' +
+      'repeated_int64: -01627646215024\n' +
+      'repeated_int64: 01627646215024\n' +
+      'repeated_int64: 1205\n';
 
     new TextFormatSerializer().deserializeTo(message, value);
 
@@ -457,9 +457,7 @@ testSuite({
 
   testDeserializationOfZeroFalseAndEmptyString() {
     const message = new TestAllTypes();
-    const value = 'optional_int32: 0\n' +
-        'optional_bool: false\n' +
-        'optional_string: ""';
+    const value = 'optional_int32: 0\n' + 'optional_bool: false\n' + 'optional_string: ""';
 
     new TextFormatSerializer().deserializeTo(message, value);
 
@@ -470,11 +468,12 @@ testSuite({
 
   testDeserializationOfConcatenatedString() {
     const message = new TestAllTypes();
-    const value = 'optional_int32: 123\n' +
-        'optional_string:\n' +
-        '    "FirstLine"\n' +
-        '    "SecondLine"\n' +
-        'optional_float: 456.7';
+    const value =
+      'optional_int32: 123\n' +
+      'optional_string:\n' +
+      '    "FirstLine"\n' +
+      '    "SecondLine"\n' +
+      'optional_float: 456.7';
 
     new TextFormatSerializer().deserializeTo(message, value);
 
@@ -485,11 +484,12 @@ testSuite({
 
   testDeserializationSkipComment() {
     const message = new TestAllTypes();
-    const value = 'optional_int32: 101\n' +
-        'repeated_int32: 201\n' +
-        '# Some comment.\n' +
-        'repeated_int32: 202\n' +
-        'optional_float: 123.4';
+    const value =
+      'optional_int32: 101\n' +
+      'repeated_int32: 201\n' +
+      '# Some comment.\n' +
+      'repeated_int32: 202\n' +
+      'optional_float: 123.4';
 
     const parser = new TextFormatSerializer.Parser();
     assertTrue(parser.parse(message, value));
@@ -502,10 +502,11 @@ testSuite({
 
   testDeserializationSkipTrailingComment() {
     const message = new TestAllTypes();
-    const value = 'optional_int32: 101\n' +
-        'repeated_int32: 201\n' +
-        'repeated_int32: 202  # Some trailing comment.\n' +
-        'optional_float: 123.4';
+    const value =
+      'optional_int32: 101\n' +
+      'repeated_int32: 201\n' +
+      'repeated_int32: 202  # Some trailing comment.\n' +
+      'optional_float: 123.4';
 
     const parser = new TextFormatSerializer.Parser();
     assertTrue(parser.parse(message, value));
@@ -518,11 +519,12 @@ testSuite({
 
   testDeserializationSkipUnknown() {
     const message = new TestAllTypes();
-    const value = 'optional_int32: 101\n' +
-        'repeated_int32: 201\n' +
-        'some_unknown: true\n' +
-        'repeated_int32: 202\n' +
-        'optional_float: 123.4';
+    const value =
+      'optional_int32: 101\n' +
+      'repeated_int32: 201\n' +
+      'some_unknown: true\n' +
+      'repeated_int32: 202\n' +
+      'optional_float: 123.4';
 
     const parser = new TextFormatSerializer.Parser();
     assertTrue(parser.parse(message, value, true));
@@ -535,11 +537,12 @@ testSuite({
 
   testDeserializationSkipUnknownList() {
     const message = new TestAllTypes();
-    const value = 'optional_int32: 101\n' +
-        'repeated_int32: 201\n' +
-        'some_unknown: [true, 1, 201, "hello"]\n' +
-        'repeated_int32: 202\n' +
-        'optional_float: 123.4';
+    const value =
+      'optional_int32: 101\n' +
+      'repeated_int32: 201\n' +
+      'some_unknown: [true, 1, 201, "hello"]\n' +
+      'repeated_int32: 202\n' +
+      'optional_float: 123.4';
 
     const parser = new TextFormatSerializer.Parser();
     assertTrue(parser.parse(message, value, true));
@@ -552,14 +555,15 @@ testSuite({
 
   testDeserializationSkipUnknownNested() {
     const message = new TestAllTypes();
-    const value = 'optional_int32: 101\n' +
-        'repeated_int32: 201\n' +
-        'some_unknown: <\n' +
-        '  a: 1\n' +
-        '  b: 2\n' +
-        '>\n' +
-        'repeated_int32: 202\n' +
-        'optional_float: 123.4';
+    const value =
+      'optional_int32: 101\n' +
+      'repeated_int32: 201\n' +
+      'some_unknown: <\n' +
+      '  a: 1\n' +
+      '  b: 2\n' +
+      '>\n' +
+      'repeated_int32: 202\n' +
+      'optional_float: 123.4';
 
     const parser = new TextFormatSerializer.Parser();
     assertTrue(parser.parse(message, value, true));
@@ -572,14 +576,15 @@ testSuite({
 
   testDeserializationSkipUnknownNestedInvalid() {
     const message = new TestAllTypes();
-    const value = 'optional_int32: 101\n' +
-        'repeated_int32: 201\n' +
-        'some_unknown: <\n' +
-        '  a: \n' +  // Missing value.
-        '  b: 2\n' +
-        '>\n' +
-        'repeated_int32: 202\n' +
-        'optional_float: 123.4';
+    const value =
+      'optional_int32: 101\n' +
+      'repeated_int32: 201\n' +
+      'some_unknown: <\n' +
+      '  a: \n' + // Missing value.
+      '  b: 2\n' +
+      '>\n' +
+      'repeated_int32: 202\n' +
+      'optional_float: 123.4';
 
     const parser = new TextFormatSerializer.Parser();
     assertFalse(parser.parse(message, value, true));
@@ -587,14 +592,15 @@ testSuite({
 
   testDeserializationSkipUnknownNestedInvalid2() {
     const message = new TestAllTypes();
-    const value = 'optional_int32: 101\n' +
-        'repeated_int32: 201\n' +
-        'some_unknown: <\n' +
-        '  a: 2\n' +
-        '  b: 2\n' +
-        '}\n' +  // Delimiter mismatch
-        'repeated_int32: 202\n' +
-        'optional_float: 123.4';
+    const value =
+      'optional_int32: 101\n' +
+      'repeated_int32: 201\n' +
+      'some_unknown: <\n' +
+      '  a: 2\n' +
+      '  b: 2\n' +
+      '}\n' + // Delimiter mismatch
+      'repeated_int32: 202\n' +
+      'optional_float: 123.4';
 
     const parser = new TextFormatSerializer.Parser();
     assertFalse(parser.parse(message, value, true));
@@ -602,10 +608,11 @@ testSuite({
 
   testDeserializationLegacyFormat() {
     const message = new TestAllTypes();
-    const value = 'optional_int32: 101,\n' +
-        'repeated_int32: 201,\n' +
-        'repeated_int32: 202;\n' +
-        'optional_float: 123.4';
+    const value =
+      'optional_int32: 101,\n' +
+      'repeated_int32: 201,\n' +
+      'repeated_int32: 202;\n' +
+      'optional_float: 123.4';
 
     new TextFormatSerializer().deserializeTo(message, value);
 
@@ -618,12 +625,12 @@ testSuite({
   testDeserializationVariedNumbers() {
     const message = new TestAllTypes();
     const value =
-        ('repeated_int32: 23\n' +
-         'repeated_int32: -3\n' +
-         'repeated_int32: 0xdeAdBeef\n' +
-         'repeated_float: 123.0\n' +
-         'repeated_float: -3.27\n' +
-         'repeated_float: -35.5f\n');
+      'repeated_int32: 23\n' +
+      'repeated_int32: -3\n' +
+      'repeated_int32: 0xdeAdBeef\n' +
+      'repeated_float: 123.0\n' +
+      'repeated_float: -3.27\n' +
+      'repeated_float: -35.5f\n';
 
     new TextFormatSerializer().deserializeTo(message, value);
 
@@ -637,10 +644,11 @@ testSuite({
 
   testDeserializationScientificNotation() {
     const message = new TestAllTypes();
-    const value = 'repeated_float: 1.1e5\n' +
-        'repeated_float: 1.1e-5\n' +
-        'repeated_double: 1.1E5\n' +
-        'repeated_double: 1.1e-5\n';
+    const value =
+      'repeated_float: 1.1e5\n' +
+      'repeated_float: 1.1e-5\n' +
+      'repeated_double: 1.1E5\n' +
+      'repeated_double: 1.1e-5\n';
     new TextFormatSerializer().deserializeTo(message, value);
     assertEquals(1.1e5, message.getRepeatedFloat(0));
     assertEquals(1.1e-5, message.getRepeatedFloat(1));
@@ -650,20 +658,19 @@ testSuite({
 
   testParseNumericalConstant() {
     /** @suppress {visibility} suppression added to enable type checking */
-    const parseNumericalConstant =
-        TextFormatSerializer.Parser.parseNumericalConstant_;
+    const parseNumericalConstant = TextFormatSerializer.Parser.parseNumericalConstant_;
 
-    assertEquals(Infinity, parseNumericalConstant('inf'));
-    assertEquals(Infinity, parseNumericalConstant('inff'));
-    assertEquals(Infinity, parseNumericalConstant('infinity'));
-    assertEquals(Infinity, parseNumericalConstant('infinityf'));
-    assertEquals(Infinity, parseNumericalConstant('Infinityf'));
+    assertEquals(Number.POSITIVE_INFINITY, parseNumericalConstant('inf'));
+    assertEquals(Number.POSITIVE_INFINITY, parseNumericalConstant('inff'));
+    assertEquals(Number.POSITIVE_INFINITY, parseNumericalConstant('infinity'));
+    assertEquals(Number.POSITIVE_INFINITY, parseNumericalConstant('infinityf'));
+    assertEquals(Number.POSITIVE_INFINITY, parseNumericalConstant('Infinityf'));
 
-    assertEquals(-Infinity, parseNumericalConstant('-inf'));
-    assertEquals(-Infinity, parseNumericalConstant('-inff'));
-    assertEquals(-Infinity, parseNumericalConstant('-infinity'));
-    assertEquals(-Infinity, parseNumericalConstant('-infinityf'));
-    assertEquals(-Infinity, parseNumericalConstant('-Infinity'));
+    assertEquals(Number.NEGATIVE_INFINITY, parseNumericalConstant('-inf'));
+    assertEquals(Number.NEGATIVE_INFINITY, parseNumericalConstant('-inff'));
+    assertEquals(Number.NEGATIVE_INFINITY, parseNumericalConstant('-infinity'));
+    assertEquals(Number.NEGATIVE_INFINITY, parseNumericalConstant('-infinityf'));
+    assertEquals(Number.NEGATIVE_INFINITY, parseNumericalConstant('-Infinity'));
 
     assertNull(parseNumericalConstant('-infin'));
     assertNull(parseNumericalConstant('infin'));
@@ -692,15 +699,15 @@ testSuite({
   testDeserializationOfNumericalConstants() {
     const message = new TestAllTypes();
     const value =
-        ('repeated_float: inf\n' +
-         'repeated_float: -inf\n' +
-         'repeated_float: nan\n' +
-         'repeated_float: 300.2\n');
+      'repeated_float: inf\n' +
+      'repeated_float: -inf\n' +
+      'repeated_float: nan\n' +
+      'repeated_float: 300.2\n';
 
     new TextFormatSerializer().deserializeTo(message, value);
 
-    assertEquals(Infinity, message.getRepeatedFloat(0));
-    assertEquals(-Infinity, message.getRepeatedFloat(1));
+    assertEquals(Number.POSITIVE_INFINITY, message.getRepeatedFloat(0));
+    assertEquals(Number.NEGATIVE_INFINITY, message.getRepeatedFloat(1));
     assertTrue(isNaN(message.getRepeatedFloat(2)));
     assertEquals(300.2, message.getRepeatedFloat(3));
   },
@@ -709,8 +716,7 @@ testSuite({
     for (let i = 0; i < floatFormatCases.length; ++i) {
       const thistest = floatFormatCases[i];
       /** @suppress {visibility} suppression added to enable type checking */
-      const result =
-          TextFormatSerializer.Parser.getNumberFromString_(thistest.given);
+      const result = TextFormatSerializer.Parser.getNumberFromString_(thistest.given);
       assertEquals(thistest.expect, result);
     }
   },
@@ -728,8 +734,7 @@ testSuite({
 
   testGetNumberFromString() {
     /** @suppress {visibility} suppression added to enable type checking */
-    const getNumberFromString =
-        TextFormatSerializer.Parser.getNumberFromString_;
+    const getNumberFromString = TextFormatSerializer.Parser.getNumberFromString_;
 
     assertEquals(3735928559, getNumberFromString('0xdeadbeef'));
     assertEquals(4276215469, getNumberFromString('0xFEE1DEAD'));
@@ -765,10 +770,7 @@ testSuite({
 
   testNestedDeserialization() {
     const message = new TestAllTypes();
-    const value = 'optional_int32: 101\n' +
-        'optional_nested_message: {\n' +
-        '  b: 301\n' +
-        '}';
+    const value = 'optional_int32: 101\n' + 'optional_nested_message: {\n' + '  b: 301\n' + '}';
 
     new TextFormatSerializer().deserializeTo(message, value);
 
@@ -778,10 +780,7 @@ testSuite({
 
   testNestedDeserializationLegacyFormat() {
     const message = new TestAllTypes();
-    const value = 'optional_int32: 101\n' +
-        'optional_nested_message: <\n' +
-        '  b: 301\n' +
-        '>';
+    const value = 'optional_int32: 101\n' + 'optional_nested_message: <\n' + '  b: 301\n' + '>';
 
     new TextFormatSerializer().deserializeTo(message, value);
 
@@ -870,8 +869,6 @@ testSuite({
     const deserializedMessage = new TestAllTypes();
     serializer.deserializeTo(deserializedMessage, textform);
 
-    assertEquals(
-        TestAllTypes.NestedEnum.FOO,
-        deserializedMessage.getOptionalNestedEnum());
+    assertEquals(TestAllTypes.NestedEnum.FOO, deserializedMessage.getOptionalNestedEnum());
   },
 });

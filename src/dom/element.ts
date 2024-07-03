@@ -19,8 +19,7 @@ const HTML_NAMESPACE = 'http://www.w3.org/1999/xhtml';
  * @return {boolean}
  */
 const isElement = (value) => {
-  return goog.isObject(value) &&
-      /** @type {!Node} */ (value).nodeType === NodeType.ELEMENT;
+  return goog.isObject(value) && /** @type {!Node} */ (value).nodeType === NodeType.ELEMENT;
 };
 
 /**
@@ -29,10 +28,13 @@ const isElement = (value) => {
  * @return {boolean}
  */
 const isHtmlElement = (value) => {
-  return goog.isObject(value) && isElement(value) &&
-      // namespaceURI of old browsers (FF < 3.6, IE < 9) will be null.
-      (!/** @type {!Element} */ (value).namespaceURI ||
-       /** @type {!Element} */ (value).namespaceURI === HTML_NAMESPACE);
+  return (
+    goog.isObject(value) &&
+    isElement(value) &&
+    // namespaceURI of old browsers (FF < 3.6, IE < 9) will be null.
+    (!(/** @type {!Element} */ (value).namespaceURI) ||
+      /** @type {!Element} */ (value).namespaceURI === HTML_NAMESPACE)
+  );
 };
 
 /**
@@ -44,11 +46,13 @@ const isHtmlElement = (value) => {
  * @return {boolean}
  */
 const isHtmlElementOfType = (value, tagName) => {
-  return goog.isObject(value) && isHtmlElement(value) &&
-      // Some uncommon JS environments (e.g. Cobalt 9) have issues with tag
-      // capitalization.
-      (/** @type {!HTMLElement} */ (value).tagName.toUpperCase() ===
-       tagName.toString());
+  return (
+    goog.isObject(value) &&
+    isHtmlElement(value) &&
+    // Some uncommon JS environments (e.g. Cobalt 9) have issues with tag
+    // capitalization.
+    /** @type {!HTMLElement} */ (value).tagName.toUpperCase() === tagName.toString()
+  );
 };
 
 /**

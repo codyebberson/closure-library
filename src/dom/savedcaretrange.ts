@@ -8,7 +8,6 @@
  * @fileoverview An API for saving and restoring ranges as HTML carets.
  */
 
-
 goog.provide('goog.dom.SavedCaretRange');
 
 goog.require('goog.dom');
@@ -16,7 +15,6 @@ goog.require('goog.dom.AbstractSavedCaretRange');
 goog.require('goog.dom.TagName');
 goog.require('goog.string');
 goog.requireType('goog.dom.AbstractRange');
-
 
 /**
  * A struct for holding context about saved selections.
@@ -30,8 +28,7 @@ goog.requireType('goog.dom.AbstractRange');
  * @constructor
  * @extends {goog.dom.AbstractSavedCaretRange}
  */
-goog.dom.SavedCaretRange = function(range) {
-  'use strict';
+goog.dom.SavedCaretRange = function (range) {
   goog.dom.AbstractSavedCaretRange.call(this);
 
   /**
@@ -65,15 +62,13 @@ goog.dom.SavedCaretRange = function(range) {
 };
 goog.inherits(goog.dom.SavedCaretRange, goog.dom.AbstractSavedCaretRange);
 
-
 /**
  * Gets the range that this SavedCaretRage represents, without selecting it
  * or removing the carets from the DOM.
  * @return {goog.dom.AbstractRange?} An abstract range.
  * @override
  */
-goog.dom.SavedCaretRange.prototype.toAbstractRange = function() {
-  'use strict';
+goog.dom.SavedCaretRange.prototype.toAbstractRange = function () {
   var range = null;
   var startCaret = this.getCaret(true);
   var endCaret = this.getCaret(false);
@@ -84,7 +79,6 @@ goog.dom.SavedCaretRange.prototype.toAbstractRange = function() {
   return range;
 };
 
-
 /**
  * Gets carets.
  * @param {boolean} start If true, returns the start caret. Otherwise, get the
@@ -92,11 +86,9 @@ goog.dom.SavedCaretRange.prototype.toAbstractRange = function() {
  * @return {Element} The start or end caret in the given document.
  * @override
  */
-goog.dom.SavedCaretRange.prototype.getCaret = function(start) {
-  'use strict';
+goog.dom.SavedCaretRange.prototype.getCaret = function (start) {
   return this.dom_.getElement(start ? this.startCaretId_ : this.endCaretId_);
 };
-
 
 /**
  * Removes the carets from the current restoration document.
@@ -107,8 +99,7 @@ goog.dom.SavedCaretRange.prototype.getCaret = function(start) {
  *     was provided.
  * @override
  */
-goog.dom.SavedCaretRange.prototype.removeCarets = function(opt_range) {
-  'use strict';
+goog.dom.SavedCaretRange.prototype.removeCarets = function (opt_range) {
   goog.dom.removeNode(this.getCaret(true));
   goog.dom.removeNode(this.getCaret(false));
   // This appears unused, but the range is sometimes adjusted in other
@@ -116,17 +107,14 @@ goog.dom.SavedCaretRange.prototype.removeCarets = function(opt_range) {
   return opt_range;
 };
 
-
 /**
  * Sets the document where the range will be restored.
  * @param {!Document} doc An HTML document.
  * @override
  */
-goog.dom.SavedCaretRange.prototype.setRestorationDocument = function(doc) {
-  'use strict';
+goog.dom.SavedCaretRange.prototype.setRestorationDocument = function (doc) {
   this.dom_.setDocument(doc);
 };
-
 
 /**
  * Reconstruct the selection from the given saved range. Removes carets after
@@ -137,18 +125,15 @@ goog.dom.SavedCaretRange.prototype.setRestorationDocument = function(doc) {
  * @override
  * @protected
  */
-goog.dom.SavedCaretRange.prototype.restoreInternal = function() {
-  'use strict';
+goog.dom.SavedCaretRange.prototype.restoreInternal = function () {
   var range = null;
   var anchorCaret = this.getCaret(!this.reversed_);
   var focusCaret = this.getCaret(this.reversed_);
   if (anchorCaret && focusCaret) {
     var anchorNode = anchorCaret.parentNode;
-    var anchorOffset =
-        Array.prototype.indexOf.call(anchorNode.childNodes, anchorCaret);
+    var anchorOffset = Array.prototype.indexOf.call(anchorNode.childNodes, anchorCaret);
     var focusNode = focusCaret.parentNode;
-    var focusOffset =
-        Array.prototype.indexOf.call(focusNode.childNodes, focusCaret);
+    var focusOffset = Array.prototype.indexOf.call(focusNode.childNodes, focusCaret);
     if (focusNode == anchorNode) {
       // Compensate for the start caret being removed.
       if (this.reversed_) {
@@ -159,8 +144,7 @@ goog.dom.SavedCaretRange.prototype.restoreInternal = function() {
     }
 
     const TextRange = goog.module.get('goog.dom.TextRange');
-    range = TextRange.createFromNodes(
-        anchorNode, anchorOffset, focusNode, focusOffset);
+    range = TextRange.createFromNodes(anchorNode, anchorOffset, focusNode, focusOffset);
     range = this.removeCarets(range);
     range.select();
   } else {
@@ -170,17 +154,14 @@ goog.dom.SavedCaretRange.prototype.restoreInternal = function() {
   return range;
 };
 
-
 /**
  * Dispose the saved range and remove the carets from the DOM.
  * @override
  */
-goog.dom.SavedCaretRange.prototype.disposeInternal = function() {
-  'use strict';
+goog.dom.SavedCaretRange.prototype.disposeInternal = function () {
   this.removeCarets();
   this.dom_ = null;
 };
-
 
 /**
  * Creates a caret element.
@@ -189,20 +170,17 @@ goog.dom.SavedCaretRange.prototype.disposeInternal = function() {
  * @return {!Element} The new caret element.
  * @private
  */
-goog.dom.SavedCaretRange.prototype.createCaret_ = function(start) {
-  'use strict';
-  return this.dom_.createDom(
-      goog.dom.TagName.SPAN,
-      {'id': start ? this.startCaretId_ : this.endCaretId_});
+goog.dom.SavedCaretRange.prototype.createCaret_ = function (start) {
+  return this.dom_.createDom(goog.dom.TagName.SPAN, {
+    id: start ? this.startCaretId_ : this.endCaretId_,
+  });
 };
-
 
 /**
  * A regex that will match all saved range carets in a string.
  * @type {RegExp}
  */
-goog.dom.SavedCaretRange.CARET_REGEX = /<span\s+id="?goog_\d+"?><\/span>/ig;
-
+goog.dom.SavedCaretRange.CARET_REGEX = /<span\s+id="?goog_\d+"?><\/span>/gi;
 
 /**
  * Returns whether two strings of html are equal, ignoring any saved carets.
@@ -214,9 +192,7 @@ goog.dom.SavedCaretRange.CARET_REGEX = /<span\s+id="?goog_\d+"?><\/span>/ig;
  * @return {boolean} Whether two strings of html are equal, ignoring any
  *     saved carets.
  */
-goog.dom.SavedCaretRange.htmlEqual = function(str1, str2) {
-  'use strict';
-  return str1 == str2 ||
-      str1.replace(goog.dom.SavedCaretRange.CARET_REGEX, '') ==
-      str2.replace(goog.dom.SavedCaretRange.CARET_REGEX, '');
-};
+goog.dom.SavedCaretRange.htmlEqual = (str1, str2) =>
+  str1 == str2 ||
+  str1.replace(goog.dom.SavedCaretRange.CARET_REGEX, '') ==
+    str2.replace(goog.dom.SavedCaretRange.CARET_REGEX, '');

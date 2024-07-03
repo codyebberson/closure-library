@@ -9,7 +9,6 @@
  */
 
 goog.module('goog.testing.safe.assertionFailure');
-goog.setTestOnly();
 
 const asserts = goog.require('goog.asserts');
 const testingAsserts = goog.require('goog.testing.asserts');
@@ -26,23 +25,21 @@ const testingAsserts = goog.require('goog.testing.asserts');
  * @param {number=} opt_number of time the assertion should throw. Default is 1.
  * @return {*} the return value of f.
  */
-exports.withAssertionFailure = function(f, opt_message, opt_number) {
+exports.withAssertionFailure = (f, opt_message, opt_number) => {
   try {
     if (!opt_number) {
       opt_number = 1;
     }
     var assertions = 0;
-    asserts.setErrorHandler(function(e) {
-      asserts.assertInstanceof(
-          e, asserts.AssertionError, 'A none assertion failure is thrown');
+    asserts.setErrorHandler((e) => {
+      asserts.assertInstanceof(e, asserts.AssertionError, 'A none assertion failure is thrown');
       if (opt_message) {
         testingAsserts.assertContains(opt_message, e.message);
       }
       assertions += 1;
     });
     var result = f();
-    asserts.assert(
-        assertions == opt_number, '%d assertion failed.', assertions);
+    asserts.assert(assertions == opt_number, '%d assertion failed.', assertions);
     return result;
   } finally {
     asserts.setErrorHandler(asserts.DEFAULT_ERROR_HANDLER);

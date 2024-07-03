@@ -23,4 +23,4 @@ goog.setTestOnly('goog.test_module');
 exports.someValue = 1;
 
 /** @type {function()} */
-exports.someFunction = function() {};
+exports.someFunction = () => {};

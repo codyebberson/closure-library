@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.net.ChannelRequestTest');
-goog.setTestOnly();
 
 const BrowserChannel = goog.require('goog.net.BrowserChannel');
 const ChannelDebug = goog.require('goog.net.ChannelDebug');
@@ -41,13 +40,13 @@ class MockBrowserChannel {
     this.isActive = () => true;
     this.shouldUseSecondaryDomains = () => false;
     this.completedRequests = [];
-    this.notifyServerReachabilityEvent = function(reachabilityType) {
+    this.notifyServerReachabilityEvent = function (reachabilityType) {
       if (!this.reachabilityEvents[reachabilityType]) {
         this.reachabilityEvents[reachabilityType] = 0;
       }
       this.reachabilityEvents[reachabilityType]++;
     };
-    this.onRequestComplete = function(request) {
+    this.onRequestComplete = function (request) {
       this.completedRequests.push(request);
     };
     this.onRequestData = (request, data) => {};
@@ -66,7 +65,11 @@ class MockBrowserChannel {
  */
 function createChannelRequest() {
   xhrIo = new XhrIo();
-  xhrIo.abort = xhrIo.abort || function() { this.active_ = false; };
+  xhrIo.abort =
+    xhrIo.abort ||
+    function () {
+      this.active_ = false;
+    };
 
   // Install mock browser channel and no-op debug logger.
   mockBrowserChannel = new MockBrowserChannel();
@@ -92,7 +95,7 @@ function createChannelRequest() {
    * @suppress {visibility,globalThis} suppression added to enable type
    * checking
    */
-  channelRequest.onWatchDogTimeout_ = function() {
+  channelRequest.onWatchDogTimeout_ = function () {
     this.watchdogTimeoutCallCount++;
     return this.originalOnWatchDogTimeout();
   };
@@ -102,21 +105,16 @@ function createChannelRequest() {
 
 function checkReachabilityEvents(reqMade, reqSucceeded, reqFail, backChannel) {
   const Reachability = BrowserChannel.ServerReachability;
+  assertEquals(reqMade, mockBrowserChannel.reachabilityEvents[Reachability.REQUEST_MADE] || 0);
   assertEquals(
-      reqMade,
-      mockBrowserChannel.reachabilityEvents[Reachability.REQUEST_MADE] || 0);
+    reqSucceeded,
+    mockBrowserChannel.reachabilityEvents[Reachability.REQUEST_SUCCEEDED] || 0
+  );
+  assertEquals(reqFail, mockBrowserChannel.reachabilityEvents[Reachability.REQUEST_FAILED] || 0);
   assertEquals(
-      reqSucceeded,
-      mockBrowserChannel.reachabilityEvents[Reachability.REQUEST_SUCCEEDED] ||
-          0);
-  assertEquals(
-      reqFail,
-      mockBrowserChannel.reachabilityEvents[Reachability.REQUEST_FAILED] || 0);
-  assertEquals(
-      backChannel,
-      mockBrowserChannel
-              .reachabilityEvents[Reachability.BACK_CHANNEL_ACTIVITY] ||
-          0);
+    backChannel,
+    mockBrowserChannel.reachabilityEvents[Reachability.BACK_CHANNEL_ACTIVITY] || 0
+  );
 }
 testSuite({
   setUp() {
@@ -257,8 +255,7 @@ testSuite({
 
     channelRequest.tridentGet(new Uri('some_uri'), false);
     assertFalse(channelRequest.getSuccess());
-    assertEquals(
-        ChannelRequest.Error.ACTIVE_X_BLOCKED, channelRequest.getLastError());
+    assertEquals(ChannelRequest.Error.ACTIVE_X_BLOCKED, channelRequest.getLastError());
 
     checkReachabilityEvents(0, 0, 0, 0);
   },
@@ -270,6 +267,6 @@ testSuite({
   testEscapeForStringInScript() {
     /** @suppress {visibility} suppression added to enable type checking */
     const actual = ChannelRequest.escapeForStringInScript_('"\'<>');
-    assertEquals('\\"\\\'\\x3c\\x3e', actual);
+    assertEquals('\\"\\'\\x3c\\x3e', actual);
   },
 });

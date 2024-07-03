@@ -7,14 +7,13 @@
 /** @fileoverview Unit tests for userAgentPlatform. */
 
 goog.module('goog.labs.userAgent.platformTest');
-goog.setTestOnly();
 
 const testAgentData = goog.require('goog.labs.userAgent.testAgentData');
 const testAgents = goog.require('goog.labs.userAgent.testAgents');
 const testSuite = goog.require('goog.testing.testSuite');
 const userAgentPlatform = goog.require('goog.labs.userAgent.platform');
 const util = goog.require('goog.labs.userAgent.util');
-const {setUseClientHintsForTesting} = goog.require('goog.labs.userAgent');
+const { setUseClientHintsForTesting } = goog.require('goog.labs.userAgent');
 
 /**
  * Asserts that getVersion correctly returns the given version.
@@ -40,8 +39,7 @@ function assertPreUachVersionBetween(lowVersion, highVersion) {
  */
 function assertHighEntroyVersionIsntCached() {
   const platformVersion = userAgentPlatform.version;
-  assertEquals(
-      undefined, platformVersion.getIfLoaded()?.toVersionStringForLogging());
+  assertEquals(undefined, platformVersion.getIfLoaded()?.toVersionStringForLogging());
 }
 
 /**
@@ -50,10 +48,8 @@ function assertHighEntroyVersionIsntCached() {
  */
 async function assertHighEntropyVersion(version) {
   const platformVersion = userAgentPlatform.version;
-  assertEquals(
-      version, (await platformVersion.load()).toVersionStringForLogging());
-  assertEquals(
-      version, platformVersion.getIfLoaded()?.toVersionStringForLogging());
+  assertEquals(version, (await platformVersion.load()).toVersionStringForLogging());
+  assertEquals(version, platformVersion.getIfLoaded()?.toVersionStringForLogging());
 }
 
 /**
@@ -595,16 +591,15 @@ testSuite({
   },
 
   async testAndroidUserAgentData() {
-    const uaData = testAgentData.withHighEntropyData(
-        testAgentData.CHROME_USERAGENT_DATA_MOBILE, {
-          platformVersion: '11.0.0',
-        });
+    const uaData = testAgentData.withHighEntropyData(testAgentData.CHROME_USERAGENT_DATA_MOBILE, {
+      platformVersion: '11.0.0',
+    });
     util.setUserAgentData(uaData);
     await assertHighEntropyVersion('11.0.0');
   },
 
   async testAndroidUserAgentDataWithRejectedHighEntropyValues() {
-    let uaData = testAgentData.CHROME_USERAGENT_DATA_MOBILE;
+    const uaData = testAgentData.CHROME_USERAGENT_DATA_MOBILE;
     util.setUserAgentData(uaData);
     assertEquals(undefined, userAgentPlatform.version.getIfLoaded());
 
@@ -613,10 +608,9 @@ testSuite({
   },
 
   async testChromeOSUserAgentData() {
-    const uaData = testAgentData.withHighEntropyData(
-        testAgentData.CHROME_USERAGENT_DATA_CROS, {
-          platformVersion: '14150.74.0',
-        });
+    const uaData = testAgentData.withHighEntropyData(testAgentData.CHROME_USERAGENT_DATA_CROS, {
+      platformVersion: '14150.74.0',
+    });
     util.setUserAgentData(uaData);
 
     setUseClientHintsForTesting(false);
@@ -633,10 +627,9 @@ testSuite({
   async testLinuxUserAgentData() {
     // Linux version should be an empty string.
     // See https://wicg.github.io/ua-client-hints/#sec-ch-ua-platform-version
-    const uaData = testAgentData.withHighEntropyData(
-        testAgentData.CHROME_USERAGENT_DATA_LINUX, {
-          platformVersion: '',
-        });
+    const uaData = testAgentData.withHighEntropyData(testAgentData.CHROME_USERAGENT_DATA_LINUX, {
+      platformVersion: '',
+    });
     util.setUserAgentData(uaData);
 
     setUseClientHintsForTesting(false);
@@ -651,10 +644,9 @@ testSuite({
   },
 
   async testMacOSUserAgentData() {
-    const uaData = testAgentData.withHighEntropyData(
-        testAgentData.CHROME_USERAGENT_DATA_MACOS, {
-          platformVersion: '11.6.0',
-        });
+    const uaData = testAgentData.withHighEntropyData(testAgentData.CHROME_USERAGENT_DATA_MACOS, {
+      platformVersion: '11.6.0',
+    });
     util.setUserAgentData(uaData);
 
     setUseClientHintsForTesting(false);
@@ -669,10 +661,9 @@ testSuite({
   },
 
   async testWindowsUserAgentData() {
-    const uaData = testAgentData.withHighEntropyData(
-        testAgentData.CHROME_USERAGENT_DATA_WINDOWS, {
-          platformVersion: '10.0.0',
-        });
+    const uaData = testAgentData.withHighEntropyData(testAgentData.CHROME_USERAGENT_DATA_WINDOWS, {
+      platformVersion: '10.0.0',
+    });
     util.setUserAgentData(uaData);
 
     setUseClientHintsForTesting(false);

@@ -13,7 +13,6 @@ goog.provide('goog.locale.timezonelist');
 
 goog.require('goog.locale');
 
-
 /**
  * Returns the displayable list of short timezone names paired with its id for
  * the current locale, selected based on the region or language provided.
@@ -31,13 +30,8 @@ goog.require('goog.locale');
  * @return {!Array<Object>} Localized and relevant list of timezone names
  *    and ids.
  */
-goog.locale.timezonelist.getTimeZoneSelectedShortNames = function(
-    opt_regionOrLang) {
-  'use strict';
-  return goog.locale.getTimeZoneNameList_(
-      'TimeZoneSelectedShortNames', opt_regionOrLang);
-};
-
+goog.locale.timezonelist.getTimeZoneSelectedShortNames = (opt_regionOrLang) =>
+  goog.locale.getTimeZoneNameList_('TimeZoneSelectedShortNames', opt_regionOrLang);
 
 /**
  * Returns the displayable list of long timezone names paired with its id for
@@ -56,13 +50,8 @@ goog.locale.timezonelist.getTimeZoneSelectedShortNames = function(
  * @return {!Array<Object>} Localized and relevant list of timezone names
  *    and ids.
  */
-goog.locale.timezonelist.getTimeZoneSelectedLongNames = function(
-    opt_regionOrLang) {
-  'use strict';
-  return goog.locale.getTimeZoneNameList_(
-      'TimeZoneSelectedLongNames', opt_regionOrLang);
-};
-
+goog.locale.timezonelist.getTimeZoneSelectedLongNames = (opt_regionOrLang) =>
+  goog.locale.getTimeZoneNameList_('TimeZoneSelectedLongNames', opt_regionOrLang);
 
 /**
  * Returns the displayable list of long timezone names paired with its id for
@@ -75,13 +64,10 @@ goog.locale.timezonelist.getTimeZoneSelectedLongNames = function(
  * @return {Array<Object>} localized and relevant list of timezone names
  *    and ids.
  */
-goog.locale.timezonelist.getTimeZoneAllLongNames = function() {
-  'use strict';
+goog.locale.timezonelist.getTimeZoneAllLongNames = () => {
   var locale = goog.locale.getLocale();
-  return /** @type {Array<Object>} */ (
-      goog.locale.getResource('TimeZoneAllLongNames', locale));
+  return /** @type {Array<Object>} */ (goog.locale.getResource('TimeZoneAllLongNames', locale));
 };
-
 
 /**
  * Returns the displayable list of timezone names paired with its id for
@@ -102,8 +88,7 @@ goog.locale.timezonelist.getTimeZoneAllLongNames = function() {
  *    and ids.
  * @private
  */
-goog.locale.getTimeZoneNameList_ = function(nameType, opt_resource) {
-  'use strict';
+goog.locale.getTimeZoneNameList_ = (nameType, opt_resource) => {
   var locale = goog.locale.getLocale();
 
   if (!opt_resource) {
@@ -122,7 +107,7 @@ goog.locale.getTimeZoneNameList_ = function(nameType, opt_resource) {
 
   for (var i = 0; i < len; i++) {
     var id = ids[i];
-    result.push({'id': id, 'name': names[id]});
+    result.push({ id: id, name: names[id] });
   }
   return result;
 };

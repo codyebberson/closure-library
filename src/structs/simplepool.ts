@@ -13,12 +13,9 @@
  * use. See constructor comment.
  */
 
-
 goog.provide('goog.structs.SimplePool');
 
 goog.require('goog.Disposable');
-
-
 
 /**
  * A generic pool class. Simpler and more efficient than goog.structs.Pool
@@ -41,8 +38,7 @@ goog.require('goog.Disposable');
  * @extends {goog.Disposable}
  * @template T
  */
-goog.structs.SimplePool = function(initialCount, maxCount) {
-  'use strict';
+goog.structs.SimplePool = function (initialCount, maxCount) {
   goog.Disposable.call(this);
 
   /**
@@ -76,18 +72,15 @@ goog.structs.SimplePool = function(initialCount, maxCount) {
 };
 goog.inherits(goog.structs.SimplePool, goog.Disposable);
 
-
 /**
  * Sets the `createObject` function which is used for creating a new
  * object in the pool.
  * @param {Function} createObjectFn Create object function which returns the
  *     newly created object.
  */
-goog.structs.SimplePool.prototype.setCreateObjectFn = function(createObjectFn) {
-  'use strict';
+goog.structs.SimplePool.prototype.setCreateObjectFn = function (createObjectFn) {
   this.createObjectFn_ = createObjectFn;
 };
-
 
 /**
  * Sets the `disposeObject` function which is used for disposing of an
@@ -95,34 +88,28 @@ goog.structs.SimplePool.prototype.setCreateObjectFn = function(createObjectFn) {
  * @param {Function} disposeObjectFn Dispose object function which takes the
  *     object to dispose as a parameter.
  */
-goog.structs.SimplePool.prototype.setDisposeObjectFn = function(
-    disposeObjectFn) {
-  'use strict';
+goog.structs.SimplePool.prototype.setDisposeObjectFn = function (disposeObjectFn) {
   this.disposeObjectFn_ = disposeObjectFn;
 };
-
 
 /**
  * Gets an unused object from the pool, if there is one available,
  * otherwise creates a new one.
  * @return {T} An object from the pool or a new one if necessary.
  */
-goog.structs.SimplePool.prototype.getObject = function() {
-  'use strict';
+goog.structs.SimplePool.prototype.getObject = function () {
   if (this.freeQueue_.length) {
     return this.freeQueue_.pop();
   }
   return this.createObject();
 };
 
-
 /**
  * Returns an object to the pool so that it can be reused. If the pool is
  * already full, the object is disposed instead.
  * @param {T} obj The object to release.
  */
-goog.structs.SimplePool.prototype.releaseObject = function(obj) {
-  'use strict';
+goog.structs.SimplePool.prototype.releaseObject = function (obj) {
   if (this.freeQueue_.length < this.maxCount_) {
     this.freeQueue_.push(obj);
   } else {
@@ -130,31 +117,26 @@ goog.structs.SimplePool.prototype.releaseObject = function(obj) {
   }
 };
 
-
 /**
  * Populates the pool with initialCount objects.
  * @param {number} initialCount The number of objects to add to the pool.
  * @private
  */
-goog.structs.SimplePool.prototype.createInitial_ = function(initialCount) {
-  'use strict';
+goog.structs.SimplePool.prototype.createInitial_ = function (initialCount) {
   if (initialCount > this.maxCount_) {
-    throw new Error(
-        '[goog.structs.SimplePool] Initial cannot be greater than max');
+    throw new Error('[goog.structs.SimplePool] Initial cannot be greater than max');
   }
   for (var i = 0; i < initialCount; i++) {
     this.freeQueue_.push(this.createObject());
   }
 };
 
-
 /**
  * Should be overridden by sub-classes to return an instance of the object type
  * that is expected in the pool.
  * @return {T} The created object.
  */
-goog.structs.SimplePool.prototype.createObject = function() {
-  'use strict';
+goog.structs.SimplePool.prototype.createObject = function () {
   if (this.createObjectFn_) {
     return this.createObjectFn_();
   } else {
@@ -162,15 +144,13 @@ goog.structs.SimplePool.prototype.createObject = function() {
   }
 };
 
-
 /**
  * Should be overrideen to dispose of an object. Default implementation is to
  * remove all of the object's members, which should render it useless. Calls the
  *  object's dispose method, if available.
  * @param {T} obj The object to dispose.
  */
-goog.structs.SimplePool.prototype.disposeObject = function(obj) {
-  'use strict';
+goog.structs.SimplePool.prototype.disposeObject = function (obj) {
   if (this.disposeObjectFn_) {
     this.disposeObjectFn_(obj);
   } else if (goog.isObject(obj)) {
@@ -184,14 +164,12 @@ goog.structs.SimplePool.prototype.disposeObject = function(obj) {
   }
 };
 
-
 /**
  * Disposes of the pool and all objects currently held in the pool.
  * @override
  * @protected
  */
-goog.structs.SimplePool.prototype.disposeInternal = function() {
-  'use strict';
+goog.structs.SimplePool.prototype.disposeInternal = function () {
   goog.structs.SimplePool.superClass_.disposeInternal.call(this);
   // Call disposeObject on each object held by the pool.
   var freeQueue = this.freeQueue_;

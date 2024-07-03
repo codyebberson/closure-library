@@ -25,17 +25,16 @@ goog.require('goog.singleton');
  * instance on next call.
  * @const
  */
-goog.testing.singleton.resetAll = function() {
-  'use strict';
+goog.testing.singleton.resetAll = () => {
   // Avoid concatenating arrays here - causes tests to perform poorly when there
   // are very large numbers of singletons to reset.
   const singletons1 = goog.getObjectByName('goog.instantiatedSingletons_');
   const singletons2 = goog.singleton.instantiatedSingletons;
   let ctor;
-  while (ctor = singletons1.pop()) {
+  while ((ctor = singletons1.pop())) {
     goog.testing.singleton.reset(ctor);
   }
-  while (ctor = singletons2.pop()) {
+  while ((ctor = singletons2.pop())) {
     goog.testing.singleton.reset(ctor);
   }
 };
@@ -48,9 +47,8 @@ goog.testing.singleton.resetAll = function() {
  * @suppress {missingProperties} 'instance_' isn't a property on any declared
  * type.
  */
-goog.testing.singleton.reset = function(singleton) {
-  'use strict';
-  delete /** @type {?} */ (singleton).instance_;
+goog.testing.singleton.reset = (singleton) => {
+  delete (/** @type {?} */ (singleton).instance_);
 };
 
 /**

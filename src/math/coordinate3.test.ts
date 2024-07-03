@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.math.Coordinate3Test');
-goog.setTestOnly();
 
 const Coordinate3 = goog.require('goog.math.Coordinate3');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -65,7 +64,7 @@ testSuite({
 
   testCoordinate3AllNonNumericValues() {
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const nonNumeric = new Coordinate3('ten', {woop: 'test'}, Math.sqrt(-1));
+    const nonNumeric = new Coordinate3('ten', { woop: 'test' }, Math.sqrt(-1));
     assertTrue(isNaN(nonNumeric.x));
     assertTrue(isNaN(nonNumeric.y));
     assertTrue(isNaN(nonNumeric.z));
@@ -95,9 +94,7 @@ testSuite({
     assertEquals('(0, 0, 0)', new Coordinate3(0, 0, 0).toString());
     assertEquals('(1, 2, 3)', new Coordinate3(1, 2, 3).toString());
     assertEquals('(-4, 5, -3)', new Coordinate3(-4, 5, -3).toString());
-    assertEquals(
-        '(11.25, -71.935, 2.8)',
-        new Coordinate3(11.25, -71.935, 2.8).toString());
+    assertEquals('(11.25, -71.935, 2.8)', new Coordinate3(11.25, -71.935, 2.8).toString());
   },
 
   testEquals() {
@@ -127,8 +124,7 @@ testSuite({
   testCoordinate3Difference() {
     const a = new Coordinate3(7, 11, 1);
     const b = new Coordinate3(3, -1, 1);
-    assertCoordinate3Equals(
-        Coordinate3.difference(a, b), new Coordinate3(4, 12, 0));
+    assertCoordinate3Equals(Coordinate3.difference(a, b), new Coordinate3(4, 12, 0));
   },
 
   testToArray() {
@@ -166,7 +162,8 @@ testSuite({
 
     const tooLong = [1, 2, 3, 4, 5, 6];
     assertThrows(
-        'Error should be thrown attempting to convert an invalid type.',
-        goog.partial(Coordinate3.fromArray, tooLong));
+      'Error should be thrown attempting to convert an invalid type.',
+      goog.partial(Coordinate3.fromArray, tooLong)
+    );
   },
 });

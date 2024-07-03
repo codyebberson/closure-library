@@ -5,19 +5,19 @@
  */
 
 goog.module('goog.format.HtmlPrettyPrinterTest');
-goog.setTestOnly();
 
 const HtmlPrettyPrinter = goog.require('goog.format.HtmlPrettyPrinter');
 const MockClock = goog.require('goog.testing.MockClock');
 const testSuite = goog.require('goog.testing.testSuite');
 
-const COMPLEX_HTML = '<!DOCTYPE root-element [SYSTEM OR PUBLIC FPI] "uri" [' +
-    '<!-- internal declarations -->]>' +
-    '<html><head><title>My HTML</title><!-- my comment --></head>' +
-    '<script> if(i<0)\nfoo; </script>' +
-    '<body><h1>My Header</h1>My text.<br><b>My bold text.</b><hr>' +
-    '<pre>My\npreformatted <br> HTML.</pre>5 < 10</body>' +
-    '</html>';
+const COMPLEX_HTML =
+  '<!DOCTYPE root-element [SYSTEM OR PUBLIC FPI] "uri" [' +
+  '<!-- internal declarations -->]>' +
+  '<html><head><title>My HTML</title><!-- my comment --></head>' +
+  '<script> if(i<0)\nfoo; </script>' +
+  '<body><h1>My Header</h1>My text.<br><b>My bold text.</b><hr>' +
+  '<pre>My\npreformatted <br> HTML.</pre>5 < 10</body>' +
+  '</html>';
 let mockClock;
 let mockClockTicks;
 
@@ -49,23 +49,24 @@ testSuite({
 
   testComplexHtml() {
     const actual = HtmlPrettyPrinter.format(COMPLEX_HTML);
-    const expected = '<!DOCTYPE root-element [SYSTEM OR PUBLIC FPI] "uri" [' +
-        '<!-- internal declarations -->]>\n' +
-        '<html>\n' +
-        '<head>\n' +
-        '<title>My HTML</title>\n' +
-        '<!-- my comment -->' +
-        '</head>\n' +
-        '<script> if(i<0)\nfoo; </script>\n' +
-        '<body>\n' +
-        '<h1>My Header</h1>\n' +
-        'My text.<br>\n' +
-        '<b>My bold text.</b>\n' +
-        '<hr>\n' +
-        '<pre>My\npreformatted <br> HTML.</pre>\n' +
-        '5 < 10' +
-        '</body>\n' +
-        '</html>\n';
+    const expected =
+      '<!DOCTYPE root-element [SYSTEM OR PUBLIC FPI] "uri" [' +
+      '<!-- internal declarations -->]>\n' +
+      '<html>\n' +
+      '<head>\n' +
+      '<title>My HTML</title>\n' +
+      '<!-- my comment -->' +
+      '</head>\n' +
+      '<script> if(i<0)\nfoo; </script>\n' +
+      '<body>\n' +
+      '<h1>My Header</h1>\n' +
+      'My text.<br>\n' +
+      '<b>My bold text.</b>\n' +
+      '<hr>\n' +
+      '<pre>My\npreformatted <br> HTML.</pre>\n' +
+      '5 < 10' +
+      '</body>\n' +
+      '</html>\n';
     assertEquals(expected, actual);
     assertEquals(actual, HtmlPrettyPrinter.format(actual));
   },
@@ -73,14 +74,15 @@ testSuite({
   testTimeout() {
     const pp = new HtmlPrettyPrinter(3);
     const actual = pp.format(COMPLEX_HTML);
-    const expected = '<!DOCTYPE root-element [SYSTEM OR PUBLIC FPI] "uri" [' +
-        '<!-- internal declarations -->]>\n' +
-        '<html>\n' +
-        '<head><title>My HTML</title><!-- my comment --></head>' +
-        '<script> if(i<0)\nfoo; </script>' +
-        '<body><h1>My Header</h1>My text.<br><b>My bold text.</b><hr>' +
-        '<pre>My\npreformatted <br> HTML.</pre>5 < 10</body>' +
-        '</html>\n';
+    const expected =
+      '<!DOCTYPE root-element [SYSTEM OR PUBLIC FPI] "uri" [' +
+      '<!-- internal declarations -->]>\n' +
+      '<html>\n' +
+      '<head><title>My HTML</title><!-- my comment --></head>' +
+      '<script> if(i<0)\nfoo; </script>' +
+      '<body><h1>My Header</h1>My text.<br><b>My bold text.</b><hr>' +
+      '<pre>My\npreformatted <br> HTML.</pre>5 < 10</body>' +
+      '</html>\n';
     assertEquals(expected, actual);
   },
 
@@ -99,17 +101,19 @@ testSuite({
   testExtraLines() {
     const original = '<br>\ntombrat';
     assertEquals(
-        `${original}
+      `${original}
 `,
-        HtmlPrettyPrinter.format(original));
+      HtmlPrettyPrinter.format(original)
+    );
   },
 
   testCrlf() {
     const original = '<br>\r\none\r\ntwo<br>';
     assertEquals(
-        `${original}
+      `${original}
 `,
-        HtmlPrettyPrinter.format(original));
+      HtmlPrettyPrinter.format(original)
+    );
   },
 
   testEndInLineBreak() {
@@ -121,14 +125,16 @@ testSuite({
   },
 
   testTable() {
-    const original = '<table>' +
-        '<tr><td>one.one</td><td>one.two</td></tr>' +
-        '<tr><td>two.one</td><td>two.two</td></tr>' +
-        '</table>';
-    const expected = '<table>\n' +
-        '<tr>\n<td>one.one</td>\n<td>one.two</td>\n</tr>\n' +
-        '<tr>\n<td>two.one</td>\n<td>two.two</td>\n</tr>\n' +
-        '</table>\n';
+    const original =
+      '<table>' +
+      '<tr><td>one.one</td><td>one.two</td></tr>' +
+      '<tr><td>two.one</td><td>two.two</td></tr>' +
+      '</table>';
+    const expected =
+      '<table>\n' +
+      '<tr>\n<td>one.one</td>\n<td>one.two</td>\n</tr>\n' +
+      '<tr>\n<td>two.one</td>\n<td>two.two</td>\n</tr>\n' +
+      '</table>\n';
     assertEquals(expected, HtmlPrettyPrinter.format(original));
   },
 
@@ -150,18 +156,17 @@ testSuite({
       /**
        * @suppress {visibility,const} suppression added to enable type checking
        */
-      HtmlPrettyPrinter.TOKEN_REGEX_ =
-          /(?:\B|<!--.*?-->|<!.*?>|<(\/?)(\w+)[^>]*>|[^<]+|<)/g;
+      HtmlPrettyPrinter.TOKEN_REGEX_ = /(?:\B|<!--.*?-->|<!.*?>|<(\/?)(\w+)[^>]*>|[^<]+|<)/g;
 
       // It would work on this string.
       assertEquals('f o o\n', HtmlPrettyPrinter.format('f o o'));
 
       // But not this one.
       const ex = assertThrows(
-          'should have failed for invalid regex - endless loop',
-          goog.partial(HtmlPrettyPrinter.format, COMPLEX_HTML));
-      assertEquals(
-          'Regex failed to make progress through source html.', ex.message);
+        'should have failed for invalid regex - endless loop',
+        goog.partial(HtmlPrettyPrinter.format, COMPLEX_HTML)
+      );
+      assertEquals('Regex failed to make progress through source html.', ex.message);
     } finally {
       /**
        * @suppress {visibility,constantProperty} suppression added to enable
@@ -177,8 +182,7 @@ testSuite({
    */
   testLists() {
     const original = '<ul><li>one</li><ul><li>two</li></UL><li>three</li></ul>';
-    const expected =
-        '<ul><li>one</li>\n<ul><li>two</li></UL>\n<li>three</li></ul>\n';
+    const expected = '<ul><li>one</li>\n<ul><li>two</li></UL>\n<li>three</li></ul>\n';
     assertEquals(expected, HtmlPrettyPrinter.format(original));
   },
 
@@ -201,16 +205,16 @@ testSuite({
        * @suppress {visibility,constantProperty} suppression added to enable
        * type checking
        */
-      HtmlPrettyPrinter.TOKEN_REGEX_ =
-          /(?:<!--.*?-->|<!.*?>|<(\/?)(\w+)[^>]*>|[^<]+)/g;
+      HtmlPrettyPrinter.TOKEN_REGEX_ = /(?:<!--.*?-->|<!.*?>|<(\/?)(\w+)[^>]*>|[^<]+)/g;
 
       // It would work on this string.
       assertEquals('foo\n', HtmlPrettyPrinter.format('foo'));
 
       // But not this one.
       const ex = assertThrows(
-          'should have failed for invalid regex - data loss',
-          goog.partial(HtmlPrettyPrinter.format, COMPLEX_HTML));
+        'should have failed for invalid regex - data loss',
+        goog.partial(HtmlPrettyPrinter.format, COMPLEX_HTML)
+      );
       assertEquals('Lost data pretty printing html.', ex.message);
     } finally {
       /**

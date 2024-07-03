@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.PaletteTest');
-goog.setTestOnly();
 
 const Component = goog.require('goog.ui.Component');
 const Container = goog.require('goog.ui.Container');
@@ -58,20 +57,23 @@ testSuite({
 
     palette.setHighlightedItem(nodes[0]);
     assertEquals(
-        'Node 0 cell should be the container\'s active descendant',
-        palette.getRenderer().getCellForItem(nodes[0]),
-        aria.getActiveDescendant(container.getElement()));
+      "Node 0 cell should be the container's active descendant",
+      palette.getRenderer().getCellForItem(nodes[0]),
+      aria.getActiveDescendant(container.getElement())
+    );
 
     palette.setHighlightedItem(nodes[1]);
     assertEquals(
-        'Node 1 cell should be the container\'s active descendant',
-        palette.getRenderer().getCellForItem(nodes[1]),
-        aria.getActiveDescendant(container.getElement()));
+      "Node 1 cell should be the container's active descendant",
+      palette.getRenderer().getCellForItem(nodes[1]),
+      aria.getActiveDescendant(container.getElement())
+    );
 
     palette.setHighlightedItem();
     assertNull(
-        'Container should have no active descendant',
-        aria.getActiveDescendant(container.getElement()));
+      'Container should have no active descendant',
+      aria.getActiveDescendant(container.getElement())
+    );
 
     container.dispose();
   },
@@ -89,25 +91,23 @@ testSuite({
       events.push(e);
       targetElements.push(e.target.getElement());
     };
-    palette.getHandler().listen(
+    palette
+      .getHandler()
+      .listen(
         palette,
-        [
-          this,
-          Component.EventType.HIGHLIGHT,
-          this,
-          Component.EventType.UNHIGHLIGHT,
-        ],
-        handleEvent);
+        [this, Component.EventType.HIGHLIGHT, this, Component.EventType.UNHIGHLIGHT],
+        handleEvent
+      );
 
     // Test highlight events on first selection
     palette.setHighlightedItem(nodes[0]);
     assertEquals('Should have fired 1 event', 1, events.length);
+    assertEquals('HIGHLIGHT event should be fired', Component.EventType.HIGHLIGHT, events[0].type);
     assertEquals(
-        'HIGHLIGHT event should be fired', Component.EventType.HIGHLIGHT,
-        events[0].type);
-    assertEquals(
-        'Event should be fired for node[0] cell',
-        renderer.getCellForItem(nodes[0]), targetElements[0]);
+      'Event should be fired for node[0] cell',
+      renderer.getCellForItem(nodes[0]),
+      targetElements[0]
+    );
 
     events = [];
     targetElements = [];
@@ -122,17 +122,25 @@ testSuite({
     const unhighlightEvent = events.shift();
     const highlightEvent = events.shift();
     assertEquals(
-        'UNHIGHLIGHT should be fired first', Component.EventType.UNHIGHLIGHT,
-        unhighlightEvent.type);
+      'UNHIGHLIGHT should be fired first',
+      Component.EventType.UNHIGHLIGHT,
+      unhighlightEvent.type
+    );
     assertEquals(
-        'UNHIGHLIGHT should be fired for node[0] cell',
-        renderer.getCellForItem(nodes[0]), targetElements[0]);
+      'UNHIGHLIGHT should be fired for node[0] cell',
+      renderer.getCellForItem(nodes[0]),
+      targetElements[0]
+    );
     assertEquals(
-        'HIGHLIGHT should be fired after UNHIGHLIGHT',
-        Component.EventType.HIGHLIGHT, highlightEvent.type);
+      'HIGHLIGHT should be fired after UNHIGHLIGHT',
+      Component.EventType.HIGHLIGHT,
+      highlightEvent.type
+    );
     assertEquals(
-        'HIGHLIGHT should be fired for node[1] cell',
-        renderer.getCellForItem(nodes[1]), targetElements[1]);
+      'HIGHLIGHT should be fired for node[1] cell',
+      renderer.getCellForItem(nodes[1]),
+      targetElements[1]
+    );
 
     events = [];
     targetElements = [];
@@ -142,11 +150,15 @@ testSuite({
 
     assertEquals('Should have fired 1 event', 1, events.length);
     assertEquals(
-        'UNHIGHLIGHT event should be fired', Component.EventType.UNHIGHLIGHT,
-        events[0].type);
+      'UNHIGHLIGHT event should be fired',
+      Component.EventType.UNHIGHLIGHT,
+      events[0].type
+    );
     assertEquals(
-        'Event should be fired for node[1] cell',
-        renderer.getCellForItem(nodes[1]), targetElements[0]);
+      'Event should be fired for node[1] cell',
+      renderer.getCellForItem(nodes[1]),
+      targetElements[0]
+    );
   },
 
   testHandleKeyEventLoops() {
@@ -157,8 +169,11 @@ testSuite({
     palette.setHighlightedIndex(0);
     const createKeyEvent = (keyCode) => {
       return new KeyEvent(
-          keyCode, 0 /* charCode */, false /* repeat */,
-          new GoogTestingEvent(EventType.KEYDOWN));
+        keyCode,
+        0 /* charCode */,
+        false /* repeat */,
+        new GoogTestingEvent(EventType.KEYDOWN)
+      );
     };
     palette.handleKeyEvent(createKeyEvent(KeyCodes.LEFT));
     assertEquals(nodes.length - 1, palette.getHighlightedIndex());
@@ -186,8 +201,11 @@ testSuite({
     const item20 = palette.getRenderer().getCellForItem(nodes[20]);
     const pressDownArrowKeyFourTimes = () => {
       const downArrayKeyEvent = new KeyEvent(
-          KeyCodes.DOWN, 0 /* charCode */, false /* repeat */,
-          new GoogTestingEvent(EventType.KEYDOWN));
+        KeyCodes.DOWN,
+        0 /* charCode */,
+        false /* repeat */,
+        new GoogTestingEvent(EventType.KEYDOWN)
+      );
       for (let i = 0; i < 4; i++) {
         palette.handleKeyEvent(downArrayKeyEvent);
       }
@@ -199,8 +217,9 @@ testSuite({
     pressDownArrowKeyFourTimes();
     assertEquals(20, palette.getHighlightedIndex());
     assert(
-        'Container should scroll down to make the highlighted item visible.',
-        containerEl.scrollTop > 0);
+      'Container should scroll down to make the highlighted item visible.',
+      containerEl.scrollTop > 0
+    );
   },
 
   testSetHighlight() {
@@ -235,8 +254,11 @@ testSuite({
 
     // Click somewhere in the palette, but not inside a cell.
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const mouseUp = new googEvents.BrowserEvent(
-        {type: 'mouseup', button: 1, target: palette});
+    const mouseUp = new googEvents.BrowserEvent({
+      type: 'mouseup',
+      button: 1,
+      target: palette,
+    });
     palette.handleMouseUp(mouseUp);
 
     // Highlight and selection are both unchanged (user did not select
@@ -246,18 +268,21 @@ testSuite({
   },
 
   testSetAriaLabel() {
-    assertNull(
-        'Palette must not have aria label by default', palette.getAriaLabel());
+    assertNull('Palette must not have aria label by default', palette.getAriaLabel());
     palette.setAriaLabel('My Palette');
     palette.render();
     const element = palette.getElementStrict();
     assertNotNull('Element must not be null', element);
     assertEquals(
-        'Palette element must have expected aria-label', 'My Palette',
-        element.getAttribute('aria-label'));
+      'Palette element must have expected aria-label',
+      'My Palette',
+      element.getAttribute('aria-label')
+    );
     palette.setAriaLabel('My new Palette');
     assertEquals(
-        'Palette element must have updated aria-label', 'My new Palette',
-        element.getAttribute('aria-label'));
+      'Palette element must have updated aria-label',
+      'My new Palette',
+      element.getAttribute('aria-label')
+    );
   },
 });

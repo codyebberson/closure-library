@@ -19,8 +19,6 @@ goog.require('goog.ui.MenuSeparatorRenderer');
 goog.require('goog.ui.registry');
 goog.requireType('goog.dom.DomHelper');
 
-
-
 /**
  * Class representing a separator.  Although it extends {@link goog.ui.Control},
  * the Separator class doesn't allocate any event handlers, nor does it change
@@ -32,11 +30,13 @@ goog.requireType('goog.dom.DomHelper');
  * @constructor
  * @extends {goog.ui.Control}
  */
-goog.ui.Separator = function(opt_renderer, opt_domHelper) {
-  'use strict';
+goog.ui.Separator = function (opt_renderer, opt_domHelper) {
   goog.ui.Control.call(
-      this, null, opt_renderer || goog.ui.MenuSeparatorRenderer.getInstance(),
-      opt_domHelper);
+    this,
+    null,
+    opt_renderer || goog.ui.MenuSeparatorRenderer.getInstance(),
+    opt_domHelper
+  );
 
   this.setSupportedState(goog.ui.Component.State.DISABLED, false);
   this.setSupportedState(goog.ui.Component.State.HOVER, false);
@@ -48,27 +48,21 @@ goog.ui.Separator = function(opt_renderer, opt_domHelper) {
 };
 goog.inherits(goog.ui.Separator, goog.ui.Control);
 
-
 /**
  * Configures the component after its DOM has been rendered.  Overrides
  * {@link goog.ui.Control#enterDocument} by making sure no event handler
  * is allocated.
  * @override
  */
-goog.ui.Separator.prototype.enterDocument = function() {
-  'use strict';
+goog.ui.Separator.prototype.enterDocument = function () {
   goog.ui.Separator.superClass_.enterDocument.call(this);
   var element = this.getElement();
-  goog.asserts.assert(
-      element, 'The DOM element for the separator cannot be null.');
+  goog.asserts.assert(element, 'The DOM element for the separator cannot be null.');
   goog.a11y.aria.setRole(element, 'separator');
 };
 
-
 // Register a decorator factory function for goog.ui.MenuSeparators.
-goog.ui.registry.setDecoratorByClassName(
-    goog.ui.MenuSeparatorRenderer.CSS_CLASS, function() {
-      'use strict';
-      // Separator defaults to using MenuSeparatorRenderer.
-      return new goog.ui.Separator();
-    });
+goog.ui.registry.setDecoratorByClassName(goog.ui.MenuSeparatorRenderer.CSS_CLASS, () => {
+  // Separator defaults to using MenuSeparatorRenderer.
+  return new goog.ui.Separator();
+});

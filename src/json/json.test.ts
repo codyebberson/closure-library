@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.jsonTest');
-goog.setTestOnly();
 
 const functions = goog.require('goog.functions');
 const googJson = goog.require('goog.json');
@@ -41,7 +40,7 @@ function assertSerialize(expected, obj, replacer = undefined) {
   if (obj === undefined) return;
 
   // Browsers don't serialize undefined properties, but goog.json.serialize does
-  if (goog.isObject(obj) && ('a' in obj) && obj['a'] === undefined) return;
+  if (goog.isObject(obj) && 'a' in obj && obj['a'] === undefined) return;
 
   // Replacers are broken on IE and older versions of firefox.
   if (replacer && !userAgent.WEBKIT) return;
@@ -57,8 +56,10 @@ function assertSerialize(expected, obj, replacer = undefined) {
 
   if (typeof JSON != 'undefined') {
     assertEquals(
-        'goog.json.serialize does not match JSON.stringify', expected,
-        JSON.stringify(obj, replacer));
+      'goog.json.serialize does not match JSON.stringify',
+      expected,
+      JSON.stringify(obj, replacer)
+    );
   }
 }
 
@@ -97,7 +98,7 @@ testSuite({
   testNullSerialize() {
     assertSerialize('null', null);
     assertSerialize('null', undefined);
-    assertSerialize('null', NaN);
+    assertSerialize('null', Number.NaN);
 
     assertSerialize('0', 0);
     assertSerialize('""', '');
@@ -105,8 +106,8 @@ testSuite({
   },
 
   testNullPropertySerialize() {
-    assertSerialize('{"a":null}', {'a': null});
-    assertSerialize('{"a":null}', {'a': undefined});
+    assertSerialize('{"a":null}', { a: null });
+    assertSerialize('{"a":null}', { a: undefined });
   },
 
   testNumberSerialize() {
@@ -116,24 +117,23 @@ testSuite({
 
     assertSerialize('0.1', 0.1);
     // the leading zero may not be omitted
-    assertSerialize('0.1', .1);
+    assertSerialize('0.1', 0.1);
 
     // no leading +
     assertSerialize('1', +1);
 
     // either format is OK
     let s = googJson.serialize(1e50);
-    assertTrue(
-        '1e50', s == '1e50' || s == '1E50' || s == '1e+50' || s == '1E+50');
+    assertTrue('1e50', s == '1e50' || s == '1E50' || s == '1e+50' || s == '1E+50');
 
     // either format is OK
     s = googJson.serialize(1e-50);
     assertTrue('1e50', s == '1e-50' || s == '1E-50');
 
     // These numbers cannot be represented in JSON
-    assertSerialize('null', NaN);
-    assertSerialize('null', Infinity);
-    assertSerialize('null', -Infinity);
+    assertSerialize('null', Number.NaN);
+    assertSerialize('null', Number.POSITIVE_INFINITY);
+    assertSerialize('null', Number.NEGATIVE_INFINITY);
   },
 
   testBooleanSerialize() {
@@ -152,7 +152,7 @@ testSuite({
     assertSerialize('[[]]', [[]]);
     assertSerialize('[null,null]', [() => {}, () => {}]);
 
-    assertNotEquals('{length:0}', googJson.serialize({length: 0}), '[]');
+    assertNotEquals('{length:0}', googJson.serialize({ length: 0 }), '[]');
   },
 
   testFunctionSerialize() {
@@ -164,17 +164,15 @@ testSuite({
   },
 
   testObjectSerialize_oneItem() {
-    assertSerialize('{"a":"b"}', {a: 'b'});
+    assertSerialize('{"a":"b"}', { a: 'b' });
   },
 
   testObjectSerialize_twoItems() {
-    assertEquals(
-        '{"a":"b","c":"d"}', googJson.serialize({a: 'b', c: 'd'}),
-        '{"a":"b","c":"d"}');
+    assertEquals('{"a":"b","c":"d"}', googJson.serialize({ a: 'b', c: 'd' }), '{"a":"b","c":"d"}');
   },
 
   testObjectSerialize_whitespace() {
-    assertSerialize('{" ":" "}', {' ': ' '});
+    assertSerialize('{" ":" "}', { ' ': ' ' });
   },
 
   testSerializeSkipFunction() {
@@ -182,9 +180,9 @@ testSuite({
       s: 'string value',
       b: true,
       i: 100,
-      f: function() {
+      f: () => {
         const x = 'x';
-      }
+      },
     };
     assertSerialize('null', object.f);
     assertSerialize('{"s":"string value","b":true,"i":100}', object);
@@ -196,7 +194,7 @@ testSuite({
 
   testObjectSerialize_recursion() {
     if (userAgent.WEBKIT) {
-      return;  // this makes safari 4 crash.
+      return; // this makes safari 4 crash.
     }
 
     const anObject = {};
@@ -207,7 +205,7 @@ testSuite({
   },
 
   testObjectSerializeWithHasOwnProperty() {
-    const object = {'hasOwnProperty': null};
+    const object = { hasOwnProperty: null };
     assertEquals('{"hasOwnProperty":null}', googJson.serialize(object));
   },
 
@@ -285,7 +283,7 @@ testSuite({
     // Note that array-holes are not valid json. However, goog.json.parse
     // supports them so that clients can reap the security benefits of
     // goog.json.parse even if they are using this non-standard format.
-    assertArrayEquals([1, /* hole */, 3], googJson.parse('[1,,3]'));
+    assertArrayEquals([1 /* hole */, , 3], googJson.parse('[1,,3]'));
 
     // make sure we do not get an array for something that looks like an array
     assertFalse('{length:0}', 'push' in googJson.parse('{"length":0}'));
@@ -293,7 +291,7 @@ testSuite({
 
   testObjectParse() {
     function objectEquals(a1, a2) {
-      for (let key in a1) {
+      for (const key in a1) {
         if (a1[key] != a2[key]) {
           return false;
         }
@@ -302,13 +300,12 @@ testSuite({
     }
 
     assertTrue('{}', objectEquals(googJson.parse('{}'), {}));
+    assertTrue('{"a":"b"}', objectEquals(googJson.parse('{"a":"b"}'), { a: 'b' }));
     assertTrue(
-        '{"a":"b"}', objectEquals(googJson.parse('{"a":"b"}'), {a: 'b'}));
-    assertTrue(
-        '{"a":"b","c":"d"}',
-        objectEquals(googJson.parse('{"a":"b","c":"d"}'), {a: 'b', c: 'd'}));
-    assertTrue(
-        '{" ":" "}', objectEquals(googJson.parse('{" ":" "}'), {' ': ' '}));
+      '{"a":"b","c":"d"}',
+      objectEquals(googJson.parse('{"a":"b","c":"d"}'), { a: 'b', c: 'd' })
+    );
+    assertTrue('{" ":" "}', objectEquals(googJson.parse('{" ":" "}'), { ' ': ' ' }));
 
     // make sure we do not get an Object when it is really an array
     assertTrue('[0,1]', 'length' in googJson.parse('[0,1]'));
@@ -317,8 +314,9 @@ testSuite({
   testForValidJson() {
     function error_(msg, s) {
       assertThrows(
-          `${msg}, Should have raised an exception: ${s}`,
-          goog.partial(googJson.parse, s));
+        `${msg}, Should have raised an exception: ${s}`,
+        goog.partial(googJson.parse, s)
+      );
     }
 
     error_('Non closed string', '"dasdas');
@@ -352,8 +350,8 @@ testSuite({
     assertFalse(googJson.isValid('-t'));
     assertFalse(googJson.isValid('+t'));
 
-    assertFalse(googJson.isValid('"\\"'));  // "\"
-    assertFalse(googJson.isValid('"\\'));   // "\
+    assertFalse(googJson.isValid('"\\"')); // "\"
+    assertFalse(googJson.isValid('"\\')); // "\
 
     // multiline string using \ at the end is not valid
     assertFalse(googJson.isValid('"a\\\nb"'));
@@ -406,36 +404,33 @@ testSuite({
 
   testDoNotSerializeProto() {
     function F() {}
-    F.prototype = {c: 3};
+    F.prototype = { c: 3 };
 
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const obj = new F;
+    const obj = new F();
     obj.a = 1;
     obj.b = 2;
 
-    assertEquals(
-        'Should not follow the prototype chain', '{"a":1,"b":2}',
-        googJson.serialize(obj));
+    assertEquals('Should not follow the prototype chain', '{"a":1,"b":2}', googJson.serialize(obj));
   },
 
   testEscape() {
     const unescaped = '1a*/]';
-    assertEquals(
-        'Should not escape', `"${unescaped}"`, googJson.serialize(unescaped));
+    assertEquals('Should not escape', `"${unescaped}"`, googJson.serialize(unescaped));
 
     const escaped = '\n\x7f\u1049';
+    assertEquals('Should escape', '', findCommonChar(escaped, googJson.serialize(escaped)));
     assertEquals(
-        'Should escape', '',
-        findCommonChar(escaped, googJson.serialize(escaped)));
-    assertEquals(
-        'Should eval to the same string after escaping', escaped,
-        googJson.parse(googJson.serialize(escaped)));
+      'Should eval to the same string after escaping',
+      escaped,
+      googJson.parse(googJson.serialize(escaped))
+    );
   },
 
   testReplacer() {
     assertSerialize('[null,null,0]', [, , 0]);
 
-    assertSerialize('[0,0,{"x":0}]', [, , {x: 0}], function(k, v) {
+    assertSerialize('[0,0,{"x":0}]', [, , { x: 0 }], function (k, v) {
       if (v === undefined && Array.isArray(this)) {
         return 0;
       }
@@ -450,8 +445,8 @@ testSuite({
       return v;
     });
 
-    const f = (k, v) => typeof v == 'number' ? v + 1 : v;
-    assertSerialize('{"a":1,"b":{"c":2}}', {'a': 0, 'b': {'c': 1}}, f);
+    const f = (k, v) => (typeof v == 'number' ? v + 1 : v);
+    assertSerialize('{"a":1,"b":{"c":2}}', { a: 0, b: { c: 1 } }, f);
   },
 
   testDateSerialize() {
@@ -459,8 +454,8 @@ testSuite({
   },
 
   testToJSONSerialize() {
-    assertSerialize('{}', {toJSON: functions.constant('serialized')});
-    assertSerialize('{"toJSON":"normal"}', {toJSON: 'normal'});
+    assertSerialize('{}', { toJSON: functions.constant('serialized') });
+    assertSerialize('{"toJSON":"normal"}', { toJSON: 'normal' });
   },
 
   testTryNativeJson() {

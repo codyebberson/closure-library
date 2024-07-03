@@ -18,8 +18,6 @@ goog.require('goog.testing.LooseMock');
 goog.require('goog.testing.mockmatchers');
 goog.requireType('goog.dom.AbstractRange');
 
-
-
 /**
  * Mock of goog.editor.Field.
  * @param {Window=} opt_window Window the field would edit.  Defaults to
@@ -35,47 +33,37 @@ goog.requireType('goog.dom.AbstractRange');
  * @suppress {missingProperties} Mocks do not fit in the type system well.
  * @final
  */
-goog.testing.editor.FieldMock = function(opt_window, opt_appWindow, opt_range) {
-  'use strict';
+goog.testing.editor.FieldMock = function (opt_window, opt_appWindow, opt_range) {
   goog.testing.LooseMock.call(this, goog.editor.Field);
   opt_window = opt_window || window;
   opt_appWindow = opt_appWindow || opt_window;
 
-  // We want to pretend this is a Field even though it can't actaully be a
-  // subclass.
-  const thisField = /** @type {!goog.editor.Field} */ (/** @type {*} */ (this));
-
-  thisField.getAppWindow();
+  this.getAppWindow();
   this.$anyTimes();
   this.$returns(opt_appWindow);
 
-  thisField.getRange();
+  this.getRange();
   this.$anyTimes();
-  this.$does(function() {
-    'use strict';
-    return opt_range || goog.dom.Range.createFromWindow(opt_window);
-  });
+  this.$does(() => opt_range || goog.dom.Range.createFromWindow(opt_window));
 
-  thisField.getEditableDomHelper();
+  this.getEditableDomHelper();
   this.$anyTimes();
   this.$returns(goog.dom.getDomHelper(opt_window.document));
 
-  thisField.usesIframe();
+  this.usesIframe();
   this.$anyTimes();
 
-  thisField.getBaseZindex();
+  this.getBaseZindex();
   this.$anyTimes();
   this.$returns(0);
 
-  thisField.restoreSavedRange(
-      /** @type {?} */ (goog.testing.mockmatchers.ignoreArgument));
+  this.restoreSavedRange(/** @type {?} */ (goog.testing.mockmatchers.ignoreArgument));
   this.$anyTimes();
-  this.$does(function(range) {
-    'use strict';
+  this.$does((range) => {
     if (range) {
       range.restore();
     }
-    thisField.focus();
+    this.focus();
   });
 
   // These methods cannot be set on the prototype, because the prototype
@@ -85,16 +73,12 @@ goog.testing.editor.FieldMock = function(opt_window, opt_appWindow, opt_range) {
   /**
    * @return {boolean} Whether we're in modal interaction mode.
    */
-  this.inModalMode = function() {
-    'use strict';
-    return inModalMode;
-  };
+  this.inModalMode = () => inModalMode;
 
   /**
    * @param {boolean} mode Sets whether we're in modal interaction mode.
    */
-  this.setModalMode = function(mode) {
-    'use strict';
+  this.setModalMode = (mode) => {
     inModalMode = mode;
   };
 
@@ -103,16 +87,12 @@ goog.testing.editor.FieldMock = function(opt_window, opt_appWindow, opt_range) {
   /**
    * @return {boolean} Whether the field is uneditable.
    */
-  this.isUneditable = function() {
-    'use strict';
-    return uneditable;
-  };
+  this.isUneditable = () => uneditable;
 
   /**
    * @param {boolean} isUneditable Whether the field is uneditable.
    */
-  this.setUneditable = function(isUneditable) {
-    'use strict';
+  this.setUneditable = (isUneditable) => {
     uneditable = isUneditable;
   };
 };

@@ -10,7 +10,6 @@
 
 /** @suppress {extraProvide} */
 goog.module('goog.dom.BufferedViewportSizeMonitorTest');
-goog.setTestOnly();
 
 const BufferedViewportSizeMonitor = goog.require('goog.dom.BufferedViewportSizeMonitor');
 const EventType = goog.require('goog.events.EventType');
@@ -39,8 +38,7 @@ const resizeCallback = () => {
 
 function resize(width, height) {
   size = new Size(width, height);
-  testingEvents.fireBrowserEvent(
-      new GoogTestingEvent(EventType.RESIZE, viewportSizeMonitor));
+  testingEvents.fireBrowserEvent(new GoogTestingEvent(EventType.RESIZE, viewportSizeMonitor));
 }
 testSuite({
   setUp() {
@@ -68,24 +66,20 @@ testSuite({
     assertEquals(0, resizeEventCount);
     resize(100, 100);
     timer.tick(RESIZE_DELAY - 1);
-    assertEquals(
-        'No resize expected before the delay is fired', 0, resizeEventCount);
+    assertEquals('No resize expected before the delay is fired', 0, resizeEventCount);
     timer.tick(1);
     assertEquals('Expected resize after delay', 1, resizeEventCount);
     assertTrue(Size.equals(new Size(100, 100), bufferedVsm.getSize()));
   },
 
   testWindowResize_eventBatching() {
-    assertEquals(
-        'No resize calls expected before resize events', 0, resizeEventCount);
+    assertEquals('No resize calls expected before resize events', 0, resizeEventCount);
     resize(100, 100);
     timer.tick(RESIZE_DELAY - 1);
     resize(200, 200);
-    assertEquals(
-        'No resize expected before the delay is fired', 0, resizeEventCount);
+    assertEquals('No resize expected before the delay is fired', 0, resizeEventCount);
     timer.tick(1);
-    assertEquals(
-        'No resize expected when delay is restarted', 0, resizeEventCount);
+    assertEquals('No resize expected when delay is restarted', 0, resizeEventCount);
     timer.tick(RESIZE_DELAY);
     assertEquals('Expected resize after delay', 1, resizeEventCount);
   },
@@ -96,8 +90,7 @@ testSuite({
     assertEquals(1, resizeEventCount);
     resize(100, 100);
     timer.tick(RESIZE_DELAY);
-    assertEquals(
-        'No resize expected when size doesn\'t change', 1, resizeEventCount);
+    assertEquals("No resize expected when size doesn't change", 1, resizeEventCount);
     assertTrue(Size.equals(new Size(100, 100), bufferedVsm.getSize()));
   },
 

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.PromptTest');
-goog.setTestOnly();
 
 const BidiInput = goog.require('goog.ui.BidiInput');
 const Dialog = goog.require('goog.ui.Dialog');
@@ -25,10 +24,15 @@ let prompt;
 
 // An interactive test so we can manually see what it looks like.
 function newPrompt() {
-  prompt = new Prompt('title', 'Prompt:', (result) => {
-    alert(`Result: ${result}`);
-    dispose(prompt);
-  }, 'defaultValue');
+  prompt = new Prompt(
+    'title',
+    'Prompt:',
+    (result) => {
+      alert(`Result: ${result}`);
+      dispose(prompt);
+    },
+    'defaultValue'
+  );
   prompt.setVisible(true);
 }
 testSuite({
@@ -48,9 +52,14 @@ testSuite({
     }
 
     let promptResult = undefined;
-    prompt = new Prompt('title', 'Prompt:', (result) => {
-      promptResult = result;
-    }, 'defaultValue');
+    prompt = new Prompt(
+      'title',
+      'Prompt:',
+      (result) => {
+        promptResult = result;
+      },
+      'defaultValue'
+    );
     prompt.setVisible(true);
 
     if (product.CHROME) {
@@ -67,9 +76,14 @@ testSuite({
    */
   testValidationFunction() {
     let promptResult = undefined;
-    prompt = new Prompt('title', 'Prompt:', (result) => {
-      promptResult = result;
-    }, '');
+    prompt = new Prompt(
+      'title',
+      'Prompt:',
+      (result) => {
+        promptResult = result;
+      },
+      ''
+    );
     prompt.setValidationFunction(functions.not(googString.isEmptyOrWhitespace));
     prompt.setVisible(true);
 
@@ -102,14 +116,14 @@ testSuite({
     /** @suppress {visibility} suppression added to enable type checking */
     prompt.userInputEl_.value = shalomInHebrew;
     events.fireKeySequence(prompt.userInputEl_, KeyCodes.SPACE);
-    events.fireBrowserEvent({'target': prompt.userInputEl_, 'type': 'input'});
+    events.fireBrowserEvent({ target: prompt.userInputEl_, type: 'input' });
     bidiInput.inputHandler_.dispatchEvent(InputHandler.EventType.INPUT);
     assertEquals('rtl', prompt.userInputEl_.dir);
 
     /** @suppress {visibility} suppression added to enable type checking */
     prompt.userInputEl_.value = 'shalomInEnglish';
     events.fireKeySequence(prompt.userInputEl_, KeyCodes.SPACE);
-    events.fireBrowserEvent({'target': prompt.userInputEl_, 'type': 'input'});
+    events.fireBrowserEvent({ target: prompt.userInputEl_, type: 'input' });
     bidiInput.inputHandler_.dispatchEvent(InputHandler.EventType.INPUT);
     assertEquals('ltr', prompt.userInputEl_.dir);
     dispose(bidiInput);
@@ -128,7 +142,7 @@ testSuite({
     /** @suppress {visibility} suppression added to enable type checking */
     prompt.userInputEl_.value = shalomInHebrew;
     events.fireKeySequence(prompt.userInputEl_, KeyCodes.SPACE);
-    events.fireBrowserEvent({'target': prompt.userInputEl_, 'type': 'input'});
+    events.fireBrowserEvent({ target: prompt.userInputEl_, type: 'input' });
     assertEquals('', prompt.userInputEl_.dir);
 
     /** @suppress {visibility} suppression added to enable type checking */

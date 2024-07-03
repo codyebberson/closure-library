@@ -18,8 +18,6 @@ goog.provide('goog.net.WebChannelTransport');
 goog.requireType('goog.net.WebChannel');
 goog.requireType('goog.net.WebChannel.Options');
 
-
-
 /**
  * A WebChannelTransport instance represents a shared context of logical
  * connectivity between a browser client and a remote origin.
@@ -38,8 +36,7 @@ goog.requireType('goog.net.WebChannel.Options');
  *
  * @interface
  */
-goog.net.WebChannelTransport = function() {};
-
+goog.net.WebChannelTransport = () => {};
 
 /**
  * The client version. This integer value will be passed to the server
@@ -52,7 +49,6 @@ goog.net.WebChannelTransport = function() {};
  * @type {number}
  */
 goog.net.WebChannelTransport.CLIENT_VERSION = 22;
-
 
 /**
  * Create a new WebChannel instance.

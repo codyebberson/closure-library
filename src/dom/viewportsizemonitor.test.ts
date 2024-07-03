@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dom.ViewportSizeMonitorTest');
-goog.setTestOnly();
 
 const EventType = goog.require('goog.events.EventType');
 const GoogEvent = goog.require('goog.events.Event');
@@ -81,17 +80,11 @@ testSuite({
 
   testResizeEvent() {
     events.listen(viewportSizeMonitor, EventType.RESIZE, getListenerFn(1));
-    assertFalse(
-        'Listener should not be called if window was not resized',
-        listenerWasCalled(1));
+    assertFalse('Listener should not be called if window was not resized', listenerWasCalled(1));
     setViewportSize(300, 300, true);
-    assertFalse(
-        'Listener should not be called for bogus resize event',
-        listenerWasCalled(1));
+    assertFalse('Listener should not be called for bogus resize event', listenerWasCalled(1));
     setViewportSize(301, 301, true);
-    assertTrue(
-        'Listener should be called for valid resize event',
-        listenerWasCalled(1));
+    assertTrue('Listener should be called for valid resize event', listenerWasCalled(1));
   },
 
   testInstanceGetter() {
@@ -100,21 +93,18 @@ testSuite({
     const monitor1 = ViewportSizeMonitor.getInstanceForWindow(fakeWindow1);
     /** @suppress {checkTypes} suppression added to enable type checking */
     const monitor2 = ViewportSizeMonitor.getInstanceForWindow(fakeWindow1);
-    assertEquals(
-        'The same window should give us the same instance monitor', monitor1,
-        monitor2);
+    assertEquals('The same window should give us the same instance monitor', monitor1, monitor2);
 
     const fakeWindow2 = new FakeWindow();
     /** @suppress {checkTypes} suppression added to enable type checking */
     const monitor3 = ViewportSizeMonitor.getInstanceForWindow(fakeWindow2);
-    assertNotEquals(
-        'Different windows should give different instances', monitor1,
-        monitor3);
+    assertNotEquals('Different windows should give different instances', monitor1, monitor3);
 
     assertEquals(
-        'Monitors should match if opt_window is not provided',
-        ViewportSizeMonitor.getInstanceForWindow(),
-        ViewportSizeMonitor.getInstanceForWindow());
+      'Monitors should match if opt_window is not provided',
+      ViewportSizeMonitor.getInstanceForWindow(),
+      ViewportSizeMonitor.getInstanceForWindow()
+    );
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */

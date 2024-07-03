@@ -9,7 +9,6 @@
  * MessageChannel and allows the user to get the response from the services.
  */
 
-
 goog.provide('goog.messaging.RespondingChannel');
 
 goog.require('goog.Disposable');
@@ -18,8 +17,6 @@ goog.require('goog.dispose');
 goog.require('goog.log');
 goog.require('goog.messaging.MultiChannel');
 goog.requireType('goog.messaging.MessageChannel');
-
-
 
 /**
  * Creates a new RespondingChannel wrapping a single MessageChannel.
@@ -31,8 +28,7 @@ goog.requireType('goog.messaging.MessageChannel');
  * @constructor
  * @extends {goog.Disposable}
  */
-goog.messaging.RespondingChannel = function(messageChannel) {
-  'use strict';
+goog.messaging.RespondingChannel = function (messageChannel) {
   goog.messaging.RespondingChannel.base(this, 'constructor');
 
   /**
@@ -58,7 +54,8 @@ goog.messaging.RespondingChannel = function(messageChannel) {
    * @private
    */
   this.privateChannel_ = this.messageChannel_.createVirtualChannel(
-      goog.messaging.RespondingChannel.PRIVATE_CHANNEL_);
+    goog.messaging.RespondingChannel.PRIVATE_CHANNEL_
+  );
 
   /**
    * The virtual channel to send public messages on.
@@ -66,14 +63,16 @@ goog.messaging.RespondingChannel = function(messageChannel) {
    * @private
    */
   this.publicChannel_ = this.messageChannel_.createVirtualChannel(
-      goog.messaging.RespondingChannel.PUBLIC_CHANNEL_);
+    goog.messaging.RespondingChannel.PUBLIC_CHANNEL_
+  );
 
   this.privateChannel_.registerService(
-      goog.messaging.RespondingChannel.CALLBACK_SERVICE_,
-      goog.bind(this.callbackServiceHandler_, this), true);
+    goog.messaging.RespondingChannel.CALLBACK_SERVICE_,
+    goog.bind(this.callbackServiceHandler_, this),
+    true
+  );
 };
 goog.inherits(goog.messaging.RespondingChannel, goog.Disposable);
-
 
 /**
  * The name of the method invocation callback service (used internally).
@@ -83,7 +82,6 @@ goog.inherits(goog.messaging.RespondingChannel, goog.Disposable);
  */
 goog.messaging.RespondingChannel.CALLBACK_SERVICE_ = 'mics';
 
-
 /**
  * The name of the channel to send private control messages on.
  * @type {string}
@@ -91,7 +89,6 @@ goog.messaging.RespondingChannel.CALLBACK_SERVICE_ = 'mics';
  * @private
  */
 goog.messaging.RespondingChannel.PRIVATE_CHANNEL_ = 'private';
-
 
 /**
  * The name of the channel to send public messages on.
@@ -101,7 +98,6 @@ goog.messaging.RespondingChannel.PRIVATE_CHANNEL_ = 'private';
  */
 goog.messaging.RespondingChannel.PUBLIC_CHANNEL_ = 'public';
 
-
 /**
  * The next signature index to save the callback against.
  * @type {number}
@@ -109,30 +105,26 @@ goog.messaging.RespondingChannel.PUBLIC_CHANNEL_ = 'public';
  */
 goog.messaging.RespondingChannel.prototype.nextSignatureIndex_ = 0;
 
-
 /**
  * Logger object for goog.messaging.RespondingChannel.
  * @type {goog.log.Logger}
  * @private
  */
-goog.messaging.RespondingChannel.prototype.logger_ =
-    goog.log.getLogger('goog.messaging.RespondingChannel');
-
+goog.messaging.RespondingChannel.prototype.logger_ = goog.log.getLogger(
+  'goog.messaging.RespondingChannel'
+);
 
 /**
  * Gets a random number to use for method invocation results.
  * @return {number} A unique random signature.
  * @private
  */
-goog.messaging.RespondingChannel.prototype.getNextSignature_ = function() {
-  'use strict';
+goog.messaging.RespondingChannel.prototype.getNextSignature_ = function () {
   return this.nextSignatureIndex_++;
 };
 
-
 /** @override */
-goog.messaging.RespondingChannel.prototype.disposeInternal = function() {
-  'use strict';
+goog.messaging.RespondingChannel.prototype.disposeInternal = function () {
   goog.dispose(this.messageChannel_);
   delete this.messageChannel_;
   // Note: this.publicChannel_ and this.privateChannel_ get disposed by
@@ -140,7 +132,6 @@ goog.messaging.RespondingChannel.prototype.disposeInternal = function() {
   delete this.publicChannel_;
   delete this.privateChannel_;
 };
-
 
 /**
  * Sends a message over the channel.
@@ -151,9 +142,7 @@ goog.messaging.RespondingChannel.prototype.disposeInternal = function() {
  * @param {function(?Object)} callback The callback invoked with
  *     the result of the service call.
  */
-goog.messaging.RespondingChannel.prototype.send = function(
-    serviceName, payload, callback) {
-  'use strict';
+goog.messaging.RespondingChannel.prototype.send = function (serviceName, payload, callback) {
   const signature = this.getNextSignature_();
   this.sigCallbackMap_[signature] = callback;
 
@@ -164,22 +153,18 @@ goog.messaging.RespondingChannel.prototype.send = function(
   this.publicChannel_.send(serviceName, message);
 };
 
-
 /**
  * Receives the results of the peer's service results.
  * @param {!Object|string} message The results from the remote service
  *     invocation.
  * @private
  */
-goog.messaging.RespondingChannel.prototype.callbackServiceHandler_ = function(
-    message) {
-  'use strict';
+goog.messaging.RespondingChannel.prototype.callbackServiceHandler_ = function (message) {
   const signature = message['signature'];
   const result = message['data'];
 
   if (signature in this.sigCallbackMap_) {
-    const callback =
-        /** @type {function(Object)} */ (this.sigCallbackMap_[signature]);
+    const callback = /** @type {function(Object)} */ (this.sigCallbackMap_[signature]);
     callback(result);
     delete this.sigCallbackMap_[signature];
   } else {
@@ -187,20 +172,19 @@ goog.messaging.RespondingChannel.prototype.callbackServiceHandler_ = function(
   }
 };
 
-
 /**
  * Registers a service to be called when a message is received.
  * @param {string} serviceName The name of the service.
  * @param {function(!Object)} callback The callback to process the
  *     incoming messages. Passed the payload.
  */
-goog.messaging.RespondingChannel.prototype.registerService = function(
-    serviceName, callback) {
-  'use strict';
+goog.messaging.RespondingChannel.prototype.registerService = function (serviceName, callback) {
   this.publicChannel_.registerService(
-      serviceName, goog.bind(this.callbackProxy_, this, callback), true);
+    serviceName,
+    goog.bind(this.callbackProxy_, this, callback),
+    true
+  );
 };
-
 
 /**
  * A intermediary proxy for service callbacks to be invoked and return their
@@ -211,17 +195,15 @@ goog.messaging.RespondingChannel.prototype.registerService = function(
  *     the data to invoke the service callback with.
  * @private
  */
-goog.messaging.RespondingChannel.prototype.callbackProxy_ = function(
-    callback, message) {
-  'use strict';
+goog.messaging.RespondingChannel.prototype.callbackProxy_ = function (callback, message) {
   const response = callback(message['data']);
   const signature = message['signature'];
-  goog.Promise.resolve(response).then(goog.bind(function(result) {
-    'use strict';
-    this.sendResponse_(result, signature);
-  }, this));
+  goog.Promise.resolve(response).then(
+    goog.bind(function (result) {
+      this.sendResponse_(result, signature);
+    }, this)
+  );
 };
-
 
 /**
  * Sends the results of the service callback to the remote caller's callback.
@@ -230,16 +212,13 @@ goog.messaging.RespondingChannel.prototype.callbackProxy_ = function(
  *     callback.
  * @private
  */
-goog.messaging.RespondingChannel.prototype.sendResponse_ = function(
-    result, signature) {
-  'use strict';
+goog.messaging.RespondingChannel.prototype.sendResponse_ = function (result, signature) {
   const resultMessage = {};
   resultMessage['data'] = result;
   resultMessage['signature'] = signature;
   // The callback invoked above may have disposed the channel so check if it
   // exists.
   if (this.privateChannel_) {
-    this.privateChannel_.send(
-        goog.messaging.RespondingChannel.CALLBACK_SERVICE_, resultMessage);
+    this.privateChannel_.send(goog.messaging.RespondingChannel.CALLBACK_SERVICE_, resultMessage);
   }
 };

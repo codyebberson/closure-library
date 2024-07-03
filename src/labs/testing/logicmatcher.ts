@@ -10,11 +10,8 @@
 
 goog.provide('goog.labs.testing.logicmatcher');
 
-
 goog.require('goog.array');
 goog.require('goog.labs.testing.Matcher');
-
-
 
 /**
  * The AllOf matcher.
@@ -26,8 +23,7 @@ goog.require('goog.labs.testing.Matcher');
  * @implements {goog.labs.testing.Matcher}
  * @final
  */
-goog.labs.testing.logicmatcher.AllOfMatcher = function(matchers) {
-  'use strict';
+goog.labs.testing.logicmatcher.AllOfMatcher = function (matchers) {
   /**
    * @type {!Array<!goog.labs.testing.Matcher>}
    * @private
@@ -35,21 +31,14 @@ goog.labs.testing.logicmatcher.AllOfMatcher = function(matchers) {
   this.matchers_ = matchers;
 };
 
-
 /**
  * Determines if all of the matchers match the input value.
  *
  * @override
  */
-goog.labs.testing.logicmatcher.AllOfMatcher.prototype.matches = function(
-    actualValue) {
-  'use strict';
-  return this.matchers_.every(function(matcher) {
-    'use strict';
-    return matcher.matches(actualValue);
-  });
+goog.labs.testing.logicmatcher.AllOfMatcher.prototype.matches = function (actualValue) {
+  return this.matchers_.every((matcher) => matcher.matches(actualValue));
 };
-
 
 /**
  * Describes why the matcher failed. The returned string is a concatenation of
@@ -57,21 +46,16 @@ goog.labs.testing.logicmatcher.AllOfMatcher.prototype.matches = function(
  *
  * @override
  */
-goog.labs.testing.logicmatcher.AllOfMatcher.prototype.describe = function(
-    actualValue) {
-  'use strict';
+goog.labs.testing.logicmatcher.AllOfMatcher.prototype.describe = function (actualValue) {
   // TODO(vbhasin) : Optimize this to remove duplication with matches ?
   var errorString = '';
-  this.matchers_.forEach(function(matcher) {
-    'use strict';
+  this.matchers_.forEach((matcher) => {
     if (!matcher.matches(actualValue)) {
       errorString += matcher.describe(actualValue) + '\n';
     }
   });
   return errorString;
 };
-
-
 
 /**
  * The AnyOf matcher.
@@ -83,8 +67,7 @@ goog.labs.testing.logicmatcher.AllOfMatcher.prototype.describe = function(
  * @implements {goog.labs.testing.Matcher}
  * @final
  */
-goog.labs.testing.logicmatcher.AnyOfMatcher = function(matchers) {
-  'use strict';
+goog.labs.testing.logicmatcher.AnyOfMatcher = function (matchers) {
   /**
    * @type {!Array<!goog.labs.testing.Matcher>}
    * @private
@@ -92,42 +75,30 @@ goog.labs.testing.logicmatcher.AnyOfMatcher = function(matchers) {
   this.matchers_ = matchers;
 };
 
-
 /**
  * Determines if any of the matchers matches the input value.
  *
  * @override
  */
-goog.labs.testing.logicmatcher.AnyOfMatcher.prototype.matches = function(
-    actualValue) {
-  'use strict';
-  return goog.array.some(this.matchers_, function(matcher) {
-    'use strict';
-    return matcher.matches(actualValue);
-  });
+goog.labs.testing.logicmatcher.AnyOfMatcher.prototype.matches = function (actualValue) {
+  return goog.array.some(this.matchers_, (matcher) => matcher.matches(actualValue));
 };
-
 
 /**
  * Describes why the matcher failed.
  *
  * @override
  */
-goog.labs.testing.logicmatcher.AnyOfMatcher.prototype.describe = function(
-    actualValue) {
-  'use strict';
+goog.labs.testing.logicmatcher.AnyOfMatcher.prototype.describe = function (actualValue) {
   // TODO(vbhasin) : Optimize this to remove duplication with matches ?
   var errorString = '';
-  this.matchers_.forEach(function(matcher) {
-    'use strict';
+  this.matchers_.forEach((matcher) => {
     if (!matcher.matches(actualValue)) {
       errorString += matcher.describe(actualValue) + '\n';
     }
   });
   return errorString;
 };
-
-
 
 /**
  * The IsNot matcher.
@@ -139,8 +110,7 @@ goog.labs.testing.logicmatcher.AnyOfMatcher.prototype.describe = function(
  * @implements {goog.labs.testing.Matcher}
  * @final
  */
-goog.labs.testing.logicmatcher.IsNotMatcher = function(matcher) {
-  'use strict';
+goog.labs.testing.logicmatcher.IsNotMatcher = function (matcher) {
   /**
    * @type {!goog.labs.testing.Matcher}
    * @private
@@ -148,30 +118,23 @@ goog.labs.testing.logicmatcher.IsNotMatcher = function(matcher) {
   this.matcher_ = matcher;
 };
 
-
 /**
  * Determines if the input value doesn't satisfy a matcher.
  *
  * @override
  */
-goog.labs.testing.logicmatcher.IsNotMatcher.prototype.matches = function(
-    actualValue) {
-  'use strict';
+goog.labs.testing.logicmatcher.IsNotMatcher.prototype.matches = function (actualValue) {
   return !this.matcher_.matches(actualValue);
 };
-
 
 /**
  * Describes why the matcher failed.
  *
  * @override
  */
-goog.labs.testing.logicmatcher.IsNotMatcher.prototype.describe = function(
-    actualValue) {
-  'use strict';
+goog.labs.testing.logicmatcher.IsNotMatcher.prototype.describe = function (actualValue) {
   return 'The following is false: ' + this.matcher_.describe(actualValue);
 };
-
 
 /**
  * Creates a matcher that will succeed only if all of the given matchers
@@ -182,12 +145,10 @@ goog.labs.testing.logicmatcher.IsNotMatcher.prototype.describe = function(
  *
  * @return {!goog.labs.testing.logicmatcher.AllOfMatcher} The AllOf matcher.
  */
-goog.labs.testing.logicmatcher.AllOfMatcher.allOf = function(var_args) {
-  'use strict';
+goog.labs.testing.logicmatcher.AllOfMatcher.allOf = (var_args) => {
   var matchers = Array.prototype.slice.call(arguments);
   return new goog.labs.testing.logicmatcher.AllOfMatcher(matchers);
 };
-
 
 /**
  * Accepts a set of matchers and returns a matcher which matches
@@ -198,12 +159,10 @@ goog.labs.testing.logicmatcher.AllOfMatcher.allOf = function(var_args) {
  *
  * @return {!goog.labs.testing.logicmatcher.AnyOfMatcher} The AnyOf matcher.
  */
-goog.labs.testing.logicmatcher.AnyOfMatcher.anyOf = function(var_args) {
-  'use strict';
+goog.labs.testing.logicmatcher.AnyOfMatcher.anyOf = (var_args) => {
   var matchers = Array.prototype.slice.call(arguments);
   return new goog.labs.testing.logicmatcher.AnyOfMatcher(matchers);
 };
-
 
 /**
  * Returns a matcher that negates the input matcher. The returned
@@ -213,7 +172,5 @@ goog.labs.testing.logicmatcher.AnyOfMatcher.anyOf = function(var_args) {
  *
  * @return {!goog.labs.testing.logicmatcher.IsNotMatcher} The IsNot matcher.
  */
-goog.labs.testing.logicmatcher.IsNotMatcher.isNot = function(matcher) {
-  'use strict';
-  return new goog.labs.testing.logicmatcher.IsNotMatcher(matcher);
-};
+goog.labs.testing.logicmatcher.IsNotMatcher.isNot = (matcher) =>
+  new goog.labs.testing.logicmatcher.IsNotMatcher(matcher);

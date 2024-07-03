@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.net.streams.JsonStreamParserTest');
-goog.setTestOnly();
 
 const JsonFuzzing = goog.require('goog.labs.testing.JsonFuzzing');
 const JsonStreamParser = goog.require('goog.net.streams.JsonStreamParser');
@@ -22,8 +21,7 @@ let debug;
  */
 function print(info) {
   if (debug) {
-    debug.append(
-        document.createElement('p'), document.createElement('p'), info);
+    debug.append(document.createElement('p'), document.createElement('p'), info);
   }
 }
 
@@ -174,7 +172,7 @@ testSuite({
    * manual runs as required.
    */
   testChunkedFuzzyMessages() {
-    const options = {jsonSize: 5, numFields: 5, arraySize: 4, maxDepth: 3};
+    const options = { jsonSize: 5, numFields: 5, arraySize: 4, maxDepth: 3 };
     const fuzzing = new JsonFuzzing(options);
 
     const data = fuzzing.newArray();
@@ -239,9 +237,11 @@ testSuite({
     assertEquals(data.length, result.length);
     data.forEach((elm, index) => {
       assertObjectEquals(
-          `${dataString}
+        `${dataString}
 @${index}`,
-          elm, result[index]);
+        elm,
+        result[index]
+      );
     });
   },
 
@@ -262,7 +262,7 @@ testSuite({
   },
 
   testDeliverMessageAsRawString() {
-    const parser = new JsonStreamParser({'deliverMessageAsRawString': true});
+    const parser = new JsonStreamParser({ deliverMessageAsRawString: true });
     const result = parser.parse(' [{"a" : "b"}, {"c" : "d"},[],{}] ');
     assertEquals(4, result.length);
     assertEquals('{"a" : "b"}', result[0]);

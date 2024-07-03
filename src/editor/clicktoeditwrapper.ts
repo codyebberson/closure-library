@@ -30,16 +30,13 @@ goog.require('goog.events.EventType');
 goog.requireType('goog.dom.AbstractRange');
 goog.requireType('goog.dom.SavedCaretRange');
 
-
-
 /**
  * Initialize the wrapper, and begin listening to mouse events immediately.
  * @param {goog.editor.Field} fieldObj The editable field being wrapped.
  * @constructor
  * @extends {goog.Disposable}
  */
-goog.editor.ClickToEditWrapper = function(fieldObj) {
-  'use strict';
+goog.editor.ClickToEditWrapper = function (fieldObj) {
   goog.Disposable.call(this);
 
   /**
@@ -54,8 +51,7 @@ goog.editor.ClickToEditWrapper = function(fieldObj) {
    * @type {goog.dom.DomHelper}
    * @private
    */
-  this.originalDomHelper_ =
-      goog.dom.getDomHelper(fieldObj.getOriginalElement());
+  this.originalDomHelper_ = goog.dom.getDomHelper(fieldObj.getOriginalElement());
 
   /**
    * @type {?goog.dom.SavedCaretRange}
@@ -90,40 +86,27 @@ goog.editor.ClickToEditWrapper = function(fieldObj) {
   }
 
   this.fieldEventHandler_
-      .
-      // Whenever the field is made editable, we need to check if there
-      // are any carets in it, and if so, use them to render the selection.
-      listen(
-          this.fieldObj_, goog.editor.Field.EventType.LOAD,
-          this.renderSelection_)
-      .
-      // Whenever the field is made uneditable, we need to set up
-      // the click-to-edit listeners.
-      listen(
-          this.fieldObj_, goog.editor.Field.EventType.UNLOAD,
-          this.enterDocument);
+    // Whenever the field is made editable, we need to check if there
+    // are any carets in it, and if so, use them to render the selection.
+    .listen(this.fieldObj_, goog.editor.Field.EventType.LOAD, this.renderSelection_)
+    // Whenever the field is made uneditable, we need to set up
+    // the click-to-edit listeners.
+    .listen(this.fieldObj_, goog.editor.Field.EventType.UNLOAD, this.enterDocument);
 };
 goog.inherits(goog.editor.ClickToEditWrapper, goog.Disposable);
 
-
-
 /** @return {goog.editor.Field} The field. */
-goog.editor.ClickToEditWrapper.prototype.getFieldObject = function() {
-  'use strict';
+goog.editor.ClickToEditWrapper.prototype.getFieldObject = function () {
   return this.fieldObj_;
 };
 
-
 /** @return {goog.dom.DomHelper} The dom helper of the uneditable element. */
-goog.editor.ClickToEditWrapper.prototype.getOriginalDomHelper = function() {
-  'use strict';
+goog.editor.ClickToEditWrapper.prototype.getOriginalDomHelper = function () {
   return this.originalDomHelper_;
 };
 
-
 /** @override */
-goog.editor.ClickToEditWrapper.prototype.disposeInternal = function() {
-  'use strict';
+goog.editor.ClickToEditWrapper.prototype.disposeInternal = function () {
   goog.editor.ClickToEditWrapper.base(this, 'disposeInternal');
   this.exitDocument();
 
@@ -138,14 +121,12 @@ goog.editor.ClickToEditWrapper.prototype.disposeInternal = function() {
   delete this.mouseEventHandler_;
 };
 
-
 /**
  * Initialize listeners when the uneditable field is added to the document.
  * Also sets up lorem ipsum text.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.editor.ClickToEditWrapper.prototype.enterDocument = function() {
-  'use strict';
+goog.editor.ClickToEditWrapper.prototype.enterDocument = function () {
   if (this.isInDocument_) {
     return;
   }
@@ -168,24 +149,21 @@ goog.editor.ClickToEditWrapper.prototype.enterDocument = function() {
   /** @suppress {strictMissingProperties} Added to tighten compiler checks */
   this.savedAnchorClicked_ = null;
   this.mouseEventHandler_
-      .listen(field, goog.events.EventType.MOUSEUP, this.handleMouseUp_)
-      .listen(field, goog.events.EventType.CLICK, this.handleClick_);
+    .listen(field, goog.events.EventType.MOUSEUP, this.handleMouseUp_)
+    .listen(field, goog.events.EventType.CLICK, this.handleClick_);
 
   // manage lorem ipsum text, if necessary
   this.fieldObj_.execCommand(goog.editor.Command.UPDATE_LOREM);
 };
 
-
 /**
  * Destroy listeners when the field is removed from the document.
  */
-goog.editor.ClickToEditWrapper.prototype.exitDocument = function() {
-  'use strict';
+goog.editor.ClickToEditWrapper.prototype.exitDocument = function () {
   this.mouseEventHandler_.removeAll();
   /** @suppress {strictMissingProperties} Added to tighten compiler checks */
   this.isInDocument_ = false;
 };
-
 
 /**
  * Returns the uneditable field element if the field is not yet editable
@@ -194,12 +172,11 @@ goog.editor.ClickToEditWrapper.prototype.exitDocument = function() {
  * EditableField.getElement()).
  * @return {Element} The element containing the editable field contents.
  */
-goog.editor.ClickToEditWrapper.prototype.getElement = function() {
-  'use strict';
-  return this.fieldObj_.isLoaded() ? this.fieldObj_.getElement() :
-                                     this.fieldObj_.getOriginalElement();
+goog.editor.ClickToEditWrapper.prototype.getElement = function () {
+  return this.fieldObj_.isLoaded()
+    ? this.fieldObj_.getElement()
+    : this.fieldObj_.getOriginalElement();
 };
-
 
 /**
  * True if a mouse event should be handled, false if it should be ignored.
@@ -207,24 +184,22 @@ goog.editor.ClickToEditWrapper.prototype.getElement = function() {
  * @return {boolean} Wether or not this mouse event should be handled.
  * @private
  */
-goog.editor.ClickToEditWrapper.prototype.shouldHandleMouseEvent_ = function(e) {
-  'use strict';
-  return e.isButton(goog.events.BrowserEvent.MouseButton.LEFT) &&
-      !(e.shiftKey || e.ctrlKey || e.altKey || e.metaKey);
-};
-
+goog.editor.ClickToEditWrapper.prototype.shouldHandleMouseEvent_ = (e) =>
+  e.isButton(goog.events.BrowserEvent.MouseButton.LEFT) &&
+  !(e.shiftKey || e.ctrlKey || e.altKey || e.metaKey);
 
 /**
  * Handle mouse click events on the field.
  * @param {goog.events.BrowserEvent} e The click event.
  * @private
  */
-goog.editor.ClickToEditWrapper.prototype.handleClick_ = function(e) {
-  'use strict';
+goog.editor.ClickToEditWrapper.prototype.handleClick_ = function (e) {
   // If the user clicked on a link in an uneditable field,
   // we want to cancel the click.
   var anchorAncestor = goog.dom.getAncestorByTagNameAndClass(
-      /** @type {Node} */ (e.target), goog.dom.TagName.A);
+    /** @type {Node} */ (e.target),
+    goog.dom.TagName.A
+  );
   if (anchorAncestor) {
     e.preventDefault();
 
@@ -237,14 +212,12 @@ goog.editor.ClickToEditWrapper.prototype.handleClick_ = function(e) {
   }
 };
 
-
 /**
  * Handle a mouse up event on the field.
  * @param {goog.events.BrowserEvent} e The mouseup event.
  * @private
  */
-goog.editor.ClickToEditWrapper.prototype.handleMouseUp_ = function(e) {
-  'use strict';
+goog.editor.ClickToEditWrapper.prototype.handleMouseUp_ = function (e) {
   // Only respond to the left mouse button.
   if (this.shouldHandleMouseEvent_(e)) {
     // We need to get the selection when the user mouses up, but the
@@ -254,14 +227,12 @@ goog.editor.ClickToEditWrapper.prototype.handleMouseUp_ = function(e) {
   }
 };
 
-
 /**
  * A helper function for handleMouseUp_ -- does the actual work
  * when the event is finished propagating.
  * @private
  */
-goog.editor.ClickToEditWrapper.prototype.finishMouseUp_ = function() {
-  'use strict';
+goog.editor.ClickToEditWrapper.prototype.finishMouseUp_ = function () {
   // Make sure that the field is still not editable.
   if (!this.fieldObj_.isLoaded()) {
     if (this.savedCaretRange_) {
@@ -285,14 +256,12 @@ goog.editor.ClickToEditWrapper.prototype.finishMouseUp_ = function() {
   this.savedAnchorClicked_ = null;
 };
 
-
 /**
  * Ensure that the field is editable. If the field is not editable,
  * make it so, and record the fact that it was done by a user mouse event.
  * @private
  */
-goog.editor.ClickToEditWrapper.prototype.ensureFieldEditable_ = function() {
-  'use strict';
+goog.editor.ClickToEditWrapper.prototype.ensureFieldEditable_ = function () {
   if (!this.fieldObj_.isLoaded()) {
     /** @suppress {strictMissingProperties} Added to tighten compiler checks */
     this.mouseEventTriggeredLoad_ = true;
@@ -300,20 +269,19 @@ goog.editor.ClickToEditWrapper.prototype.ensureFieldEditable_ = function() {
   }
 };
 
-
 /**
  * Once the field has loaded in an iframe, re-create the selection
  * as marked by the carets.
  * @private
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.editor.ClickToEditWrapper.prototype.renderSelection_ = function() {
-  'use strict';
+goog.editor.ClickToEditWrapper.prototype.renderSelection_ = function () {
   if (this.savedCaretRange_) {
     // Make sure that the restoration document is inside the iframe
     // if we're using one.
     this.savedCaretRange_.setRestorationDocument(
-        this.fieldObj_.getEditableDomHelper().getDocument());
+      this.fieldObj_.getEditableDomHelper().getDocument()
+    );
 
     var startCaret = this.savedCaretRange_.getCaret(true);
     var endCaret = this.savedCaretRange_.getCaret(false);
@@ -350,32 +318,26 @@ goog.editor.ClickToEditWrapper.prototype.renderSelection_ = function() {
   this.mouseEventTriggeredLoad_ = false;
 };
 
-
 /**
  * Focus on the field object.
  * @param {goog.editor.Field} field The field to focus.
  * @protected
  */
-goog.editor.ClickToEditWrapper.prototype.focusOnFieldObj = function(field) {
-  'use strict';
+goog.editor.ClickToEditWrapper.prototype.focusOnFieldObj = (field) => {
   field.focusAndPlaceCursorAtStart();
 };
-
 
 /**
  * Make the field object editable.
  * @param {goog.editor.Field} field The field to make editable.
  * @protected
  */
-goog.editor.ClickToEditWrapper.prototype.makeFieldEditable = function(field) {
-  'use strict';
+goog.editor.ClickToEditWrapper.prototype.makeFieldEditable = (field) => {
   field.makeEditable();
 };
 
-
 //================================================================
 // Caret-handling methods
-
 
 /**
  * Gets a saved caret range for the given range.
@@ -384,11 +346,8 @@ goog.editor.ClickToEditWrapper.prototype.makeFieldEditable = function(field) {
  *    if the range wrapper was null.
  * @private
  */
-goog.editor.ClickToEditWrapper.createCaretRange_ = function(range) {
-  'use strict';
-  return range && goog.editor.range.saveUsingNormalizedCarets(range);
-};
-
+goog.editor.ClickToEditWrapper.createCaretRange_ = (range) =>
+  range && goog.editor.range.saveUsingNormalizedCarets(range);
 
 /**
  * Inserts the carets, given the current selection.
@@ -397,8 +356,7 @@ goog.editor.ClickToEditWrapper.createCaretRange_ = function(range) {
  * a selection with the start and end at the same point.
  * @private
  */
-goog.editor.ClickToEditWrapper.prototype.insertCarets_ = function() {
-  'use strict';
+goog.editor.ClickToEditWrapper.prototype.insertCarets_ = function () {
   var fieldElement = this.fieldObj_.getOriginalElement();
 
   this.savedCaretRange_ = null;
@@ -406,8 +364,7 @@ goog.editor.ClickToEditWrapper.prototype.insertCarets_ = function() {
   if (goog.dom.Range.hasSelection(originalWindow)) {
     var range = goog.dom.Range.createFromWindow(originalWindow);
     range = range && goog.editor.range.narrow(range, fieldElement);
-    this.savedCaretRange_ =
-        goog.editor.ClickToEditWrapper.createCaretRange_(range);
+    this.savedCaretRange_ = goog.editor.ClickToEditWrapper.createCaretRange_(range);
   }
 
   if (!this.savedCaretRange_) {
@@ -419,8 +376,7 @@ goog.editor.ClickToEditWrapper.prototype.insertCarets_ = function() {
     // document.activeElement. In FF, we have to be more hacky.
     var specialNodeClicked;
     if (goog.editor.BrowserFeature.HAS_ACTIVE_ELEMENT) {
-      specialNodeClicked =
-          goog.dom.getActiveElement(this.originalDomHelper_.getDocument());
+      specialNodeClicked = goog.dom.getActiveElement(this.originalDomHelper_.getDocument());
     } else {
       /**
        * @suppress {strictMissingProperties} Added to tighten compiler checks
@@ -428,12 +384,8 @@ goog.editor.ClickToEditWrapper.prototype.insertCarets_ = function() {
       specialNodeClicked = this.savedAnchorClicked_;
     }
 
-    var isFieldElement = function(node) {
-      'use strict';
-      return node == fieldElement;
-    };
-    if (specialNodeClicked &&
-        goog.dom.getAncestor(specialNodeClicked, isFieldElement, true)) {
+    var isFieldElement = (node) => node == fieldElement;
+    if (specialNodeClicked && goog.dom.getAncestor(specialNodeClicked, isFieldElement, true)) {
       // Insert the cursor at the beginning of the active element to be
       // consistent with the behavior in FF1.5, where clicking on a
       // link makes the current selection equal to the cursor position
@@ -441,8 +393,8 @@ goog.editor.ClickToEditWrapper.prototype.insertCarets_ = function() {
       //
       // TODO(nicksantos): Is there a way to more accurately place the cursor?
       this.savedCaretRange_ = goog.editor.ClickToEditWrapper.createCaretRange_(
-          goog.dom.Range.createFromNodes(
-              specialNodeClicked, 0, specialNodeClicked, 0));
+        goog.dom.Range.createFromNodes(specialNodeClicked, 0, specialNodeClicked, 0)
+      );
     }
   }
 };

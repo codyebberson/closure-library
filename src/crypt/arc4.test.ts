@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.crypt.Arc4Test');
-goog.setTestOnly();
 
 const Arc4 = goog.require('goog.crypt.Arc4');
 const googArray = goog.require('goog.array');
@@ -21,7 +20,7 @@ testSuite({
     arc4.setKey(key);
     arc4.crypt(byteArray);
 
-    assertArrayEquals(byteArray, [0x51, 0xBB, 0xDD, 0x95, 0x9B, 0x42, 0x34]);
+    assertArrayEquals(byteArray, [0x51, 0xbb, 0xdd, 0x95, 0x9b, 0x42, 0x34]);
 
     // The same key and crypt call should unencrypt the data back to its
     // original state

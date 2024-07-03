@@ -17,28 +17,24 @@ goog.require('goog.dom.safe');
 goog.require('goog.html.legacyconversions');
 goog.require('goog.userAgent');
 
+/**
+ * Max XML size for MSXML2.  Used to prevent potential DoS attacks.
+ * @type {number}
+ */
+goog.dom.xml.MAX_XML_SIZE_KB = 2 * 1024; // In kB
 
 /**
  * Max XML size for MSXML2.  Used to prevent potential DoS attacks.
  * @type {number}
  */
-goog.dom.xml.MAX_XML_SIZE_KB = 2 * 1024;  // In kB
-
-
-/**
- * Max XML size for MSXML2.  Used to prevent potential DoS attacks.
- * @type {number}
- */
-goog.dom.xml.MAX_ELEMENT_DEPTH = 256;  // Same default as MSXML6.
-
+goog.dom.xml.MAX_ELEMENT_DEPTH = 256; // Same default as MSXML6.
 
 /**
  * Check for ActiveXObject support by the browser.
  * @return {boolean} true if browser has ActiveXObject support.
  * @private
  */
-goog.dom.xml.hasActiveXObjectSupport_ = function() {
-  'use strict';
+goog.dom.xml.hasActiveXObjectSupport_ = () => {
   if (!goog.userAgent.IE) {
     // Avoid raising useless exception in case code is not compiled
     // and browser is not MSIE.
@@ -56,15 +52,12 @@ goog.dom.xml.hasActiveXObjectSupport_ = function() {
   }
 };
 
-
 /**
  * True if browser has ActiveXObject support.
  * Possible override if this test become wrong in coming IE versions.
  * @type {boolean}
  */
-goog.dom.xml.ACTIVEX_SUPPORT =
-    goog.userAgent.IE && goog.dom.xml.hasActiveXObjectSupport_();
-
+goog.dom.xml.ACTIVEX_SUPPORT = goog.userAgent.IE && goog.dom.xml.hasActiveXObjectSupport_();
 
 /**
  * Creates an XML document appropriate for the current JS runtime
@@ -78,33 +71,37 @@ goog.dom.xml.ACTIVEX_SUPPORT =
  * @throws {Error} if browser does not support creating new documents or
  * namespace is provided without a root tag name.
  */
-goog.dom.xml.createDocument = function(
-    opt_rootTagName, opt_namespaceUri, opt_preferActiveX) {
-  'use strict';
+goog.dom.xml.createDocument = (opt_rootTagName, opt_namespaceUri, opt_preferActiveX) => {
   if (opt_namespaceUri && !opt_rootTagName) {
-    throw new Error('Can\'t create document with namespace and no root tag');
+    throw new Error("Can't create document with namespace and no root tag");
   }
   // If document.implementation.createDocument is available and they haven't
   // explicitly opted to use ActiveXObject when possible.
-  if (document.implementation && document.implementation.createDocument &&
-      !(goog.dom.xml.ACTIVEX_SUPPORT && opt_preferActiveX)) {
+  if (
+    document.implementation &&
+    document.implementation.createDocument &&
+    !(goog.dom.xml.ACTIVEX_SUPPORT && opt_preferActiveX)
+  ) {
     return document.implementation.createDocument(
-        opt_namespaceUri || '', opt_rootTagName || '', null);
+      opt_namespaceUri || '',
+      opt_rootTagName || '',
+      null
+    );
   } else if (goog.dom.xml.ACTIVEX_SUPPORT) {
     var doc = goog.dom.xml.createMsXmlDocument_();
     if (doc) {
       if (opt_rootTagName) {
         doc.appendChild(
-            /** @type {!Node} */ (doc.createNode(
-                goog.dom.NodeType.ELEMENT, opt_rootTagName,
-                opt_namespaceUri || '')));
+          /** @type {!Node} */ (
+            doc.createNode(goog.dom.NodeType.ELEMENT, opt_rootTagName, opt_namespaceUri || '')
+          )
+        );
       }
       return doc;
     }
   }
   throw new Error('Your browser does not support creating new documents');
 };
-
 
 /**
  * Creates an XML document from a string
@@ -116,13 +113,13 @@ goog.dom.xml.createDocument = function(
  * @return {Document} XML document from the text.
  * @throws {Error} if browser does not support loading XML documents.
  */
-goog.dom.xml.loadXml = function(xml, opt_preferActiveX) {
-  'use strict';
-  if (typeof DOMParser != 'undefined' &&
-      !(goog.dom.xml.ACTIVEX_SUPPORT && opt_preferActiveX)) {
+goog.dom.xml.loadXml = (xml, opt_preferActiveX) => {
+  if (typeof DOMParser != 'undefined' && !(goog.dom.xml.ACTIVEX_SUPPORT && opt_preferActiveX)) {
     return goog.dom.safe.parseFromString(
-        new DOMParser(), goog.html.legacyconversions.safeHtmlFromString(xml),
-        'application/xml');
+      new DOMParser(),
+      goog.html.legacyconversions.safeHtmlFromString(xml),
+      'application/xml'
+    );
   } else if (goog.dom.xml.ACTIVEX_SUPPORT) {
     var doc = goog.dom.xml.createMsXmlDocument_();
     doc.loadXML(xml);
@@ -131,15 +128,13 @@ goog.dom.xml.loadXml = function(xml, opt_preferActiveX) {
   throw new Error('Your browser does not support loading xml documents');
 };
 
-
 /**
  * Serializes an XML document or subtree to string.
  * @param {Document|Element} xml The document or the root node of the subtree.
  * @return {string} The serialized XML.
  * @throws {Error} if browser does not support XML serialization.
  */
-goog.dom.xml.serialize = function(xml) {
-  'use strict';
+goog.dom.xml.serialize = (xml) => {
   // Compatible with IE/ActiveXObject.
   var text = xml.xml;
   if (text) {
@@ -152,15 +147,13 @@ goog.dom.xml.serialize = function(xml) {
   throw new Error('Your browser does not support serializing XML documents');
 };
 
-
 /**
  * Selects a single node using an Xpath expression and a root node
  * @param {Node} node The root node.
  * @param {string} path Xpath selector.
  * @return {Node} The selected node, or null if no matching node.
  */
-goog.dom.xml.selectSingleNode = function(node, path) {
-  'use strict';
+goog.dom.xml.selectSingleNode = (node, path) => {
   if (typeof node.selectSingleNode != 'undefined') {
     var doc = goog.dom.getOwnerDocument(node);
     if (typeof doc.setProperty != 'undefined') {
@@ -170,8 +163,7 @@ goog.dom.xml.selectSingleNode = function(node, path) {
   } else if (document.implementation.hasFeature('XPath', '3.0')) {
     var doc = goog.dom.getOwnerDocument(node);
     var resolver = doc.createNSResolver(doc.documentElement);
-    var result = doc.evaluate(
-        path, node, resolver, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+    var result = doc.evaluate(path, node, resolver, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
     return result.singleNodeValue;
   }
   // This browser does not support xpath for the given node. If IE, ensure XML
@@ -180,7 +172,6 @@ goog.dom.xml.selectSingleNode = function(node, path) {
   return null;
 };
 
-
 /**
  * Selects multiple nodes using an Xpath expression and a root node
  * @param {Node} node The root node.
@@ -188,8 +179,7 @@ goog.dom.xml.selectSingleNode = function(node, path) {
  * @return {(!NodeList<!Node>|!Array<!Node>)} The selected nodes, or empty array
  *     if no matching nodes.
  */
-goog.dom.xml.selectNodes = function(node, path) {
-  'use strict';
+goog.dom.xml.selectNodes = (node, path) => {
   if (typeof node.selectNodes != 'undefined') {
     var doc = goog.dom.getOwnerDocument(node);
     if (typeof doc.setProperty != 'undefined') {
@@ -199,8 +189,7 @@ goog.dom.xml.selectNodes = function(node, path) {
   } else if (document.implementation.hasFeature('XPath', '3.0')) {
     var doc = goog.dom.getOwnerDocument(node);
     var resolver = doc.createNSResolver(doc.documentElement);
-    var nodes = doc.evaluate(
-        path, node, resolver, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+    var nodes = doc.evaluate(path, node, resolver, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
     var results = [];
     var count = nodes.snapshotLength;
     for (var i = 0; i < count; i++) {
@@ -215,7 +204,6 @@ goog.dom.xml.selectNodes = function(node, path) {
   }
 };
 
-
 /**
  * Sets multiple attributes on an element. Differs from goog.dom.setProperties
  * in that it exclusively uses the element's setAttributes method. Use this
@@ -224,8 +212,7 @@ goog.dom.xml.selectNodes = function(node, path) {
  * @param {!Element} element XML or DOM element to set attributes on.
  * @param {!Object<string, string>} attributes Map of property:value pairs.
  */
-goog.dom.xml.setAttributes = function(element, attributes) {
-  'use strict';
+goog.dom.xml.setAttributes = (element, attributes) => {
   for (var key in attributes) {
     if (attributes.hasOwnProperty(key)) {
       element.setAttribute(key, attributes[key]);
@@ -233,14 +220,12 @@ goog.dom.xml.setAttributes = function(element, attributes) {
   }
 };
 
-
 /**
  * Creates an instance of the MSXML2.DOMDocument.
  * @return {!XMLDOMDocument} The new document.
  * @private
  */
-goog.dom.xml.createMsXmlDocument_ = function() {
-  'use strict';
+goog.dom.xml.createMsXmlDocument_ = () => {
   var doc = new ActiveXObject('MSXML2.DOMDocument');
   if (doc) {
     // Prevent potential vulnerabilities exposed by MSXML2, see

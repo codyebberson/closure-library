@@ -13,32 +13,20 @@ goog.provide('goog.labs.testing.objectmatcher');
 
 goog.require('goog.labs.testing.Matcher');
 
-
-
 /**
  * Matches any object value.
  *
  * @constructor @struct @implements {goog.labs.testing.Matcher} @final
  */
-goog.labs.testing.objectmatcher.AnyObjectMatcher = function() {};
-
-
-/** @override */
-goog.labs.testing.objectmatcher.AnyObjectMatcher.prototype.matches = function(
-    actualValue) {
-  'use strict';
-  return goog.isObject(actualValue);
-};
-
+goog.labs.testing.objectmatcher.AnyObjectMatcher = () => {};
 
 /** @override */
-goog.labs.testing.objectmatcher.AnyObjectMatcher.prototype.describe = function(
-    actualValue) {
-  'use strict';
-  return '<' + actualValue + '> is not an object';
-};
+goog.labs.testing.objectmatcher.AnyObjectMatcher.prototype.matches = (actualValue) =>
+  goog.isObject(actualValue);
 
-
+/** @override */
+goog.labs.testing.objectmatcher.AnyObjectMatcher.prototype.describe = (actualValue) =>
+  '<' + actualValue + '> is not an object';
 
 /**
  * The Equals matcher.
@@ -50,8 +38,7 @@ goog.labs.testing.objectmatcher.AnyObjectMatcher.prototype.describe = function(
  * @implements {goog.labs.testing.Matcher}
  * @final
  */
-goog.labs.testing.objectmatcher.ObjectEqualsMatcher = function(expectedObject) {
-  'use strict';
+goog.labs.testing.objectmatcher.ObjectEqualsMatcher = function (expectedObject) {
   /**
    * @type {!Object}
    * @private
@@ -59,29 +46,20 @@ goog.labs.testing.objectmatcher.ObjectEqualsMatcher = function(expectedObject) {
   this.object_ = expectedObject;
 };
 
-
 /**
  * Determines if two objects are the same.
  *
  * @override
  */
-goog.labs.testing.objectmatcher.ObjectEqualsMatcher.prototype.matches =
-    function(actualObject) {
-  'use strict';
+goog.labs.testing.objectmatcher.ObjectEqualsMatcher.prototype.matches = function (actualObject) {
   return actualObject === this.object_;
 };
-
 
 /**
  * @override
  */
-goog.labs.testing.objectmatcher.ObjectEqualsMatcher.prototype.describe =
-    function(actualObject) {
-  'use strict';
-  return 'Input object is not the same as the expected object.';
-};
-
-
+goog.labs.testing.objectmatcher.ObjectEqualsMatcher.prototype.describe = (actualObject) =>
+  'Input object is not the same as the expected object.';
 
 /**
  * The HasProperty matcher.
@@ -93,8 +71,7 @@ goog.labs.testing.objectmatcher.ObjectEqualsMatcher.prototype.describe =
  * @implements {goog.labs.testing.Matcher}
  * @final
  */
-goog.labs.testing.objectmatcher.HasPropertyMatcher = function(property) {
-  'use strict';
+goog.labs.testing.objectmatcher.HasPropertyMatcher = function (property) {
   /**
    * @type {string}
    * @private
@@ -102,29 +79,21 @@ goog.labs.testing.objectmatcher.HasPropertyMatcher = function(property) {
   this.property_ = property;
 };
 
-
 /**
  * Determines if an object has a property.
  *
  * @override
  */
-goog.labs.testing.objectmatcher.HasPropertyMatcher.prototype.matches = function(
-    actualObject) {
-  'use strict';
+goog.labs.testing.objectmatcher.HasPropertyMatcher.prototype.matches = function (actualObject) {
   return this.property_ in actualObject;
 };
-
 
 /**
  * @override
  */
-goog.labs.testing.objectmatcher.HasPropertyMatcher.prototype.describe =
-    function(actualObject) {
-  'use strict';
+goog.labs.testing.objectmatcher.HasPropertyMatcher.prototype.describe = function (actualObject) {
   return 'Object does not have property: ' + this.property_;
 };
-
-
 
 /**
  * The InstanceOf matcher.
@@ -136,8 +105,7 @@ goog.labs.testing.objectmatcher.HasPropertyMatcher.prototype.describe =
  * @implements {goog.labs.testing.Matcher}
  * @final
  */
-goog.labs.testing.objectmatcher.InstanceOfMatcher = function(object) {
-  'use strict';
+goog.labs.testing.objectmatcher.InstanceOfMatcher = function (object) {
   /**
    * @type {!Object}
    * @private
@@ -145,29 +113,20 @@ goog.labs.testing.objectmatcher.InstanceOfMatcher = function(object) {
   this.object_ = object;
 };
 
-
 /**
  * Determines if an object is an instance of another object.
  *
  * @override
  */
-goog.labs.testing.objectmatcher.InstanceOfMatcher.prototype.matches = function(
-    actualObject) {
-  'use strict';
+goog.labs.testing.objectmatcher.InstanceOfMatcher.prototype.matches = function (actualObject) {
   return actualObject instanceof this.object_;
 };
-
 
 /**
  * @override
  */
-goog.labs.testing.objectmatcher.InstanceOfMatcher.prototype.describe = function(
-    actualObject) {
-  'use strict';
-  return 'Input object is not an instance of the expected object';
-};
-
-
+goog.labs.testing.objectmatcher.InstanceOfMatcher.prototype.describe = (actualObject) =>
+  'Input object is not an instance of the expected object';
 
 /**
  * The IsNullOrUndefined matcher.
@@ -177,31 +136,21 @@ goog.labs.testing.objectmatcher.InstanceOfMatcher.prototype.describe = function(
  * @implements {goog.labs.testing.Matcher}
  * @final
  */
-goog.labs.testing.objectmatcher.IsNullOrUndefinedMatcher = function() {};
-
+goog.labs.testing.objectmatcher.IsNullOrUndefinedMatcher = () => {};
 
 /**
  * Determines if input value is null or undefined.
  *
  * @override
  */
-goog.labs.testing.objectmatcher.IsNullOrUndefinedMatcher.prototype.matches =
-    function(actualValue) {
-  'use strict';
-  return actualValue == null;
-};
-
+goog.labs.testing.objectmatcher.IsNullOrUndefinedMatcher.prototype.matches = (actualValue) =>
+  actualValue == null;
 
 /**
  * @override
  */
-goog.labs.testing.objectmatcher.IsNullOrUndefinedMatcher.prototype.describe =
-    function(actualValue) {
-  'use strict';
-  return actualValue + ' is not null or undefined.';
-};
-
-
+goog.labs.testing.objectmatcher.IsNullOrUndefinedMatcher.prototype.describe = (actualValue) =>
+  actualValue + ' is not null or undefined.';
 
 /**
  * The IsNull matcher.
@@ -211,31 +160,21 @@ goog.labs.testing.objectmatcher.IsNullOrUndefinedMatcher.prototype.describe =
  * @implements {goog.labs.testing.Matcher}
  * @final
  */
-goog.labs.testing.objectmatcher.IsNullMatcher = function() {};
-
+goog.labs.testing.objectmatcher.IsNullMatcher = () => {};
 
 /**
  * Determines if input value is null.
  *
  * @override
  */
-goog.labs.testing.objectmatcher.IsNullMatcher.prototype.matches = function(
-    actualValue) {
-  'use strict';
-  return actualValue === null;
-};
-
+goog.labs.testing.objectmatcher.IsNullMatcher.prototype.matches = (actualValue) =>
+  actualValue === null;
 
 /**
  * @override
  */
-goog.labs.testing.objectmatcher.IsNullMatcher.prototype.describe = function(
-    actualValue) {
-  'use strict';
-  return actualValue + ' is not null.';
-};
-
-
+goog.labs.testing.objectmatcher.IsNullMatcher.prototype.describe = (actualValue) =>
+  actualValue + ' is not null.';
 
 /**
  * The IsUndefined matcher.
@@ -245,37 +184,25 @@ goog.labs.testing.objectmatcher.IsNullMatcher.prototype.describe = function(
  * @implements {goog.labs.testing.Matcher}
  * @final
  */
-goog.labs.testing.objectmatcher.IsUndefinedMatcher = function() {};
-
+goog.labs.testing.objectmatcher.IsUndefinedMatcher = () => {};
 
 /**
  * Determines if input value is undefined.
  *
  * @override
  */
-goog.labs.testing.objectmatcher.IsUndefinedMatcher.prototype.matches = function(
-    actualValue) {
-  'use strict';
-  return actualValue === undefined;
-};
-
+goog.labs.testing.objectmatcher.IsUndefinedMatcher.prototype.matches = (actualValue) =>
+  actualValue === undefined;
 
 /**
  * @override
  */
-goog.labs.testing.objectmatcher.IsUndefinedMatcher.prototype.describe =
-    function(actualValue) {
-  'use strict';
-  return actualValue + ' is not undefined.';
-};
-
+goog.labs.testing.objectmatcher.IsUndefinedMatcher.prototype.describe = (actualValue) =>
+  actualValue + ' is not undefined.';
 
 /** @return {!goog.labs.testing.objectmatcher.AnyObjectMatcher} */
-goog.labs.testing.objectmatcher.AnyObjectMatcher.anyObject = function() {
-  'use strict';
-  return new goog.labs.testing.objectmatcher.AnyObjectMatcher();
-};
-
+goog.labs.testing.objectmatcher.AnyObjectMatcher.anyObject = () =>
+  new goog.labs.testing.objectmatcher.AnyObjectMatcher();
 
 /**
  * Returns a matcher that matches objects that are equal to the input object.
@@ -287,12 +214,8 @@ goog.labs.testing.objectmatcher.AnyObjectMatcher.anyObject = function() {
  * @return {!goog.labs.testing.objectmatcher.ObjectEqualsMatcher} A
  *     ObjectEqualsMatcher.
  */
-goog.labs.testing.objectmatcher.ObjectEqualsMatcher.equalsObject = function(
-    object) {
-  'use strict';
-  return new goog.labs.testing.objectmatcher.ObjectEqualsMatcher(object);
-};
-
+goog.labs.testing.objectmatcher.ObjectEqualsMatcher.equalsObject = (object) =>
+  new goog.labs.testing.objectmatcher.ObjectEqualsMatcher(object);
 
 /**
  * Returns a matcher that matches objects that contain the input property.
@@ -302,12 +225,8 @@ goog.labs.testing.objectmatcher.ObjectEqualsMatcher.equalsObject = function(
  * @return {!goog.labs.testing.objectmatcher.HasPropertyMatcher} A
  *     HasPropertyMatcher.
  */
-goog.labs.testing.objectmatcher.HasPropertyMatcher.hasProperty = function(
-    property) {
-  'use strict';
-  return new goog.labs.testing.objectmatcher.HasPropertyMatcher(property);
-};
-
+goog.labs.testing.objectmatcher.HasPropertyMatcher.hasProperty = (property) =>
+  new goog.labs.testing.objectmatcher.HasPropertyMatcher(property);
 
 /**
  * Returns a matcher that matches instances of the input class.
@@ -317,23 +236,16 @@ goog.labs.testing.objectmatcher.HasPropertyMatcher.hasProperty = function(
  * @return {!goog.labs.testing.objectmatcher.InstanceOfMatcher} A
  *     InstanceOfMatcher.
  */
-goog.labs.testing.objectmatcher.InstanceOfMatcher.instanceOfClass = function(
-    object) {
-  'use strict';
-  return new goog.labs.testing.objectmatcher.InstanceOfMatcher(object);
-};
-
+goog.labs.testing.objectmatcher.InstanceOfMatcher.instanceOfClass = (object) =>
+  new goog.labs.testing.objectmatcher.InstanceOfMatcher(object);
 
 /**
  * Returns a matcher that matches all null values.
  *
  * @return {!goog.labs.testing.objectmatcher.IsNullMatcher} A IsNullMatcher.
  */
-goog.labs.testing.objectmatcher.IsNullMatcher.isNull = function() {
-  'use strict';
-  return new goog.labs.testing.objectmatcher.IsNullMatcher();
-};
-
+goog.labs.testing.objectmatcher.IsNullMatcher.isNull = () =>
+  new goog.labs.testing.objectmatcher.IsNullMatcher();
 
 /**
  * Returns a matcher that matches all null and undefined values.
@@ -341,12 +253,8 @@ goog.labs.testing.objectmatcher.IsNullMatcher.isNull = function() {
  * @return {!goog.labs.testing.objectmatcher.IsNullOrUndefinedMatcher} A
  *     IsNullOrUndefinedMatcher.
  */
-goog.labs.testing.objectmatcher.IsNullOrUndefinedMatcher.isNullOrUndefined =
-    function() {
-  'use strict';
-  return new goog.labs.testing.objectmatcher.IsNullOrUndefinedMatcher();
-};
-
+goog.labs.testing.objectmatcher.IsNullOrUndefinedMatcher.isNullOrUndefined = () =>
+  new goog.labs.testing.objectmatcher.IsNullOrUndefinedMatcher();
 
 /**
  * Returns a matcher that matches undefined values.
@@ -354,7 +262,5 @@ goog.labs.testing.objectmatcher.IsNullOrUndefinedMatcher.isNullOrUndefined =
  * @return {!goog.labs.testing.objectmatcher.IsUndefinedMatcher} A
  *     IsUndefinedMatcher.
  */
-goog.labs.testing.objectmatcher.IsUndefinedMatcher.isUndefined = function() {
-  'use strict';
-  return new goog.labs.testing.objectmatcher.IsUndefinedMatcher();
-};
+goog.labs.testing.objectmatcher.IsUndefinedMatcher.isUndefined = () =>
+  new goog.labs.testing.objectmatcher.IsUndefinedMatcher();

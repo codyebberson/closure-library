@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.fs.FileWriterTest');
-goog.setTestOnly();
 
 const EventObserver = goog.require('goog.testing.events.EventObserver');
 const FsBlob = goog.require('goog.testing.fs.Blob');
@@ -66,8 +65,7 @@ testSuite({
     // Temporarily install the MockClock to get predictable file modified times.
     mockClock = new MockClock(true);
     const fs = new FsFileSystem();
-    const fileEntry =
-        fs.getRoot().createDirectorySync('foo').createFileSync('bar');
+    const fileEntry = fs.getRoot().createDirectorySync('foo').createFileSync('bar');
     mockClock.uninstall();
 
     file = fileEntry.fileSync();
@@ -96,43 +94,44 @@ testSuite({
     assertPositionAndLength(0, 0, writer);
     assertEquals(ReadyState.WRITING, writer.getReadyState());
 
-    promise =
-        promise
-            .then(() => {
-              assertEquals('hello', file.toString());
-              assertPositionAndLength(5, 5, writer);
-              assertLastModified(3, file);
+    promise = promise
+      .then(() => {
+        assertEquals('hello', file.toString());
+        assertPositionAndLength(5, 5, writer);
+        assertLastModified(3, file);
 
-              assertEquals(ReadyState.DONE, writer.getReadyState());
-              assertArrayEquals(
-                  [EventType.WRITE_START, EventType.WRITE, EventType.WRITE_END],
-                  googArray.map(observer.getEvents(), (e) => e.type));
+        assertEquals(ReadyState.DONE, writer.getReadyState());
+        assertArrayEquals(
+          [EventType.WRITE_START, EventType.WRITE, EventType.WRITE_END],
+          googArray.map(observer.getEvents(), (e) => e.type)
+        );
 
-              const promise = writeString(writer, ' world');
-              assertEquals(ReadyState.WRITING, writer.getReadyState());
-              mockClock.tick();
-              return promise;
-            })
-            .then(() => {
-              assertEquals('hello world', file.toString());
-              assertPositionAndLength(11, 11, writer);
-              assertLastModified(4, file);
+        const promise = writeString(writer, ' world');
+        assertEquals(ReadyState.WRITING, writer.getReadyState());
+        mockClock.tick();
+        return promise;
+      })
+      .then(() => {
+        assertEquals('hello world', file.toString());
+        assertPositionAndLength(11, 11, writer);
+        assertLastModified(4, file);
 
-              assertEquals(ReadyState.DONE, writer.getReadyState());
-              assertArrayEquals(
-                  [
-                    EventType.WRITE_START,
-                    EventType.WRITE,
-                    EventType.WRITE_END,
-                    EventType.WRITE_START,
-                    EventType.WRITE,
-                    EventType.WRITE_END,
-                  ],
-                  googArray.map(observer.getEvents(), (e) => e.type));
-            })
-            .thenAlways(() => {
-              mockClock.uninstall();
-            });
+        assertEquals(ReadyState.DONE, writer.getReadyState());
+        assertArrayEquals(
+          [
+            EventType.WRITE_START,
+            EventType.WRITE,
+            EventType.WRITE_END,
+            EventType.WRITE_START,
+            EventType.WRITE,
+            EventType.WRITE_END,
+          ],
+          googArray.map(observer.getEvents(), (e) => e.type)
+        );
+      })
+      .thenAlways(() => {
+        mockClock.uninstall();
+      });
 
     mockClock.tick();
     return promise;
@@ -144,58 +143,58 @@ testSuite({
     assertLastModified(0, file);
 
     const promise = writeString(writer, 'hello world')
-                        .then(() => {
-                          assertPositionAndLength(11, 11, writer);
-                          assertLastModified(17, file);
+      .then(() => {
+        assertPositionAndLength(11, 11, writer);
+        assertLastModified(17, file);
 
-                          writer.seek(6);
-                          assertPositionAndLength(6, 11, writer);
+        writer.seek(6);
+        assertPositionAndLength(6, 11, writer);
 
-                          const promise = writeString(writer, 'universe');
-                          mockClock.tick();
-                          return promise;
-                        })
-                        .then(() => {
-                          assertEquals('hello universe', file.toString());
-                          assertPositionAndLength(14, 14, writer);
+        const promise = writeString(writer, 'universe');
+        mockClock.tick();
+        return promise;
+      })
+      .then(() => {
+        assertEquals('hello universe', file.toString());
+        assertPositionAndLength(14, 14, writer);
 
-                          writer.seek(500);
-                          assertPositionAndLength(14, 14, writer);
+        writer.seek(500);
+        assertPositionAndLength(14, 14, writer);
 
-                          const promise = writeString(writer, '!');
-                          mockClock.tick();
-                          return promise;
-                        })
-                        .then(() => {
-                          assertEquals('hello universe!', file.toString());
-                          assertPositionAndLength(15, 15, writer);
+        const promise = writeString(writer, '!');
+        mockClock.tick();
+        return promise;
+      })
+      .then(() => {
+        assertEquals('hello universe!', file.toString());
+        assertPositionAndLength(15, 15, writer);
 
-                          writer.seek(-9);
-                          assertPositionAndLength(6, 15, writer);
+        writer.seek(-9);
+        assertPositionAndLength(6, 15, writer);
 
-                          const promise = writeString(writer, 'foo');
-                          mockClock.tick();
-                          return promise;
-                        })
-                        .then(() => {
-                          assertEquals('hello fooverse!', file.toString());
-                          assertPositionAndLength(9, 15, writer);
+        const promise = writeString(writer, 'foo');
+        mockClock.tick();
+        return promise;
+      })
+      .then(() => {
+        assertEquals('hello fooverse!', file.toString());
+        assertPositionAndLength(9, 15, writer);
 
-                          writer.seek(-500);
-                          assertPositionAndLength(0, 15, writer);
+        writer.seek(-500);
+        assertPositionAndLength(0, 15, writer);
 
-                          const promise = writeString(writer, 'bye-o');
-                          mockClock.tick();
-                          return promise;
-                        })
-                        .then(() => {
-                          assertEquals('bye-o fooverse!', file.toString());
-                          assertPositionAndLength(5, 15, writer);
-                          assertLastModified(21, file);
-                        })
-                        .thenAlways(() => {
-                          mockClock.uninstall();
-                        });
+        const promise = writeString(writer, 'bye-o');
+        mockClock.tick();
+        return promise;
+      })
+      .then(() => {
+        assertEquals('bye-o fooverse!', file.toString());
+        assertPositionAndLength(5, 15, writer);
+        assertLastModified(21, file);
+      })
+      .thenAlways(() => {
+        mockClock.uninstall();
+      });
 
     mockClock.tick();
     return promise;
@@ -212,20 +211,21 @@ testSuite({
     writer.abort();
 
     promise = promise
-                  .then(() => {
-                    assertEquals('', file.toString());
+      .then(() => {
+        assertEquals('', file.toString());
 
-                    assertEquals(ReadyState.DONE, writer.getReadyState());
-                    assertPositionAndLength(0, 0, writer);
-                    assertLastModified(0, file);
+        assertEquals(ReadyState.DONE, writer.getReadyState());
+        assertPositionAndLength(0, 0, writer);
+        assertLastModified(0, file);
 
-                    assertArrayEquals(
-                        [EventType.ERROR, EventType.ABORT, EventType.WRITE_END],
-                        googArray.map(observer.getEvents(), (e) => e.type));
-                  })
-                  .thenAlways(() => {
-                    mockClock.uninstall();
-                  });
+        assertArrayEquals(
+          [EventType.ERROR, EventType.ABORT, EventType.WRITE_END],
+          googArray.map(observer.getEvents(), (e) => e.type)
+        );
+      })
+      .thenAlways(() => {
+        mockClock.uninstall();
+      });
 
     mockClock.tick();
     return promise;
@@ -237,43 +237,43 @@ testSuite({
 
     mockClock.install();
 
-    const promise =
-        writeString(writer, 'hello world')
-            .then(() => {
-              observer = createObserver(writer);
+    const promise = writeString(writer, 'hello world')
+      .then(() => {
+        observer = createObserver(writer);
 
-              writer.truncate(5);
-              assertEquals(ReadyState.WRITING, writer.getReadyState());
-              assertPositionAndLength(11, 11, writer);
-              assertLastModified(0, file);
+        writer.truncate(5);
+        assertEquals(ReadyState.WRITING, writer.getReadyState());
+        assertPositionAndLength(11, 11, writer);
+        assertLastModified(0, file);
 
-              const promise = waitForEvent(writer, EventType.WRITE_END);
-              mockClock.tick();
-              return promise;
-            })
-            .then(() => {
-              assertEquals('hello', file.toString());
+        const promise = waitForEvent(writer, EventType.WRITE_END);
+        mockClock.tick();
+        return promise;
+      })
+      .then(() => {
+        assertEquals('hello', file.toString());
 
-              assertEquals(ReadyState.DONE, writer.getReadyState());
-              assertPositionAndLength(5, 5, writer);
-              assertLastModified(7, file);
+        assertEquals(ReadyState.DONE, writer.getReadyState());
+        assertPositionAndLength(5, 5, writer);
+        assertLastModified(7, file);
 
-              assertArrayEquals(
-                  [EventType.WRITE_START, EventType.WRITE, EventType.WRITE_END],
-                  googArray.map(observer.getEvents(), (e) => e.type));
+        assertArrayEquals(
+          [EventType.WRITE_START, EventType.WRITE, EventType.WRITE_END],
+          googArray.map(observer.getEvents(), (e) => e.type)
+        );
 
-              writer.truncate(10);
-              const promise = waitForEvent(writer, EventType.WRITE_END);
-              mockClock.tick(1);
-              return promise;
-            })
-            .then(() => {
-              assertEquals('hello\0\0\0\0\0', file.toString());
-              assertLastModified(8, file);
-            })
-            .thenAlways(() => {
-              mockClock.uninstall();
-            });
+        writer.truncate(10);
+        const promise = waitForEvent(writer, EventType.WRITE_END);
+        mockClock.tick(1);
+        return promise;
+      })
+      .then(() => {
+        assertEquals('hello\0\0\0\0\0', file.toString());
+        assertLastModified(8, file);
+      })
+      .thenAlways(() => {
+        mockClock.uninstall();
+      });
 
     mockClock.tick(7);
     return promise;
@@ -291,17 +291,18 @@ testSuite({
   },
 
   testAbortAfterWrite() {
-    return writeString(writer, 'hello world')
-        .then(/**
+    return writeString(writer, 'hello world').then(
+      /**
                  @suppress {strictMissingProperties} suppression added to
                  enable type checking
                */
-              () => {
-                const err = assertThrows(() => {
-                  writer.abort();
-                });
-                assertEquals(FsError.ErrorCode.INVALID_STATE, err.code);
-              });
+      () => {
+        const err = assertThrows(() => {
+          writer.abort();
+        });
+        assertEquals(FsError.ErrorCode.INVALID_STATE, err.code);
+      }
+    );
   },
 
   /**

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.editor.plugins.LinkDialogTest');
-goog.setTestOnly();
 
 const AbstractDialog = goog.require('goog.ui.editor.AbstractDialog');
 const Command = goog.require('goog.editor.Command');
@@ -48,8 +47,7 @@ let fieldElem;
 let fieldObj;
 let linkObj;
 
-function setUpAnchor(
-    text, href, isNew = undefined, target = undefined, rel = undefined) {
+function setUpAnchor(text, href, isNew = undefined, target = undefined, rel = undefined) {
   setUpGivenAnchor(anchorElem, text, href, isNew, target, rel);
 }
 
@@ -88,8 +86,7 @@ function verifyRelNoFollow(noFollow, originalRel, expectedRel) {
   setUpAnchor(OLD_LINK_TEXT, OLD_LINK_URL, true, null, originalRel);
   /** @suppress {visibility} suppression added to enable type checking */
   const dialog = plugin.createDialog(new DomHelper(), mockLink);
-  dialog.dispatchEvent(
-      new LinkDialog.OkEvent(NEW_LINK_TEXT, NEW_LINK_URL, false, noFollow));
+  dialog.dispatchEvent(new LinkDialog.OkEvent(NEW_LINK_TEXT, NEW_LINK_URL, false, noFollow));
   assertEquals(expectedRel, anchorElem.rel);
 
   mockCtrl.$verifyAll();
@@ -144,13 +141,17 @@ testSuite({
     mockAlert = mockCtrl.createGlobalFunctionMock('alert');
 
     isNew = false;
-    mockLink.isNew().$anyTimes().$does(() => isNew);
-    mockLink.setTextAndUrl(mockmatchers.isString, mockmatchers.isString)
-        .$anyTimes()
-        .$does((text, url) => {
-          anchorElem.innerHTML = text;
-          anchorElem.href = url;
-        });
+    mockLink
+      .isNew()
+      .$anyTimes()
+      .$does(() => isNew);
+    mockLink
+      .setTextAndUrl(mockmatchers.isString, mockmatchers.isString)
+      .$anyTimes()
+      .$does((text, url) => {
+        anchorElem.innerHTML = text;
+        anchorElem.href = url;
+      });
     mockLink.getAnchor().$anyTimes().$returns(anchorElem);
     mockLink.getExtraAnchors().$anyTimes().$returns(extraAnchors);
   },
@@ -179,9 +180,7 @@ testSuite({
 
     /** @suppress {visibility} suppression added to enable type checking */
     const dialog = plugin.createDialog(new DomHelper(), mockLink);
-    assertTrue(
-        'Dialog should be of type goog.ui.editor.LinkDialog',
-        dialog instanceof LinkDialog);
+    assertTrue('Dialog should be of type goog.ui.editor.LinkDialog', dialog instanceof LinkDialog);
 
     mockCtrl.$verifyAll();
   },
@@ -214,8 +213,7 @@ testSuite({
     dialog.dispatchEvent(new LinkDialog.OkEvent(NEW_LINK_TEXT, NEW_LINK_URL));
 
     assertEquals('Display text incorrect', NEW_LINK_TEXT, anchorElem.innerHTML);
-    assertEquals(
-        'Anchor element href incorrect', NEW_LINK_URL, anchorElem.href);
+    assertEquals('Anchor element href incorrect', NEW_LINK_URL, anchorElem.href);
 
     mockCtrl.$verifyAll();
   },
@@ -241,12 +239,8 @@ testSuite({
     plugin.currentLink_ = mockLink;
     dialog.dispatchEvent(AbstractDialog.EventType.CANCEL);
 
-    assertEquals(
-        'Display text should not be changed', OLD_LINK_TEXT,
-        anchorElem.innerHTML);
-    assertEquals(
-        'Anchor element href should not be changed', OLD_LINK_URL,
-        anchorElem.href);
+    assertEquals('Display text should not be changed', OLD_LINK_TEXT, anchorElem.innerHTML);
+    assertEquals('Anchor element href should not be changed', OLD_LINK_URL, anchorElem.href);
 
     mockCtrl.$verifyAll();
   },
@@ -257,7 +251,7 @@ testSuite({
      type checking
    */
   testCancelNew() {
-    mockField.dispatchChange();  // Should be fired because link was removed.
+    mockField.dispatchChange(); // Should be fired because link was removed.
     mockCtrl.$replayAll();
 
     setUpAnchor(OLD_LINK_TEXT, OLD_LINK_URL, true);
@@ -276,15 +270,13 @@ testSuite({
     dialog.dispatchEvent(AbstractDialog.EventType.CANCEL);
 
     assertNotEquals(
-        'Anchor element should be removed from document body', testDiv,
-        anchorElem.parentNode);
+      'Anchor element should be removed from document body',
+      testDiv,
+      anchorElem.parentNode
+    );
     const newElem = prevSib.nextSibling;
-    assertEquals(
-        'Link should be replaced by text node', NodeType.TEXT,
-        newElem.nodeType);
-    assertEquals(
-        'Original text should be left behind', OLD_LINK_TEXT,
-        newElem.nodeValue);
+    assertEquals('Link should be replaced by text node', NodeType.TEXT, newElem.nodeType);
+    assertEquals('Original text should be left behind', OLD_LINK_TEXT, newElem.nodeValue);
 
     mockCtrl.$verifyAll();
   },
@@ -295,27 +287,24 @@ testSuite({
      type checking
    */
   testCancelNewMultiple() {
-    mockField.dispatchChange();  // Should be fired because link was removed.
+    mockField.dispatchChange(); // Should be fired because link was removed.
     mockCtrl.$replayAll();
 
     const anchorElem1 = anchorElem;
     const parent1 = dom.createDom(TagName.DIV, null, anchorElem1);
     dom.appendChild(testDiv, parent1);
-    setUpGivenAnchor(
-        anchorElem1, `${OLD_LINK_TEXT}1`, `${OLD_LINK_URL}1`, true);
+    setUpGivenAnchor(anchorElem1, `${OLD_LINK_TEXT}1`, `${OLD_LINK_URL}1`, true);
 
-    let anchorElem2 = dom.createDom(TagName.A);
+    const anchorElem2 = dom.createDom(TagName.A);
     const parent2 = dom.createDom(TagName.DIV, null, anchorElem2);
     dom.appendChild(testDiv, parent2);
-    setUpGivenAnchor(
-        anchorElem2, `${OLD_LINK_TEXT}2`, `${OLD_LINK_URL}2`, true);
+    setUpGivenAnchor(anchorElem2, `${OLD_LINK_TEXT}2`, `${OLD_LINK_URL}2`, true);
     extraAnchors.push(anchorElem2);
 
-    let anchorElem3 = dom.createDom(TagName.A);
+    const anchorElem3 = dom.createDom(TagName.A);
     const parent3 = dom.createDom(TagName.DIV, null, anchorElem3);
     dom.appendChild(testDiv, parent3);
-    setUpGivenAnchor(
-        anchorElem3, `${OLD_LINK_TEXT}3`, `${OLD_LINK_URL}3`, true);
+    setUpGivenAnchor(anchorElem3, `${OLD_LINK_TEXT}3`, `${OLD_LINK_URL}3`, true);
     extraAnchors.push(anchorElem3);
 
     plugin = new LinkDialogPlugin();
@@ -332,34 +321,52 @@ testSuite({
     dialog.dispatchEvent(AbstractDialog.EventType.CANCEL);
 
     assertNotEquals(
-        'Anchor 1 element should be removed from document body', parent1,
-        anchorElem1.parentNode);
+      'Anchor 1 element should be removed from document body',
+      parent1,
+      anchorElem1.parentNode
+    );
     assertNotEquals(
-        'Anchor 2 element should be removed from document body', parent2,
-        anchorElem2.parentNode);
+      'Anchor 2 element should be removed from document body',
+      parent2,
+      anchorElem2.parentNode
+    );
     assertNotEquals(
-        'Anchor 3 element should be removed from document body', parent3,
-        anchorElem3.parentNode);
+      'Anchor 3 element should be removed from document body',
+      parent3,
+      anchorElem3.parentNode
+    );
 
     assertEquals(
-        'Link 1 should be replaced by text node', NodeType.TEXT,
-        parent1.firstChild.nodeType);
+      'Link 1 should be replaced by text node',
+      NodeType.TEXT,
+      parent1.firstChild.nodeType
+    );
     assertEquals(
-        'Link 2 should be replaced by text node', NodeType.TEXT,
-        parent2.firstChild.nodeType);
+      'Link 2 should be replaced by text node',
+      NodeType.TEXT,
+      parent2.firstChild.nodeType
+    );
     assertEquals(
-        'Link 3 should be replaced by text node', NodeType.TEXT,
-        parent3.firstChild.nodeType);
+      'Link 3 should be replaced by text node',
+      NodeType.TEXT,
+      parent3.firstChild.nodeType
+    );
 
     assertEquals(
-        'Original text 1 should be left behind', `${OLD_LINK_TEXT}1`,
-        parent1.firstChild.nodeValue);
+      'Original text 1 should be left behind',
+      `${OLD_LINK_TEXT}1`,
+      parent1.firstChild.nodeValue
+    );
     assertEquals(
-        'Original text 2 should be left behind', `${OLD_LINK_TEXT}2`,
-        parent2.firstChild.nodeValue);
+      'Original text 2 should be left behind',
+      `${OLD_LINK_TEXT}2`,
+      parent2.firstChild.nodeValue
+    );
     assertEquals(
-        'Original text 3 should be left behind', `${OLD_LINK_TEXT}3`,
-        parent3.firstChild.nodeValue);
+      'Original text 3 should be left behind',
+      `${OLD_LINK_TEXT}3`,
+      parent3.firstChild.nodeValue
+    );
 
     mockCtrl.$verifyAll();
   },
@@ -377,19 +384,16 @@ testSuite({
     mockCtrl.$replayAll();
 
     const anchorElem1 = anchorElem;
-    setUpGivenAnchor(
-        anchorElem1, `${OLD_LINK_TEXT}1`, `${OLD_LINK_URL}1`, true);
+    setUpGivenAnchor(anchorElem1, `${OLD_LINK_TEXT}1`, `${OLD_LINK_URL}1`, true);
 
-    let anchorElem2 = dom.createElement(TagName.A);
+    const anchorElem2 = dom.createElement(TagName.A);
     dom.appendChild(testDiv, anchorElem2);
-    setUpGivenAnchor(
-        anchorElem2, `${OLD_LINK_TEXT}2`, `${OLD_LINK_URL}2`, true);
+    setUpGivenAnchor(anchorElem2, `${OLD_LINK_TEXT}2`, `${OLD_LINK_URL}2`, true);
     extraAnchors.push(anchorElem2);
 
-    let anchorElem3 = dom.createElement(TagName.A);
+    const anchorElem3 = dom.createElement(TagName.A);
     dom.appendChild(testDiv, anchorElem3);
-    setUpGivenAnchor(
-        anchorElem3, `${OLD_LINK_TEXT}3`, `${OLD_LINK_URL}3`, true);
+    setUpGivenAnchor(anchorElem3, `${OLD_LINK_TEXT}3`, `${OLD_LINK_URL}3`, true);
     extraAnchors.push(anchorElem3);
 
     const prevSib = anchorElem1.previousSibling;
@@ -407,21 +411,13 @@ testSuite({
     plugin.currentLink_ = mockLink;
     dialog.dispatchEvent(new LinkDialog.OkEvent(NEW_LINK_TEXT, NEW_LINK_URL));
 
-    assertEquals(
-        'Display text 1 must update', NEW_LINK_TEXT, anchorElem1.innerHTML);
-    assertEquals(
-        'Display text 2 must not update', `${OLD_LINK_TEXT}2`,
-        anchorElem2.innerHTML);
-    assertEquals(
-        'Display text 3 must not update', `${OLD_LINK_TEXT}3`,
-        anchorElem3.innerHTML);
+    assertEquals('Display text 1 must update', NEW_LINK_TEXT, anchorElem1.innerHTML);
+    assertEquals('Display text 2 must not update', `${OLD_LINK_TEXT}2`, anchorElem2.innerHTML);
+    assertEquals('Display text 3 must not update', `${OLD_LINK_TEXT}3`, anchorElem3.innerHTML);
 
-    assertEquals(
-        'Anchor element 1 href must update', NEW_LINK_URL, anchorElem1.href);
-    assertEquals(
-        'Anchor element 2 href must update', NEW_LINK_URL, anchorElem2.href);
-    assertEquals(
-        'Anchor element 3 href must update', NEW_LINK_URL, anchorElem3.href);
+    assertEquals('Anchor element 1 href must update', NEW_LINK_URL, anchorElem1.href);
+    assertEquals('Anchor element 2 href must update', NEW_LINK_URL, anchorElem2.href);
+    assertEquals('Anchor element 3 href must update', NEW_LINK_URL, anchorElem3.href);
 
     mockCtrl.$verifyAll();
   },
@@ -452,49 +448,47 @@ testSuite({
     setUpAnchor(OLD_LINK_TEXT, OLD_LINK_URL);
     /** @suppress {visibility} suppression added to enable type checking */
     let dialog = plugin.createDialog(new DomHelper(), mockLink);
-    dialog.dispatchEvent(
-        new LinkDialog.OkEvent(NEW_LINK_TEXT, NEW_LINK_URL, false, false));
+    dialog.dispatchEvent(new LinkDialog.OkEvent(NEW_LINK_TEXT, NEW_LINK_URL, false, false));
     assertEquals(
-        'Target should not be set for link that doesn\'t open in new window',
-        '', anchorElem.target);
-    assertFalse(
-        'Checked state should stay false',
-        plugin.getOpenLinkInNewWindowCheckedState());
+      "Target should not be set for link that doesn't open in new window",
+      '',
+      anchorElem.target
+    );
+    assertFalse('Checked state should stay false', plugin.getOpenLinkInNewWindowCheckedState());
 
     // Edit a link that doesn't open in a new window and toggle it on.
     setUpAnchor(OLD_LINK_TEXT, OLD_LINK_URL);
     /** @suppress {visibility} suppression added to enable type checking */
     dialog = plugin.createDialog(new DomHelper(), mockLink);
-    dialog.dispatchEvent(
-        new LinkDialog.OkEvent(NEW_LINK_TEXT, NEW_LINK_URL, true));
+    dialog.dispatchEvent(new LinkDialog.OkEvent(NEW_LINK_TEXT, NEW_LINK_URL, true));
     assertEquals(
-        'Target should be set to _blank for link that opens in new window',
-        '_blank', anchorElem.target);
+      'Target should be set to _blank for link that opens in new window',
+      '_blank',
+      anchorElem.target
+    );
     assertTrue(
-        'Checked state should be true after toggling a link on',
-        plugin.getOpenLinkInNewWindowCheckedState());
+      'Checked state should be true after toggling a link on',
+      plugin.getOpenLinkInNewWindowCheckedState()
+    );
 
     // Edit a link that doesn't open in a named window and don't touch it.
     setUpAnchor(OLD_LINK_TEXT, OLD_LINK_URL, false, 'named');
     /** @suppress {visibility} suppression added to enable type checking */
     dialog = plugin.createDialog(new DomHelper(), mockLink);
-    dialog.dispatchEvent(
-        new LinkDialog.OkEvent(NEW_LINK_TEXT, NEW_LINK_URL, false));
-    assertEquals(
-        'Target should keep its original value', 'named', anchorElem.target);
-    assertFalse(
-        'Checked state should be false again',
-        plugin.getOpenLinkInNewWindowCheckedState());
+    dialog.dispatchEvent(new LinkDialog.OkEvent(NEW_LINK_TEXT, NEW_LINK_URL, false));
+    assertEquals('Target should keep its original value', 'named', anchorElem.target);
+    assertFalse('Checked state should be false again', plugin.getOpenLinkInNewWindowCheckedState());
 
     // Edit a link that opens in a new window and toggle it off.
     setUpAnchor(OLD_LINK_TEXT, OLD_LINK_URL, false, '_blank');
     /** @suppress {visibility} suppression added to enable type checking */
     dialog = plugin.createDialog(new DomHelper(), mockLink);
-    dialog.dispatchEvent(
-        new LinkDialog.OkEvent(NEW_LINK_TEXT, NEW_LINK_URL, false));
+    dialog.dispatchEvent(new LinkDialog.OkEvent(NEW_LINK_TEXT, NEW_LINK_URL, false));
     assertEquals(
-        'Target should not be set for link that doesn\'t open in new window',
-        '', anchorElem.target);
+      "Target should not be set for link that doesn't open in new window",
+      '',
+      anchorElem.target
+    );
 
     mockCtrl.$verifyAll();
   },
@@ -538,23 +532,21 @@ testSuite({
 
     const elem = fieldObj.getElement();
     const helper = new TestHelper(elem);
-    helper.select('12345', 1, '12345', 4);  // Selects '234'.
+    helper.select('12345', 1, '12345', 4); // Selects '234'.
 
     assertEquals(
-        'Incorrect text selected before dialog is opened', '234',
-        fieldObj.getRange().getText());
+      'Incorrect text selected before dialog is opened',
+      '234',
+      fieldObj.getRange().getText()
+    );
     plugin.execCommand(Command.MODAL_LINK_EDITOR, linkObj);
     if (!userAgent.IE) {
       // IE returns some bogus range when field doesn't have selection.
       // You can't remove the selection from a whitebox field in Opera.
-      assertNull(
-          'There should be no selection while dialog is open',
-          fieldObj.getRange());
+      assertNull('There should be no selection while dialog is open', fieldObj.getRange());
     }
     events.fireClickSequence(plugin.dialog_.getOkButtonElement());
-    assertEquals(
-        'No text should be selected after clicking ok', '',
-        fieldObj.getRange().getText());
+    assertEquals('No text should be selected after clicking ok', '', fieldObj.getRange().getText());
 
     // Test that the caret is placed at the end of the link text.
     editorDom.assertRangeBetweenText('5', '', fieldObj.getRange());
@@ -576,23 +568,25 @@ testSuite({
 
     const elem = fieldObj.getElement();
     const helper = new TestHelper(elem);
-    helper.select('12345', 1, '12345', 4);  // Selects '234'.
+    helper.select('12345', 1, '12345', 4); // Selects '234'.
 
     assertEquals(
-        'Incorrect text selected before dialog is opened', '234',
-        fieldObj.getRange().getText());
+      'Incorrect text selected before dialog is opened',
+      '234',
+      fieldObj.getRange().getText()
+    );
     plugin.execCommand(Command.MODAL_LINK_EDITOR, linkObj);
     if (!userAgent.IE) {
       // IE returns some bogus range when field doesn't have selection.
       // You can't remove the selection from a whitebox field in Opera.
-      assertNull(
-          'There should be no selection while dialog is open',
-          fieldObj.getRange());
+      assertNull('There should be no selection while dialog is open', fieldObj.getRange());
     }
     events.fireClickSequence(plugin.dialog_.getCancelButtonElement());
     assertEquals(
-        'Incorrect text selected after clicking cancel', '234',
-        fieldObj.getRange().getText());
+      'Incorrect text selected after clicking cancel',
+      '234',
+      fieldObj.getRange().getText()
+    );
   },
 
   /**
@@ -612,7 +606,7 @@ testSuite({
     mockAlert(mockmatchers.isString);
     mockCtrl.$replayAll();
 
-    const invalidUrl = 'javascript:document.write(\'hello\');';
+    const invalidUrl = "javascript:document.write('hello');";
 
     plugin = new LinkDialogPlugin();
     /** @suppress {visibility} suppression added to enable type checking */
@@ -620,8 +614,7 @@ testSuite({
 
     // Mock of execCommand + clicking test without actually opening the
     // dialog.
-    const dispatched =
-        dialog.dispatchEvent(new LinkDialog.BeforeTestLinkEvent(invalidUrl));
+    const dispatched = dialog.dispatchEvent(new LinkDialog.BeforeTestLinkEvent(invalidUrl));
 
     assertFalse(dispatched);
     mockCtrl.$verifyAll();
@@ -650,21 +643,17 @@ testSuite({
       'javascript:google.com',
       'httpp://google.com',
       'data:foo',
-      'javascript:alert(\'hi\');',
+      "javascript:alert('hi');",
       'abc:def',
     ];
 
     let i;
     for (i = 0; i < good.length; i++) {
-      assertTrue(
-          good[i] + ' should have a safe scheme',
-          plugin.isSafeSchemeToOpen_(good[i]));
+      assertTrue(good[i] + ' should have a safe scheme', plugin.isSafeSchemeToOpen_(good[i]));
     }
 
     for (i = 0; i < bad.length; i++) {
-      assertFalse(
-          bad[i] + ' should have an unsafe scheme',
-          plugin.isSafeSchemeToOpen_(bad[i]));
+      assertFalse(bad[i] + ' should have an unsafe scheme', plugin.isSafeSchemeToOpen_(bad[i]));
     }
   },
 
@@ -672,15 +661,14 @@ testSuite({
   testShouldOpenWithWhitelist() {
     plugin.setSafeToOpenSchemes(['abc']);
 
-    assertTrue(
-        'Scheme should be safe', plugin.shouldOpenUrl('abc://google.com'));
-    assertFalse(
-        'Scheme should be unsafe', plugin.shouldOpenUrl('http://google.com'));
+    assertTrue('Scheme should be safe', plugin.shouldOpenUrl('abc://google.com'));
+    assertFalse('Scheme should be unsafe', plugin.shouldOpenUrl('http://google.com'));
 
     plugin.setBlockOpeningUnsafeSchemes(false);
     assertTrue(
-        'Non-whitelisted should now be safe after disabling blocking',
-        plugin.shouldOpenUrl('http://google.com'));
+      'Non-whitelisted should now be safe after disabling blocking',
+      plugin.shouldOpenUrl('http://google.com')
+    );
   },
 
   /**
@@ -697,7 +685,7 @@ testSuite({
 
     const elem = fieldObj.getElement();
     const helper = new TestHelper(elem);
-    helper.select('abc', 1, 'abc', 2);  // Selects 'b'.
+    helper.select('abc', 1, 'abc', 2); // Selects 'b'.
     // Dispatching a selection event causes the field to cache a selection
     // util, which is the root of the bug.
     plugin.fieldObject.dispatchSelectionChangeEvent();
@@ -721,8 +709,9 @@ testSuite({
 
     const elem = fieldObj.getElement();
     fieldObj.setSafeHtml(
-        false,
-        SafeHtml.create('div', {}, SafeHtml.create('a', {'href': '/'}, '')));
+      false,
+      SafeHtml.create('div', {}, SafeHtml.create('a', { href: '/' }, ''))
+    );
     anchorElem = elem.firstChild.firstChild;
     linkObj = new Link(anchorElem, true);
 
@@ -747,8 +736,7 @@ testSuite({
     okButton.disabled = false;
     events.fireClickSequence(okButton);
 
-    assertEquals(
-        'Link text should have been inserted', 'foo', anchorElem.innerHTML);
+    assertEquals('Link text should have been inserted', 'foo', anchorElem.innerHTML);
   },
 
   /**
@@ -757,8 +745,8 @@ testSuite({
    */
   testBug7279077ScrollOnFocus() {
     if (userAgent.IE) {
-      return;  // TODO(user): take this out once b/7279077 fixed for IE
-               // too.
+      return; // TODO(user): take this out once b/7279077 fixed for IE
+      // too.
     }
     setUpAnchor('12345', '/');
     setUpRealEditableField();
@@ -776,7 +764,7 @@ testSuite({
     elem.insertBefore(longTextElem, elem.firstChild);
 
     const helper = new TestHelper(elem);
-    helper.select('12345', 1, '12345', 4);  // Selects '234'.
+    helper.select('12345', 1, '12345', 4); // Selects '234'.
 
     // Scroll down.
     elem.scrollTop = 60;
@@ -797,8 +785,7 @@ testSuite({
     const cancelButton = plugin.dialog_.getCancelButtonElement();
     events.fireClickSequence(cancelButton);
 
-    assertEquals(
-        'Field should not have scrolled after cancel', 60, elem.scrollTop);
+    assertEquals('Field should not have scrolled after cancel', 60, elem.scrollTop);
 
     // Now let's try it with clicking the OK button.
     plugin.execCommand(Command.MODAL_LINK_EDITOR, linkObj);

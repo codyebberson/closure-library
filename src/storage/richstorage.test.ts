@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.storage.RichStorageTest');
-goog.setTestOnly();
 
 const ErrorCode = goog.require('goog.storage.ErrorCode');
 const FakeMechanism = goog.require('goog.testing.storage.FakeMechanism');
@@ -25,7 +24,7 @@ testSuite({
     const storage = new RichStorage(mechanism);
 
     // Some metadata.
-    const object = {'a': 97, 'b': 98};
+    const object = { a: 97, b: 98 };
     const wrapper = new RichStorage.Wrapper(object);
     wrapper['meta'] = 'info';
     storage.set('first', wrapper);
@@ -46,13 +45,19 @@ testSuite({
 
     // Invalid wrappings.
     mechanism.set('third', 'null');
-    assertEquals(ErrorCode.INVALID_VALUE, assertThrows(() => {
-                   storage.get('third');
-                 }));
+    assertEquals(
+      ErrorCode.INVALID_VALUE,
+      assertThrows(() => {
+        storage.get('third');
+      })
+    );
     mechanism.set('third', '{"meta": "data"}');
-    assertEquals(ErrorCode.INVALID_VALUE, assertThrows(() => {
-                   storage.get('third');
-                 }));
+    assertEquals(
+      ErrorCode.INVALID_VALUE,
+      assertThrows(() => {
+        storage.get('third');
+      })
+    );
 
     // Weird values.
     /** @suppress {checkTypes} suppression added to enable type checking */

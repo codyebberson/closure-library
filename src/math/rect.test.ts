@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.math.RectTest');
-goog.setTestOnly();
 
 const Box = goog.require('goog.math.Box');
 const Coordinate = goog.require('goog.math.Coordinate');
@@ -43,7 +42,7 @@ function createRect(a) {
  */
 function createIRect(a) {
   if (a) {
-    return {left: a[0], top: a[1], width: a[2] - a[0], height: a[3] - a[1]};
+    return { left: a[0], top: a[1], width: a[2] - a[0], height: a[3] - a[1] };
   }
   return null;
 }
@@ -53,9 +52,7 @@ function assertDifference(a, b, expected) {
   const r1 = createRect(b);
   const diff1 = GoogRect.difference(r0, r1);
 
-  assertEquals(
-      'Wrong number of rectangles in difference ', expected.length,
-      diff1.length);
+  assertEquals('Wrong number of rectangles in difference ', expected.length, diff1.length);
 
   for (let j = 0; j < expected.length; ++j) {
     const e = createRect(expected[j]);
@@ -68,9 +65,7 @@ function assertDifference(a, b, expected) {
   // Test in place version
   const diff2 = r0.difference(r1);
 
-  assertEquals(
-      'Wrong number of rectangles in in-place difference ', expected.length,
-      diff2.length);
+  assertEquals('Wrong number of rectangles in in-place difference ', expected.length, diff2.length);
 
   for (let j = 0; j < expected.length; ++j) {
     const e = createRect(expected[j]);
@@ -110,10 +105,22 @@ testSuite({
 
   testRectIntersection() {
     const tests = [
-      [[10, 10, 20, 20], [15, 15, 25, 25], [15, 15, 20, 20]],
-      [[10, 10, 20, 20], [20, 0, 30, 10], [20, 10, 20, 10]],
+      [
+        [10, 10, 20, 20],
+        [15, 15, 25, 25],
+        [15, 15, 20, 20],
+      ],
+      [
+        [10, 10, 20, 20],
+        [20, 0, 30, 10],
+        [20, 10, 20, 10],
+      ],
       [[0, 0, 1, 1], [10, 11, 12, 13], null],
-      [[11, 12, 98, 99], [22, 23, 34, 35], [22, 23, 34, 35]],
+      [
+        [11, 12, 98, 99],
+        [22, 23, 34, 35],
+        [22, 23, 34, 35],
+      ],
     ];
 
     const intersectTest = (r0, r1, expected) => {
@@ -184,10 +191,26 @@ testSuite({
 
   testRectBoundingRect() {
     const tests = [
-      [[10, 10, 20, 20], [15, 15, 25, 25], [10, 10, 25, 25]],
-      [[10, 10, 20, 20], [20, 0, 30, 10], [10, 0, 30, 20]],
-      [[0, 0, 1, 1], [10, 11, 12, 13], [0, 0, 12, 13]],
-      [[11, 12, 98, 99], [22, 23, 34, 35], [11, 12, 98, 99]],
+      [
+        [10, 10, 20, 20],
+        [15, 15, 25, 25],
+        [10, 10, 25, 25],
+      ],
+      [
+        [10, 10, 20, 20],
+        [20, 0, 30, 10],
+        [10, 0, 30, 20],
+      ],
+      [
+        [0, 0, 1, 1],
+        [10, 11, 12, 13],
+        [0, 0, 12, 13],
+      ],
+      [
+        [11, 12, 98, 99],
+        [22, 23, 34, 35],
+        [11, 12, 98, 99],
+      ],
     ];
     for (let i = 0; i < tests.length; ++i) {
       const t = tests[i];
@@ -229,31 +252,79 @@ testSuite({
     assertDifference([10, 10, 20, 20], [12, 20, 17, 25], [[10, 10, 20, 20]]);
     // B splits A horizontally.
     assertDifference(
-        [10, 10, 20, 20], [5, 12, 25, 18],
-        [[10, 10, 20, 12], [10, 18, 20, 20]]);
+      [10, 10, 20, 20],
+      [5, 12, 25, 18],
+      [
+        [10, 10, 20, 12],
+        [10, 18, 20, 20],
+      ]
+    );
     // B splits A vertically.
     assertDifference(
-        [10, 10, 20, 20], [12, 5, 18, 25],
-        [[10, 10, 12, 20], [18, 10, 20, 20]]);
+      [10, 10, 20, 20],
+      [12, 5, 18, 25],
+      [
+        [10, 10, 12, 20],
+        [18, 10, 20, 20],
+      ]
+    );
     // B subtracts a notch from the top of A.
     assertDifference(
-        [10, 10, 20, 20], [12, 5, 18, 15],
-        [[10, 15, 20, 20], [10, 10, 12, 15], [18, 10, 20, 15]]);
+      [10, 10, 20, 20],
+      [12, 5, 18, 15],
+      [
+        [10, 15, 20, 20],
+        [10, 10, 12, 15],
+        [18, 10, 20, 15],
+      ]
+    );
     // B subtracts a notch from the bottom left of A
-    assertDifference([1, 6, 3, 9], [1, 7, 2, 9], [[1, 6, 3, 7], [2, 7, 3, 9]]);
+    assertDifference(
+      [1, 6, 3, 9],
+      [1, 7, 2, 9],
+      [
+        [1, 6, 3, 7],
+        [2, 7, 3, 9],
+      ]
+    );
     // B subtracts a notch from the bottom right of A
-    assertDifference([1, 6, 3, 9], [2, 7, 3, 9], [[1, 6, 3, 7], [1, 7, 2, 9]]);
+    assertDifference(
+      [1, 6, 3, 9],
+      [2, 7, 3, 9],
+      [
+        [1, 6, 3, 7],
+        [1, 7, 2, 9],
+      ]
+    );
     // B subtracts a notch from the top left of A
-    assertDifference([1, 6, 3, 9], [1, 6, 2, 8], [[1, 8, 3, 9], [2, 6, 3, 8]]);
+    assertDifference(
+      [1, 6, 3, 9],
+      [1, 6, 2, 8],
+      [
+        [1, 8, 3, 9],
+        [2, 6, 3, 8],
+      ]
+    );
     // B subtracts a notch from the top left of A (no coinciding edge)
-    assertDifference([1, 6, 3, 9], [0, 5, 2, 8], [[1, 8, 3, 9], [2, 6, 3, 8]]);
+    assertDifference(
+      [1, 6, 3, 9],
+      [0, 5, 2, 8],
+      [
+        [1, 8, 3, 9],
+        [2, 6, 3, 8],
+      ]
+    );
     // B subtracts a hole from the center of A.
-    assertDifference([-20, -20, -10, -10], [-18, -18, -12, -12], [
-      [-20, -20, -10, -18],
-      [-20, -12, -10, -10],
-      [-20, -18, -18, -12],
-      [-12, -18, -10, -12],
-    ]);
+    assertDifference(
+      [-20, -20, -10, -10],
+      [-18, -18, -12, -12],
+      [
+        [-20, -20, -10, -18],
+        [-20, -12, -10, -10],
+        [-20, -18, -18, -12],
+        [-12, -18, -10, -12],
+      ]
+    );
   },
 
   testRectToBox() {
@@ -281,36 +352,34 @@ testSuite({
     box.left = 15;
     box.right = 23;
     box.bottom = 27;
-    assertObjectEquals(
-        new GoogRect(15, 10, 8, 17), GoogRect.createFromBox(box));
+    assertObjectEquals(new GoogRect(15, 10, 8, 17), GoogRect.createFromBox(box));
 
     box.top = -10;
     box.left = 3;
     box.right = 12;
     box.bottom = 7;
-    assertObjectEquals(
-        new GoogRect(3, -10, 9, 17), GoogRect.createFromBox(box));
+    assertObjectEquals(new GoogRect(3, -10, 9, 17), GoogRect.createFromBox(box));
   },
 
   testBoxToRectAndBack() {
     rectToBoxAndBackTest(new GoogRect(8, 11, 20, 23));
-    rectToBoxAndBackTest(new GoogRect(9, 13, NaN, NaN));
-    rectToBoxAndBackTest(new GoogRect(10, 13, NaN, 21));
-    rectToBoxAndBackTest(new GoogRect(5, 7, 14, NaN));
+    rectToBoxAndBackTest(new GoogRect(9, 13, Number.NaN, Number.NaN));
+    rectToBoxAndBackTest(new GoogRect(10, 13, Number.NaN, 21));
+    rectToBoxAndBackTest(new GoogRect(5, 7, 14, Number.NaN));
   },
 
   testRectToBoxAndBack() {
     // This doesn't work if left or top is undefined.
     boxToRectAndBackTest(new Box(11, 13, 20, 17));
-    boxToRectAndBackTest(new Box(10, NaN, NaN, 11));
-    boxToRectAndBackTest(new Box(9, 14, NaN, 11));
-    boxToRectAndBackTest(new Box(10, NaN, 22, 15));
+    boxToRectAndBackTest(new Box(10, Number.NaN, Number.NaN, 11));
+    boxToRectAndBackTest(new Box(9, 14, Number.NaN, 11));
+    boxToRectAndBackTest(new Box(10, Number.NaN, 22, 15));
   },
 
   testRectContainsRect() {
     const r = new GoogRect(-10, 0, 20, 10);
     assertTrue(r.contains(r));
-    assertFalse(r.contains(new GoogRect(NaN, NaN, NaN, NaN)));
+    assertFalse(r.contains(new GoogRect(Number.NaN, Number.NaN, Number.NaN, Number.NaN)));
     const r2 = new GoogRect(0, 2, 5, 5);
     assertTrue(r.contains(r2));
     assertFalse(r2.contains(r));
@@ -354,83 +423,67 @@ testSuite({
   },
 
   testGetSize() {
-    assertObjectEquals(
-        new Size(60, 80), new GoogRect(20, 40, 60, 80).getSize());
+    assertObjectEquals(new Size(60, 80), new GoogRect(20, 40, 60, 80).getSize());
   },
 
   testGetBottomRight() {
-    assertObjectEquals(
-        new Coordinate(40, 60), new GoogRect(10, 20, 30, 40).getBottomRight());
+    assertObjectEquals(new Coordinate(40, 60), new GoogRect(10, 20, 30, 40).getBottomRight());
   },
 
   testGetCenter() {
-    assertObjectEquals(
-        new Coordinate(25, 40), new GoogRect(10, 20, 30, 40).getCenter());
+    assertObjectEquals(new Coordinate(25, 40), new GoogRect(10, 20, 30, 40).getCenter());
   },
 
   testGetTopLeft() {
-    assertObjectEquals(
-        new Coordinate(10, 20), new GoogRect(10, 20, 30, 40).getTopLeft());
+    assertObjectEquals(new Coordinate(10, 20), new GoogRect(10, 20, 30, 40).getTopLeft());
   },
 
   testRectCeil() {
     const rect = new GoogRect(11.4, 26.6, 17.8, 9.2);
-    assertEquals(
-        'The function should return the target instance', rect, rect.ceil());
+    assertEquals('The function should return the target instance', rect, rect.ceil());
     assertRectsEqual(new GoogRect(12, 27, 18, 10), rect);
   },
 
   testRectFloor() {
     const rect = new GoogRect(11.4, 26.6, 17.8, 9.2);
-    assertEquals(
-        'The function should return the target instance', rect, rect.floor());
+    assertEquals('The function should return the target instance', rect, rect.floor());
     assertRectsEqual(new GoogRect(11, 26, 17, 9), rect);
   },
 
   testRectRound() {
     const rect = new GoogRect(11.4, 26.6, 17.8, 9.2);
-    assertEquals(
-        'The function should return the target instance', rect, rect.round());
+    assertEquals('The function should return the target instance', rect, rect.round());
     assertRectsEqual(new GoogRect(11, 27, 18, 9), rect);
   },
 
   testRectTranslateCoordinate() {
     const rect = new GoogRect(10, 40, 30, 20);
     const c = new Coordinate(10, 5);
-    assertEquals(
-        'The function should return the target instance', rect,
-        rect.translate(c));
+    assertEquals('The function should return the target instance', rect, rect.translate(c));
     assertRectsEqual(new GoogRect(20, 45, 30, 20), rect);
   },
 
   testRectTranslateXY() {
     const rect = new GoogRect(10, 20, 40, 35);
-    assertEquals(
-        'The function should return the target instance', rect,
-        rect.translate(15, 10));
+    assertEquals('The function should return the target instance', rect, rect.translate(15, 10));
     assertRectsEqual(new GoogRect(25, 30, 40, 35), rect);
   },
 
   testRectTranslateX() {
     const rect = new GoogRect(12, 34, 113, 88);
-    assertEquals(
-        'The function should return the target instance', rect,
-        rect.translate(10));
+    assertEquals('The function should return the target instance', rect, rect.translate(10));
     assertRectsEqual(new GoogRect(22, 34, 113, 88), rect);
   },
 
   testRectScaleXY() {
     const rect = new GoogRect(10, 30, 100, 60);
-    assertEquals(
-        'The function should return the target instance', rect,
-        rect.scale(2, 5));
+    assertEquals('The function should return the target instance', rect, rect.scale(2, 5));
     assertRectsEqual(new GoogRect(20, 150, 200, 300), rect);
   },
 
   testRectScaleFactor() {
     const rect = new GoogRect(12, 34, 113, 88);
-    assertEquals(
-        'The function should return the target instance', rect, rect.scale(10));
+    assertEquals('The function should return the target instance', rect, rect.scale(10));
     assertRectsEqual(new GoogRect(120, 340, 1130, 880), rect);
   },
 
@@ -471,11 +524,9 @@ testSuite({
     assertEquals(0, rect.distance(new Coordinate(10, 20)));
 
     // 1, 2, and 3.
-    assertRoughlyEquals(
-        Math.sqrt(8), rect.distance(new Coordinate(0, 22)), .0001);
+    assertRoughlyEquals(Math.sqrt(8), rect.distance(new Coordinate(0, 22)), 0.0001);
     assertEquals(8, rect.distance(new Coordinate(9, 28)));
-    assertRoughlyEquals(
-        Math.sqrt(50), rect.distance(new Coordinate(15, 25)), .0001);
+    assertRoughlyEquals(Math.sqrt(50), rect.distance(new Coordinate(15, 25)), 0.0001);
 
     // 4 and 6.
     assertEquals(7, rect.distance(new Coordinate(-5, 6)));
@@ -484,7 +535,6 @@ testSuite({
     // 7, 8, and 9.
     assertEquals(5, rect.distance(new Coordinate(-2, 1)));
     assertEquals(2, rect.distance(new Coordinate(5, 2)));
-    assertRoughlyEquals(
-        Math.sqrt(10), rect.distance(new Coordinate(1, 1)), .0001);
+    assertRoughlyEquals(Math.sqrt(10), rect.distance(new Coordinate(1, 1)), 0.0001);
   },
 });

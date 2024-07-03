@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dom.browserrangeTest');
-goog.setTestOnly();
 
 const NodeType = goog.require('goog.dom.NodeType');
 const Range = goog.require('goog.dom.Range');
@@ -48,8 +47,9 @@ testSuite({
 
   testCreate() {
     assertNotNull(
-        'Browser range object can be created for node',
-        browserrange.createRangeFromNodeContents(test1));
+      'Browser range object can be created for node',
+      browserrange.createRangeFromNodeContents(test1)
+    );
   },
 
   testRangeEndPoints() {
@@ -64,8 +64,7 @@ testSuite({
     const endOffset = selRange.getEndOffset();
     if (startNode.nodeType == NodeType.TEXT) {
       // Special case for Safari.
-      assertEquals(
-          'Start node should have text: abc', 'abc', startNode.nodeValue);
+      assertEquals('Start node should have text: abc', 'abc', startNode.nodeValue);
       assertEquals('End node should have text: abc', 'abc', endNode.nodeValue);
       assertEquals('Start offset should be 3', 3, startOffset);
       assertEquals('End offset should be 3', 3, endOffset);
@@ -84,61 +83,56 @@ testSuite({
 
   testCreateFromNodes() {
     const start = test1.firstChild;
-    const range =
-        browserrange.createRangeFromNodes(start, 2, test2.firstChild, 2);
-    assertNotNull(
-        'Browser range object can be created for W3C node range', range);
+    const range = browserrange.createRangeFromNodes(start, 2, test2.firstChild, 2);
+    assertNotNull('Browser range object can be created for W3C node range', range);
+
+    assertEquals('Start node should be selected at start endpoint', start, range.getStartNode());
+    assertEquals('Selection should start at offset 2', 2, range.getStartOffset());
 
     assertEquals(
-        'Start node should be selected at start endpoint', start,
-        range.getStartNode());
-    assertEquals(
-        'Selection should start at offset 2', 2, range.getStartOffset());
-
-    assertEquals(
-        'Text node should be selected at end endpoint', test2.firstChild,
-        range.getEndNode());
+      'Text node should be selected at end endpoint',
+      test2.firstChild,
+      range.getEndNode()
+    );
     assertEquals('Selection should end at offset 2', 2, range.getEndOffset());
 
-    assertTrue(
-        'Text content should be "xt\\s*ab"', /xt\s*ab/.test(range.getText()));
+    assertTrue('Text content should be "xt\\s*ab"', /xt\s*ab/.test(range.getText()));
     assertFalse('Nodes range is not collapsed', range.isCollapsed());
     assertEquals(
-        'Should contain correct html fragment', 'xt</div><div id=test2>ab',
-        normalizeHtml(range.getHtmlFragment()));
+      'Should contain correct html fragment',
+      'xt</div><div id=test2>ab',
+      normalizeHtml(range.getHtmlFragment())
+    );
     assertEquals(
-        'Should contain correct valid html',
-        '<div id=test1>xt</div><div id=test2>ab</div>',
-        normalizeHtml(range.getValidHtml()));
+      'Should contain correct valid html',
+      '<div id=test1>xt</div><div id=test2>ab</div>',
+      normalizeHtml(range.getValidHtml())
+    );
   },
 
   testTextNode() {
     const range = browserrange.createRangeFromNodeContents(test1.firstChild);
 
     assertEquals(
-        'Text node should be selected at start endpoint', 'Text',
-        range.getStartNode().nodeValue);
-    assertEquals(
-        'Selection should start at offset 0', 0, range.getStartOffset());
+      'Text node should be selected at start endpoint',
+      'Text',
+      range.getStartNode().nodeValue
+    );
+    assertEquals('Selection should start at offset 0', 0, range.getStartOffset());
 
     assertEquals(
-        'Text node should be selected at end endpoint', 'Text',
-        range.getEndNode().nodeValue);
-    assertEquals(
-        'Selection should end at offset 4', 'Text'.length,
-        range.getEndOffset());
+      'Text node should be selected at end endpoint',
+      'Text',
+      range.getEndNode().nodeValue
+    );
+    assertEquals('Selection should end at offset 4', 'Text'.length, range.getEndOffset());
 
-    assertEquals(
-        'Container should be text node', NodeType.TEXT,
-        range.getContainer().nodeType);
+    assertEquals('Container should be text node', NodeType.TEXT, range.getContainer().nodeType);
 
     assertEquals('Text content should be "Text"', 'Text', range.getText());
     assertFalse('Text range is not collapsed', range.isCollapsed());
-    assertEquals(
-        'Should contain correct html fragment', 'Text',
-        range.getHtmlFragment());
-    assertEquals(
-        'Should contain correct valid html', 'Text', range.getValidHtml());
+    assertEquals('Should contain correct html fragment', 'Text', range.getHtmlFragment());
+    assertEquals('Should contain correct valid html', 'Text', range.getValidHtml());
   },
 
   /**
@@ -149,35 +143,32 @@ testSuite({
     dom.removeChildren(dynamic);
     dynamic.appendChild(dom.createTextNode('Part1'));
     dynamic.appendChild(dom.createTextNode('Part2'));
-    const range = browserrange.createRangeFromNodes(
-        dynamic.firstChild, 0, dynamic.lastChild, 5);
+    const range = browserrange.createRangeFromNodes(dynamic.firstChild, 0, dynamic.lastChild, 5);
 
     assertEquals(
-        'Text node 1 should be selected at start endpoint', 'Part1',
-        range.getStartNode().nodeValue);
-    assertEquals(
-        'Selection should start at offset 0', 0, range.getStartOffset());
+      'Text node 1 should be selected at start endpoint',
+      'Part1',
+      range.getStartNode().nodeValue
+    );
+    assertEquals('Selection should start at offset 0', 0, range.getStartOffset());
 
     assertEquals(
-        'Text node 2 should be selected at end endpoint', 'Part2',
-        range.getEndNode().nodeValue);
-    assertEquals(
-        'Selection should end at offset 5', 'Part2'.length,
-        range.getEndOffset());
+      'Text node 2 should be selected at end endpoint',
+      'Part2',
+      range.getEndNode().nodeValue
+    );
+    assertEquals('Selection should end at offset 5', 'Part2'.length, range.getEndOffset());
 
-    assertEquals(
-        'Container should be DIV', String(TagName.DIV),
-        range.getContainer().tagName);
+    assertEquals('Container should be DIV', String(TagName.DIV), range.getContainer().tagName);
 
-    assertEquals(
-        'Text content should be "Part1Part2"', 'Part1Part2', range.getText());
+    assertEquals('Text content should be "Part1Part2"', 'Part1Part2', range.getText());
     assertFalse('Text range is not collapsed', range.isCollapsed());
+    assertEquals('Should contain correct html fragment', 'Part1Part2', range.getHtmlFragment());
     assertEquals(
-        'Should contain correct html fragment', 'Part1Part2',
-        range.getHtmlFragment());
-    assertEquals(
-        'Should contain correct valid html', 'part1part2',
-        normalizeHtml(range.getValidHtml()));
+      'Should contain correct valid html',
+      'part1part2',
+      normalizeHtml(range.getValidHtml())
+    );
   },
 
   /**
@@ -188,30 +179,32 @@ testSuite({
     const range = browserrange.createRangeFromNodeContents(test2);
 
     assertEquals(
-        'Text node "abc" should be selected at start endpoint', 'abc',
-        range.getStartNode().nodeValue);
-    assertEquals(
-        'Selection should start at offset 0', 0, range.getStartOffset());
+      'Text node "abc" should be selected at start endpoint',
+      'abc',
+      range.getStartNode().nodeValue
+    );
+    assertEquals('Selection should start at offset 0', 0, range.getStartOffset());
 
     assertEquals(
-        'Text node "def" should be selected at end endpoint', 'def',
-        range.getEndNode().nodeValue);
-    assertEquals(
-        'Selection should end at offset 3', 'def'.length, range.getEndOffset());
+      'Text node "def" should be selected at end endpoint',
+      'def',
+      range.getEndNode().nodeValue
+    );
+    assertEquals('Selection should end at offset 3', 'def'.length, range.getEndOffset());
 
-    assertEquals(
-        'Container should be DIV', 'DIV', range.getContainer().tagName);
+    assertEquals('Container should be DIV', 'DIV', range.getContainer().tagName);
 
-    assertTrue(
-        'Div text content should be "abc\\s*def"',
-        /abc\s*def/.test(range.getText()));
+    assertTrue('Div text content should be "abc\\s*def"', /abc\s*def/.test(range.getText()));
     assertEquals(
-        'Should contain correct html fragment', 'abc<br id=br>def',
-        normalizeHtml(range.getHtmlFragment()));
+      'Should contain correct html fragment',
+      'abc<br id=br>def',
+      normalizeHtml(range.getHtmlFragment())
+    );
     assertEquals(
-        'Should contain correct valid html',
-        '<div id=test2>abc<br id=br>def</div>',
-        normalizeHtml(range.getValidHtml()));
+      'Should contain correct valid html',
+      '<div id=test2>abc<br id=br>def</div>',
+      normalizeHtml(range.getValidHtml())
+    );
     assertFalse('Div range is not collapsed', range.isCollapsed());
   },
 
@@ -220,8 +213,7 @@ testSuite({
     const range = browserrange.createRangeFromNodeContents(empty);
     const html = '<b>hello</b>';
     range.insertNode(dom.safeHtmlToNode(testing.newSafeHtmlForTest(html)));
-    assertEquals(
-        'Html is not inserted correctly', html, normalizeHtml(empty.innerHTML));
+    assertEquals('Html is not inserted correctly', html, normalizeHtml(empty.innerHTML));
     dom.removeChildren(empty);
   },
 
@@ -232,27 +224,22 @@ testSuite({
   testEmptyNode() {
     const range = browserrange.createRangeFromNodeContents(empty);
 
-    assertEquals(
-        'DIV be selected at start endpoint', 'DIV',
-        range.getStartNode().tagName);
-    assertEquals(
-        'Selection should start at offset 0', 0, range.getStartOffset());
+    assertEquals('DIV be selected at start endpoint', 'DIV', range.getStartNode().tagName);
+    assertEquals('Selection should start at offset 0', 0, range.getStartOffset());
 
-    assertEquals(
-        'DIV should be selected at end endpoint', 'DIV',
-        range.getEndNode().tagName);
+    assertEquals('DIV should be selected at end endpoint', 'DIV', range.getEndNode().tagName);
     assertEquals('Selection should end at offset 0', 0, range.getEndOffset());
 
-    assertEquals(
-        'Container should be DIV', 'DIV', range.getContainer().tagName);
+    assertEquals('Container should be DIV', 'DIV', range.getContainer().tagName);
 
     assertEquals('Empty text content should be ""', '', range.getText());
     assertTrue('Empty range is collapsed', range.isCollapsed());
     assertEquals(
-        'Should contain correct valid html', '<div id=empty></div>',
-        normalizeHtml(range.getValidHtml()));
-    assertEquals(
-        'Should contain no html fragment', '', range.getHtmlFragment());
+      'Should contain correct valid html',
+      '<div id=empty></div>',
+      normalizeHtml(range.getValidHtml())
+    );
+    assertEquals('Should contain no html fragment', '', range.getHtmlFragment());
   },
 
   testRemoveContents() {
@@ -275,8 +262,7 @@ testSuite({
 
     assertEquals('Removed range content should be ""', '', range.getText());
     assertTrue('Removed range is now collapsed', range.isCollapsed());
-    assertEquals(
-        'Outer div should have 0 children now', 0, outer.childNodes.length);
+    assertEquals('Outer div should have 0 children now', 0, outer.childNodes.length);
   },
 
   testRemoveContentsSingleNode() {
@@ -295,44 +281,37 @@ testSuite({
     const textNode = outer.firstChild.firstChild;
     const range = browserrange.createRangeFromNodes(textNode, 1, textNode, 4);
 
-    assertEquals(
-        'Previous range content should be "123"', '123', range.getText());
+    assertEquals('Previous range content should be "123"', '123', range.getText());
     range.removeContents();
 
-    assertEquals(
-        'Removed range content should be "0456789"', '0456789',
-        dom.getTextContent(outer));
+    assertEquals('Removed range content should be "0456789"', '0456789', dom.getTextContent(outer));
   },
 
   testRemoveContentsMidMultipleNodes() {
     const outer = dom.getElement('removeTestMidMultipleNodes');
     const firstTextNode = outer.firstChild.firstChild;
     const lastTextNode = outer.lastChild.firstChild;
-    const range =
-        browserrange.createRangeFromNodes(firstTextNode, 1, lastTextNode, 4);
+    const range = browserrange.createRangeFromNodes(firstTextNode, 1, lastTextNode, 4);
 
-    assertEquals(
-        'Previous range content', '1234567890123',
-        range.getText().replace(/\s/g, ''));
+    assertEquals('Previous range content', '1234567890123', range.getText().replace(/\s/g, ''));
     range.removeContents();
 
     assertEquals(
-        'Removed range content should be "0456789"', '0456789',
-        dom.getTextContent(outer).replace(/\s/g, ''));
+      'Removed range content should be "0456789"',
+      '0456789',
+      dom.getTextContent(outer).replace(/\s/g, '')
+    );
   },
 
   testRemoveDivCaretRange() {
     const outer = dom.getElement('sandbox');
     outer.innerHTML = '<div>Test1</div><div></div>';
-    const range = browserrange.createRangeFromNodes(
-        outer.lastChild, 0, outer.lastChild, 0);
+    const range = browserrange.createRangeFromNodes(outer.lastChild, 0, outer.lastChild, 0);
 
     range.removeContents();
     range.insertNode(dom.createDom(TagName.SPAN, undefined, 'Hello'), true);
 
-    assertEquals(
-        'Resulting contents', 'Test1Hello',
-        dom.getTextContent(outer).replace(/\s/g, ''));
+    assertEquals('Resulting contents', 'Test1Hello', dom.getTextContent(outer).replace(/\s/g, ''));
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -340,8 +319,7 @@ testSuite({
     let range = browserrange.createRangeFromNodeContents(test2);
     assertFalse('Div range is not collapsed', range.isCollapsed());
     range.collapse();
-    assertTrue(
-        'Div range is collapsed after call to empty()', range.isCollapsed());
+    assertTrue('Div range is collapsed after call to empty()', range.isCollapsed());
 
     range = browserrange.createRangeFromNodeContents(empty);
     assertTrue('Empty range is collapsed', range.isCollapsed());
@@ -352,22 +330,21 @@ testSuite({
   testIdWithSpecialCharacters() {
     dom.removeChildren(dynamic);
     dynamic.appendChild(dom.createTextNode('1'));
-    dynamic.appendChild(dom.createDom(TagName.DIV, {id: '<>'}));
+    dynamic.appendChild(dom.createDom(TagName.DIV, { id: '<>' }));
     dynamic.appendChild(dom.createTextNode('2'));
-    const range = browserrange.createRangeFromNodes(
-        dynamic.firstChild, 0, dynamic.lastChild, 1);
+    const range = browserrange.createRangeFromNodes(dynamic.firstChild, 0, dynamic.lastChild, 1);
 
     // Difference in special character handling is ok.
     assertEquals(
-        'Should have correct html fragment', '1<div id=<>></div>2',
-        normalizeHtml(range.getHtmlFragment()));
+      'Should have correct html fragment',
+      '1<div id=<>></div>2',
+      normalizeHtml(range.getHtmlFragment())
+    );
   },
 
   testEndOfChildren() {
-    dynamic.innerHTML =
-        '<span id="a">123<br>456</span><span id="b">text</span>';
-    const range = browserrange.createRangeFromNodes(
-        dom.getElement('a'), 3, dom.getElement('b'), 1);
+    dynamic.innerHTML = '<span id="a">123<br>456</span><span id="b">text</span>';
+    const range = browserrange.createRangeFromNodes(dom.getElement('a'), 3, dom.getElement('b'), 1);
     assertEquals('Should have correct text.', 'text', range.getText());
   },
 
@@ -380,8 +357,7 @@ testSuite({
     const expectedEndNode = a;
     const expectedEndOffset = 1;
     assertEquals('startNode is wrong', expectedStartNode, range.getStartNode());
-    assertEquals(
-        'startOffset is wrong', expectedStartOffset, range.getStartOffset());
+    assertEquals('startOffset is wrong', expectedStartOffset, range.getStartOffset());
     assertEquals('endNode is wrong', expectedEndNode, range.getEndNode());
     assertEquals('endOffset is wrong', expectedEndOffset, range.getEndOffset());
   },
@@ -400,8 +376,7 @@ testSuite({
     const startNode = selRange.getStartNode();
     if (startNode.nodeType == NodeType.TEXT) {
       // Special case for Safari.
-      assertEquals(
-          'Startnode should have text:123', '123', startNode.nodeValue);
+      assertEquals('Startnode should have text:123', '123', startNode.nodeValue);
     } else {
       assertEquals('Start node should be span', spanElem, startNode);
     }
@@ -426,8 +401,7 @@ testSuite({
     const endNode = selRange.getEndNode();
     if (startNode.nodeType == NodeType.TEXT) {
       // Special case for Safari.
-      assertEquals(
-          'Start node should have text:123', '123', startNode.nodeValue);
+      assertEquals('Start node should have text:123', '123', startNode.nodeValue);
     } else {
       assertEquals('Start node should be span', spanElem, startNode);
     }
@@ -455,8 +429,7 @@ testSuite({
     const startNode = selRange.getStartNode();
     if (startNode.nodeType == NodeType.TEXT) {
       // Special case for Safari.
-      assertEquals(
-          'Startnode should have text:123', '123', startNode.nodeValue);
+      assertEquals('Startnode should have text:123', '123', startNode.nodeValue);
     } else {
       assertEquals('Start node should be span', spanElem, startNode);
     }
@@ -516,8 +489,7 @@ testSuite({
     const startNode = selRange.getStartNode();
     if (startNode.nodeType == NodeType.TEXT) {
       // Special case for Safari.
-      assertEquals(
-          'Startnode should have text:4567', '4567', startNode.nodeValue);
+      assertEquals('Startnode should have text:4567', '4567', startNode.nodeValue);
       assertEquals('Startoffset should be 0', 0, selRange.getStartOffset());
     } else {
       assertEquals('Start node should be span', spanElem, startNode);
@@ -536,8 +508,7 @@ testSuite({
 
   testCollapsedRangeBeforeBR() {
     dynamic.innerHTML = '<span id="a">123<br>456</span>';
-    const range = browserrange.createRangeFromNodes(
-        dom.getElement('a'), 1, dom.getElement('a'), 1);
+    const range = browserrange.createRangeFromNodes(dom.getElement('a'), 1, dom.getElement('a'), 1);
     // Firefox returns <span id="a"></span> as the range HTML while IE returns
     // empty string. Therefore skipping the HTML check.
     assertEquals('Should have no text.', '', range.getText());
@@ -545,8 +516,7 @@ testSuite({
 
   testCollapsedRangeAfterBR() {
     dynamic.innerHTML = '<span id="a">123<br>456</span>';
-    const range = browserrange.createRangeFromNodes(
-        dom.getElement('a'), 2, dom.getElement('a'), 2);
+    const range = browserrange.createRangeFromNodes(dom.getElement('a'), 2, dom.getElement('a'), 2);
     // Firefox returns <span id="a"></span> as the range HTML while IE returns
     // empty string. Therefore skipping the HTML check.
     assertEquals('Should have no text.', '', range.getText());
@@ -559,37 +529,54 @@ testSuite({
     const range_inner = browserrange.createRangeFromNodeContents(inner);
 
     assertEquals(
-        'The start of the inner selection should be after the outer.', 1,
-        range_inner.compareBrowserRangeEndpoints(
-            range_outer.getBrowserRange(), RangeEndpoint.START,
-            RangeEndpoint.START));
+      'The start of the inner selection should be after the outer.',
+      1,
+      range_inner.compareBrowserRangeEndpoints(
+        range_outer.getBrowserRange(),
+        RangeEndpoint.START,
+        RangeEndpoint.START
+      )
+    );
 
     assertEquals(
-        'The start of the inner selection should be before the outer\'s end.',
-        -1,
-        range_inner.compareBrowserRangeEndpoints(
-            range_outer.getBrowserRange(), RangeEndpoint.START,
-            RangeEndpoint.END));
+      "The start of the inner selection should be before the outer's end.",
+      -1,
+      range_inner.compareBrowserRangeEndpoints(
+        range_outer.getBrowserRange(),
+        RangeEndpoint.START,
+        RangeEndpoint.END
+      )
+    );
 
     assertEquals(
-        'The end of the inner selection should be after the outer\'s start.', 1,
-        range_inner.compareBrowserRangeEndpoints(
-            range_outer.getBrowserRange(), RangeEndpoint.END,
-            RangeEndpoint.START));
+      "The end of the inner selection should be after the outer's start.",
+      1,
+      range_inner.compareBrowserRangeEndpoints(
+        range_outer.getBrowserRange(),
+        RangeEndpoint.END,
+        RangeEndpoint.START
+      )
+    );
 
     assertEquals(
-        'The end of the inner selection should be before the outer\'s end.', -1,
-        range_inner.compareBrowserRangeEndpoints(
-            range_outer.getBrowserRange(), RangeEndpoint.END,
-            RangeEndpoint.END));
+      "The end of the inner selection should be before the outer's end.",
+      -1,
+      range_inner.compareBrowserRangeEndpoints(
+        range_outer.getBrowserRange(),
+        RangeEndpoint.END,
+        RangeEndpoint.END
+      )
+    );
   },
 
   testSelectOverwritesOldSelection() {
     browserrange.createRangeFromNodes(test1, 0, test1, 1).select();
     browserrange.createRangeFromNodes(test2, 0, test2, 1).select();
     assertEquals(
-        'The old selection must be replaced with the new one', 'abc',
-        Range.createFromWindow().getText());
+      'The old selection must be replaced with the new one',
+      'abc',
+      Range.createFromWindow().getText()
+    );
   },
 
   testGetContainerInTextNodesAroundEmptySpan() {
@@ -599,23 +586,13 @@ testSuite({
 
     let range;
     range = browserrange.createRangeFromNodes(abc, 1, abc, 1);
-    assertEquals(
-        'textNode abc should be the range container', abc,
-        range.getContainer());
-    assertEquals(
-        'textNode abc should be the range start node', abc,
-        range.getStartNode());
-    assertEquals(
-        'textNode abc should be the range end node', abc, range.getEndNode());
+    assertEquals('textNode abc should be the range container', abc, range.getContainer());
+    assertEquals('textNode abc should be the range start node', abc, range.getStartNode());
+    assertEquals('textNode abc should be the range end node', abc, range.getEndNode());
 
     range = browserrange.createRangeFromNodes(def, 1, def, 1);
-    assertEquals(
-        'textNode def should be the range container', def,
-        range.getContainer());
-    assertEquals(
-        'textNode def should be the range start node', def,
-        range.getStartNode());
-    assertEquals(
-        'textNode def should be the range end node', def, range.getEndNode());
+    assertEquals('textNode def should be the range container', def, range.getContainer());
+    assertEquals('textNode def should be the range start node', def, range.getStartNode());
+    assertEquals('textNode def should be the range end node', def, range.getEndNode());
   },
 });

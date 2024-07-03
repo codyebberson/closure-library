@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.debug.entryPointRegistryTest');
-goog.setTestOnly();
 
 const ErrorHandler = goog.require('goog.debug.ErrorHandler');
 const entryPointRegistry = goog.require('goog.debug.entryPointRegistry');
@@ -19,7 +18,7 @@ testSuite({
   setUp() {
     lastError = null;
     errorFn = (message) => {
-      throw {message: message};
+      throw { message: message };
     };
     errorHandler = new ErrorHandler((ex) => {
       lastError = ex;
@@ -66,12 +65,10 @@ testSuite({
     entryPointRegistry.monitorAll(errorHandler);
     /** @suppress {checkTypes} suppression added to enable type checking */
     const e = assertThrows(
-        'expected error',
-        goog.partial(
-            entryPointRegistry.unmonitorAllIfPossible, new ErrorHandler()));
-    assertEquals(
-        'Assertion failed: Only the most recent monitor can be unwrapped.',
-        e.message);
+      'expected error',
+      goog.partial(entryPointRegistry.unmonitorAllIfPossible, new ErrorHandler())
+    );
+    assertEquals('Assertion failed: Only the most recent monitor can be unwrapped.', e.message);
     entryPointRegistry.unmonitorAllIfPossible(errorHandler);
   },
 });

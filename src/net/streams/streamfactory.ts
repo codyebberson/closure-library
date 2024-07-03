@@ -13,9 +13,8 @@ goog.module('goog.net.streams.streamFactory');
 const NodeReadableStream = goog.requireType('goog.net.streams.NodeReadableStream');
 const XhrIo = goog.requireType('goog.net.XhrIo');
 const asserts = goog.require('goog.asserts');
-const {XhrNodeReadableStream} = goog.require('goog.net.streams.xhrNodeReadableStream');
-const {XhrStreamReader} = goog.require('goog.net.streams.xhrStreamReader');
-
+const { XhrNodeReadableStream } = goog.require('goog.net.streams.xhrNodeReadableStream');
+const { XhrStreamReader } = goog.require('goog.net.streams.xhrStreamReader');
 
 /**
  * Creates a new NodeReadableStream object using goog.net.xhrio as the
@@ -58,4 +57,4 @@ function createXhrNodeReadableStream(xhr) {
   return new XhrNodeReadableStream(reader);
 }
 
-exports = {createXhrNodeReadableStream};
+exports = { createXhrNodeReadableStream };

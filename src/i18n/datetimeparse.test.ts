@@ -9,7 +9,6 @@
  * @suppress {missingRequire} Swapping using fully qualified name
  */
 goog.module('goog.i18n.DateTimeParseTest');
-goog.setTestOnly();
 
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
 const replacer = new PropertyReplacer();
@@ -31,10 +30,9 @@ const DateTimeSymbols_zh_TW = goog.require('goog.i18n.DateTimeSymbols_zh_TW');
 const GoogDate = goog.require('goog.date.Date');
 const testSuite = goog.require('goog.testing.testSuite');
 
-const {DayPeriods_zh_Hant, setDayPeriods} = goog.require('goog.i18n.DayPeriods');
+const { DayPeriods_zh_Hant, setDayPeriods } = goog.require('goog.i18n.DayPeriods');
 
-const DATETIMESYMBOLS =
-    goog.reflect.objectProperty('DateTimeSymbols', goog.i18n);
+const DATETIMESYMBOLS = goog.reflect.objectProperty('DateTimeSymbols', goog.i18n);
 const LOCALE = goog.reflect.objectProperty('LOCALE', goog);
 
 replacer.replace(goog.i18n, DATETIMESYMBOLS, DateTimeSymbols_en);
@@ -98,12 +96,10 @@ function assertTimeEquals(expectHour, expectMin, expectSec, expectMilli, date) {
  * @param {string} text
  * @param {!AssertParseOptions=} options
  */
-function assertParsedDateEquals(
-    expectYear, expectMonth, expectDate, parser, text, options) {
+function assertParsedDateEquals(expectYear, expectMonth, expectDate, parser, text, options) {
   const date = new Date(0);
 
-  assertEquals(
-      options?.partial ?? text.length, parser.parse(text, date, options));
+  assertEquals(options?.partial ?? text.length, parser.parse(text, date, options));
   assertDateEquals(expectYear, expectMonth, expectDate, date);
 }
 
@@ -118,11 +114,17 @@ function assertParsedDateEquals(
  * @param {!AssertParseOptions=} options
  */
 function assertParsedTimeEquals(
-    expectHour, expectMin, expectSec, expectMilli, parser, text, options) {
+  expectHour,
+  expectMin,
+  expectSec,
+  expectMilli,
+  parser,
+  text,
+  options
+) {
   const date = new Date(0);
 
-  assertEquals(
-      options?.partial ?? text.length, parser.parse(text, date, options));
+  assertEquals(options?.partial ?? text.length, parser.parse(text, date, options));
   assertTimeEquals(expectHour, expectMin, expectSec, expectMilli, date);
 }
 
@@ -139,9 +141,7 @@ function assertParseFails(parser, text, options) {
 }
 
 testSuite({
-  getTestName: function() {
-    return 'DateTimeParse Tests';
-  },
+  getTestName: () => 'DateTimeParse Tests',
 
   setUpPage() {},
 
@@ -184,8 +184,8 @@ testSuite({
 
     let futureDate = new Date();
     futureDate.setFullYear(
-        futureDate.getFullYear() + 100 -
-        DateTimeParse.ambiguousYearCenturyStart);
+      futureDate.getFullYear() + 100 - DateTimeParse.ambiguousYearCenturyStart
+    );
     let ambiguousYear = futureDate.getFullYear() % 100;
 
     const parser = new DateTimeParse('MM/dd/yy HH:mm:ss:SSS');
@@ -204,8 +204,8 @@ testSuite({
 
     futureDate = new Date();
     futureDate.setFullYear(
-        futureDate.getFullYear() + 100 -
-        DateTimeParse.ambiguousYearCenturyStart);
+      futureDate.getFullYear() + 100 - DateTimeParse.ambiguousYearCenturyStart
+    );
     ambiguousYear = futureDate.getFullYear() % 100;
 
     str = `01/01/${ambiguousYear} 00:00:00:001`;
@@ -233,7 +233,7 @@ testSuite({
     assertParsedTimeEquals(1, 22, 0, 0, parser, '122');
     assertParseFails(parser, '22');
     assertParseFails(parser, '22b');
-    assertParsedTimeEquals(1, 23, 0, 0, parser, '123b', {partial: 3});
+    assertParsedTimeEquals(1, 23, 0, 0, parser, '123b', { partial: 3 });
 
     parser = new DateTimeParse('hhmma');
     assertParsedTimeEquals(1, 23, 0, 0, parser, '123');
@@ -242,7 +242,7 @@ testSuite({
     assertParseFails(parser, '12am');
 
     parser = new DateTimeParse('HHmmss');
-    assertParsedTimeEquals(12, 34, 56, 0, parser, '123456789', {partial: 6});
+    assertParsedTimeEquals(12, 34, 56, 0, parser, '123456789', { partial: 6 });
     assertParsedTimeEquals(12, 34, 56, 0, parser, '123456');
     assertParsedTimeEquals(1, 23, 45, 0, parser, '12345');
     assertParseFails(parser, '1234');
@@ -403,9 +403,9 @@ testSuite({
     assertParsedTimeEquals(5, 0, 0, 0, parser, '5:');
     assertParsedTimeEquals(5, 4, 0, 0, parser, '5:4');
     assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44');
-    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44p', {partial: 4});
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44p', { partial: 4 });
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44pm');
-    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44ym', {partial: 4});
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44ym', { partial: 4 });
 
     parser = new DateTimeParse('h:mm a');
     assertParseFails(parser, '5');
@@ -414,14 +414,16 @@ testSuite({
     assertParseFails(parser, '5:44');
     assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44 ');
     assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44   ');
-    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44 p', {partial: 5});
-    assertParsedTimeEquals(
-        5, 44, 0, 0, parser, '5:44\u202f\u202fp', {partial: 6});
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44 p', { partial: 5 });
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u202f\u202fp', {
+      partial: 6,
+    });
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44 pm');
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44\u202fpm');
-    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44 ym', {partial: 5});
-    assertParsedTimeEquals(
-        5, 44, 0, 0, parser, '5:44\u1680\u00a0\t\u0020 ym', {partial: 9});
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44 ym', { partial: 5 });
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u1680\u00a0\t\u0020 ym', {
+      partial: 9,
+    });
 
     parser = new DateTimeParse('mm:ss');
     const date = new Date(0);
@@ -434,7 +436,7 @@ testSuite({
     const parser = new DateTimeParse('h:mm\u00a0a');
     assertParseFails(parser, '5');
     assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u00a0');
-    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u00a0p', {partial: 5});
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u00a0p', { partial: 5 });
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44\u00a0pm');
   },
 
@@ -442,7 +444,7 @@ testSuite({
     const parser = new DateTimeParse('h:mm\u202fa');
     assertParseFails(parser, '5');
     assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u202f');
-    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u202fp', {partial: 5});
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u202fp', { partial: 5 });
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44\u202fpm');
   },
 
@@ -450,7 +452,7 @@ testSuite({
     const parser = new DateTimeParse('h:mm\u2001a');
     assertParseFails(parser, '5');
     assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2001');
-    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2001p', {partial: 5});
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2001p', { partial: 5 });
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44\u2001pm');
   },
 
@@ -458,7 +460,7 @@ testSuite({
     const parser = new DateTimeParse('h:mm\u2000a');
     assertParseFails(parser, '5');
     assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2000');
-    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2000p', {partial: 5});
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2000p', { partial: 5 });
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44\u2000pm');
   },
 
@@ -466,7 +468,7 @@ testSuite({
     const parser = new DateTimeParse('h:mm\u2003a');
     assertParseFails(parser, '5');
     assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2003');
-    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2003p', {partial: 5});
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2003p', { partial: 5 });
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44\u2003pm');
   },
 
@@ -474,7 +476,7 @@ testSuite({
     const parser = new DateTimeParse('h:mm\u2002a');
     assertParseFails(parser, '5');
     assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2002');
-    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2002p', {partial: 5});
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2002p', { partial: 5 });
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44\u2002pm');
   },
 
@@ -482,7 +484,7 @@ testSuite({
     const parser = new DateTimeParse('h:mm\u2004a');
     assertParseFails(parser, '5');
     assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2004');
-    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2004p', {partial: 5});
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2004p', { partial: 5 });
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44\u2004pm');
   },
 
@@ -490,7 +492,7 @@ testSuite({
     const parser = new DateTimeParse('h:mm\u2005a');
     assertParseFails(parser, '5');
     assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2005');
-    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2005p', {partial: 5});
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2005p', { partial: 5 });
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44\u2005pm');
   },
 
@@ -498,7 +500,7 @@ testSuite({
     const parser = new DateTimeParse('h:mm\u2006a');
     assertParseFails(parser, '5');
     assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2006');
-    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2006p', {partial: 5});
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2006p', { partial: 5 });
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44\u2006pm');
   },
 
@@ -506,7 +508,7 @@ testSuite({
     const parser = new DateTimeParse('h:mm\u2009a');
     assertParseFails(parser, '5');
     assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2009');
-    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2009p', {partial: 5});
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2009p', { partial: 5 });
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44\u2009pm');
   },
 
@@ -514,7 +516,7 @@ testSuite({
     const parser = new DateTimeParse('h:mm\u2007a');
     assertParseFails(parser, '5');
     assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2007');
-    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2007p', {partial: 5});
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2007p', { partial: 5 });
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44\u2007pm');
   },
 
@@ -522,7 +524,7 @@ testSuite({
     const parser = new DateTimeParse('h:mm\u2008a');
     assertParseFails(parser, '5');
     assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2008');
-    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2008p', {partial: 5});
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u2008p', { partial: 5 });
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44\u2008pm');
   },
 
@@ -530,7 +532,7 @@ testSuite({
     const parser = new DateTimeParse('h:mm\u200aa');
     assertParseFails(parser, '5');
     assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u200a');
-    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u200ap', {partial: 5});
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u200ap', { partial: 5 });
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44\u200apm');
   },
 
@@ -538,7 +540,7 @@ testSuite({
     const parser = new DateTimeParse('h:mm\u205fa');
     assertParseFails(parser, '5');
     assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u205f');
-    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u205fp', {partial: 5});
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u205fp', { partial: 5 });
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44\u205fpm');
   },
 
@@ -546,7 +548,7 @@ testSuite({
     const parser = new DateTimeParse('h:mm\u3000a');
     assertParseFails(parser, '5');
     assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u3000');
-    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u3000p', {partial: 5});
+    assertParsedTimeEquals(5, 44, 0, 0, parser, '5:44\u3000p', { partial: 5 });
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44\u3000pm');
   },
 
@@ -558,8 +560,9 @@ testSuite({
   },
 
   testTimeParsing_predictive() {
-    const opts =
-        /** @type {!DateTimeParse.ParseOptions} */ ({predictive: true});
+    const opts = /** @type {!DateTimeParse.ParseOptions} */ {
+      predictive: true,
+    };
 
     let parser = new DateTimeParse('h:mm a');
     assertParsedTimeEquals(5, 0, 0, 0, parser, '5', opts);
@@ -570,8 +573,10 @@ testSuite({
     assertParseFails(parser, '5:44 x', opts);
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44 p', opts);
     assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44 pm', opts);
-    assertParsedTimeEquals(
-        17, 44, 0, 0, parser, '5:44 pmx', {...opts, partial: 7});
+    assertParsedTimeEquals(17, 44, 0, 0, parser, '5:44 pmx', {
+      ...opts,
+      partial: 7,
+    });
 
     parser = new DateTimeParse('HH:mm');
     assertParsedTimeEquals(0, 0, 0, 0, parser, '0', opts);
@@ -595,9 +600,10 @@ testSuite({
   },
 
   testTimeParsing_predictiveValidate() {
-    const opts =
-        /** @type {!DateTimeParse.ParseOptions} */ (
-            {predictive: true, validate: true});
+    const opts = /** @type {!DateTimeParse.ParseOptions} */ {
+      predictive: true,
+      validate: true,
+    };
 
     const parser = new DateTimeParse('HH:mm');
     assertParsedTimeEquals(5, 0, 0, 0, parser, '05', opts);
@@ -631,11 +637,10 @@ testSuite({
     assertParsedDateEquals(2006, 7 - 1, 24, parser, dateStr);
 
     parser = new DateTimeParse(DateTimeFormat.Format.LONG_DATE);
-    assertParsedDateEquals(
-        2006, 7 - 1, 24, parser, '2006\u5E747\u670824\u65E5');
+    assertParsedDateEquals(2006, 7 - 1, 24, parser, '2006\u5E747\u670824\u65E5');
 
     parser = new DateTimeParse(DateTimeFormat.Format.FULL_TIME);
-    let gmtDateStringPm = 'GMT-07:00 \u4E0B\u534803:26:28';
+    const gmtDateStringPm = 'GMT-07:00 \u4E0B\u534803:26:28';
 
     // CLDR 40 data does not expect AM/PM for locale zh
     assertFalse(parser.parse(gmtDateStringPm, date) > 0);
@@ -645,8 +650,7 @@ testSuite({
     assertTrue(parser.parse(gmtDateStringHH, date) > 0);
 
     // This is now 10:00, not 10PM
-    const normalizedHour =
-        (24 + date.getHours() + date.getTimezoneOffset() / 60) % 24;
+    const normalizedHour = (24 + date.getHours() + date.getTimezoneOffset() / 60) % 24;
     assertEquals(10, normalizedHour);
     assertEquals(26, date.getMinutes());
     assertEquals(28, date.getSeconds());
@@ -656,33 +660,29 @@ testSuite({
     assertTrue(parser.parse(gmtDateString13, date) > 0);
 
     // This is now 20:00, based in 24 hour time.
-    const normalizedHour13 =
-        (24 + date.getHours() + date.getTimezoneOffset() / 60) % 24;
+    const normalizedHour13 = (24 + date.getHours() + date.getTimezoneOffset() / 60) % 24;
     assertEquals(20, normalizedHour13);
   },
 
   testZhTwBFormat() {
-    let nativeMode = true;
+    const nativeMode = true;
     replacer.replace(goog.i18n, DATETIMESYMBOLS, DateTimeSymbols_zh_TW);
 
     // Make sure we have the day period info.
     setDayPeriods(DayPeriods_zh_Hant);
 
     // Test for AM/PM with B for zh_TW
-    let parser = new DateTimeParse(DateTimeFormat.Format.FULL_TIME);
+    const parser = new DateTimeParse(DateTimeFormat.Format.FULL_TIME);
 
     // 3:26 下午 (afternoon1)
-    let gmtDateStringPm = '\u4E0B\u534803:26:28 [GMT-07:00]';
-    let date = new Date(2006, 7 - 1, 24, 12, 12, 12, 0);
+    const gmtDateStringPm = '\u4E0B\u534803:26:28 [GMT-07:00]';
+    const date = new Date(2006, 7 - 1, 24, 12, 12, 12, 0);
 
-    let parsedDate = parser.parse(gmtDateStringPm, date);
+    const parsedDate = parser.parse(gmtDateStringPm, date);
 
-    assertTrue(
-        'nativeMode=' + nativeMode + ', parsedDate=' + parsedDate,
-        parsedDate > 0);
+    assertTrue('nativeMode=' + nativeMode + ', parsedDate=' + parsedDate, parsedDate > 0);
     // This should be give 10PM == 22:00.
-    const normalizedHourPm =
-        (24 + date.getHours() + date.getTimezoneOffset() / 60) % 24;
+    const normalizedHourPm = (24 + date.getHours() + date.getTimezoneOffset() / 60) % 24;
     assertEquals(22, normalizedHourPm);
   },
 
@@ -766,17 +766,18 @@ testSuite({
   },
 
   testPredictiveOption() {
-    const opts =
-        /** @type {!DateTimeParse.ParseOptions} */ ({predictive: true});
+    const opts = /** @type {!DateTimeParse.ParseOptions} */ {
+      predictive: true,
+    };
 
-    const parser = new DateTimeParse('h \'text\' m');
+    const parser = new DateTimeParse("h 'text' m");
     assertParsedTimeEquals(9, 5, 0, 0, parser, '9 text 5', opts);
     assertParsedTimeEquals(9, 0, 0, 0, parser, '9 te', opts);
     assertParseFails(parser, '9 te 5', opts);
   },
 
   testValidateOption() {
-    const opts = /** @type {!DateTimeParse.ParseOptions} */ ({validate: true});
+    const opts = /** @type {!DateTimeParse.ParseOptions} */ { validate: true };
 
     let parser = new DateTimeParse('yyyy/MM/dd');
     assertParseFails(parser, '2000/13/10', opts);
@@ -846,7 +847,7 @@ testSuite({
     // We force the initial day of month to 30 so that it will always cause an
     // overflow in February, no matter if it is a leap year or not.
     const dateOrg = new Date(2006, 7 - 1, 30, 17, 21, 42, 0);
-    let dateParsed;  // this will receive the result of the parsing
+    let dateParsed; // this will receive the result of the parsing
 
     const parserMonthYear = new DateTimeParse('MMMM yyyy');
 
@@ -908,8 +909,8 @@ testSuite({
     const date1 = new GoogDate(2006, 7 - 1);
     const date2 = new GoogDate();
     const formatter = new DateTimeFormat('LLLL yyyy');
-    let parser = new DateTimeParse('LLLL yyyy');
-    let dateStr = formatter.format(date1);
+    const parser = new DateTimeParse('LLLL yyyy');
+    const dateStr = formatter.format(date1);
 
     assertTrue(parser.parse(dateStr, date2) > 0);
     assertDateEquals(date1.getFullYear(), date1.getMonth(), undefined, date2);
@@ -943,18 +944,14 @@ testSuite({
   },
 
   testConstructorSymbols() {
-    const fmtFr =
-        new DateTimeFormat(DateTimeFormat.Format.FULL_DATE, DateTimeSymbols_fr);
-    const parserFr =
-        new DateTimeParse(DateTimeFormat.Format.FULL_DATE, DateTimeSymbols_fr);
+    const fmtFr = new DateTimeFormat(DateTimeFormat.Format.FULL_DATE, DateTimeSymbols_fr);
+    const parserFr = new DateTimeParse(DateTimeFormat.Format.FULL_DATE, DateTimeSymbols_fr);
     const dateStrFr = fmtFr.format(new Date(2015, 9 - 1, 28));
 
     assertParsedDateEquals(2015, 9 - 1, 28, parserFr, dateStrFr);
 
-    const fmtZh =
-        new DateTimeFormat(DateTimeFormat.Format.FULL_DATE, DateTimeSymbols_zh);
-    const parserZh =
-        new DateTimeParse(DateTimeFormat.Format.FULL_DATE, DateTimeSymbols_zh);
+    const fmtZh = new DateTimeFormat(DateTimeFormat.Format.FULL_DATE, DateTimeSymbols_zh);
+    const parserZh = new DateTimeParse(DateTimeFormat.Format.FULL_DATE, DateTimeSymbols_zh);
     const dateStrZh = fmtZh.format(new Date(2015, 9 - 1, 28));
 
     assertParsedDateEquals(2015, 9 - 1, 28, parserZh, dateStrZh);
@@ -965,24 +962,24 @@ testSuite({
     replacer.replace(goog.i18n, DATETIMESYMBOLS, DateTimeSymbols_en);
 
     // Literal apostrophe
-    let parser = new DateTimeParse('MMM \'\'yy');
-    assertParsedDateEquals(2013, 11 - 1, undefined, parser, 'Nov \'13');
+    let parser = new DateTimeParse("MMM ''yy");
+    assertParsedDateEquals(2013, 11 - 1, undefined, parser, "Nov '13");
 
     // Quoted text
-    parser = new DateTimeParse('MMM dd\'th\' yyyy');
+    parser = new DateTimeParse("MMM dd'th' yyyy");
     assertParsedDateEquals(2013, 11 - 1, 15, parser, 'Nov 15th 2013');
 
     // Quoted text (only opening apostrophe)
-    parser = new DateTimeParse('MMM dd\'th yyyy');
+    parser = new DateTimeParse("MMM dd'th yyyy");
     assertParsedDateEquals(undefined, 11 - 1, 15, parser, 'Nov 15th yyyy');
 
     // Quoted text with literal apostrophe
-    parser = new DateTimeParse('MMM dd\'th\'\'\'');
-    assertParsedDateEquals(undefined, 11 - 1, 15, parser, 'Nov 15th\'');
+    parser = new DateTimeParse("MMM dd'th'''");
+    assertParsedDateEquals(undefined, 11 - 1, 15, parser, "Nov 15th'");
 
     // Quoted text with literal apostrophe (only opening apostrophe)
-    parser = new DateTimeParse('MMM dd\'th\'\'');
-    assertParsedDateEquals(undefined, 11 - 1, 15, parser, 'Nov 15th\'');
+    parser = new DateTimeParse("MMM dd'th''");
+    assertParsedDateEquals(undefined, 11 - 1, 15, parser, "Nov 15th'");
   },
 
   testNullDate() {
@@ -998,8 +995,9 @@ testSuite({
 
   testPredictiveParseWithUnsupportedPattern() {
     const date = new Date();
-    const opts =
-        /** @type {!DateTimeParse.ParseOptions} */ ({predictive: true});
+    const opts = /** @type {!DateTimeParse.ParseOptions} */ {
+      predictive: true,
+    };
 
     // Abutting runs of numbers are not supported for predictive parsing.
     let parser = new DateTimeParse('hhmm');
@@ -1009,7 +1007,6 @@ testSuite({
     parser = new DateTimeParse('yyyy');
     assertThrows(() => parser.parse('1234', date, opts));
   },
-
 
   testZhHantTwDayPeriods() {
     // b/208532468, 3-Dec-2021
@@ -1047,13 +1044,17 @@ testSuite({
 
     // Expected date time values
     const parseInfoZhHantTw = [
-      [2022, 4, 20, 0, 0, 0], [2022, 4, 20, 5, 30, 0], [2022, 4, 20, 8, 58, 0],
-      [2022, 4, 20, 12, 0, 0], [2022, 4, 20, 12, 58, 59],
-      [2022, 4, 20, 14, 17, 0], [2022, 4, 20, 19, 0, 0],
-      [2022, 4, 20, 3, 37, 17]
+      [2022, 4, 20, 0, 0, 0],
+      [2022, 4, 20, 5, 30, 0],
+      [2022, 4, 20, 8, 58, 0],
+      [2022, 4, 20, 12, 0, 0],
+      [2022, 4, 20, 12, 58, 59],
+      [2022, 4, 20, 14, 17, 0],
+      [2022, 4, 20, 19, 0, 0],
+      [2022, 4, 20, 3, 37, 17],
     ];
 
-    let date = new Date(0);
+    const date = new Date(0);
     const parser = new DateTimeParse(DateTimeFormat.Format.MEDIUM_TIME);
     // Check the results make sense with both B and AM/PM formatting
     for (let index = 0; index < testStringsZhHantTw.length; index++) {
@@ -1063,13 +1064,13 @@ testSuite({
       assertTimeEquals(dVals[3], dVals[4], dVals[5], 0, date);
     }
 
-    let date2 = new Date(0);
+    const date2 = new Date(0);
     const shortParser = new DateTimeParse(DateTimeFormat.Format.SHORT_TIME);
     // Check strings with only AM/PM data in Hant_MO.
     for (let index = 0; index < testStringsZhHantMo.length; index++) {
       const dVals = parseInfoZhHantTw[index];
 
-      let parsedOK = shortParser.parse(testStringsZhHantMo[index], date2);
+      const parsedOK = shortParser.parse(testStringsZhHantMo[index], date2);
       assertTrue('index=' + index, parsedOK > 0);
       assertTimeEquals(dVals[3], dVals[4], 0, 0, date2);
     }
@@ -1084,7 +1085,7 @@ testSuite({
     setDayPeriods(DayPeriods_zh_Hant);
 
     // !!! TODO: check other mode
-    let nativeMode = false;
+    const nativeMode = false;
     // replacer.replace(
     //     LocaleFeature, 'USE_ECMASCRIPT_I18N_DATETIMEF', nativeMode);
     const fmt = new DateTimeFormat(DateTimeFormat.Format.SHORT_TIME);
@@ -1094,9 +1095,9 @@ testSuite({
     assertEquals('Native=' + nativeMode, expected, result);
 
     // Now parse this
-    let parser = new DateTimeParse(DateTimeFormat.Format.SHORT_TIME);
-    let newDate = new Date(0);
-    let parsedOK = parser.parse(result, newDate);
+    const parser = new DateTimeParse(DateTimeFormat.Format.SHORT_TIME);
+    const newDate = new Date(0);
+    const parsedOK = parser.parse(result, newDate);
     assertTrue(parsedOK > 0);
     assertTimeEquals(17, 0, 0, 0, newDate);
   },
@@ -1123,18 +1124,16 @@ testSuite({
       '\u202f',
       '\u205f',
       '\u3000',
-      '   ',                 // Multiple spaces
-      '\u202f\u00a0\u200a',  // Multiple non-ASCII spaces
+      '   ', // Multiple spaces
+      '\u202f\u00a0\u200a', // Multiple non-ASCII spaces
     ];
 
-    let parser = new DateTimeParse(DateTimeFormat.Format.SHORT_TIME);
-    let newDate = new Date(0);
+    const parser = new DateTimeParse(DateTimeFormat.Format.SHORT_TIME);
+    const newDate = new Date(0);
     for (let index = 0; index < white_spaces.length; index++) {
-      let input_string = time_part + white_spaces[index] + 'AM';
-      let parsedOK = parser.parse(input_string, newDate);
-      assertTrue(
-          'Fails on index ' + index + ' >' + input_string + '<: ' + parsedOK,
-          parsedOK > 0);
+      const input_string = time_part + white_spaces[index] + 'AM';
+      const parsedOK = parser.parse(input_string, newDate);
+      assertTrue('Fails on index ' + index + ' >' + input_string + '<: ' + parsedOK, parsedOK > 0);
       assertTimeEquals(3, 26, 0, 0, newDate);
     }
   },
@@ -1158,9 +1157,9 @@ testSuite({
     const date = new Date();
     for (let i = 0; i < dateFormats.length; i++) {
       for (let j = 0; j < twitter_dates.length; j++) {
-        let text = twitter_dates[j];
+        const text = twitter_dates[j];
         const parser = new DateTimeParse(dateFormats[i]);
-        const parseDate = parser.parse(text, date, {validate: true});
+        const parseDate = parser.parse(text, date, { validate: true });
         if (parseDate !== 0) {
           // DateTimeParse uses current seconds since they are not provided in
           // the input string. We prefer to have stable output, so we set
@@ -1177,10 +1176,10 @@ testSuite({
     replacer.replace(goog.i18n, DATETIMESYMBOLS, DateTimeSymbols_ru);
     // Checking parse of output for non-ASCII whitespace characters.
     const test_cases = [
-      '28 июн. 2012 г.',       // ASCII Space
-      '28 июн. 2012 г.',       // Narrow non-breaking space
-      '28 июн. 2012\tг.',      // Horizontal tab
-      '28 июн. 2012\u3000г.',  // Ideographic space
+      '28 июн. 2012 г.', // ASCII Space
+      '28 июн. 2012 г.', // Narrow non-breaking space
+      '28 июн. 2012\tг.', // Horizontal tab
+      '28 июн. 2012\u3000г.', // Ideographic space
       'чт, 28 июн. 2012 г.',
     ];
 
@@ -1199,8 +1198,9 @@ testSuite({
       const pattern = format_patterns[index];
 
       const parser = new DateTimeParse(pattern);
-      const parseDate =
-          parser.parse(string_date, output_date, {validate: true});
+      const parseDate = parser.parse(string_date, output_date, {
+        validate: true,
+      });
       if (parseDate !== 0) {
         assertParsedDateEquals(2012, 5, 28, parser, string_date);
       }
@@ -1210,16 +1210,17 @@ testSuite({
   testBulgarian() {
     const short_time_string = '20:29 ч.';
 
-    const short_time_bg_pattern = 'H:mm \'ч\'.';
+    const short_time_bg_pattern = "H:mm 'ч'.";
     const parser = new DateTimeParse(short_time_bg_pattern);
     const output_date = new Date();
-    const parseDate =
-        parser.parse(short_time_string, output_date, {validate: true});
+    const parseDate = parser.parse(short_time_string, output_date, {
+      validate: true,
+    });
     if (parseDate !== 0) {
       const hr = output_date.getHours();
       const min = output_date.getMinutes();
       assertEquals(20, hr);
       assertEquals(29, min);
     }
-  }
+  },
 });

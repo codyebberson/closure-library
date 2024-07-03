@@ -26,16 +26,13 @@ goog.require('goog.userAgent');
 goog.requireType('goog.dom.AbstractRange');
 goog.requireType('goog.dom.SavedCaretRange');
 
-
-
 /**
  * A plugin to handle removing formatting from selected text.
  * @constructor
  * @extends {goog.editor.Plugin}
  * @final
  */
-goog.editor.plugins.RemoveFormatting = function() {
-  'use strict';
+goog.editor.plugins.RemoveFormatting = function () {
   goog.editor.Plugin.call(this);
 
   /**
@@ -48,34 +45,27 @@ goog.editor.plugins.RemoveFormatting = function() {
 };
 goog.inherits(goog.editor.plugins.RemoveFormatting, goog.editor.Plugin);
 
-
 /**
  * The editor command this plugin in handling.
  * @type {string}
  */
-goog.editor.plugins.RemoveFormatting.REMOVE_FORMATTING_COMMAND =
-    '+removeFormat';
-
+goog.editor.plugins.RemoveFormatting.REMOVE_FORMATTING_COMMAND = '+removeFormat';
 
 /**
  * Regular expression that matches a block tag name.
  * @type {RegExp}
  * @private
  */
-goog.editor.plugins.RemoveFormatting.BLOCK_RE_ =
-    /^(DIV|TR|LI|BLOCKQUOTE|H\d|PRE|XMP)/;
-
+goog.editor.plugins.RemoveFormatting.BLOCK_RE_ = /^(DIV|TR|LI|BLOCKQUOTE|H\d|PRE|XMP)/;
 
 /**
  * Appends a new line to a string buffer.
  * @param {Array<string>} sb The string buffer to add to.
  * @private
  */
-goog.editor.plugins.RemoveFormatting.appendNewline_ = function(sb) {
-  'use strict';
+goog.editor.plugins.RemoveFormatting.appendNewline_ = (sb) => {
   sb.push('<br>');
 };
-
 
 /**
  * Create a new range delimited by the start point of the first range and
@@ -87,46 +77,34 @@ goog.editor.plugins.RemoveFormatting.appendNewline_ = function(sb) {
  * @return {!goog.dom.AbstractRange} The new range.
  * @private
  */
-goog.editor.plugins.RemoveFormatting.createRangeDelimitedByRanges_ = function(
-    startRange, endRange) {
-  'use strict';
-  return goog.dom.Range.createFromNodes(
-      startRange.getStartNode(), startRange.getStartOffset(),
-      endRange.getEndNode(), endRange.getEndOffset());
-};
-
-
-/** @override */
-goog.editor.plugins.RemoveFormatting.prototype.getTrogClassId = function() {
-  'use strict';
-  return 'RemoveFormatting';
-};
-
+goog.editor.plugins.RemoveFormatting.createRangeDelimitedByRanges_ = (startRange, endRange) =>
+  goog.dom.Range.createFromNodes(
+    startRange.getStartNode(),
+    startRange.getStartOffset(),
+    endRange.getEndNode(),
+    endRange.getEndOffset()
+  );
 
 /** @override */
-goog.editor.plugins.RemoveFormatting.prototype.isSupportedCommand = function(
-    command) {
-  'use strict';
-  return command ==
-      goog.editor.plugins.RemoveFormatting.REMOVE_FORMATTING_COMMAND;
-};
-
+goog.editor.plugins.RemoveFormatting.prototype.getTrogClassId = () => 'RemoveFormatting';
 
 /** @override */
-goog.editor.plugins.RemoveFormatting.prototype.execCommandInternal = function(
-    command, var_args) {
-  'use strict';
-  if (command ==
-      goog.editor.plugins.RemoveFormatting.REMOVE_FORMATTING_COMMAND) {
+goog.editor.plugins.RemoveFormatting.prototype.isSupportedCommand = (command) =>
+  command == goog.editor.plugins.RemoveFormatting.REMOVE_FORMATTING_COMMAND;
+
+/** @override */
+goog.editor.plugins.RemoveFormatting.prototype.execCommandInternal = function (command, var_args) {
+  if (command == goog.editor.plugins.RemoveFormatting.REMOVE_FORMATTING_COMMAND) {
     this.removeFormatting_();
   }
 };
 
-
 /** @override */
-goog.editor.plugins.RemoveFormatting.prototype.handleKeyboardShortcut =
-    function(e, key, isModifierPressed) {
-  'use strict';
+goog.editor.plugins.RemoveFormatting.prototype.handleKeyboardShortcut = function (
+  e,
+  key,
+  isModifierPressed
+) {
   if (!isModifierPressed) {
     return false;
   }
@@ -147,17 +125,18 @@ goog.editor.plugins.RemoveFormatting.prototype.handleKeyboardShortcut =
 
   // Cmd + Space does not work on Mac. Ctrl + Space is reserved for IME
   // switching on ChromeOs. Ctrl/Cmd + \ is platform agnostic.
-  if ((!(goog.userAgent.MAC || goog.labs.userAgent.platform.isChromeOS()) &&
-       key === ' ') ||
-      (key === '\\')) {
+  if (
+    (!(goog.userAgent.MAC || goog.labs.userAgent.platform.isChromeOS()) && key === ' ') ||
+    key === '\\'
+  ) {
     this.getFieldObject().execCommand(
-        goog.editor.plugins.RemoveFormatting.REMOVE_FORMATTING_COMMAND);
+      goog.editor.plugins.RemoveFormatting.REMOVE_FORMATTING_COMMAND
+    );
     return true;
   }
 
   return false;
 };
-
 
 /**
  * Removes formatting from the current selection.  Removes basic formatting
@@ -167,8 +146,7 @@ goog.editor.plugins.RemoveFormatting.prototype.handleKeyboardShortcut =
  * and then replaces the current selection with the converted text.
  * @private
  */
-goog.editor.plugins.RemoveFormatting.prototype.removeFormatting_ = function() {
-  'use strict';
+goog.editor.plugins.RemoveFormatting.prototype.removeFormatting_ = function () {
   var range = this.getFieldObject().getRange();
   if (!range || range.isCollapsed()) {
     return;
@@ -176,8 +154,7 @@ goog.editor.plugins.RemoveFormatting.prototype.removeFormatting_ = function() {
 
   // Get the html to format and send it off for formatting. Built in
   // removeFormat only strips some inline elements and some inline CSS styles
-  var convFunc = this.optRemoveFormattingFunc_ ||
-      goog.bind(this.removeFormattingWorker_, this);
+  var convFunc = this.optRemoveFormattingFunc_ || goog.bind(this.removeFormattingWorker_, this);
   this.convertSelectedHtmlText_(convFunc);
 
   // Do the execCommand last as it needs block elements removed to work
@@ -187,7 +164,6 @@ goog.editor.plugins.RemoveFormatting.prototype.removeFormatting_ = function() {
   doc.execCommand('RemoveFormat', false, undefined);
 };
 
-
 /**
  * Finds the nearest ancestor of the node that is a table.
  * @param {Node} nodeToCheck Node to search from.
@@ -195,9 +171,7 @@ goog.editor.plugins.RemoveFormatting.prototype.removeFormatting_ = function() {
  * @private
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.editor.plugins.RemoveFormatting.prototype.getTableAncestor_ = function(
-    nodeToCheck) {
-  'use strict';
+goog.editor.plugins.RemoveFormatting.prototype.getTableAncestor_ = function (nodeToCheck) {
   var fieldElement = this.getFieldObject().getElement();
   while (nodeToCheck && nodeToCheck != fieldElement) {
     if (nodeToCheck.tagName == goog.dom.TagName.TABLE) {
@@ -207,7 +181,6 @@ goog.editor.plugins.RemoveFormatting.prototype.getTableAncestor_ = function(
   }
   return null;
 };
-
 
 /**
  * Replaces the contents of the selection with html. Does its best to maintain
@@ -221,17 +194,14 @@ goog.editor.plugins.RemoveFormatting.prototype.getTableAncestor_ = function(
  * @private
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.editor.plugins.RemoveFormatting.prototype.pasteHtml_ = function(html) {
-  'use strict';
-
+goog.editor.plugins.RemoveFormatting.prototype.pasteHtml_ = function (html) {
   var dh = this.getFieldDomHelper();
   // Use markers to set the extent of the selection so that we can reselect it
   // afterwards. This works better than builtin range manipulation in FF and IE
   // because their implementations are so self-inconsistent and buggy.
   var startSpanId = goog.string.createUniqueString();
   var endSpanId = goog.string.createUniqueString();
-  html = '<span id="' + startSpanId + '"></span>' + html + '<span id="' +
-      endSpanId + '"></span>';
+  html = '<span id="' + startSpanId + '"></span>' + html + '<span id="' + endSpanId + '"></span>';
   var dummyNodeId = goog.string.createUniqueString();
   var dummySpanText = '<span id="' + dummyNodeId + '"></span>';
 
@@ -244,14 +214,17 @@ goog.editor.plugins.RemoveFormatting.prototype.pasteHtml_ = function(html) {
   // pasting.
   const placeholderAnchorContent = goog.string.createUniqueString();
   if (parent.tagName == goog.dom.TagName.A) {
-    const safePlaceholderAnchorContent =
-        goog.html.SafeHtml.htmlEscape(placeholderAnchorContent);
+    const safePlaceholderAnchorContent = goog.html.SafeHtml.htmlEscape(placeholderAnchorContent);
     goog.dom.safe.insertAdjacentHtml(
-        parent, goog.dom.safe.InsertAdjacentHtmlPosition.AFTERBEGIN,
-        safePlaceholderAnchorContent);
+      parent,
+      goog.dom.safe.InsertAdjacentHtmlPosition.AFTERBEGIN,
+      safePlaceholderAnchorContent
+    );
     goog.dom.safe.insertAdjacentHtml(
-        parent, goog.dom.safe.InsertAdjacentHtmlPosition.BEFOREEND,
-        safePlaceholderAnchorContent);
+      parent,
+      goog.dom.safe.InsertAdjacentHtmlPosition.BEFOREEND,
+      safePlaceholderAnchorContent
+    );
   }
 
   // insertHtml and range.insertNode don't merge blocks correctly.
@@ -285,21 +258,24 @@ goog.editor.plugins.RemoveFormatting.prototype.pasteHtml_ = function(html) {
     // And since we're using that to replace, we need to escape those as well,
     // hence the 2*2 dollar signs.
     goog.editor.node.replaceInnerHtml(
-        parent,
-        parent.innerHTML.replace(
-            dummyImageNodePattern, html.replace(/\$/g, '$$$$')));
+      parent,
+      parent.innerHTML.replace(dummyImageNodePattern, html.replace(/\$/g, '$$$$'))
+    );
   } else {
     goog.editor.node.replaceInnerHtml(
-        parent, parent.innerHTML.replace(dummyImageNodePattern, dummySpanText));
+      parent,
+      parent.innerHTML.replace(dummyImageNodePattern, dummySpanText)
+    );
     var dummySpan = dh.getElement(dummyNodeId);
     parent = dummySpan;
-    while ((parent = dummySpan.parentNode) &&
-           goog.editor.node.isEmpty(parent) &&
-           !goog.editor.node.isEditableContainer(parent)) {
+    while (
+      (parent = dummySpan.parentNode) &&
+      goog.editor.node.isEmpty(parent) &&
+      !goog.editor.node.isEditableContainer(parent)
+    ) {
       var tag = parent.nodeName;
       // We can't remove these table tags as it will invalidate the table dom.
-      if (tag == goog.dom.TagName.TD || tag == goog.dom.TagName.TR ||
-          tag == goog.dom.TagName.TH) {
+      if (tag == goog.dom.TagName.TD || tag == goog.dom.TagName.TR || tag == goog.dom.TagName.TH) {
         break;
       }
 
@@ -310,24 +286,22 @@ goog.editor.plugins.RemoveFormatting.prototype.pasteHtml_ = function(html) {
       goog.dom.removeNode(parent);
     }
     goog.editor.node.replaceInnerHtml(
-        parent,
-        // Escape dollars passed in second argument of String.proto.replace
-        parent.innerHTML.replace(
-            new RegExp(dummySpanText, 'i'), html.replace(/\$/g, '$$$$')));
+      parent,
+      // Escape dollars passed in second argument of String.proto.replace
+      parent.innerHTML.replace(new RegExp(dummySpanText, 'i'), html.replace(/\$/g, '$$$$'))
+    );
   }
   goog.editor.node.replaceInnerHtml(
-      parent, parent.innerHTML.replaceAll(placeholderAnchorContent, ''));
-
+    parent,
+    parent.innerHTML.replaceAll(placeholderAnchorContent, '')
+  );
 
   var startSpan = dh.getElement(startSpanId);
   var endSpan = dh.getElement(endSpanId);
-  goog.dom.Range
-      .createFromNodes(startSpan, 0, endSpan, endSpan.childNodes.length)
-      .select();
+  goog.dom.Range.createFromNodes(startSpan, 0, endSpan, endSpan.childNodes.length).select();
   goog.dom.removeNode(startSpan);
   goog.dom.removeNode(endSpan);
 };
-
 
 /**
  * Gets the html inside the selection to send off for further processing.
@@ -342,8 +316,7 @@ goog.editor.plugins.RemoveFormatting.prototype.pasteHtml_ = function(html) {
  * @private
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.editor.plugins.RemoveFormatting.prototype.getHtmlText_ = function(range) {
-  'use strict';
+goog.editor.plugins.RemoveFormatting.prototype.getHtmlText_ = function (range) {
   var div = this.getFieldDomHelper().createDom(goog.dom.TagName.DIV);
   var textRange = range.getBrowserRangeObject();
 
@@ -355,7 +328,6 @@ goog.editor.plugins.RemoveFormatting.prototype.getHtmlText_ = function(range) {
   return div.innerHTML;
 };
 
-
 /**
  * Move the range so that it doesn't include any partially selected tables.
  * @param {goog.dom.AbstractRange} range The range to adjust.
@@ -365,9 +337,11 @@ goog.editor.plugins.RemoveFormatting.prototype.getHtmlText_ = function(range) {
  *     selection after we run our custom remove formatting.
  * @private
  */
-goog.editor.plugins.RemoveFormatting.prototype.adjustRangeForTables_ = function(
-    range, startInTable, endInTable) {
-  'use strict';
+goog.editor.plugins.RemoveFormatting.prototype.adjustRangeForTables_ = function (
+  range,
+  startInTable,
+  endInTable
+) {
   // Create placeholders for the current selection so we can restore it
   // later.
   var savedCaretRange = goog.editor.range.saveUsingNormalizedCarets(range);
@@ -393,12 +367,10 @@ goog.editor.plugins.RemoveFormatting.prototype.adjustRangeForTables_ = function(
     endOffset = 0;
   }
 
-  goog.dom.Range.createFromNodes(startNode, startOffset, endNode, endOffset)
-      .select();
+  goog.dom.Range.createFromNodes(startNode, startOffset, endNode, endOffset).select();
 
   return savedCaretRange;
 };
-
 
 /**
  * Remove a caret from the dom and hide it in a safe place, so it can
@@ -408,9 +380,7 @@ goog.editor.plugins.RemoveFormatting.prototype.adjustRangeForTables_ = function(
  * @param {boolean} isStart Whether this is the start or end caret.
  * @private
  */
-goog.editor.plugins.RemoveFormatting.prototype.putCaretInCave_ = function(
-    caretRange, isStart) {
-  'use strict';
+goog.editor.plugins.RemoveFormatting.prototype.putCaretInCave_ = function (caretRange, isStart) {
   var cavedCaret = goog.dom.removeNode(caretRange.getCaret(isStart));
   if (isStart) {
     /** @suppress {strictMissingProperties} Added to tighten compiler checks */
@@ -420,7 +390,6 @@ goog.editor.plugins.RemoveFormatting.prototype.putCaretInCave_ = function(
     this.endCaretInCave_ = cavedCaret;
   }
 };
-
 
 /**
  * Restore carets that were hidden away by adding them back into the dom.
@@ -432,9 +401,7 @@ goog.editor.plugins.RemoveFormatting.prototype.putCaretInCave_ = function(
  * @private
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.editor.plugins.RemoveFormatting.prototype.restoreCaretsFromCave_ =
-    function() {
-  'use strict';
+goog.editor.plugins.RemoveFormatting.prototype.restoreCaretsFromCave_ = function () {
   // To keep start before end, we put the end caret at the bottom of the field
   // and the start caret at the start of the field.
   var field = this.getFieldObject().getElement();
@@ -450,7 +417,6 @@ goog.editor.plugins.RemoveFormatting.prototype.restoreCaretsFromCave_ =
   }
 };
 
-
 /**
  * Gets the html inside the current selection, passes it through the given
  * conversion function, and puts it back into the selection.
@@ -459,9 +425,7 @@ goog.editor.plugins.RemoveFormatting.prototype.restoreCaretsFromCave_ =
  *    transforms an html string to new html string.
  * @private
  */
-goog.editor.plugins.RemoveFormatting.prototype.convertSelectedHtmlText_ =
-    function(convertFunc) {
-  'use strict';
+goog.editor.plugins.RemoveFormatting.prototype.convertSelectedHtmlText_ = function (convertFunc) {
   var range = this.getFieldObject().getRange();
 
   // For multiple ranges, it is really hard to do our custom remove formatting
@@ -492,8 +456,7 @@ goog.editor.plugins.RemoveFormatting.prototype.convertSelectedHtmlText_ =
     // Expand the selection to include any outermost tags that weren't included
     // in the selection, but have the same visible selection. Stop expanding
     // if we reach the top level field.
-    var expandedRange =
-        goog.editor.range.expand(range, this.getFieldObject().getElement());
+    var expandedRange = goog.editor.range.expand(range, this.getFieldObject().getElement());
 
     var startInTable = this.getTableAncestor_(expandedRange.getStartNode());
     var endInTable = this.getTableAncestor_(expandedRange.getEndNode());
@@ -508,8 +471,7 @@ goog.editor.plugins.RemoveFormatting.prototype.convertSelectedHtmlText_ =
 
       // Adjust the range to not contain any partially selected tables, since
       // we don't want to run our custom remove formatting on them.
-      var savedCaretRange =
-          this.adjustRangeForTables_(range, startInTable, endInTable);
+      var savedCaretRange = this.adjustRangeForTables_(range, startInTable, endInTable);
 
       // Hack alert!!
       // If start is not in a table, then the saved caret will get sent out
@@ -528,8 +490,7 @@ goog.editor.plugins.RemoveFormatting.prototype.convertSelectedHtmlText_ =
 
       // Re-fetch the range, and re-expand it, since we just modified it.
       range = this.getFieldObject().getRange();
-      expandedRange =
-          goog.editor.range.expand(range, this.getFieldObject().getElement());
+      expandedRange = goog.editor.range.expand(range, this.getFieldObject().getElement());
     }
 
     expandedRange.select();
@@ -550,14 +511,14 @@ goog.editor.plugins.RemoveFormatting.prototype.convertSelectedHtmlText_ =
     var realSavedCaretRange = savedCaretRange.toAbstractRange();
     var startRange = startInTable ? realSavedCaretRange : range;
     var endRange = endInTable ? realSavedCaretRange : range;
-    var restoredRange =
-        goog.editor.plugins.RemoveFormatting.createRangeDelimitedByRanges_(
-            startRange, endRange);
+    var restoredRange = goog.editor.plugins.RemoveFormatting.createRangeDelimitedByRanges_(
+      startRange,
+      endRange
+    );
     restoredRange.select();
     savedCaretRange.dispose();
   }
 };
-
 
 /**
  * Does a best-effort attempt at clobbering all formatting that the
@@ -570,12 +531,9 @@ goog.editor.plugins.RemoveFormatting.prototype.convertSelectedHtmlText_ =
  *     images.
  * @private
  */
-goog.editor.plugins.RemoveFormatting.prototype.removeFormattingWorker_ =
-    function(html) {
-  'use strict';
+goog.editor.plugins.RemoveFormatting.prototype.removeFormattingWorker_ = function (html) {
   var el = goog.dom.createElement(goog.dom.TagName.DIV);
-  goog.dom.safe.setInnerHtml(
-      el, goog.html.legacyconversions.safeHtmlFromString(html));
+  goog.dom.safe.setInnerHtml(el, goog.html.legacyconversions.safeHtmlFromString(html));
 
   // Put everything into a string buffer to avoid lots of expensive string
   // concatenation along the way.
@@ -585,7 +543,7 @@ goog.editor.plugins.RemoveFormatting.prototype.removeFormattingWorker_ =
   // Keep separate stacks for places where we need to keep track of
   // how deeply embedded we are.  These are analogous to the general stack.
   var preTagStack = [];
-  var preTagLevel = 0;  // Length of the prestack.
+  var preTagLevel = 0; // Length of the prestack.
   var tableStack = [];
   var tableLevel = 0;
 
@@ -602,7 +560,6 @@ goog.editor.plugins.RemoveFormatting.prototype.removeFormattingWorker_ =
     if (changedLevel) {
       goog.editor.plugins.RemoveFormatting.appendNewline_(sb);
     }
-
 
     // Check if we should pop the <pre>/<xmp> level.
     changedLevel = false;
@@ -635,9 +592,8 @@ goog.editor.plugins.RemoveFormatting.prototype.removeFormattingWorker_ =
         case '#text':
           // Note that IE does not preserve whitespace in the dom
           // values, even in a pre tag, so this is useless for IE.
-          var nodeValue = preTagLevel > 0 ?
-              node.nodeValue :
-              goog.string.stripNewlines(node.nodeValue);
+          var nodeValue =
+            preTagLevel > 0 ? node.nodeValue : goog.string.stripNewlines(node.nodeValue);
           nodeValue = goog.string.htmlEscape(nodeValue);
           sb.push(nodeValue);
           continue;
@@ -645,7 +601,7 @@ goog.editor.plugins.RemoveFormatting.prototype.removeFormattingWorker_ =
         case String(goog.dom.TagName.P):
           goog.editor.plugins.RemoveFormatting.appendNewline_(sb);
           goog.editor.plugins.RemoveFormatting.appendNewline_(sb);
-          break;  // break (not continue) so that child nodes are processed.
+          break; // break (not continue) so that child nodes are processed.
 
         case String(goog.dom.TagName.BR):
           goog.editor.plugins.RemoveFormatting.appendNewline_(sb);
@@ -670,25 +626,25 @@ goog.editor.plugins.RemoveFormatting.prototype.removeFormattingWorker_ =
 
         case String(goog.dom.TagName.A):
           if (node.href && node.href != '') {
-            sb.push('<a href=\'');
+            sb.push("<a href='");
             sb.push(node.getAttribute('href'));
-            sb.push('\'>');
+            sb.push("'>");
             sb.push(this.removeFormattingWorker_(node.innerHTML));
             sb.push('</a>');
-            continue;  // Children taken care of.
+            continue; // Children taken care of.
           } else {
-            break;  // Take care of the children.
+            break; // Take care of the children.
           }
 
         case String(goog.dom.TagName.IMG):
-          sb.push('<img src=\'');
+          sb.push("<img src='");
           sb.push(node.src);
-          sb.push('\'');
+          sb.push("'");
           // border=0 is a common way to not show a blue border around an image
           // that is wrapped by a link. If we remove that, the blue border will
           // show up, which to the user looks like adding format, not removing.
           if (node.border == '0') {
-            sb.push(' border=\'0\'');
+            sb.push(" border='0'");
           }
           sb.push('>');
           continue;
@@ -711,14 +667,15 @@ goog.editor.plugins.RemoveFormatting.prototype.removeFormattingWorker_ =
 
         case String(goog.dom.TagName.DIV):
           var parent = node.parentNode;
-          if (parent.firstChild == node &&
-              goog.editor.plugins.RemoveFormatting.BLOCK_RE_.test(
-                  parent.tagName)) {
+          if (
+            parent.firstChild == node &&
+            goog.editor.plugins.RemoveFormatting.BLOCK_RE_.test(parent.tagName)
+          ) {
             // If a DIV is the first child of another element that itself is a
             // block element, the DIV does not add a new line.
             break;
           }
-          // Otherwise, the DIV does add a new line.  Fall through.
+        // Otherwise, the DIV does add a new line.  Fall through.
 
         default:
           if (goog.editor.plugins.RemoveFormatting.BLOCK_RE_.test(nodeName)) {
@@ -744,7 +701,6 @@ goog.editor.plugins.RemoveFormatting.prototype.removeFormattingWorker_ =
   return goog.string.normalizeSpaces(sb.join(''));
 };
 
-
 /**
  * Handle per node special processing if necessary. If this function returns
  * null then standard cleanup is applied. Otherwise this node and all children
@@ -754,12 +710,7 @@ goog.editor.plugins.RemoveFormatting.prototype.removeFormattingWorker_ =
  * @param {Element} node The node to clean.
  * @return {?string} The HTML strig representation of the cleaned data.
  */
-goog.editor.plugins.RemoveFormatting.prototype.getValueForNode = function(
-    node) {
-  'use strict';
-  return null;
-};
-
+goog.editor.plugins.RemoveFormatting.prototype.getValueForNode = (node) => null;
 
 /**
  * Sets a function to be used for remove formatting.
@@ -768,8 +719,8 @@ goog.editor.plugins.RemoveFormatting.prototype.getValueForNode = function(
  *     formatting changes desired.  Use this only if trogedit's behavior doesn't
  *     meet your needs.
  */
-goog.editor.plugins.RemoveFormatting.prototype.setRemoveFormattingFunc =
-    function(removeFormattingFunc) {
-  'use strict';
+goog.editor.plugins.RemoveFormatting.prototype.setRemoveFormattingFunc = function (
+  removeFormattingFunc
+) {
   this.optRemoveFormattingFunc_ = removeFormattingFunc;
 };

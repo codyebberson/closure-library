@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.net.XhrManagerTest');
-goog.setTestOnly();
 
 const EventType = goog.require('goog.net.EventType');
 const TestingNetXhrIo = goog.requireType('goog.testing.net.XhrIo');
@@ -37,27 +36,31 @@ testSuite({
   },
 
   testGetOutstandingRequestIds() {
-    assertArrayEquals(
-        'No outstanding requests', [], xhrManager.getOutstandingRequestIds());
+    assertArrayEquals('No outstanding requests', [], xhrManager.getOutstandingRequestIds());
 
     xhrManager.send('test1', '/test1');
     assertArrayEquals(
-        'Single outstanding request', ['test1'],
-        xhrManager.getOutstandingRequestIds());
+      'Single outstanding request',
+      ['test1'],
+      xhrManager.getOutstandingRequestIds()
+    );
 
     xhrManager.send('test2', '/test2');
     assertArrayEquals(
-        'Two outstanding requests', ['test1', 'test2'],
-        xhrManager.getOutstandingRequestIds());
+      'Two outstanding requests',
+      ['test1', 'test2'],
+      xhrManager.getOutstandingRequestIds()
+    );
 
     xhrIo.simulateResponse(200, 'data');
     assertArrayEquals(
-        'Single outstanding request', ['test2'],
-        xhrManager.getOutstandingRequestIds());
+      'Single outstanding request',
+      ['test2'],
+      xhrManager.getOutstandingRequestIds()
+    );
 
     xhrIo.simulateResponse(200, 'data');
-    assertArrayEquals(
-        'No outstanding requests', [], xhrManager.getOutstandingRequestIds());
+    assertArrayEquals('No outstanding requests', [], xhrManager.getOutstandingRequestIds());
   },
 
   testForceAbortQueuedRequest() {
@@ -65,12 +68,14 @@ testSuite({
     xhrManager.send('queued', '/queued');
 
     assertNotThrows(
-        'Forced abort of queued request should not throw an error',
-        goog.bind(xhrManager.abort, xhrManager, 'queued', true));
+      'Forced abort of queued request should not throw an error',
+      goog.bind(xhrManager.abort, xhrManager, 'queued', true)
+    );
 
     assertNotThrows(
-        'Forced abort of normal request should not throw an error',
-        goog.bind(xhrManager.abort, xhrManager, 'test', true));
+      'Forced abort of normal request should not throw an error',
+      goog.bind(xhrManager.abort, xhrManager, 'test', true)
+    );
   },
 
   testDefaultResponseType() {
@@ -82,7 +87,7 @@ testSuite({
     xhrManager.send('test1', '/test2');
     assertEquals(1, callback.getCallCount());
 
-    xhrIo.simulateResponse(200, 'data');  // Do this to make tearDown() happy.
+    xhrIo.simulateResponse(200, 'data'); // Do this to make tearDown() happy.
   },
 
   testNonDefaultResponseType() {
@@ -92,12 +97,18 @@ testSuite({
     });
     events.listenOnce(xhrManager, EventType.READY, callback);
     xhrManager.send(
-        'test2', '/test2', undefined /* opt_method */,
-        undefined /* opt_content */, undefined /* opt_headers */,
-        undefined /* opt_priority */, undefined /* opt_callback */,
-        undefined /* opt_maxRetries */, XhrIo.ResponseType.ARRAY_BUFFER);
+      'test2',
+      '/test2',
+      undefined /* opt_method */,
+      undefined /* opt_content */,
+      undefined /* opt_headers */,
+      undefined /* opt_priority */,
+      undefined /* opt_callback */,
+      undefined /* opt_maxRetries */,
+      XhrIo.ResponseType.ARRAY_BUFFER
+    );
     assertEquals(1, callback.getCallCount());
 
-    xhrIo.simulateResponse(200, 'data');  // Do this to make tearDown() happy.
+    xhrIo.simulateResponse(200, 'data'); // Do this to make tearDown() happy.
   },
 });

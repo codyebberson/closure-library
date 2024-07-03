@@ -12,7 +12,6 @@
 ////////////////////////// NOTE ABOUT EDITING THIS FILE ///////////////////////
 
 goog.module('goog.vec.vec4fTest');
-goog.setTestOnly();
 
 const testSuite = goog.require('goog.testing.testSuite');
 const vec4f = goog.require('goog.vec.vec4f');
@@ -160,7 +159,7 @@ testSuite({
     assertElementsEquals([1, 2, 3, 4], v2);
     vec4f.lerp(v2, v1, 1, v2);
     assertElementsEquals([10, 20, 30, 40], v2);
-    vec4f.lerp(v0, v1, .5, v2);
+    vec4f.lerp(v0, v1, 0.5, v2);
     assertElementsEquals([5.5, 11, 16.5, 22], v2);
   },
 

@@ -13,8 +13,6 @@ goog.provide('goog.ui.ac.RichInputHandler');
 
 goog.require('goog.ui.ac.InputHandler');
 
-
-
 /**
  * Class for managing the interaction between an autocomplete object and a
  * text-input or textarea.
@@ -27,14 +25,10 @@ goog.require('goog.ui.ac.InputHandler');
  * @constructor
  * @extends {goog.ui.ac.InputHandler}
  */
-goog.ui.ac.RichInputHandler = function(
-    opt_separators, opt_literals, opt_multi, opt_throttleTime) {
-  'use strict';
-  goog.ui.ac.InputHandler.call(
-      this, opt_separators, opt_literals, opt_multi, opt_throttleTime);
+goog.ui.ac.RichInputHandler = function (opt_separators, opt_literals, opt_multi, opt_throttleTime) {
+  goog.ui.ac.InputHandler.call(this, opt_separators, opt_literals, opt_multi, opt_throttleTime);
 };
 goog.inherits(goog.ui.ac.RichInputHandler, goog.ui.ac.InputHandler);
-
 
 /**
  * Selects the given rich row.  The row's select(target) method is called.
@@ -43,10 +37,8 @@ goog.inherits(goog.ui.ac.RichInputHandler, goog.ui.ac.InputHandler);
  * @override
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.ui.ac.RichInputHandler.prototype.selectRow = function(row) {
-  'use strict';
-  var suppressUpdate =
-      goog.ui.ac.RichInputHandler.superClass_.selectRow.call(this, row);
+goog.ui.ac.RichInputHandler.prototype.selectRow = function (row) {
+  var suppressUpdate = goog.ui.ac.RichInputHandler.superClass_.selectRow.call(this, row);
   row.select(this.ac_.getTarget());
   return suppressUpdate;
 };

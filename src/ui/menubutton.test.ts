@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.MenuButtonTest');
-goog.setTestOnly();
 
 const Component = goog.require('goog.ui.Component');
 const Corner = goog.require('goog.positioning.Corner');
@@ -46,12 +45,25 @@ let expectedFailures;
 // TODO(nicksantos): Move this into a common location if we ever have enough
 // code for a general goog.testing.ui library.
 const originalPositionAtCoordinate = positioning.positionAtCoordinate;
-positioning.positionAtCoordinate = function(
-    absolutePos, movableElement, movableElementCorner, margin = undefined,
-    viewport = undefined, overflow = undefined, preferredSize = undefined) {
+positioning.positionAtCoordinate = function (
+  absolutePos,
+  movableElement,
+  movableElementCorner,
+  margin = undefined,
+  viewport = undefined,
+  overflow = undefined,
+  preferredSize = undefined
+) {
   return originalPositionAtCoordinate.call(
-      this, absolutePos, movableElement, movableElementCorner, margin, viewport,
-      Overflow.IGNORE, preferredSize);
+    this,
+    absolutePos,
+    movableElement,
+    movableElementCorner,
+    margin,
+    viewport,
+    Overflow.IGNORE,
+    preferredSize
+  );
 };
 
 /**
@@ -70,7 +82,7 @@ function MyFakeEvent(keyCode, eventType = KeyHandler.EventType.KEY) {
   /** @suppress {globalThis} suppression added to enable type checking */
   this.preventDefault = () => {};
   /** @suppress {globalThis} suppression added to enable type checking */
-  this.stopPropagation = function() {
+  this.stopPropagation = function () {
     /** @suppress {globalThis} suppression added to enable type checking */
     this.propagationStopped = true;
   };
@@ -80,18 +92,21 @@ function MyFakeEvent(keyCode, eventType = KeyHandler.EventType.KEY) {
 function checkHasPopUp() {
   menuButton.enterDocument();
   assertFalse(
-      'Menu button must have aria-haspopup attribute set to false',
-      aria.getState(menuButton.getElement(), State.HASPOPUP));
+    'Menu button must have aria-haspopup attribute set to false',
+    aria.getState(menuButton.getElement(), State.HASPOPUP)
+  );
   const menu = new Menu();
   menu.createDom();
   menuButton.setMenu(menu);
   assertTrue(
-      'Menu button must have aria-haspopup attribute set to true',
-      aria.getState(menuButton.getElement(), State.HASPOPUP));
+    'Menu button must have aria-haspopup attribute set to true',
+    aria.getState(menuButton.getElement(), State.HASPOPUP)
+  );
   menuButton.setMenu(null);
   assertFalse(
-      'Menu button must have aria-haspopup attribute set to false',
-      aria.getState(menuButton.getElement(), State.HASPOPUP));
+    'Menu button must have aria-haspopup attribute set to false',
+    aria.getState(menuButton.getElement(), State.HASPOPUP)
+  );
 }
 
 function isWinSafariBefore5() {
@@ -135,8 +150,10 @@ testSuite({
     menuButton.decorate(node);
 
     assertEquals(
-        'Menu button must have aria-haspopup attribute set to true', 'true',
-        aria.getState(menuButton.getElement(), State.HASPOPUP));
+      'Menu button must have aria-haspopup attribute set to true',
+      'true',
+      aria.getState(menuButton.getElement(), State.HASPOPUP)
+    );
 
     testingEvents.fireClickSequence(node);
 
@@ -152,11 +169,12 @@ testSuite({
     const menuItem2 = dom.getElement('menuItem2');
     testingEvents.fireClickSequence(menuItem2);
     assertFalse('Menu must close on clicking when open', menuButton.isOpen());
+    assertEquals('Number of menu items clicked should be 1', 1, menuItemClicked);
     assertEquals(
-        'Number of menu items clicked should be 1', 1, menuItemClicked);
-    assertEquals(
-        'menuItem2 should be the last menuitem clicked', menuItem2,
-        lastMenuItemClicked.getElement());
+      'menuItem2 should be the last menuitem clicked',
+      menuItem2,
+      lastMenuItemClicked.getElement()
+    );
   },
 
   /**
@@ -174,13 +192,17 @@ testSuite({
     menuButton.handleKeyEvent(new MyFakeEvent(KeyCodes.DOWN));
     assertNotNull(menuButton.getElement());
     assertEquals(
-        'First menuitem must be the aria-activedescendant', 'menuItem1',
-        aria.getState(menuButton.getElement(), State.ACTIVEDESCENDANT));
+      'First menuitem must be the aria-activedescendant',
+      'menuItem1',
+      aria.getState(menuButton.getElement(), State.ACTIVEDESCENDANT)
+    );
 
     menuButton.handleKeyEvent(new MyFakeEvent(KeyCodes.DOWN));
     assertEquals(
-        'Second menuitem must be the aria-activedescendant', 'menuItem2',
-        aria.getState(menuButton.getElement(), State.ACTIVEDESCENDANT));
+      'Second menuitem must be the aria-activedescendant',
+      'menuItem2',
+      aria.getState(menuButton.getElement(), State.ACTIVEDESCENDANT)
+    );
   },
 
   /**
@@ -193,15 +215,19 @@ testSuite({
     menuButton.decorate(node);
     menuButton.handleKeyEvent(new MyFakeEvent(KeyCodes.ENTER));
     assertEquals(
-        'By default no items should be highlighted when opened with enter.',
-        null, menuButton.getMenu().getHighlighted());
+      'By default no items should be highlighted when opened with enter.',
+      null,
+      menuButton.getMenu().getHighlighted()
+    );
 
     menuButton.setOpen(false);
     menuButton.handleKeyEvent(new MyFakeEvent(KeyCodes.DOWN));
     assertTrue('Menu must open after down key', menuButton.isOpen());
     assertEquals(
-        'First menuitem must be highlighted', 'menuItem1',
-        menuButton.getMenu().getHighlighted().getElement().id);
+      'First menuitem must be highlighted',
+      'menuItem1',
+      menuButton.getMenu().getHighlighted().getElement().id
+    );
   },
 
   /**
@@ -218,15 +244,19 @@ testSuite({
 
     menuButton.handleKeyEvent(new MyFakeEvent(KeyCodes.ENTER));
     assertEquals(
-        'By default no items should be highlighted when opened with enter.',
-        null, menuButton.getMenu().getHighlighted());
+      'By default no items should be highlighted when opened with enter.',
+      null,
+      menuButton.getMenu().getHighlighted()
+    );
 
     menuButton.setOpen(false);
     menuButton.handleKeyEvent(new MyFakeEvent(KeyCodes.DOWN));
     assertTrue('Menu must open after down key', menuButton.isOpen());
     assertEquals(
-        'First enabled menuitem must be highlighted', 'menuItem2',
-        menuButton.getMenu().getHighlighted().getElement().id);
+      'First enabled menuitem must be highlighted',
+      'menuItem2',
+      menuButton.getMenu().getHighlighted().getElement().id
+    );
   },
 
   /**
@@ -240,9 +270,11 @@ testSuite({
     menuButton.setSelectFirstOnEnterOrSpace(true);
     menuButton.handleKeyEvent(new MyFakeEvent(KeyCodes.ENTER));
     assertEquals(
-        'The first item should be highlighted when opened with enter ' +
-            'after setting selectFirstOnEnterOrSpace',
-        'menuItem1', menuButton.getMenu().getHighlighted().getElement().id);
+      'The first item should be highlighted when opened with enter ' +
+        'after setting selectFirstOnEnterOrSpace',
+      'menuItem1',
+      menuButton.getMenu().getHighlighted().getElement().id
+    );
   },
 
   /**
@@ -260,9 +292,11 @@ testSuite({
 
     menuButton.handleKeyEvent(new MyFakeEvent(KeyCodes.ENTER));
     assertEquals(
-        'The first enabled item should be highlighted when opened ' +
-            'with enter after setting selectFirstOnEnterOrSpace',
-        'menuItem2', menuButton.getMenu().getHighlighted().getElement().id);
+      'The first enabled item should be highlighted when opened ' +
+        'with enter after setting selectFirstOnEnterOrSpace',
+      'menuItem2',
+      menuButton.getMenu().getHighlighted().getElement().id
+    );
   },
 
   /**
@@ -288,18 +322,24 @@ testSuite({
       menuButton.handleKeyEvent(new MyFakeEvent(KeyCodes.DOWN));
     }
     assertEquals(
-        'Submenu must be the aria-activedescendant', 'subMenu',
-        aria.getState(menuButton.getElement(), State.ACTIVEDESCENDANT));
+      'Submenu must be the aria-activedescendant',
+      'subMenu',
+      aria.getState(menuButton.getElement(), State.ACTIVEDESCENDANT)
+    );
 
     menuButton.handleKeyEvent(new MyFakeEvent(KeyCodes.RIGHT));
     assertEquals(
-        'Submenu item 1 must be the aria-activedescendant', 'subMenuItem1',
-        aria.getState(menuButton.getElement(), State.ACTIVEDESCENDANT));
+      'Submenu item 1 must be the aria-activedescendant',
+      'subMenuItem1',
+      aria.getState(menuButton.getElement(), State.ACTIVEDESCENDANT)
+    );
 
     menuButton.handleKeyEvent(new MyFakeEvent(KeyCodes.LEFT));
     assertEquals(
-        'Submenu must be the aria-activedescendant', 'subMenu',
-        aria.getState(menuButton.getElement(), State.ACTIVEDESCENDANT));
+      'Submenu must be the aria-activedescendant',
+      'subMenu',
+      aria.getState(menuButton.getElement(), State.ACTIVEDESCENDANT)
+    );
   },
 
   /**
@@ -342,11 +382,9 @@ testSuite({
 
     menuButton.setOpen(true);
     menuButton.handleKeyEvent(new MyFakeEvent(KeyCodes.ENTER));
-    assertTrue(
-        'Menu should remain open after pressing Enter', menuButton.isOpen());
+    assertTrue('Menu should remain open after pressing Enter', menuButton.isOpen());
     menuButton.handleKeyEvent(new MyFakeEvent(KeyCodes.SPACE, EventType.KEYUP));
-    assertTrue(
-        'Menu should remain open after pressing Space', menuButton.isOpen());
+    assertTrue('Menu should remain open after pressing Space', menuButton.isOpen());
   },
 
   // Tests the behavior of the enter key on a submenu.
@@ -363,8 +401,7 @@ testSuite({
     // Container's handleKeyEventInternal function.
     menu.setHighlightedIndex(menu.getItemCount() - 1);
     menuButton.handleKeyEvent(new MyFakeEvent(KeyCodes.ENTER));
-    assertTrue(
-        'Menu should remain open after pressing Enter', menuButton.isOpen());
+    assertTrue('Menu should remain open after pressing Enter', menuButton.isOpen());
   },
 
   // Tests the behavior of the esc key on a submenu.
@@ -397,9 +434,7 @@ testSuite({
     menuButton.setOpen(false);
 
     menuButton.handleKeyDownEvent_(fakeEvent);
-    assertFalse(
-        'Event propagation was erroneously stopped.',
-        fakeEvent.propagationStopped);
+    assertFalse('Event propagation was erroneously stopped.', fakeEvent.propagationStopped);
   },
 
   /**
@@ -415,8 +450,7 @@ testSuite({
     menuButton.setOpen(true);
 
     menuButton.handleKeyDownEvent_(fakeEvent);
-    assertTrue(
-        'Event propagation was not stopped.', fakeEvent.propagationStopped);
+    assertTrue('Event propagation was not stopped.', fakeEvent.propagationStopped);
   },
 
   /**
@@ -456,8 +490,7 @@ testSuite({
     // Now reposition and make sure position is more or less ok.
     menuButton.positionMenu();
     const menuNode = dom.getElement('demoMenu');
-    assertRoughlyEquals(
-        menuNode.offsetTop, node.offsetTop + node.offsetHeight, 20);
+    assertRoughlyEquals(menuNode.offsetTop, node.offsetTop + node.offsetHeight, 20);
     assertRoughlyEquals(menuNode.offsetLeft, node.offsetLeft, 20);
   },
 
@@ -507,29 +540,24 @@ testSuite({
 
     // Confirm the menu position
     const menuNode = iframeDom.getElement('demoMenu');
-    assertRoughlyEquals(
-        menuNode.offsetTop, node.offsetTop + node.offsetHeight, 20);
+    assertRoughlyEquals(menuNode.offsetTop, node.offsetTop + node.offsetHeight, 20);
     assertRoughlyEquals(menuNode.offsetLeft, node.offsetLeft, 20);
 
     positionMenuCalled = false;
     // A Tick event is dispatched.
     mockTimer.dispatchEvent(Timer.TICK);
-    assertFalse('positionMenu() shouldn\'t be called.', positionMenuCalled);
+    assertFalse("positionMenu() shouldn't be called.", positionMenuCalled);
 
     // Move the menu button by DOM structure change
-    const p1 =
-        iframeDom.createDom(TagName.P, null, iframeDom.createTextNode('foo'));
-    const p2 =
-        iframeDom.createDom(TagName.P, null, iframeDom.createTextNode('foo'));
-    const p3 =
-        iframeDom.createDom(TagName.P, null, iframeDom.createTextNode('foo'));
+    const p1 = iframeDom.createDom(TagName.P, null, iframeDom.createTextNode('foo'));
+    const p2 = iframeDom.createDom(TagName.P, null, iframeDom.createTextNode('foo'));
+    const p3 = iframeDom.createDom(TagName.P, null, iframeDom.createTextNode('foo'));
     iframeDom.insertSiblingBefore(p1, node);
     iframeDom.insertSiblingBefore(p2, node);
     iframeDom.insertSiblingBefore(p3, node);
 
     // Confirm the menu is detached from the button.
-    assertTrue(
-        Math.abs(node.offsetTop + node.offsetHeight - menuNode.offsetTop) > 20);
+    assertTrue(Math.abs(node.offsetTop + node.offsetHeight - menuNode.offsetTop) > 20);
 
     positionMenuCalled = false;
     // A Tick event is dispatched.
@@ -537,8 +565,7 @@ testSuite({
     assertTrue('positionMenu() should be called.', positionMenuCalled);
 
     // The menu is moved to appropriate position again.
-    assertRoughlyEquals(
-        menuNode.offsetTop, node.offsetTop + node.offsetHeight, 20);
+    assertRoughlyEquals(menuNode.offsetTop, node.offsetTop + node.offsetHeight, 20);
 
     // Make the frame page scrollable.
     const viewportHeight = iframeDom.getViewportSize().height;
@@ -620,23 +647,22 @@ testSuite({
 
     // Confirm the menu position
     const menuNode = iframeDom.getElement('demoMenu2');
-    assertRoughlyEquals(
-        menuNode.offsetTop + menuNode.offsetHeight, node.offsetTop, 20);
+    assertRoughlyEquals(menuNode.offsetTop + menuNode.offsetHeight, node.offsetTop, 20);
     assertRoughlyEquals(menuNode.offsetLeft, node.offsetLeft, 20);
 
     positionMenuCalled = false;
     // A Tick event is dispatched.
     mockTimer.dispatchEvent(Timer.TICK);
-    assertFalse('positionMenu() shouldn\'t be called.', positionMenuCalled);
+    assertFalse("positionMenu() shouldn't be called.", positionMenuCalled);
 
     // Reduce the size of the enclosing element.
     iframe.style.width = '300px';
 
     // Confirm the menu is detached from the button.
     assertTrue(
-        (Math.abs(node.offsetTop + node.offsetHeight - menuNode.offsetTop) >
-         20) ||
-        (Math.abs(node.offsetLeft - menuNode.offsetLeft) > 20));
+      Math.abs(node.offsetTop + node.offsetHeight - menuNode.offsetTop) > 20 ||
+        Math.abs(node.offsetLeft - menuNode.offsetLeft) > 20
+    );
 
     positionMenuCalled = false;
     // A Tick event is dispatched.
@@ -644,8 +670,7 @@ testSuite({
     assertTrue('positionMenu() should be called.', positionMenuCalled);
 
     // The menu is moved to appropriate position again.
-    assertRoughlyEquals(
-        menuNode.offsetTop + menuNode.offsetHeight, node.offsetTop, 20);
+    assertRoughlyEquals(menuNode.offsetTop + menuNode.offsetHeight, node.offsetTop, 20);
     assertRoughlyEquals(menuNode.offsetLeft, node.offsetLeft, 20);
 
     // Tear down.
@@ -671,8 +696,7 @@ testSuite({
 
     // Confirm the menu position
     const menuNode = menuButton.getMenu().getElement();
-    assertRoughlyEquals(
-        menuNode.offsetTop, posElement.offsetTop + posElement.offsetHeight, 20);
+    assertRoughlyEquals(menuNode.offsetTop, posElement.offsetTop + posElement.offsetHeight, 20);
     assertRoughlyEquals(menuNode.offsetLeft, posElement.offsetLeft, 20);
   },
 
@@ -686,12 +710,15 @@ testSuite({
     menuButton.decorate(node);
 
     // Show the menu.
-    menuButton.setAlignMenuToStart(true);  // Should get overridden below
-    menuButton.setScrollOnOverflow(true);  // Should get overridden below
+    menuButton.setAlignMenuToStart(true); // Should get overridden below
+    menuButton.setScrollOnOverflow(true); // Should get overridden below
 
     const position = new MenuAnchoredPosition(
-        menuButton.getElement(), Corner.TOP_START,
-        /* opt_adjust */ false, /* opt_resize */ false);
+      menuButton.getElement(),
+      Corner.TOP_START,
+      /* opt_adjust */ false,
+      /* opt_resize */ false
+    );
     menuButton.setMenuPosition(position);
     menuButton.setOpen(true);
 
@@ -700,8 +727,7 @@ testSuite({
     const menuNode = menuButton.getMenu().getElement();
     const menuBounds = style.getBounds(menuNode);
 
-    assertRoughlyEquals(
-        menuBounds.top + menuBounds.height, buttonBounds.top, 3);
+    assertRoughlyEquals(menuBounds.top + menuBounds.height, buttonBounds.top, 3);
     assertRoughlyEquals(menuBounds.left, buttonBounds.left, 3);
     // For this test to be valid, the node must have non-trival height.
     assertRoughlyEquals(node.offsetHeight, 19, 3);
@@ -717,12 +743,15 @@ testSuite({
     menuButton.decorate(node);
 
     // Show the menu.
-    menuButton.setAlignMenuToStart(true);  // Should get overridden below
-    menuButton.setScrollOnOverflow(true);  // Should get overridden below
+    menuButton.setAlignMenuToStart(true); // Should get overridden below
+    menuButton.setScrollOnOverflow(true); // Should get overridden below
 
     const position = new MenuAnchoredPosition(
-        menuButton.getElement(), Corner.BOTTOM_START,
-        /* opt_adjust */ false, /* opt_resize */ false);
+      menuButton.getElement(),
+      Corner.BOTTOM_START,
+      /* opt_adjust */ false,
+      /* opt_resize */ false
+    );
     menuButton.setMenuPosition(position);
     menuButton.setOpen(true);
 
@@ -733,8 +762,7 @@ testSuite({
 
     expectedFailures.expectFailureFor(isWinSafariBefore5());
     try {
-      assertRoughlyEquals(
-          menuBounds.top, buttonBounds.top + buttonBounds.height, 3);
+      assertRoughlyEquals(menuBounds.top, buttonBounds.top + buttonBounds.height, 3);
       assertRoughlyEquals(menuBounds.left, buttonBounds.left, 3);
     } catch (e) {
       expectedFailures.handleException(e);
@@ -759,11 +787,8 @@ testSuite({
      */
     e.keyCode = KeyCodes.SPACE;
     menuButton.handleKeyEvent(e);
-    assertFalse(
-        'Menu must not have been triggered by Space keypress',
-        menuButton.isOpen());
-    assertNotNull(
-        'Page scrolling is prevented', e.preventDefault.getLastCall());
+    assertFalse('Menu must not have been triggered by Space keypress', menuButton.isOpen());
+    assertNotNull('Page scrolling is prevented', e.preventDefault.getLastCall());
 
     e = new GoogEvent(EventType.KEYUP, menuButton);
     /**
@@ -772,8 +797,7 @@ testSuite({
      */
     e.keyCode = KeyCodes.SPACE;
     menuButton.handleKeyEvent(e);
-    assertTrue(
-        'Menu must have been triggered by Space keyup', menuButton.isOpen());
+    assertTrue('Menu must have been triggered by Space keyup', menuButton.isOpen());
     menuButton.getMenu().setHighlightedIndex(0);
     e = new GoogEvent(KeyHandler.EventType.KEY, menuButton);
     /**
@@ -783,8 +807,10 @@ testSuite({
     e.keyCode = KeyCodes.DOWN;
     menuButton.handleKeyEvent(e);
     assertEquals(
-        'Highlighted menu item must have hanged by Down keypress', 1,
-        menuButton.getMenu().getHighlightedIndex());
+      'Highlighted menu item must have hanged by Down keypress',
+      1,
+      menuButton.getMenu().getHighlightedIndex()
+    );
 
     menuButton.getMenu().setHighlightedIndex(0);
     e = new GoogEvent(EventType.KEYUP, menuButton);
@@ -795,8 +821,10 @@ testSuite({
     e.keyCode = KeyCodes.DOWN;
     menuButton.handleKeyEvent(e);
     assertEquals(
-        'Highlighted menu item must not have changed by Down keyup', 0,
-        menuButton.getMenu().getHighlightedIndex());
+      'Highlighted menu item must not have changed by Down keyup',
+      0,
+      menuButton.getMenu().getHighlightedIndex()
+    );
   },
 
   /**
@@ -813,23 +841,20 @@ testSuite({
     assertTrue('Menu button should be open.', menuButton.isOpen());
     assertTrue('Menu should be visible.', menuButton.getMenu().isVisible());
 
-    const key =
-        events.listen(menuButton, Component.EventType.CLOSE, (event) => {
-          event.preventDefault();
-        });
+    const key = events.listen(menuButton, Component.EventType.CLOSE, (event) => {
+      event.preventDefault();
+    });
 
     // Try to hide the menu.
     menuButton.setOpen(false);
     assertTrue('Menu button should still be open.', menuButton.isOpen());
-    assertTrue(
-        'Menu should still be visible.', menuButton.getMenu().isVisible());
+    assertTrue('Menu should still be visible.', menuButton.getMenu().isVisible());
 
     // Remove listener and try again.
     events.unlistenByKey(key);
     menuButton.setOpen(false);
     assertFalse('Menu button should not be open.', menuButton.isOpen());
-    assertFalse(
-        'Menu should not be visible.', menuButton.getMenu().isVisible());
+    assertFalse('Menu should not be visible.', menuButton.getMenu().isVisible());
   },
 
   /**
@@ -852,8 +877,9 @@ testSuite({
     // Confirm size of menu changed.
     const afterRemoveSize = style.getSize(menu.getElement());
     assertTrue(
-        'Height of menu must decrease after removing a menu item.',
-        afterRemoveSize.height < originalSize.height);
+      'Height of menu must decrease after removing a menu item.',
+      afterRemoveSize.height < originalSize.height
+    );
 
     // Check that removing an item while the menu is closed, then opened
     // (so that reposition is called) correctly changes the size of the menu.
@@ -864,8 +890,9 @@ testSuite({
     // Confirm size of menu changed.
     const afterRemoveAgainSize = style.getSize(menu.getElement());
     assertTrue(
-        'Height of menu must decrease after removing a second menu item.',
-        afterRemoveAgainSize.height < afterRemoveSize.height);
+      'Height of menu must decrease after removing a second menu item.',
+      afterRemoveAgainSize.height < afterRemoveSize.height
+    );
 
     // Check that adding an item while the menu is opened, then closed, then
     // opened, correctly changes the size of the menu.
@@ -877,11 +904,14 @@ testSuite({
     // Confirm size of menu changed.
     const afterAddSize = style.getSize(menu.getElement());
     assertTrue(
-        'Height of menu must increase after adding a menu item.',
-        afterRemoveAgainSize.height < afterAddSize.height);
+      'Height of menu must increase after adding a menu item.',
+      afterRemoveAgainSize.height < afterAddSize.height
+    );
     assertEquals(
-        'Removing and adding back items must not change the height of a menu.',
-        afterRemoveSize.height, afterAddSize.height);
+      'Removing and adding back items must not change the height of a menu.',
+      afterRemoveSize.height,
+      afterAddSize.height
+    );
 
     // Add back the last item to keep state consistent.
     menuButton.addItem(item);
@@ -911,8 +941,9 @@ testSuite({
     // Confirm size of menu changed.
     const afterRemoveSize = style.getSize(menu.getElement());
     assertTrue(
-        'Height of menu must decrease after removing a menu item.',
-        afterRemoveSize.height < originalSize.height);
+      'Height of menu must decrease after removing a menu item.',
+      afterRemoveSize.height < originalSize.height
+    );
 
     const item2 = menu.removeChildAt(0, true);
     menuButton.invalidateMenuSize();
@@ -921,8 +952,9 @@ testSuite({
     // Confirm size of menu changed.
     const afterRemoveAgainSize = style.getSize(menu.getElement());
     assertTrue(
-        'Height of menu must decrease after removing a second menu item.',
-        afterRemoveAgainSize.height < afterRemoveSize.height);
+      'Height of menu must decrease after removing a second menu item.',
+      afterRemoveAgainSize.height < afterRemoveSize.height
+    );
 
     // Check that adding an item while the menu is opened correctly changes the
     // size of the menu.
@@ -933,11 +965,14 @@ testSuite({
     // Confirm size of menu changed.
     const afterAddSize = style.getSize(menu.getElement());
     assertTrue(
-        'Height of menu must increase after adding a menu item.',
-        afterRemoveAgainSize.height < afterAddSize.height);
+      'Height of menu must increase after adding a menu item.',
+      afterRemoveAgainSize.height < afterAddSize.height
+    );
     assertEquals(
-        'Removing and adding back items must not change the height of a menu.',
-        afterRemoveSize.height, afterAddSize.height);
+      'Removing and adding back items must not change the height of a menu.',
+      afterRemoveSize.height,
+      afterAddSize.height
+    );
   },
 
   /**
@@ -954,9 +989,7 @@ testSuite({
     // default, rendered into the top level dom, and therefore siblings.
     menuButton.render(dom.getElement('siblingTest'));
     menuButton.setOpen(true);
-    assertEquals(
-        menuButton.getElement().parentNode,
-        menuButton.getMenu().getElement().parentNode);
+    assertEquals(menuButton.getElement().parentNode, menuButton.getMenu().getElement().parentNode);
   },
 
   /**
@@ -978,13 +1011,16 @@ testSuite({
     menuButton.setOpen(true);
 
     assertEquals(
-        'The menu should be rendered immediately after the menu button',
-        dom.getNextElementSibling(menuButton.getElement()), menu.getElement());
+      'The menu should be rendered immediately after the menu button',
+      dom.getNextElementSibling(menuButton.getElement()),
+      menu.getElement()
+    );
 
     assertEquals(
-        'The menu should be rendered immediately before the next button',
-        dom.getNextElementSibling(menu.getElement()),
-        dom.getElement('button2'));
+      'The menu should be rendered immediately before the next button',
+      dom.getNextElementSibling(menu.getElement()),
+      dom.getElement('button2')
+    );
   },
 
   testAlignToStartSetter() {

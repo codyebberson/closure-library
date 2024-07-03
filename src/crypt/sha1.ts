@@ -23,8 +23,6 @@ goog.provide('goog.crypt.Sha1');
 
 goog.require('goog.crypt.Hash');
 
-
-
 /**
  * SHA-1 cryptographic hash constructor.
  *
@@ -34,8 +32,7 @@ goog.require('goog.crypt.Hash');
  * @final
  * @struct
  */
-goog.crypt.Sha1 = function() {
-  'use strict';
+goog.crypt.Sha1 = function () {
   goog.crypt.Sha1.base(this, 'constructor');
 
   /** @const {number} */
@@ -90,10 +87,8 @@ goog.crypt.Sha1 = function() {
 };
 goog.inherits(goog.crypt.Sha1, goog.crypt.Hash);
 
-
 /** @override */
-goog.crypt.Sha1.prototype.reset = function() {
-  'use strict';
+goog.crypt.Sha1.prototype.reset = function () {
   this.chain_[0] = 0x67452301;
   this.chain_[1] = 0xefcdab89;
   this.chain_[2] = 0x98badcfe;
@@ -104,15 +99,13 @@ goog.crypt.Sha1.prototype.reset = function() {
   this.total_ = 0;
 };
 
-
 /**
  * Internal compress helper function.
  * @param {!Array<number>|!Uint8Array|string} buf Block to compress.
  * @param {number=} opt_offset Offset of the block in the buffer.
  * @private
  */
-goog.crypt.Sha1.prototype.compress_ = function(buf, opt_offset) {
-  'use strict';
+goog.crypt.Sha1.prototype.compress_ = function (buf, opt_offset) {
   if (!opt_offset) {
     opt_offset = 0;
   }
@@ -130,16 +123,20 @@ goog.crypt.Sha1.prototype.compress_ = function(buf, opt_offset) {
       // this change once the Safari bug
       // (https://bugs.webkit.org/show_bug.cgi?id=109036) has been fixed and
       // most clients have been updated.
-      W[i] = (buf.charCodeAt(opt_offset) << 24) |
-          (buf.charCodeAt(opt_offset + 1) << 16) |
-          (buf.charCodeAt(opt_offset + 2) << 8) |
-          (buf.charCodeAt(opt_offset + 3));
+      W[i] =
+        (buf.charCodeAt(opt_offset) << 24) |
+        (buf.charCodeAt(opt_offset + 1) << 16) |
+        (buf.charCodeAt(opt_offset + 2) << 8) |
+        buf.charCodeAt(opt_offset + 3);
       opt_offset += 4;
     }
   } else {
     for (var i = 0; i < 16; i++) {
-      W[i] = (buf[opt_offset] << 24) | (buf[opt_offset + 1] << 16) |
-          (buf[opt_offset + 2] << 8) | (buf[opt_offset + 3]);
+      W[i] =
+        (buf[opt_offset] << 24) |
+        (buf[opt_offset + 1] << 16) |
+        (buf[opt_offset + 2] << 8) |
+        buf[opt_offset + 3];
       opt_offset += 4;
     }
   }
@@ -192,10 +189,8 @@ goog.crypt.Sha1.prototype.compress_ = function(buf, opt_offset) {
   this.chain_[4] = (this.chain_[4] + e) & 0xffffffff;
 };
 
-
 /** @override */
-goog.crypt.Sha1.prototype.update = function(bytes, opt_length) {
-  'use strict';
+goog.crypt.Sha1.prototype.update = function (bytes, opt_length) {
   // TODO(johnlenz): tighten the function signature and remove this check
   if (bytes == null) {
     return;
@@ -255,10 +250,8 @@ goog.crypt.Sha1.prototype.update = function(bytes, opt_length) {
   this.total_ += opt_length;
 };
 
-
 /** @override */
-goog.crypt.Sha1.prototype.digest = function() {
-  'use strict';
+goog.crypt.Sha1.prototype.digest = function () {
   var digest = [];
   var totalBits = this.total_ * 8;
 
@@ -272,7 +265,7 @@ goog.crypt.Sha1.prototype.digest = function() {
   // Add # bits.
   for (var i = this.blockSize - 1; i >= 56; i--) {
     this.buf_[i] = totalBits & 255;
-    totalBits /= 256;  // Don't use bit-shifting here!
+    totalBits /= 256; // Don't use bit-shifting here!
   }
 
   this.compress_(this.buf_);

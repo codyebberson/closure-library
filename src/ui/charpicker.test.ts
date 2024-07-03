@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.CharPickerTest');
-goog.setTestOnly();
 
 const CharPicker = goog.require('goog.ui.CharPicker');
 const CharPickerData = goog.require('goog.i18n.CharPickerData');
@@ -33,7 +32,9 @@ testSuite({
   setUp() {
     mockControl = new MockControl();
     charNameFetcherMock = mockControl.createLooseMock(
-        NameFetcher, true /* opt_ignoreUnexpectedCalls */);
+      NameFetcher,
+      true /* opt_ignoreUnexpectedCalls */
+    );
 
     charPickerData = new CharPickerData();
     charPickerElement = dom.getElement('charpicker');
@@ -56,10 +57,9 @@ testSuite({
     const character = '←';
     const characterName = 'right arrow';
 
-    charNameFetcherMock.getName(character, mockmatchers.isFunction)
-        .$does((c, callback) => {
-          callback(characterName);
-        });
+    charNameFetcherMock.getName(character, mockmatchers.isFunction).$does((c, callback) => {
+      callback(characterName);
+    });
 
     mockControl.$replayAll();
 
@@ -68,9 +68,10 @@ testSuite({
     // Get the first button elements within the grid div and override its
     // char attribute so the test doesn't depend on the actual grid content.
     const gridElement = dom.getElementByClass(
-        goog.getCssName('goog-char-picker-grid'), charPickerElement);
-    const buttonElement =
-        dom.getElementsByClass(FlatButtonRenderer.CSS_CLASS, gridElement)[0];
+      goog.getCssName('goog-char-picker-grid'),
+      charPickerElement
+    );
+    const buttonElement = dom.getElementsByClass(FlatButtonRenderer.CSS_CLASS, gridElement)[0];
     buttonElement.setAttribute('char', character);
 
     // Trigger a focus event on the button element.
@@ -80,8 +81,9 @@ testSuite({
 
     const ariaLabel = aria.getState(buttonElement, State.LABEL);
     assertEquals(
-        'The aria label should be updated when the button' +
-            'gains focus.',
-        characterName, ariaLabel);
+      'The aria label should be updated when the button' + 'gains focus.',
+      characterName,
+      ariaLabel
+    );
   },
 });

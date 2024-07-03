@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.net.BulkLoaderTest');
-goog.setTestOnly();
 
 const BulkLoader = goog.require('goog.net.BulkLoader');
 const EventHandler = goog.require('goog.events.EventHandler');
@@ -40,7 +39,7 @@ let errorStatus;
 function getSuccessfulBulkLoader(uris) {
   const bulkLoader = new BulkLoader(uris);
   /** @suppress {globalThis} suppression added to enable type checking */
-  bulkLoader.load = function() {
+  bulkLoader.load = function () {
     /** @suppress {globalThis} suppression added to enable type checking */
     const uris = this.helper_.getUris();
     for (let i = 0; i < uris.length; i++) {
@@ -49,9 +48,7 @@ function getSuccessfulBulkLoader(uris) {
       // This timeout determines how many ticks after the send request
       // all the URIs will complete loading. This delays the load of
       // the first uri and every subsequent uri by 15 ticks.
-      setTimeout(
-          goog.bind(this.onSuccess, this, i, uris[i]),
-          DELAY_INTERVAL_FOR_URI_LOAD);
+      setTimeout(goog.bind(this.onSuccess, this, i, uris[i]), DELAY_INTERVAL_FOR_URI_LOAD);
     }
   };
 
@@ -59,15 +56,11 @@ function getSuccessfulBulkLoader(uris) {
    * @suppress {strictMissingProperties,globalThis} suppression added to enable
    * type checking
    */
-  bulkLoader.onSuccess = function(id, uri) {
+  bulkLoader.onSuccess = function (id, uri) {
     const xhrIo = {
-      getResponseText: function() {
-        return uri;
-      },
-      isSuccess: function() {
-        return true;
-      },
-      dispose: function() {},
+      getResponseText: () => uri,
+      isSuccess: () => true,
+      dispose: () => {},
     };
     this.handleEvent_(id, new GoogEvent(EventType.COMPLETE, xhrIo));
   };
@@ -94,7 +87,7 @@ function getSuccessfulBulkLoader(uris) {
 function getNonSuccessfulBulkLoader(uris) {
   const bulkLoader = new BulkLoader(uris);
   /** @suppress {globalThis} suppression added to enable type checking */
-  bulkLoader.load = function() {
+  bulkLoader.load = function () {
     /** @suppress {globalThis} suppression added to enable type checking */
     const uris = this.helper_.getUris();
     for (let i = 0; i < uris.length; i++) {
@@ -106,13 +99,9 @@ function getNonSuccessfulBulkLoader(uris) {
       // of the first uri and every subsequent uri by 15 ticks. The URI
       // with id == 2 is in error.
       if (i != 2) {
-        setTimeout(
-            goog.bind(this.onSuccess, this, i, uris[i]),
-            DELAY_INTERVAL_FOR_URI_LOAD);
+        setTimeout(goog.bind(this.onSuccess, this, i, uris[i]), DELAY_INTERVAL_FOR_URI_LOAD);
       } else {
-        setTimeout(
-            goog.bind(this.onError, this, i, uris[i]),
-            DELAY_INTERVAL_FOR_URI_LOAD);
+        setTimeout(goog.bind(this.onError, this, i, uris[i]), DELAY_INTERVAL_FOR_URI_LOAD);
       }
     }
   };
@@ -121,15 +110,11 @@ function getNonSuccessfulBulkLoader(uris) {
    * @suppress {strictMissingProperties,globalThis} suppression added to enable
    * type checking
    */
-  bulkLoader.onSuccess = function(id, uri) {
+  bulkLoader.onSuccess = function (id, uri) {
     const xhrIo = {
-      getResponseText: function() {
-        return uri;
-      },
-      isSuccess: function() {
-        return true;
-      },
-      dispose: function() {},
+      getResponseText: () => uri,
+      isSuccess: () => true,
+      dispose: () => {},
     };
     this.handleEvent_(id, new GoogEvent(EventType.COMPLETE, xhrIo));
   };
@@ -138,18 +123,12 @@ function getNonSuccessfulBulkLoader(uris) {
    * @suppress {strictMissingProperties,globalThis} suppression added to enable
    * type checking
    */
-  bulkLoader.onError = function(id) {
+  bulkLoader.onError = function (id) {
     const xhrIo = {
-      getResponseText: function() {
-        return null;
-      },
-      isSuccess: function() {
-        return false;
-      },
-      dispose: function() {},
-      getStatus: function() {
-        return 500;
-      },
+      getResponseText: () => null,
+      isSuccess: () => false,
+      dispose: () => {},
+      getStatus: () => 500,
     };
     this.handleEvent_(id, new GoogEvent(EventType.ERROR, xhrIo));
   };
@@ -195,23 +174,18 @@ testSuite({
     bulkLoader.load();
 
     clock.tick(2);
-    assertFalse(
-        'The bulk loader is not yet loaded (after 2 ticks)', loadSuccess);
+    assertFalse('The bulk loader is not yet loaded (after 2 ticks)', loadSuccess);
 
     clock.tick(3);
-    assertFalse(
-        'The bulk loader is not yet loaded (after 5 ticks)', loadSuccess);
+    assertFalse('The bulk loader is not yet loaded (after 5 ticks)', loadSuccess);
 
     clock.tick(5);
-    assertFalse(
-        'The bulk loader is not yet loaded (after 10 ticks)', loadSuccess);
+    assertFalse('The bulk loader is not yet loaded (after 10 ticks)', loadSuccess);
 
     clock.tick(5);
     assertTrue('The bulk loader is loaded (after 15 ticks)', loadSuccess);
 
-    assertArrayEquals(
-        'Ensure that the response texts are present', successResponseTexts,
-        uris);
+    assertArrayEquals('Ensure that the response texts are present', successResponseTexts, uris);
   },
 
   /** Test error loading URIs using the bulkloader. */
@@ -228,15 +202,11 @@ testSuite({
     assertFalse('The bulk loader is not yet loaded (after 5 ticks)', loadError);
 
     clock.tick(5);
-    assertFalse(
-        'The bulk loader is not yet loaded (after 10 ticks)', loadError);
+    assertFalse('The bulk loader is not yet loaded (after 10 ticks)', loadError);
 
     clock.tick(5);
-    assertFalse(
-        'The bulk loader is not loaded successfully (after 15 ticks)',
-        loadSuccess);
-    assertTrue(
-        'The bulk loader is loaded in error (after 15 ticks)', loadError);
+    assertFalse('The bulk loader is not loaded successfully (after 15 ticks)', loadSuccess);
+    assertTrue('The bulk loader is loaded in error (after 15 ticks)', loadError);
     assertEquals('Ensure that the error status is present', 500, errorStatus);
   },
 });

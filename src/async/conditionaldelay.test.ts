@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 goog.module('goog.async.ConditionalDelayTest');
-goog.setTestOnly();
 
 const ConditionalDelay = goog.require('goog.async.ConditionalDelay');
 const MockClock = goog.require('goog.testing.MockClock');

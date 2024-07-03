@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.PopupMenuTest');
-goog.setTestOnly();
 
 const Box = goog.require('goog.math.Box');
 const BrowserEvent = goog.require('goog.events.BrowserEvent');
@@ -49,8 +48,13 @@ let popup;
  *     property.
  */
 function assertTarget(
-    target, expectedElement, expectedTargetCorner, expectedMenuCorner,
-    expectedEventType, expectedMargin) {
+  target,
+  expectedElement,
+  expectedTargetCorner,
+  expectedMenuCorner,
+  expectedEventType,
+  expectedMargin
+) {
   const expectedTarget = {
     element_: expectedElement,
     targetCorner_: expectedTargetCorner,
@@ -90,21 +94,25 @@ testSuite({
     function beforeShowPopup(e) {
       // Ensure that the element is not yet visible.
       assertFalse(
-          'The element should not be shown when BEFORE_SHOW event is ' +
-              'being handled',
-          style.isElementShown(popup.getElement()));
+        'The element should not be shown when BEFORE_SHOW event is ' + 'being handled',
+        style.isElementShown(popup.getElement())
+      );
       // Verify that current anchor is set before dispatching BEFORE_SHOW.
       assertNotNullNorUndefined(popup.getAttachedElement());
       assertEquals(
-          'The attached anchor element is incorrect', target.element_,
-          popup.getAttachedElement());
+        'The attached anchor element is incorrect',
+        target.element_,
+        popup.getAttachedElement()
+      );
       beforeShowPopupCalled = true;
       return showPopup;
     }
     function onShowPopup(e) {
       assertEquals(
-          'The attached anchor element is incorrect', target.element_,
-          popup.getAttachedElement());
+        'The attached anchor element is incorrect',
+        target.element_,
+        popup.getAttachedElement()
+      );
     }
 
     handler.listen(popup, Menu.EventType.BEFORE_SHOW, beforeShowPopup);
@@ -113,21 +121,19 @@ testSuite({
     beforeShowPopupCalled = false;
     showPopup = false;
     popup.showMenu(target, 0, 0);
-    assertTrue(
-        'BEFORE_SHOW event handler should be called on #showMenu',
-        beforeShowPopupCalled);
+    assertTrue('BEFORE_SHOW event handler should be called on #showMenu', beforeShowPopupCalled);
     assertFalse(
-        'The element should not be shown when BEFORE_SHOW handler ' +
-            'returned false',
-        style.isElementShown(popup.getElement()));
+      'The element should not be shown when BEFORE_SHOW handler ' + 'returned false',
+      style.isElementShown(popup.getElement())
+    );
 
     beforeShowPopupCalled = false;
     showPopup = true;
     popup.showMenu(target, 0, 0);
     assertTrue(
-        'The element should be shown when BEFORE_SHOW handler ' +
-            'returned true',
-        style.isElementShown(popup.getElement()));
+      'The element should be shown when BEFORE_SHOW handler ' + 'returned true',
+      style.isElementShown(popup.getElement())
+    );
   },
 
   /**
@@ -137,18 +143,13 @@ testSuite({
   testIsAttachTarget() {
     popup.render();
     // Before 'attach' is called.
-    assertFalse(
-        'Menu should not be attached to the element',
-        popup.isAttachTarget(anchor));
+    assertFalse('Menu should not be attached to the element', popup.isAttachTarget(anchor));
 
     popup.attach(anchor);
-    assertTrue(
-        'Menu should be attached to the anchor', popup.isAttachTarget(anchor));
+    assertTrue('Menu should be attached to the anchor', popup.isAttachTarget(anchor));
 
     popup.detach(anchor);
-    assertFalse(
-        'Menu is expected to be detached from the element',
-        popup.isAttachTarget(anchor));
+    assertFalse('Menu is expected to be detached from the element', popup.isAttachTarget(anchor));
   },
 
   /**
@@ -159,30 +160,31 @@ testSuite({
     // Randomly picking parameters.
     const targetCorner = Corner.TOP_END;
     const menuCorner = Corner.BOTTOM_LEFT;
-    const contextMenu = false;  // Show menu on mouse down event.
+    const contextMenu = false; // Show menu on mouse down event.
     const margin = new Box(0, 10, 5, 25);
 
     // Simply setting the required parameters.
     /** @suppress {visibility} suppression added to enable type checking */
     let target = popup.createAttachTarget(anchor);
     assertTrue(popup.isAttachTarget(anchor));
-    assertTarget(
-        target, anchor, undefined, undefined, EventType.MOUSEDOWN, undefined);
+    assertTarget(target, anchor, undefined, undefined, EventType.MOUSEDOWN, undefined);
 
     // Creating another target with all the parameters.
     /** @suppress {visibility} suppression added to enable type checking */
-    target = popup.createAttachTarget(
-        anchor, targetCorner, menuCorner, contextMenu, margin);
+    target = popup.createAttachTarget(anchor, targetCorner, menuCorner, contextMenu, margin);
     assertTrue(popup.isAttachTarget(anchor));
-    assertTarget(
-        target, anchor, targetCorner, menuCorner, EventType.MOUSEDOWN, margin);
+    assertTarget(target, anchor, targetCorner, menuCorner, EventType.MOUSEDOWN, margin);
 
     // Finally, switch up the 'contextMenu'
     /** @suppress {visibility} suppression added to enable type checking */
     target = popup.createAttachTarget(
-        anchor, undefined, undefined, true /*opt_contextMenu*/, undefined);
-    assertTarget(
-        target, anchor, undefined, undefined, EventType.CONTEXTMENU, undefined);
+      anchor,
+      undefined,
+      undefined,
+      true /*opt_contextMenu*/,
+      undefined
+    );
+    assertTarget(target, anchor, undefined, undefined, EventType.CONTEXTMENU, undefined);
   },
 
   /** Tests the behavior of {@link PopupMenu.getAttachTarget}. */
@@ -191,25 +193,21 @@ testSuite({
     // Before the menu is attached to the anchor.
     /** @suppress {visibility} suppression added to enable type checking */
     let target = popup.getAttachTarget(anchor);
-    assertTrue(
-        'Not expecting a target before the element is attach to the menu',
-        target == null);
+    assertTrue('Not expecting a target before the element is attach to the menu', target == null);
 
     // Randomly picking parameters.
     const targetCorner = Corner.TOP_END;
     const menuCorner = Corner.BOTTOM_LEFT;
-    const contextMenu = false;  // Show menu on mouse down event.
+    const contextMenu = false; // Show menu on mouse down event.
     const margin = new Box(0, 10, 5, 25);
 
     popup.attach(anchor, targetCorner, menuCorner, contextMenu, margin);
     /** @suppress {visibility} suppression added to enable type checking */
     target = popup.getAttachTarget(anchor);
-    assertTrue(
-        'Failed to get target after attaching element to menu', target != null);
+    assertTrue('Failed to get target after attaching element to menu', target != null);
 
     // Make sure we got the right target back.
-    assertTarget(
-        target, anchor, targetCorner, menuCorner, EventType.MOUSEDOWN, margin);
+    assertTarget(target, anchor, targetCorner, menuCorner, EventType.MOUSEDOWN, margin);
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -225,10 +223,8 @@ testSuite({
     const viewportRect = style.getVisibleRectForElement(viewport);
 
     const middlePos = Math.floor((viewportRect.right - viewportRect.left) / 2);
-    const leftwardPos =
-        Math.floor((viewportRect.right - viewportRect.left) / 3);
-    const rightwardPos =
-        Math.floor((viewportRect.right - viewportRect.left) / 3 * 2);
+    const leftwardPos = Math.floor((viewportRect.right - viewportRect.left) / 3);
+    const rightwardPos = Math.floor(((viewportRect.right - viewportRect.left) / 3) * 2);
 
     // Can interpret these positions as widths relative to the viewport as well.
     const smallWidth = leftwardPos;
@@ -245,18 +241,24 @@ testSuite({
 
     popup.showMenu(target, leftwardPos, 0);
     assertObjectEquals(
-        'Popup in wrong position: small size, leftward pos',
-        new Coordinate(leftwardPos, 0), style.getPosition(popup.getElement()));
+      'Popup in wrong position: small size, leftward pos',
+      new Coordinate(leftwardPos, 0),
+      style.getPosition(popup.getElement())
+    );
 
     popup.showMenu(target, middlePos, 0);
     assertObjectEquals(
-        'Popup in wrong position: small size, middle pos',
-        new Coordinate(middlePos, 0), style.getPosition(popup.getElement()));
+      'Popup in wrong position: small size, middle pos',
+      new Coordinate(middlePos, 0),
+      style.getPosition(popup.getElement())
+    );
 
     popup.showMenu(target, rightwardPos, 0);
     assertObjectEquals(
-        'Popup in wrong position: small size, rightward pos',
-        new Coordinate(rightwardPos, 0), style.getPosition(popup.getElement()));
+      'Popup in wrong position: small size, rightward pos',
+      new Coordinate(rightwardPos, 0),
+      style.getPosition(popup.getElement())
+    );
 
     // Test medium menu next.  This should display with its upper left corner
     // at the target when leftward and middle, but on the right it should
@@ -265,19 +267,24 @@ testSuite({
 
     popup.showMenu(target, leftwardPos, 0);
     assertObjectEquals(
-        'Popup in wrong position: medium size, leftward pos',
-        new Coordinate(leftwardPos, 0), style.getPosition(popup.getElement()));
+      'Popup in wrong position: medium size, leftward pos',
+      new Coordinate(leftwardPos, 0),
+      style.getPosition(popup.getElement())
+    );
 
     popup.showMenu(target, middlePos, 0);
     assertObjectEquals(
-        'Popup in wrong position: medium size, middle pos',
-        new Coordinate(middlePos, 0), style.getPosition(popup.getElement()));
+      'Popup in wrong position: medium size, middle pos',
+      new Coordinate(middlePos, 0),
+      style.getPosition(popup.getElement())
+    );
 
     popup.showMenu(target, rightwardPos, 0);
     assertObjectEquals(
-        'Popup in wrong position: medium size, rightward pos',
-        new Coordinate(rightwardPos - mediumWidth, 0),
-        style.getPosition(popup.getElement()));
+      'Popup in wrong position: medium size, rightward pos',
+      new Coordinate(rightwardPos - mediumWidth, 0),
+      style.getPosition(popup.getElement())
+    );
 
     // Test large menu next.  This should display with its upper left corner at
     // the target when leftward, and its upper right corner at the target when
@@ -287,20 +294,24 @@ testSuite({
     popup.getElement().style.width = `${largeWidth}px`;
     popup.showMenu(target, leftwardPos, 0);
     assertObjectEquals(
-        'Popup in wrong position: large size, leftward pos',
-        new Coordinate(leftwardPos, 0), style.getPosition(popup.getElement()));
+      'Popup in wrong position: large size, leftward pos',
+      new Coordinate(leftwardPos, 0),
+      style.getPosition(popup.getElement())
+    );
 
     popup.showMenu(target, middlePos, 0);
     assertObjectEquals(
-        'Popup in wrong position: large size, middle pos',
-        new Coordinate(viewportRect.right - viewportRect.left - largeWidth, 0),
-        style.getPosition(popup.getElement()));
+      'Popup in wrong position: large size, middle pos',
+      new Coordinate(viewportRect.right - viewportRect.left - largeWidth, 0),
+      style.getPosition(popup.getElement())
+    );
 
     popup.showMenu(target, rightwardPos, 0);
     assertObjectEquals(
-        'Popup in wrong position: large size, rightward pos',
-        new Coordinate(rightwardPos - largeWidth, 0),
-        style.getPosition(popup.getElement()));
+      'Popup in wrong position: large size, rightward pos',
+      new Coordinate(rightwardPos - largeWidth, 0),
+      style.getPosition(popup.getElement())
+    );
 
     // Make sure that the menu still displays correctly if we give the target
     // a target corner.  We can't set the overflow policy in that case, but it
@@ -316,8 +327,10 @@ testSuite({
     popup.getElement().style.width = `${smallWidth}px`;
     popup.showMenu(target, leftwardPos, 0);
     assertObjectEquals(
-        'Popup in wrong position: small size, leftward pos, with target corner',
-        new Coordinate(24, 24), style.getPosition(popup.getElement()));
+      'Popup in wrong position: small size, leftward pos, with target corner',
+      new Coordinate(24, 24),
+      style.getPosition(popup.getElement())
+    );
   },
 
   /**
@@ -422,9 +435,7 @@ testSuite({
     try {
       events.fireKeySequence(menu, KeyCodes.SPACE);
     } catch (e) {
-      fail(
-          'Crash attempting to reference null selected menu item after ' +
-          'keyboard event.');
+      fail('Crash attempting to reference null selected menu item after ' + 'keyboard event.');
     }
   },
 
@@ -436,23 +447,28 @@ testSuite({
   testShiftOverride() {
     popup.decorate(menu);
     popup.attach(
-        anchor,
-        /* opt_targetCorner */ undefined,
-        /* opt_menuCorner */ undefined,
-        /* opt_contextMenu */ false);
+      anchor,
+      /* opt_targetCorner */ undefined,
+      /* opt_menuCorner */ undefined,
+      /* opt_contextMenu */ false
+    );
 
     popup.setShiftOverride(true);
     events.fireMouseDownEvent(
-        anchor, BrowserEvent.MouseButton.RIGHT,
-        /* opt_coords */ null,
-        /* opt_eventProperties */ {shiftKey: true});
+      anchor,
+      BrowserEvent.MouseButton.RIGHT,
+      /* opt_coords */ null,
+      /* opt_eventProperties */ { shiftKey: true }
+    );
     assertFalse(popup.isVisible());
 
     popup.setShiftOverride(false);
     events.fireMouseDownEvent(
-        anchor, BrowserEvent.MouseButton.RIGHT,
-        /* opt_coords */ null,
-        /* opt_eventProperties */ {shiftKey: true});
+      anchor,
+      BrowserEvent.MouseButton.RIGHT,
+      /* opt_coords */ null,
+      /* opt_eventProperties */ { shiftKey: true }
+    );
     assertTrue(popup.isVisible());
   },
 });

@@ -8,13 +8,10 @@
  * @fileoverview The event object dispatched when the history changes.
  */
 
-
 goog.provide('goog.history.Event');
 
 goog.require('goog.events.Event');
 goog.require('goog.history.EventType');
-
-
 
 /**
  * Event object dispatched after the history state has changed.
@@ -28,8 +25,7 @@ goog.require('goog.history.EventType');
  * @extends {goog.events.Event}
  * @final
  */
-goog.history.Event = function(token, isNavigation) {
-  'use strict';
+goog.history.Event = function (token, isNavigation) {
   goog.events.Event.call(this, goog.history.EventType.NAVIGATE);
 
   /**

@@ -49,7 +49,7 @@ function memoize(f, serializer = simpleSerializer) {
    * @param {...*} args
    * @return {?} the return value of the original function.
    */
-  const memoizedFn = function(...args) {
+  const memoizedFn = function (...args) {
     if (memoize.ENABLE_MEMOIZE) {
       const cacheKey = this || goog.global;
       let cache = MODULE_LOCAL_CACHE.get(cacheKey);
@@ -71,16 +71,14 @@ exports = memoize;
  */
 memoize.ENABLE_MEMOIZE = goog.define('goog.memoize.ENABLE_MEMOIZE', true);
 
-
 /**
  * Clears the memoization cache on the given object.
  * @param {?Object} cacheOwner The owner of the cache.
  */
-const clearCache = function(cacheOwner) {
+const clearCache = (cacheOwner) => {
   MODULE_LOCAL_CACHE.set(cacheOwner || goog.global, {});
 };
 exports.clearCache = clearCache;
-
 
 /**
  * Simple and fast argument serializer function for goog.memoize.
@@ -94,7 +92,7 @@ exports.clearCache = clearCache;
  * @return {string} The list of arguments with type information concatenated
  *     with the functionUid argument, serialized as \x0B-separated string.
  */
-const simpleSerializer = function(functionUid, args) {
+const simpleSerializer = (functionUid, args) => {
   const context = [functionUid];
   for (let i = args.length - 1; i >= 0; --i) {
     context.push(typeof args[i], args[i]);

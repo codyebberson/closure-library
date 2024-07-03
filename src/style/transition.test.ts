@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.style.transitionTest');
-goog.setTestOnly();
 
 const style = goog.require('goog.style');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -21,7 +20,7 @@ function getTransitionStyle(element) {
 
 testSuite({
   setUp() {
-    element = {'style': {}};
+    element = { style: {} };
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -42,28 +41,28 @@ testSuite({
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testSetWithSingleProperty() {
-    transition.set(
-        element,
-        {property: 'opacity', duration: 1, timing: 'ease-in', delay: 0.125});
+    transition.set(element, {
+      property: 'opacity',
+      duration: 1,
+      timing: 'ease-in',
+      delay: 0.125,
+    });
     assertEquals('opacity 1s ease-in 0.125s', getTransitionStyle(element));
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testSetWithMultipleStrings() {
     transition.set(element, ['width 1s ease-in', 'height 0.5s linear 1s']);
-    assertEquals(
-        'width 1s ease-in,height 0.5s linear 1s', getTransitionStyle(element));
+    assertEquals('width 1s ease-in,height 0.5s linear 1s', getTransitionStyle(element));
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testSetWithMultipleProperty() {
     transition.set(element, [
-      {property: 'width', duration: 1, timing: 'ease-in', delay: 0},
-      {property: 'height', duration: 0.5, timing: 'linear', delay: 1},
+      { property: 'width', duration: 1, timing: 'ease-in', delay: 0 },
+      { property: 'height', duration: 0.5, timing: 'linear', delay: 1 },
     ]);
-    assertEquals(
-        'width 1s ease-in 0s,height 0.5s linear 1s',
-        getTransitionStyle(element));
+    assertEquals('width 1s ease-in 0s,height 0.5s linear 1s', getTransitionStyle(element));
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.events.EventTest');
-goog.setTestOnly();
 
 const EventId = goog.require('goog.events.EventId');
 const GoogEvent = goog.require('goog.events.Event');
@@ -33,8 +32,7 @@ testSuite({
   },
 
   testStopPropagation() {
-    assertFalse(
-        'Propagation must not have been stopped', e.hasPropagationStopped());
+    assertFalse('Propagation must not have been stopped', e.hasPropagationStopped());
     e.stopPropagation();
     assertTrue('Propagation must have been stopped', e.hasPropagationStopped());
   },

@@ -16,8 +16,6 @@ goog.require('goog.fx.TransitionBase');
 goog.require('goog.style');
 goog.require('goog.style.transition');
 
-
-
 /**
  * A class to handle targeted CSS3 transition. This class
  * handles common features required for targeted CSS3 transition.
@@ -61,9 +59,7 @@ goog.require('goog.style.transition');
  * @constructor
  * @struct
  */
-goog.fx.css3.Transition = function(
-    element, duration, initialStyle, finalStyle, transitions) {
-  'use strict';
+goog.fx.css3.Transition = function (element, duration, initialStyle, finalStyle, transitions) {
   goog.fx.css3.Transition.base(this, 'constructor');
 
   /**
@@ -104,10 +100,8 @@ goog.fx.css3.Transition = function(
 };
 goog.inherits(goog.fx.css3.Transition, goog.fx.TransitionBase);
 
-
 /** @override */
-goog.fx.css3.Transition.prototype.play = function() {
-  'use strict';
+goog.fx.css3.Transition.prototype.play = function () {
   if (this.isPlaying()) {
     return false;
   }
@@ -130,39 +124,32 @@ goog.fx.css3.Transition.prototype.play = function() {
   }
 };
 
-
 /**
  * Helper method for play method. This needs to be executed on a timer.
  * @private
  */
-goog.fx.css3.Transition.prototype.play_ = function() {
-  'use strict';
+goog.fx.css3.Transition.prototype.play_ = function () {
   // This measurement of the DOM element causes the browser to recalculate its
   // initial state before the transition starts.
   goog.style.getSize(this.element_);
   goog.style.transition.set(this.element_, this.transitions_);
   goog.style.setStyle(this.element_, this.finalStyle_);
-  this.timerId_ = goog.Timer.callOnce(
-      goog.bind(this.stop_, this, false), this.duration_ * 1000);
+  this.timerId_ = goog.Timer.callOnce(goog.bind(this.stop_, this, false), this.duration_ * 1000);
 };
 
-
 /** @override */
-goog.fx.css3.Transition.prototype.stop = function() {
-  'use strict';
+goog.fx.css3.Transition.prototype.stop = function () {
   if (!this.isPlaying()) return;
 
   this.stop_(true);
 };
-
 
 /**
  * Helper method for stop method.
  * @param {boolean} stopped If the transition was stopped.
  * @private
  */
-goog.fx.css3.Transition.prototype.stop_ = function(stopped) {
-  'use strict';
+goog.fx.css3.Transition.prototype.stop_ = function (stopped) {
   goog.style.transition.removeAll(this.element_);
 
   // Clear the timer.
@@ -182,20 +169,16 @@ goog.fx.css3.Transition.prototype.stop_ = function(stopped) {
   this.onEnd();
 };
 
-
 /** @override */
-goog.fx.css3.Transition.prototype.disposeInternal = function() {
-  'use strict';
+goog.fx.css3.Transition.prototype.disposeInternal = function () {
   this.stop();
   goog.fx.css3.Transition.base(this, 'disposeInternal');
 };
-
 
 /**
  * Pausing CSS3 Transitions in not supported.
  * @override
  */
-goog.fx.css3.Transition.prototype.pause = function() {
-  'use strict';
+goog.fx.css3.Transition.prototype.pause = () => {
   goog.asserts.assert(false, 'Css3 transitions does not support pause action.');
 };

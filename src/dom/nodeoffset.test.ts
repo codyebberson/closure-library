@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dom.NodeOffsetTest');
-goog.setTestOnly();
 
 const NodeOffset = goog.require('goog.dom.NodeOffset');
 const NodeType = goog.require('goog.dom.NodeType');
@@ -36,12 +35,9 @@ testSuite({
 
     const recovered = nodeOffset.findTargetNode(test2);
     assertNotNull('Should recover a node.', recovered);
-    assertEquals(
-        'Should recover an I node.', String(TagName.I), recovered.tagName);
-    assertTrue(
-        'Should recover a child of test2', dom.contains(test2, recovered));
-    assertFalse(
-        'Should not recover a child of test1', dom.contains(test1, recovered));
+    assertEquals('Should recover an I node.', String(TagName.I), recovered.tagName);
+    assertTrue('Should recover a child of test2', dom.contains(test2, recovered));
+    assertFalse('Should not recover a child of test1', dom.contains(test1, recovered));
 
     nodeOffset.dispose();
   },
@@ -51,14 +47,10 @@ testSuite({
 
     const recovered = nodeOffset.findTargetNode(test2);
     assertNotNull('Should recover a node.', recovered);
-    assertEquals(
-        'Should recover a text node.', NodeType.TEXT, recovered.nodeType);
-    assertEquals(
-        'Should  have correct contents.', 'text.', recovered.nodeValue);
-    assertTrue(
-        'Should recover a child of test2', dom.contains(test2, recovered));
-    assertFalse(
-        'Should not recover a child of test1', dom.contains(test1, recovered));
+    assertEquals('Should recover a text node.', NodeType.TEXT, recovered.nodeType);
+    assertEquals('Should  have correct contents.', 'text.', recovered.nodeValue);
+    assertTrue('Should recover a child of test2', dom.contains(test2, recovered));
+    assertFalse('Should not recover a child of test1', dom.contains(test1, recovered));
 
     nodeOffset.dispose();
   },
@@ -67,8 +59,10 @@ testSuite({
     const nodeOffset = new NodeOffset(i.firstChild, test1);
 
     assertEquals(
-        'Should have correct string representation', '3,B\n1,I\n0,#text',
-        nodeOffset.toString());
+      'Should have correct string representation',
+      '3,B\n1,I\n0,#text',
+      nodeOffset.toString()
+    );
 
     nodeOffset.dispose();
   },

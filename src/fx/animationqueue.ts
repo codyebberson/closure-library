@@ -24,8 +24,6 @@ goog.require('goog.fx.Transition');
 goog.require('goog.fx.TransitionBase');
 goog.requireType('goog.events.Event');
 
-
-
 /**
  * Constructor for AnimationQueue object.
  *
@@ -33,8 +31,7 @@ goog.requireType('goog.events.Event');
  * @struct
  * @extends {goog.fx.TransitionBase}
  */
-goog.fx.AnimationQueue = function() {
-  'use strict';
+goog.fx.AnimationQueue = function () {
   goog.fx.AnimationQueue.base(this, 'constructor');
 
   /**
@@ -46,16 +43,15 @@ goog.fx.AnimationQueue = function() {
 };
 goog.inherits(goog.fx.AnimationQueue, goog.fx.TransitionBase);
 
-
 /**
  * Pushes an Animation to the end of the queue.
  * @param {goog.fx.TransitionBase} animation The animation to add to the queue.
  */
-goog.fx.AnimationQueue.prototype.add = function(animation) {
-  'use strict';
+goog.fx.AnimationQueue.prototype.add = function (animation) {
   goog.asserts.assert(
-      this.isStopped(),
-      'Not allowed to add animations to a running animation queue.');
+    this.isStopped(),
+    'Not allowed to add animations to a running animation queue.'
+  );
 
   if (goog.array.contains(this.queue, animation)) {
     return;
@@ -63,28 +59,34 @@ goog.fx.AnimationQueue.prototype.add = function(animation) {
 
   this.queue.push(animation);
   goog.events.listen(
-      animation, goog.fx.Transition.EventType.FINISH, this.onAnimationFinish,
-      false, this);
+    animation,
+    goog.fx.Transition.EventType.FINISH,
+    this.onAnimationFinish,
+    false,
+    this
+  );
 };
-
 
 /**
  * Removes an Animation from the queue.
  * @param {goog.fx.Animation} animation The animation to remove.
  */
-goog.fx.AnimationQueue.prototype.remove = function(animation) {
-  'use strict';
+goog.fx.AnimationQueue.prototype.remove = function (animation) {
   goog.asserts.assert(
-      this.isStopped(),
-      'Not allowed to remove animations from a running animation queue.');
+    this.isStopped(),
+    'Not allowed to remove animations from a running animation queue.'
+  );
 
   if (goog.array.remove(this.queue, animation)) {
     goog.events.unlisten(
-        animation, goog.fx.Transition.EventType.FINISH, this.onAnimationFinish,
-        false, this);
+      animation,
+      goog.fx.Transition.EventType.FINISH,
+      this.onAnimationFinish,
+      false,
+      this
+    );
   }
 };
-
 
 /**
  * Handles the event that an animation has finished.
@@ -93,15 +95,12 @@ goog.fx.AnimationQueue.prototype.remove = function(animation) {
  */
 goog.fx.AnimationQueue.prototype.onAnimationFinish = goog.abstractMethod;
 
-
 /**
  * Disposes of the animations.
  * @override
  */
-goog.fx.AnimationQueue.prototype.disposeInternal = function() {
-  'use strict';
-  this.queue.forEach(function(animation) {
-    'use strict';
+goog.fx.AnimationQueue.prototype.disposeInternal = function () {
+  this.queue.forEach((animation) => {
     animation.dispose();
   });
   this.queue.length = 0;
@@ -109,16 +108,13 @@ goog.fx.AnimationQueue.prototype.disposeInternal = function() {
   goog.fx.AnimationQueue.base(this, 'disposeInternal');
 };
 
-
-
 /**
  * Constructor for AnimationParallelQueue object.
  * @constructor
  * @struct
  * @extends {goog.fx.AnimationQueue}
  */
-goog.fx.AnimationParallelQueue = function() {
-  'use strict';
+goog.fx.AnimationParallelQueue = function () {
   goog.fx.AnimationParallelQueue.base(this, 'constructor');
 
   /**
@@ -130,10 +126,8 @@ goog.fx.AnimationParallelQueue = function() {
 };
 goog.inherits(goog.fx.AnimationParallelQueue, goog.fx.AnimationQueue);
 
-
 /** @override */
-goog.fx.AnimationParallelQueue.prototype.play = function(opt_restart) {
-  'use strict';
+goog.fx.AnimationParallelQueue.prototype.play = function (opt_restart) {
   if (this.queue.length == 0) {
     return false;
   }
@@ -155,8 +149,7 @@ goog.fx.AnimationParallelQueue.prototype.play = function(opt_restart) {
   this.endTime = null;
   this.setStatePlaying();
 
-  this.queue.forEach(function(anim) {
-    'use strict';
+  this.queue.forEach((anim) => {
     if (!resuming || anim.isPaused()) {
       anim.play(opt_restart);
     }
@@ -165,13 +158,10 @@ goog.fx.AnimationParallelQueue.prototype.play = function(opt_restart) {
   return true;
 };
 
-
 /** @override */
-goog.fx.AnimationParallelQueue.prototype.pause = function() {
-  'use strict';
+goog.fx.AnimationParallelQueue.prototype.pause = function () {
   if (this.isPlaying()) {
-    this.queue.forEach(function(anim) {
-      'use strict';
+    this.queue.forEach((anim) => {
       if (anim.isPlaying()) {
         anim.pause();
       }
@@ -182,12 +172,9 @@ goog.fx.AnimationParallelQueue.prototype.pause = function() {
   }
 };
 
-
 /** @override */
-goog.fx.AnimationParallelQueue.prototype.stop = function(opt_gotoEnd) {
-  'use strict';
-  this.queue.forEach(function(anim) {
-    'use strict';
+goog.fx.AnimationParallelQueue.prototype.stop = function (opt_gotoEnd) {
+  this.queue.forEach((anim) => {
     if (!anim.isStopped()) {
       anim.stop(opt_gotoEnd);
     }
@@ -200,10 +187,8 @@ goog.fx.AnimationParallelQueue.prototype.stop = function(opt_gotoEnd) {
   this.onEnd();
 };
 
-
 /** @override */
-goog.fx.AnimationParallelQueue.prototype.onAnimationFinish = function(e) {
-  'use strict';
+goog.fx.AnimationParallelQueue.prototype.onAnimationFinish = function (e) {
   this.finishedCounter_++;
   if (this.finishedCounter_ == this.queue.length) {
     this.endTime = goog.now();
@@ -215,16 +200,13 @@ goog.fx.AnimationParallelQueue.prototype.onAnimationFinish = function(e) {
   }
 };
 
-
-
 /**
  * Constructor for AnimationSerialQueue object.
  * @constructor
  * @struct
  * @extends {goog.fx.AnimationQueue}
  */
-goog.fx.AnimationSerialQueue = function() {
-  'use strict';
+goog.fx.AnimationSerialQueue = function () {
   goog.fx.AnimationSerialQueue.base(this, 'constructor');
 
   /**
@@ -236,17 +218,14 @@ goog.fx.AnimationSerialQueue = function() {
 };
 goog.inherits(goog.fx.AnimationSerialQueue, goog.fx.AnimationQueue);
 
-
 /** @override */
-goog.fx.AnimationSerialQueue.prototype.play = function(opt_restart) {
-  'use strict';
+goog.fx.AnimationSerialQueue.prototype.play = function (opt_restart) {
   if (this.queue.length == 0) {
     return false;
   }
 
   if (opt_restart || this.isStopped()) {
-    if (this.current_ < this.queue.length &&
-        !this.queue[this.current_].isStopped()) {
+    if (this.current_ < this.queue.length && !this.queue[this.current_].isStopped()) {
       this.queue[this.current_].stop(false);
     }
 
@@ -270,10 +249,8 @@ goog.fx.AnimationSerialQueue.prototype.play = function(opt_restart) {
   return true;
 };
 
-
 /** @override */
-goog.fx.AnimationSerialQueue.prototype.pause = function() {
-  'use strict';
+goog.fx.AnimationSerialQueue.prototype.pause = function () {
   if (this.isPlaying()) {
     this.queue[this.current_].pause();
     this.setStatePaused();
@@ -281,10 +258,8 @@ goog.fx.AnimationSerialQueue.prototype.pause = function() {
   }
 };
 
-
 /** @override */
-goog.fx.AnimationSerialQueue.prototype.stop = function(opt_gotoEnd) {
-  'use strict';
+goog.fx.AnimationSerialQueue.prototype.stop = function (opt_gotoEnd) {
   this.setStateStopped();
   this.endTime = goog.now();
 
@@ -306,10 +281,8 @@ goog.fx.AnimationSerialQueue.prototype.stop = function(opt_gotoEnd) {
   this.onEnd();
 };
 
-
 /** @override */
-goog.fx.AnimationSerialQueue.prototype.onAnimationFinish = function(e) {
-  'use strict';
+goog.fx.AnimationSerialQueue.prototype.onAnimationFinish = function (e) {
   if (this.isPlaying()) {
     this.current_++;
     if (this.current_ < this.queue.length) {

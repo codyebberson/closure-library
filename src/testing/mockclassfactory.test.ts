@@ -18,36 +18,30 @@ const fake = {};
 
 // Classes that will be mocked.  A base class and child class are used to
 // test inheritance.
-fake.BaseClass = function(a) {
+fake.BaseClass = (a) => {
   fail('real object should never be called');
 };
 
-fake.BaseClass.prototype.foo = function() {
+fake.BaseClass.prototype.foo = () => {
   fail('real object should never be called');
 };
 
-fake.BaseClass.prototype.toString = function() {
-  return 'foo';
-};
+fake.BaseClass.prototype.toString = () => 'foo';
 
-fake.BaseClass.prototype.toLocaleString = function() {
-  return 'bar';
-};
+fake.BaseClass.prototype.toLocaleString = () => 'bar';
 
-fake.BaseClass.prototype.overridden = function() {
-  return 42;
-};
+fake.BaseClass.prototype.overridden = () => 42;
 
-fake.ChildClass = function(a) {
+fake.ChildClass = (a) => {
   fail('real object should never be called');
 };
 goog.inherits(fake.ChildClass, fake.BaseClass);
 
-fake.ChildClass.staticFoo = function() {
+fake.ChildClass.staticFoo = () => {
   fail('real object should never be called');
 };
 
-fake.ChildClass.prototype.bar = function() {
+fake.ChildClass.prototype.bar = () => {
   fail('real object should never be called');
 };
 
@@ -55,7 +49,7 @@ fake.ChildClass.staticProperty = 'staticPropertyOnClass';
 
 function TopLevelBaseClass() {}
 
-fake.ChildClass.prototype.overridden = function() {
+fake.ChildClass.prototype.overridden = function () {
   /**
    * @suppress {missingProperties} suppression added to enable type checking
    */
@@ -68,7 +62,6 @@ fake.ChildClass.prototype.overridden = function() {
 
 const mockClassFactory = new MockClassFactory();
 const matchers = testing.mockmatchers;
-
 
 testSuite({
   tearDown() {
@@ -109,13 +102,15 @@ testSuite({
     instance3.bar();
     mock3.$verify();
 
-    assertThrows(/**
+    assertThrows(
+      /**
                     @suppress {checkTypes} suppression added to enable type
                     checking
                   */
-                 function() {
-                   new fake.BaseClass(-1);
-                 });
+      () => {
+        new fake.BaseClass(-1);
+      }
+    );
     assertTrue(instance1 instanceof fake.BaseClass);
     assertTrue(instance2 instanceof fake.BaseClass);
     assertTrue(instance3 instanceof fake.ChildClass);
@@ -178,13 +173,15 @@ testSuite({
     instance3.bar();
     mock3.$verify();
 
-    assertThrows(/**
+    assertThrows(
+      /**
                     @suppress {checkTypes} suppression added to enable type
                     checking
                   */
-                 function() {
-                   new fake.BaseClass(-1);
-                 });
+      () => {
+        new fake.BaseClass(-1);
+      }
+    );
     assertTrue(instance1 instanceof fake.BaseClass);
     assertTrue(instance2 instanceof fake.BaseClass);
     assertTrue(instance3 instanceof fake.ChildClass);
@@ -195,8 +192,7 @@ testSuite({
      checking
    */
   testGetStrictStaticMock() {
-    const staticMock =
-        mockClassFactory.getStrictStaticMock(fake, fake.ChildClass);
+    const staticMock = mockClassFactory.getStrictStaticMock(fake, fake.ChildClass);
     const mock = mockClassFactory.getStrictMockClass(fake, fake.ChildClass, 1);
 
     mock.foo();
@@ -215,27 +211,23 @@ testSuite({
 
     assertTrue(instance instanceof fake.BaseClass);
     assertTrue(instance instanceof fake.ChildClass);
-    assertThrows(function() {
+    assertThrows(() => {
       mockClassFactory.getLooseStaticMock(fake, fake.ChildClass);
     });
   },
 
   testGetStrictStaticMockKeepsStaticProperties() {
     const OriginalChildClass = fake.ChildClass;
-    const staticMock =
-        mockClassFactory.getStrictStaticMock(fake, fake.ChildClass);
+    const staticMock = mockClassFactory.getStrictStaticMock(fake, fake.ChildClass);
     assertTrue(staticMock instanceof StrictMock);
-    assertEquals(
-        OriginalChildClass.staticProperty, fake.ChildClass.staticProperty);
+    assertEquals(OriginalChildClass.staticProperty, fake.ChildClass.staticProperty);
   },
 
   testGetLooseStaticMockKeepsStaticProperties() {
     const OriginalChildClass = fake.ChildClass;
-    const staticMock =
-        mockClassFactory.getLooseStaticMock(fake, fake.ChildClass);
+    const staticMock = mockClassFactory.getLooseStaticMock(fake, fake.ChildClass);
     assertTrue(staticMock instanceof LooseMock);
-    assertEquals(
-        OriginalChildClass.staticProperty, fake.ChildClass.staticProperty);
+    assertEquals(OriginalChildClass.staticProperty, fake.ChildClass.staticProperty);
   },
 
   /**
@@ -243,8 +235,7 @@ testSuite({
      checking
    */
   testGetLooseStaticMock() {
-    const staticMock =
-        mockClassFactory.getLooseStaticMock(fake, fake.ChildClass);
+    const staticMock = mockClassFactory.getLooseStaticMock(fake, fake.ChildClass);
     const mock = mockClassFactory.getStrictMockClass(fake, fake.ChildClass, 1);
 
     mock.foo();
@@ -264,7 +255,7 @@ testSuite({
 
     assertTrue(instance instanceof fake.BaseClass);
     assertTrue(instance instanceof fake.ChildClass);
-    assertThrows(function() {
+    assertThrows(() => {
       mockClassFactory.getStrictStaticMock(fake, fake.ChildClass);
     });
   },
@@ -276,10 +267,9 @@ testSuite({
   testFlexibleClassMockInstantiation() {
     // This mock should be returned for all instances created with a number
     // as the first argument.
-    const mock = mockClassFactory.getStrictMockClass(
-        fake, fake.ChildClass, matchers.isNumber);
-    mock.foo();  // Will be called by the first mock instance.
-    mock.foo();  // Will be called by the second mock instance.
+    const mock = mockClassFactory.getStrictMockClass(fake, fake.ChildClass, matchers.isNumber);
+    mock.foo(); // Will be called by the first mock instance.
+    mock.foo(); // Will be called by the second mock instance.
     mock.$replay();
 
     /** @suppress {checkTypes} suppression added to enable type checking */
@@ -288,13 +278,15 @@ testSuite({
     const instance2 = new fake.ChildClass(2);
     instance1.foo();
     instance2.foo();
-    assertThrows(/**
+    assertThrows(
+      /**
                     @suppress {checkTypes} suppression added to enable type
                     checking
                   */
-                 function() {
-                   new fake.ChildClass('foo');
-                 });
+      () => {
+        new fake.ChildClass('foo');
+      }
+    );
     mock.$verify();
   },
 
@@ -305,5 +297,4 @@ testSuite({
     const instance1 = new fake.ChildClass(1);
     assertTrue(43 == overriddenFn.call(instance1));
   },
-
 });

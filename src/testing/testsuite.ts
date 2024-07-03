@@ -36,8 +36,8 @@ class TestSuiteOptions {
 function testSuite(obj, options) {
   if (typeof obj === 'function') {
     throw new Error(
-        'testSuite should be called with an object. ' +
-        'Did you forget to initialize a class?');
+      'testSuite should be called with an object. ' + 'Did you forget to initialize a class?'
+    );
   }
 
   if (initialized) {
@@ -45,8 +45,7 @@ function testSuite(obj, options) {
   }
   initialized = true;
 
-  const testCase =
-      Environment.getTestCaseIfActive() || new TestCase(document.title);
+  const testCase = Environment.getTestCaseIfActive() || new TestCase(document.title);
   testCase.setTestObj(obj);
 
   if (options && options.order) {
@@ -66,7 +65,7 @@ let initialized = false;
  * Should not be called outside Closure.  This should be package-private,
  * but it's called from environment_test in labs.testing package.
  */
-testSuite.resetForTesting = function() {
+testSuite.resetForTesting = () => {
   const name = TestCase.getActiveTestCase().getName();
   if (name !== 'environment_test' && name !== 'testsuite_test') {
     throw new Error(name);

@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Supplies global data types and constants for the vector math
  *     library.
@@ -15,7 +14,6 @@ goog.provide('goog.vec.ArrayType');
 goog.provide('goog.vec.Float32');
 goog.provide('goog.vec.Float64');
 goog.provide('goog.vec.Number');
-
 
 /**
  * On platforms that don't have native Float32Array or Float64Array support we
@@ -31,29 +29,23 @@ goog.require('goog.vec.Float64Array');
 // either Float32Array, Float64Array, or a standard JavaScript Array of
 // Numbers.
 
-
 /** @typedef {!Float32Array} */
 goog.vec.Float32;
-
 
 /** @typedef {!Float64Array} */
 goog.vec.Float64;
 
-
 /** @typedef {!Array<number>} */
 goog.vec.Number;
 
-
 /** @typedef {!goog.vec.Float32|!goog.vec.Float64|!goog.vec.Number} */
 goog.vec.AnyType;
-
 
 /**
  * @deprecated Use AnyType.
  * @typedef {!Float32Array|!Array<number>}
  */
 goog.vec.ArrayType;
-
 
 /**
  * For graphics work, 6 decimal places of accuracy are typically all that is

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.ModalPopupTest');
-goog.setTestOnly();
 
 const EventType = goog.require('goog.events.EventType');
 const GoogEventTarget = goog.require('goog.events.EventTarget');
@@ -45,7 +44,7 @@ class MockTransition extends GoogEventTarget {
 
 testSuite({
   setUp() {
-    main = /** @type {!Element} */ (dom.getElement('main'));
+    main = /** @type {!Element} */ dom.getElement('main');
     mockClock = new MockClock(true);
   },
 
@@ -65,8 +64,7 @@ testSuite({
     };
     popup.render();
     popup.setVisible(true);
-    const event = new events.Event(
-        EventType.ORIENTATIONCHANGE, popup.getDomHelper().getWindow());
+    const event = new events.Event(EventType.ORIENTATIONCHANGE, popup.getDomHelper().getWindow());
 
     testingEvents.fireBrowserEvent(event);
     assertEquals(1, i);
@@ -93,13 +91,9 @@ testSuite({
     popup = new ModalPopup();
     popup.render();
 
-    assertEquals(
-        0,
-        dom.getElementsByTagNameAndClass(TagName.IFRAME, 'goog-modalpopup-bg')
-            .length);
+    assertEquals(0, dom.getElementsByTagNameAndClass(TagName.IFRAME, 'goog-modalpopup-bg').length);
 
-    const bg =
-        dom.getElementsByTagNameAndClass(TagName.DIV, 'goog-modalpopup-bg');
+    const bg = dom.getElementsByTagNameAndClass(TagName.DIV, 'goog-modalpopup-bg');
     assertEquals(1, bg.length);
     const content = dom.getElementByClass('goog-modalpopup');
     assertNotNull(content);
@@ -108,26 +102,29 @@ testSuite({
 
     assertTrue(dom.compareNodeOrder(bg[0], content) < 0);
     assertTrue(dom.compareNodeOrder(content, tabCatcher[0]) < 0);
-    assertTrue(googString.isEmptyOrWhitespace(
-        googString.makeSafe(aria.getState(main, State.HIDDEN))));
+    assertTrue(
+      googString.isEmptyOrWhitespace(googString.makeSafe(aria.getState(main, State.HIDDEN)))
+    );
     popup.setVisible(true);
-    assertTrue(googString.isEmptyOrWhitespace(googString.makeSafe(
-        aria.getState(popup.getElementStrict(), State.HIDDEN))));
+    assertTrue(
+      googString.isEmptyOrWhitespace(
+        googString.makeSafe(aria.getState(popup.getElementStrict(), State.HIDDEN))
+      )
+    );
     assertEquals('true', aria.getState(main, State.HIDDEN));
     popup.setVisible(false);
-    assertTrue(googString.isEmptyOrWhitespace(
-        googString.makeSafe(aria.getState(main, State.HIDDEN))));
+    assertTrue(
+      googString.isEmptyOrWhitespace(googString.makeSafe(aria.getState(main, State.HIDDEN)))
+    );
   },
 
   testRenderWithIframeMask() {
     popup = new ModalPopup(true);
     popup.render();
 
-    const iframe =
-        dom.getElementsByTagNameAndClass(TagName.IFRAME, 'goog-modalpopup-bg');
+    const iframe = dom.getElementsByTagNameAndClass(TagName.IFRAME, 'goog-modalpopup-bg');
     assertEquals(1, iframe.length);
-    const bg =
-        dom.getElementsByTagNameAndClass(TagName.DIV, 'goog-modalpopup-bg');
+    const bg = dom.getElementsByTagNameAndClass(TagName.DIV, 'goog-modalpopup-bg');
     assertEquals(1, bg.length);
     const content = dom.getElementByClass('goog-modalpopup');
     assertNotNull(content);
@@ -137,15 +134,20 @@ testSuite({
     assertTrue(dom.compareNodeOrder(iframe[0], bg[0]) < 0);
     assertTrue(dom.compareNodeOrder(bg[0], content) < 0);
     assertTrue(dom.compareNodeOrder(content, tabCatcher[0]) < 0);
-    assertTrue(googString.isEmptyOrWhitespace(
-        googString.makeSafe(aria.getState(main, State.HIDDEN))));
+    assertTrue(
+      googString.isEmptyOrWhitespace(googString.makeSafe(aria.getState(main, State.HIDDEN)))
+    );
     popup.setVisible(true);
-    assertTrue(googString.isEmptyOrWhitespace(googString.makeSafe(
-        aria.getState(popup.getElementStrict(), State.HIDDEN))));
+    assertTrue(
+      googString.isEmptyOrWhitespace(
+        googString.makeSafe(aria.getState(popup.getElementStrict(), State.HIDDEN))
+      )
+    );
     assertEquals('true', aria.getState(main, State.HIDDEN));
     popup.setVisible(false);
-    assertTrue(googString.isEmptyOrWhitespace(
-        googString.makeSafe(aria.getState(main, State.HIDDEN))));
+    assertTrue(
+      googString.isEmptyOrWhitespace(googString.makeSafe(aria.getState(main, State.HIDDEN)))
+    );
   },
 
   testRenderWithAriaState() {
@@ -169,11 +171,9 @@ testSuite({
     popup = new ModalPopup(true);
     popup.render();
 
-    const iframe =
-        dom.getElementsByTagNameAndClass(TagName.IFRAME, 'goog-modalpopup-bg');
+    const iframe = dom.getElementsByTagNameAndClass(TagName.IFRAME, 'goog-modalpopup-bg');
     assertFalse(style.isElementShown(iframe[0]));
-    const bg =
-        dom.getElementsByTagNameAndClass(TagName.DIV, 'goog-modalpopup-bg');
+    const bg = dom.getElementsByTagNameAndClass(TagName.DIV, 'goog-modalpopup-bg');
     assertFalse(style.isElementShown(bg[0]));
     assertFalse(style.isElementShown(dom.getElementByClass('goog-modalpopup')));
     const tabCatcher = dom.getElementsByTagNameAndClass(TagName.SPAN);
@@ -184,8 +184,7 @@ testSuite({
     popup = new ModalPopup(true);
     popup.render();
 
-    const iframe = dom.getElementsByTagNameAndClass(
-        TagName.IFRAME, 'goog-modalpopup-bg')[0];
+    const iframe = dom.getElementsByTagNameAndClass(TagName.IFRAME, 'goog-modalpopup-bg')[0];
     assertEquals(0, style.getOpacity(iframe));
   },
 
@@ -203,8 +202,7 @@ testSuite({
      * checking
      */
     const showHandler = () => {
-      assertEquals(
-          'BEFORE_SHOW is not dispatched before SHOW', 1, beforeShowCallCount);
+      assertEquals('BEFORE_SHOW is not dispatched before SHOW', 1, beforeShowCallCount);
       showCallCount++;
     };
 
@@ -232,8 +230,7 @@ testSuite({
      * checking
      */
     const hideHandler = () => {
-      assertEquals(
-          'BEFORE_HIDE is not dispatched before HIDE', 1, beforeHideCallCount);
+      assertEquals('BEFORE_HIDE is not dispatched before HIDE', 1, beforeHideCallCount);
       hideCallCount++;
     };
 
@@ -288,8 +285,11 @@ testSuite({
     });
 
     popup.setTransition(
-        mockPopupShowTransition, mockPopupHideTransition, mockBgShowTransition,
-        mockBgHideTransition);
+      mockPopupShowTransition,
+      mockPopupHideTransition,
+      mockBgShowTransition,
+      mockBgHideTransition
+    );
     assertFalse(mockPopupShowTransition.wasPlayed);
     assertFalse(mockBgShowTransition.wasPlayed);
 
@@ -317,8 +317,11 @@ testSuite({
     });
 
     popup.setTransition(
-        mockPopupShowTransition, mockPopupHideTransition, mockBgShowTransition,
-        mockBgHideTransition);
+      mockPopupShowTransition,
+      mockPopupHideTransition,
+      mockBgShowTransition,
+      mockBgHideTransition
+    );
     popup.setVisible(true);
     assertFalse(mockPopupHideTransition.wasPlayed);
     assertFalse(mockBgHideTransition.wasPlayed);
@@ -340,18 +343,17 @@ testSuite({
       popup.dispose();
     });
 
-    const popupShowTransition =
-        css3.fadeIn(popup.getElement(), 0.1 /* duration */);
-    const popupHideTransition =
-        css3.fadeOut(popup.getElement(), 0.1 /* duration */);
-    const bgShowTransition =
-        css3.fadeIn(popup.getElement(), 0.1 /* duration */);
-    const bgHideTransition =
-        css3.fadeOut(popup.getElement(), 0.1 /* duration */);
+    const popupShowTransition = css3.fadeIn(popup.getElement(), 0.1 /* duration */);
+    const popupHideTransition = css3.fadeOut(popup.getElement(), 0.1 /* duration */);
+    const bgShowTransition = css3.fadeIn(popup.getElement(), 0.1 /* duration */);
+    const bgHideTransition = css3.fadeOut(popup.getElement(), 0.1 /* duration */);
 
     popup.setTransition(
-        popupShowTransition, popupHideTransition, bgShowTransition,
-        bgHideTransition);
+      popupShowTransition,
+      popupHideTransition,
+      bgShowTransition,
+      bgHideTransition
+    );
     popup.setVisible(true);
     popup.setVisible(false);
     // Nothing to assert. We only want to ensure that there is no error.
@@ -361,10 +363,11 @@ testSuite({
     popup = new ModalPopup();
     popup.render();
     popup.setTransition(
-        css3.fadeIn(popup.getElement(), 1),
-        css3.fadeIn(popup.getBackgroundElement(), 1),
-        css3.fadeOut(popup.getElement(), 1),
-        css3.fadeOut(popup.getBackgroundElement(), 1));
+      css3.fadeIn(popup.getElement(), 1),
+      css3.fadeIn(popup.getBackgroundElement(), 1),
+      css3.fadeOut(popup.getElement(), 1),
+      css3.fadeOut(popup.getBackgroundElement(), 1)
+    );
 
     // Consecutive calls to setVisible works without needing to wait for
     // transition to finish.
@@ -426,8 +429,9 @@ testSuite({
 
       const size = style.getSize(popup.getBackgroundElement());
       assertTrue(
-          'Background element must cover the size of the content',
-          size.width >= w && size.height >= h);
+        'Background element must cover the size of the content',
+        size.width >= w && size.height >= h
+      );
     } finally {
       dom.removeNode(dummy);
     }
@@ -436,13 +440,12 @@ testSuite({
   /** @suppress {visibility} suppression added to enable type checking */
   testSetupBackwardTabWrapResetsFlagAfterTimeout() {
     popup.setupBackwardTabWrap();
-    assertTrue(
-        'Backward tab wrap should be in progress',
-        popup.backwardTabWrapInProgress_);
+    assertTrue('Backward tab wrap should be in progress', popup.backwardTabWrapInProgress_);
     mockClock.tick(1);
     assertFalse(
-        'Backward tab wrap flag should be reset after delay',
-        popup.backwardTabWrapInProgress_);
+      'Backward tab wrap flag should be reset after delay',
+      popup.backwardTabWrapInProgress_
+    );
   },
 
   testPopupGetsFocus() {
@@ -450,8 +453,9 @@ testSuite({
     popup.render();
     popup.setVisible(true);
     assertTrue(
-        'Dialog must receive initial focus',
-        dom.getActiveElement(document) == popup.getElement());
+      'Dialog must receive initial focus',
+      dom.getActiveElement(document) == popup.getElement()
+    );
   },
 
   testPopupGetsFocus_withOptionalParent() {
@@ -464,8 +468,9 @@ testSuite({
     popup.setVisible(true);
 
     assertTrue(
-        'Dialog must receive initial focus',
-        dom.getActiveElement(document) == popup.getElement());
+      'Dialog must receive initial focus',
+      dom.getActiveElement(document) == popup.getElement()
+    );
   },
 
   testDecoratedPopupGetsFocus() {
@@ -475,8 +480,9 @@ testSuite({
     popup.decorate(dialogElem);
     popup.setVisible(true);
     assertTrue(
-        'Dialog must receive initial focus',
-        dom.getActiveElement(document) == popup.getElement());
+      'Dialog must receive initial focus',
+      dom.getActiveElement(document) == popup.getElement()
+    );
     dom.removeNode(dialogElem);
   },
 
@@ -554,14 +560,12 @@ testSuite({
     const modalEl = popup.getElement();
     const modalSize = style.getSize(modalEl);
     const parentSize = style.getSize(parentEl);
-    const parentInnerHeight =
-        parentSize.height - borderThickness - borderThickness;
+    const parentInnerHeight = parentSize.height - borderThickness - borderThickness;
     const expectedTop = parentInnerHeight / 2 - modalSize.height / 2;
     const top = style.getComputedStyle(modalEl, 'top');
     assertTrue(top === expectedTop + 'px');
     const left = style.getComputedStyle(modalEl, 'left');
-    const parentInnerWidth =
-        parentSize.width - borderThickness - borderThickness;
+    const parentInnerWidth = parentSize.width - borderThickness - borderThickness;
     const expectedLeft = parentInnerWidth / 2 - modalSize.width / 2;
     assertTrue(left === expectedLeft + 'px');
     dom.removeNode(parentEl);
@@ -574,5 +578,5 @@ testSuite({
     popup.render();
 
     assertThrows(() => popup.setCenterInsideParentElement(true));
-  }
+  },
 });

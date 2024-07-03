@@ -10,14 +10,11 @@
 
 goog.provide('goog.math.interpolator.Interpolator1');
 
-
-
 /**
  * An interface for one dimensional data interpolation.
  * @interface
  */
-goog.math.interpolator.Interpolator1 = function() {};
-
+goog.math.interpolator.Interpolator1 = () => {};
 
 /**
  * Sets the data to be interpolated. Note that the data points are expected
@@ -31,7 +28,6 @@ goog.math.interpolator.Interpolator1 = function() {};
  */
 goog.math.interpolator.Interpolator1.prototype.setData;
 
-
 /**
  * Computes the interpolated value at abscissa x. If x is outside the range
  * of the data points passed in setData, the value is extrapolated.
@@ -39,7 +35,6 @@ goog.math.interpolator.Interpolator1.prototype.setData;
  * @return {number} The interpolated value at abscissa x.
  */
 goog.math.interpolator.Interpolator1.prototype.interpolate;
-
 
 /**
  * Computes the inverse interpolator. That is, it returns invInterp s.t.

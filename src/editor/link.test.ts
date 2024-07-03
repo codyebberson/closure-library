@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.LinkTest');
-goog.setTestOnly();
 
 const Link = goog.require('goog.editor.Link');
 const NodeType = goog.require('goog.dom.NodeType');
@@ -13,7 +12,6 @@ const Range = goog.require('goog.dom.Range');
 const TagName = goog.require('goog.dom.TagName');
 const dom = goog.require('goog.dom');
 const testSuite = goog.require('goog.testing.testSuite');
-
 
 let anchor;
 
@@ -60,8 +58,10 @@ testSuite({
     assertNotNull('Should have created object', link);
     assertEquals('Should have url in anchor', url, anchor.href);
     assertEquals(
-        'The text should still have spaces', urlWithSpacesUpdatedByBrowser,
-        link.getCurrentText());
+      'The text should still have spaces',
+      urlWithSpacesUpdatedByBrowser,
+      link.getCurrentText()
+    );
   },
 
   testCreateNewLinkFromTextWithAnchor() {
@@ -94,9 +94,7 @@ testSuite({
     const link = Link.createNewLink(anchor, 'http://www.google.com', '_blank');
     assertEquals('Should be empty', '', link.getCurrentText());
     link.setTextAndUrl('Text', 'http://docs.google.com/');
-    assertEquals(
-        'Should point to http://docs.google.com/', 'http://docs.google.com/',
-        anchor.href);
+    assertEquals('Should point to http://docs.google.com/', 'http://docs.google.com/', anchor.href);
     assertEquals('Should have correct text', 'Text', link.getCurrentText());
   },
 
@@ -105,12 +103,9 @@ testSuite({
     const link = Link.createNewLink(anchor, 'http://www.google.com', '_blank');
     assertEquals('Should be empty', '', link.getCurrentText());
     link.setTextAndUrl('Text', 'http://docs.google.com/');
-    assertEquals(
-        'Should point to http://docs.google.com/', 'http://docs.google.com/',
-        anchor.href);
+    assertEquals('Should point to http://docs.google.com/', 'http://docs.google.com/', anchor.href);
     assertEquals('Should have correct text', 'Text', link.getCurrentText());
-    assertEquals(
-        'Should still be bold', String(TagName.B), anchor.firstChild.tagName);
+    assertEquals('Should still be bold', String(TagName.B), anchor.firstChild.tagName);
   },
 
   testLinkImgTag() {
@@ -119,17 +114,11 @@ testSuite({
     assertEquals('Test getCurrentText', 'alt_txt', link.getCurrentText());
     link.setTextAndUrl('newText', 'http://docs.google.com/');
     assertEquals('Test getCurrentText', 'newText', link.getCurrentText());
-    assertEquals(
-        'Should point to http://docs.google.com/', 'http://docs.google.com/',
-        anchor.href);
+    assertEquals('Should point to http://docs.google.com/', 'http://docs.google.com/', anchor.href);
 
-    assertEquals(
-        'Should still have img tag', String(TagName.IMG),
-        anchor.firstChild.tagName);
+    assertEquals('Should still have img tag', String(TagName.IMG), anchor.firstChild.tagName);
 
-    assertEquals(
-        'Alt should equal "newText"', 'newText',
-        anchor.firstChild.getAttribute('alt'));
+    assertEquals('Alt should equal "newText"', 'newText', anchor.firstChild.getAttribute('alt'));
   },
 
   testLinkImgTagWithNoAlt() {
@@ -143,12 +132,9 @@ testSuite({
     const link = Link.createNewLink(anchor, 'http://www.google.com', '_blank');
     assertEquals('Should have text: AB', 'AB', link.getCurrentText());
     link.setTextAndUrl('Text', 'http://docs.google.com/');
-    assertEquals(
-        'Should point to http://docs.google.com/', 'http://docs.google.com/',
-        anchor.href);
+    assertEquals('Should point to http://docs.google.com/', 'http://docs.google.com/', anchor.href);
     assertEquals('Should have correct text', 'Text', link.getCurrentText());
-    assertEquals(
-        'Should not be bold', NodeType.TEXT, anchor.firstChild.nodeType);
+    assertEquals('Should not be bold', NodeType.TEXT, anchor.firstChild.nodeType);
   },
 
   testPlaceCursorRightOf() {
@@ -175,11 +161,12 @@ testSuite({
     // but if you type, it types outside the anchor.
     //
     // Best we can do is test that it is at the end of the anchor text.
+    assertEquals('Selection should be in anchor text', anchor.firstChild, startNode);
     assertEquals(
-        'Selection should be in anchor text', anchor.firstChild, startNode);
-    assertEquals(
-        'Selection should be at the end of the text', anchor.firstChild.length,
-        range.getStartOffset());
+      'Selection should be at the end of the text',
+      anchor.firstChild.length,
+      range.getStartOffset()
+    );
 
     if (ed) {
       dom.removeNode(ed);
@@ -248,7 +235,7 @@ testSuite({
       'www.jester is gone.com',
       'ftp .nospaces.net',
       'www_foo_net',
-      'www.\'jester\'.net',
+      "www.'jester'.net",
       'www:8080',
       'www . notnsense.com',
       'email@address.com',
@@ -306,8 +293,8 @@ testSuite({
       '3g?@bil.com',
       'adam be@hi.net',
       'john\nsmith@test.com',
-      'www.\'jester\'.net',
-      '\'james\'@covald.net',
+      "www.'jester'.net",
+      "'james'@covald.net",
       'ftp://user@site.com/',
       'aim:goim?screenname=en2es',
       'user:pass@site.com',

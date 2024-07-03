@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.structs.PoolTest');
-goog.setTestOnly();
 
 const MockClock = goog.require('goog.testing.MockClock');
 const Pool = goog.require('goog.structs.Pool');
@@ -56,7 +55,7 @@ testSuite({
   },
 
   testExceedMax3() {
-    const p = new Pool();  // default: 10
+    const p = new Pool(); // default: 10
     const objs = [];
 
     for (let i = 0; i < 12; i++) {

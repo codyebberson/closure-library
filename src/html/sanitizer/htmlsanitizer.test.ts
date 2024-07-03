@@ -7,7 +7,6 @@
 /** @fileoverview Unit tests for HTML Sanitizer */
 
 goog.module('goog.html.HtmlSanitizerTest');
-goog.setTestOnly();
 
 const Builder = goog.require('goog.html.sanitizer.HtmlSanitizer.Builder');
 const Const = goog.require('goog.string.Const');
@@ -38,8 +37,7 @@ function assertSanitizedHtml(originalHtml, expectedHtml, opt_sanitizer) {
   const sanitizer = opt_sanitizer || new Builder().build();
   const sanitized = SafeHtml.unwrap(sanitizer.sanitize(originalHtml));
   if (typeof expectedHtml == 'string') {
-    testingDom.assertHtmlMatches(
-        expectedHtml, sanitized, true /* opt_strictAttributes */);
+    testingDom.assertHtmlMatches(expectedHtml, sanitized, true /* opt_strictAttributes */);
   } else {
     assertRegExp(expectedHtml, sanitized);
   }
@@ -90,8 +88,7 @@ function assertAfterInsertionEquals(expected, input) {
   const div = document.createElement('div');
   document.body.appendChild(div);
   div.innerHTML = input;
-  testingDom.assertHtmlMatches(
-      expected, div.innerHTML, true /* opt_strictAttributes */);
+  testingDom.assertHtmlMatches(expected, div.innerHTML, true /* opt_strictAttributes */);
   div.parentNode.removeChild(div);
 }
 
@@ -126,7 +123,7 @@ testSuite({
     html = '<div><span>hello world</span></div>';
     assertSanitizedHtml(html, html);
 
-    html = '<div><a target=\'_blank\'>hello world</a></div>';
+    html = "<div><a target='_blank'>hello world</a></div>";
     assertSanitizedHtml(html, html);
   },
 
@@ -150,9 +147,9 @@ testSuite({
     const testUrl = 'http://www.example.com/image3.jpg';
     const html = '<div style="background-image: url(' + testUrl + ');"></div>';
     const sanitizer = new Builder()
-                          .allowCssStyles()
-                          .withCustomNetworkRequestUrlPolicy(SafeUrl.sanitize)
-                          .build();
+      .allowCssStyles()
+      .withCustomNetworkRequestUrlPolicy(SafeUrl.sanitize)
+      .build();
     assertSanitizedHtml(html, html, sanitizer);
   },
 
@@ -167,7 +164,7 @@ testSuite({
     // Inserting <script> tags is unsafe
     // Browser Support [IE7.0|IE6.0|NS8.1-IE] [NS8.1-G|FF2.0]
     safeHtml = '';
-    xssHtml = '<SCRIPT SRC=xss.js><\/SCRIPT>';
+    xssHtml = '<SCRIPT SRC=xss.js></SCRIPT>';
     assertSanitizedHtml(xssHtml, safeHtml);
     // removes strings like javascript:, alert, etc
     // Image XSS using the javascript directive
@@ -177,7 +174,7 @@ testSuite({
     assertSanitizedHtml(xssHtml, safeHtml);
 
     safeHtml = '<div><a>hello world</a></div>';
-    xssHtml = '<div><a target=\'_xss\'>hello world</a></div>';
+    xssHtml = "<div><a target='_xss'>hello world</a></div>";
     assertSanitizedHtml(xssHtml, safeHtml);
 
     safeHtml = '';
@@ -221,15 +218,16 @@ testSuite({
     // http://www.begeek.it/2006/03/18/esclusivo-vulnerabilita-xss-in-firefox/#more-300
     // Browser Support [IE7.0|IE6.0|NS8.1-IE] [NS8.1-G|FF2.0]
     safeHtml = '<img />"&gt;';
-    xssHtml = '<IMG """><SCRIPT defer>exploited = true;<\/SCRIPT>">';
+    xssHtml = '<IMG """><SCRIPT defer>exploited = true;</SCRIPT>">';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // UTF-8 Unicode encoding
     // Browser Support [IE6.0|NS8.1-IE]
     safeHtml = '<img />';
-    xssHtml = '<IMG SRC=&#106;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;' +
-        '&#116;&#58;&#97;&#108;&#101;&#114;&#116;&#40;&#39;&#88;&#83;&#83;&#39;' +
-        '&#41;>';
+    xssHtml =
+      '<IMG SRC=&#106;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;' +
+      '&#116;&#58;&#97;&#108;&#101;&#114;&#116;&#40;&#39;&#88;&#83;&#83;&#39;' +
+      '&#41;>';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // Long UTF-8 Unicode encoding without semicolons (this is often effective
@@ -241,10 +239,10 @@ testSuite({
     // Browser Support [IE6.0|NS8.1-IE]
     safeHtml = '<img />';
     xssHtml =
-        '<IMG SRC=&#0000106&#0000097&#0000118&#0000097&#0000115&#0000099' +
-        '&#0000114&#0000105&#0000112&#0000116&#0000058&#0000097&#0000108' +
-        '&#0000101&#0000114&#0000116&#0000040&#0000039&#0000088&#0000083' +
-        '&#0000083&#0000039&#0000041>';
+      '<IMG SRC=&#0000106&#0000097&#0000118&#0000097&#0000115&#0000099' +
+      '&#0000114&#0000105&#0000112&#0000116&#0000058&#0000097&#0000108' +
+      '&#0000101&#0000114&#0000116&#0000040&#0000039&#0000088&#0000083' +
+      '&#0000083&#0000039&#0000041>';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // Hex encoding without semicolons (this is also a viable XSS attack against
@@ -254,8 +252,8 @@ testSuite({
     // information: Browser Support [IE6.0|NS8.1-IE]
     safeHtml = '<img />';
     xssHtml =
-        '<IMG SRC=&#x6A&#x61&#x76&#x61&#x73&#x63&#x72&#x69&#x70&#x74&#x3A' +
-        '&#x61&#x6C&#x65&#x72&#x74&#x28&#x27&#x58&#x53&#x53&#x27&#x29>';
+      '<IMG SRC=&#x6A&#x61&#x76&#x61&#x73&#x63&#x72&#x69&#x70&#x74&#x3A' +
+      '&#x61&#x6C&#x65&#x72&#x74&#x28&#x27&#x58&#x53&#x53&#x27&#x29>';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // Embedded tab
@@ -285,8 +283,8 @@ testSuite({
     // Browser Support [IE6.0|NS8.1-IE]
     safeHtml = '<img />';
     xssHtml =
-        '<IMG\nSRC\n=\n"\nj\na\nv\na\ns\nc\nr\ni\np\nt\n:\na\nl\ne\nr\nt' +
-        '\n(\n"\nX\nS\nS\n"\n)\n"\n>';
+      '<IMG\nSRC\n=\n"\nj\na\nv\na\ns\nc\nr\ni\np\nt\n:\na\nl\ne\nr\nt' +
+      '\n(\n"\nX\nS\nS\n"\n)\n"\n>';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // Null breaks up JavaScript directive. Okay, I lied, null chars also work
@@ -307,7 +305,7 @@ testSuite({
     // sanitizer on IE9 doesn't "recover as well" as other browsers but the
     // result is safe.
     safeHtml = '<span>alert("XSS")</span>';
-    xssHtml = '<SCR\0IPT>alert(\"XSS\")</SCR\0IPT>';
+    xssHtml = '<SCR\0IPT>alert("XSS")</SCR\0IPT>';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // Spaces and meta chars before the JavaScript in images for XSS (this is
@@ -328,7 +326,7 @@ testSuite({
     // tag they are looking for is broken up by whitespace.
     // Browser Support [IE7.0|IE6.0|NS8.1-IE] [NS8.1-G|FF2.0]
     safeHtml = '';
-    xssHtml = '<SCRIPT/XSS SRC="http://ha.ckers.org/xss.js"><\/SCRIPT>';
+    xssHtml = '<SCRIPT/XSS SRC="http://ha.ckers.org/xss.js"></SCRIPT>';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // Non-alpha-non-digit part 2 XSS. yawnmoth brought my attention to this
@@ -350,7 +348,7 @@ testSuite({
     // allow spaces.
     // Browser support: [IE7.0|IE6.0|NS8.1-IE] [NS8.1-G|FF2.0]
     safeHtml = '';
-    xssHtml = '<SCRIPT/SRC="http://ha.ckers.org/xss.js"><\/SCRIPT>';
+    xssHtml = '<SCRIPT/SRC="http://ha.ckers.org/xss.js"></SCRIPT>';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // Extraneous open brackets. Submitted by Franz Sedlmaier, this XSS vector
@@ -362,7 +360,7 @@ testSuite({
     // comments out the ending extraneous bracket to supress a JavaScript error:
     // Browser support: [IE7.0|IE6.0|NS8.1-IE] [NS8.1-G|FF2.0]
     safeHtml = '&lt;';
-    xssHtml = '<<SCRIPT>xss=true;//<<\/SCRIPT>';
+    xssHtml = '<<SCRIPT>xss=true;//<</SCRIPT>';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // No closing script tags. In Firefox and Netscape 8.1 in the Gecko
@@ -421,7 +419,7 @@ testSuite({
     // which can encapsulate the malicious cross site scripting attack:
     // Browser support: [IE7.0|IE6.0|NS8.1-IE] [NS8.1-G|FF2.0]
     safeHtml = '';
-    xssHtml = '</TITLE><SCRIPT>alert(window);<\/SCRIPT>';
+    xssHtml = '</TITLE><SCRIPT>alert(window);</SCRIPT>';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // Input Image.
@@ -486,8 +484,8 @@ testSuite({
     // vector:
     // Browser support: [IE6.0|NS8.1-IE]
     safeHtml = '<ul><li>XSS</li></ul>';
-    xssHtml = '<STYLE>li {list-style-image: url("javascript:alert(window)");}' +
-        '</STYLE><UL><LI>XSS';
+    xssHtml =
+      '<STYLE>li {list-style-image: url("javascript:alert(window)");}' + '</STYLE><UL><LI>XSS';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // VBscript in an image:
@@ -513,8 +511,7 @@ testSuite({
     // need to get rid of referring URLs):
     // Browser support: [IE6.0|NS8.1-IE] [NS8.1-G|FF2.0] [O9.02]
     safeHtml = '';
-    xssHtml = '<META HTTP-EQUIV="refresh" CONTENT="0;url=' +
-        'javascript:alert(window);">';
+    xssHtml = '<META HTTP-EQUIV="refresh" CONTENT="0;url=' + 'javascript:alert(window);">';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // META using data: directive URL scheme. This is nice because it also
@@ -526,16 +523,16 @@ testSuite({
     // [NS8.1-G|FF2.0] [O9.02]
     safeHtml = '';
     xssHtml =
-        '<META HTTP-EQUIV="refresh" CONTENT="0;url=data:text/html;base64,' +
-        'PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K">';
+      '<META HTTP-EQUIV="refresh" CONTENT="0;url=data:text/html;base64,' +
+      'PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K">';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // META with additional URL parameter. If the target website attempts to see
     // if the URL contains "http://" at the beginning you can evade it with the
     // following technique (Submitted by Moritz Naumann):
     safeHtml = '';
-    xssHtml = '<META HTTP-EQUIV="refresh" CONTENT="0; URL=http://;URL=' +
-        'javascript:alert(window);">';
+    xssHtml =
+      '<META HTTP-EQUIV="refresh" CONTENT="0; URL=http://;URL=' + 'javascript:alert(window);">';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // IFRAME (if iframes are allowed there are a lot of other XSS problems as
@@ -580,8 +577,7 @@ testSuite({
     // padding of course. (Any of the following chars can be used: 1-32, 34, 39,
     // 160, 8192-8.13, 12288, 65279): Browser support: [IE6.0|NS8.1-IE]
     safeHtml = '<div></div>';
-    xssHtml =
-        '<DIV STYLE="background-image: url(&#1;javascript:alert(window))">';
+    xssHtml = '<DIV STYLE="background-image: url(&#1;javascript:alert(window))">';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // DIV expression - a variant of this was effective against a real world
@@ -596,7 +592,7 @@ testSuite({
     // into an infinite loop of alerts):
     // Browser support: [IE6.0|NS8.1-IE]
     safeHtml = '';
-    xssHtml = '<STYLE>@import\'ja\vasc\ript:alert(window)\';</STYLE>';
+    xssHtml = "<STYLE>@import'ja\vasc\ript:alert(window)';</STYLE>";
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // STYLE attribute using a comment to break up expression (Thanks to Roman
@@ -618,8 +614,9 @@ testSuite({
     // apart, like above this can send IE into a loop): Browser support:
     // [IE7.0|IE6.0|NS8.1-IE]
     safeHtml = 'exp/*<a></a>';
-    xssHtml = 'exp/*<A STYLE="no\\xss:noxss("*//*");xss:&#101;x&#x2F;*XSS*//*' +
-        '/*/pression(alert(window))">';
+    xssHtml =
+      'exp/*<A STYLE="no\\xss:noxss("*//*");xss:&#101;x&#x2F;*XSS*//*' +
+      '/*/pression(alert(window))">';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // STYLE tag (Older versions of Netscape only):
@@ -631,8 +628,8 @@ testSuite({
     // STYLE tag using background-image:
     // Browser support: [IE6.0|NS8.1-IE]
     safeHtml = '<a></a>';
-    xssHtml = '<STYLE>.XSS{background-image:url("javascript:alert("XSS")");}' +
-        '</STYLE><A CLASS=XSS></A>';
+    xssHtml =
+      '<STYLE>.XSS{background-image:url("javascript:alert("XSS")");}' + '</STYLE><A CLASS=XSS></A>';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // BASE tag. Works in IE and Netscape 8.1 in safe mode. You need the // to
@@ -652,8 +649,8 @@ testSuite({
     // actually an HTML file that can contain your XSS:
     // Browser support: [O9.02]
     safeHtml = '';
-    xssHtml = '<OBJECT TYPE="text/x-scriptlet" ' +
-        'DATA="http://ha.ckers.org/scriptlet.html"></OBJECT>';
+    xssHtml =
+      '<OBJECT TYPE="text/x-scriptlet" ' + 'DATA="http://ha.ckers.org/scriptlet.html"></OBJECT>';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // Using an EMBED tag you can embed a Flash movie that contains XSS. Click
@@ -662,8 +659,7 @@ testSuite({
     // Jonathan Vanasco for the info).: Browser support: [IE7.0|IE6.0|NS8.1-IE]
     // [NS8.1-G|FF2.0] [O9.02]
     safeHtml = '';
-    xssHtml = '<EMBED SRC="http://ha.ckers.org/xss.swf" ' +
-        'AllowScriptAccess="always"></EMBED>';
+    xssHtml = '<EMBED SRC="http://ha.ckers.org/xss.swf" ' + 'AllowScriptAccess="always"></EMBED>';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // You can EMBED SVG which can contain your XSS vector. This example only
@@ -673,31 +669,33 @@ testSuite({
     // [IE7.0|IE6.0|NS8.1-IE] [NS8.1-G|FF2.0] [O9.02]
     safeHtml = '';
     xssHtml =
-        '<EMBED SRC="data:image/svg+xml;base64,PHN2ZyB4bWxuczpzdmc9Imh0dH' +
-        ' A6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv Mj' +
-        'AwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hs aW5rIiB' +
-        '2ZXJzaW9uPSIxLjAiIHg9IjAiIHk9IjAiIHdpZHRoPSIxOTQiIGhlaWdodD0iMjAw IiBp' +
-        'ZD0ieHNzIj48c2NyaXB0IHR5cGU9InRleHQvZWNtYXNjcmlwdCI+YWxlcnQoIlh TUyIpO' +
-        'zwvc2NyaXB0Pjwvc3ZnPg==" type="image/svg+xml" ' +
-        'AllowScriptAccess="always"></EMBED>';
+      '<EMBED SRC="data:image/svg+xml;base64,PHN2ZyB4bWxuczpzdmc9Imh0dH' +
+      ' A6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv Mj' +
+      'AwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hs aW5rIiB' +
+      '2ZXJzaW9uPSIxLjAiIHg9IjAiIHk9IjAiIHdpZHRoPSIxOTQiIGhlaWdodD0iMjAw IiBp' +
+      'ZD0ieHNzIj48c2NyaXB0IHR5cGU9InRleHQvZWNtYXNjcmlwdCI+YWxlcnQoIlh TUyIpO' +
+      'zwvc2NyaXB0Pjwvc3ZnPg==" type="image/svg+xml" ' +
+      'AllowScriptAccess="always"></EMBED>';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // XML namespace. The htc file must be located on the same server as your
     // XSS vector: Browser support: [IE7.0|IE6.0|NS8.1-IE]
     safeHtml = '<span>XSS</span>';
-    xssHtml = '<HTML xmlns:xss>' +
-        '<?import namespace="xss" implementation="http://ha.ckers.org/xss.htc">' +
-        '<xss:xss>XSS</xss:xss>' +
-        '</HTML>';
+    xssHtml =
+      '<HTML xmlns:xss>' +
+      '<?import namespace="xss" implementation="http://ha.ckers.org/xss.htc">' +
+      '<xss:xss>XSS</xss:xss>' +
+      '</HTML>';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // XML data island with CDATA obfuscation (this XSS attack works only in IE
     // and Netscape 8.1 in IE rendering engine mode) - vector found by Sec
     // Consult while auditing Yahoo: Browser support: [IE6.0|NS8.1-IE]
     safeHtml = '<span><span><span>]]&gt;</span></span></span><span></span>';
-    xssHtml = '<XML ID=I><X><C><![CDATA[<IMG SRC="javas]]>' +
-        '<![CDATA[cript:xss=true;">]]>' +
-        '</C></X></xml><SPAN DATASRC=#I DATAFLD=C DATAFORMATAS=HTML></SPAN>';
+    xssHtml =
+      '<XML ID=I><X><C><![CDATA[<IMG SRC="javas]]>' +
+      '<![CDATA[cript:xss=true;">]]>' +
+      '</C></X></xml><SPAN DATASRC=#I DATAFLD=C DATAFORMATAS=HTML></SPAN>';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // HTML+TIME in XML. This is how Grey Magic hacked Hotmail and Yahoo!. This
@@ -706,12 +704,13 @@ testSuite({
     // to work:
     // Browser support: [IE7.0|IE6.0|NS8.1-IE]
     safeHtml = '<span></span>';
-    xssHtml = '<HTML><BODY>' +
-        '<?xml:namespace prefix="t" ns="urn:schemas-microsoft-com:time">' +
-        '<?import namespace="t" implementation="#default#time2">' +
-        '<t:set attributeName="innerHTML" to="XSS&lt;SCRIPT DEFER&gt;' +
-        'alert(&quot;XSS&quot;)&lt;/SCRIPT&gt;">' +
-        '</BODY></HTML>';
+    xssHtml =
+      '<HTML><BODY>' +
+      '<?xml:namespace prefix="t" ns="urn:schemas-microsoft-com:time">' +
+      '<?import namespace="t" implementation="#default#time2">' +
+      '<t:set attributeName="innerHTML" to="XSS&lt;SCRIPT DEFER&gt;' +
+      'alert(&quot;XSS&quot;)&lt;/SCRIPT&gt;">' +
+      '</BODY></HTML>';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // IMG Embedded commands - this works when the webpage where this is
@@ -722,8 +721,8 @@ testSuite({
     // the lesser used but more useful XSS vectors: Browser support:
     // [IE7.0|IE6.0|NS8.1-IE] [NS8.1-G|FF2.0] [O9.02]
     safeHtml = '<img />';
-    xssHtml = '<IMG SRC="http://www.thesiteyouareon.com/somecommand.php?' +
-        'somevariables=maliciouscode">';
+    xssHtml =
+      '<IMG SRC="http://www.thesiteyouareon.com/somecommand.php?' + 'somevariables=maliciouscode">';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // This was tested in IE, your mileage may vary. For performing XSS on sites
@@ -731,19 +730,19 @@ testSuite({
     // filter "/<script[^>]+src/i":
     // Browser support: [IE7.0|IE6.0|NS8.1-IE] [NS8.1-G|FF2.0] [O9.02]
     safeHtml = '';
-    xssHtml = '<SCRIPT a=">" SRC="http://ha.ckers.org/xss.js"><\/SCRIPT>';
+    xssHtml = '<SCRIPT a=">" SRC="http://ha.ckers.org/xss.js"></SCRIPT>';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     safeHtml = '';
-    xssHtml = '<SCRIPT =">" SRC="http://ha.ckers.org/xss.js"><\/SCRIPT>';
+    xssHtml = '<SCRIPT =">" SRC="http://ha.ckers.org/xss.js"></SCRIPT>';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // This XSS still worries me, as it would be nearly impossible to stop this
     // without blocking all active content:
     // Browser support: [IE7.0|IE6.0|NS8.1-IE] [NS8.1-G|FF2.0] [O9.02]
     safeHtml = 'PT SRC="http://ha.ckers.org/xss.js"&gt;';
-    xssHtml = '<SCRIPT>document.write("<SCRI");<\/SCRIPT>PT ' +
-        'SRC="http://ha.ckers.org/xss.js"><\/SCRIPT>';
+    xssHtml =
+      '<SCRIPT>document.write("<SCRI");</SCRIPT>PT ' + 'SRC="http://ha.ckers.org/xss.js"></SCRIPT>';
     assertSanitizedHtml(xssHtml, safeHtml);
 
     // US-ASCII encoding (found by Kurt Huwig). This uses malformed ASCII
@@ -784,11 +783,10 @@ testSuite({
     html = '<div data-goomoji="test" data-other="xyz">Testing</div>';
     const expectedHtml = '<div data-goomoji="test">Testing</div>';
     assertSanitizedHtml(
-        html, expectedHtml,
-        new Builder()
-            .allowCssStyles()
-            .allowDataAttributes(['data-goomoji'])
-            .build());
+      html,
+      expectedHtml,
+      new Builder().allowCssStyles().allowDataAttributes(['data-goomoji']).build()
+    );
   },
 
   testDisallowedDataWhitelistingAttributes() {
@@ -798,9 +796,7 @@ testSuite({
 
     // Disallow internal attribute used by html sanitizer
     assertThrows(() => {
-      new Builder()
-          .allowDataAttributes(['data-i', 'data-sanitizer-safe'])
-          .build();
+      new Builder().allowDataAttributes(['data-i', 'data-sanitizer-safe']).build();
     });
   },
 
@@ -812,25 +808,24 @@ testSuite({
     html = '<my-cool-div>Testing</my-cool-div><lame-div></lame-div>';
     const expectedHtml = '<my-cool-div>Testing</my-cool-div><span></span>';
     assertSanitizedHtml(
-        html, expectedHtml,
-        new Builder()
-            .allowCssStyles()
-            .allowCustomElementTag('my-cool-div')
-            .build());
+      html,
+      expectedHtml,
+      new Builder().allowCssStyles().allowCustomElementTag('my-cool-div').build()
+    );
   },
 
   testAllowWithelistedCustomElementsAttributes() {
-    let html =
-        '<my-div my-attr="yes" my-bool-attr not-whitelisted="no">Testing</my-div>';
+    const html = '<my-div my-attr="yes" my-bool-attr not-whitelisted="no">Testing</my-div>';
     const expectedHtml = '<my-div my-attr="yes" my-bool-attr>Testing</my-div>';
     assertSanitizedHtml(
-        html, expectedHtml,
-        new Builder()
-            .allowCssStyles()
-            .allowCustomElementTag('my-div', ['my-attr', 'my-bool-attr'])
-            .build());
+      html,
+      expectedHtml,
+      new Builder()
+        .allowCssStyles()
+        .allowCustomElementTag('my-div', ['my-attr', 'my-bool-attr'])
+        .build()
+    );
   },
-
 
   testDisallowedCustomElementsWhitelistingTags() {
     assertThrows(() => {
@@ -856,29 +851,30 @@ testSuite({
   testFormBody() {
     const safeHtml = '<form>stuff</form>';
     const formHtml = '<form name="body">stuff</form>';
-    assertSanitizedHtml(
-        formHtml, safeHtml, new Builder().allowFormTag().build());
+    assertSanitizedHtml(formHtml, safeHtml, new Builder().allowFormTag().build());
   },
 
   testStyleTag() {
     const safeHtml = '';
-    const xssHtml =
-        '<STYLE>P.special {color : green;border: solid red;}</STYLE>';
+    const xssHtml = '<STYLE>P.special {color : green;border: solid red;}</STYLE>';
     assertSanitizedHtml(xssHtml, safeHtml);
   },
 
   testOnlyAllowTags() {
-    const result = '<div><span></span>' +
-        '<a href="http://www.google.com">hi</a>' +
-        '<br>Test.<span></span><div align="right">Test</div></div>';
+    const result =
+      '<div><span></span>' +
+      '<a href="http://www.google.com">hi</a>' +
+      '<br>Test.<span></span><div align="right">Test</div></div>';
     // If we were mimicing goog.labs.html.sanitizer, our output would be
     // '<div><a>hi</a><br>Test.<div>Test</div></div>';
     assertSanitizedHtml(
-        '<div><img id="bar" name=foo class="c d" ' +
-            'src="http://wherever.com">' +
-            '<a href=" http://www.google.com">hi</a>' +
-            '<br>Test.<hr><div align="right">Test</div></div>',
-        result, new Builder().onlyAllowTags(['bR', 'a', 'DIV']).build());
+      '<div><img id="bar" name=foo class="c d" ' +
+        'src="http://wherever.com">' +
+        '<a href=" http://www.google.com">hi</a>' +
+        '<br>Test.<hr><div align="right">Test</div></div>',
+      result,
+      new Builder().onlyAllowTags(['bR', 'a', 'DIV']).build()
+    );
   },
 
   testDisallowNonWhitelistedTags() {
@@ -888,164 +884,166 @@ testSuite({
   },
 
   testDefaultPoliciesAreApplied() {
-    const result = '<img /><a href="http://www.google.com">hi</a>' +
-        '<a href="ftp://whatever.com">another</a>';
+    const result =
+      '<img /><a href="http://www.google.com">hi</a>' + '<a href="ftp://whatever.com">another</a>';
     assertSanitizedHtml(
-        '<img id="bar" name=foo class="c d" ' +
-            'src="http://wherever.com">' +
-            '<a href=" http://www.google.com">hi</a>' +
-            '<a href=ftp://whatever.com>another</a>',
-        result);
+      '<img id="bar" name=foo class="c d" ' +
+        'src="http://wherever.com">' +
+        '<a href=" http://www.google.com">hi</a>' +
+        '<a href=ftp://whatever.com>another</a>',
+      result
+    );
   },
 
   testCustomNamePolicyIsApplied() {
-    const result = '<img name="myOwnPrefix-foo" />' +
-        '<a href="http://www.google.com">hi</a>' +
-        '<a href="ftp://whatever.com">another</a>';
+    const result =
+      '<img name="myOwnPrefix-foo" />' +
+      '<a href="http://www.google.com">hi</a>' +
+      '<a href="ftp://whatever.com">another</a>';
     assertSanitizedHtml(
-        '<img id="bar" name=foo class="c d" ' +
-            'src="http://wherever.com"><a href=" http://www.google.com">hi</a>' +
-            '<a href=ftp://whatever.com>another</a>',
-        result,
-        new Builder()
-            .withCustomNamePolicy((name) => `myOwnPrefix-${name}`)
-            .build());
+      '<img id="bar" name=foo class="c d" ' +
+        'src="http://wherever.com"><a href=" http://www.google.com">hi</a>' +
+        '<a href=ftp://whatever.com>another</a>',
+      result,
+      new Builder().withCustomNamePolicy((name) => `myOwnPrefix-${name}`).build()
+    );
   },
 
   testCustomTokenPolicyIsApplied() {
-    const result = '<img id="myOwnPrefix-bar" ' +
-        'class="myOwnPrefix-c myOwnPrefix-d" />' +
-        '<a href="http://www.google.com">hi</a>' +
-        '<a href="ftp://whatever.com">another</a>';
+    const result =
+      '<img id="myOwnPrefix-bar" ' +
+      'class="myOwnPrefix-c myOwnPrefix-d" />' +
+      '<a href="http://www.google.com">hi</a>' +
+      '<a href="ftp://whatever.com">another</a>';
     assertSanitizedHtml(
-        '<img id="bar" name=foo class="c d" ' +
-            'src="http://wherever.com"><a href=" http://www.google.com">hi</a>' +
-            '<a href=ftp://whatever.com>another</a>',
-        result,
-        new Builder()
-            .withCustomTokenPolicy((name) => `myOwnPrefix-${name}`)
-            .build());
+      '<img id="bar" name=foo class="c d" ' +
+        'src="http://wherever.com"><a href=" http://www.google.com">hi</a>' +
+        '<a href=ftp://whatever.com>another</a>',
+      result,
+      new Builder().withCustomTokenPolicy((name) => `myOwnPrefix-${name}`).build()
+    );
   },
 
   testMultipleCustomPoliciesAreApplied() {
-    const result = '<img id="plarpalarp-bar" name="larlarlar-foo" ' +
-        'class="plarpalarp-c plarpalarp-d" />' +
-        '<a href="http://www.google.com">hi</a>' +
-        '<a href="ftp://whatever.com">another</a>';
+    const result =
+      '<img id="plarpalarp-bar" name="larlarlar-foo" ' +
+      'class="plarpalarp-c plarpalarp-d" />' +
+      '<a href="http://www.google.com">hi</a>' +
+      '<a href="ftp://whatever.com">another</a>';
     assertSanitizedHtml(
-        '<img id="bar" name=foo class="c d" ' +
-            'src="http://wherever.com"><a href=" http://www.google.com">hi</a>' +
-            '<a href=ftp://whatever.com>another</a>',
-        result,
-        new Builder()
-            .withCustomTokenPolicy((token) => `plarpalarp-${token}`)
-            .withCustomNamePolicy((name) => `larlarlar-${name}`)
-            .build());
+      '<img id="bar" name=foo class="c d" ' +
+        'src="http://wherever.com"><a href=" http://www.google.com">hi</a>' +
+        '<a href=ftp://whatever.com>another</a>',
+      result,
+      new Builder()
+        .withCustomTokenPolicy((token) => `plarpalarp-${token}`)
+        .withCustomNamePolicy((name) => `larlarlar-${name}`)
+        .build()
+    );
   },
 
   testNonTrivialCustomPolicy() {
     const result =
-        '<img /><a href="http://www.google.com" name="Alacrity">hi</a>' +
-        '<a href="ftp://whatever.com">another</a>';
+      '<img /><a href="http://www.google.com" name="Alacrity">hi</a>' +
+      '<a href="ftp://whatever.com">another</a>';
     assertSanitizedHtml(
-        '<img id="bar" name=foo class="c d" src="http://wherever.com">' +
-            '<a href=" http://www.google.com" name=Alacrity>hi</a>' +
-            '<a href=ftp://whatever.com>another</a>',
-        result,
-        new Builder()
-            .withCustomNamePolicy((name) => name.charAt(0) != 'A' ? null : name)
-            .build());
+      '<img id="bar" name=foo class="c d" src="http://wherever.com">' +
+        '<a href=" http://www.google.com" name=Alacrity>hi</a>' +
+        '<a href=ftp://whatever.com>another</a>',
+      result,
+      new Builder().withCustomNamePolicy((name) => (name.charAt(0) != 'A' ? null : name)).build()
+    );
   },
 
   testNetworkRequestUrlsAllowed() {
-    const result = '<img src="http://wherever.com" />' +
-        '<img src="https://secure.wherever.com" />' +
-        '<img alt="test" src="//wherever.com" />' +
-        '<a href="http://www.google.com">hi</a>' +
-        '<a href="ftp://whatever.com">another</a>';
+    const result =
+      '<img src="http://wherever.com" />' +
+      '<img src="https://secure.wherever.com" />' +
+      '<img alt="test" src="//wherever.com" />' +
+      '<a href="http://www.google.com">hi</a>' +
+      '<a href="ftp://whatever.com">another</a>';
     assertSanitizedHtml(
-        '<img id="bar" name=foo class="c d" src="http://wherever.com">' +
-            '<img src="https://secure.wherever.com">' +
-            '<img alt="test" src="//wherever.com">' +
-            '<a href=" http://www.google.com">hi</a>' +
-            '<a href=ftp://whatever.com>another</a>',
-        result,
-        new Builder()
-            .withCustomNetworkRequestUrlPolicy(SafeUrl.sanitize)
-            .build());
+      '<img id="bar" name=foo class="c d" src="http://wherever.com">' +
+        '<img src="https://secure.wherever.com">' +
+        '<img alt="test" src="//wherever.com">' +
+        '<a href=" http://www.google.com">hi</a>' +
+        '<a href=ftp://whatever.com>another</a>',
+      result,
+      new Builder().withCustomNetworkRequestUrlPolicy(SafeUrl.sanitize).build()
+    );
   },
 
   testCustomNRUrlPolicyMustNotContainParameters() {
     const result = '<img src="http://wherever.com" /><img />';
     assertSanitizedHtml(
-        '<img id="bar" class="c d" src="http://wherever.com">' +
-            '<img src="https://www.bank.com/withdraw?amount=onebeeeelion">',
-        result,
-        new Builder()
-            .withCustomNetworkRequestUrlPolicy(
-                (url) =>
-                    url.match(/\?/) ? null : testing.newSafeUrlForTest(url))
-            .build());
+      '<img id="bar" class="c d" src="http://wherever.com">' +
+        '<img src="https://www.bank.com/withdraw?amount=onebeeeelion">',
+      result,
+      new Builder()
+        .withCustomNetworkRequestUrlPolicy((url) =>
+          url.match(/\?/) ? null : testing.newSafeUrlForTest(url)
+        )
+        .build()
+    );
   },
 
   testPolicyHints() {
-    const sanitizer =
-        new Builder()
-            .allowFormTag()
-            .withCustomNetworkRequestUrlPolicy((url, policyHints) => {
-              if ((policyHints.tagName == 'img' &&
-                   policyHints.attributeName == 'src') ||
-                  (policyHints.tagName == 'input' &&
-                   policyHints.attributeName == 'src')) {
-                return testing.newSafeUrlForTest(`https://imageproxy/?${url}`);
-              } else {
-                return null;
-              }
-            })
-            .withCustomUrlPolicy((url, policyHints) => {
-              if (policyHints.tagName == 'a' &&
-                  policyHints.attributeName == 'href') {
-                return testing.newSafeUrlForTest(`https://linkproxy/?${url}`);
-              }
-              return SafeUrl.sanitize(url);
-            })
-            .build();
+    const sanitizer = new Builder()
+      .allowFormTag()
+      .withCustomNetworkRequestUrlPolicy((url, policyHints) => {
+        if (
+          (policyHints.tagName == 'img' && policyHints.attributeName == 'src') ||
+          (policyHints.tagName == 'input' && policyHints.attributeName == 'src')
+        ) {
+          return testing.newSafeUrlForTest(`https://imageproxy/?${url}`);
+        } else {
+          return null;
+        }
+      })
+      .withCustomUrlPolicy((url, policyHints) => {
+        if (policyHints.tagName == 'a' && policyHints.attributeName == 'href') {
+          return testing.newSafeUrlForTest(`https://linkproxy/?${url}`);
+        }
+        return SafeUrl.sanitize(url);
+      })
+      .build();
 
     // TODO(user): update this test to include a stylesheet once they're
     //   supported (in order to view both branches of the NRUrlPolicy).
-    const result = '<img src="https://imageproxy/?http://image" /> ' +
-        '<input type="image" src="https://imageproxy/?http://another" />' +
-        '<a href="https://linkproxy/?http://link">a link</a>' +
-        '<form action="http://formaction"></form>';
+    const result =
+      '<img src="https://imageproxy/?http://image" /> ' +
+      '<input type="image" src="https://imageproxy/?http://another" />' +
+      '<a href="https://linkproxy/?http://link">a link</a>' +
+      '<form action="http://formaction"></form>';
     assertSanitizedHtml(
-        '<img src="http://image"> <input type="image" ' +
-            'src="http://another"><a href="http://link">a link</a>' +
-            '<form action="http://formaction"></form>',
-        result, sanitizer);
+      '<img src="http://image"> <input type="image" ' +
+        'src="http://another"><a href="http://link">a link</a>' +
+        '<form action="http://formaction"></form>',
+      result,
+      sanitizer
+    );
   },
 
   testNRUrlPolicyAffectsCssSanitization() {
-    const sanitizer =
-        new Builder()
-            .allowCssStyles()
-            .withCustomNetworkRequestUrlPolicy((url, policyHints) => {
-              // Network request URLs may only be over https.
-              if (!/^https:\/\//i.test(url)) {
-                return null;
-              }
-              // CSS background URLs may only come from google.com.
-              if (policyHints.cssProperty === 'background-image') {
-                if (!/^https:\/\/www\.google\.com\//i.test(url)) {
-                  return null;
-                }
-              }
-              return SafeUrl.sanitize(url);
-            })
-            .build();
+    const sanitizer = new Builder()
+      .allowCssStyles()
+      .withCustomNetworkRequestUrlPolicy((url, policyHints) => {
+        // Network request URLs may only be over https.
+        if (!/^https:\/\//i.test(url)) {
+          return null;
+        }
+        // CSS background URLs may only come from google.com.
+        if (policyHints.cssProperty === 'background-image') {
+          if (!/^https:\/\/www\.google\.com\//i.test(url)) {
+            return null;
+          }
+        }
+        return SafeUrl.sanitize(url);
+      })
+      .build();
 
     const googleUrl = 'https://www.google.com/i.png';
-    let html =
-        '<div style="background-image: url(\'' + googleUrl + '\')"></div>';
+    let html = '<div style="background-image: url(\'' + googleUrl + '\')"></div>';
     assertSanitizedHtml(html, html, sanitizer);
 
     const otherUrl = 'https://wherever';
@@ -1060,52 +1058,56 @@ testSuite({
   },
 
   testAllowOnlyHttpAndHttpsAndFtpForNRUP() {
-    const input = '<img src="http://whatever">' +
-        '<img src="https://whatever">' +
-        '<img src="ftp://nope">' +
-        '<img src="garbage:nope">' +
-        '<img src="data:yep">';
-    const expected = '<img src="http://whatever" />' +
-        '<img src="https://whatever" />' +
-        '<img src="ftp://nope">' +
-        '<img />' +
-        '<img />';
+    const input =
+      '<img src="http://whatever">' +
+      '<img src="https://whatever">' +
+      '<img src="ftp://nope">' +
+      '<img src="garbage:nope">' +
+      '<img src="data:yep">';
+    const expected =
+      '<img src="http://whatever" />' +
+      '<img src="https://whatever" />' +
+      '<img src="ftp://nope">' +
+      '<img />' +
+      '<img />';
     assertSanitizedHtml(
-        input, expected,
-        new Builder()
-            .withCustomNetworkRequestUrlPolicy(SafeUrl.sanitize)
-            .build());
+      input,
+      expected,
+      new Builder().withCustomNetworkRequestUrlPolicy(SafeUrl.sanitize).build()
+    );
   },
 
   testUriSchemesOnNonNetworkRequestUrls() {
-    const input = '<a href="ftp://yep">something</a>' +
-        '<a href="gopher://yep">something</a>' +
-        '<a href="gopher:nope">something</a>' +
-        '<a href="http://yep">something</a>' +
-        '<a href="https://yep">something</a>' +
-        '<a href="garbage://nope">something</a>' +
-        '<a href="relative/yup">something</a>' +
-        '<a href="nope">something</a>' +
-        '<a>lol</a>';
-    const expected = '<a href="ftp://yep">something</a>' +
-        '<a>something</a>' +
-        '<a>something</a>' +
-        '<a href="http://yep">something</a>' +
-        '<a href="https://yep">something</a>' +
-        '<a>something</a>' +
-        '<a href="relative/yup">something</a>' +
-        '<a href="nope">something</a>' +
-        '<a>lol</a>';
+    const input =
+      '<a href="ftp://yep">something</a>' +
+      '<a href="gopher://yep">something</a>' +
+      '<a href="gopher:nope">something</a>' +
+      '<a href="http://yep">something</a>' +
+      '<a href="https://yep">something</a>' +
+      '<a href="garbage://nope">something</a>' +
+      '<a href="relative/yup">something</a>' +
+      '<a href="nope">something</a>' +
+      '<a>lol</a>';
+    const expected =
+      '<a href="ftp://yep">something</a>' +
+      '<a>something</a>' +
+      '<a>something</a>' +
+      '<a href="http://yep">something</a>' +
+      '<a href="https://yep">something</a>' +
+      '<a>something</a>' +
+      '<a href="relative/yup">something</a>' +
+      '<a href="nope">something</a>' +
+      '<a>lol</a>';
     assertSanitizedHtml(
-        input, expected,
-        new Builder().withCustomUrlPolicy(SafeUrl.sanitize).build());
+      input,
+      expected,
+      new Builder().withCustomUrlPolicy(SafeUrl.sanitize).build()
+    );
   },
 
   testOverridingGetOrSetAttribute() {
-    const input = '<form>' +
-        '<input name=setAttribute />' +
-        '<input name=getAttribute />' +
-        '</form>';
+    const input =
+      '<form>' + '<input name=setAttribute />' + '<input name=getAttribute />' + '</form>';
     const expected = '<form><input><input></form>';
     assertSanitizedHtml(input, expected, new Builder().allowFormTag().build());
   },
@@ -1114,8 +1116,10 @@ testSuite({
     const input = '<div data-sanitizer-foo="1" alt="b">Hello</div>';
     const expected = '<div alt="b">Hello</div>';
     assertSanitizedHtml(
-        input, expected,
-        new Builder().withCustomTokenPolicy((token) => token).build());
+      input,
+      expected,
+      new Builder().withCustomTokenPolicy((token) => token).build()
+    );
   },
 
   testTemplateRemoved() {
@@ -1133,43 +1137,41 @@ testSuite({
   testOriginalTag() {
     const input = '<p>Line1<magic></magic></p>';
     const expected = '<p>Line1<span ' + otag('magic') + '></span></p>';
-    assertSanitizedHtml(
-        input, expected, new Builder().addOriginalTagNames().build());
+    assertSanitizedHtml(input, expected, new Builder().addOriginalTagNames().build());
   },
 
   testOriginalTagOverwrite() {
-    const input = '<div id="qqq">hello' +
-        '<a:b id="hi" class="hnn a" boo="3">qqq</a:b></div>';
-    const expected = '<div>hello<span ' + otag('a:b') +
-        ' id="HI" class="hnn a">' +
-        'qqq</span></div>';
+    const input = '<div id="qqq">hello' + '<a:b id="hi" class="hnn a" boo="3">qqq</a:b></div>';
+    const expected =
+      '<div>hello<span ' + otag('a:b') + ' id="HI" class="hnn a">' + 'qqq</span></div>';
     assertSanitizedHtml(
-        input, expected,
-        new Builder()
-            .addOriginalTagNames()
-            .withCustomTokenPolicy((token, hints) => {
-              const an = hints.attributeName;
-              if (an === 'id' && token === 'hi') {
-                return 'HI';
-              } else if (an === 'class') {
-                return token;
-              }
-              return null;
-            })
-            .build());
+      input,
+      expected,
+      new Builder()
+        .addOriginalTagNames()
+        .withCustomTokenPolicy((token, hints) => {
+          const an = hints.attributeName;
+          if (an === 'id' && token === 'hi') {
+            return 'HI';
+          } else if (an === 'class') {
+            return token;
+          }
+          return null;
+        })
+        .build()
+    );
   },
 
   testStyleTag_default() {
-    const input = '<style>a { color: red; qqq: z; ' +
-        'background-image: url("http://foo.com") }</style>';
+    const input =
+      '<style>a { color: red; qqq: z; ' + 'background-image: url("http://foo.com") }</style>';
     const expected = '';
     assertSanitizedHtml(input, expected, new Builder().build());
   },
 
   testStyleTag_random() {
     const input = '<style>a { color: red; }</style>';
-    const expected =
-        /^<span id="(sanitizer-\w+)"><style>#\1 a{color: red;}<\/style><\/span>$/;
+    const expected = /^<span id="(sanitizer-\w+)"><style>#\1 a{color: red;}<\/style><\/span>$/;
     const sanitizer = new Builder().allowStyleTag().build();
     assertSanitizedHtml(input, expected, sanitizer);
   },
@@ -1187,56 +1189,61 @@ testSuite({
   },
 
   testStyleTag_wrappingDisabled() {
-    const input = '<style>a { color: red; qqq: z; ' +
-        'background-image: url("http://foo.com") }</style>';
+    const input =
+      '<style>a { color: red; qqq: z; ' + 'background-image: url("http://foo.com") }</style>';
     const expected = '<style>a{color: red;}</style>';
     assertSanitizedHtml(
-        input, expected,
-        new Builder().allowStyleTag().withStyleContainer().build());
+      input,
+      expected,
+      new Builder().allowStyleTag().withStyleContainer().build()
+    );
   },
 
   testStyleTag_withStyleContainer() {
     const input = '<style>a { color: red; }</style>';
     const expected = '<style>#foo a{color: red;}</style>';
     assertSanitizedHtml(
-        input, expected,
-        new Builder().allowStyleTag().withStyleContainer('foo').build());
+      input,
+      expected,
+      new Builder().allowStyleTag().withStyleContainer('foo').build()
+    );
   },
 
   testStyleTag_networkUrlPolicy() {
     const input = '<style>a{background-image: url("http://foo.com");}</style>';
-    const expected =
-        '<style>a{background-image: url("http://foo.com");}</style>';
+    const expected = '<style>a{background-image: url("http://foo.com");}</style>';
     assertSanitizedHtml(
-        input, expected,
-        new Builder()
-            .allowStyleTag()
-            .withStyleContainer()
-            .withCustomNetworkRequestUrlPolicy(SafeUrl.sanitize)
-            .build());
+      input,
+      expected,
+      new Builder()
+        .allowStyleTag()
+        .withStyleContainer()
+        .withCustomNetworkRequestUrlPolicy(SafeUrl.sanitize)
+        .build()
+    );
   },
 
   testInlineStyleRules_basic() {
     const input = '<style>a{color:red}</style><a>foo</a>';
     const expected = '<a style="color:red;">foo</a>';
-    assertSanitizedHtml(
-        input, expected,
-        new Builder().allowCssStyles().inlineStyleRules().build());
+    assertSanitizedHtml(input, expected, new Builder().allowCssStyles().inlineStyleRules().build());
   },
 
   testInlineStyleRules_specificity() {
-    const input = '<style>a{color: red; border-width: 1px}' +
-        '#foo{color: white;}</style>' +
-        '<a id="foo">foo</a>';
-    const expected =
-        '<a id="foo" style="color: white; border-width: 1px">foo</a>';
+    const input =
+      '<style>a{color: red; border-width: 1px}' +
+      '#foo{color: white;}</style>' +
+      '<a id="foo">foo</a>';
+    const expected = '<a id="foo" style="color: white; border-width: 1px">foo</a>';
     assertSanitizedHtml(
-        input, expected,
-        new Builder()
-            .allowCssStyles()
-            .inlineStyleRules()
-            .withCustomTokenPolicy(functions.identity)
-            .build());
+      input,
+      expected,
+      new Builder()
+        .allowCssStyles()
+        .inlineStyleRules()
+        .withCustomTokenPolicy(functions.identity)
+        .build()
+    );
   },
 
   testInlineStyleRules_required() {
@@ -1255,108 +1262,97 @@ testSuite({
   },
 
   testInlineStyleRules_allowsExistingStyleAttributes() {
-    const input =
-        '<style>a{color:red}</style><a style="font-weight: bold">foo</a>';
+    const input = '<style>a{color:red}</style><a style="font-weight: bold">foo</a>';
     const expected = '<a style="color: red; font-weight: bold">foo</a>';
-    assertSanitizedHtml(
-        input, expected,
-        new Builder().allowCssStyles().inlineStyleRules().build());
+    assertSanitizedHtml(input, expected, new Builder().allowCssStyles().inlineStyleRules().build());
   },
 
   testInlineStyleRules_inlinedBeforeRenaming() {
     const input = '<style>#bar{color:red}</style><a id="bar">baz</a>';
     const expected = '<a id="foo-bar" style="color:red">baz</a>';
     assertSanitizedHtml(
-        input, expected,
-        new Builder()
-            .allowCssStyles()
-            .inlineStyleRules()
-            .withCustomTokenPolicy((id) => `foo-${id}`)
-            .build());
+      input,
+      expected,
+      new Builder()
+        .allowCssStyles()
+        .inlineStyleRules()
+        .withCustomTokenPolicy((id) => `foo-${id}`)
+        .build()
+    );
   },
 
   testInlineStyleRules_networkRequestUrlPolicy() {
-    let input =
-        '<style>a{background-image: url("http://foo.com")}</style><a>foo</a>';
+    let input = '<style>a{background-image: url("http://foo.com")}</style><a>foo</a>';
     let expected = '<a>foo</a>';
-    assertSanitizedHtml(
-        input, expected,
-        new Builder().allowCssStyles().inlineStyleRules().build());
+    assertSanitizedHtml(input, expected, new Builder().allowCssStyles().inlineStyleRules().build());
 
     expected = '<a style="background-image: url(\'http://foo.com\')">foo</a>';
     assertSanitizedHtml(
-        input, expected,
-        new Builder()
-            .allowCssStyles()
-            .inlineStyleRules()
-            .withCustomNetworkRequestUrlPolicy(SafeUrl.sanitize)
-            .build());
+      input,
+      expected,
+      new Builder()
+        .allowCssStyles()
+        .inlineStyleRules()
+        .withCustomNetworkRequestUrlPolicy(SafeUrl.sanitize)
+        .build()
+    );
 
-    input = '<style>a{background-image: url("javascript:alert(1)")}</style>' +
-        '<a>foo</a>';
+    input = '<style>a{background-image: url("javascript:alert(1)")}</style>' + '<a>foo</a>';
     expected = '<a>foo</a>';
     assertSanitizedHtml(
-        input, expected,
-        new Builder()
-            .allowCssStyles()
-            .inlineStyleRules()
-            .withCustomNetworkRequestUrlPolicy(SafeUrl.sanitize)
-            .build());
+      input,
+      expected,
+      new Builder()
+        .allowCssStyles()
+        .inlineStyleRules()
+        .withCustomNetworkRequestUrlPolicy(SafeUrl.sanitize)
+        .build()
+    );
   },
 
   testOriginalTagClobber() {
     const input = '<a:b data-sanitizer-original-tag="xss"></a:b>';
     const expected = '<span ' + otag('a:b') + '></span>';
-    assertSanitizedHtml(
-        input, expected, new Builder().addOriginalTagNames().build());
+    assertSanitizedHtml(input, expected, new Builder().addOriginalTagNames().build());
   },
 
   testSpanNotCorrectedByBrowsersOuter() {
-    googObject.getKeys(TagWhitelist).forEach(tag => {
-      if (googArray.contains(
-              [
-                'BR', 'IMG', 'AREA', 'COL', 'COLGROUP', 'HR', 'INPUT', 'SOURCE',
-                'WBR'
-              ],
-              tag)) {
-        return;  // empty elements, ok
+    googObject.getKeys(TagWhitelist).forEach((tag) => {
+      if (
+        googArray.contains(
+          ['BR', 'IMG', 'AREA', 'COL', 'COLGROUP', 'HR', 'INPUT', 'SOURCE', 'WBR'],
+          tag
+        )
+      ) {
+        return; // empty elements, ok
       }
       if (googArray.contains(['CAPTION'], tag)) {
-        return;  // potential problems
+        return; // potential problems
       }
       if (googArray.contains(['NOSCRIPT'], tag)) {
-        return;  // weird/not important
+        return; // weird/not important
       }
-      if (googArray.contains(
-              [
-                'SELECT',
-                'STYLE',
-                'TABLE',
-                'TBODY',
-                'TD',
-                'TR',
-                'TEXTAREA',
-                'TFOOT',
-                'THEAD',
-                'TH',
-              ],
-              tag)) {
-        return;  // consistent in whitelist, ok
+      if (
+        googArray.contains(
+          ['SELECT', 'STYLE', 'TABLE', 'TBODY', 'TD', 'TR', 'TEXTAREA', 'TFOOT', 'THEAD', 'TH'],
+          tag
+        )
+      ) {
+        return; // consistent in whitelist, ok
       }
-      const input = '<' + tag.toLowerCase() + '>a<span></span>a</' +
-          tag.toLowerCase() + '>';
+      const input = '<' + tag.toLowerCase() + '>a<span></span>a</' + tag.toLowerCase() + '>';
       assertAfterInsertionEquals(input, input);
     });
   },
 
   testSpanNotCorrectedByBrowsersInner() {
-    googObject.getKeys(TagWhitelist).forEach(tag => {
-      if (googArray.contains(
-              [
-                'CAPTION', 'STYLE', 'TABLE', 'TBODY', 'TD', 'TR', 'TEXTAREA',
-                'TFOOT', 'THEAD', 'TH'
-              ],
-              tag)) {
+    googObject.getKeys(TagWhitelist).forEach((tag) => {
+      if (
+        googArray.contains(
+          ['CAPTION', 'STYLE', 'TABLE', 'TBODY', 'TD', 'TR', 'TEXTAREA', 'TFOOT', 'THEAD', 'TH'],
+          tag
+        )
+      ) {
         return;
       }
       // consistent in whitelist, ok
@@ -1370,35 +1366,30 @@ testSuite({
         return;
       }
       let input;
-      if (googArray.contains(
-              [
-                'BR', 'IMG', 'AREA', 'COL', 'COLGROUP', 'HR', 'INPUT', 'SOURCE',
-                'WBR'
-              ]  // empty elements, ok
-              ,
-              tag)) {
+      if (
+        googArray.contains(
+          ['BR', 'IMG', 'AREA', 'COL', 'COLGROUP', 'HR', 'INPUT', 'SOURCE', 'WBR'], // empty elements, ok
+          tag
+        )
+      ) {
         input = '<span>a<' + tag.toLowerCase() + '>a</span>';
       } else {
-        input = '<span>a<' + tag.toLowerCase() + '>a</' + tag.toLowerCase() +
-            '>a</span>';
+        input = '<span>a<' + tag.toLowerCase() + '>a</' + tag.toLowerCase() + '>a</span>';
       }
       assertAfterInsertionEquals(input, input);
     });
   },
 
   testTemplateTagFake() {
-    const input =
-        '<template data-sanitizer-original-tag="template">a</template>';
+    const input = '<template data-sanitizer-original-tag="template">a</template>';
     const expected = '';
     assertSanitizedHtml(input, expected);
   },
 
   testOnlyAllowEmptyAttrList() {
-    const input = '<p alt="nope" aria-checked="true" zzz="1">b</p>' +
-        '<a target="_blank">c</a>';
+    const input = '<p alt="nope" aria-checked="true" zzz="1">b</p>' + '<a target="_blank">c</a>';
     const expected = '<p>b</p><a>c</a>';
-    assertSanitizedHtml(
-        input, expected, new Builder().onlyAllowAttributes([]).build());
+    assertSanitizedHtml(input, expected, new Builder().onlyAllowAttributes([]).build());
   },
 
   testOnlyAllowUnWhitelistedAttr() {
@@ -1408,90 +1399,105 @@ testSuite({
   },
 
   testOnlyAllowAttributeWildCard() {
-    const input =
-        '<div alt="yes" aria-checked="true"><img alt="yep" avbb="no" /></div>';
+    const input = '<div alt="yes" aria-checked="true"><img alt="yep" avbb="no" /></div>';
     const expected = '<div alt="yes"><img alt="yep" /></div>';
     assertSanitizedHtml(
-        input, expected,
-        new Builder()
-            .onlyAllowAttributes([{tagName: '*', attributeName: 'alt'}])
-            .build());
+      input,
+      expected,
+      new Builder().onlyAllowAttributes([{ tagName: '*', attributeName: 'alt' }]).build()
+    );
   },
 
   testOnlyAllowAttributeLabelForA() {
     const input = '<a label="3" aria-checked="4">fff</a><img label="3" />';
     const expected = '<a label="3">fff</a><img />';
     assertSanitizedHtml(
-        input, expected,
-        new Builder()
-            .onlyAllowAttributes([{
-              tagName: '*',
-              attributeName: 'label',
-              policy: function(value, hints) {
-                if (hints.tagName !== 'a') {
-                  return null;
-                }
-                return value;
-              },
-            }])
-            .build());
+      input,
+      expected,
+      new Builder()
+        .onlyAllowAttributes([
+          {
+            tagName: '*',
+            attributeName: 'label',
+            policy: (value, hints) => {
+              if (hints.tagName !== 'a') {
+                return null;
+              }
+              return value;
+            },
+          },
+        ])
+        .build()
+    );
   },
 
   testOnlyAllowAttributePolicy() {
     const input = '<img alt="yes" /><img alt="no" />';
     const expected = '<img alt="yes" /><img />';
     assertSanitizedHtml(
-        input, expected,
-        new Builder()
-            .onlyAllowAttributes([{
-              tagName: '*',
-              attributeName: 'alt',
-              policy: function(value, hints) {
-                assertEquals(hints.attributeName, 'alt');
-                return value === 'yes' ? value : null;
-              },
-            }])
-            .build());
+      input,
+      expected,
+      new Builder()
+        .onlyAllowAttributes([
+          {
+            tagName: '*',
+            attributeName: 'alt',
+            policy: (value, hints) => {
+              assertEquals(hints.attributeName, 'alt');
+              return value === 'yes' ? value : null;
+            },
+          },
+        ])
+        .build()
+    );
   },
 
   testOnlyAllowAttributePolicyPipe1() {
     const input = '<a target="hello">b</a>';
     const expected = '<a target="_blank">b</a>';
     assertSanitizedHtml(
-        input, expected,
-        new Builder()
-            .onlyAllowAttributes([{
-              tagName: 'a',
-              attributeName: 'target',
-              policy: function(value, hints) {
-                assertEquals(hints.attributeName, 'target');
-                return '_blank';
-              },
-            }])
-            .build());
+      input,
+      expected,
+      new Builder()
+        .onlyAllowAttributes([
+          {
+            tagName: 'a',
+            attributeName: 'target',
+            policy: (value, hints) => {
+              assertEquals(hints.attributeName, 'target');
+              return '_blank';
+            },
+          },
+        ])
+        .build()
+    );
   },
 
   testOnlyAllowAttributePolicyPipe2() {
     const input = '<a target="hello">b</a>';
     const expected = '<a>b</a>';
     assertSanitizedHtml(
-        input, expected,
-        new Builder()
-            .onlyAllowAttributes([{
-              tagName: 'a',
-              attributeName: 'target',
-              policy: function(value, hints) {
-                assertEquals(hints.attributeName, 'target');
-                return 'nope';
-              },
-            }])
-            .build());
+      input,
+      expected,
+      new Builder()
+        .onlyAllowAttributes([
+          {
+            tagName: 'a',
+            attributeName: 'target',
+            policy: (value, hints) => {
+              assertEquals(hints.attributeName, 'target');
+              return 'nope';
+            },
+          },
+        ])
+        .build()
+    );
   },
 
   testOnlyAllowAttributeSpecificPolicyThrows() {
     assertThrows(() => {
       new Builder().onlyAllowAttributes([
-        {tagName: 'img', attributeName: 'src', policy: functions.identity},
+        { tagName: 'img', attributeName: 'src', policy: functions.identity },
       ]);
     });
   },
@@ -1499,17 +1505,15 @@ testSuite({
   testOnlyAllowAttributeGenericPolicyThrows() {
     assertThrows(() => {
       new Builder().onlyAllowAttributes([
-        {tagName: '*', attributeName: 'target', policy: functions.identity},
+        { tagName: '*', attributeName: 'target', policy: functions.identity },
       ]);
     });
   },
 
   testOnlyAllowAttributeRefineThrows() {
-    const builder =
-        new Builder()
-            .onlyAllowAttributes(
-                ['aria-checked', {tagName: 'LINK', attributeName: 'HREF'}])
-            .onlyAllowAttributes(['aria-checked']);
+    const builder = new Builder()
+      .onlyAllowAttributes(['aria-checked', { tagName: 'LINK', attributeName: 'HREF' }])
+      .onlyAllowAttributes(['aria-checked']);
     assertThrows(() => {
       builder.onlyAllowAttributes(['alt']);
     });
@@ -1517,13 +1521,13 @@ testSuite({
 
   testUrlWithCredentials() {
     const sanitizer = new Builder()
-                          .withCustomNetworkRequestUrlPolicy(SafeUrl.sanitize)
-                          .allowCssStyles()
-                          .build();
+      .withCustomNetworkRequestUrlPolicy(SafeUrl.sanitize)
+      .allowCssStyles()
+      .build();
 
     const url = 'http://foo:bar@example.com';
-    const input = '<div style="background-image: url(\'' + url + '\');">' +
-        '<img src="' + url + '" /></div>';
+    const input =
+      '<div style="background-image: url(\'' + url + '\');">' + '<img src="' + url + '" /></div>';
     assertSanitizedHtml(input, input, sanitizer);
   },
 
@@ -1532,85 +1536,71 @@ testSuite({
     // Passing a string in assertSanitizedHtml uses assertHtmlMatches, which is
     // also vulnerable to clobbering. We use a regexp to fall back to simple
     // string matching.
-    const expected = new RegExp('<form><input name="nodeType" /></form>');
+    const expected = /<form><input name="nodeType" \/><\/form>/;
     assertSanitizedHtml(
-        input, expected,
-        new Builder()
-            .allowFormTag()
-            .withCustomNamePolicy(functions.identity)
-            .build());
+      input,
+      expected,
+      new Builder().allowFormTag().withCustomNamePolicy(functions.identity).build()
+    );
   },
 
   testHorizontalRuleWithInlineStyles() {
-    const input = '<meta charset="utf-8"><b><p><span>foo</span></p>' +
-        '<p><span><hr /></span></p><p><span>bar</span></p></b><br />';
+    const input =
+      '<meta charset="utf-8"><b><p><span>foo</span></p>' +
+      '<p><span><hr /></span></p><p><span>bar</span></p></b><br />';
     // Note that adding </span></p> before </hr> is WAI, this is the browser
     // correcting malformed HTML.
-    const expected = '<b><p><span>foo</span></p>' +
-        '<p><span></span></p><hr /><p></p><p><span>bar</span></p></b><br />';
-    assertSanitizedHtml(
-        input, expected,
-        new Builder().allowCssStyles().inlineStyleRules().build());
+    const expected =
+      '<b><p><span>foo</span></p>' +
+      '<p><span></span></p><hr /><p></p><p><span>bar</span></p></b><br />';
+    assertSanitizedHtml(input, expected, new Builder().allowCssStyles().inlineStyleRules().build());
   },
 
   testDetailOpen() {
-    const input =
-        '<details open><summary>foo</summary>This is a test</details>';
-    assertSanitizedHtml(
-        input, input,
-        new Builder().allowCssStyles().inlineStyleRules().build());
+    const input = '<details open><summary>foo</summary>This is a test</details>';
+    assertSanitizedHtml(input, input, new Builder().allowCssStyles().inlineStyleRules().build());
   },
 
   testInputRequired() {
     const input = '<input required/>';
-    assertSanitizedHtml(
-        input, input,
-        new Builder().allowCssStyles().inlineStyleRules().build());
+    assertSanitizedHtml(input, input, new Builder().allowCssStyles().inlineStyleRules().build());
   },
 
   testProgressMax() {
     const input = '<progress max="100" />';
-    assertSanitizedHtml(
-        input, input,
-        new Builder().allowCssStyles().inlineStyleRules().build());
+    assertSanitizedHtml(input, input, new Builder().allowCssStyles().inlineStyleRules().build());
   },
 
   testMathStyleXSS() {
     const input = '<math><style><a>{} *{background: red url(https://wherever)}';
     const output = '';
-    assertSanitizedHtml(
-        input, output,
-        new Builder().allowStyleTag().withStyleContainer().build());
+    assertSanitizedHtml(input, output, new Builder().allowStyleTag().withStyleContainer().build());
   },
 
   testMathStyleXSS_withoutMath() {
     // Just checking that there are no issues without the use of MATH.
     const input = '<span><style><a>{} *{background-url: url(https://wherever)}';
     const output = '<span><style>*{}</style></span>';
-    assertSanitizedHtml(
-        input, output,
-        new Builder().allowStyleTag().withStyleContainer().build());
+    assertSanitizedHtml(input, output, new Builder().allowStyleTag().withStyleContainer().build());
   },
 
   async testNotLoadSubresources() {
     // Sanitization by itself should not load subresources.
     const html = `<img src=ftp://not-load-subresources />`;
 
-    const sanitizer = new Builder()
-                          .withCustomNetworkRequestUrlPolicy(SafeUrl.sanitize)
-                          .build();
+    const sanitizer = new Builder().withCustomNetworkRequestUrlPolicy(SafeUrl.sanitize).build();
 
     sanitizer.sanitize(html);
 
     // Give the subresource a little time to load.
-    await new Promise(resolve => {
+    await new Promise((resolve) => {
       setTimeout(resolve, 200);
     });
 
     // Make sure there was no attempt to load the subresource.
-    const entry = performance.getEntries().find(
-        entry => entry.name.startsWith('ftp://not-load-subresources'));
+    const entry = performance
+      .getEntries()
+      .find((entry) => entry.name.startsWith('ftp://not-load-subresources'));
     assertUndefined(entry);
-  }
-
+  },
 });

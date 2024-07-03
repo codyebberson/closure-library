@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.labs.storage.BoundedCollectableStorageTest');
-goog.setTestOnly();
 
 const BoundedCollectableStorage = goog.require('goog.labs.storage.BoundedCollectableStorage');
 const FakeMechanism = goog.require('goog.testing.storage.FakeMechanism');

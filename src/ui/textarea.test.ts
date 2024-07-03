@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.TextareaTest');
-goog.setTestOnly();
 
 const EventObserver = goog.require('goog.testing.events.EventObserver');
 const ExpectedFailures = goog.require('goog.testing.ExpectedFailures');
@@ -52,26 +51,23 @@ testSuite({
   testConstructor() {
     assertNotNull('Textarea must not be null', textarea);
     assertEquals(
-        'Renderer must default to expected value',
-        TextareaRenderer.getInstance(), textarea.getRenderer());
+      'Renderer must default to expected value',
+      TextareaRenderer.getInstance(),
+      textarea.getRenderer()
+    );
 
     const fakeDomHelper = {
-      'getDocument': function() {
-        return true;
-      }
+      getDocument: () => true,
     };
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const testTextarea =
-        new Textarea('Hello', TextareaRenderer.getInstance(), fakeDomHelper);
+    const testTextarea = new Textarea('Hello', TextareaRenderer.getInstance(), fakeDomHelper);
+    assertEquals('Content must have expected content', 'Hello', testTextarea.getContent());
     assertEquals(
-        'Content must have expected content', 'Hello',
-        testTextarea.getContent());
-    assertEquals(
-        'Renderer must have expected value', TextareaRenderer.getInstance(),
-        testTextarea.getRenderer());
-    assertEquals(
-        'DOM helper must have expected value', fakeDomHelper,
-        testTextarea.getDomHelper());
+      'Renderer must have expected value',
+      TextareaRenderer.getInstance(),
+      testTextarea.getRenderer()
+    );
+    assertEquals('DOM helper must have expected value', fakeDomHelper, testTextarea.getDomHelper());
     testTextarea.dispose();
   },
 
@@ -84,8 +80,10 @@ testSuite({
     const decoratedTextarea = new Textarea();
     decoratedTextarea.decorate(demoTextareaElement);
     assertEquals(
-        'Textarea should have current content after decoration', 'Foo',
-        decoratedTextarea.getContent());
+      'Textarea should have current content after decoration',
+      'Foo',
+      decoratedTextarea.getContent()
+    );
     /** @suppress {visibility} suppression added to enable type checking */
     const initialHeight = decoratedTextarea.getHeight_();
     /**
@@ -96,43 +94,34 @@ testSuite({
     // focus() will trigger the grow/shrink flow.
     decoratedTextarea.getElement().focus();
     assertEquals(
-        'Height should not have changed without content change', initialHeight,
-        decoratedTextarea.getHeight_());
+      'Height should not have changed without content change',
+      initialHeight,
+      decoratedTextarea.getHeight_()
+    );
     assertEquals(
-        'offsetHeight should not have changed without content ' +
-            'change',
-        initialOffsetHeight, decoratedTextarea.getElement().offsetHeight);
+      'offsetHeight should not have changed without content ' + 'change',
+      initialOffsetHeight,
+      decoratedTextarea.getElement().offsetHeight
+    );
     decoratedTextarea.dispose();
   },
 
   testGetSetContent() {
     textarea.render(sandbox);
-    assertEquals(
-        'Textarea\'s content must default to an empty string', '',
-        textarea.getContent());
+    assertEquals("Textarea's content must default to an empty string", '', textarea.getContent());
     textarea.setContent(17);
-    assertEquals(
-        'Textarea element must have expected content', '17',
-        textarea.getElement().value);
+    assertEquals('Textarea element must have expected content', '17', textarea.getElement().value);
     textarea.setContent('foo');
-    assertEquals(
-        'Textarea element must have updated content', 'foo',
-        textarea.getElement().value);
+    assertEquals('Textarea element must have updated content', 'foo', textarea.getElement().value);
   },
 
   testGetSetValue() {
     textarea.render(sandbox);
-    assertEquals(
-        'Textarea\'s content must default to an empty string', '',
-        textarea.getValue());
+    assertEquals("Textarea's content must default to an empty string", '', textarea.getValue());
     textarea.setValue(17);
-    assertEquals(
-        'Textarea element must have expected content', '17',
-        textarea.getValue());
+    assertEquals('Textarea element must have expected content', '17', textarea.getValue());
     textarea.setValue('17');
-    assertEquals(
-        'Textarea element must have expected content', '17',
-        textarea.getValue());
+    assertEquals('Textarea element must have expected content', '17', textarea.getValue());
   },
 
   testBasicTextareaBehavior() {
@@ -142,30 +131,28 @@ testSuite({
     const el = textarea.getElement();
     /** @suppress {visibility} suppression added to enable type checking */
     const heightBefore = textarea.getHeight_();
-    assertTrue(
-        'One resize event should be fired during render',
-        observer.getEvents().length == 1);
+    assertTrue('One resize event should be fired during render', observer.getEvents().length == 1);
     textarea.setContent(
-        'Lorem ipsum dolor sit amet, consectetuer ' +
+      'Lorem ipsum dolor sit amet, consectetuer ' +
         'elit. Aenean sollicitudin ultrices urna. Proin vehicula mauris ac ' +
         'est. Ut scelerisque, risus ut facilisis dictum, est massa lacinia ' +
-        'lorem, in fermentum purus ligula quis nunc.');
+        'lorem, in fermentum purus ligula quis nunc.'
+    );
     /** @suppress {visibility} suppression added to enable type checking */
     let heightAfter = textarea.getHeight_();
+    assertTrue('With this much content, height should have grown.', heightAfter > heightBefore);
     assertTrue(
-        'With this much content, height should have grown.',
-        heightAfter > heightBefore);
-    assertTrue(
-        'With a height change, a resize event should have fired.',
-        observer.getEvents().length == 2);
+      'With a height change, a resize event should have fired.',
+      observer.getEvents().length == 2
+    );
     textarea.setContent('');
     /** @suppress {visibility} suppression added to enable type checking */
     heightAfter = textarea.getHeight_();
+    assertTrue('Textarea should shrink with no content.', heightAfter <= heightBefore);
     assertTrue(
-        'Textarea should shrink with no content.', heightAfter <= heightBefore);
-    assertTrue(
-        'With a height change, a resize event should have fired.',
-        observer.getEvents().length == 3);
+      'With a height change, a resize event should have fired.',
+      observer.getEvents().length == 3
+    );
     events.unlisten(textarea, Textarea.EventType.RESIZE, observer);
   },
 
@@ -173,27 +160,29 @@ testSuite({
   testMinHeight() {
     textarea.render(sandbox);
     textarea.setMinHeight(50);
-    assertEquals(
-        'offsetHeight should be 50 initially', 50,
-        textarea.getElement().offsetHeight);
+    assertEquals('offsetHeight should be 50 initially', 50, textarea.getElement().offsetHeight);
     textarea.setContent(
-        'Lorem ipsum dolor sit amet, consectetuer  ' +
+      'Lorem ipsum dolor sit amet, consectetuer  ' +
         'elit. Aenean sollicitudin ultrices urna. Proin vehicula mauris ac ' +
         'est. Ut scelerisque, risus ut facilisis dictum, est massa lacinia ' +
-        'lorem, in fermentum purus ligula quis nunc.');
+        'lorem, in fermentum purus ligula quis nunc.'
+    );
     assertTrue('getHeight_() should be > 50', textarea.getHeight_() > 50);
 
     textarea.setContent('');
     assertEquals(
-        'With no content, offsetHeight should go back to 50, ' +
-            'the minHeight.',
-        50, textarea.getElement().offsetHeight);
+      'With no content, offsetHeight should go back to 50, ' + 'the minHeight.',
+      50,
+      textarea.getElement().offsetHeight
+    );
 
     textarea.setMinHeight(0);
     assertTrue(
-        'After setting minHeight to 0, offsetHeight should ' +
-            'now be < 50, but it is ' + textarea.getElement().offsetHeight,
-        textarea.getElement().offsetHeight < 50);
+      'After setting minHeight to 0, offsetHeight should ' +
+        'now be < 50, but it is ' +
+        textarea.getElement().offsetHeight,
+      textarea.getElement().offsetHeight < 50
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -203,17 +192,20 @@ testSuite({
     textarea.setMaxHeight(200);
     textarea.mouseUpListener_({});
     assertEquals(
-        'After a mouseup which is not a resize, minHeight should ' +
-            'still be 100',
-        100, textarea.minHeight_);
+      'After a mouseup which is not a resize, minHeight should ' + 'still be 100',
+      100,
+      textarea.minHeight_
+    );
 
     // We need to test how CSS drop shadows effect this too.
     classlist.add(textarea.getElement(), 'drop-shadowed');
     textarea.mouseUpListener_({});
     assertEquals(
-        'After a mouseup which is not a resize, minHeight should ' +
-            'still be 100 even with a shadow',
-        100, textarea.minHeight_);
+      'After a mouseup which is not a resize, minHeight should ' +
+        'still be 100 even with a shadow',
+      100,
+      textarea.minHeight_
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -221,48 +213,53 @@ testSuite({
     textarea.render(sandbox);
     textarea.setMaxHeight(50);
     assertTrue(
-        'Initial offsetHeight should be less than 50',
-        textarea.getElement().offsetHeight < 50);
-    const newContent = 'Lorem ipsum dolor sit amet, consectetuer adipiscing ' +
-        'elit. Aenean sollicitudin ultrices urna. Proin vehicula mauris ac ' +
-        'est. Ut scelerisque, risus ut facilisis dictum, est massa lacinia ' +
-        'lorem, in fermentum purus ligula quis nunc.';
+      'Initial offsetHeight should be less than 50',
+      textarea.getElement().offsetHeight < 50
+    );
+    const newContent =
+      'Lorem ipsum dolor sit amet, consectetuer adipiscing ' +
+      'elit. Aenean sollicitudin ultrices urna. Proin vehicula mauris ac ' +
+      'est. Ut scelerisque, risus ut facilisis dictum, est massa lacinia ' +
+      'lorem, in fermentum purus ligula quis nunc.';
     textarea.setContent(newContent);
 
-    assertTrue(
-        'With lots of content, getHeight_() should be > 50',
-        textarea.getHeight_() > 50);
+    assertTrue('With lots of content, getHeight_() should be > 50', textarea.getHeight_() > 50);
     assertEquals(
-        'Even with lots of content, offsetHeight should be 50 ' +
-            'with maxHeight set',
-        50, textarea.getElement().offsetHeight);
+      'Even with lots of content, offsetHeight should be 50 ' + 'with maxHeight set',
+      50,
+      textarea.getElement().offsetHeight
+    );
     textarea.setMaxHeight(0);
     assertTrue(
-        'After setting maxHeight to 0, offsetHeight should now ' +
-            'be > 50',
-        textarea.getElement().offsetHeight > 50);
+      'After setting maxHeight to 0, offsetHeight should now ' + 'be > 50',
+      textarea.getElement().offsetHeight > 50
+    );
   },
 
   testMaxHeight_canShrink() {
     textarea.render(sandbox);
     textarea.setMaxHeight(50);
     assertTrue(
-        'Initial offsetHeight should be less than 50',
-        textarea.getElement().offsetHeight < 50);
-    const newContent = 'Lorem ipsum dolor sit amet, consectetuer adipiscing ' +
-        'elit. Aenean sollicitudin ultrices urna. Proin vehicula mauris ac ' +
-        'est. Ut scelerisque, risus ut facilisis dictum, est massa lacinia ' +
-        'lorem, in fermentum purus ligula quis nunc.';
+      'Initial offsetHeight should be less than 50',
+      textarea.getElement().offsetHeight < 50
+    );
+    const newContent =
+      'Lorem ipsum dolor sit amet, consectetuer adipiscing ' +
+      'elit. Aenean sollicitudin ultrices urna. Proin vehicula mauris ac ' +
+      'est. Ut scelerisque, risus ut facilisis dictum, est massa lacinia ' +
+      'lorem, in fermentum purus ligula quis nunc.';
     textarea.setContent(newContent);
 
     assertEquals(
-        'Even with lots of content, offsetHeight should be 50 ' +
-            'with maxHeight set',
-        50, textarea.getElement().offsetHeight);
+      'Even with lots of content, offsetHeight should be 50 ' + 'with maxHeight set',
+      50,
+      textarea.getElement().offsetHeight
+    );
     textarea.setContent('');
     assertTrue(
-        'With no content, offsetHeight should be back to < 50',
-        textarea.getElement().offsetHeight < 50);
+      'With no content, offsetHeight should be back to < 50',
+      textarea.getElement().offsetHeight < 50
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -308,15 +305,14 @@ testSuite({
     textarea.render(sandbox);
     textarea.setMinHeight(50);
     textarea.setMaxHeight(150);
-    assertEquals(
-        'offsetHeight should be 50 initially', 50,
-        textarea.getElement().offsetHeight);
+    assertEquals('offsetHeight should be 50 initially', 50, textarea.getElement().offsetHeight);
 
     textarea.setContent(
-        'Lorem ipsum dolor sit amet, consectetuer  ' +
+      'Lorem ipsum dolor sit amet, consectetuer  ' +
         'elit. Aenean sollicitudin ultrices urna. Proin vehicula mauris ac ' +
         'est. Ut scelerisque, risus ut facilisis dictum, est massa lacinia ' +
-        'lorem, in fermentum purus ligula quis nunc.');
+        'lorem, in fermentum purus ligula quis nunc.'
+    );
 
     /** @suppress {visibility} suppression added to enable type checking */
     const height = textarea.getHeight_();
@@ -324,26 +320,30 @@ testSuite({
     expectedFailures.expectFailureFor(isMacSafari3() || isLinuxFirefox());
     try {
       assertTrue(
-          'With lots of content, getHeight_() should be > 150 ' +
-              '(it is ' + height + ')',
-          height > 150);
+        'With lots of content, getHeight_() should be > 150 ' + '(it is ' + height + ')',
+        height > 150
+      );
       assertEquals(
-          'Even with lots of content, offsetHeight should be 150 ' +
-              'with maxHeight set',
-          150, textarea.getElement().offsetHeight);
+        'Even with lots of content, offsetHeight should be 150 ' + 'with maxHeight set',
+        150,
+        textarea.getElement().offsetHeight
+      );
 
       textarea.setMaxHeight(0);
       assertTrue(
-          'After setting maxHeight to 0, offsetHeight should now ' +
-              'be > 150 (it is ' + textarea.getElement().offsetHeight + ')',
-          textarea.getElement().offsetHeight > 150);
+        'After setting maxHeight to 0, offsetHeight should now ' +
+          'be > 150 (it is ' +
+          textarea.getElement().offsetHeight +
+          ')',
+        textarea.getElement().offsetHeight > 150
+      );
 
       textarea.setContent('');
       textarea.setMinHeight(0);
       assertTrue(
-          'After setting minHeight to 0, with no contents, ' +
-              'offsetHeight should now be < 50',
-          textarea.getElement().offsetHeight < 50);
+        'After setting minHeight to 0, with no contents, ' + 'offsetHeight should now be < 50',
+        textarea.getElement().offsetHeight < 50
+      );
     } catch (e) {
       expectedFailures.handleException(e);
     }
@@ -351,10 +351,11 @@ testSuite({
 
   testSetValueWhenInvisible() {
     textarea.render(sandbox);
-    const content = 'Lorem ipsum dolor sit amet, consectetuer  ' +
-        'elit. Aenean sollicitudin ultrices urna. Proin vehicula mauris ac ' +
-        'est. Ut scelerisque, risus ut facilisis dictum, est massa lacinia ' +
-        'lorem, in fermentum purus ligula quis nunc.';
+    const content =
+      'Lorem ipsum dolor sit amet, consectetuer  ' +
+      'elit. Aenean sollicitudin ultrices urna. Proin vehicula mauris ac ' +
+      'est. Ut scelerisque, risus ut facilisis dictum, est massa lacinia ' +
+      'lorem, in fermentum purus ligula quis nunc.';
     textarea.setValue(content);
     /** @suppress {visibility} suppression added to enable type checking */
     let height = textarea.getHeight_();
@@ -375,19 +376,21 @@ testSuite({
   },
 
   testSetAriaLabel() {
-    assertNull(
-        'Textarea must not have aria label by default',
-        textarea.getAriaLabel());
+    assertNull('Textarea must not have aria label by default', textarea.getAriaLabel());
     textarea.setAriaLabel('My textarea');
     textarea.render(sandbox);
     const element = textarea.getElementStrict();
     assertNotNull('Element must not be null', element);
     assertEquals(
-        'Item element must have expected aria-label', 'My textarea',
-        element.getAttribute('aria-label'));
+      'Item element must have expected aria-label',
+      'My textarea',
+      element.getAttribute('aria-label')
+    );
     textarea.setAriaLabel('My new textarea');
     assertEquals(
-        'Item element must have updated aria-label', 'My new textarea',
-        element.getAttribute('aria-label'));
+      'Item element must have updated aria-label',
+      'My new textarea',
+      element.getAttribute('aria-label')
+    );
   },
 });

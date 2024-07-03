@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.editor.ToolbarFactoryTest');
-goog.setTestOnly();
 
 const ExpectedFailures = goog.require('goog.testing.ExpectedFailures');
 const TestHelper = goog.require('goog.testing.editor.TestHelper');
@@ -53,8 +52,10 @@ testSuite({
         helper.select('foo', 1);
         const value = document.queryCommandValue('fontSize');
         assertEquals(
-            `Px size ${value} should convert to legacy size ${i}`, i,
-            ToolbarFactory.getLegacySizeFromPx(parseInt(value, 10)));
+          `Px size ${value} should convert to legacy size ${i}`,
+          i,
+          ToolbarFactory.getLegacySizeFromPx(Number.parseInt(value, 10))
+        );
       }
     } catch (e) {
       expectedFailures.handleException(e);

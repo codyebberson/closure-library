@@ -8,13 +8,10 @@
  * @fileoverview A utility class for representing a numeric box.
  */
 
-
 goog.provide('goog.math.Box');
 
 goog.require('goog.asserts');
 goog.require('goog.math.Coordinate');
-
-
 
 /**
  * Class for representing a box. A box is specified as a top, right, bottom,
@@ -30,8 +27,7 @@ goog.require('goog.math.Coordinate');
  * @struct
  * @constructor
  */
-goog.math.Box = function(top, right, bottom, left) {
-  'use strict';
+goog.math.Box = function (top, right, bottom, left) {
   /**
    * Top
    * @type {number}
@@ -57,51 +53,41 @@ goog.math.Box = function(top, right, bottom, left) {
   this.left = left;
 };
 
-
 /**
  * Creates a Box by bounding a collection of goog.math.Coordinate objects
  * @param {...goog.math.Coordinate} var_args Coordinates to be included inside
  *     the box.
  * @return {!goog.math.Box} A Box containing all the specified Coordinates.
  */
-goog.math.Box.boundingBox = function(var_args) {
-  'use strict';
-  var box = new goog.math.Box(
-      arguments[0].y, arguments[0].x, arguments[0].y, arguments[0].x);
+goog.math.Box.boundingBox = (var_args) => {
+  var box = new goog.math.Box(arguments[0].y, arguments[0].x, arguments[0].y, arguments[0].x);
   for (var i = 1; i < arguments.length; i++) {
     box.expandToIncludeCoordinate(arguments[i]);
   }
   return box;
 };
 
-
 /**
  * @return {number} width The width of this Box.
  */
-goog.math.Box.prototype.getWidth = function() {
-  'use strict';
+goog.math.Box.prototype.getWidth = function () {
   return this.right - this.left;
 };
-
 
 /**
  * @return {number} height The height of this Box.
  */
-goog.math.Box.prototype.getHeight = function() {
-  'use strict';
+goog.math.Box.prototype.getHeight = function () {
   return this.bottom - this.top;
 };
-
 
 /**
  * Creates a copy of the box with the same dimensions.
  * @return {!goog.math.Box} A clone of this Box.
  */
-goog.math.Box.prototype.clone = function() {
-  'use strict';
+goog.math.Box.prototype.clone = function () {
   return new goog.math.Box(this.top, this.right, this.bottom, this.left);
 };
-
 
 if (goog.DEBUG) {
   /**
@@ -109,13 +95,10 @@ if (goog.DEBUG) {
    * @return {string} In the form (50t, 73r, 24b, 13l).
    * @override
    */
-  goog.math.Box.prototype.toString = function() {
-    'use strict';
-    return '(' + this.top + 't, ' + this.right + 'r, ' + this.bottom + 'b, ' +
-        this.left + 'l)';
+  goog.math.Box.prototype.toString = function () {
+    return '(' + this.top + 't, ' + this.right + 'r, ' + this.bottom + 'b, ' + this.left + 'l)';
   };
 }
-
 
 /**
  * Returns whether the box contains a coordinate or another box.
@@ -123,11 +106,9 @@ if (goog.DEBUG) {
  * @param {goog.math.Coordinate|goog.math.Box} other A Coordinate or a Box.
  * @return {boolean} Whether the box contains the coordinate or other box.
  */
-goog.math.Box.prototype.contains = function(other) {
-  'use strict';
+goog.math.Box.prototype.contains = function (other) {
   return goog.math.Box.contains(this, other);
 };
-
 
 /**
  * Expands box with the given margins.
@@ -138,9 +119,7 @@ goog.math.Box.prototype.contains = function(other) {
  * @param {number=} opt_left Left margin.
  * @return {!goog.math.Box} A reference to this Box.
  */
-goog.math.Box.prototype.expand = function(
-    top, opt_right, opt_bottom, opt_left) {
-  'use strict';
+goog.math.Box.prototype.expand = function (top, opt_right, opt_bottom, opt_left) {
   if (goog.isObject(top)) {
     this.top -= top.top;
     this.right += top.right;
@@ -156,7 +135,6 @@ goog.math.Box.prototype.expand = function(
   return this;
 };
 
-
 /**
  * Expand this box to include another box.
  * NOTE(user): This is used in code that needs to be very fast, please don't
@@ -164,28 +142,24 @@ goog.math.Box.prototype.expand = function(
  * arguments, accepting multiple argument types, etc).
  * @param {goog.math.Box} box The box to include in this one.
  */
-goog.math.Box.prototype.expandToInclude = function(box) {
-  'use strict';
+goog.math.Box.prototype.expandToInclude = function (box) {
   this.left = Math.min(this.left, box.left);
   this.top = Math.min(this.top, box.top);
   this.right = Math.max(this.right, box.right);
   this.bottom = Math.max(this.bottom, box.bottom);
 };
 
-
 /**
  * Expand this box to include the coordinate.
  * @param {!goog.math.Coordinate} coord The coordinate to be included
  *     inside the box.
  */
-goog.math.Box.prototype.expandToIncludeCoordinate = function(coord) {
-  'use strict';
+goog.math.Box.prototype.expandToIncludeCoordinate = function (coord) {
   this.top = Math.min(this.top, coord.y);
   this.right = Math.max(this.right, coord.x);
   this.bottom = Math.max(this.bottom, coord.y);
   this.left = Math.min(this.left, coord.x);
 };
-
 
 /**
  * Compares boxes for equality.
@@ -193,18 +167,15 @@ goog.math.Box.prototype.expandToIncludeCoordinate = function(coord) {
  * @param {goog.math.Box} b A Box.
  * @return {boolean} True iff the boxes are equal, or if both are null.
  */
-goog.math.Box.equals = function(a, b) {
-  'use strict';
+goog.math.Box.equals = (a, b) => {
   if (a == b) {
     return true;
   }
   if (!a || !b) {
     return false;
   }
-  return a.top == b.top && a.right == b.right && a.bottom == b.bottom &&
-      a.left == b.left;
+  return a.top == b.top && a.right == b.right && a.bottom == b.bottom && a.left == b.left;
 };
-
 
 /**
  * Returns whether a box contains a coordinate or another box.
@@ -213,22 +184,23 @@ goog.math.Box.equals = function(a, b) {
  * @param {goog.math.Coordinate|goog.math.Box} other A Coordinate or a Box.
  * @return {boolean} Whether the box contains the coordinate or other box.
  */
-goog.math.Box.contains = function(box, other) {
-  'use strict';
+goog.math.Box.contains = (box, other) => {
   if (!box || !other) {
     return false;
   }
 
   if (other instanceof goog.math.Box) {
-    return other.left >= box.left && other.right <= box.right &&
-        other.top >= box.top && other.bottom <= box.bottom;
+    return (
+      other.left >= box.left &&
+      other.right <= box.right &&
+      other.top >= box.top &&
+      other.bottom <= box.bottom
+    );
   }
 
   // other is a Coordinate.
-  return other.x >= box.left && other.x <= box.right && other.y >= box.top &&
-      other.y <= box.bottom;
+  return other.x >= box.left && other.x <= box.right && other.y >= box.top && other.y <= box.bottom;
 };
-
 
 /**
  * Returns the relative x position of a coordinate compared to a box.  Returns
@@ -239,8 +211,7 @@ goog.math.Box.contains = function(box, other) {
  * @return {number} The x position of `coord` relative to the nearest
  *     side of `box`, or zero if `coord` is inside `box`.
  */
-goog.math.Box.relativePositionX = function(box, coord) {
-  'use strict';
+goog.math.Box.relativePositionX = (box, coord) => {
   if (coord.x < box.left) {
     return coord.x - box.left;
   } else if (coord.x > box.right) {
@@ -248,7 +219,6 @@ goog.math.Box.relativePositionX = function(box, coord) {
   }
   return 0;
 };
-
 
 /**
  * Returns the relative y position of a coordinate compared to a box.  Returns
@@ -259,8 +229,7 @@ goog.math.Box.relativePositionX = function(box, coord) {
  * @return {number} The y position of `coord` relative to the nearest
  *     side of `box`, or zero if `coord` is inside `box`.
  */
-goog.math.Box.relativePositionY = function(box, coord) {
-  'use strict';
+goog.math.Box.relativePositionY = (box, coord) => {
   if (coord.y < box.top) {
     return coord.y - box.top;
   } else if (coord.y > box.bottom) {
@@ -268,7 +237,6 @@ goog.math.Box.relativePositionY = function(box, coord) {
   }
   return 0;
 };
-
 
 /**
  * Returns the distance between a coordinate and the nearest corner/side of a
@@ -280,13 +248,11 @@ goog.math.Box.relativePositionY = function(box, coord) {
  *     corner/side of `box`, or zero if `coord` is inside
  *     `box`.
  */
-goog.math.Box.distance = function(box, coord) {
-  'use strict';
+goog.math.Box.distance = (box, coord) => {
   var x = goog.math.Box.relativePositionX(box, coord);
   var y = goog.math.Box.relativePositionY(box, coord);
   return Math.sqrt(x * x + y * y);
 };
-
 
 /**
  * Returns whether two boxes intersect.
@@ -295,13 +261,8 @@ goog.math.Box.distance = function(box, coord) {
  * @param {goog.math.Box} b A second Box.
  * @return {boolean} Whether the boxes intersect.
  */
-goog.math.Box.intersects = function(a, b) {
-  'use strict';
-  return (
-      a.left <= b.right && b.left <= a.right && a.top <= b.bottom &&
-      b.top <= a.bottom);
-};
-
+goog.math.Box.intersects = (a, b) =>
+  a.left <= b.right && b.left <= a.right && a.top <= b.bottom && b.top <= a.bottom;
 
 /**
  * Returns whether two boxes would intersect with additional padding.
@@ -311,21 +272,18 @@ goog.math.Box.intersects = function(a, b) {
  * @param {number} padding The additional padding.
  * @return {boolean} Whether the boxes intersect.
  */
-goog.math.Box.intersectsWithPadding = function(a, b, padding) {
-  'use strict';
-  return (
-      a.left <= b.right + padding && b.left <= a.right + padding &&
-      a.top <= b.bottom + padding && b.top <= a.bottom + padding);
-};
-
+goog.math.Box.intersectsWithPadding = (a, b, padding) =>
+  a.left <= b.right + padding &&
+  b.left <= a.right + padding &&
+  a.top <= b.bottom + padding &&
+  b.top <= a.bottom + padding;
 
 /**
  * Rounds the fields to the next larger integer values.
  *
  * @return {!goog.math.Box} This box with ceil'd fields.
  */
-goog.math.Box.prototype.ceil = function() {
-  'use strict';
+goog.math.Box.prototype.ceil = function () {
   this.top = Math.ceil(this.top);
   this.right = Math.ceil(this.right);
   this.bottom = Math.ceil(this.bottom);
@@ -333,14 +291,12 @@ goog.math.Box.prototype.ceil = function() {
   return this;
 };
 
-
 /**
  * Rounds the fields to the next smaller integer values.
  *
  * @return {!goog.math.Box} This box with floored fields.
  */
-goog.math.Box.prototype.floor = function() {
-  'use strict';
+goog.math.Box.prototype.floor = function () {
   this.top = Math.floor(this.top);
   this.right = Math.floor(this.right);
   this.bottom = Math.floor(this.bottom);
@@ -348,21 +304,18 @@ goog.math.Box.prototype.floor = function() {
   return this;
 };
 
-
 /**
  * Rounds the fields to nearest integer values.
  *
  * @return {!goog.math.Box} This box with rounded fields.
  */
-goog.math.Box.prototype.round = function() {
-  'use strict';
+goog.math.Box.prototype.round = function () {
   this.top = Math.round(this.top);
   this.right = Math.round(this.right);
   this.bottom = Math.round(this.bottom);
   this.left = Math.round(this.left);
   return this;
 };
-
 
 /**
  * Translates this box by the given offsets. If a `goog.math.Coordinate`
@@ -376,8 +329,7 @@ goog.math.Box.prototype.round = function() {
  * @param {number=} opt_ty The value to translate y dimension values by.
  * @return {!goog.math.Box} This box after translating.
  */
-goog.math.Box.prototype.translate = function(tx, opt_ty) {
-  'use strict';
+goog.math.Box.prototype.translate = function (tx, opt_ty) {
   if (tx instanceof goog.math.Coordinate) {
     this.left += tx.x;
     this.right += tx.x;
@@ -395,7 +347,6 @@ goog.math.Box.prototype.translate = function(tx, opt_ty) {
   return this;
 };
 
-
 /**
  * Scales this coordinate by the given scale factors. The x and y dimension
  * values are scaled by `sx` and `opt_sy` respectively.
@@ -405,9 +356,8 @@ goog.math.Box.prototype.translate = function(tx, opt_ty) {
  * @param {number=} opt_sy The scale factor to use for the y dimension.
  * @return {!goog.math.Box} This box after scaling.
  */
-goog.math.Box.prototype.scale = function(sx, opt_sy) {
-  'use strict';
-  var sy = (typeof opt_sy === 'number') ? opt_sy : sx;
+goog.math.Box.prototype.scale = function (sx, opt_sy) {
+  var sy = typeof opt_sy === 'number' ? opt_sy : sx;
   this.left *= sx;
   this.right *= sx;
   this.top *= sy;

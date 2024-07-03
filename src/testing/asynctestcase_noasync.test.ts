@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.AsyncTestCaseSyncTest');
-goog.setTestOnly();
 
 const AsyncTestCase = goog.require('goog.testing.AsyncTestCase');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -30,9 +29,7 @@ const asyncTestCase = AsyncTestCase.createAndInstall(document.title);
 function doAsyncStuff(numAsyncCalls, name) {
   if (numAsyncCalls > 0) {
     curTestIsDone = false;
-    asyncTestCase.waitForAsync(
-        `doAsyncStuff-${name}` +
-        '(' + numAsyncCalls + ')');
+    asyncTestCase.waitForAsync(`doAsyncStuff-${name}` + '(' + numAsyncCalls + ')');
     window.setTimeout(() => {
       doAsyncStuff(numAsyncCalls - 1, name);
     }, 0);
@@ -107,7 +104,7 @@ testSuite({
       });
       assertEquals('Still waiting for 1 signals.', thrown.message);
     }, 0);
-    doAsyncSignals();  // To not timeout.
+    doAsyncSignals(); // To not timeout.
   },
 
   /** @suppress {missingProperties} suppression added to enable type checking */

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.fxTest');
-goog.setTestOnly();
 
 const Animation = goog.require('goog.fx.Animation');
 const MockClock = goog.require('goog.testing.MockClock');
@@ -49,23 +48,25 @@ testSuite({
 
   testAnimationConstructor() {
     assertThrows(
-        'Should throw since first arg is not an array', /**
+      'Should throw since first arg is not an array' /**
                                                            @suppress {checkTypes}
                                                            suppression added to
                                                            enable type checking
-                                                         */
-        () => {
-          new Animation(1, [2], 3);
-        });
+                                                         */,
+      () => {
+        new Animation(1, [2], 3);
+      }
+    );
     assertThrows(
-        'Should throw since second arg is not an array', /**
+      'Should throw since second arg is not an array' /**
                                                             @suppress {checkTypes}
                                                             suppression added to
                                                             enable type checking
-                                                          */
-        () => {
-          new Animation([1], 2, 3);
-        });
+                                                          */,
+      () => {
+        new Animation([1], 2, 3);
+      }
+    );
     assertThrows('Should throw since the length are different', () => {
       new Animation([0, 1], [2], 3);
     });
@@ -76,27 +77,34 @@ testSuite({
     anim = new Animation([0], [1], 1000);
 
     assertTrue(
-        'There should be no active animations',
-        googObject.isEmpty(fxAnim.activeAnimations_));
+      'There should be no active animations',
+      googObject.isEmpty(fxAnim.activeAnimations_)
+    );
 
     anim.play();
     assertEquals(
-        'There should be one active animations', 1,
-        googObject.getCount(fxAnim.activeAnimations_));
+      'There should be one active animations',
+      1,
+      googObject.getCount(fxAnim.activeAnimations_)
+    );
 
     anim.stop();
     assertTrue(
-        'There should be no active animations',
-        googObject.isEmpty(fxAnim.activeAnimations_));
+      'There should be no active animations',
+      googObject.isEmpty(fxAnim.activeAnimations_)
+    );
 
     anim.play();
     assertEquals(
-        'There should be one active animations', 1,
-        googObject.getCount(fxAnim.activeAnimations_));
+      'There should be one active animations',
+      1,
+      googObject.getCount(fxAnim.activeAnimations_)
+    );
 
     anim.pause();
     assertTrue(
-        'There should be no active animations',
-        googObject.isEmpty(fxAnim.activeAnimations_));
+      'There should be no active animations',
+      googObject.isEmpty(fxAnim.activeAnimations_)
+    );
   },
 });

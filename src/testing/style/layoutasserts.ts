@@ -17,7 +17,6 @@ goog.require('goog.style');
 goog.require('goog.testing.asserts');
 goog.require('goog.testing.style');
 
-
 /**
  * Asserts that an element has:
  *   1 - a CSS rendering the makes the element visible.
@@ -25,25 +24,23 @@ goog.require('goog.testing.style');
  * @param {Element|string} a The element or optionally the comment string.
  * @param {Element=} opt_b The element when a comment string is present.
  */
-const assertIsVisible = function(a, opt_b) {
-  'use strict';
+const assertIsVisible = (a, opt_b) => {
   _validateArguments(1, arguments);
   const element = nonCommentArg(1, 1, arguments);
 
   _assert(
-      commentArg(1, arguments), goog.testing.style.isVisible(element) &&
-          goog.testing.style.hasVisibleDimensions(element),
-      'Specified element should be visible.');
+    commentArg(1, arguments),
+    goog.testing.style.isVisible(element) && goog.testing.style.hasVisibleDimensions(element),
+    'Specified element should be visible.'
+  );
 };
-
 
 /**
  * The counter assertion of assertIsVisible().
  * @param {Element|string} a The element or optionally the comment string.
  * @param {Element=} opt_b The element when a comment string is present.
  */
-const assertNotVisible = function(a, opt_b) {
-  'use strict';
+const assertNotVisible = (a, opt_b) => {
   _validateArguments(1, arguments);
   const element = nonCommentArg(1, 1, arguments);
   if (!element) {
@@ -51,11 +48,11 @@ const assertNotVisible = function(a, opt_b) {
   }
 
   _assert(
-      commentArg(1, arguments), !goog.testing.style.isVisible(element) ||
-          !goog.testing.style.hasVisibleDimensions(element),
-      'Specified element should not be visible.');
+    commentArg(1, arguments),
+    !goog.testing.style.isVisible(element) || !goog.testing.style.hasVisibleDimensions(element),
+    'Specified element should not be visible.'
+  );
 };
-
 
 /**
  * Asserts that the two specified elements intersect.
@@ -64,18 +61,17 @@ const assertNotVisible = function(a, opt_b) {
  *     is present.
  * @param {Element=} opt_c The second element if comment string is present.
  */
-const assertIntersect = function(a, b, opt_c) {
-  'use strict';
+const assertIntersect = (a, b, opt_c) => {
   _validateArguments(2, arguments);
   const element = nonCommentArg(1, 2, arguments);
   const otherElement = nonCommentArg(2, 2, arguments);
 
   _assert(
-      commentArg(1, arguments),
-      goog.testing.style.intersects(element, otherElement),
-      'Elements should intersect.');
+    commentArg(1, arguments),
+    goog.testing.style.intersects(element, otherElement),
+    'Elements should intersect.'
+  );
 };
-
 
 /**
  * Asserts that the two specified elements do not intersect.
@@ -84,18 +80,17 @@ const assertIntersect = function(a, b, opt_c) {
  *     is present.
  * @param {Element=} opt_c The second element if comment string is present.
  */
-const assertNoIntersect = function(a, b, opt_c) {
-  'use strict';
+const assertNoIntersect = (a, b, opt_c) => {
   _validateArguments(2, arguments);
   const element = nonCommentArg(1, 2, arguments);
   const otherElement = nonCommentArg(2, 2, arguments);
 
   _assert(
-      commentArg(1, arguments),
-      !goog.testing.style.intersects(element, otherElement),
-      'Elements should not intersect.');
+    commentArg(1, arguments),
+    !goog.testing.style.intersects(element, otherElement),
+    'Elements should not intersect.'
+  );
 };
-
 
 /**
  * Asserts that the element must have the specified width.
@@ -104,8 +99,7 @@ const assertNoIntersect = function(a, b, opt_c) {
  *     is present.
  * @param {(Element|number)=} opt_c The second element if comment string is present.
  */
-const assertWidth = function(a, b, opt_c) {
-  'use strict';
+const assertWidth = (a, b, opt_c) => {
   _validateArguments(2, arguments);
   const element = nonCommentArg(1, 2, arguments);
   const width = nonCommentArg(2, 2, arguments);
@@ -113,12 +107,11 @@ const assertWidth = function(a, b, opt_c) {
   const elementWidth = size.width;
 
   _assert(
-      commentArg(1, arguments),
-      goog.testing.style.layoutasserts.isWithinThreshold_(
-          width, elementWidth, 0 /* tolerance */),
-      'Element should have width ' + width + ' but was ' + elementWidth + '.');
+    commentArg(1, arguments),
+    goog.testing.style.layoutasserts.isWithinThreshold_(width, elementWidth, 0 /* tolerance */),
+    'Element should have width ' + width + ' but was ' + elementWidth + '.'
+  );
 };
-
 
 /**
  * Asserts that the element must have the specified width within the specified
@@ -130,8 +123,7 @@ const assertWidth = function(a, b, opt_c) {
  *     present.
  * @param {number=} opt_d The tolerance if comment string is present.
  */
-const assertWidthWithinTolerance = function(a, b, c, opt_d) {
-  'use strict';
+const assertWidthWithinTolerance = (a, b, c, opt_d) => {
   _validateArguments(3, arguments);
   const element = nonCommentArg(1, 3, arguments);
   const width = nonCommentArg(2, 3, arguments);
@@ -140,13 +132,17 @@ const assertWidthWithinTolerance = function(a, b, c, opt_d) {
   const elementWidth = size.width;
 
   _assert(
-      commentArg(1, arguments),
-      goog.testing.style.layoutasserts.isWithinThreshold_(
-          width, elementWidth, tolerance),
-      'Element width(' + elementWidth + ') should be within given width(' +
-          width + ') with tolerance value of ' + tolerance + '.');
+    commentArg(1, arguments),
+    goog.testing.style.layoutasserts.isWithinThreshold_(width, elementWidth, tolerance),
+    'Element width(' +
+      elementWidth +
+      ') should be within given width(' +
+      width +
+      ') with tolerance value of ' +
+      tolerance +
+      '.'
+  );
 };
-
 
 /**
  * Asserts that the element must have the specified height.
@@ -155,8 +151,7 @@ const assertWidthWithinTolerance = function(a, b, c, opt_d) {
  *     is present.
  * @param {(Element|number)=} opt_c The second element if comment string is present.
  */
-const assertHeight = function(a, b, opt_c) {
-  'use strict';
+const assertHeight = (a, b, opt_c) => {
   _validateArguments(2, arguments);
   const element = nonCommentArg(1, 2, arguments);
   const height = nonCommentArg(2, 2, arguments);
@@ -164,12 +159,11 @@ const assertHeight = function(a, b, opt_c) {
   const elementHeight = size.height;
 
   _assert(
-      commentArg(1, arguments),
-      goog.testing.style.layoutasserts.isWithinThreshold_(
-          height, elementHeight, 0 /* tolerance */),
-      'Element should have height ' + height + '.');
+    commentArg(1, arguments),
+    goog.testing.style.layoutasserts.isWithinThreshold_(height, elementHeight, 0 /* tolerance */),
+    'Element should have height ' + height + '.'
+  );
 };
-
 
 /**
  * Asserts that the element must have the specified height within the specified
@@ -181,8 +175,7 @@ const assertHeight = function(a, b, opt_c) {
  *     present.
  * @param {number=} opt_d The tolerance if comment string is present.
  */
-const assertHeightWithinTolerance = function(a, b, c, opt_d) {
-  'use strict';
+const assertHeightWithinTolerance = (a, b, c, opt_d) => {
   _validateArguments(3, arguments);
   const element = nonCommentArg(1, 3, arguments);
   const height = nonCommentArg(2, 3, arguments);
@@ -191,13 +184,17 @@ const assertHeightWithinTolerance = function(a, b, c, opt_d) {
   const elementHeight = size.height;
 
   _assert(
-      commentArg(1, arguments),
-      goog.testing.style.layoutasserts.isWithinThreshold_(
-          height, elementHeight, tolerance),
-      'Element width(' + elementHeight + ') should be within given height(' +
-          height + ') with tolerance value of ' + tolerance + '.');
+    commentArg(1, arguments),
+    goog.testing.style.layoutasserts.isWithinThreshold_(height, elementHeight, tolerance),
+    'Element width(' +
+      elementHeight +
+      ') should be within given height(' +
+      height +
+      ') with tolerance value of ' +
+      tolerance +
+      '.'
+  );
 };
-
 
 /**
  * Asserts that the first element is to the left of the second element.
@@ -206,8 +203,7 @@ const assertHeightWithinTolerance = function(a, b, c, opt_d) {
  *     is present.
  * @param {Element=} opt_c The second element if comment string is present.
  */
-const assertIsLeftOf = function(a, b, opt_c) {
-  'use strict';
+const assertIsLeftOf = (a, b, opt_c) => {
   _validateArguments(2, arguments);
   const element = nonCommentArg(1, 2, arguments);
   const otherElement = nonCommentArg(2, 2, arguments);
@@ -215,10 +211,11 @@ const assertIsLeftOf = function(a, b, opt_c) {
   const otherElementRect = goog.style.getBounds(otherElement);
 
   _assert(
-      commentArg(1, arguments), elementRect.left < otherElementRect.left,
-      'Elements should be left to right.');
+    commentArg(1, arguments),
+    elementRect.left < otherElementRect.left,
+    'Elements should be left to right.'
+  );
 };
-
 
 /**
  * Asserts that the first element is strictly left of the second element.
@@ -227,8 +224,7 @@ const assertIsLeftOf = function(a, b, opt_c) {
  *     is present.
  * @param {Element=} opt_c The second element if comment string is present.
  */
-const assertIsStrictlyLeftOf = function(a, b, opt_c) {
-  'use strict';
+const assertIsStrictlyLeftOf = (a, b, opt_c) => {
   _validateArguments(2, arguments);
   const element = nonCommentArg(1, 2, arguments);
   const otherElement = nonCommentArg(2, 2, arguments);
@@ -236,11 +232,11 @@ const assertIsStrictlyLeftOf = function(a, b, opt_c) {
   const otherElementRect = goog.style.getBounds(otherElement);
 
   _assert(
-      commentArg(1, arguments),
-      elementRect.left + elementRect.width < otherElementRect.left,
-      'Elements should be strictly left to right.');
+    commentArg(1, arguments),
+    elementRect.left + elementRect.width < otherElementRect.left,
+    'Elements should be strictly left to right.'
+  );
 };
-
 
 /**
  * Asserts that the first element is higher than the second element.
@@ -249,8 +245,7 @@ const assertIsStrictlyLeftOf = function(a, b, opt_c) {
  *     is present.
  * @param {Element=} opt_c The second element if comment string is present.
  */
-const assertIsAbove = function(a, b, opt_c) {
-  'use strict';
+const assertIsAbove = (a, b, opt_c) => {
   _validateArguments(2, arguments);
   const element = nonCommentArg(1, 2, arguments);
   const otherElement = nonCommentArg(2, 2, arguments);
@@ -258,10 +253,11 @@ const assertIsAbove = function(a, b, opt_c) {
   const otherElementRect = goog.style.getBounds(otherElement);
 
   _assert(
-      commentArg(1, arguments), elementRect.top < otherElementRect.top,
-      'Elements should be top to bottom.');
+    commentArg(1, arguments),
+    elementRect.top < otherElementRect.top,
+    'Elements should be top to bottom.'
+  );
 };
-
 
 /**
  * Asserts that the first element is strictly higher than the second element.
@@ -270,8 +266,7 @@ const assertIsAbove = function(a, b, opt_c) {
  *     is present.
  * @param {Element=} opt_c The second element if comment string is present.
  */
-const assertIsStrictlyAbove = function(a, b, opt_c) {
-  'use strict';
+const assertIsStrictlyAbove = (a, b, opt_c) => {
   _validateArguments(2, arguments);
   const element = nonCommentArg(1, 2, arguments);
   const otherElement = nonCommentArg(2, 2, arguments);
@@ -279,11 +274,11 @@ const assertIsStrictlyAbove = function(a, b, opt_c) {
   const otherElementRect = goog.style.getBounds(otherElement);
 
   _assert(
-      commentArg(1, arguments),
-      elementRect.top + elementRect.height < otherElementRect.top,
-      'Elements should be strictly top to bottom.');
+    commentArg(1, arguments),
+    elementRect.top + elementRect.height < otherElementRect.top,
+    'Elements should be strictly top to bottom.'
+  );
 };
-
 
 /**
  * Asserts that the first element's bounds contain the bounds of the second
@@ -293,8 +288,7 @@ const assertIsStrictlyAbove = function(a, b, opt_c) {
  *     is present.
  * @param {Element=} opt_c The second element if comment string is present.
  */
-const assertContained = function(a, b, opt_c) {
-  'use strict';
+const assertContained = (a, b, opt_c) => {
   _validateArguments(2, arguments);
   const element = nonCommentArg(1, 2, arguments);
   const otherElement = nonCommentArg(2, 2, arguments);
@@ -302,10 +296,11 @@ const assertContained = function(a, b, opt_c) {
   const otherElementRect = goog.style.getBounds(otherElement);
 
   _assert(
-      commentArg(1, arguments), elementRect.contains(otherElementRect),
-      'Element should be contained within the other element.');
+    commentArg(1, arguments),
+    elementRect.contains(otherElementRect),
+    'Element should be contained within the other element.'
+  );
 };
-
 
 /**
  * Returns true if the difference between val1 and val2 is less than or equal to
@@ -316,8 +311,5 @@ const assertContained = function(a, b, opt_c) {
  * @return {boolean} Whether or not the values are within the threshold.
  * @private
  */
-goog.testing.style.layoutasserts.isWithinThreshold_ = function(
-    val1, val2, threshold) {
-  'use strict';
-  return Math.abs(val1 - val2) <= threshold;
-};
+goog.testing.style.layoutasserts.isWithinThreshold_ = (val1, val2, threshold) =>
+  Math.abs(val1 - val2) <= threshold;

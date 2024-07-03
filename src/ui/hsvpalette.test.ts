@@ -10,7 +10,6 @@
  */
 
 goog.module('goog.ui.HsvPaletteTest');
-goog.setTestOnly();
 
 const Component = goog.require('goog.ui.Component');
 const Coordinate = goog.require('goog.math.Coordinate');
@@ -47,18 +46,16 @@ testSuite({
     samplePalette.inputElement.value = color;
     samplePalette.handleInput(null);
     /** @suppress {visibility} suppression added to enable type checking */
-    const expectedRight = samplePalette.hsImageEl_.offsetWidth -
-        Math.ceil(samplePalette.hsHandleEl_.offsetWidth / 2);
-    assertEquals(
-        `${expectedRight}px`, samplePalette.hsHandleEl_.style['right']);
+    const expectedRight =
+      samplePalette.hsImageEl_.offsetWidth - Math.ceil(samplePalette.hsHandleEl_.offsetWidth / 2);
+    assertEquals(`${expectedRight}px`, samplePalette.hsHandleEl_.style['right']);
     assertEquals('', samplePalette.hsHandleEl_.style['left']);
   },
 
   testOptionalInitialColor() {
     const initialColor = '#0000ff';
     const customInitialPalette = new HsvPalette(null, initialColor);
-    assertEquals(
-        initialColor, googColor.parse(customInitialPalette.getColor()).hex);
+    assertEquals(initialColor, googColor.parse(customInitialPalette.getColor()).hex);
   },
 
   testCustomClassName() {
@@ -66,8 +63,7 @@ testSuite({
     /** @suppress {checkTypes} suppression added to enable type checking */
     const customClassPalette = new HsvPalette(null, null, customClassName);
     customClassPalette.createDom();
-    assertTrue(
-        classlist.contains(customClassPalette.getElement(), customClassName));
+    assertTrue(classlist.contains(customClassPalette.getElement(), customClassName));
   },
 
   testCannotDecorate() {
@@ -135,16 +131,13 @@ testSuite({
     assertNotNull(elem);
     assertEquals(String(TagName.DIV), elem.tagName);
 
-    assertEquals(
-        'The noalpha class must not be present', 'goog-hsv-palette',
-        elem.className);
+    assertEquals('The noalpha class must not be present', 'goog-hsv-palette', elem.className);
   },
 
   testRenderWithEnableBrowserSpellcheckOnInputFalse() {
     samplePalette.render(document.getElementById('sandbox'));
 
-    const inputElement =
-        samplePalette.getRequiredElementByClass('goog-hsv-palette-input');
+    const inputElement = samplePalette.getRequiredElementByClass('goog-hsv-palette-input');
     assertFalse(inputElement.spellcheck);
   },
 
@@ -156,13 +149,11 @@ testSuite({
 
     // Text should be black when background is light.
     samplePalette.setColor('#ccffff');
-    assertEquals(
-        '#000000', googColor.parse(style.getStyle(swatchElement, 'color')).hex);
+    assertEquals('#000000', googColor.parse(style.getStyle(swatchElement, 'color')).hex);
 
     // Text should be white when background is dark.
     samplePalette.setColor('#410800');
-    assertEquals(
-        '#ffffff', googColor.parse(style.getStyle(swatchElement, 'color')).hex);
+    assertEquals('#ffffff', googColor.parse(style.getStyle(swatchElement, 'color')).hex);
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -188,8 +179,7 @@ testSuite({
      * @suppress {checkTypes,visibility} suppression added to enable type
      * checking
      */
-    const boundaries =
-        style.getBounds(samplePalette.valueBackgroundImageElement, 0, 0);
+    const boundaries = style.getBounds(samplePalette.valueBackgroundImageElement, 0, 0);
 
     /** @suppress {checkTypes} suppression added to enable type checking */
     const event = new GoogEvent();

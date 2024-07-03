@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.proto2.PbLiteSerializerTest');
-goog.setTestOnly();
 
 const PbLiteSerializer = goog.require('goog.proto2.PbLiteSerializer');
 const TestAllTypes = goog.require('proto2.TestAllTypes');
@@ -153,8 +152,7 @@ function assertDeserializationMatches(messageCopy) {
 
   assertEquals(112, messageCopy.getOptionalNestedMessage().getB());
 
-  assertEquals(
-      TestAllTypes.NestedEnum.FOO, messageCopy.getOptionalNestedEnum());
+  assertEquals(TestAllTypes.NestedEnum.FOO, messageCopy.getOptionalNestedEnum());
 
   assertEquals(201, messageCopy.getRepeatedInt32(0));
   assertEquals(202, messageCopy.getRepeatedInt32(1));
@@ -183,7 +181,7 @@ testSuite({
     assertEquals('110', pblite[10]);
     assertEquals(111.5, pblite[11]);
     assertEquals(112.5, pblite[12]);
-    assertEquals(1, pblite[13]);  // true is serialized as 1
+    assertEquals(1, pblite[13]); // true is serialized as 1
     assertEquals('test', pblite[14]);
     assertEquals('abcd', pblite[15]);
 
@@ -203,8 +201,7 @@ testSuite({
     const serializer2 = new PbLiteSerializer();
     // Deserialize.
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const messageCopy =
-        serializer2.deserialize(TestAllTypes.getDescriptor(), pblite);
+    const messageCopy = serializer2.deserialize(TestAllTypes.getDescriptor(), pblite);
 
     assertNotEquals(messageCopy, message);
 
@@ -239,7 +236,7 @@ testSuite({
     assertEquals('110', pblite[9]);
     assertEquals(111.5, pblite[10]);
     assertEquals(112.5, pblite[11]);
-    assertEquals(1, pblite[12]);  // true is serialized as 1
+    assertEquals(1, pblite[12]); // true is serialized as 1
     assertEquals('test', pblite[13]);
     assertEquals('abcd', pblite[14]);
 
@@ -258,8 +255,7 @@ testSuite({
 
     // Deserialize.
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const messageCopy =
-        serializer.deserialize(TestAllTypes.getDescriptor(), pblite);
+    const messageCopy = serializer.deserialize(TestAllTypes.getDescriptor(), pblite);
 
     assertNotEquals(messageCopy, message);
 
@@ -276,47 +272,30 @@ testSuite({
     // outside the Closure proto2 library, such as the JsPbLite library, or
     // manually as in this test.
     const pblite = [
-      ,        // 0
-      101,     // 1
-      '102',   // 2
-      103,     // 3
-      '104',   // 4
-      105,     // 5
-      '106',   // 6
-      107,     // 7
-      '108',   // 8
-      109,     // 9
-      '110',   // 10
-      111.5,   // 11
-      112.5,   // 12
-      1,       // 13
-      'test',  // 14
-      'abcd',  // 15
-      [
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        111,
-      ],        // 16, note the 17 commas so value is index 17
-      ,         // 17
-      [, 112],  // 18
       ,
-      ,                             // 19-20
-      TestAllTypes.NestedEnum.FOO,  // 21
+      // 0
+      101, // 1
+      '102', // 2
+      103, // 3
+      '104', // 4
+      105, // 5
+      '106', // 6
+      107, // 7
+      '108', // 8
+      109, // 9
+      '110', // 10
+      111.5, // 11
+      112.5, // 12
+      1, // 13
+      'test', // 14
+      'abcd', // 15
+      [, , , , , , , , , , , , , , , , , 111],
+      , // 16, note the 17 commas so value is index 17 // 17
+      [, 112],
+      , // 18 // 19-20
+      ,
+      TestAllTypes.NestedEnum.FOO,
+      , // 21 // 22-30
       ,
       ,
       ,
@@ -325,8 +304,8 @@ testSuite({
       ,
       ,
       ,
-      ,            // 22-30
-      [201, 202],  // 31
+      [201, 202],
+      , // 31 // 32-43
       ,
       ,
       ,
@@ -338,16 +317,14 @@ testSuite({
       ,
       ,
       ,
-      ,               // 32-43
-      ['foo', 'bar']  // 44
+      ['foo', 'bar'], // 44
     ];
     pblite.length = 50;
 
     // Deserialize.
     const serializer = new PbLiteSerializer();
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const messageCopy =
-        serializer.deserialize(TestAllTypes.getDescriptor(), pblite);
+    const messageCopy = serializer.deserialize(TestAllTypes.getDescriptor(), pblite);
 
     assertDeserializationMatches(messageCopy);
 
@@ -383,47 +360,30 @@ testSuite({
    */
   testModifyLazyDeserializedMessage() {
     const pblite = [
-      ,        // 0
-      101,     // 1
-      '102',   // 2
-      103,     // 3
-      '104',   // 4
-      105,     // 5
-      '106',   // 6
-      107,     // 7
-      '108',   // 8
-      109,     // 9
-      '110',   // 10
-      111.5,   // 11
-      112.5,   // 12
-      1,       // 13
-      'test',  // 14
-      'abcd',  // 15
-      [
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        111,
-      ],        // 16, note the 17 commas so value is index 17
-      ,         // 17
-      [, 112],  // 18
       ,
-      ,                             // 19-20
-      TestAllTypes.NestedEnum.FOO,  // 21
+      // 0
+      101, // 1
+      '102', // 2
+      103, // 3
+      '104', // 4
+      105, // 5
+      '106', // 6
+      107, // 7
+      '108', // 8
+      109, // 9
+      '110', // 10
+      111.5, // 11
+      112.5, // 12
+      1, // 13
+      'test', // 14
+      'abcd', // 15
+      [, , , , , , , , , , , , , , , , , 111],
+      , // 16, note the 17 commas so value is index 17 // 17
+      [, 112],
+      , // 18 // 19-20
+      ,
+      TestAllTypes.NestedEnum.FOO,
+      , // 21 // 22-30
       ,
       ,
       ,
@@ -432,8 +392,8 @@ testSuite({
       ,
       ,
       ,
-      ,            // 22-30
-      [201, 202],  // 31
+      [201, 202],
+      , // 31 // 32-43
       ,
       ,
       ,
@@ -445,16 +405,14 @@ testSuite({
       ,
       ,
       ,
-      ,               // 32-43
-      ['foo', 'bar']  // 44
+      ['foo', 'bar'], // 44
     ];
     pblite.length = 50;
 
     // Deserialize.
     const serializer = new PbLiteSerializer();
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const message =
-        serializer.deserialize(TestAllTypes.getDescriptor(), pblite);
+    const message = serializer.deserialize(TestAllTypes.getDescriptor(), pblite);
 
     // Conduct some operations, ensuring that they all work as expected, even
     // with the lazily deserialized data.
@@ -493,47 +451,30 @@ testSuite({
    */
   testModifyLazyDeserializedMessageByAddingMessage() {
     const pblite = [
-      ,        // 0
-      101,     // 1
-      '102',   // 2
-      103,     // 3
-      '104',   // 4
-      105,     // 5
-      '106',   // 6
-      107,     // 7
-      '108',   // 8
-      109,     // 9
-      '110',   // 10
-      111.5,   // 11
-      112.5,   // 12
-      1,       // 13
-      'test',  // 14
-      'abcd',  // 15
-      [
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        111,
-      ],        // 16, note the 17 commas so value is index 17
-      ,         // 17
-      [, 112],  // 18
       ,
-      ,                             // 19-20
-      TestAllTypes.NestedEnum.FOO,  // 21
+      // 0
+      101, // 1
+      '102', // 2
+      103, // 3
+      '104', // 4
+      105, // 5
+      '106', // 6
+      107, // 7
+      '108', // 8
+      109, // 9
+      '110', // 10
+      111.5, // 11
+      112.5, // 12
+      1, // 13
+      'test', // 14
+      'abcd', // 15
+      [, , , , , , , , , , , , , , , , , 111],
+      , // 16, note the 17 commas so value is index 17 // 17
+      [, 112],
+      , // 18 // 19-20
+      ,
+      TestAllTypes.NestedEnum.FOO,
+      , // 21 // 22-30
       ,
       ,
       ,
@@ -542,8 +483,8 @@ testSuite({
       ,
       ,
       ,
-      ,            // 22-30
-      [201, 202],  // 31
+      [201, 202],
+      , // 31 // 32-43
       ,
       ,
       ,
@@ -555,16 +496,14 @@ testSuite({
       ,
       ,
       ,
-      ,               // 32-43
-      ['foo', 'bar']  // 44
+      ['foo', 'bar'], // 44
     ];
     pblite.length = 50;
 
     // Deserialize.
     const serializer = new PbLiteSerializer();
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const message =
-        serializer.deserialize(TestAllTypes.getDescriptor(), pblite);
+    const message = serializer.deserialize(TestAllTypes.getDescriptor(), pblite);
 
     // Add a new nested message.
     const nested1 = new TestAllTypes.NestedMessage();
@@ -610,8 +549,7 @@ testSuite({
     target.addRepeatedInt32(1);
     const pbliteTarget = serializer.serialize(target);
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const lazyTarget =
-        serializer.deserialize(TestAllTypes.getDescriptor(), pbliteTarget);
+    const lazyTarget = serializer.deserialize(TestAllTypes.getDescriptor(), pbliteTarget);
 
     const expected = new TestAllTypes();
     nested = new TestAllTypes.NestedMessage();
@@ -626,8 +564,6 @@ testSuite({
     expected.addRepeatedInt32(2);
 
     lazyTarget.mergeFrom(source);
-    assertTrue(
-        'expected and lazyTarget are equal after mergeFrom',
-        lazyTarget.equals(expected));
+    assertTrue('expected and lazyTarget are equal after mergeFrom', lazyTarget.equals(expected));
   },
 });

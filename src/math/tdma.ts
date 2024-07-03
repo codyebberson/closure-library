@@ -13,7 +13,6 @@
 
 goog.provide('goog.math.tdma');
 
-
 /**
  * Solves a linear system where the matrix is square tri-diagonal. That is,
  * given a system of equations:
@@ -37,9 +36,7 @@ goog.provide('goog.math.tdma');
  * @param {Array<number>=} opt_result The optional array to store the result.
  * @return {!Array<number>} The vector that is the solution to the system.
  */
-goog.math.tdma.solve = function(
-    subDiag, mainDiag, supDiag, vecRight, opt_result) {
-  'use strict';
+goog.math.tdma.solve = (subDiag, mainDiag, supDiag, vecRight, opt_result) => {
   // Make a local copy of the main diagonal and the right vector.
   mainDiag = mainDiag.slice();
   vecRight = vecRight.slice();

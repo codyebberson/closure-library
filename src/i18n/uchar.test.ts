@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.i18n.uCharTest');
-goog.setTestOnly();
 
 const testSuite = goog.require('goog.testing.testSuite');
 const uChar = goog.require('goog.i18n.uChar');
@@ -24,65 +23,55 @@ testSuite({
 
   testToCharCode() {
     const result = uChar.toCharCode('\uD869\uDED6');
-    assertEquals(0x2A6D6, result);
+    assertEquals(0x2a6d6, result);
   },
 
   testcodePointAt() {
     // Basic cases.
-    assertEquals(0x006C, uChar.getCodePointAround('Hello!', 2));
+    assertEquals(0x006c, uChar.getCodePointAround('Hello!', 2));
     assertEquals(
-        0x2708 /* Airplane symbol (non-ASCII) */,
-        uChar.getCodePointAround('Hello\u2708', 5));
+      0x2708 /* Airplane symbol (non-ASCII) */,
+      uChar.getCodePointAround('Hello\u2708', 5)
+    );
 
     // Supplementary characters.
-    assertEquals(0x2A6D6, uChar.getCodePointAround('\uD869\uDED6', 0));
-    assertEquals(-0x2A6D6, uChar.getCodePointAround('\uD869\uDED6', 1));
-    assertEquals(
-        0xD869,
-        uChar.getCodePointAround(
-            '\uD869' +
-                'w',
-            0));
-    assertEquals(
-        0xDED6,
-        uChar.getCodePointAround(
-            '\uD869' +
-                'w' +
-                '\uDED6',
-            2));
+    assertEquals(0x2a6d6, uChar.getCodePointAround('\uD869\uDED6', 0));
+    assertEquals(-0x2a6d6, uChar.getCodePointAround('\uD869\uDED6', 1));
+    assertEquals(0xd869, uChar.getCodePointAround('\uD869' + 'w', 0));
+    assertEquals(0xded6, uChar.getCodePointAround('\uD869' + 'w' + '\uDED6', 2));
   },
 
   testBuildSupplementaryCodePoint() {
-    const result = uChar.buildSupplementaryCodePoint(0xD869, 0xDED6);
-    assertEquals(0x2A6D6, result);
-    assertNull(uChar.buildSupplementaryCodePoint(0xDED6, 0xD869));
-    assertNull(uChar.buildSupplementaryCodePoint(0xD869, 0xAC00));
+    const result = uChar.buildSupplementaryCodePoint(0xd869, 0xded6);
+    assertEquals(0x2a6d6, result);
+    assertNull(uChar.buildSupplementaryCodePoint(0xded6, 0xd869));
+    assertNull(uChar.buildSupplementaryCodePoint(0xd869, 0xac00));
   },
 
   testCharCount() {
-    assertEquals(2, uChar.charCount(0x2A6D6));
-    assertEquals(1, uChar.charCount(0xAC00));
+    assertEquals(2, uChar.charCount(0x2a6d6));
+    assertEquals(1, uChar.charCount(0xac00));
   },
 
   testIsSupplementaryCodePoint() {
-    assertTrue(uChar.isSupplementaryCodePoint(0x2A6D6));
-    assertFalse(uChar.isSupplementaryCodePoint(0xAC00));
+    assertTrue(uChar.isSupplementaryCodePoint(0x2a6d6));
+    assertFalse(uChar.isSupplementaryCodePoint(0xac00));
   },
 
   testIsLeadSurrogateCodepoint() {
-    assertTrue(uChar.isLeadSurrogateCodePoint(0xD869));
-    assertFalse(uChar.isLeadSurrogateCodePoint(0xDED6));
-    assertFalse(uChar.isLeadSurrogateCodePoint(0xAC00));
+    assertTrue(uChar.isLeadSurrogateCodePoint(0xd869));
+    assertFalse(uChar.isLeadSurrogateCodePoint(0xded6));
+    assertFalse(uChar.isLeadSurrogateCodePoint(0xac00));
   },
 
   testIsTrailSurrogateCodePoint() {
-    assertTrue(uChar.isTrailSurrogateCodePoint(0xDED6));
-    assertFalse(uChar.isTrailSurrogateCodePoint(0xD869));
-    assertFalse(uChar.isTrailSurrogateCodePoint(0xAC00));
+    assertTrue(uChar.isTrailSurrogateCodePoint(0xded6));
+    assertFalse(uChar.isTrailSurrogateCodePoint(0xd869));
+    assertFalse(uChar.isTrailSurrogateCodePoint(0xac00));
   },
 
   testFromCharCode() {
-    const result = uChar.fromCharCode(0x2A6D6);
+    const result = uChar.fromCharCode(0x2a6d6);
     assertEquals('\uD869\uDED6', result);
   },
 
@@ -102,7 +91,7 @@ testSuite({
     result = uChar.fromCharCode(undefined);
     assertEquals(null, result);
 
-    result = uChar.fromCharCode(NaN);
+    result = uChar.fromCharCode(Number.NaN);
     assertEquals(null, result);
   },
 });

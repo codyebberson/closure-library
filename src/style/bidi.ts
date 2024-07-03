@@ -17,7 +17,6 @@ goog.require('goog.userAgent.platform');
 goog.require('goog.userAgent.product');
 goog.require('goog.userAgent.product.isVersion');
 
-
 /**
  * Returns the normalized scrollLeft position for a scrolled element.
  * @param {Element} element The scrolled element.
@@ -25,8 +24,7 @@ goog.require('goog.userAgent.product.isVersion');
  *     that the element is not scrolled at all (which, in general, is the
  *     left-most position in ltr and the right-most position in rtl).
  */
-goog.style.bidi.getScrollLeft = function(element) {
-  'use strict';
+goog.style.bidi.getScrollLeft = (element) => {
   var isRtl = goog.style.isRightToLeft(element);
   if (isRtl && goog.style.bidi.usesNegativeScrollLeftInRtl_()) {
     return -element.scrollLeft;
@@ -45,7 +43,6 @@ goog.style.bidi.getScrollLeft = function(element) {
   // increases as the element is scrolled away from the start.
   return element.scrollLeft;
 };
-
 
 /**
  * Returns the "offsetStart" of an element, analogous to offsetLeft but
@@ -77,8 +74,7 @@ goog.style.bidi.getScrollLeft = function(element) {
  *     offsetStart position.
  * @return {number} The offsetStart for that element.
  */
-goog.style.bidi.getOffsetStart = function(element) {
-  'use strict';
+goog.style.bidi.getOffsetStart = (element) => {
   element = /** @type {!HTMLElement} */ (element);
   var offsetLeftForReal = element.offsetLeft;
 
@@ -104,8 +100,9 @@ goog.style.bidi.getOffsetStart = function(element) {
     var borderWidths = goog.style.getBorderBox(bestParent);
     offsetLeftForReal += borderWidths.left;
   } else if (
-      goog.userAgent.isDocumentModeOrHigher(8) &&
-      !goog.userAgent.isDocumentModeOrHigher(9)) {
+    goog.userAgent.isDocumentModeOrHigher(8) &&
+    !goog.userAgent.isDocumentModeOrHigher(9)
+  ) {
     // When calculating an element's offsetLeft, IE8/9-Standards Mode
     // erroneously adds the border width to the actual distance.  So we need to
     // subtract it.
@@ -124,7 +121,6 @@ goog.style.bidi.getOffsetStart = function(element) {
   return offsetLeftForReal;
 };
 
-
 /**
  * Sets the element's scrollLeft attribute so it is correctly scrolled by
  * offsetStart pixels.  This takes into account whether the element is RTL and
@@ -136,8 +132,7 @@ goog.style.bidi.getOffsetStart = function(element) {
  * @param {number} offsetStart The number of pixels to scroll the element.
  *     If this value is < 0, 0 is used.
  */
-goog.style.bidi.setScrollOffset = function(element, offsetStart) {
-  'use strict';
+goog.style.bidi.setScrollOffset = (element, offsetStart) => {
   offsetStart = Math.max(offsetStart, 0);
   // In LTR and in "mirrored" browser RTL (such as IE), we set scrollLeft to
   // the number of pixels to scroll.
@@ -150,13 +145,11 @@ goog.style.bidi.setScrollOffset = function(element, offsetStart) {
     // Take the current scrollLeft value and move to the right by the
     // offsetStart to get to the left edge of the element, and then by
     // the clientWidth of the element to get to the right edge.
-    element.scrollLeft =
-        element.scrollWidth - offsetStart - element.clientWidth;
+    element.scrollLeft = element.scrollWidth - offsetStart - element.clientWidth;
   } else {
     element.scrollLeft = offsetStart;
   }
 };
-
 
 /**
  * @return {boolean} Whether the current browser returns negative scrollLeft
@@ -164,17 +157,12 @@ goog.style.bidi.setScrollOffset = function(element, offsetStart) {
  *     becomes more negative as the element is scrolled towards the left.
  * @private
  */
-goog.style.bidi.usesNegativeScrollLeftInRtl_ = function() {
-  'use strict';
-  var isSafari10Plus =
-      goog.userAgent.product.SAFARI && goog.userAgent.product.isVersion(10);
+goog.style.bidi.usesNegativeScrollLeftInRtl_ = () => {
+  var isSafari10Plus = goog.userAgent.product.SAFARI && goog.userAgent.product.isVersion(10);
   var isIOS10Plus = goog.userAgent.IOS && goog.userAgent.platform.isVersion(10);
-  const isChrome85Plus =
-      goog.userAgent.product.CHROME && goog.userAgent.product.isVersion(85);
-  return goog.userAgent.GECKO || isSafari10Plus || isIOS10Plus ||
-      isChrome85Plus;
+  const isChrome85Plus = goog.userAgent.product.CHROME && goog.userAgent.product.isVersion(85);
+  return goog.userAgent.GECKO || isSafari10Plus || isIOS10Plus || isChrome85Plus;
 };
-
 
 /**
  * Sets the element's left style attribute in LTR or right style attribute in
@@ -184,8 +172,7 @@ goog.style.bidi.usesNegativeScrollLeftInRtl_ = function() {
  * @param {?number} top The top position.  If null only the left/right is set.
  * @param {boolean} isRtl Whether we are in RTL mode.
  */
-goog.style.bidi.setPosition = function(elem, left, top, isRtl) {
-  'use strict';
+goog.style.bidi.setPosition = (elem, left, top, isRtl) => {
   if (top !== null) {
     elem.style.top = top + 'px';
   }

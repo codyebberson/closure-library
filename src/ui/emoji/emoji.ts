@@ -10,8 +10,6 @@
 
 goog.provide('goog.ui.emoji.Emoji');
 
-
-
 /**
  * Creates an emoji.
  *
@@ -28,8 +26,7 @@ goog.provide('goog.ui.emoji.Emoji');
  * @constructor
  * @final
  */
-goog.ui.emoji.Emoji = function(url, id, opt_height, opt_width, opt_altText) {
-  'use strict';
+goog.ui.emoji.Emoji = function (url, id, opt_height, opt_width, opt_altText) {
   /**
    * The URL pointing to the source image for the emoji
    *
@@ -71,14 +68,12 @@ goog.ui.emoji.Emoji = function(url, id, opt_height, opt_width, opt_altText) {
   this.altText_ = opt_altText || null;
 };
 
-
 /**
  * The name of the goomoji attribute, used for emoji image elements.
  * @type {string}
  * @deprecated Use goog.ui.emoji.Emoji.DATA_ATTRIBUTE instead.
  */
 goog.ui.emoji.Emoji.ATTRIBUTE = 'goomoji';
-
 
 /**
  * The name of the goomoji data-attribute, used for emoji image elements. Data
@@ -87,48 +82,38 @@ goog.ui.emoji.Emoji.ATTRIBUTE = 'goomoji';
  */
 goog.ui.emoji.Emoji.DATA_ATTRIBUTE = 'data-' + goog.ui.emoji.Emoji.ATTRIBUTE;
 
-
 /**
  * @return {string} The URL for this emoji.
  */
-goog.ui.emoji.Emoji.prototype.getUrl = function() {
-  'use strict';
+goog.ui.emoji.Emoji.prototype.getUrl = function () {
   return this.url_;
 };
-
 
 /**
  * @return {string} The id of this emoji.
  */
-goog.ui.emoji.Emoji.prototype.getId = function() {
-  'use strict';
+goog.ui.emoji.Emoji.prototype.getId = function () {
   return this.id_;
 };
-
 
 /**
  * @return {?number} The height of this emoji.
  */
-goog.ui.emoji.Emoji.prototype.getHeight = function() {
-  'use strict';
+goog.ui.emoji.Emoji.prototype.getHeight = function () {
   return this.height_;
 };
-
 
 /**
  * @return {?number} The width of this emoji.
  */
-goog.ui.emoji.Emoji.prototype.getWidth = function() {
-  'use strict';
+goog.ui.emoji.Emoji.prototype.getWidth = function () {
   return this.width_;
 };
-
 
 /**
  * @return {?string} The alt text for the emoji image, eg. the unicode character
  *     representation of the emoji.
  */
-goog.ui.emoji.Emoji.prototype.getAltText = function() {
-  'use strict';
+goog.ui.emoji.Emoji.prototype.getAltText = function () {
   return this.altText_;
 };

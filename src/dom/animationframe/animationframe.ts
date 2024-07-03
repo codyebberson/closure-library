@@ -49,7 +49,6 @@ goog.require('goog.dom.animationFrame.polyfill');
 // Install the polyfill.
 goog.dom.animationFrame.polyfill.install();
 
-
 /**
  * @typedef {{
  *   id: number,
@@ -59,7 +58,6 @@ goog.dom.animationFrame.polyfill.install();
  * @private
  */
 goog.dom.animationFrame.Task_;
-
 
 /**
  * @typedef {{
@@ -73,7 +71,6 @@ goog.dom.animationFrame.Task_;
  */
 goog.dom.animationFrame.TaskSet_;
 
-
 /**
  * @typedef {{
  *   measure: (!Function|undefined),
@@ -82,15 +79,12 @@ goog.dom.animationFrame.TaskSet_;
  */
 goog.dom.animationFrame.Spec;
 
-
-
 /**
  * A type to represent state. Users may add properties as desired.
  * @constructor
  * @final
  */
-goog.dom.animationFrame.State = function() {};
-
+goog.dom.animationFrame.State = () => {};
 
 /**
  * Saves a set of tasks to be executed in the next requestAnimationFrame phase.
@@ -101,14 +95,12 @@ goog.dom.animationFrame.State = function() {};
  */
 goog.dom.animationFrame.tasks_ = [[], []];
 
-
 /**
  * Values are 0 or 1, for whether the first or second array should be used to
  * lookup or add tasks.
  * @private {number}
  */
 goog.dom.animationFrame.doubleBufferIndex_ = 0;
-
 
 /**
  * Whether we have already requested an animation frame that hasn't happened
@@ -117,20 +109,17 @@ goog.dom.animationFrame.doubleBufferIndex_ = 0;
  */
 goog.dom.animationFrame.requestedFrame_ = false;
 
-
 /**
  * Counter to generate IDs for tasks.
  * @private {number}
  */
 goog.dom.animationFrame.taskId_ = 0;
 
-
 /**
  * Whether the animationframe runTasks_ loop is currently running.
  * @private {boolean}
  */
 goog.dom.animationFrame.running_ = false;
-
 
 /**
  * Returns a function that schedules the two passed-in functions to be run upon
@@ -149,22 +138,20 @@ goog.dom.animationFrame.running_ = false;
  * @return {function(...?)}
  * @template THIS
  */
-goog.dom.animationFrame.createTask = function(spec, opt_context) {
-  'use strict';
+goog.dom.animationFrame.createTask = (spec, opt_context) => {
   const id = goog.dom.animationFrame.taskId_++;
-  const measureTask = {id: id, fn: spec.measure, context: opt_context};
-  const mutateTask = {id: id, fn: spec.mutate, context: opt_context};
+  const measureTask = { id: id, fn: spec.measure, context: opt_context };
+  const mutateTask = { id: id, fn: spec.mutate, context: opt_context };
 
   const taskSet = {
     measureTask: measureTask,
     mutateTask: mutateTask,
     state: {},
     args: undefined,
-    isScheduled: false
+    isScheduled: false,
   };
 
-  return function() {
-    'use strict';
+  return () => {
     // Save args and state.
     if (arguments.length > 0) {
       // The state argument goes last. That is kinda horrible.
@@ -184,33 +171,26 @@ goog.dom.animationFrame.createTask = function(spec, opt_context) {
     }
     if (!taskSet.isScheduled) {
       taskSet.isScheduled = true;
-      const tasksArray =
-          goog.dom.animationFrame
-              .tasks_[goog.dom.animationFrame.doubleBufferIndex_];
-      tasksArray.push(
-          /** @type {goog.dom.animationFrame.TaskSet_} */ (taskSet));
+      const tasksArray = goog.dom.animationFrame.tasks_[goog.dom.animationFrame.doubleBufferIndex_];
+      tasksArray.push(/** @type {goog.dom.animationFrame.TaskSet_} */ (taskSet));
     }
     goog.dom.animationFrame.requestAnimationFrame_();
   };
 };
 
-
 /**
  * Run scheduled tasks.
  * @private
  */
-goog.dom.animationFrame.runTasks_ = function() {
-  'use strict';
+goog.dom.animationFrame.runTasks_ = () => {
   goog.dom.animationFrame.running_ = true;
   goog.dom.animationFrame.requestedFrame_ = false;
-  const tasksArray = goog.dom.animationFrame
-                         .tasks_[goog.dom.animationFrame.doubleBufferIndex_];
+  const tasksArray = goog.dom.animationFrame.tasks_[goog.dom.animationFrame.doubleBufferIndex_];
   const taskLength = tasksArray.length;
 
   // During the runTasks_, if there is a recursive call to queue up more
   // task(s) for the next frame, we use double-buffering for that.
-  goog.dom.animationFrame.doubleBufferIndex_ =
-      (goog.dom.animationFrame.doubleBufferIndex_ + 1) % 2;
+  goog.dom.animationFrame.doubleBufferIndex_ = (goog.dom.animationFrame.doubleBufferIndex_ + 1) % 2;
 
   let task;
 
@@ -244,25 +224,19 @@ goog.dom.animationFrame.runTasks_ = function() {
   goog.dom.animationFrame.running_ = false;
 };
 
-
 /**
  * @return {boolean} Whether the animationframe is currently running. For use
  *     by callers who need not to delay tasks scheduled during runTasks_ for an
  *     additional frame.
  */
-goog.dom.animationFrame.isRunning = function() {
-  'use strict';
-  return goog.dom.animationFrame.running_;
-};
-
+goog.dom.animationFrame.isRunning = () => goog.dom.animationFrame.running_;
 
 /**
  * Request {@see goog.dom.animationFrame.runTasks_} to be called upon the
  * next animation frame if we haven't done so already.
  * @private
  */
-goog.dom.animationFrame.requestAnimationFrame_ = function() {
-  'use strict';
+goog.dom.animationFrame.requestAnimationFrame_ = () => {
   if (goog.dom.animationFrame.requestedFrame_) {
     return;
   }

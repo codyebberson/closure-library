@@ -13,15 +13,12 @@
 goog.provide('goog.fx.Transition');
 goog.provide('goog.fx.Transition.EventType');
 
-
-
 /**
  * An interface for programmatic transition. Must extend
  * `goog.events.EventTarget`.
  * @interface
  */
-goog.fx.Transition = function() {};
-
+goog.fx.Transition = () => {};
 
 /**
  * Transition event types.
@@ -50,16 +47,14 @@ goog.fx.Transition.EventType = {
   FINISH: 'finish',
 
   /** Dispatched when an animation is paused. */
-  PAUSE: 'pause'
+  PAUSE: 'pause',
 };
-
 
 /**
  * @type {function()}
  * Plays the transition.
  */
 goog.fx.Transition.prototype.play;
-
 
 /**
  * @type {function()}

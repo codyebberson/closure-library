@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.ToolbarColorMenuButtonRendererTest');
-goog.setTestOnly();
 
 const RendererHarness = goog.require('goog.testing.ui.RendererHarness');
 const ToolbarColorMenuButton = goog.require('goog.ui.ToolbarColorMenuButton');
@@ -19,8 +18,10 @@ let harness;
 testSuite({
   setUp() {
     harness = new RendererHarness(
-        ToolbarColorMenuButtonRenderer.getInstance(), dom.getElement('parent'),
-        dom.getElement('decoratedButton'));
+      ToolbarColorMenuButtonRenderer.getInstance(),
+      dom.getElement('parent'),
+      dom.getElement('decoratedButton')
+    );
   },
 
   tearDown() {
@@ -35,7 +36,6 @@ testSuite({
   },
 
   testDoesntCallGetCssClassInConstructor() {
-    rendererasserts.assertNoGetCssClassCallsInConstructor(
-        ToolbarColorMenuButtonRenderer);
+    rendererasserts.assertNoGetCssClassCallsInConstructor(ToolbarColorMenuButtonRenderer);
   },
 });

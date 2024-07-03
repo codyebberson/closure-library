@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.plugins.EmoticonsTest');
-goog.setTestOnly();
 
 const Emoji = goog.require('goog.ui.emoji.Emoji');
 const Emoticons = goog.require('goog.editor.plugins.Emoticons');
@@ -21,8 +20,9 @@ let HTML;
 function assertUriEquals(expected, actual) {
   const winUri = new Uri(window.location);
   assertEquals(
-      winUri.resolve(new Uri(expected)).toString(),
-      winUri.resolve(new Uri(actual)).toString());
+    winUri.resolve(new Uri(expected)).toString(),
+    winUri.resolve(new Uri(actual)).toString()
+  );
 }
 testSuite({
   setUp() {
@@ -47,8 +47,7 @@ testSuite({
     field.execCommand(Emoticons.COMMAND, emoji);
 
     // The url may be relative or absolute.
-    const imgs =
-        field.getEditableDomHelper().getElementsByTagNameAndClass(TagName.IMG);
+    const imgs = field.getEditableDomHelper().getElementsByTagNameAndClass(TagName.IMG);
     assertEquals(1, imgs.length);
 
     const img = imgs[0];
@@ -61,17 +60,14 @@ testSuite({
     assertTrue('range must be a cursor', range.isCollapsed());
 
     if (!userAgent.IE) {
-      const webkitValid = (2 == range.getStartOffset());
+      const webkitValid = 2 == range.getStartOffset();
       const otherValid =
-          (2 ==
-           Array.prototype.indexOf.call(
-               range.getContainerElement().childNodes, range.getStartNode()));
+        2 ==
+        Array.prototype.indexOf.call(range.getContainerElement().childNodes, range.getStartNode());
 
       assertTrue('range starts after image', webkitValid || otherValid);
     }
 
-    assertEquals(
-        'range must be around image', img.parentElement,
-        range.getContainerElement());
+    assertEquals('range must be around image', img.parentElement, range.getContainerElement());
   },
 });

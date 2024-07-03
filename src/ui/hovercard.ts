@@ -25,8 +25,6 @@ goog.require('goog.ui.Tooltip');
 goog.requireType('goog.events.BrowserEvent');
 goog.requireType('goog.positioning.AbstractPosition');
 
-
-
 /**
  * Create a hover card object.  Hover cards extend tooltips in that they don't
  * have to be manually attached to each element that can cause them to display.
@@ -64,9 +62,12 @@ goog.requireType('goog.positioning.AbstractPosition');
  * @constructor
  * @extends {goog.ui.AdvancedTooltip}
  */
-goog.ui.HoverCard = function(
-    isAnchor, opt_checkDescendants, opt_domHelper, opt_triggeringDocument) {
-  'use strict';
+goog.ui.HoverCard = function (
+  isAnchor,
+  opt_checkDescendants,
+  opt_domHelper,
+  opt_triggeringDocument
+) {
   goog.ui.AdvancedTooltip.call(this, null, null, opt_domHelper);
 
   if (typeof isAnchor === 'function') {
@@ -104,15 +105,19 @@ goog.ui.HoverCard = function(
    * @type {Document}
    * @private
    */
-  this.document_ = opt_triggeringDocument ||
-      (opt_domHelper ? opt_domHelper.getDocument() : goog.dom.getDocument());
+  this.document_ =
+    opt_triggeringDocument ||
+    (opt_domHelper ? opt_domHelper.getDocument() : goog.dom.getDocument());
 
   goog.events.listen(
-      this.document_, goog.events.EventType.MOUSEOVER,
-      this.handleTriggerMouseOver_, false, this);
+    this.document_,
+    goog.events.EventType.MOUSEOVER,
+    this.handleTriggerMouseOver_,
+    false,
+    this
+  );
 };
 goog.inherits(goog.ui.HoverCard, goog.ui.AdvancedTooltip);
-
 
 /**
  * Enum for event type fired by HoverCard.
@@ -124,20 +129,21 @@ goog.ui.HoverCard.EventType = {
   BEFORE_SHOW: goog.ui.PopupBase.EventType.BEFORE_SHOW,
   SHOW: goog.ui.PopupBase.EventType.SHOW,
   BEFORE_HIDE: goog.ui.PopupBase.EventType.BEFORE_HIDE,
-  HIDE: goog.ui.PopupBase.EventType.HIDE
+  HIDE: goog.ui.PopupBase.EventType.HIDE,
 };
 
-
 /** @override */
-goog.ui.HoverCard.prototype.disposeInternal = function() {
-  'use strict';
+goog.ui.HoverCard.prototype.disposeInternal = function () {
   goog.ui.HoverCard.superClass_.disposeInternal.call(this);
 
   goog.events.unlisten(
-      this.document_, goog.events.EventType.MOUSEOVER,
-      this.handleTriggerMouseOver_, false, this);
+    this.document_,
+    goog.events.EventType.MOUSEOVER,
+    this.handleTriggerMouseOver_,
+    false,
+    this
+  );
 };
-
 
 /**
  * Anchor of hovercard currently being shown.  This may be different from
@@ -149,14 +155,12 @@ goog.ui.HoverCard.prototype.disposeInternal = function() {
  */
 goog.ui.HoverCard.prototype.currentAnchor_;
 
-
 /**
  * Maximum number of levels to search up the dom when checking descendants.
  * @type {number}
  * @private
  */
 goog.ui.HoverCard.prototype.maxSearchSteps_;
-
 
 /**
  * This function can be overridden by passing a function as the first parameter
@@ -166,12 +170,9 @@ goog.ui.HoverCard.prototype.maxSearchSteps_;
  * @private
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.ui.HoverCard.prototype.isAnchor_ = function(node) {
-  'use strict';
-  return node.tagName in this.anchors_ &&
-      !!node.getAttribute(this.anchors_[node.tagName]);
+goog.ui.HoverCard.prototype.isAnchor_ = function (node) {
+  return node.tagName in this.anchors_ && !!node.getAttribute(this.anchors_[node.tagName]);
 };
-
 
 /**
  * If the user mouses over an element with the correct tag and attribute, then
@@ -180,8 +181,7 @@ goog.ui.HoverCard.prototype.isAnchor_ = function(node) {
  * @param {goog.events.Event} e Mouse over event.
  * @private
  */
-goog.ui.HoverCard.prototype.handleTriggerMouseOver_ = function(e) {
-  'use strict';
+goog.ui.HoverCard.prototype.handleTriggerMouseOver_ = function (e) {
   var target = /** @type {Element} */ (e.target);
   // Target might be null when hovering over disabled input textboxes in IE.
   if (!target) {
@@ -192,14 +192,17 @@ goog.ui.HoverCard.prototype.handleTriggerMouseOver_ = function(e) {
     this.triggerForElement(target);
   } else if (this.checkDescendants_) {
     var trigger = goog.dom.getAncestor(
-        target, goog.bind(this.isAnchor_, this), false, this.maxSearchSteps_);
+      target,
+      goog.bind(this.isAnchor_, this),
+      false,
+      this.maxSearchSteps_
+    );
     if (trigger) {
       this.setPosition(null);
       this.triggerForElement(/** @type {!Element} */ (trigger));
     }
   }
 };
-
 
 /**
  * Triggers the hovercard to show after a delay.
@@ -208,9 +211,7 @@ goog.ui.HoverCard.prototype.handleTriggerMouseOver_ = function(e) {
  *     hovercard.
  * @param {Object=} opt_data Data to pass to the onTrigger event.
  */
-goog.ui.HoverCard.prototype.triggerForElement = function(
-    anchorElement, opt_pos, opt_data) {
-  'use strict';
+goog.ui.HoverCard.prototype.triggerForElement = function (anchorElement, opt_pos, opt_data) {
   if (anchorElement == this.currentAnchor_) {
     // Element is already showing, just make sure it doesn't hide.
     this.clearHideTimer();
@@ -226,7 +227,11 @@ goog.ui.HoverCard.prototype.triggerForElement = function(
 
   // Create a new event for this trigger
   var triggerEvent = new goog.ui.HoverCard.TriggerEvent(
-      goog.ui.HoverCard.EventType.TRIGGER, this, anchorElement, opt_data);
+    goog.ui.HoverCard.EventType.TRIGGER,
+    this,
+    anchorElement,
+    opt_data
+  );
 
   if (!this.getElements().contains(anchorElement)) {
     this.attach(anchorElement);
@@ -238,11 +243,8 @@ goog.ui.HoverCard.prototype.triggerForElement = function(
     return;
   }
   var pos = opt_pos || this.getPosition();
-  this.startShowTimer(
-      anchorElement,
-      /** @type {goog.positioning.AbstractPosition} */ (pos));
+  this.startShowTimer(anchorElement, /** @type {goog.positioning.AbstractPosition} */ (pos));
 };
-
 
 /**
  * Sets the current anchor element at the time that the hovercard is shown.
@@ -250,14 +252,12 @@ goog.ui.HoverCard.prototype.triggerForElement = function(
  *     no current anchor.
  * @private
  */
-goog.ui.HoverCard.prototype.setCurrentAnchor_ = function(anchor) {
-  'use strict';
+goog.ui.HoverCard.prototype.setCurrentAnchor_ = function (anchor) {
   if (anchor != this.currentAnchor_) {
     this.detachTempAnchor_(this.currentAnchor_);
   }
   this.currentAnchor_ = anchor;
 };
-
 
 /**
  * If given anchor is in the list of temporarily attached anchors, then
@@ -266,8 +266,7 @@ goog.ui.HoverCard.prototype.setCurrentAnchor_ = function(anchor) {
  *     from.
  * @private
  */
-goog.ui.HoverCard.prototype.detachTempAnchor_ = function(anchor) {
-  'use strict';
+goog.ui.HoverCard.prototype.detachTempAnchor_ = function (anchor) {
   if (anchor) {
     var pos = this.tempAttachedAnchors_.indexOf(anchor);
     if (pos != -1) {
@@ -276,7 +275,6 @@ goog.ui.HoverCard.prototype.detachTempAnchor_ = function(anchor) {
     }
   }
 };
-
 
 /**
  * Called when an element triggers the hovercard.  This will return false
@@ -287,49 +285,46 @@ goog.ui.HoverCard.prototype.detachTempAnchor_ = function(anchor) {
  * @return {boolean} Whether hovercard should be shown or cancelled.
  * @protected
  */
-goog.ui.HoverCard.prototype.onTrigger = function(triggerEvent) {
-  'use strict';
+goog.ui.HoverCard.prototype.onTrigger = function (triggerEvent) {
   return this.dispatchEvent(triggerEvent);
 };
-
 
 /**
  * Abort pending hovercard showing, if any.
  */
-goog.ui.HoverCard.prototype.cancelTrigger = function() {
-  'use strict';
+goog.ui.HoverCard.prototype.cancelTrigger = function () {
   this.clearShowTimer();
   this.onCancelTrigger();
 };
-
 
 /**
  * If hovercard is in the process of being triggered, then cancel it.
  * @private
  */
-goog.ui.HoverCard.prototype.maybeCancelTrigger_ = function() {
-  'use strict';
-  if (this.getState() == goog.ui.Tooltip.State.WAITING_TO_SHOW ||
-      this.getState() == goog.ui.Tooltip.State.UPDATING) {
+goog.ui.HoverCard.prototype.maybeCancelTrigger_ = function () {
+  if (
+    this.getState() == goog.ui.Tooltip.State.WAITING_TO_SHOW ||
+    this.getState() == goog.ui.Tooltip.State.UPDATING
+  ) {
     this.cancelTrigger();
   }
 };
-
 
 /**
  * This method gets called when we detect that a trigger event will not lead
  * to the hovercard being shown.
  * @protected
  */
-goog.ui.HoverCard.prototype.onCancelTrigger = function() {
-  'use strict';
+goog.ui.HoverCard.prototype.onCancelTrigger = function () {
   var event = new goog.ui.HoverCard.TriggerEvent(
-      goog.ui.HoverCard.EventType.CANCEL_TRIGGER, this, this.anchor || null);
+    goog.ui.HoverCard.EventType.CANCEL_TRIGGER,
+    this,
+    this.anchor || null
+  );
   this.dispatchEvent(event);
   this.detachTempAnchor_(this.anchor);
   delete this.anchor;
 };
-
 
 /**
  * Gets the DOM element that triggered the current hovercard.  Note that in
@@ -338,25 +333,21 @@ goog.ui.HoverCard.prototype.onCancelTrigger = function() {
  * @return {Element} Object that caused the currently displayed hovercard (or
  *     pending hovercard if none is displayed) to be triggered.
  */
-goog.ui.HoverCard.prototype.getAnchorElement = function() {
-  'use strict';
+goog.ui.HoverCard.prototype.getAnchorElement = function () {
   // this.currentAnchor_ is only set if the hovercard is showing.  If it isn't
   // showing yet, then use this.anchor as the pending anchor.
   return /** @type {Element} */ (this.currentAnchor_ || this.anchor);
 };
-
 
 /**
  * Make sure we detach from temp anchor when we are done displaying hovercard.
  * @protected
  * @override
  */
-goog.ui.HoverCard.prototype.onHide = function() {
-  'use strict';
+goog.ui.HoverCard.prototype.onHide = function () {
   goog.ui.HoverCard.superClass_.onHide.call(this);
   this.setCurrentAnchor_(null);
 };
-
 
 /**
  * This mouse over event is only received if the anchor is already attached.
@@ -364,11 +355,9 @@ goog.ui.HoverCard.prototype.onHide = function() {
  * @param {goog.events.BrowserEvent} event Mouse over event.
  * @override
  */
-goog.ui.HoverCard.prototype.handleMouseOver = function(event) {
-  'use strict';
+goog.ui.HoverCard.prototype.handleMouseOver = function (event) {
   // If this is a child of a triggering element, find the triggering element.
-  var trigger = this.getAnchorFromElement(
-      /** @type {Element} */ (event.target));
+  var trigger = this.getAnchorFromElement(/** @type {Element} */ (event.target));
 
   // If we moused over an element different from the one currently being
   // triggered (if any), then trigger this new element.
@@ -380,30 +369,28 @@ goog.ui.HoverCard.prototype.handleMouseOver = function(event) {
   goog.ui.HoverCard.superClass_.handleMouseOver.call(this, event);
 };
 
-
 /**
  * If the mouse moves out of the trigger while we're being triggered, then
  * cancel it.
  * @param {goog.events.BrowserEvent} event Mouse out or blur event.
  * @override
  */
-goog.ui.HoverCard.prototype.handleMouseOutAndBlur = function(event) {
-  'use strict';
+goog.ui.HoverCard.prototype.handleMouseOutAndBlur = function (event) {
   // Get ready to see if a trigger should be cancelled.
   var anchor = this.anchor;
   var state = this.getState();
   goog.ui.HoverCard.superClass_.handleMouseOutAndBlur.call(this, event);
-  if (state != this.getState() &&
-      (state == goog.ui.Tooltip.State.WAITING_TO_SHOW ||
-       state == goog.ui.Tooltip.State.UPDATING)) {
+  if (
+    state != this.getState() &&
+    (state == goog.ui.Tooltip.State.WAITING_TO_SHOW || state == goog.ui.Tooltip.State.UPDATING)
+  ) {
     // Tooltip's handleMouseOutAndBlur method sets anchor to null.  Reset
     // so that the cancel trigger event will have the right data, and so that
     // it will be properly detached.
     this.anchor = anchor;
-    this.onCancelTrigger();  // This will remove and detach the anchor.
+    this.onCancelTrigger(); // This will remove and detach the anchor.
   }
 };
-
 
 /**
  * Called by timer from mouse over handler. If this is called and the hovercard
@@ -413,8 +400,7 @@ goog.ui.HoverCard.prototype.handleMouseOutAndBlur = function(event) {
  *     at.
  * @override
  */
-goog.ui.HoverCard.prototype.maybeShow = function(el, opt_pos) {
-  'use strict';
+goog.ui.HoverCard.prototype.maybeShow = function (el, opt_pos) {
   goog.ui.HoverCard.superClass_.maybeShow.call(this, el, opt_pos);
 
   if (!this.isVisible()) {
@@ -424,22 +410,18 @@ goog.ui.HoverCard.prototype.maybeShow = function(el, opt_pos) {
   }
 };
 
-
 /**
  * Sets the max number of levels to search up the dom if checking descendants.
  * @param {number} maxSearchSteps Maximum number of levels to search up the
  *     dom if checking descendants.
  */
-goog.ui.HoverCard.prototype.setMaxSearchSteps = function(maxSearchSteps) {
-  'use strict';
+goog.ui.HoverCard.prototype.setMaxSearchSteps = function (maxSearchSteps) {
   if (!maxSearchSteps) {
     this.checkDescendants_ = false;
   } else if (this.checkDescendants_) {
     this.maxSearchSteps_ = maxSearchSteps;
   }
 };
-
-
 
 /**
  * Create a trigger event for specified anchor and optional data.
@@ -451,8 +433,7 @@ goog.ui.HoverCard.prototype.setMaxSearchSteps = function(maxSearchSteps) {
  * @extends {goog.events.Event}
  * @final
  */
-goog.ui.HoverCard.TriggerEvent = function(type, target, anchor, opt_data) {
-  'use strict';
+goog.ui.HoverCard.TriggerEvent = function (type, target, anchor, opt_data) {
   goog.events.Event.call(this, type, target);
 
   /**

@@ -20,7 +20,6 @@ goog.require('goog.testing.JsTdAsyncWrapper');
 goog.require('goog.testing.TestCase');
 goog.require('goog.testing.jsunit');
 
-
 /**
  * @param {string} testCaseName The name of the test case.
  * @param {function(): boolean} condition A condition to determine whether to
@@ -32,16 +31,18 @@ goog.require('goog.testing.jsunit');
  * @private
  * @suppress {checkPrototypalTypes}
  */
-goog.testing.JsTdTestCaseAdapter.TestCaseFactory_ = function(
-    testCaseName, condition, opt_proto, opt_isAsync) {
-  'use strict';
+goog.testing.JsTdTestCaseAdapter.TestCaseFactory_ = (
+  testCaseName,
+  condition,
+  opt_proto,
+  opt_isAsync
+) => {
   /** @constructor */
-  var T = function() {};
+  var T = () => {};
   if (opt_proto) T.prototype = opt_proto;
   T.displayName = testCaseName;
 
-  goog.async.run(function() {
-    'use strict';
+  goog.async.run(() => {
     var t = new T();
     if (opt_isAsync) {
       t = goog.testing.JsTdAsyncWrapper.convertToAsyncTestObj(t);
@@ -56,19 +57,14 @@ goog.testing.JsTdTestCaseAdapter.TestCaseFactory_ = function(
   return T;
 };
 
-
 /**
  * @param {string} testCaseName The name of the test case.
  * @param {?=} opt_proto An optional prototype object for the test case.
  * @return {!Function}
  * @private
  */
-goog.testing.JsTdTestCaseAdapter.TestCase_ = function(testCaseName, opt_proto) {
-  'use strict';
-  return goog.testing.JsTdTestCaseAdapter.TestCaseFactory_(
-      testCaseName, goog.functions.TRUE, opt_proto);
-};
-
+goog.testing.JsTdTestCaseAdapter.TestCase_ = (testCaseName, opt_proto) =>
+  goog.testing.JsTdTestCaseAdapter.TestCaseFactory_(testCaseName, goog.functions.TRUE, opt_proto);
 
 /**
  * @param {string} testCaseName The name of the test case.
@@ -78,13 +74,8 @@ goog.testing.JsTdTestCaseAdapter.TestCase_ = function(testCaseName, opt_proto) {
  * @return {!Function}
  * @private
  */
-goog.testing.JsTdTestCaseAdapter.ConditionalTestCase_ = function(
-    testCaseName, condition, opt_proto) {
-  'use strict';
-  return goog.testing.JsTdTestCaseAdapter.TestCaseFactory_(
-      testCaseName, condition, opt_proto);
-};
-
+goog.testing.JsTdTestCaseAdapter.ConditionalTestCase_ = (testCaseName, condition, opt_proto) =>
+  goog.testing.JsTdTestCaseAdapter.TestCaseFactory_(testCaseName, condition, opt_proto);
 
 /**
  * @param {string} testCaseName The name of the test case.
@@ -92,13 +83,13 @@ goog.testing.JsTdTestCaseAdapter.ConditionalTestCase_ = function(
  * @return {!Function}
  * @private
  */
-goog.testing.JsTdTestCaseAdapter.AsyncTestCase_ = function(
-    testCaseName, opt_proto) {
-  'use strict';
-  return goog.testing.JsTdTestCaseAdapter.TestCaseFactory_(
-      testCaseName, goog.functions.TRUE, opt_proto, true);
-};
-
+goog.testing.JsTdTestCaseAdapter.AsyncTestCase_ = (testCaseName, opt_proto) =>
+  goog.testing.JsTdTestCaseAdapter.TestCaseFactory_(
+    testCaseName,
+    goog.functions.TRUE,
+    opt_proto,
+    true
+  );
 
 /**
  * @param {string} testCaseName The name of the test case.
@@ -108,40 +99,28 @@ goog.testing.JsTdTestCaseAdapter.AsyncTestCase_ = function(
  * @return {!Function}
  * @private
  */
-goog.testing.JsTdTestCaseAdapter.AsyncConditionalTestCase_ = function(
-    testCaseName, condition, opt_proto) {
-  'use strict';
-  return goog.testing.JsTdTestCaseAdapter.TestCaseFactory_(
-      testCaseName, condition, opt_proto, true);
-};
-
+goog.testing.JsTdTestCaseAdapter.AsyncConditionalTestCase_ = (testCaseName, condition, opt_proto) =>
+  goog.testing.JsTdTestCaseAdapter.TestCaseFactory_(testCaseName, condition, opt_proto, true);
 
 // --- conditionally add polyfills for the basic JSTD API ---
-
 
 /** @suppress {duplicate} */
 var TestCase = TestCase || goog.testing.JsTdTestCaseAdapter.TestCase_;
 
+/** @suppress {duplicate} */
+var ConditionalTestCase =
+  ConditionalTestCase || goog.testing.JsTdTestCaseAdapter.ConditionalTestCase_;
 
 /** @suppress {duplicate} */
-var ConditionalTestCase = ConditionalTestCase ||
-    goog.testing.JsTdTestCaseAdapter.ConditionalTestCase_;
-
+var AsyncTestCase = AsyncTestCase || goog.testing.JsTdTestCaseAdapter.AsyncTestCase_;
 
 /** @suppress {duplicate} */
-var AsyncTestCase =
-    AsyncTestCase || goog.testing.JsTdTestCaseAdapter.AsyncTestCase_;
-
-
-/** @suppress {duplicate} */
-var AsyncConditionalTestCase = AsyncConditionalTestCase ||
-    goog.testing.JsTdTestCaseAdapter.AsyncConditionalTestCase_;
-
+var AsyncConditionalTestCase =
+  AsyncConditionalTestCase || goog.testing.JsTdTestCaseAdapter.AsyncConditionalTestCase_;
 
 /** @suppress {duplicate} */
-var ConditionalAsyncTestCase = ConditionalAsyncTestCase ||
-    goog.testing.JsTdTestCaseAdapter.AsyncConditionalTestCase_;
-
+var ConditionalAsyncTestCase =
+  ConditionalAsyncTestCase || goog.testing.JsTdTestCaseAdapter.AsyncConditionalTestCase_;
 
 // The API is also available under the jstestdriver namespace.
 
@@ -154,6 +133,6 @@ if (!jstestdriver.testCaseManager) {
     ConditionalTestCase: ConditionalTestCase,
     AsyncTestCase: AsyncTestCase,
     AsyncConditionalTestCase: AsyncConditionalTestCase,
-    ConditionalAsyncTestCase: ConditionalAsyncTestCase
+    ConditionalAsyncTestCase: ConditionalAsyncTestCase,
   };
 }

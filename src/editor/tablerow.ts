@@ -21,7 +21,7 @@ goog.module.declareLegacyNamespace();
  * @constructor
  * @final
  */
-const TableRow = function(trElement, rowIndex) {
+const TableRow = function (trElement, rowIndex) {
   this.index = rowIndex;
   this.element = trElement;
   this.columns = [];

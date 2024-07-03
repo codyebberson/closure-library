@@ -61,8 +61,6 @@ goog.require('goog.string.Const');
 
 goog.require('goog.ui.media.MediaModel');
 
-
-
 /**
  * The `goog.ui.media.Youtube` media data model. It stores a required
  * `videoId` field, sets the youtube URL, and allows a few optional
@@ -76,11 +74,14 @@ goog.require('goog.ui.media.MediaModel');
  * @extends {goog.ui.media.MediaModel}
  * @final
  */
-goog.ui.media.YoutubeModel = function(videoId, opt_caption, opt_description) {
-  'use strict';
+goog.ui.media.YoutubeModel = function (videoId, opt_caption, opt_description) {
   goog.ui.media.MediaModel.call(
-      this, goog.ui.media.YoutubeModel.buildUrl(videoId), opt_caption,
-      opt_description, goog.ui.media.MediaModel.MimeType.FLASH);
+    this,
+    goog.ui.media.YoutubeModel.buildUrl(videoId),
+    opt_caption,
+    opt_description,
+    goog.ui.media.MediaModel.MimeType.FLASH
+  );
 
   /**
    * The Youtube video id.
@@ -89,15 +90,15 @@ goog.ui.media.YoutubeModel = function(videoId, opt_caption, opt_description) {
    */
   this.videoId_ = videoId;
 
-  this.setThumbnails([new goog.ui.media.MediaModel.Thumbnail(
-      goog.ui.media.YoutubeModel.getThumbnailUrl(videoId))]);
+  this.setThumbnails([
+    new goog.ui.media.MediaModel.Thumbnail(goog.ui.media.YoutubeModel.getThumbnailUrl(videoId)),
+  ]);
 
   this.setPlayer(
-      new goog.ui.media.MediaModel.Player(
-          goog.ui.media.YoutubeModel.getFlashUrl(videoId, true)));
+    new goog.ui.media.MediaModel.Player(goog.ui.media.YoutubeModel.getFlashUrl(videoId, true))
+  );
 };
 goog.inherits(goog.ui.media.YoutubeModel, goog.ui.media.MediaModel);
-
 
 /**
  * A youtube regular expression matcher. It matches the VIDEOID of URLs like
@@ -111,40 +112,40 @@ goog.inherits(goog.ui.media.YoutubeModel, goog.ui.media.MediaModel);
 // use "[\\w=-]" instead of "[\\w-=]" if you mean to include the dash as a
 // character and not create a character range like "[a-f]".
 goog.ui.media.YoutubeModel.MATCHER_ = new RegExp(
-    // Lead in.
-    'https?://(?:[a-zA-Z]{1,3}\\.)?' +
-        // Watch short URL prefix and /embed/ URLs. This should handle URLs
-        // like:
-        // https://youtu.be/jqxENMKaeCU?cgiparam=value
-        // https://youtube.com/embed/jqxENMKaeCU?cgiparam=value
-        // https://youtube-nocookie.com/jqxENMKaeCU?cgiparam=value
-        '(?:(?:(?:youtu\\.be|youtube(?:-nocookie)?\\.com/embed)/([\\w-]+)(?:\\?[\\w=&-]+)?)|' +
-        // Watch URL prefix.  This should handle new URLs of the form:
-        // https://www.youtube.com/watch#!v=jqxENMKaeCU&feature=related
-        // https://www.youtube-nocookie.com/watch#!v=jqxENMKaeCU&feature=related
-        // where the parameters appear after "#!" instead of "?".
-        '(?:youtube(?:-nocookie)?\\.com/watch)' +
-        // Get the video id:
-        // The video ID is a parameter v=[videoid] either right after the "?"
-        // or after some other parameters.
-        '(?:\\?(?:[\\w=-]+&(?:amp;)?)*v=([\\w-]+)' +
-        '(?:&(?:amp;)?[\\w=-]+)*)?' +
-        // Get any extra arguments in the URL's hash part.
-        '(?:#[!]?(?:' +
-        // Video ID from the v=[videoid] parameter, optionally surrounded by
-        // other
-        // & separated parameters.
-        '(?:(?:[\\w=-]+&(?:amp;)?)*(?:v=([\\w-]+))' +
-        '(?:&(?:amp;)?[\\w=-]+)*)' +
-        '|' +
-        // Continue supporting "?" for the video ID
-        // and "#" for other hash parameters.
-        '(?:[\\w=&-]+)' +
-        '))?)' +
-        // Should terminate with a non-word, non-dash (-) character.
-        '[^\\w-]?',
-    'i');
-
+  // Lead in.
+  'https?://(?:[a-zA-Z]{1,3}\\.)?' +
+    // Watch short URL prefix and /embed/ URLs. This should handle URLs
+    // like:
+    // https://youtu.be/jqxENMKaeCU?cgiparam=value
+    // https://youtube.com/embed/jqxENMKaeCU?cgiparam=value
+    // https://youtube-nocookie.com/jqxENMKaeCU?cgiparam=value
+    '(?:(?:(?:youtu\\.be|youtube(?:-nocookie)?\\.com/embed)/([\\w-]+)(?:\\?[\\w=&-]+)?)|' +
+    // Watch URL prefix.  This should handle new URLs of the form:
+    // https://www.youtube.com/watch#!v=jqxENMKaeCU&feature=related
+    // https://www.youtube-nocookie.com/watch#!v=jqxENMKaeCU&feature=related
+    // where the parameters appear after "#!" instead of "?".
+    '(?:youtube(?:-nocookie)?\\.com/watch)' +
+    // Get the video id:
+    // The video ID is a parameter v=[videoid] either right after the "?"
+    // or after some other parameters.
+    '(?:\\?(?:[\\w=-]+&(?:amp;)?)*v=([\\w-]+)' +
+    '(?:&(?:amp;)?[\\w=-]+)*)?' +
+    // Get any extra arguments in the URL's hash part.
+    '(?:#[!]?(?:' +
+    // Video ID from the v=[videoid] parameter, optionally surrounded by
+    // other
+    // & separated parameters.
+    '(?:(?:[\\w=-]+&(?:amp;)?)*(?:v=([\\w-]+))' +
+    '(?:&(?:amp;)?[\\w=-]+)*)' +
+    '|' +
+    // Continue supporting "?" for the video ID
+    // and "#" for other hash parameters.
+    '(?:[\\w=&-]+)' +
+    '))?)' +
+    // Should terminate with a non-word, non-dash (-) character.
+    '[^\\w-]?',
+  'i'
+);
 
 /**
  * A auxiliary static method that parses a youtube URL, extracting the ID of the
@@ -159,19 +160,15 @@ goog.ui.media.YoutubeModel.MATCHER_ = new RegExp(
  * @see goog.ui.media.YoutubeModel.getVideoId()
  * @throws Error in case the parsing fails.
  */
-goog.ui.media.YoutubeModel.newInstance = function(
-    youtubeUrl, opt_caption, opt_description) {
-  'use strict';
+goog.ui.media.YoutubeModel.newInstance = (youtubeUrl, opt_caption, opt_description) => {
   const extract = goog.ui.media.YoutubeModel.MATCHER_.exec(youtubeUrl);
   if (extract) {
     const videoId = extract[1] || extract[2] || extract[3];
-    return new goog.ui.media.YoutubeModel(
-        videoId, opt_caption, opt_description);
+    return new goog.ui.media.YoutubeModel(videoId, opt_caption, opt_description);
   }
 
   throw new Error('failed to parse video id from youtube url: ' + youtubeUrl);
 };
-
 
 /**
  * The opposite of `goog.ui.media.Youtube.newInstance`: it takes a videoId
@@ -180,11 +177,8 @@ goog.ui.media.YoutubeModel.newInstance = function(
  * @param {string} videoId The youtube video ID.
  * @return {string} The youtube URL.
  */
-goog.ui.media.YoutubeModel.buildUrl = function(videoId) {
-  'use strict';
-  return 'https://www.youtube.com/watch?v=' + goog.string.urlEncode(videoId);
-};
-
+goog.ui.media.YoutubeModel.buildUrl = (videoId) =>
+  'https://www.youtube.com/watch?v=' + goog.string.urlEncode(videoId);
 
 /**
  * A static auxiliary method that builds a static image URL with a preview of
@@ -199,11 +193,8 @@ goog.ui.media.YoutubeModel.buildUrl = function(videoId) {
  * @return {string} An URL that contains an image with a preview of the youtube
  *     movie.
  */
-goog.ui.media.YoutubeModel.getThumbnailUrl = function(youtubeId) {
-  'use strict';
-  return 'https://i.ytimg.com/vi/' + youtubeId + '/default.jpg';
-};
-
+goog.ui.media.YoutubeModel.getThumbnailUrl = (youtubeId) =>
+  'https://i.ytimg.com/vi/' + youtubeId + '/default.jpg';
 
 /**
  * A static auxiliary method that builds URL of the flash movie to be embedded,
@@ -215,26 +206,23 @@ goog.ui.media.YoutubeModel.getThumbnailUrl = function(youtubeId) {
  * @return {!goog.html.TrustedResourceUrl} The flash URL to be embedded on the
  *     page.
  */
-goog.ui.media.YoutubeModel.getFlashUrl = function(videoId, opt_autoplay) {
-  'use strict';
+goog.ui.media.YoutubeModel.getFlashUrl = (videoId, opt_autoplay) => {
   // YouTube video ids are extracted from youtube URLs, which are user
   // generated input. The video id is later used to embed a flash object,
   // which is generated through HTML construction.
   return goog.html.TrustedResourceUrl.format(
-      goog.string.Const.from(
-          'https://www.youtube.com/v/%{v}&hl=en&fs=1%{autoplay}'),
-      {
-        'v': videoId,
-        'autoplay': opt_autoplay ? goog.string.Const.from('&autoplay=1') : ''
-      });
+    goog.string.Const.from('https://www.youtube.com/v/%{v}&hl=en&fs=1%{autoplay}'),
+    {
+      v: videoId,
+      autoplay: opt_autoplay ? goog.string.Const.from('&autoplay=1') : '',
+    }
+  );
 };
-
 
 /**
  * Gets the Youtube video id.
  * @return {string} The Youtube video id.
  */
-goog.ui.media.YoutubeModel.prototype.getVideoId = function() {
-  'use strict';
+goog.ui.media.YoutubeModel.prototype.getVideoId = function () {
   return this.videoId_;
 };

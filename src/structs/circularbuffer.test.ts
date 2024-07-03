@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.structs.CircularBufferTest');
-goog.setTestOnly();
 
 const CircularBuffer = goog.require('goog.structs.CircularBuffer');
 const testSuite = goog.require('goog.testing.testSuite');

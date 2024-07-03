@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.emoji.EmojiPickerTest');
-goog.setTestOnly();
 
 const Component = goog.require('goog.ui.Component');
 const Emoji = goog.require('goog.ui.emoji.Emoji');
@@ -126,10 +125,15 @@ const sprite2 = '../../demos/emoji/sprite2.png';
  * @param {boolean=} animated Whether the sprite info is for an animated emoji.
  */
 function si(
-    cssClass, url = undefined, width = undefined, height = undefined,
-    xOffset = undefined, yOffset = undefined, animated = undefined) {
-  return new SpriteInfo(
-      cssClass, url, width, height, xOffset, yOffset, animated);
+  cssClass,
+  url = undefined,
+  width = undefined,
+  height = undefined,
+  xOffset = undefined,
+  yOffset = undefined,
+  animated = undefined
+) {
+  return new SpriteInfo(cssClass, url, width, height, xOffset, yOffset, animated);
 }
 
 // Contains a mix of sprited emoji via css, sprited emoji via metadata, and
@@ -193,26 +197,10 @@ const spritedEmoji2 = [
     ['../../demos/emoji/2C7.gif', 'std.2C7'],
     ['../../demos/emoji/2C8.gif', 'std.2C8'],
     ['../../demos/emoji/2C9.gif', 'std.2C9'],
-    [
-      '../../demos/emoji/2CA.gif',
-      'std.2CA',
-      si(null, sprite2, 18, 20, 36, 72, 1),
-    ],
-    [
-      '../../demos/emoji/2E3.gif',
-      'std.2E3',
-      si(null, sprite2, 18, 18, 0, 0, 1),
-    ],
-    [
-      '../../demos/emoji/2EF.gif',
-      'std.2EF',
-      si(null, sprite2, 18, 20, 0, 300, 1),
-    ],
-    [
-      '../../demos/emoji/2F1.gif',
-      'std.2F1',
-      si(null, sprite2, 18, 18, 0, 320, 1),
-    ],
+    ['../../demos/emoji/2CA.gif', 'std.2CA', si(null, sprite2, 18, 20, 36, 72, 1)],
+    ['../../demos/emoji/2E3.gif', 'std.2E3', si(null, sprite2, 18, 18, 0, 0, 1)],
+    ['../../demos/emoji/2EF.gif', 'std.2EF', si(null, sprite2, 18, 20, 0, 300, 1)],
+    ['../../demos/emoji/2F1.gif', 'std.2F1', si(null, sprite2, 18, 18, 0, 320, 1)],
   ],
 ];
 
@@ -244,7 +232,7 @@ function checkPathsEndWithSameFile(path1, path2) {
  */
 function getImageUrl(element) {
   /** @suppress {checkTypes} suppression added to enable type checking */
-  element = element.firstChild;  // get the wrapped element
+  element = element.firstChild; // get the wrapped element
   if (element.tagName == TagName.IMG) {
     return element.src;
   } else {
@@ -269,8 +257,9 @@ function checkContentIsDefaultImg(page, defaultImgUrl) {
   for (let i = 0; i < content.length; i++) {
     const url = getImageUrl(content[i]);
     assertTrue(
-        `img src should be ${defaultImgUrl} but is ${url}`,
-        checkPathsEndWithSameFile(url, defaultImgUrl));
+      `img src should be ${defaultImgUrl} but is ${url}`,
+      checkPathsEndWithSameFile(url, defaultImgUrl)
+    );
   }
 }
 
@@ -290,12 +279,14 @@ function checkContentIsEmojiImages(page, emojiList, defaultImg) {
     const url = getImageUrl(content[i]);
     if (i < emojiList.length) {
       assertTrue(
-          `Paths should end with the same file: ${url}, ` + emojiList[i][0],
-          checkPathsEndWithSameFile(url, emojiList[i][0]));
+        `Paths should end with the same file: ${url}, ` + emojiList[i][0],
+        checkPathsEndWithSameFile(url, emojiList[i][0])
+      );
     } else {
       assertTrue(
-          `Paths should end with the same file: ${url}, ${defaultImg}`,
-          checkPathsEndWithSameFile(url, defaultImg));
+        `Paths should end with the same file: ${url}, ${defaultImg}`,
+        checkPathsEndWithSameFile(url, defaultImg)
+      );
     }
   }
 }
@@ -314,20 +305,22 @@ function checkStructureForNonProgressivePicker(palette, emoji) {
     palette.setSelectedIndex(i);
     const emojiInfo = emoji[1][i];
     const cell = palette.getSelectedItem();
-    const inner = /** @type {Element} */ (cell.firstChild);
+    const inner = /** @type {Element} */ cell.firstChild;
 
     // Check that the cell is a div wrapped around something else, and that the
     // outer div contains the goomoji attribute
-    assertEquals(
-        'The palette item should be a div wrapped around something',
-        cell.tagName, 'DIV');
+    assertEquals('The palette item should be a div wrapped around something', cell.tagName, 'DIV');
     assertNotNull('The outer div is not wrapped around another element', inner);
     assertEquals(
-        'The palette item should have the goomoji attribute',
-        cell.getAttribute(Emoji.ATTRIBUTE), emojiInfo[1]);
+      'The palette item should have the goomoji attribute',
+      cell.getAttribute(Emoji.ATTRIBUTE),
+      emojiInfo[1]
+    );
     assertEquals(
-        'The palette item should have the data-goomoji attribute',
-        cell.getAttribute(Emoji.DATA_ATTRIBUTE), emojiInfo[1]);
+      'The palette item should have the data-goomoji attribute',
+      cell.getAttribute(Emoji.DATA_ATTRIBUTE),
+      emojiInfo[1]
+    );
 
     // Now check the contents of the cells
     const spriteInfo = emojiInfo[2];
@@ -335,24 +328,17 @@ function checkStructureForNonProgressivePicker(palette, emoji) {
       assertEquals(inner.tagName, 'DIV');
       const cssClass = spriteInfo.getCssClass();
       if (cssClass) {
-        assertTrue(
-            'Sprite should have its CSS class set',
-            classlist.contains(inner, cssClass));
+        assertTrue('Sprite should have its CSS class set', classlist.contains(inner, cssClass));
       } else {
-        checkPathsEndWithSameFile(
-            style.getStyle(inner, 'background-image'), spriteInfo.getUrl());
+        checkPathsEndWithSameFile(style.getStyle(inner, 'background-image'), spriteInfo.getUrl());
+        assertEquals(spriteInfo.getWidthCssValue(), style.getStyle(inner, 'width'));
+        assertEquals(spriteInfo.getHeightCssValue(), style.getStyle(inner, 'height'));
         assertEquals(
-            spriteInfo.getWidthCssValue(), style.getStyle(inner, 'width'));
-        assertEquals(
-            spriteInfo.getHeightCssValue(), style.getStyle(inner, 'height'));
-        assertEquals(
-            (spriteInfo.getXOffsetCssValue() + ' ' +
-             spriteInfo.getYOffsetCssValue())
-                .replace(/px/g, '')
-                .replace(/pt/g, ''),
-            style.getStyle(inner, 'background-position')
-                .replace(/px/g, '')
-                .replace(/pt/g, ''));
+          (spriteInfo.getXOffsetCssValue() + ' ' + spriteInfo.getYOffsetCssValue())
+            .replace(/px/g, '')
+            .replace(/pt/g, ''),
+          style.getStyle(inner, 'background-position').replace(/px/g, '').replace(/pt/g, '')
+        );
       }
     } else {
       // A non-sprited emoji is just an img
@@ -376,20 +362,22 @@ function checkStructureForProgressivePicker(palette, emoji) {
     palette.setSelectedIndex(i);
     const emojiInfo = emoji[1][i];
     const cell = palette.getSelectedItem();
-    const inner = /** @type {Element} */ (cell.firstChild);
+    const inner = /** @type {Element} */ cell.firstChild;
 
     // Check that the cell is a div wrapped around something else, and that the
     // outer div contains the goomoji attribute
-    assertEquals(
-        'The palette item should be a div wrapped around something',
-        cell.tagName, 'DIV');
+    assertEquals('The palette item should be a div wrapped around something', cell.tagName, 'DIV');
     assertNotNull('The outer div is not wrapped around another element', inner);
     assertEquals(
-        'The palette item should have the goomoji attribute',
-        cell.getAttribute(Emoji.ATTRIBUTE), emojiInfo[1]);
+      'The palette item should have the goomoji attribute',
+      cell.getAttribute(Emoji.ATTRIBUTE),
+      emojiInfo[1]
+    );
     assertEquals(
-        'The palette item should have the data-goomoji attribute',
-        cell.getAttribute(Emoji.DATA_ATTRIBUTE), emojiInfo[1]);
+      'The palette item should have the data-goomoji attribute',
+      cell.getAttribute(Emoji.DATA_ATTRIBUTE),
+      emojiInfo[1]
+    );
 
     // Now check the contents of the cells
     const spriteInfo = emojiInfo[2];
@@ -397,9 +385,7 @@ function checkStructureForProgressivePicker(palette, emoji) {
       const cssClass = spriteInfo.getCssClass();
       if (cssClass) {
         assertEquals('DIV', inner.tagName);
-        assertTrue(
-            'Sprite should have its CSS class set',
-            classlist.contains(inner, cssClass));
+        assertTrue('Sprite should have its CSS class set', classlist.contains(inner, cssClass));
       } else {
         // There's an inner div wrapping an img tag
         assertEquals('DIV', inner.tagName);
@@ -407,16 +393,16 @@ function checkStructureForProgressivePicker(palette, emoji) {
         assertNotNull('Div should be wrapping something', img);
         assertEquals('IMG', img.tagName);
         checkPathsEndWithSameFile(img.src, spriteInfo.getUrl());
+        assertEquals(spriteInfo.getWidthCssValue(), style.getStyle(inner, 'width'));
+        assertEquals(spriteInfo.getHeightCssValue(), style.getStyle(inner, 'height'));
         assertEquals(
-            spriteInfo.getWidthCssValue(), style.getStyle(inner, 'width'));
+          spriteInfo.getXOffsetCssValue().replace(/px/, '').replace(/pt/, ''),
+          style.getStyle(img, 'left').replace(/px/, '').replace(/pt/, '')
+        );
         assertEquals(
-            spriteInfo.getHeightCssValue(), style.getStyle(inner, 'height'));
-        assertEquals(
-            spriteInfo.getXOffsetCssValue().replace(/px/, '').replace(/pt/, ''),
-            style.getStyle(img, 'left').replace(/px/, '').replace(/pt/, ''));
-        assertEquals(
-            spriteInfo.getYOffsetCssValue().replace(/px/, '').replace(/pt/, ''),
-            style.getStyle(img, 'top').replace(/px/, '').replace(/pt/, ''));
+          spriteInfo.getYOffsetCssValue().replace(/px/, '').replace(/pt/, ''),
+          style.getStyle(img, 'top').replace(/px/, '').replace(/pt/, '')
+        );
       }
     } else {
       // A non-sprited emoji is just an img
@@ -438,67 +424,58 @@ function checkPostLoadStructureForFastLoadNonProgressivePicker(palette, emoji) {
     palette.setSelectedIndex(i);
     const emojiInfo = emoji[1][i];
     const cell = palette.getSelectedItem();
-    const inner = /** @type {Element} */ (cell.firstChild);
+    const inner = /** @type {Element} */ cell.firstChild;
 
     // Check that the cell is a div wrapped around something else, and that the
     // outer div contains the goomoji attribute
-    assertEquals(
-        'The palette item should be a div wrapped around something',
-        cell.tagName, 'DIV');
+    assertEquals('The palette item should be a div wrapped around something', cell.tagName, 'DIV');
     assertNotNull('The outer div is not wrapped around another element', inner);
     assertEquals(
-        'The palette item should have the goomoji attribute',
-        cell.getAttribute(Emoji.ATTRIBUTE), emojiInfo[1]);
+      'The palette item should have the goomoji attribute',
+      cell.getAttribute(Emoji.ATTRIBUTE),
+      emojiInfo[1]
+    );
     assertEquals(
-        'The palette item should have the data-goomoji attribute',
-        cell.getAttribute(Emoji.DATA_ATTRIBUTE), emojiInfo[1]);
+      'The palette item should have the data-goomoji attribute',
+      cell.getAttribute(Emoji.DATA_ATTRIBUTE),
+      emojiInfo[1]
+    );
 
     // Now check the contents of the cells
-    const url = emojiInfo[0];  // url of the animated emoji
+    const url = emojiInfo[0]; // url of the animated emoji
     const spriteInfo = emojiInfo[2];
     if (spriteInfo) {
       assertEquals(inner.tagName, 'DIV');
       if (spriteInfo.isAnimated()) {
         const img = new Image();
         img.src = url;
-        checkPathsEndWithSameFile(
-            style.getStyle(inner, 'background-image'), url);
+        checkPathsEndWithSameFile(style.getStyle(inner, 'background-image'), url);
         assertEquals(
-            String(img.width),
-            style.getStyle(inner, 'width')
-                .replace(/px/g, '')
-                .replace(/pt/g, ''));
+          String(img.width),
+          style.getStyle(inner, 'width').replace(/px/g, '').replace(/pt/g, '')
+        );
         assertEquals(
-            String(img.height),
-            style.getStyle(inner, 'height')
-                .replace(/px/g, '')
-                .replace(/pt/g, ''));
+          String(img.height),
+          style.getStyle(inner, 'height').replace(/px/g, '').replace(/pt/g, '')
+        );
         assertEquals(
-            '0 0',
-            style.getStyle(inner, 'background-position')
-                .replace(/px/g, '')
-                .replace(/pt/g, ''));
+          '0 0',
+          style.getStyle(inner, 'background-position').replace(/px/g, '').replace(/pt/g, '')
+        );
       } else {
         const cssClass = spriteInfo.getCssClass();
         if (cssClass) {
-          assertTrue(
-              'Sprite should have its CSS class set',
-              classlist.contains(inner, cssClass));
+          assertTrue('Sprite should have its CSS class set', classlist.contains(inner, cssClass));
         } else {
-          checkPathsEndWithSameFile(
-              style.getStyle(inner, 'background-image'), spriteInfo.getUrl());
+          checkPathsEndWithSameFile(style.getStyle(inner, 'background-image'), spriteInfo.getUrl());
+          assertEquals(spriteInfo.getWidthCssValue(), style.getStyle(inner, 'width'));
+          assertEquals(spriteInfo.getHeightCssValue(), style.getStyle(inner, 'height'));
           assertEquals(
-              spriteInfo.getWidthCssValue(), style.getStyle(inner, 'width'));
-          assertEquals(
-              spriteInfo.getHeightCssValue(), style.getStyle(inner, 'height'));
-          assertEquals(
-              (spriteInfo.getXOffsetCssValue() + ' ' +
-               spriteInfo.getYOffsetCssValue())
-                  .replace(/px/g, '')
-                  .replace(/pt/g, ''),
-              style.getStyle(inner, 'background-position')
-                  .replace(/px/g, '')
-                  .replace(/pt/g, ''));
+            (spriteInfo.getXOffsetCssValue() + ' ' + spriteInfo.getYOffsetCssValue())
+              .replace(/px/g, '')
+              .replace(/pt/g, ''),
+            style.getStyle(inner, 'background-position').replace(/px/g, '').replace(/pt/g, '')
+          );
         }
       }
     } else {
@@ -522,23 +499,25 @@ function checkPostLoadStructureForFastLoadProgressivePicker(palette, emoji) {
     palette.setSelectedIndex(i);
     const emojiInfo = emoji[1][i];
     const cell = palette.getSelectedItem();
-    const inner = /** @type {Element} */ (cell.firstChild);
+    const inner = /** @type {Element} */ cell.firstChild;
 
     // Check that the cell is a div wrapped around something else, and that the
     // outer div contains the goomoji attribute
-    assertEquals(
-        'The palette item should be a div wrapped around something',
-        cell.tagName, 'DIV');
+    assertEquals('The palette item should be a div wrapped around something', cell.tagName, 'DIV');
     assertNotNull('The outer div is not wrapped around another element', inner);
     assertEquals(
-        'The palette item should have the goomoji attribute',
-        cell.getAttribute(Emoji.ATTRIBUTE), emojiInfo[1]);
+      'The palette item should have the goomoji attribute',
+      cell.getAttribute(Emoji.ATTRIBUTE),
+      emojiInfo[1]
+    );
     assertEquals(
-        'The palette item should have the data-goomoji attribute',
-        cell.getAttribute(Emoji.DATA_ATTRIBUTE), emojiInfo[1]);
+      'The palette item should have the data-goomoji attribute',
+      cell.getAttribute(Emoji.DATA_ATTRIBUTE),
+      emojiInfo[1]
+    );
 
     // Now check the contents of the cells
-    const url = emojiInfo[0];  // url of the animated emoji
+    const url = emojiInfo[0]; // url of the animated emoji
     const spriteInfo = emojiInfo[2];
     if (spriteInfo) {
       if (spriteInfo.isAnimated()) {
@@ -548,19 +527,13 @@ function checkPostLoadStructureForFastLoadProgressivePicker(palette, emoji) {
         checkPathsEndWithSameFile(img.src, url);
         assertEquals(testImg.width, img.width);
         assertEquals(testImg.height, img.height);
-        assertEquals(
-            '0',
-            style.getStyle(img, 'left').replace(/px/g, '').replace(/pt/g, ''));
-        assertEquals(
-            '0',
-            style.getStyle(img, 'top').replace(/px/g, '').replace(/pt/g, ''));
+        assertEquals('0', style.getStyle(img, 'left').replace(/px/g, '').replace(/pt/g, ''));
+        assertEquals('0', style.getStyle(img, 'top').replace(/px/g, '').replace(/pt/g, ''));
       } else {
         const cssClass = spriteInfo.getCssClass();
         if (cssClass) {
           assertEquals('DIV', inner.tagName);
-          assertTrue(
-              'Sprite should have its CSS class set',
-              classlist.contains(inner, cssClass));
+          assertTrue('Sprite should have its CSS class set', classlist.contains(inner, cssClass));
         } else {
           // There's an inner div wrapping an img tag
           assertEquals('DIV', inner.tagName);
@@ -568,18 +541,16 @@ function checkPostLoadStructureForFastLoadProgressivePicker(palette, emoji) {
           assertNotNull('Div should be wrapping something', img);
           assertEquals('IMG', img.tagName);
           checkPathsEndWithSameFile(img.src, spriteInfo.getUrl());
+          assertEquals(spriteInfo.getWidthCssValue(), style.getStyle(inner, 'width'));
+          assertEquals(spriteInfo.getHeightCssValue(), style.getStyle(inner, 'height'));
           assertEquals(
-              spriteInfo.getWidthCssValue(), style.getStyle(inner, 'width'));
+            spriteInfo.getXOffsetCssValue().replace(/px/, '').replace(/pt/, ''),
+            style.getStyle(img, 'left').replace(/px/, '').replace(/pt/, '')
+          );
           assertEquals(
-              spriteInfo.getHeightCssValue(), style.getStyle(inner, 'height'));
-          assertEquals(
-              spriteInfo.getXOffsetCssValue().replace(/px/, '').replace(
-                  /pt/, ''),
-              style.getStyle(img, 'left').replace(/px/, '').replace(/pt/, ''));
-          assertEquals(
-              spriteInfo.getYOffsetCssValue().replace(/px/, '').replace(
-                  /pt/, ''),
-              style.getStyle(img, 'top').replace(/px/, '').replace(/pt/, ''));
+            spriteInfo.getYOffsetCssValue().replace(/px/, '').replace(/pt/, ''),
+            style.getStyle(img, 'top').replace(/px/, '').replace(/pt/, '')
+          );
         }
       }
     } else {
@@ -681,8 +652,7 @@ testSuite({
     picker.render();
 
     const page = picker.getPage(0);
-    assertTrue(
-        'Page should be in the document but is not', page.isInDocument());
+    assertTrue('Page should be in the document but is not', page.isInDocument());
 
     // The content should be the actual emoji images now, with the remainder set
     // to the default img
@@ -704,9 +674,7 @@ testSuite({
 
     for (let i = 0; i < emojiGroups.length; i++) {
       const page = picker.getPage(i);
-      assertTrue(
-          `Page ${i} should be in the document but is not`,
-          page.isInDocument());
+      assertTrue(`Page ${i} should be in the document but is not`, page.isInDocument());
       checkContentIsEmojiImages(page, emojiGroups[i][1], defaultImg);
     }
 
@@ -728,8 +696,7 @@ testSuite({
     picker.loadImages();
 
     const page = picker.getPage(0);
-    assertTrue(
-        'Page should be in the document but is not', page.isInDocument());
+    assertTrue('Page should be in the document but is not', page.isInDocument());
 
     // The content should be the actual emoji images now, with the remainder set
     // to the default img
@@ -772,13 +739,15 @@ testSuite({
     // Artificially select the an emoji
     palette.setSelectedIndex(2);
     const element = palette.getSelectedItem();
-    palette.setSelectedIndex(0);  // Select a different emoji.
+    palette.setSelectedIndex(0); // Select a different emoji.
 
     let eventSent;
     handler.listen(picker, Component.EventType.ACTION, (e) => {
       eventSent = e;
     });
-    events.fireClickSequence(element, undefined, undefined, {shiftKey: false});
+    events.fireClickSequence(element, undefined, undefined, {
+      shiftKey: false,
+    });
 
     // Now we should get the first emoji back. See emojiGroup1 above.
     const emoji = picker.getSelectedEmoji();
@@ -800,13 +769,13 @@ testSuite({
     // Artificially select the an emoji
     palette.setSelectedIndex(3);
     const element = palette.getSelectedItem();
-    palette.setSelectedIndex(0);  // Select a different emoji.
+    palette.setSelectedIndex(0); // Select a different emoji.
 
     let eventSent;
     handler.listen(picker, Component.EventType.ACTION, (e) => {
       eventSent = e;
     });
-    events.fireClickSequence(element, undefined, undefined, {shiftKey: true});
+    events.fireClickSequence(element, undefined, undefined, { shiftKey: true });
 
     // Now we should get the first emoji back. See emojiGroup1 above.
     const emoji = picker.getSelectedEmoji();
@@ -924,8 +893,7 @@ testSuite({
 
     // The first page should be loaded
     let page = picker.getPage(0);
-    assertTrue(
-        'Page should be in the document but is not', page.isInDocument());
+    assertTrue('Page should be in the document but is not', page.isInDocument());
     checkContentIsEmojiImages(page, emojiGroups[0][1], defaultImg);
 
     // The other pages should all be filled with the default img since they are

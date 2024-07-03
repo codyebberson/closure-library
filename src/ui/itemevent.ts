@@ -10,10 +10,7 @@
 
 goog.provide('goog.ui.ItemEvent');
 
-
 goog.require('goog.events.Event');
-
-
 
 /**
  * Generic ui event class for events that take a single item like a menu click
@@ -27,8 +24,7 @@ goog.require('goog.events.Event');
  * @param {Object} item The item that was clicked.
  * @final
  */
-goog.ui.ItemEvent = function(type, target, item) {
-  'use strict';
+goog.ui.ItemEvent = function (type, target, item) {
   goog.events.Event.call(this, type, target);
 
   /**

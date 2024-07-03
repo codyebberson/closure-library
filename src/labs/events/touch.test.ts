@@ -7,7 +7,6 @@
 /** @fileoverview Unit tests for touch. */
 
 goog.module('goog.labs.events.touchTest');
-goog.setTestOnly();
 
 const testSuite = goog.require('goog.testing.testSuite');
 const touch = goog.require('goog.labs.events.touch');
@@ -17,12 +16,12 @@ testSuite({
     const fakeTarget = {};
 
     const fakeMouseMove = {
-      'clientX': 1,
-      'clientY': 2,
-      'screenX': 3,
-      'screenY': 4,
-      'target': fakeTarget,
-      'type': 'mousemove',
+      clientX: 1,
+      clientY: 2,
+      screenX: 3,
+      screenY: 4,
+      target: fakeTarget,
+      type: 'mousemove',
     };
 
     /** @suppress {checkTypes} suppression added to enable type checking */
@@ -38,17 +37,17 @@ testSuite({
     const fakeTarget = {};
 
     const fakeTouch = {
-      'clientX': 1,
-      'clientY': 2,
-      'screenX': 3,
-      'screenY': 4,
-      'target': fakeTarget,
+      clientX: 1,
+      clientY: 2,
+      screenX: 3,
+      screenY: 4,
+      target: fakeTarget,
     };
 
     const fakeTouchStart = {
-      'targetTouches': [fakeTouch],
-      'target': fakeTarget,
-      'type': 'touchstart',
+      targetTouches: [fakeTouch],
+      target: fakeTarget,
+      type: 'touchstart',
     };
 
     /** @suppress {checkTypes} suppression added to enable type checking */
@@ -64,17 +63,17 @@ testSuite({
     const fakeTarget = {};
 
     const fakeTouch = {
-      'clientX': 1,
-      'clientY': 2,
-      'screenX': 3,
-      'screenY': 4,
-      'target': fakeTarget,
+      clientX: 1,
+      clientY: 2,
+      screenX: 3,
+      screenY: 4,
+      target: fakeTarget,
     };
 
     const fakeTouchStart = {
-      'changedTouches': [fakeTouch],
-      'target': fakeTarget,
-      'type': 'touchend'
+      changedTouches: [fakeTouch],
+      target: fakeTarget,
+      type: 'touchend',
     };
 
     /** @suppress {checkTypes} suppression added to enable type checking */

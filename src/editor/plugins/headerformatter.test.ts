@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.plugins.HeaderFormatterTest');
-goog.setTestOnly();
 
 const BasicTextFormatter = goog.require('goog.editor.plugins.BasicTextFormatter');
 const BrowserEvent = goog.require('goog.events.BrowserEvent');
@@ -64,20 +63,22 @@ testSuite({
     editableField.$anyTimes();
     editableField.$returns(null);
 
-    editableField.execCommand(
-        Command.FORMAT_BLOCK, HeaderFormatter.HEADER_COMMAND.H1);
+    editableField.execCommand(Command.FORMAT_BLOCK, HeaderFormatter.HEADER_COMMAND.H1);
     // Bypass EditableField's execCommand and directly call
     // basicTextFormatter's.  Future version of headerformatter will include
     // that code in its own execCommand.
-    editableField.$does(/**
+    editableField.$does(
+      /**
                            @suppress {visibility} suppression added to enable
                            type checking
                          */
-                        () => {
-                          btf.execCommandInternal(
-                              BasicTextFormatter.COMMAND.FORMAT_BLOCK,
-                              HeaderFormatter.HEADER_COMMAND.H1);
-                        });
+      () => {
+        btf.execCommandInternal(
+          BasicTextFormatter.COMMAND.FORMAT_BLOCK,
+          HeaderFormatter.HEADER_COMMAND.H1
+        );
+      }
+    );
 
     const event = new LooseMock(BrowserEvent);
     if (userAgent.GECKO) {
@@ -87,9 +88,7 @@ testSuite({
     editableField.$replay();
     event.$replay();
 
-    assertTrue(
-        'Event handled',
-        headerFormatter.handleKeyboardShortcut(event, '1', true));
+    assertTrue('Event handled', headerFormatter.handleKeyboardShortcut(event, '1', true));
     assertEquals('Field contains a header', 'H1', field.firstChild.nodeName);
 
     editableField.$verify();

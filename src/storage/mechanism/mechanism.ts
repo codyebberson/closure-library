@@ -11,8 +11,6 @@
 
 goog.provide('goog.storage.mechanism.Mechanism');
 
-
-
 /**
  * Basic interface for all storage mechanisms.
  *
@@ -20,8 +18,7 @@ goog.provide('goog.storage.mechanism.Mechanism');
  * @struct
  * @abstract
  */
-goog.storage.mechanism.Mechanism = function() {};
-
+goog.storage.mechanism.Mechanism = () => {};
 
 /**
  * Set a value for a key.
@@ -30,8 +27,7 @@ goog.storage.mechanism.Mechanism = function() {};
  * @param {string} value The string to save.
  * @abstract
  */
-goog.storage.mechanism.Mechanism.prototype.set = function(key, value) {};
-
+goog.storage.mechanism.Mechanism.prototype.set = (key, value) => {};
 
 /**
  * Get the value stored under a key.
@@ -40,8 +36,7 @@ goog.storage.mechanism.Mechanism.prototype.set = function(key, value) {};
  * @return {?string} The corresponding value, null if not found.
  * @abstract
  */
-goog.storage.mechanism.Mechanism.prototype.get = function(key) {};
-
+goog.storage.mechanism.Mechanism.prototype.get = (key) => {};
 
 /**
  * Remove a key and its value.
@@ -49,4 +44,4 @@ goog.storage.mechanism.Mechanism.prototype.get = function(key) {};
  * @param {string} key The key to remove.
  * @abstract
  */
-goog.storage.mechanism.Mechanism.prototype.remove = function(key) {};
+goog.storage.mechanism.Mechanism.prototype.remove = (key) => {};

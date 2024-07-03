@@ -17,8 +17,6 @@ goog.require('goog.functions');
 goog.require('goog.ui.emoji.Emoji');
 goog.require('goog.userAgent');
 
-
-
 /**
  * Plugin for generating emoticons.
  *
@@ -26,28 +24,22 @@ goog.require('goog.userAgent');
  * @extends {goog.editor.Plugin}
  * @final
  */
-goog.editor.plugins.Emoticons = function() {
-  'use strict';
+goog.editor.plugins.Emoticons = function () {
   goog.editor.plugins.Emoticons.base(this, 'constructor');
 };
 goog.inherits(goog.editor.plugins.Emoticons, goog.editor.Plugin);
 
-
 /** The emoticon command. */
 goog.editor.plugins.Emoticons.COMMAND = '+emoticon';
 
+/** @override */
+goog.editor.plugins.Emoticons.prototype.getTrogClassId = goog.functions.constant(
+  goog.editor.plugins.Emoticons.COMMAND
+);
 
 /** @override */
-goog.editor.plugins.Emoticons.prototype.getTrogClassId =
-    goog.functions.constant(goog.editor.plugins.Emoticons.COMMAND);
-
-
-/** @override */
-goog.editor.plugins.Emoticons.prototype.isSupportedCommand = function(command) {
-  'use strict';
-  return command == goog.editor.plugins.Emoticons.COMMAND;
-};
-
+goog.editor.plugins.Emoticons.prototype.isSupportedCommand = (command) =>
+  command == goog.editor.plugins.Emoticons.COMMAND;
 
 /**
  * Inserts an emoticon into the editor at the cursor location. Places the
@@ -57,9 +49,7 @@ goog.editor.plugins.Emoticons.prototype.isSupportedCommand = function(command) {
  * @return {!Object|undefined} The result of the command.
  * @override
  */
-goog.editor.plugins.Emoticons.prototype.execCommandInternal = function(
-    command, opt_arg) {
-  'use strict';
+goog.editor.plugins.Emoticons.prototype.execCommandInternal = function (command, opt_arg) {
   var emoji = /** @type {goog.ui.emoji.Emoji} */ (opt_arg);
 
   var styleProperties = 'margin:0 0.2ex;vertical-align:middle;';
@@ -69,7 +59,7 @@ goog.editor.plugins.Emoticons.prototype.execCommandInternal = function(
   styleProperties += emojiWidth ? 'width:' + emojiWidth + 'px;' : '';
 
   var dom = this.getFieldDomHelper();
-  var imgAttributes = {'src': emoji.getUrl(), 'style': styleProperties};
+  var imgAttributes = { src: emoji.getUrl(), style: styleProperties };
   if (emoji.getAltText()) {
     imgAttributes['alt'] = emoji.getAltText();
   }

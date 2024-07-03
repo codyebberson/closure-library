@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.mathTest');
-goog.setTestOnly();
 
 const googMath = goog.require('goog.math');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -64,32 +63,33 @@ testSuite({
 
   testNearlyEquals() {
     assertTrue(
-        'Numbers inside default tolerance should be equal',
-        googMath.nearlyEquals(0.000001, 0.000001001));
+      'Numbers inside default tolerance should be equal',
+      googMath.nearlyEquals(0.000001, 0.000001001)
+    );
     assertFalse(
-        'Numbers outside default tolerance should be unequal',
-        googMath.nearlyEquals(0.000001, 0.000003));
+      'Numbers outside default tolerance should be unequal',
+      googMath.nearlyEquals(0.000001, 0.000003)
+    );
     assertTrue(
-        'Numbers inside custom tolerance should be equal',
-        googMath.nearlyEquals(0.001, 0.002, 0.1));
+      'Numbers inside custom tolerance should be equal',
+      googMath.nearlyEquals(0.001, 0.002, 0.1)
+    );
     assertFalse(
-        'Numbers outside custom tolerance should be unequal',
-        googMath.nearlyEquals(0.001, -0.1, 0.1));
+      'Numbers outside custom tolerance should be unequal',
+      googMath.nearlyEquals(0.001, -0.1, 0.1)
+    );
     assertTrue(
-        'Integer tolerance greater than one should succeed',
-        googMath.nearlyEquals(87, 85, 3));
+      'Integer tolerance greater than one should succeed',
+      googMath.nearlyEquals(87, 85, 3)
+    );
   },
 
   testStandardAngleInRadians() {
     assertRoughlyEquals(0, googMath.standardAngleInRadians(2 * Math.PI), 1e-10);
-    assertRoughlyEquals(
-        Math.PI, googMath.standardAngleInRadians(Math.PI), 1e-10);
-    assertRoughlyEquals(
-        Math.PI, googMath.standardAngleInRadians(-1 * Math.PI), 1e-10);
-    assertRoughlyEquals(
-        Math.PI / 2, googMath.standardAngleInRadians(-1.5 * Math.PI), 1e-10);
-    assertRoughlyEquals(
-        Math.PI, googMath.standardAngleInRadians(5 * Math.PI), 1e-10);
+    assertRoughlyEquals(Math.PI, googMath.standardAngleInRadians(Math.PI), 1e-10);
+    assertRoughlyEquals(Math.PI, googMath.standardAngleInRadians(-1 * Math.PI), 1e-10);
+    assertRoughlyEquals(Math.PI / 2, googMath.standardAngleInRadians(-1.5 * Math.PI), 1e-10);
+    assertRoughlyEquals(Math.PI, googMath.standardAngleInRadians(5 * Math.PI), 1e-10);
     assertEquals(0.01, googMath.standardAngleInRadians(0.01));
     assertEquals(0, googMath.standardAngleInRadians(0));
   },
@@ -166,9 +166,9 @@ testSuite({
   },
 
   testSignOfSpecialFloatValues() {
-    assertEquals(-1, googMath.sign(-Infinity));
-    assertEquals(1, googMath.sign(Infinity));
-    assertNaN(googMath.sign(NaN));
+    assertEquals(-1, googMath.sign(Number.NEGATIVE_INFINITY));
+    assertEquals(1, googMath.sign(Number.POSITIVE_INFINITY));
+    assertNaN(googMath.sign(Number.NaN));
     assertEquals(0, googMath.sign(0));
     assertFalse(googMath.isNegativeZero(googMath.sign(0)));
     assertEquals(0, googMath.sign(-0));
@@ -180,13 +180,10 @@ testSuite({
 
     assertArrayEquals([2], func([1, 2], [2, 1]));
     assertArrayEquals([1, 2], func([1, 2, 5], [2, 1, 2]));
-    assertArrayEquals(
-        [1, 2, 3, 4, 5],
-        func([1, 0, 2, 3, 8, 4, 9, 5], [8, 1, 2, 4, 3, 6, 4, 5]));
+    assertArrayEquals([1, 2, 3, 4, 5], func([1, 0, 2, 3, 8, 4, 9, 5], [8, 1, 2, 4, 3, 6, 4, 5]));
     assertArrayEquals([1, 1, 1, 1, 1], func([1, 1, 1, 1, 1], [1, 1, 1, 1, 1]));
     assertArrayEquals([5], func([1, 2, 3, 4, 5], [5, 4, 3, 2, 1]));
-    assertArrayEquals(
-        [1, 8, 11], func([1, 6, 8, 11, 13], [1, 3, 5, 8, 9, 11, 12]));
+    assertArrayEquals([1, 8, 11], func([1, 6, 8, 11, 13], [1, 3, 5, 8, 9, 11, 12]));
   },
 
   testLongestCommonSubsequenceWithCustomComparator() {
@@ -194,10 +191,10 @@ testSuite({
 
     const compareFn = (a, b) => a.field == b.field;
 
-    const a1 = {field: 'a1', field2: 'hello'};
-    const a2 = {field: 'a2', field2: 33};
-    const a3 = {field: 'a3'};
-    const a4 = {field: 'a3'};
+    const a1 = { field: 'a1', field2: 'hello' };
+    const a2 = { field: 'a2', field2: 33 };
+    const a3 = { field: 'a3' };
+    const a4 = { field: 'a3' };
 
     assertArrayEquals([a1, a2], func([a1, a2, a3], [a3, a1, a2], compareFn));
     assertArrayEquals([a1, a3], func([a1, a3], [a1, a4], compareFn));
@@ -211,100 +208,109 @@ testSuite({
     const collectorFn = (a, b) => b;
 
     assertArrayEquals(
-        [1, 2, 4, 6, 7],
-        func(
-            [1, 0, 2, 3, 8, 4, 9, 5], [8, 1, 2, 4, 3, 6, 4, 5], null,
-            collectorFn));
+      [1, 2, 4, 6, 7],
+      func([1, 0, 2, 3, 8, 4, 9, 5], [8, 1, 2, 4, 3, 6, 4, 5], null, collectorFn)
+    );
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testSum() {
-    assertEquals(
-        'sum() must return 0 if there are no arguments', 0, googMath.sum());
-    assertEquals(
-        'sum() must return its argument if there is only one', 17,
-        googMath.sum(17));
-    assertEquals(
-        'sum() must handle positive integers', 10, googMath.sum(1, 2, 3, 4));
-    assertEquals(
-        'sum() must handle real numbers', -2.5, googMath.sum(1, -2, 3, -4.5));
+    assertEquals('sum() must return 0 if there are no arguments', 0, googMath.sum());
+    assertEquals('sum() must return its argument if there is only one', 17, googMath.sum(17));
+    assertEquals('sum() must handle positive integers', 10, googMath.sum(1, 2, 3, 4));
+    assertEquals('sum() must handle real numbers', -2.5, googMath.sum(1, -2, 3, -4.5));
     assertTrue(
-        'sum() must return NaN if one of the arguments isn\'t numeric',
-        isNaN(googMath.sum(1, 2, 'foo', 3)));
+      "sum() must return NaN if one of the arguments isn't numeric",
+      isNaN(googMath.sum(1, 2, 'foo', 3))
+    );
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testAverage() {
+    assertTrue('average() must return NaN if there are no arguments', isNaN(googMath.average()));
+    assertEquals(
+      'average() must return its argument if there is only one',
+      17,
+      googMath.average(17)
+    );
+    assertEquals('average() must handle positive integers', 3, googMath.average(1, 2, 3, 4, 5));
+    assertEquals('average() must handle real numbers', -0.625, googMath.average(1, -2, 3, -4.5));
     assertTrue(
-        'average() must return NaN if there are no arguments',
-        isNaN(googMath.average()));
-    assertEquals(
-        'average() must return its argument if there is only one', 17,
-        googMath.average(17));
-    assertEquals(
-        'average() must handle positive integers', 3,
-        googMath.average(1, 2, 3, 4, 5));
-    assertEquals(
-        'average() must handle real numbers', -0.625,
-        googMath.average(1, -2, 3, -4.5));
-    assertTrue(
-        'average() must return NaN if one of the arguments isn\'t ' +
-            'numeric',
-        isNaN(googMath.average(1, 2, 'foo', 3)));
+      "average() must return NaN if one of the arguments isn't " + 'numeric',
+      isNaN(googMath.average(1, 2, 'foo', 3))
+    );
   },
 
   testSampleVariance() {
     assertEquals(
-        'sampleVariance() must return 0 if there are no samples', 0,
-        googMath.sampleVariance());
+      'sampleVariance() must return 0 if there are no samples',
+      0,
+      googMath.sampleVariance()
+    );
     assertEquals(
-        'sampleVariance() must return 0 if there is only one ' +
-            'sample',
-        0, googMath.sampleVariance(17));
+      'sampleVariance() must return 0 if there is only one ' + 'sample',
+      0,
+      googMath.sampleVariance(17)
+    );
     assertRoughlyEquals(
-        'sampleVariance() must handle positive integers', 48,
-        googMath.sampleVariance(3, 7, 7, 19), 0.0001);
+      'sampleVariance() must handle positive integers',
+      48,
+      googMath.sampleVariance(3, 7, 7, 19),
+      0.0001
+    );
     assertRoughlyEquals(
-        'sampleVariance() must handle real numbers', 12.0138,
-        googMath.sampleVariance(1.23, -2.34, 3.14, -4.56), 0.0001);
+      'sampleVariance() must handle real numbers',
+      12.0138,
+      googMath.sampleVariance(1.23, -2.34, 3.14, -4.56),
+      0.0001
+    );
   },
 
   testStandardDeviation() {
     assertEquals(
-        'standardDeviation() must return 0 if there are no samples', 0,
-        googMath.standardDeviation());
+      'standardDeviation() must return 0 if there are no samples',
+      0,
+      googMath.standardDeviation()
+    );
     assertEquals(
-        'standardDeviation() must return 0 if there is only one ' +
-            'sample',
-        0, googMath.standardDeviation(17));
+      'standardDeviation() must return 0 if there is only one ' + 'sample',
+      0,
+      googMath.standardDeviation(17)
+    );
     assertRoughlyEquals(
-        'standardDeviation() must handle positive integers', 6.9282,
-        googMath.standardDeviation(3, 7, 7, 19), 0.0001);
+      'standardDeviation() must handle positive integers',
+      6.9282,
+      googMath.standardDeviation(3, 7, 7, 19),
+      0.0001
+    );
     assertRoughlyEquals(
-        'standardDeviation() must handle real numbers', 3.4660,
-        googMath.standardDeviation(1.23, -2.34, 3.14, -4.56), 0.0001);
+      'standardDeviation() must handle real numbers',
+      3.466,
+      googMath.standardDeviation(1.23, -2.34, 3.14, -4.56),
+      0.0001
+    );
   },
 
   testIsInt() {
     assertFalse(googMath.isInt(12345.67));
     assertFalse(googMath.isInt(0.123));
-    assertFalse(googMath.isInt(.1));
+    assertFalse(googMath.isInt(0.1));
     assertFalse(googMath.isInt(-23.43));
-    assertFalse(googMath.isInt(-.1));
+    assertFalse(googMath.isInt(-0.1));
     assertFalse(googMath.isInt(1e-1));
     assertTrue(googMath.isInt(1));
     assertTrue(googMath.isInt(0));
     assertTrue(googMath.isInt(-2));
     assertTrue(googMath.isInt(-2.0));
     assertTrue(googMath.isInt(10324231));
-    assertTrue(googMath.isInt(1.));
+    assertTrue(googMath.isInt(1));
     assertTrue(googMath.isInt(1e3));
   },
 
   testIsFiniteNumber() {
-    assertFalse(googMath.isFiniteNumber(NaN));
-    assertFalse(googMath.isFiniteNumber(-Infinity));
-    assertFalse(googMath.isFiniteNumber(+Infinity));
+    assertFalse(googMath.isFiniteNumber(Number.NaN));
+    assertFalse(googMath.isFiniteNumber(Number.NEGATIVE_INFINITY));
+    assertFalse(googMath.isFiniteNumber(Number.POSITIVE_INFINITY));
     assertTrue(googMath.isFiniteNumber(0));
     assertTrue(googMath.isFiniteNumber(1));
     assertTrue(googMath.isFiniteNumber(Math.PI));
@@ -322,11 +328,10 @@ testSuite({
     // The greatest floating point number that is less than 1.
     const oneMinusEpsilon = 1 - Math.pow(2, -53);
     for (let i = -30; i <= 30; i++) {
-      assertEquals(i, googMath.log10Floor(parseFloat(`1e${i}`)));
-      assertEquals(
-          i - 1, googMath.log10Floor(parseFloat(`1e${i}`) * oneMinusEpsilon));
+      assertEquals(i, googMath.log10Floor(Number.parseFloat(`1e${i}`)));
+      assertEquals(i - 1, googMath.log10Floor(Number.parseFloat(`1e${i}`) * oneMinusEpsilon));
     }
-    assertEquals(-Infinity, googMath.log10Floor(0));
+    assertEquals(Number.NEGATIVE_INFINITY, googMath.log10Floor(0));
     assertTrue(isNaN(googMath.log10Floor(-1)));
   },
 
@@ -343,7 +348,7 @@ testSuite({
     assertEquals(2, googMath.safeFloor(2.89, 0.1));
     // Tests some real life examples with the default epsilon value.
     assertEquals(0, googMath.safeFloor(Math.log(1000) / Math.LN10 - 3));
-    assertEquals(21, googMath.safeFloor(Math.log(1e+21) / Math.LN10));
+    assertEquals(21, googMath.safeFloor(Math.log(1e21) / Math.LN10));
   },
 
   testSafeCeil() {

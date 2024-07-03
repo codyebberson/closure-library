@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.messaging.MockMessageChannelTest');
-goog.setTestOnly();
 
 const MockControl = goog.require('goog.testing.MockControl');
 const MockMessageChannel = goog.require('goog.testing.messaging.MockMessageChannel');
@@ -18,12 +17,12 @@ testSuite({
     const ch1 = new MockMessageChannel(mockControl);
     const ch2 = new MockMessageChannel(mockControl);
     ch1.send('ping', 'HELLO');
-    ch2.send('pong', {key: 'value'});
+    ch2.send('pong', { key: 'value' });
     messaging.pipe(ch1, ch2);
 
     mockControl.$replayAll();
     ch2.receive('ping', 'HELLO');
-    ch1.receive('pong', {key: 'value'});
+    ch1.receive('pong', { key: 'value' });
     mockControl.$verifyAll();
   },
 });

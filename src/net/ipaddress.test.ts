@@ -5,11 +5,10 @@
  */
 
 goog.module('goog.net.IpAddressTest');
-goog.setTestOnly();
 
 const Integer = goog.require('goog.math.Integer');
 const testSuite = goog.require('goog.testing.testSuite');
-const {IpAddress, Ipv4Address, Ipv6Address} = goog.require('goog.net.ipaddress');
+const { IpAddress, Ipv4Address, Ipv6Address } = goog.require('goog.net.ipaddress');
 
 testSuite({
   testInvalidStrings() {
@@ -92,8 +91,7 @@ testSuite({
     assertEquals('192.168.1.1', new Ipv4Address('192.168.1.1').toString());
     assertEquals('1.1.1.1', new Ipv4Address('1.1.1.1').toString());
     assertEquals('224.56.33.2', new Ipv4Address('224.56.33.2').toString());
-    assertEquals(
-        '255.255.255.255', new Ipv4Address('255.255.255.255').toString());
+    assertEquals('255.255.255.255', new Ipv4Address('255.255.255.255').toString());
     assertEquals('0.0.0.0', new Ipv4Address('0.0.0.0').toString());
   },
 
@@ -105,53 +103,40 @@ testSuite({
     assertEquals(ip4Str.toString(), ip4Int.toString());
 
     assertThrows('Ipv4(-1)', goog.partial(Ipv4Address, Integer.fromInt(-1)));
-    assertThrows(
-        'Ipv4(2**32)', goog.partial(Ipv4Address, Integer.ONE.shiftLeft(32)));
+    assertThrows('Ipv4(2**32)', goog.partial(Ipv4Address, Integer.ONE.shiftLeft(32)));
   },
 
   testStringIpv6Address() {
-    assertEquals(
-        '1:2:3:4:5:6:7:8', new Ipv6Address('1:2:3:4:5:6:7:8').toString());
-    assertEquals(
-        '::1:2:3:4:5:6:7', new Ipv6Address('::1:2:3:4:5:6:7').toString());
-    assertEquals(
-        '1:2:3:4:5:6:7::', new Ipv6Address('1:2:3:4:5:6:7:0').toString());
-    assertEquals(
-        '2001:0:0:4::8', new Ipv6Address('2001:0:0:4:0:0:0:8').toString());
-    assertEquals(
-        '2001::4:5:6:7:8', new Ipv6Address('2001:0:0:4:5:6:7:8').toString());
-    assertEquals(
-        '2001::3:4:5:6:7:8', new Ipv6Address('2001:0:3:4:5:6:7:8').toString());
-    assertEquals(
-        '0:0:3::ffff', new Ipv6Address('0:0:3:0:0:0:0:ffff').toString());
-    assertEquals(
-        '::4:0:0:0:ffff', new Ipv6Address('0:0:0:4:0:0:0:ffff').toString());
-    assertEquals(
-        '::5:0:0:ffff', new Ipv6Address('0:0:0:0:5:0:0:ffff').toString());
+    assertEquals('1:2:3:4:5:6:7:8', new Ipv6Address('1:2:3:4:5:6:7:8').toString());
+    assertEquals('::1:2:3:4:5:6:7', new Ipv6Address('::1:2:3:4:5:6:7').toString());
+    assertEquals('1:2:3:4:5:6:7::', new Ipv6Address('1:2:3:4:5:6:7:0').toString());
+    assertEquals('2001:0:0:4::8', new Ipv6Address('2001:0:0:4:0:0:0:8').toString());
+    assertEquals('2001::4:5:6:7:8', new Ipv6Address('2001:0:0:4:5:6:7:8').toString());
+    assertEquals('2001::3:4:5:6:7:8', new Ipv6Address('2001:0:3:4:5:6:7:8').toString());
+    assertEquals('0:0:3::ffff', new Ipv6Address('0:0:3:0:0:0:0:ffff').toString());
+    assertEquals('::4:0:0:0:ffff', new Ipv6Address('0:0:0:4:0:0:0:ffff').toString());
+    assertEquals('::5:0:0:ffff', new Ipv6Address('0:0:0:0:5:0:0:ffff').toString());
     assertEquals('1::4:0:0:7:8', new Ipv6Address('1:0:0:4:0:0:7:8').toString());
     assertEquals('::', new Ipv6Address('0:0:0:0:0:0:0:0').toString());
     assertEquals('::1', new Ipv6Address('0:0:0:0:0:0:0:1').toString());
     assertEquals(
-        '2001:658:22a:cafe::',
-        new Ipv6Address('2001:0658:022a:cafe:0000:0000:0000:0000').toString());
+      '2001:658:22a:cafe::',
+      new Ipv6Address('2001:0658:022a:cafe:0000:0000:0000:0000').toString()
+    );
     assertEquals('::102:304', new Ipv6Address('::1.2.3.4').toString());
-    assertEquals(
-        '::ffff:303:303', new Ipv6Address('::ffff:3.3.3.3').toString());
-    assertEquals(
-        '::ffff:ffff', new Ipv6Address('::255.255.255.255').toString());
+    assertEquals('::ffff:303:303', new Ipv6Address('::ffff:3.3.3.3').toString());
+    assertEquals('::ffff:ffff', new Ipv6Address('::255.255.255.255').toString());
   },
 
   testIntIpv6Address() {
     const ip6Str = new Ipv6Address('2001::dead:beef:1');
-    const ip6Int =
-        new Ipv6Address(new Integer([3203334145, 57005, 0, 536936448], 0));
+    const ip6Int = new Ipv6Address(new Integer([3203334145, 57005, 0, 536936448], 0));
 
     assertTrue(ip6Str.equals(ip6Int));
     assertEquals(ip6Str.toString(), ip6Int.toString());
 
     assertThrows('Ipv6(-1)', goog.partial(Ipv6Address, Integer.fromInt(-1)));
-    assertThrows(
-        'Ipv6(2**128)', goog.partial(Ipv6Address, Integer.ONE.shiftLeft(128)));
+    assertThrows('Ipv6(2**128)', goog.partial(Ipv6Address, Integer.ONE.shiftLeft(128)));
   },
 
   testDottedQuadIpv6() {
@@ -205,7 +190,7 @@ testSuite({
       'fd00::',
       'fdff:ffff:ffff:ffff:ffff:ffff:ffff:ffff',
     ];
-    siteLocalAddresses.forEach(siteLocalAddress => {
+    siteLocalAddresses.forEach((siteLocalAddress) => {
       assertTrue(IpAddress.fromString(siteLocalAddress).isSiteLocal());
     });
 
@@ -219,7 +204,7 @@ testSuite({
       'fcff:ffff:ffff:ffff:ffff:ffff:ffff:ffff',
       'fe00::',
     ];
-    nonSiteLocalAddresses.forEach(nonSiteLocalAddress => {
+    nonSiteLocalAddresses.forEach((nonSiteLocalAddress) => {
       assertFalse(IpAddress.fromString(nonSiteLocalAddress).isSiteLocal());
     });
   },
@@ -231,7 +216,7 @@ testSuite({
       'fe80::',
       'febf:ffff:ffff:ffff:ffff:ffff:ffff:ffff',
     ];
-    linkLocalAddresses.forEach(linkLocalAddress => {
+    linkLocalAddresses.forEach((linkLocalAddress) => {
       assertTrue(IpAddress.fromString(linkLocalAddress).isLinkLocal());
     });
 
@@ -241,7 +226,7 @@ testSuite({
       'fe7f:ffff:ffff:ffff:ffff:ffff:ffff:ffff',
       'fec0::',
     ];
-    nonLinkLocalAddresses.forEach(nonLinkLocalAddress => {
+    nonLinkLocalAddresses.forEach((nonLinkLocalAddress) => {
       assertFalse(IpAddress.fromString(nonLinkLocalAddress).isLinkLocal());
     });
   },

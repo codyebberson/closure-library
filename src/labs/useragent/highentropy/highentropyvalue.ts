@@ -12,7 +12,7 @@
 goog.module('goog.labs.userAgent.highEntropy.highEntropyValue');
 
 const util = goog.require('goog.labs.userAgent.util');
-const {compareVersions} = goog.require('goog.string.internal');
+const { compareVersions } = goog.require('goog.string.internal');
 
 /**
  * Represents a value that can be asynchronously loaded.
@@ -99,11 +99,8 @@ class HighEntropyValue {
       this.pending_ = true;
       this.promise_ = (async () => {
         try {
-          const dataValues =
-              await userAgentData.getHighEntropyValues([this.key_]);
-          this.value_ =
-              /** @type {!Object<string, VALUE_TYPE>} */ (
-                  dataValues)[this.key_];
+          const dataValues = await userAgentData.getHighEntropyValues([this.key_]);
+          this.value_ = /** @type {!Object<string, VALUE_TYPE>} */ (dataValues)[this.key_];
           return this.value_;
         } finally {
           this.pending_ = false;

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.asserts.domTest');
-goog.setTestOnly();
 
 const DomHelper = goog.require('goog.dom.DomHelper');
 const TagName = goog.require('goog.dom.TagName');
@@ -71,12 +70,10 @@ const getTestsObject = (getDocument) => {
       assertThrows(dom.assertIsHtmlElementOfType.bind(null, a, TagName.DIV));
 
       assertEquals(table, dom.assertIsHtmlElementOfType(table, TagName.TABLE));
-      assertThrows(
-          dom.assertIsHtmlElementOfType.bind(null, table, TagName.DIV));
+      assertThrows(dom.assertIsHtmlElementOfType.bind(null, table, TagName.DIV));
 
       if (svg) {
-        assertThrows(
-            dom.assertIsHtmlElementOfType.bind(null, svg, TagName.DIV));
+        assertThrows(dom.assertIsHtmlElementOfType.bind(null, svg, TagName.DIV));
       }
     },
 

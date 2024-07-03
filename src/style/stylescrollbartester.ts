@@ -16,7 +16,6 @@ goog.require('goog.style');
 goog.require('goog.testing.asserts');
 goog.setTestOnly('goog.styleScrollbarTester');
 
-
 /**
  * Tests the scrollbar width calculation. Assumes that there is an element with
  * id 'test-scrollbarwidth' in the page.
@@ -26,8 +25,7 @@ function testScrollbarWidth() {
   assertTrue(width > 0);
 
   var outer = goog.dom.getElement('test-scrollbarwidth');
-  var inner = goog.dom.getElementsByTagNameAndClass(
-      goog.dom.TagName.DIV, null, outer)[0];
+  var inner = goog.dom.getElementsByTagNameAndClass(goog.dom.TagName.DIV, null, outer)[0];
   assertTrue('should have a scroll bar', hasVerticalScroll(outer));
   assertTrue('should have a scroll bar', hasHorizontalScroll(outer));
 
@@ -39,21 +37,19 @@ function testScrollbarWidth() {
 
   // Leave the vertical scroll and remove the horizontal by using the scroll
   // bar width calculation.
-  goog.style.setStyle(outer, 'width', (innerAbsoluteWidth + width) + 'px');
+  goog.style.setStyle(outer, 'width', innerAbsoluteWidth + width + 'px');
   assertTrue('should have a scroll bar', hasVerticalScroll(outer));
   assertFalse('should not have a scroll bar', hasHorizontalScroll(outer));
 
   // verify by adding 1 more pixel (brings back the vertical scroll bar).
-  goog.style.setStyle(outer, 'width', (innerAbsoluteWidth + width - 1) + 'px');
+  goog.style.setStyle(outer, 'width', innerAbsoluteWidth + width - 1 + 'px');
   assertTrue('should have a scroll bar', hasVerticalScroll(outer));
   assertTrue('should have a scroll bar', hasHorizontalScroll(outer));
 }
 
-
 function hasVerticalScroll(el) {
   return el.clientWidth != 0 && el.offsetWidth - el.clientWidth > 0;
 }
-
 
 function hasHorizontalScroll(el) {
   return el.clientHeight != 0 && el.offsetHeight - el.clientHeight > 0;

@@ -45,8 +45,7 @@ function get() {
   if (!moduleManager && getDefault) {
     set(getDefault());
   }
-  asserts.assert(
-      moduleManager != null, 'The module manager has not yet been set.');
+  asserts.assert(moduleManager != null, 'The module manager has not yet been set.');
   return moduleManager;
 }
 
@@ -57,10 +56,9 @@ function get() {
  * @param {!AbstractModuleManager} newModuleManager
  */
 function set(newModuleManager) {
-  asserts.assert(
-      moduleManager == null, 'The module manager cannot be redefined.');
+  asserts.assert(moduleManager == null, 'The module manager cannot be redefined.');
   moduleManager = newModuleManager;
-  configureFunctions.forEach(configureFn => {
+  configureFunctions.forEach((configureFn) => {
     configureFn(/** @type {!AbstractModuleManager} */ (moduleManager));
   });
   configureFunctions = [];
@@ -114,7 +112,7 @@ function maybeInitialize(info, loadingModuleIds) {
 }
 
 /** Test-only method for removing the active module manager. */
-const reset = function() {
+const reset = () => {
   moduleManager = null;
   configureFunctions = [];
 };

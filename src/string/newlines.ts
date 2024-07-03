@@ -8,14 +8,11 @@
  * @fileoverview Utilities for string newlines.
  */
 
-
 /**
  * Namespace for string utilities
  */
 goog.provide('goog.string.newlines');
 goog.provide('goog.string.newlines.Line');
-
-
 
 /**
  * Splits a string into lines, properly handling universal newlines.
@@ -24,16 +21,10 @@ goog.provide('goog.string.newlines.Line');
  *     resulting strings. Defaults to false.
  * @return {!Array<string>} String split into lines.
  */
-goog.string.newlines.splitLines = function(str, opt_keepNewlines) {
-  'use strict';
+goog.string.newlines.splitLines = (str, opt_keepNewlines) => {
   const lines = goog.string.newlines.getLines(str);
-  return lines.map(function(line) {
-    'use strict';
-    return opt_keepNewlines ? line.getFullLine() : line.getContent();
-  });
+  return lines.map((line) => (opt_keepNewlines ? line.getFullLine() : line.getContent()));
 };
-
-
 
 /**
  * Line metadata class that records the start/end indicies of lines
@@ -55,9 +46,7 @@ goog.string.newlines.splitLines = function(str, opt_keepNewlines) {
  * @struct
  * @final
  */
-goog.string.newlines.Line = function(
-    string, startLineIndex, endContentIndex, endLineIndex) {
-  'use strict';
+goog.string.newlines.Line = function (string, startLineIndex, endContentIndex, endLineIndex) {
   /**
    * The original string.
    * @type {string}
@@ -88,52 +77,48 @@ goog.string.newlines.Line = function(
   this.endLineIndex = endLineIndex;
 };
 
-
 /**
  * @return {string} The content of the line, excluding any newline characters.
  */
-goog.string.newlines.Line.prototype.getContent = function() {
-  'use strict';
+goog.string.newlines.Line.prototype.getContent = function () {
   return this.string.substring(this.startLineIndex, this.endContentIndex);
 };
-
 
 /**
  * @return {string} The full line, including any newline characters.
  */
-goog.string.newlines.Line.prototype.getFullLine = function() {
-  'use strict';
+goog.string.newlines.Line.prototype.getFullLine = function () {
   return this.string.substring(this.startLineIndex, this.endLineIndex);
 };
-
 
 /**
  * @return {string} The newline characters, if any ('\n', \r', '\r\n', '', etc).
  */
-goog.string.newlines.Line.prototype.getNewline = function() {
-  'use strict';
+goog.string.newlines.Line.prototype.getNewline = function () {
   return this.string.substring(this.endContentIndex, this.endLineIndex);
 };
-
 
 /**
  * Splits a string into an array of line metadata.
  * @param {string} str String to split.
  * @return {!Array<!goog.string.newlines.Line>} Array of line metadata.
  */
-goog.string.newlines.getLines = function(str) {
-  'use strict';
+goog.string.newlines.getLines = (str) => {
   // We use the constructor because literals are evaluated only once in
   // < ES 3.1.
   // See http://www.mail-archive.com/es-discuss@mozilla.org/msg01796.html
-  const re = RegExp('\r\n|\r|\n', 'g');
+  const re = /\r\n|\r|\n/g;
   let sliceIndex = 0;
   let result;
   const lines = [];
 
-  while (result = re.exec(str)) {
+  while ((result = re.exec(str))) {
     const line = new goog.string.newlines.Line(
-        str, sliceIndex, result.index, result.index + result[0].length);
+      str,
+      sliceIndex,
+      result.index,
+      result.index + result[0].length
+    );
     lines.push(line);
 
     // remember where to start the slice from
@@ -142,8 +127,7 @@ goog.string.newlines.getLines = function(str) {
 
   // If the string does not end with a newline, add the last line.
   if (sliceIndex < str.length) {
-    const line =
-        new goog.string.newlines.Line(str, sliceIndex, str.length, str.length);
+    const line = new goog.string.newlines.Line(str, sliceIndex, str.length, str.length);
     lines.push(line);
   }
 

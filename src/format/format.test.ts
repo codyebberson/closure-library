@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.formatTest');
-goog.setTestOnly();
 
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
 const TagName = goog.require('goog.dom.TagName');
@@ -75,9 +74,9 @@ testSuite({
   testNumericValueToString() {
     const numericValueToString = format.numericValueToString;
 
-    assertEquals('Infinity', numericValueToString(Infinity));
-    assertEquals('Infinity', numericValueToString(1.8e+309));
-    assertEquals('-Infinity', numericValueToString(-Infinity));
+    assertEquals('Infinity', numericValueToString(Number.POSITIVE_INFINITY));
+    assertEquals('Infinity', numericValueToString(1.8e309));
+    assertEquals('-Infinity', numericValueToString(Number.NEGATIVE_INFINITY));
     assertEquals('-Infinity', numericValueToString(-1.8e309));
 
     assertEquals('0', numericValueToString(0.0));
@@ -99,8 +98,7 @@ testSuite({
 
     assertEquals('1.07G', numericValueToString(1024 * 1024 * 1024));
     assertEquals('6.44G', numericValueToString(6 * 1024 * 1024 * 1024));
-    assertEquals(
-        '13.26T', numericValueToString(12345.6789 * 1024 * 1024 * 1024));
+    assertEquals('13.26T', numericValueToString(12345.6789 * 1024 * 1024 * 1024));
     assertEquals('50.67P', numericValueToString(45 * Math.pow(1024, 5)));
     assertEquals('57.65E', numericValueToString(50 * Math.pow(1024, 6)));
     assertEquals('77.33Z', numericValueToString(65.5 * Math.pow(1024, 7)));
@@ -117,7 +115,7 @@ testSuite({
     assertEquals('-46', numericValueToString(-45.51, 0));
 
     assertEquals('300K', numericValueToString(3e5));
-    assertEquals('700K', numericValueToString(7E+5));
+    assertEquals('700K', numericValueToString(7e5));
     assertEquals('30u', numericValueToString(3e-5));
   },
 
@@ -147,10 +145,10 @@ testSuite({
     assertNaN(stringToNumericValue('foo'));
     assertNaN(stringToNumericValue('3E5E6'));
 
-    assertEquals(Infinity, stringToNumericValue('Infinity'));
-    assertEquals(Infinity, stringToNumericValue('2E+1000'));
-    assertEquals(-Infinity, stringToNumericValue('-Infinity'));
-    assertEquals(-Infinity, stringToNumericValue('-4E+1000'));
+    assertEquals(Number.POSITIVE_INFINITY, stringToNumericValue('Infinity'));
+    assertEquals(Number.POSITIVE_INFINITY, stringToNumericValue('2E+1000'));
+    assertEquals(Number.NEGATIVE_INFINITY, stringToNumericValue('-Infinity'));
+    assertEquals(Number.NEGATIVE_INFINITY, stringToNumericValue('-4E+1000'));
 
     assertEquals(45, stringToNumericValue('45'));
     assertEquals(-45, stringToNumericValue('-45'));
@@ -183,8 +181,7 @@ testSuite({
     assertEquals(1024 * 1024, stringToNumBytes('1M'));
     assertEquals(6 * 1024 * 1024 * 1024, stringToNumBytes('6G'));
     assertEquals(13260110230978.56, stringToNumBytes('12.06T'));
-    assertTrue(
-        Math.abs(3.191564163782621e+24 - stringToNumBytes('2.64Y')) < epsilon);
+    assertTrue(Math.abs(3.191564163782621e24 - stringToNumBytes('2.64Y')) < epsilon);
   },
 
   testInsertWordBreaks() {
@@ -196,14 +193,13 @@ testSuite({
 
     assertEquals('abcdef', insertWordBreaks('abcdef', 10));
     assertEquals('ab<wbr>cd<wbr>ef', insertWordBreaks('abcdef', 2));
-    assertEquals(
-        'a<wbr>b<wbr>c<wbr>d<wbr>e<wbr>f', insertWordBreaks('abcdef', 1));
+    assertEquals('a<wbr>b<wbr>c<wbr>d<wbr>e<wbr>f', insertWordBreaks('abcdef', 1));
 
+    assertEquals('a&amp;b=<wbr>=fal<wbr>se', insertWordBreaks('a&amp;b==false', 4));
     assertEquals(
-        'a&amp;b=<wbr>=fal<wbr>se', insertWordBreaks('a&amp;b==false', 4));
-    assertEquals(
-        '&lt;&amp;&gt;&raquo;<wbr>&laquo;',
-        insertWordBreaks('&lt;&amp;&gt;&raquo;&laquo;', 4));
+      '&lt;&amp;&gt;&raquo;<wbr>&laquo;',
+      insertWordBreaks('&lt;&amp;&gt;&raquo;&laquo;', 4)
+    );
 
     assertEquals('a<wbr>b<wbr>c d<wbr>e<wbr>f', insertWordBreaks('abc def', 1));
     assertEquals('ab<wbr>c de<wbr>f', insertWordBreaks('abc def', 2));
@@ -212,19 +208,19 @@ testSuite({
 
     assertEquals('a<b>cd</b>e<wbr>f', insertWordBreaks('a<b>cd</b>ef', 4));
     assertEquals(
-        'Thi<wbr>s is a <a href="">lin<wbr>k</a>.',
-        insertWordBreaks('This is a <a href="">link</a>.', 3));
+      'Thi<wbr>s is a <a href="">lin<wbr>k</a>.',
+      insertWordBreaks('This is a <a href="">link</a>.', 3)
+    );
     assertEquals(
-        '<abc a="&amp;&amp;&amp;&amp;&amp;">a<wbr>b',
-        insertWordBreaks('<abc a="&amp;&amp;&amp;&amp;&amp;">ab', 1));
+      '<abc a="&amp;&amp;&amp;&amp;&amp;">a<wbr>b',
+      insertWordBreaks('<abc a="&amp;&amp;&amp;&amp;&amp;">ab', 1)
+    );
 
     assertEquals('ab\u0300<wbr>cd', insertWordBreaks('ab\u0300cd', 2));
     assertEquals('ab\u036F<wbr>cd', insertWordBreaks('ab\u036Fcd', 2));
     assertEquals('ab<wbr>\u0370c<wbr>d', insertWordBreaks('ab\u0370cd', 2));
     assertEquals('ab<wbr>\uFE1Fc<wbr>d', insertWordBreaks('ab\uFE1Fcd', 2));
-    assertEquals(
-        'ab\u0300<wbr>c\u0301<wbr>de<wbr>f',
-        insertWordBreaks('ab\u0300c\u0301def', 2));
+    assertEquals('ab\u0300<wbr>c\u0301<wbr>de<wbr>f', insertWordBreaks('ab\u0300c\u0301def', 2));
   },
 
   testInsertWordBreaksWithFormattingCharacters() {
@@ -235,32 +231,42 @@ testSuite({
 
     // A date in Arabic-Indic digits with Right-to-Left Marks (U+200F).
     // The date is "11<RLM>/01<RLM>/2012".
-    const textWithRLMs = 'This is a date - ' +
-        '\u0661\u0661\u200f/\u0660\u0661\u200f/\u0662\u0660\u0661\u0662';
+    const textWithRLMs =
+      'This is a date - ' + '\u0661\u0661\u200f/\u0660\u0661\u200f/\u0662\u0660\u0661\u0662';
     // A string of 10 Xs with invisible formatting characters in between.
     // These characters are in the ranges U+200C to U+200F and U+202A to
     // U+202E, inclusive. See: http://unicode.org/charts/PDF/U2000.pdf
     const stringWithInvisibleFormatting =
-        'X\u200cX\u200dX\u200eX\u200fX\u202a' +
-        'X\u202bX\u202cX\u202dX\u202eX';
+      'X\u200cX\u200dX\u200eX\u200fX\u202a' + 'X\u202bX\u202cX\u202dX\u202eX';
     // A string formed by concatenating copies of the previous string
     // alternating with characters which behave like breaking spaces. Besides
     // the space character itself, the other characters are in the range U+2000
     // to U+200B inclusive, except for the exclusion of U+2007 and inclusion of
     // U+2029. See: http://unicode.org/charts/PDF/U2000.pdf
     const stringWithInvisibleFormattingAndSpacelikeCharacters =
-        `${stringWithInvisibleFormatting} ${stringWithInvisibleFormatting}` +
-        '\u2000' + stringWithInvisibleFormatting + '\u2001' +
-        stringWithInvisibleFormatting + '\u2002' +
-        stringWithInvisibleFormatting + '\u2003' +
-        stringWithInvisibleFormatting + '\u2005' +
-        stringWithInvisibleFormatting + '\u2006' +
-        stringWithInvisibleFormatting + '\u2008' +
-        stringWithInvisibleFormatting + '\u2009' +
-        stringWithInvisibleFormatting + '\u200A' +
-        stringWithInvisibleFormatting + '\u200B' +
-        stringWithInvisibleFormatting + '\u2029' +
-        stringWithInvisibleFormatting;
+      `${stringWithInvisibleFormatting} ${stringWithInvisibleFormatting}` +
+      '\u2000' +
+      stringWithInvisibleFormatting +
+      '\u2001' +
+      stringWithInvisibleFormatting +
+      '\u2002' +
+      stringWithInvisibleFormatting +
+      '\u2003' +
+      stringWithInvisibleFormatting +
+      '\u2005' +
+      stringWithInvisibleFormatting +
+      '\u2006' +
+      stringWithInvisibleFormatting +
+      '\u2008' +
+      stringWithInvisibleFormatting +
+      '\u2009' +
+      stringWithInvisibleFormatting +
+      '\u200A' +
+      stringWithInvisibleFormatting +
+      '\u200B' +
+      stringWithInvisibleFormatting +
+      '\u2029' +
+      stringWithInvisibleFormatting;
 
     // Test that the word break algorithm does not count RLMs towards word
     // length, and therefore does not insert word breaks into a typical date
@@ -271,9 +277,9 @@ testSuite({
     // length, and that characters which are treated as breaking spaces behave
     // as breaking spaces.
     assertEquals(
-        stringWithInvisibleFormattingAndSpacelikeCharacters,
-        insertWordBreaks(
-            stringWithInvisibleFormattingAndSpacelikeCharacters, 10));
+      stringWithInvisibleFormattingAndSpacelikeCharacters,
+      insertWordBreaks(stringWithInvisibleFormattingAndSpacelikeCharacters, 10)
+    );
   },
 
   testInsertWordBreaksBasic() {
@@ -284,40 +290,43 @@ testSuite({
 
     assertEquals('abcdef', insertWordBreaksBasic('abcdef', 10));
     assertEquals('ab<wbr>cd<wbr>ef', insertWordBreaksBasic('abcdef', 2));
+    assertEquals('a<wbr>b<wbr>c<wbr>d<wbr>e<wbr>f', insertWordBreaksBasic('abcdef', 1));
     assertEquals(
-        'a<wbr>b<wbr>c<wbr>d<wbr>e<wbr>f', insertWordBreaksBasic('abcdef', 1));
-    assertEquals(
-        'ab\u0300<wbr>c\u0301<wbr>de<wbr>f',
-        insertWordBreaksBasic('ab\u0300c\u0301def', 2));
+      'ab\u0300<wbr>c\u0301<wbr>de<wbr>f',
+      insertWordBreaksBasic('ab\u0300c\u0301def', 2)
+    );
 
     assertEquals(
-        'Inserting word breaks into the word "Russia" should work fine.',
-        '\u0420\u043E<wbr>\u0441\u0441<wbr>\u0438\u044F',
-        insertWordBreaksBasic('\u0420\u043E\u0441\u0441\u0438\u044F', 2));
+      'Inserting word breaks into the word "Russia" should work fine.',
+      '\u0420\u043E<wbr>\u0441\u0441<wbr>\u0438\u044F',
+      insertWordBreaksBasic('\u0420\u043E\u0441\u0441\u0438\u044F', 2)
+    );
 
     // The word 'Internet' in Hindi.
     const hindiInternet = '\u0907\u0902\u091F\u0930\u0928\u0947\u091F';
     assertEquals(
-        'The basic algorithm is not good enough to insert word ' +
-            'breaks into Hindi.',
-        hindiInternet, insertWordBreaksBasic(hindiInternet, 2));
+      'The basic algorithm is not good enough to insert word ' + 'breaks into Hindi.',
+      hindiInternet,
+      insertWordBreaksBasic(hindiInternet, 2)
+    );
     // The word 'Internet' in Hindi broken into slashes.
     assertEquals(
-        'Hindi can have word breaks inserted between slashes',
-        `${hindiInternet}<wbr>/${hindiInternet}<wbr>.${hindiInternet}`,
-        insertWordBreaksBasic(
-            `${hindiInternet}/${hindiInternet}.${hindiInternet}`, 2));
+      'Hindi can have word breaks inserted between slashes',
+      `${hindiInternet}<wbr>/${hindiInternet}<wbr>.${hindiInternet}`,
+      insertWordBreaksBasic(`${hindiInternet}/${hindiInternet}.${hindiInternet}`, 2)
+    );
   },
 
   testWordBreaksWorking() {
     const text = googString.repeat('test', 20);
     const textWbr = googString.repeat('test' + format.WORD_BREAK_HTML, 20);
 
-    const overflowEl = dom.createDom(
-        TagName.DIV, {'style': 'width: 100px; overflow: hidden; margin 5px'});
-    const wbrEl = dom.createDom(
-        TagName.DIV,
-        {'style': 'width: 100px; overflow: hidden; margin-top: 15px'});
+    const overflowEl = dom.createDom(TagName.DIV, {
+      style: 'width: 100px; overflow: hidden; margin 5px',
+    });
+    const wbrEl = dom.createDom(TagName.DIV, {
+      style: 'width: 100px; overflow: hidden; margin-top: 15px',
+    });
     dom.appendChild(globalThis.document.body, overflowEl);
     dom.appendChild(globalThis.document.body, wbrEl);
 
@@ -336,7 +345,9 @@ testSuite({
     wbrEl.innerHTML = textWbr;
 
     assertEquals(
-        'text content should have wbr character removed', expectedText,
-        dom.getTextContent(wbrEl));
+      'text content should have wbr character removed',
+      expectedText,
+      dom.getTextContent(wbrEl)
+    );
   },
 });

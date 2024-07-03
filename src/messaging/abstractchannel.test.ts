@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.messaging.AbstractChannelTest');
-goog.setTestOnly();
 
 const AbstractChannel = goog.require('goog.messaging.AbstractChannel');
 const AsyncMockControl = goog.require('goog.testing.async.MockControl');
@@ -30,8 +29,7 @@ testSuite({
   },
 
   testConnect() {
-    channel.connect(
-        asyncMockControl.createCallbackMock('connectCallback', () => {}));
+    channel.connect(asyncMockControl.createCallbackMock('connectCallback', () => {}));
   },
 
   testIsConnected() {
@@ -41,40 +39,44 @@ testSuite({
   /** @suppress {visibility} suppression added to enable type checking */
   testDeliverString() {
     channel.registerService(
-        'foo',
-        asyncMockControl.asyncAssertEquals(
-            'should pass string to service', 'bar'),
-        false /* opt_json */);
+      'foo',
+      asyncMockControl.asyncAssertEquals('should pass string to service', 'bar'),
+      false /* opt_json */
+    );
     channel.deliver('foo', 'bar');
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
   testDeliverDeserializedString() {
     channel.registerService(
-        'foo',
-        asyncMockControl.asyncAssertEquals(
-            'should pass string to service', '{"bar":"baz"}'),
-        false /* opt_json */);
-    channel.deliver('foo', {bar: 'baz'});
+      'foo',
+      asyncMockControl.asyncAssertEquals('should pass string to service', '{"bar":"baz"}'),
+      false /* opt_json */
+    );
+    channel.deliver('foo', { bar: 'baz' });
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
   testDeliverObject() {
     channel.registerService(
-        'foo',
-        asyncMockControl.asyncAssertEquals(
-            'should pass string to service', {bar: 'baz'}),
-        true /* opt_json */);
-    channel.deliver('foo', {bar: 'baz'});
+      'foo',
+      asyncMockControl.asyncAssertEquals('should pass string to service', {
+        bar: 'baz',
+      }),
+      true /* opt_json */
+    );
+    channel.deliver('foo', { bar: 'baz' });
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
   testDeliverSerializedObject() {
     channel.registerService(
-        'foo',
-        asyncMockControl.asyncAssertEquals(
-            'should pass string to service', {bar: 'baz'}),
-        true /* opt_json */);
+      'foo',
+      asyncMockControl.asyncAssertEquals('should pass string to service', {
+        bar: 'baz',
+      }),
+      true /* opt_json */
+    );
     channel.deliver('foo', '{"bar":"baz"}');
   },
 });

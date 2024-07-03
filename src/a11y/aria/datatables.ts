@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
-
 /**
  * @fileoverview The file contains data tables generated from the ARIA
  * standard schema http://www.w3.org/TR/wai-aria/.
@@ -18,7 +16,6 @@ goog.module.declareLegacyNamespace();
 
 const State = goog.require('goog.a11y.aria.State');
 
-
 /**
  * A map that contains mapping between an ARIA state and the default value
  * for it. Note that not all ARIA states have default values.
@@ -27,7 +24,6 @@ const State = goog.require('goog.a11y.aria.State');
  */
 let defaultStateValueMap;
 
-
 /**
  * A method that creates a map that contains mapping between an ARIA state and
  * the default value for it. Note that not all ARIA states have default values.
@@ -35,7 +31,7 @@ let defaultStateValueMap;
  * @return {!Object<!State|string, string|boolean|number>}
  *      The names for each of the notification methods.
  */
-exports.getDefaultValuesMap = function() {
+exports.getDefaultValuesMap = () => {
   if (!defaultStateValueMap) {
     defaultStateValueMap = {
       [State.ATOMIC]: false,

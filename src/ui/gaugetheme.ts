@@ -4,21 +4,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview The color theme used by a gauge (goog.ui.Gauge).
  */
 
-
 goog.provide('goog.ui.GaugeTheme');
-
 
 goog.require('goog.graphics.LinearGradient');
 goog.require('goog.graphics.SolidFill');
 goog.require('goog.graphics.Stroke');
 goog.requireType('goog.graphics.Fill');
-
-
 
 /**
  * A class for the default color theme for a Gauge.
@@ -27,18 +22,13 @@ goog.requireType('goog.graphics.Fill');
  * @constructor
  * @final
  */
-goog.ui.GaugeTheme = function() {};
-
+goog.ui.GaugeTheme = () => {};
 
 /**
  * Returns the stroke for the external border of the gauge.
  * @return {!goog.graphics.Stroke} The stroke to use.
  */
-goog.ui.GaugeTheme.prototype.getExternalBorderStroke = function() {
-  'use strict';
-  return new goog.graphics.Stroke(1, '#333333');
-};
-
+goog.ui.GaugeTheme.prototype.getExternalBorderStroke = () => new goog.graphics.Stroke(1, '#333333');
 
 /**
  * Returns the fill for the external border of the gauge.
@@ -47,22 +37,14 @@ goog.ui.GaugeTheme.prototype.getExternalBorderStroke = function() {
  * @param {number} r Radius of the gauge.
  * @return {!goog.graphics.Fill} The fill to use.
  */
-goog.ui.GaugeTheme.prototype.getExternalBorderFill = function(cx, cy, r) {
-  'use strict';
-  return new goog.graphics.LinearGradient(
-      cx + r, cy - r, cx - r, cy + r, '#f7f7f7', '#cccccc');
-};
-
+goog.ui.GaugeTheme.prototype.getExternalBorderFill = (cx, cy, r) =>
+  new goog.graphics.LinearGradient(cx + r, cy - r, cx - r, cy + r, '#f7f7f7', '#cccccc');
 
 /**
  * Returns the stroke for the internal border of the gauge.
  * @return {!goog.graphics.Stroke} The stroke to use.
  */
-goog.ui.GaugeTheme.prototype.getInternalBorderStroke = function() {
-  'use strict';
-  return new goog.graphics.Stroke(2, '#e0e0e0');
-};
-
+goog.ui.GaugeTheme.prototype.getInternalBorderStroke = () => new goog.graphics.Stroke(2, '#e0e0e0');
 
 /**
  * Returns the fill for the internal border of the gauge.
@@ -71,41 +53,26 @@ goog.ui.GaugeTheme.prototype.getInternalBorderStroke = function() {
  * @param {number} r Radius of the gauge.
  * @return {!goog.graphics.Fill} The fill to use.
  */
-goog.ui.GaugeTheme.prototype.getInternalBorderFill = function(cx, cy, r) {
-  'use strict';
-  return new goog.graphics.SolidFill('#f7f7f7');
-};
-
+goog.ui.GaugeTheme.prototype.getInternalBorderFill = (cx, cy, r) =>
+  new goog.graphics.SolidFill('#f7f7f7');
 
 /**
  * Returns the stroke for the major ticks of the gauge.
  * @return {!goog.graphics.Stroke} The stroke to use.
  */
-goog.ui.GaugeTheme.prototype.getMajorTickStroke = function() {
-  'use strict';
-  return new goog.graphics.Stroke(2, '#333333');
-};
-
+goog.ui.GaugeTheme.prototype.getMajorTickStroke = () => new goog.graphics.Stroke(2, '#333333');
 
 /**
  * Returns the stroke for the minor ticks of the gauge.
  * @return {!goog.graphics.Stroke} The stroke to use.
  */
-goog.ui.GaugeTheme.prototype.getMinorTickStroke = function() {
-  'use strict';
-  return new goog.graphics.Stroke(1, '#666666');
-};
-
+goog.ui.GaugeTheme.prototype.getMinorTickStroke = () => new goog.graphics.Stroke(1, '#666666');
 
 /**
  * Returns the stroke for the hinge at the center of the gauge.
  * @return {!goog.graphics.Stroke} The stroke to use.
  */
-goog.ui.GaugeTheme.prototype.getHingeStroke = function() {
-  'use strict';
-  return new goog.graphics.Stroke(1, '#666666');
-};
-
+goog.ui.GaugeTheme.prototype.getHingeStroke = () => new goog.graphics.Stroke(1, '#666666');
 
 /**
  * Returns the fill for the hinge at the center of the gauge.
@@ -114,22 +81,14 @@ goog.ui.GaugeTheme.prototype.getHingeStroke = function() {
  * @param {number} r  Radius of the hinge.
  * @return {!goog.graphics.Fill} The fill to use.
  */
-goog.ui.GaugeTheme.prototype.getHingeFill = function(cx, cy, r) {
-  'use strict';
-  return new goog.graphics.LinearGradient(
-      cx + r, cy - r, cx - r, cy + r, '#4684ee', '#3776d6');
-};
-
+goog.ui.GaugeTheme.prototype.getHingeFill = (cx, cy, r) =>
+  new goog.graphics.LinearGradient(cx + r, cy - r, cx - r, cy + r, '#4684ee', '#3776d6');
 
 /**
  * Returns the stroke for the gauge needle.
  * @return {!goog.graphics.Stroke} The stroke to use.
  */
-goog.ui.GaugeTheme.prototype.getNeedleStroke = function() {
-  'use strict';
-  return new goog.graphics.Stroke(1, '#c63310');
-};
-
+goog.ui.GaugeTheme.prototype.getNeedleStroke = () => new goog.graphics.Stroke(1, '#c63310');
 
 /**
  * Returns the fill for the hinge at the center of the gauge.
@@ -138,38 +97,25 @@ goog.ui.GaugeTheme.prototype.getNeedleStroke = function() {
  * @param {number} r Radius of the gauge.
  * @return {!goog.graphics.Fill} The fill to use.
  */
-goog.ui.GaugeTheme.prototype.getNeedleFill = function(cx, cy, r) {
-  'use strict';
+goog.ui.GaugeTheme.prototype.getNeedleFill = (cx, cy, r) => {
   // Make needle a bit transparent so that text underneeth is still visible.
   return new goog.graphics.SolidFill('#dc3912', 0.7);
 };
-
 
 /**
  * Returns the color for the gauge title.
  * @return {string} The color to use.
  */
-goog.ui.GaugeTheme.prototype.getTitleColor = function() {
-  'use strict';
-  return '#333333';
-};
-
+goog.ui.GaugeTheme.prototype.getTitleColor = () => '#333333';
 
 /**
  * Returns the color for the gauge value.
  * @return {string} The color to use.
  */
-goog.ui.GaugeTheme.prototype.getValueColor = function() {
-  'use strict';
-  return 'black';
-};
-
+goog.ui.GaugeTheme.prototype.getValueColor = () => 'black';
 
 /**
  * Returns the color for the labels (formatted values) of tick marks.
  * @return {string} The color to use.
  */
-goog.ui.GaugeTheme.prototype.getTickLabelColor = function() {
-  'use strict';
-  return '#333333';
-};
+goog.ui.GaugeTheme.prototype.getTickLabelColor = () => '#333333';

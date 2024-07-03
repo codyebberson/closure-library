@@ -10,8 +10,6 @@
 
 goog.provide('goog.string.StringBuffer');
 
-
-
 /**
  * Utility class to facilitate string concatenation.
  *
@@ -20,13 +18,11 @@ goog.provide('goog.string.StringBuffer');
  *     append, e.g., new goog.string.StringBuffer('foo', 'bar').
  * @constructor
  */
-goog.string.StringBuffer = function(opt_a1, var_args) {
-  'use strict';
+goog.string.StringBuffer = function (opt_a1, var_args) {
   if (opt_a1 != null) {
     this.append.apply(this, arguments);
   }
 };
-
 
 /**
  * Internal buffer for the string to be concatenated.
@@ -35,18 +31,15 @@ goog.string.StringBuffer = function(opt_a1, var_args) {
  */
 goog.string.StringBuffer.prototype.buffer_ = '';
 
-
 /**
  * Sets the contents of the string buffer object, replacing what's currently
  * there.
  *
  * @param {*} s String to set.
  */
-goog.string.StringBuffer.prototype.set = function(s) {
-  'use strict';
+goog.string.StringBuffer.prototype.set = function (s) {
   this.buffer_ = '' + s;
 };
-
 
 /**
  * Appends one or more items to the buffer.
@@ -60,11 +53,11 @@ goog.string.StringBuffer.prototype.set = function(s) {
  * @return {!goog.string.StringBuffer} This same StringBuffer object.
  * @suppress {duplicate}
  */
-goog.string.StringBuffer.prototype.append = function(a1, opt_a2, var_args) {
-  'use strict';
+goog.string.StringBuffer.prototype.append = function (a1, opt_a2, var_args) {
   // Use a1 directly to avoid arguments instantiation for single-arg case.
   this.buffer_ += String(a1);
-  if (opt_a2 != null) {  // second argument is undefined (null == undefined)
+  if (opt_a2 != null) {
+    // second argument is undefined (null == undefined)
     for (let i = 1; i < arguments.length; i++) {
       this.buffer_ += arguments[i];
     }
@@ -72,30 +65,24 @@ goog.string.StringBuffer.prototype.append = function(a1, opt_a2, var_args) {
   return this;
 };
 
-
 /**
  * Clears the internal buffer.
  */
-goog.string.StringBuffer.prototype.clear = function() {
-  'use strict';
+goog.string.StringBuffer.prototype.clear = function () {
   this.buffer_ = '';
 };
-
 
 /**
  * @return {number} the length of the current contents of the buffer.
  */
-goog.string.StringBuffer.prototype.getLength = function() {
-  'use strict';
+goog.string.StringBuffer.prototype.getLength = function () {
   return this.buffer_.length;
 };
-
 
 /**
  * @return {string} The concatenated string.
  * @override
  */
-goog.string.StringBuffer.prototype.toString = function() {
-  'use strict';
+goog.string.StringBuffer.prototype.toString = function () {
   return this.buffer_;
 };

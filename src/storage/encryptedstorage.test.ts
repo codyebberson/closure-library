@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.storage.EncryptedStorageTest');
-goog.setTestOnly();
 
 const EncryptedStorage = goog.require('goog.storage.EncryptedStorage');
 const ErrorCode = goog.require('goog.storage.ErrorCode');
@@ -29,8 +28,9 @@ function getEncryptedData(storage, key) {
 
 /** @suppress {visibility} suppression added to enable type checking */
 function decryptWrapper(storage, key, wrapper) {
-  return JSON.parse(storage.decryptValue_(
-      wrapper[EncryptedStorage.SALT_KEY], key, wrapper[RichStorage.DATA_KEY]));
+  return JSON.parse(
+    storage.decryptValue_(wrapper[EncryptedStorage.SALT_KEY], key, wrapper[RichStorage.DATA_KEY])
+  );
 }
 
 function hammingDistance(a, b) {
@@ -71,7 +71,7 @@ testSuite({
     // Simple Objects.
     storage.set('first', 'Hello world!');
     storage.set('second', ['one', 'two', 'three'], 1000);
-    storage.set('third', {'a': 97, 'b': 98});
+    storage.set('third', { a: 97, b: 98 });
 
     // Wrong secret can't find keys.
     assertNull(mechanism.get('first'));
@@ -90,12 +90,11 @@ testSuite({
     // Correct key decrypts properly.
     assertObjectEquals('Hello world!', storage.get('first'));
     assertObjectEquals(['one', 'two', 'three'], storage.get('second'));
-    assertObjectEquals({'a': 97, 'b': 98}, storage.get('third'));
+    assertObjectEquals({ a: 97, b: 98 }, storage.get('third'));
 
     // Wrong secret can't decode values even if the key is revealed.
     const encryptedWrapper = getEncryptedWrapper(storage, 'first');
-    assertObjectEquals(
-        'Hello world!', decryptWrapper(storage, 'first', encryptedWrapper));
+    assertObjectEquals('Hello world!', decryptWrapper(storage, 'first', encryptedWrapper));
     assertThrows(() => {
       decryptWrapper(mallory, 'first', encryptedWrapper);
     });
@@ -103,30 +102,31 @@ testSuite({
     // If the value is overwritten, it can't be decrypted.
     /** @suppress {visibility} suppression added to enable type checking */
     encryptedWrapper[RichStorage.DATA_KEY] = 'kaboom';
-    mechanism.set(
-        storage.hashKeyWithSecret_('first'),
-        googJson.serialize(encryptedWrapper));
-    assertEquals(ErrorCode.DECRYPTION_ERROR, assertThrows(() => {
-                   storage.get('first');
-                 }));
+    mechanism.set(storage.hashKeyWithSecret_('first'), googJson.serialize(encryptedWrapper));
+    assertEquals(
+      ErrorCode.DECRYPTION_ERROR,
+      assertThrows(() => {
+        storage.get('first');
+      })
+    );
 
     // Test garbage collection.
     storage.collect();
     assertNotNull(getEncryptedWrapper(storage, 'first'));
     assertObjectEquals(['one', 'two', 'three'], storage.get('second'));
-    assertObjectEquals({'a': 97, 'b': 98}, storage.get('third'));
+    assertObjectEquals({ a: 97, b: 98 }, storage.get('third'));
     clock.tick(2000);
     storage.collect();
     assertNotNull(getEncryptedWrapper(storage, 'first'));
     assertUndefined(storage.get('second'));
-    assertObjectEquals({'a': 97, 'b': 98}, storage.get('third'));
+    assertObjectEquals({ a: 97, b: 98 }, storage.get('third'));
     mechanism.set(storage.hashKeyWithSecret_('first'), '"kaboom"');
     storage.collect();
     assertNotNull(getEncryptedWrapper(storage, 'first'));
-    assertObjectEquals({'a': 97, 'b': 98}, storage.get('third'));
+    assertObjectEquals({ a: 97, b: 98 }, storage.get('third'));
     storage.collect(true);
     assertUndefined(storage.get('first'));
-    assertObjectEquals({'a': 97, 'b': 98}, storage.get('third'));
+    assertObjectEquals({ a: 97, b: 98 }, storage.get('third'));
 
     // Clean up.
     storage.remove('third');
@@ -142,18 +142,24 @@ testSuite({
     // Same value under two different keys should appear very different,
     // even with the same salt.
     storage.set('one', 'Hello world!');
-    randomMock.seed(0);  // Reset the generator so we get the same salt.
+    randomMock.seed(0); // Reset the generator so we get the same salt.
     storage.set('two', 'Hello world!');
     const golden = getEncryptedData(storage, 'one');
     assertRoughlyEquals(
-        'Ciphertext did not change with keys', golden.length,
-        hammingDistance(golden, getEncryptedData(storage, 'two')), 2);
+      'Ciphertext did not change with keys',
+      golden.length,
+      hammingDistance(golden, getEncryptedData(storage, 'two')),
+      2
+    );
 
     // Same key-value pair written second time should appear very different.
     storage.set('one', 'Hello world!');
     assertRoughlyEquals(
-        'Salting seems to have failed', golden.length,
-        hammingDistance(golden, getEncryptedData(storage, 'one')), 2);
+      'Salting seems to have failed',
+      golden.length,
+      hammingDistance(golden, getEncryptedData(storage, 'one')),
+      2
+    );
 
     // Clean up.
     storage.remove('1');

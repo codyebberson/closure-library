@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.ScrollFloaterTest');
-goog.setTestOnly();
 
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
 const ScrollFloater = goog.require('goog.ui.ScrollFloater');
@@ -21,14 +20,11 @@ testSuite({
     scrollFloater.decorate(floater);
 
     assertTrue('Default state is enabled', scrollFloater.isScrollingEnabled());
-    assertFalse(
-        'On unscrolled page should not be floating',
-        scrollFloater.isFloating());
+    assertFalse('On unscrolled page should not be floating', scrollFloater.isFloating());
 
     scrollFloater.setScrollingEnabled(false);
 
-    assertFalse(
-        'We can disable the floater', scrollFloater.isScrollingEnabled());
+    assertFalse('We can disable the floater', scrollFloater.isScrollingEnabled());
     scrollFloater.dispose();
   },
 
@@ -92,8 +88,7 @@ testSuite({
     assertFalse('Should not be pinned', scrollFloater.isPinned());
 
     // Detach eventCanceller and enable floating.
-    events.unlisten(
-        scrollFloater, ScrollFloater.EventType.FLOAT, eventCanceller);
+    events.unlisten(scrollFloater, ScrollFloater.EventType.FLOAT, eventCanceller);
     scrollFloater.float_(ScrollFloater.FloatMode_.TOP);
 
     // Have eventCanceller handle the DOCK event and verify cancellation.
@@ -125,15 +120,17 @@ testSuite({
 
     // Ensure event handler got called and updated the font size.
     assertEquals(
-        'Font size should be 20px', '20px',
-        style.getStyle(scrollFloater.getElement(), 'font-size'));
+      'Font size should be 20px',
+      '20px',
+      style.getStyle(scrollFloater.getElement(), 'font-size')
+    );
 
+    assertEquals('Top should be auto', 'auto', style.getStyle(scrollFloater.getElement(), 'top'));
     assertEquals(
-        'Top should be auto', 'auto',
-        style.getStyle(scrollFloater.getElement(), 'top'));
-    assertEquals(
-        'Bottom should be 0px', 0,
-        parseInt(style.getStyle(scrollFloater.getElement(), 'bottom')));
+      'Bottom should be 0px',
+      0,
+      Number.parseInt(style.getStyle(scrollFloater.getElement(), 'bottom'))
+    );
 
     scrollFloater.dispose();
   },
@@ -148,17 +145,21 @@ testSuite({
 
     // For some reason the default position of the tested SF is 16px left.
     assertEquals(
-        'Element should be left aligned', '16px',
-        style.getStyle(scrollFloater.getElement(), 'left'));
+      'Element should be left aligned',
+      '16px',
+      style.getStyle(scrollFloater.getElement(), 'left')
+    );
 
     const propReplacer = new PropertyReplacer();
-    propReplacer.set(dom, 'getDocumentScroll', () => ({'x': 20}));
+    propReplacer.set(dom, 'getDocumentScroll', () => ({ x: 20 }));
 
     scrollFloater.float_(ScrollFloater.FloatMode_.TOP);
 
     assertEquals(
-        'Element should be scrolled to the left', '-4px',
-        style.getStyle(scrollFloater.getElement(), 'left'));
+      'Element should be scrolled to the left',
+      '-4px',
+      style.getStyle(scrollFloater.getElement(), 'left')
+    );
 
     propReplacer.reset();
     scrollFloater.dispose();

@@ -15,32 +15,20 @@ goog.require('goog.asserts');
 goog.require('goog.labs.testing.Matcher');
 goog.require('goog.string');
 
-
-
 /**
  * Matches any string value.
  *
  * @constructor @struct @implements {goog.labs.testing.Matcher} @final
  */
-goog.labs.testing.stringmatcher.AnyStringMatcher = function() {};
-
-
-/** @override */
-goog.labs.testing.stringmatcher.AnyStringMatcher.prototype.matches = function(
-    actualValue) {
-  'use strict';
-  return typeof actualValue === 'string';
-};
-
+goog.labs.testing.stringmatcher.AnyStringMatcher = () => {};
 
 /** @override */
-goog.labs.testing.stringmatcher.AnyStringMatcher.prototype.describe = function(
-    actualValue) {
-  'use strict';
-  return '<' + actualValue + '> is not a string';
-};
+goog.labs.testing.stringmatcher.AnyStringMatcher.prototype.matches = (actualValue) =>
+  typeof actualValue === 'string';
 
-
+/** @override */
+goog.labs.testing.stringmatcher.AnyStringMatcher.prototype.describe = (actualValue) =>
+  '<' + actualValue + '> is not a string';
 
 /**
  * The ContainsString matcher.
@@ -52,8 +40,7 @@ goog.labs.testing.stringmatcher.AnyStringMatcher.prototype.describe = function(
  * @implements {goog.labs.testing.Matcher}
  * @final
  */
-goog.labs.testing.stringmatcher.ContainsStringMatcher = function(value) {
-  'use strict';
+goog.labs.testing.stringmatcher.ContainsStringMatcher = function (value) {
   /**
    * @type {string}
    * @private
@@ -61,41 +48,30 @@ goog.labs.testing.stringmatcher.ContainsStringMatcher = function(value) {
   this.value_ = value;
 };
 
-
 /**
  * Determines if input string contains the expected string.
  *
  * @override
  */
-goog.labs.testing.stringmatcher.ContainsStringMatcher.prototype.matches =
-    function(actualValue) {
-  'use strict';
+goog.labs.testing.stringmatcher.ContainsStringMatcher.prototype.matches = function (actualValue) {
   goog.asserts.assertString(actualValue);
   return goog.string.contains(actualValue, this.value_);
 };
 
-
 /**
  * @override
  */
-goog.labs.testing.stringmatcher.ContainsStringMatcher.prototype.describe =
-    function(actualValue) {
-  'use strict';
+goog.labs.testing.stringmatcher.ContainsStringMatcher.prototype.describe = function (actualValue) {
   return actualValue + ' does not contain ' + this.value_;
 };
-
 
 /**
  * @return {string}
  * @override
  */
-goog.labs.testing.stringmatcher.ContainsStringMatcher.prototype.toString =
-    function() {
-  'use strict';
+goog.labs.testing.stringmatcher.ContainsStringMatcher.prototype.toString = function () {
   return 'ContainsStringMatcher[' + this.value_ + ']';
 };
-
-
 
 /**
  * The EndsWith matcher.
@@ -107,8 +83,7 @@ goog.labs.testing.stringmatcher.ContainsStringMatcher.prototype.toString =
  * @implements {goog.labs.testing.Matcher}
  * @final
  */
-goog.labs.testing.stringmatcher.EndsWithMatcher = function(value) {
-  'use strict';
+goog.labs.testing.stringmatcher.EndsWithMatcher = function (value) {
   /**
    * @type {string}
    * @private
@@ -116,41 +91,30 @@ goog.labs.testing.stringmatcher.EndsWithMatcher = function(value) {
   this.value_ = value;
 };
 
-
 /**
  * Determines if input string ends with the expected string.
  *
  * @override
  */
-goog.labs.testing.stringmatcher.EndsWithMatcher.prototype.matches = function(
-    actualValue) {
-  'use strict';
+goog.labs.testing.stringmatcher.EndsWithMatcher.prototype.matches = function (actualValue) {
   goog.asserts.assertString(actualValue);
   return goog.string.endsWith(actualValue, this.value_);
 };
 
-
 /**
  * @override
  */
-goog.labs.testing.stringmatcher.EndsWithMatcher.prototype.describe = function(
-    actualValue) {
-  'use strict';
+goog.labs.testing.stringmatcher.EndsWithMatcher.prototype.describe = function (actualValue) {
   return actualValue + ' does not end with ' + this.value_;
 };
-
 
 /**
  * @return {string}
  * @override
  */
-goog.labs.testing.stringmatcher.EndsWithMatcher.prototype.toString =
-    function() {
-  'use strict';
+goog.labs.testing.stringmatcher.EndsWithMatcher.prototype.toString = function () {
   return 'EndsWithMatcher[' + this.value_ + ']';
 };
-
-
 
 /**
  * The EqualToIgnoringWhitespace matcher.  Collapses all whitespace down to a
@@ -163,16 +127,13 @@ goog.labs.testing.stringmatcher.EndsWithMatcher.prototype.toString =
  * @implements {goog.labs.testing.Matcher}
  * @final
  */
-goog.labs.testing.stringmatcher.EqualToIgnoringWhitespaceMatcher = function(
-    value) {
-  'use strict';
+goog.labs.testing.stringmatcher.EqualToIgnoringWhitespaceMatcher = function (value) {
   /**
    * @type {string}
    * @private
    */
   this.value_ = value;
 };
-
 
 /**
  * Determines if input string is the expected string when all whitespace in both
@@ -182,46 +143,41 @@ goog.labs.testing.stringmatcher.EqualToIgnoringWhitespaceMatcher = function(
  * @param {*} actualValue
  * @return {boolean}
  */
-goog.labs.testing.stringmatcher.EqualToIgnoringWhitespaceMatcher.prototype
-    .matches = function(actualValue) {
-  'use strict';
+goog.labs.testing.stringmatcher.EqualToIgnoringWhitespaceMatcher.prototype.matches = function (
+  actualValue
+) {
   goog.asserts.assertString(actualValue);
   const collapsedActualValue = goog.string.collapseWhitespace(actualValue);
   const collapsedExpectedValue = goog.string.collapseWhitespace(this.value_);
 
-  return goog.string.caseInsensitiveCompare(
-             collapsedActualValue, collapsedExpectedValue) === 0;
+  return goog.string.caseInsensitiveCompare(collapsedActualValue, collapsedExpectedValue) === 0;
 };
-
 
 /**
  * @override
  * @param {*} actualValue
  * @return {string}
  */
-goog.labs.testing.stringmatcher.EqualToIgnoringWhitespaceMatcher.prototype
-    .describe = function(actualValue) {
-  'use strict';
+goog.labs.testing.stringmatcher.EqualToIgnoringWhitespaceMatcher.prototype.describe = function (
+  actualValue
+) {
   goog.asserts.assertString(actualValue);
   const collapsedSuppliedValue = goog.string.collapseWhitespace(actualValue);
   const collapsedExpectedString = goog.string.collapseWhitespace(this.value_);
   return `"${actualValue}" collapses to "${
-      collapsedSuppliedValue}" which is not equal(ignoring whitespace and case) to "${
-      this.value_}" which collapses to "${collapsedExpectedString}"`;
+    collapsedSuppliedValue
+  }" which is not equal(ignoring whitespace and case) to "${
+    this.value_
+  }" which collapses to "${collapsedExpectedString}"`;
 };
-
 
 /**
  * @return {string}
  * @override
  */
-goog.labs.testing.stringmatcher.EqualToIgnoringWhitespaceMatcher.prototype
-    .toString = function() {
-  'use strict';
+goog.labs.testing.stringmatcher.EqualToIgnoringWhitespaceMatcher.prototype.toString = function () {
   return 'EqualToIgnoringWhitespaceMatcher[' + this.value_ + ']';
 };
-
-
 
 /**
  * The Equals matcher.
@@ -233,8 +189,7 @@ goog.labs.testing.stringmatcher.EqualToIgnoringWhitespaceMatcher.prototype
  * @implements {goog.labs.testing.Matcher}
  * @final
  */
-goog.labs.testing.stringmatcher.EqualsMatcher = function(value) {
-  'use strict';
+goog.labs.testing.stringmatcher.EqualsMatcher = function (value) {
   /**
    * @type {string}
    * @private
@@ -242,40 +197,30 @@ goog.labs.testing.stringmatcher.EqualsMatcher = function(value) {
   this.value_ = value;
 };
 
-
 /**
  * Determines if input string is equal to the expected string.
  *
  * @override
  */
-goog.labs.testing.stringmatcher.EqualsMatcher.prototype.matches = function(
-    actualValue) {
-  'use strict';
+goog.labs.testing.stringmatcher.EqualsMatcher.prototype.matches = function (actualValue) {
   goog.asserts.assertString(actualValue);
   return this.value_ === actualValue;
 };
 
-
 /**
  * @override
  */
-goog.labs.testing.stringmatcher.EqualsMatcher.prototype.describe = function(
-    actualValue) {
-  'use strict';
+goog.labs.testing.stringmatcher.EqualsMatcher.prototype.describe = function (actualValue) {
   return actualValue + ' is not equal to ' + this.value_;
 };
-
 
 /**
  * @return {string}
  * @override
  */
-goog.labs.testing.stringmatcher.EqualsMatcher.prototype.toString = function() {
-  'use strict';
+goog.labs.testing.stringmatcher.EqualsMatcher.prototype.toString = function () {
   return 'EqualsMatcher[' + this.value_ + ']';
 };
-
-
 
 /**
  * The MatchesRegex matcher.
@@ -287,8 +232,7 @@ goog.labs.testing.stringmatcher.EqualsMatcher.prototype.toString = function() {
  * @implements {goog.labs.testing.Matcher}
  * @final
  */
-goog.labs.testing.stringmatcher.RegexMatcher = function(regex) {
-  'use strict';
+goog.labs.testing.stringmatcher.RegexMatcher = function (regex) {
   /**
    * @type {!RegExp}
    * @private
@@ -296,40 +240,30 @@ goog.labs.testing.stringmatcher.RegexMatcher = function(regex) {
   this.regex_ = regex;
 };
 
-
 /**
  * Determines if input string is equal to the expected string.
  *
  * @override
  */
-goog.labs.testing.stringmatcher.RegexMatcher.prototype.matches = function(
-    actualValue) {
-  'use strict';
+goog.labs.testing.stringmatcher.RegexMatcher.prototype.matches = function (actualValue) {
   goog.asserts.assertString(actualValue);
   return this.regex_.test(actualValue);
 };
 
-
 /**
  * @override
  */
-goog.labs.testing.stringmatcher.RegexMatcher.prototype.describe = function(
-    actualValue) {
-  'use strict';
+goog.labs.testing.stringmatcher.RegexMatcher.prototype.describe = function (actualValue) {
   return actualValue + ' does not match ' + this.regex_;
 };
-
 
 /**
  * @return {string}
  * @override
  */
-goog.labs.testing.stringmatcher.RegexMatcher.prototype.toString = function() {
-  'use strict';
+goog.labs.testing.stringmatcher.RegexMatcher.prototype.toString = function () {
   return 'RegexMatcher[' + this.regex_ + ']';
 };
-
-
 
 /**
  * The StartsWith matcher.
@@ -341,8 +275,7 @@ goog.labs.testing.stringmatcher.RegexMatcher.prototype.toString = function() {
  * @implements {goog.labs.testing.Matcher}
  * @final
  */
-goog.labs.testing.stringmatcher.StartsWithMatcher = function(value) {
-  'use strict';
+goog.labs.testing.stringmatcher.StartsWithMatcher = function (value) {
   /**
    * @type {string}
    * @private
@@ -350,41 +283,30 @@ goog.labs.testing.stringmatcher.StartsWithMatcher = function(value) {
   this.value_ = value;
 };
 
-
 /**
  * Determines if input string starts with the expected string.
  *
  * @override
  */
-goog.labs.testing.stringmatcher.StartsWithMatcher.prototype.matches = function(
-    actualValue) {
-  'use strict';
+goog.labs.testing.stringmatcher.StartsWithMatcher.prototype.matches = function (actualValue) {
   goog.asserts.assertString(actualValue);
   return goog.string.startsWith(actualValue, this.value_);
 };
 
-
 /**
  * @override
  */
-goog.labs.testing.stringmatcher.StartsWithMatcher.prototype.describe = function(
-    actualValue) {
-  'use strict';
+goog.labs.testing.stringmatcher.StartsWithMatcher.prototype.describe = function (actualValue) {
   return actualValue + ' does not start with ' + this.value_;
 };
-
 
 /**
  * @return {string}
  * @override
  */
-goog.labs.testing.stringmatcher.StartsWithMatcher.prototype.toString =
-    function() {
-  'use strict';
+goog.labs.testing.stringmatcher.StartsWithMatcher.prototype.toString = function () {
   return 'StartsWithMatcher[' + this.value_ + ']';
 };
-
-
 
 /**
  * The StringContainsInOrdermatcher.
@@ -396,9 +318,7 @@ goog.labs.testing.stringmatcher.StartsWithMatcher.prototype.toString =
  * @implements {goog.labs.testing.Matcher}
  * @final
  */
-goog.labs.testing.stringmatcher.StringContainsInOrderMatcher = function(
-    values) {
-  'use strict';
+goog.labs.testing.stringmatcher.StringContainsInOrderMatcher = function (values) {
   /**
    * @type {Array<string>}
    * @private
@@ -406,17 +326,17 @@ goog.labs.testing.stringmatcher.StringContainsInOrderMatcher = function(
   this.values_ = values;
 };
 
-
 /**
  * Determines if input string contains, in order, the expected array of strings.
  * @override
  * @suppress {strictPrimitiveOperators} Part of the go/strict_warnings_migration
  */
-goog.labs.testing.stringmatcher.StringContainsInOrderMatcher.prototype.matches =
-    function(actualValue) {
-  'use strict';
+goog.labs.testing.stringmatcher.StringContainsInOrderMatcher.prototype.matches = function (
+  actualValue
+) {
   goog.asserts.assertString(actualValue);
-  var currentIndex, previousIndex = 0;
+  var currentIndex,
+    previousIndex = 0;
   for (var i = 0; i < this.values_.length; i++) {
     currentIndex = goog.string.contains(actualValue, this.values_[i]);
     if (currentIndex < 0 || currentIndex < previousIndex) {
@@ -427,35 +347,23 @@ goog.labs.testing.stringmatcher.StringContainsInOrderMatcher.prototype.matches =
   return true;
 };
 
-
 /**
  * @override
  */
-goog.labs.testing.stringmatcher.StringContainsInOrderMatcher.prototype
-    .describe = function(actualValue) {
-  'use strict';
-  return actualValue + ' does not contain the expected values in order.';
-};
-
+goog.labs.testing.stringmatcher.StringContainsInOrderMatcher.prototype.describe = (actualValue) =>
+  actualValue + ' does not contain the expected values in order.';
 
 /**
  * @return {string}
  * @override
  */
-goog.labs.testing.stringmatcher.StringContainsInOrderMatcher.prototype
-    .toString = function() {
-  'use strict';
+goog.labs.testing.stringmatcher.StringContainsInOrderMatcher.prototype.toString = function () {
   return 'StringContainsInOrderMatcher[' + this.values_ + ']';
 };
 
-
-
 /** @return {!goog.labs.testing.stringmatcher.AnyStringMatcher} */
-goog.labs.testing.stringmatcher.AnyStringMatcher.anyString = function() {
-  'use strict';
-  return new goog.labs.testing.stringmatcher.AnyStringMatcher();
-};
-
+goog.labs.testing.stringmatcher.AnyStringMatcher.anyString = () =>
+  new goog.labs.testing.stringmatcher.AnyStringMatcher();
 
 /**
  * Matches a string containing the given string.
@@ -465,12 +373,8 @@ goog.labs.testing.stringmatcher.AnyStringMatcher.anyString = function() {
  * @return {!goog.labs.testing.stringmatcher.ContainsStringMatcher} A
  *     ContainsStringMatcher.
  */
-goog.labs.testing.stringmatcher.ContainsStringMatcher.containsString = function(
-    value) {
-  'use strict';
-  return new goog.labs.testing.stringmatcher.ContainsStringMatcher(value);
-};
-
+goog.labs.testing.stringmatcher.ContainsStringMatcher.containsString = (value) =>
+  new goog.labs.testing.stringmatcher.ContainsStringMatcher(value);
 
 /**
  * Matches a string that ends with the given string.
@@ -480,11 +384,8 @@ goog.labs.testing.stringmatcher.ContainsStringMatcher.containsString = function(
  * @return {!goog.labs.testing.stringmatcher.EndsWithMatcher} A
  *     EndsWithMatcher.
  */
-goog.labs.testing.stringmatcher.EndsWithMatcher.endsWith = function(value) {
-  'use strict';
-  return new goog.labs.testing.stringmatcher.EndsWithMatcher(value);
-};
-
+goog.labs.testing.stringmatcher.EndsWithMatcher.endsWith = (value) =>
+  new goog.labs.testing.stringmatcher.EndsWithMatcher(value);
 
 /**
  * Matches a string that equals (ignoring whitespace) the given string.
@@ -494,13 +395,9 @@ goog.labs.testing.stringmatcher.EndsWithMatcher.endsWith = function(value) {
  * @return {!goog.labs.testing.stringmatcher.EqualToIgnoringWhitespaceMatcher} A
  *     EqualToIgnoringWhitespaceMatcher.
  */
-goog.labs.testing.stringmatcher.EqualToIgnoringWhitespaceMatcher
-    .equalToIgnoringWhitespace = function(value) {
-  'use strict';
-  return new goog.labs.testing.stringmatcher.EqualToIgnoringWhitespaceMatcher(
-      value);
-};
-
+goog.labs.testing.stringmatcher.EqualToIgnoringWhitespaceMatcher.equalToIgnoringWhitespace = (
+  value
+) => new goog.labs.testing.stringmatcher.EqualToIgnoringWhitespaceMatcher(value);
 
 /**
  * Matches a string that equals the given string.
@@ -509,11 +406,8 @@ goog.labs.testing.stringmatcher.EqualToIgnoringWhitespaceMatcher
  *
  * @return {!goog.labs.testing.stringmatcher.EqualsMatcher} A EqualsMatcher.
  */
-goog.labs.testing.stringmatcher.EqualsMatcher.equals = function(value) {
-  'use strict';
-  return new goog.labs.testing.stringmatcher.EqualsMatcher(value);
-};
-
+goog.labs.testing.stringmatcher.EqualsMatcher.equals = (value) =>
+  new goog.labs.testing.stringmatcher.EqualsMatcher(value);
 
 /**
  * Matches a string against a regular expression.
@@ -522,11 +416,8 @@ goog.labs.testing.stringmatcher.EqualsMatcher.equals = function(value) {
  *
  * @return {!goog.labs.testing.stringmatcher.RegexMatcher} A RegexMatcher.
  */
-goog.labs.testing.stringmatcher.RegexMatcher.matchesRegex = function(regex) {
-  'use strict';
-  return new goog.labs.testing.stringmatcher.RegexMatcher(regex);
-};
-
+goog.labs.testing.stringmatcher.RegexMatcher.matchesRegex = (regex) =>
+  new goog.labs.testing.stringmatcher.RegexMatcher(regex);
 
 /**
  * Matches a string that starts with the given string.
@@ -536,11 +427,8 @@ goog.labs.testing.stringmatcher.RegexMatcher.matchesRegex = function(regex) {
  * @return {!goog.labs.testing.stringmatcher.StartsWithMatcher} A
  *     StartsWithMatcher.
  */
-goog.labs.testing.stringmatcher.StartsWithMatcher.startsWith = function(value) {
-  'use strict';
-  return new goog.labs.testing.stringmatcher.StartsWithMatcher(value);
-};
-
+goog.labs.testing.stringmatcher.StartsWithMatcher.startsWith = (value) =>
+  new goog.labs.testing.stringmatcher.StartsWithMatcher(value);
 
 /**
  * Matches a string that contains the given strings in order.
@@ -550,9 +438,5 @@ goog.labs.testing.stringmatcher.StartsWithMatcher.startsWith = function(value) {
  * @return {!goog.labs.testing.stringmatcher.StringContainsInOrderMatcher} A
  *     StringContainsInOrderMatcher.
  */
-goog.labs.testing.stringmatcher.StringContainsInOrderMatcher
-    .stringContainsInOrder = function(values) {
-  'use strict';
-  return new goog.labs.testing.stringmatcher.StringContainsInOrderMatcher(
-      values);
-};
+goog.labs.testing.stringmatcher.StringContainsInOrderMatcher.stringContainsInOrder = (values) =>
+  new goog.labs.testing.stringmatcher.StringContainsInOrderMatcher(values);

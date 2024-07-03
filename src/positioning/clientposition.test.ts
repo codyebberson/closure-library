@@ -9,7 +9,6 @@
  */
 
 goog.module('goog.positioning.clientPositionTest');
-goog.setTestOnly();
 
 const ClientPosition = goog.require('goog.positioning.ClientPosition');
 const Corner = goog.require('goog.positioning.Corner');

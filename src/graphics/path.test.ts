@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.graphics.PathTest');
-goog.setTestOnly();
 
 const AffineTransform = goog.require('goog.graphics.AffineTransform');
 const Path = goog.require('goog.graphics.Path');
@@ -21,10 +20,16 @@ testSuite({
   },
 
   testGetSegmentCount() {
-    assertArrayEquals([2, 2, 6, 6, 0], [
-      Path.Segment.MOVETO, Path.Segment.LINETO, Path.Segment.CURVETO,
-      Path.Segment.ARCTO, Path.Segment.CLOSE
-    ].map(Path.getSegmentCount));
+    assertArrayEquals(
+      [2, 2, 6, 6, 0],
+      [
+        Path.Segment.MOVETO,
+        Path.Segment.LINETO,
+        Path.Segment.CURVETO,
+        Path.Segment.ARCTO,
+        Path.Segment.CLOSE,
+      ].map(Path.getSegmentCount)
+    );
   },
 
   testSimpleMoveTo() {
@@ -96,8 +101,9 @@ testSuite({
     assertTrue(path.isSimple());
     assertObjectEquals([110, 120], path.getCurrentPoint());
     graphics.assertPathEquals(
-        ['M', 0, 0, 'C', 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
-        path);
+      ['M', 0, 0, 'C', 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
+      path
+    );
   },
 
   testRepeatedCurveTo() {
@@ -108,8 +114,9 @@ testSuite({
     assertTrue(path.isSimple());
     assertObjectEquals([110, 120], path.getCurrentPoint());
     graphics.assertPathEquals(
-        ['M', 0, 0, 'C', 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
-        path);
+      ['M', 0, 0, 'C', 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
+      path
+    );
   },
 
   testSimpleArc() {
@@ -119,8 +126,7 @@ testSuite({
     const p = path.getCurrentPoint();
     assertEquals(55, p[0]);
     assertRoughlyEquals(77.32, p[1], 0.01);
-    graphics.assertPathEquals(
-        ['M', 58.66, 70, 'A', 10, 20, 30, 30, 55, 77.32], path);
+    graphics.assertPathEquals(['M', 58.66, 70, 'A', 10, 20, 30, 30, 55, 77.32], path);
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -140,11 +146,9 @@ testSuite({
     assertFalse(path.isSimple());
     assertObjectEquals([50, 80], path.getCurrentPoint());
     graphics.assertPathEquals(
-        [
-          'M', 58.66, 70,    'A', 10, 20, 30, 30, 55, 77.32,
-          'M', 55,    77.32, 'A', 10, 20, 60, 30, 50, 80
-        ],
-        path);
+      ['M', 58.66, 70, 'A', 10, 20, 30, 30, 55, 77.32, 'M', 55, 77.32, 'A', 10, 20, 60, 30, 50, 80],
+      path
+    );
   },
 
   testRepeatedArc2() {
@@ -152,11 +156,9 @@ testSuite({
     path.arc(50, 60, 10, 20, 30, 30, false);
     path.arc(50, 60, 10, 20, 60, 30, true);
     graphics.assertPathEquals(
-        [
-          'M', 58.66, 70, 'A', 10, 20, 30, 30, 55, 77.32, 'A', 10, 20, 60, 30,
-          50, 80
-        ],
-        path);
+      ['M', 58.66, 70, 'A', 10, 20, 30, 30, 55, 77.32, 'A', 10, 20, 60, 30, 50, 80],
+      path
+    );
   },
 
   testCompleteCircle() {
@@ -184,8 +186,7 @@ testSuite({
     path.close();
     assertTrue(path.isSimple());
     assertObjectEquals([0, 0], path.getCurrentPoint());
-    graphics.assertPathEquals(
-        ['M', 0, 0, 'L', 10, 20, 30, 40, 50, 60, 'X'], path);
+    graphics.assertPathEquals(['M', 0, 0, 'L', 10, 20, 30, 40, 50, 60, 'X'], path);
   },
 
   testClear() {
@@ -208,8 +209,7 @@ testSuite({
     const p = path.getCurrentPoint();
     assertEquals(55, p[0]);
     assertRoughlyEquals(77.32, p[1], 0.01);
-    graphics.assertPathEquals(
-        ['M', 58.66, 70, 'C', 57.78, 73.04, 56.52, 75.57, 55, 77.32], path);
+    graphics.assertPathEquals(['M', 58.66, 70, 'C', 57.78, 73.04, 56.52, 75.57, 55, 77.32], path);
   },
 
   testCreateSimplifiedPath2() {
@@ -220,11 +220,30 @@ testSuite({
     path = Path.createSimplifiedPath(path);
     assertTrue(path.isSimple());
     graphics.assertPathEquals(
-        [
-          'M', 58.66, 70,    'C', 57.78, 73.04, 56.52, 75.57, 55, 77.32,
-          'M', 55,    77.32, 'C', 53.48, 79.08, 51.76, 80,    50, 80
-        ],
-        path);
+      [
+        'M',
+        58.66,
+        70,
+        'C',
+        57.78,
+        73.04,
+        56.52,
+        75.57,
+        55,
+        77.32,
+        'M',
+        55,
+        77.32,
+        'C',
+        53.48,
+        79.08,
+        51.76,
+        80,
+        50,
+        80,
+      ],
+      path
+    );
   },
 
   testCreateSimplifiedPath3() {
@@ -234,11 +253,27 @@ testSuite({
     path.close();
     path = Path.createSimplifiedPath(path);
     graphics.assertPathEquals(
-        [
-          'M', 58.66, 70, 'C', 57.78, 73.04, 56.52, 75.57, 55, 77.32, 53.48,
-          79.08, 51.76, 80, 50, 80, 'X'
-        ],
-        path);
+      [
+        'M',
+        58.66,
+        70,
+        'C',
+        57.78,
+        73.04,
+        56.52,
+        75.57,
+        55,
+        77.32,
+        53.48,
+        79.08,
+        51.76,
+        80,
+        50,
+        80,
+        'X',
+      ],
+      path
+    );
     const p = path.getCurrentPoint();
     assertRoughlyEquals(58.66, p[0], 0.01);
     assertRoughlyEquals(70, p[1], 0.01);
@@ -249,8 +284,7 @@ testSuite({
     const path = new Path();
     path.moveTo(58.66, 70);
     path.arcToAsCurves(10, 20, 30, 30, false);
-    graphics.assertPathEquals(
-        ['M', 58.66, 70, 'C', 57.78, 73.04, 56.52, 75.57, 55, 77.32], path);
+    graphics.assertPathEquals(['M', 58.66, 70, 'C', 57.78, 73.04, 56.52, 75.57, 55, 77.32], path);
   },
 
   testCreateTransformedPath() {
@@ -260,10 +294,8 @@ testSuite({
     path.close();
     const tx = new AffineTransform(2, 0, 0, 3, 10, 20);
     const path2 = path.createTransformedPath(tx);
-    graphics.assertPathEquals(
-        ['M', 0, 0, 'L', 0, 10, 10, 10, 10, 0, 'X'], path);
-    graphics.assertPathEquals(
-        ['M', 10, 20, 'L', 10, 50, 30, 50, 30, 20, 'X'], path2);
+    graphics.assertPathEquals(['M', 0, 0, 'L', 0, 10, 10, 10, 10, 0, 'X'], path);
+    graphics.assertPathEquals(['M', 10, 20, 'L', 10, 50, 30, 50, 30, 20, 'X'], path2);
   },
 
   testTransform() {
@@ -274,8 +306,7 @@ testSuite({
     const tx = new AffineTransform(2, 0, 0, 3, 10, 20);
     const path2 = path.transform(tx);
     assertTrue(path === path2);
-    graphics.assertPathEquals(
-        ['M', 10, 20, 'L', 10, 50, 30, 50, 30, 20, 'X'], path2);
+    graphics.assertPathEquals(['M', 10, 20, 'L', 10, 50, 30, 50, 30, 20, 'X'], path2);
   },
 
   testTransformCurrentAndClosePoints() {
@@ -310,11 +341,9 @@ testSuite({
     path1.appendPath(path2);
     assertFalse(path1.isSimple());
     graphics.assertPathEquals(
-        [
-          'M', 0,     0,  'L', 0,  10, 10, 10, 10, 0,     'X',
-          'M', 58.66, 70, 'A', 10, 20, 30, 30, 55, 77.32,
-        ],
-        path1);
+      ['M', 0, 0, 'L', 0, 10, 10, 10, 10, 0, 'X', 'M', 58.66, 70, 'A', 10, 20, 30, 30, 55, 77.32],
+      path1
+    );
   },
 
   testIsEmpty() {

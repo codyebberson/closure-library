@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.labs.testing.dictionaryMatcherTest');
-goog.setTestOnly();
 
 /** @suppress {extraRequire} */
 const MatcherError = goog.require('goog.labs.testing.MatcherError');
@@ -20,16 +19,16 @@ function assertMatcherError(callable, errorString) {
 }
 testSuite({
   testHasEntries() {
-    const obj1 = {x: 1, y: 2, z: 3};
-    assertThat(obj1, hasEntries({x: 1, y: 2}), 'obj1 has entries: {x:1, y:2}');
+    const obj1 = { x: 1, y: 2, z: 3 };
+    assertThat(obj1, hasEntries({ x: 1, y: 2 }), 'obj1 has entries: {x:1, y:2}');
 
     assertMatcherError(() => {
-      assertThat(obj1, hasEntries({z: 5, a: 4}));
+      assertThat(obj1, hasEntries({ z: 5, a: 4 }));
     }, 'hasEntries should throw exception when it fails');
   },
 
   testHasEntry() {
-    const obj1 = {x: 1, y: 2, z: 3};
+    const obj1 = { x: 1, y: 2, z: 3 };
     assertThat(obj1, hasEntry('x', 1), 'obj1 has entry: {x:1}');
 
     assertMatcherError(() => {
@@ -38,7 +37,7 @@ testSuite({
   },
 
   testHasKey() {
-    const obj1 = {x: 1};
+    const obj1 = { x: 1 };
     assertThat(obj1, hasKey('x'), 'obj1 has key x');
 
     assertMatcherError(() => {
@@ -47,7 +46,7 @@ testSuite({
   },
 
   testHasValue() {
-    const obj1 = {x: 1};
+    const obj1 = { x: 1 };
     assertThat(obj1, hasValue(1), 'obj1 has value 1');
 
     assertMatcherError(() => {

@@ -21,8 +21,6 @@ goog.require('goog.net.EventType');
 goog.require('goog.object');
 goog.requireType('goog.events.Event');
 
-
-
 /**
  * Image loader utility class.  Raises a {@link goog.events.EventType.LOAD}
  * event for each image loaded, with an {@link Image} object as the target of
@@ -51,8 +49,7 @@ goog.requireType('goog.events.Event');
  * @extends {goog.events.EventTarget}
  * @final
  */
-goog.net.ImageLoader = function(opt_parent) {
-  'use strict';
+goog.net.ImageLoader = function (opt_parent) {
   goog.events.EventTarget.call(this);
 
   /**
@@ -101,7 +98,6 @@ goog.net.ImageLoader = function(opt_parent) {
 };
 goog.inherits(goog.net.ImageLoader, goog.events.EventTarget);
 
-
 /**
  * The type of image request to dispatch, if this is a CORS-enabled image
  * request. CORS-enabled images can be reused in canvas elements without them
@@ -115,7 +111,6 @@ goog.net.ImageLoader.CorsRequestType = {
   USE_CREDENTIALS: 'use-credentials',
 };
 
-
 /**
  * Describes a request for an image. This includes its URL and its CORS-request
  * type, if any.
@@ -126,7 +121,6 @@ goog.net.ImageLoader.CorsRequestType = {
  * @private
  */
 goog.net.ImageLoader.ImageRequest_;
-
 
 /**
  * An array of event types to listen to on images.  This is browser dependent.
@@ -151,7 +145,6 @@ goog.net.ImageLoader.IMAGE_LOAD_EVENTS_ = [
   goog.net.EventType.ERROR,
 ];
 
-
 /**
  * Adds an image to the image loader, and associates it with the given ID
  * string.  If an image with that ID already exists, it is silently replaced.
@@ -164,29 +157,24 @@ goog.net.ImageLoader.IMAGE_LOAD_EVENTS_ = [
  * @param {!goog.net.ImageLoader.CorsRequestType=} opt_corsRequestType The type
  *     of CORS request to use, if any.
  */
-goog.net.ImageLoader.prototype.addImage = function(
-    id, image, opt_corsRequestType) {
-  'use strict';
-  const src = (typeof image === 'string') ? image : image.src;
+goog.net.ImageLoader.prototype.addImage = function (id, image, opt_corsRequestType) {
+  const src = typeof image === 'string' ? image : image.src;
   if (src) {
     this.completionFired_ = false;
     // For now, we just store the source URL for the image.
     this.imageIdToRequestMap_[id] = {
       src: src,
-      corsRequestType: opt_corsRequestType !== undefined ? opt_corsRequestType :
-                                                           null,
+      corsRequestType: opt_corsRequestType !== undefined ? opt_corsRequestType : null,
     };
   }
 };
-
 
 /**
  * Removes the image associated with the given ID string from the image loader.
  * If the image was previously loading, removes any listeners for its events.
  * @param {string} id The ID of the image to remove.
  */
-goog.net.ImageLoader.prototype.removeImage = function(id) {
-  'use strict';
+goog.net.ImageLoader.prototype.removeImage = function (id) {
   delete this.imageIdToRequestMap_[id];
 
   const image = this.imageIdToImageMap_[id];
@@ -194,25 +182,21 @@ goog.net.ImageLoader.prototype.removeImage = function(id) {
     delete this.imageIdToImageMap_[id];
 
     // Stop listening for events on the image.
-    this.handler_.unlisten(
-        image, goog.net.ImageLoader.IMAGE_LOAD_EVENTS_, this.onNetworkEvent_);
+    this.handler_.unlisten(image, goog.net.ImageLoader.IMAGE_LOAD_EVENTS_, this.onNetworkEvent_);
   }
 };
-
 
 /**
  * Starts loading all images in the image loader in parallel.  Raises a LOAD
  * event each time an image finishes loading, and a COMPLETE event after all
  * images have finished loading.
  */
-goog.net.ImageLoader.prototype.start = function() {
-  'use strict';
+goog.net.ImageLoader.prototype.start = function () {
   // Iterate over the keys, rather than the full object, to essentially clone
   // the initial queued images in case any event handlers decide to add more
   // images before this loop has finished executing.
   const imageIdToRequestMap = this.imageIdToRequestMap_;
-  goog.object.getKeys(imageIdToRequestMap).forEach(function(id) {
-    'use strict';
+  goog.object.getKeys(imageIdToRequestMap).forEach(function (id) {
     const imageRequest = imageIdToRequestMap[id];
     if (imageRequest) {
       delete imageIdToRequestMap[id];
@@ -221,7 +205,6 @@ goog.net.ImageLoader.prototype.start = function() {
   }, this);
 };
 
-
 /**
  * Creates an `Image` object with the specified ID and source URL, and
  * listens for network events raised as the image is loaded.
@@ -229,8 +212,7 @@ goog.net.ImageLoader.prototype.start = function() {
  * @param {string} id The unique ID of the image to load.
  * @private
  */
-goog.net.ImageLoader.prototype.loadImage_ = function(imageRequest, id) {
-  'use strict';
+goog.net.ImageLoader.prototype.loadImage_ = function (imageRequest, id) {
   if (this.isDisposed()) {
     // When loading an image in IE7 (and maybe IE8), the error handler
     // may fire before we yield JS control. If the error handler
@@ -251,14 +233,12 @@ goog.net.ImageLoader.prototype.loadImage_ = function(imageRequest, id) {
     image.crossOrigin = imageRequest.corsRequestType;
   }
 
-  this.handler_.listen(
-      image, goog.net.ImageLoader.IMAGE_LOAD_EVENTS_, this.onNetworkEvent_);
+  this.handler_.listen(image, goog.net.ImageLoader.IMAGE_LOAD_EVENTS_, this.onNetworkEvent_);
   this.imageIdToImageMap_[id] = image;
 
   image.id = id;
   image.src = imageRequest.src;
 };
-
 
 /**
  * Handles net events (READY_STATE_CHANGE, LOAD, ABORT, and ERROR).
@@ -266,8 +246,7 @@ goog.net.ImageLoader.prototype.loadImage_ = function(imageRequest, id) {
  * @private
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.net.ImageLoader.prototype.onNetworkEvent_ = function(evt) {
-  'use strict';
+goog.net.ImageLoader.prototype.onNetworkEvent_ = function (evt) {
   const image = /** @type {Element} */ (evt.currentTarget);
 
   if (!image) {
@@ -317,7 +296,7 @@ goog.net.ImageLoader.prototype.onNetworkEvent_ = function(evt) {
 
   // Redispatch the event on behalf of the image. Note that the external
   // listener may dispose this instance.
-  this.dispatchEvent({type: evt.type, target: image});
+  this.dispatchEvent({ type: evt.type, target: image });
 
   if (this.isDisposed()) {
     // If instance was disposed by listener, exit this function.
@@ -331,19 +310,19 @@ goog.net.ImageLoader.prototype.onNetworkEvent_ = function(evt) {
  * If there are no more images pending, raise a COMPLETE event.
  * @private
  */
-goog.net.ImageLoader.prototype.maybeFireCompletionEvent_ = function() {
-  'use strict';
-  if (goog.object.isEmpty(this.imageIdToImageMap_) &&
-      goog.object.isEmpty(this.imageIdToRequestMap_) &&
-      !this.completionFired_) {
+goog.net.ImageLoader.prototype.maybeFireCompletionEvent_ = function () {
+  if (
+    goog.object.isEmpty(this.imageIdToImageMap_) &&
+    goog.object.isEmpty(this.imageIdToRequestMap_) &&
+    !this.completionFired_
+  ) {
     this.completionFired_ = true;
     this.dispatchEvent(goog.net.EventType.COMPLETE);
   }
 };
 
 /** @override */
-goog.net.ImageLoader.prototype.disposeInternal = function() {
-  'use strict';
+goog.net.ImageLoader.prototype.disposeInternal = function () {
   delete this.imageIdToRequestMap_;
   delete this.imageIdToImageMap_;
   goog.dispose(this.handler_);

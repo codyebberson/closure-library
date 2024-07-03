@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.net.CorsXmlHttpFactoryTest');
-goog.setTestOnly();
 
 const CorsXmlHttpFactory = goog.require('goog.net.CorsXmlHttpFactory');
 const testSuite = goog.require('goog.testing.testSuite');

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dom.SavedCaretRangeTest');
-goog.setTestOnly();
 
 const Range = goog.require('goog.dom.Range');
 const SavedCaretRange = goog.require('goog.dom.SavedCaretRange');
@@ -101,13 +100,16 @@ testSuite({
     range.select();
 
     const saved = range.saveUsingCarets();
-    assertHTMLEquals(
-        'd<span id="' + saved.startCaretId_ + '"></span>ef', def.innerHTML);
-    assertHTMLEquals(
-        'jk<span id="' + saved.endCaretId_ + '"></span>l', jkl.innerHTML);
+    assertHTMLEquals('d<span id="' + saved.startCaretId_ + '"></span>ef', def.innerHTML);
+    assertHTMLEquals('jk<span id="' + saved.endCaretId_ + '"></span>l', jkl.innerHTML);
 
     testingDom.assertRangeEquals(
-        def.childNodes[1], 0, jkl.childNodes[1], 0, saved.toAbstractRange());
+      def.childNodes[1],
+      0,
+      jkl.childNodes[1],
+      0,
+      saved.toAbstractRange()
+    );
 
     def = dom.getElement('def');
     jkl = dom.getElement('jkl');
@@ -124,12 +126,10 @@ testSuite({
     const endNode = selection.getEndNode();
     if (endNode == jkl.childNodes[0]) {
       // Webkit (up to Chrome 57) and IE < 9.
-      testingDom.assertRangeEquals(
-          def.childNodes[1], 0, jkl.childNodes[0], 2, selection);
+      testingDom.assertRangeEquals(def.childNodes[1], 0, jkl.childNodes[0], 2, selection);
     } else if (endNode == jkl.childNodes[1]) {
       // Opera
-      testingDom.assertRangeEquals(
-          def.childNodes[1], 0, jkl.childNodes[1], 0, selection);
+      testingDom.assertRangeEquals(def.childNodes[1], 0, jkl.childNodes[1], 0, selection);
     } else {
       // Gecko, newer Chromes
       testingDom.assertRangeEquals(def, 1, jkl, 1, selection);
@@ -189,14 +189,16 @@ testSuite({
     saved2.removeCarets();
 
     assertNotEquals(
-        'Same selection with different saved caret range carets ' +
-            'must have different html.',
-        html1, html2);
+      'Same selection with different saved caret range carets ' + 'must have different html.',
+      html1,
+      html2
+    );
 
     assertTrue(
-        'Same selection with different saved caret range carets must ' +
-            'be considered equal by htmlEqual',
-        SavedCaretRange.htmlEqual(html1, html2));
+      'Same selection with different saved caret range carets must ' +
+        'be considered equal by htmlEqual',
+      SavedCaretRange.htmlEqual(html1, html2)
+    );
 
     saved.dispose();
     saved2.dispose();

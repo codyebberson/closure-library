@@ -13,8 +13,7 @@
  * @nocompile
  */
 
-self.CLOSURE_BASE_PATH =
-self.CLOSURE_BASE_PATH = '../../';
+self.CLOSURE_BASE_PATH = self.CLOSURE_BASE_PATH = '../../';
 self.CLOSURE_DEFINES = self.CLOSURE_DEFINES || {};
 self.CLOSURE_DEFINES['goog.ENABLE_DEBUG_LOADER'] = true;
 importScripts('../../bootstrap/webworkers.js');
@@ -27,14 +26,16 @@ goog.require('goog.messaging.PortCaller');
 goog.require('goog.messaging.PortChannel');
 
 function startListening() {
-  const caller =
-      new goog.messaging.PortCaller(new goog.messaging.PortChannel(self));
+  const caller = new goog.messaging.PortCaller(new goog.messaging.PortChannel(self));
 
-  caller.dial('frame').registerService('sendToMain', function(msg) {
-    'use strict';
-    msg.push('worker1');
-    caller.dial('main').send('result', msg);
-  }, true);
+  caller.dial('frame').registerService(
+    'sendToMain',
+    (msg) => {
+      msg.push('worker1');
+      caller.dial('main').send('result', msg);
+    },
+    true
+  );
 }
 
 startListening();

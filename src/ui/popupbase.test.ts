@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.PopupBaseTest');
-goog.setTestOnly();
 
 const EventType = goog.require('goog.events.EventType');
 const GoogEventTarget = goog.require('goog.events.EventTarget');
@@ -72,12 +71,14 @@ testSuite({
   testEscapeDismissal() {
     popup.setHideOnEscape(true);
     assertTrue(
-        'Sanity check that getHideOnEscape is true when set to true.',
-        popup.getHideOnEscape());
+      'Sanity check that getHideOnEscape is true when set to true.',
+      popup.getHideOnEscape()
+    );
     popup.setVisible(true);
     assertFalse(
-        'Escape key should be cancelled',
-        testingEvents.fireKeySequence(targetDiv, KeyCodes.ESC));
+      'Escape key should be cancelled',
+      testingEvents.fireKeySequence(targetDiv, KeyCodes.ESC)
+    );
     assertFalse(popup.isVisible());
   },
 
@@ -85,8 +86,9 @@ testSuite({
     popup.setHideOnEscape(false);
     popup.setVisible(true);
     assertTrue(
-        'Escape key should be cancelled',
-        testingEvents.fireKeySequence(targetDiv, KeyCodes.ESC));
+      'Escape key should be cancelled',
+      testingEvents.fireKeySequence(targetDiv, KeyCodes.ESC)
+    );
     assertTrue(popup.isVisible());
   },
 
@@ -99,41 +101,36 @@ testSuite({
     popup.setVisible(true);
     let eventsPropagated = 0;
     events.listenOnce(
-        dom.getElement('commonAncestor'),
-        [
-          EventType.KEYDOWN,
-          EventType.KEYUP,
-          EventType.KEYPRESS,
-        ],
-        () => {
-          ++eventsPropagated;
-        });
+      dom.getElement('commonAncestor'),
+      [EventType.KEYDOWN, EventType.KEYUP, EventType.KEYPRESS],
+      () => {
+        ++eventsPropagated;
+      }
+    );
     assertTrue('Popup should remain visible', popup.isVisible());
     assertTrue(
-        'The key event default action should not be prevented',
-        testingEvents.fireKeySequence(targetDiv, KeyCodes.A));
-    assertEquals(
-        'Keydown, keyup, and keypress should have all propagated', 3,
-        eventsPropagated);
+      'The key event default action should not be prevented',
+      testingEvents.fireKeySequence(targetDiv, KeyCodes.A)
+    );
+    assertEquals('Keydown, keyup, and keypress should have all propagated', 3, eventsPropagated);
   },
 
   testEscapeDismissalCanBeCancelledByBeforeHideEvent() {
     popup.setHideOnEscape(true);
     popup.setVisible(true);
     let eventsPropagated = 0;
-    events.listenOnce(
-        dom.getElement('commonAncestor'), EventType.KEYDOWN, () => {
-          ++eventsPropagated;
-        });
+    events.listenOnce(dom.getElement('commonAncestor'), EventType.KEYDOWN, () => {
+      ++eventsPropagated;
+    });
     // Make a listener so that we stop hiding with an event handler.
     events.listenOnce(popup, PopupBase.EventType.BEFORE_HIDE, (e) => {
       e.preventDefault();
     });
-    assertEquals(
-        'The hide should have been cancelled', true, popup.isVisible());
+    assertEquals('The hide should have been cancelled', true, popup.isVisible());
     assertTrue(
-        'The key event default action should not be prevented',
-        testingEvents.fireKeySequence(targetDiv, KeyCodes.ESC));
+      'The key event default action should not be prevented',
+      testingEvents.fireKeySequence(targetDiv, KeyCodes.ESC)
+    );
     assertEquals('Keydown should have all propagated', 1, eventsPropagated);
   },
 
@@ -141,25 +138,17 @@ testSuite({
     popup.setHideOnEscape(true);
     popup.setVisible(true);
     let calls = 0;
-    events.listenOnce(
-        popup,
-        [
-          PopupBase.EventType.BEFORE_HIDE,
-          PopupBase.EventType.HIDE,
-        ],
-        (e) => {
-          calls++;
-          assertEquals(
-              'The key target should be the hide event target', 'targetDiv',
-              e.target.id);
-        });
+    events.listenOnce(popup, [PopupBase.EventType.BEFORE_HIDE, PopupBase.EventType.HIDE], (e) => {
+      calls++;
+      assertEquals('The key target should be the hide event target', 'targetDiv', e.target.id);
+    });
     testingEvents.fireKeySequence(targetDiv, KeyCodes.ESC);
   },
 
   testAutoHide() {
     popup.setAutoHide(true);
     popup.setVisible(true);
-    clock.tick(1000);  // avoid bouncing
+    clock.tick(1000); // avoid bouncing
     testingEvents.fireClickSequence(targetDiv);
     assertFalse(popup.isVisible());
   },
@@ -167,10 +156,9 @@ testSuite({
   testAutoHideCanBeDisabled() {
     popup.setAutoHide(false);
     popup.setVisible(true);
-    clock.tick(1000);  // avoid bouncing
+    clock.tick(1000); // avoid bouncing
     testingEvents.fireClickSequence(targetDiv);
-    assertTrue(
-        'Should not be hidden if auto hide is disabled', popup.isVisible());
+    assertTrue('Should not be hidden if auto hide is disabled', popup.isVisible());
   },
 
   testAutoHideEnabledByDefault() {
@@ -182,7 +170,7 @@ testSuite({
     popup.setVisible(true);
     popup.addAutoHidePartner(targetDiv);
     popup.addAutoHidePartner(partnerDiv);
-    clock.tick(1000);  // avoid bouncing
+    clock.tick(1000); // avoid bouncing
 
     testingEvents.fireClickSequence(targetDiv);
     assertTrue(popup.isVisible());
@@ -208,9 +196,7 @@ testSuite({
     const e = assertThrows(() => {
       popup.setVisible(true);
     });
-    assertEquals(
-        'Caller must call setElement before trying to show the popup',
-        e.message);
+    assertEquals('Caller must call setElement before trying to show the popup', e.message);
   },
 
   testShowEventFiredWithNoTransition() {
@@ -272,9 +258,7 @@ testSuite({
   },
 
   testSetVisibleWorksCorrectlyWithTransitions() {
-    popup.setTransition(
-        css3.fadeIn(popup.getElement(), 1),
-        css3.fadeOut(popup.getElement(), 1));
+    popup.setTransition(css3.fadeIn(popup.getElement(), 1), css3.fadeOut(popup.getElement(), 1));
 
     // Consecutive calls to setVisible works without needing to wait for
     // transition to finish.
@@ -302,9 +286,7 @@ testSuite({
   },
 
   testWasRecentlyVisibleWorksCorrectlyWithTransitions() {
-    popup.setTransition(
-        css3.fadeIn(popup.getElement(), 1),
-        css3.fadeOut(popup.getElement(), 1));
+    popup.setTransition(css3.fadeIn(popup.getElement(), 1), css3.fadeOut(popup.getElement(), 1));
 
     popup.setVisible(true);
     clock.tick(1100);
@@ -316,18 +298,19 @@ testSuite({
 
   testMoveOffscreenRTL() {
     document.body.setAttribute('dir', 'rtl');
-    popup.reposition = function() {
+    popup.reposition = function () {
       this.element_.style.left = '100px';
       this.element_.style.top = '100px';
     };
     popup.setType(PopupBase.Type.MOVE_OFFSCREEN);
     popup.setElement(dom.getElement('moveOffscreenPopupDiv'));
-    let originalScrollWidth = dom.getDocumentScrollElement().scrollWidth;
+    const originalScrollWidth = dom.getDocumentScrollElement().scrollWidth;
     popup.setVisible(true);
     popup.setVisible(false);
     assertFalse(
-        'Moving a popup offscreen should not cause scrollbars',
-        dom.getDocumentScrollElement().scrollWidth != originalScrollWidth);
+      'Moving a popup offscreen should not cause scrollbars',
+      dom.getDocumentScrollElement().scrollWidth != originalScrollWidth
+    );
   },
 
   testOnDocumentBlurDisabledCrossIframeDismissalWithoutDelay() {
@@ -374,8 +357,7 @@ testSuite({
 
   testOnDocumentBlurActiveElementIsBodyWithoutDelay() {
     popup.setVisible(true);
-    const bodyElement =
-        dom.getDomHelper().getElementsByTagNameAndClass('body')[0];
+    const bodyElement = dom.getDomHelper().getElementsByTagNameAndClass('body')[0];
     bodyElement.setAttribute('tabIndex', 0);
     bodyElement.focus();
     const e = new GoogTestingEvent(EventType.BLUR, document);
@@ -385,8 +367,7 @@ testSuite({
 
   testOnDocumentBlurActiveElementIsBodyWithDelay() {
     popup.setVisible(true);
-    const bodyElement =
-        dom.getDomHelper().getElementsByTagNameAndClass('body')[0];
+    const bodyElement = dom.getDomHelper().getElementsByTagNameAndClass('body')[0];
     bodyElement.setAttribute('tabIndex', 0);
     bodyElement.focus();
     const e = new GoogTestingEvent(EventType.BLUR, document);

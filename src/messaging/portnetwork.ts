@@ -25,12 +25,10 @@ goog.provide('goog.messaging.PortNetwork');
 
 goog.requireType('goog.messaging.MessageChannel');
 
-
 /**
  * @interface
  */
-goog.messaging.PortNetwork = function() {};
-
+goog.messaging.PortNetwork = () => {};
 
 /**
  * Returns a message channel that communicates with the named context. If no
@@ -47,8 +45,7 @@ goog.messaging.PortNetwork = function() {};
  *     decorator around a PortChannel, so it's safe to send {@link MessagePorts}
  *     across it. This will be disposed along with the PortNetwork.
  */
-goog.messaging.PortNetwork.prototype.dial = function(name) {};
-
+goog.messaging.PortNetwork.prototype.dial = (name) => {};
 
 /**
  * The name of the service exported by the operator for creating a connection
@@ -58,7 +55,6 @@ goog.messaging.PortNetwork.prototype.dial = function(name) {};
  * @const
  */
 goog.messaging.PortNetwork.REQUEST_CONNECTION_SERVICE = 'requestConnection';
-
 
 /**
  * The name of the service exported by the callers for adding a connection to

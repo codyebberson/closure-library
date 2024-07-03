@@ -7,7 +7,6 @@
 /** @fileoverview Unit tests for SafeUrl and its builders. */
 
 goog.module('goog.html.safeUrlTest');
-goog.setTestOnly();
 
 const Const = goog.require('goog.string.Const');
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
@@ -18,8 +17,7 @@ const googObject = goog.require('goog.object');
 const javascriptUrlTestVectors = goog.require('goog.html.javascriptUrlTestVectors');
 const safeUrlTestVectors = goog.require('goog.html.safeUrlTestVectors');
 const testSuite = goog.require('goog.testing.testSuite');
-const {assertExists} = goog.require('goog.asserts');
-
+const { assertExists } = goog.require('goog.asserts');
 
 /**
  * Tests creating a SafeUrl from a blob with the given MIME type, asserting
@@ -30,7 +28,7 @@ const {assertExists} = goog.require('goog.asserts');
  *     by {@link SafeUrl.fromBlob}.
  */
 function assertBlobTypeIsSafe(type, isSafe) {
-  const safeUrl = SafeUrl.fromBlob(new Blob(['test'], {type: type}));
+  const safeUrl = SafeUrl.fromBlob(new Blob(['test'], { type: type }));
   const extracted = SafeUrl.unwrap(safeUrl);
   if (isSafe) {
     assertEquals('blob:', extracted.substring(0, 5));
@@ -45,7 +43,6 @@ function assertBlobTypeIsSafe(type, isSafe) {
 let stubs;
 
 testSuite({
-
   setUp() {
     stubs = new PropertyReplacer();
   },
@@ -55,9 +52,8 @@ testSuite({
   },
 
   testConstructor_throwsOnBadToken() {
-    assertThrows(() => new (/** @type {?} */ (SafeUrl))(''));
-    assertThrows(
-        () => new (/** @type {?} */ (SafeUrl.ABOUT_BLANK)).constructor(''));
+    assertThrows(() => new /** @type {?} */ SafeUrl(''));
+    assertThrows(() => new /** @type {?} */ SafeUrl.ABOUT_BLANK.constructor(''));
   },
 
   testFromConstant_throwsOnJavaScriptUrl() {
@@ -142,14 +138,12 @@ testSuite({
 
   testSafeUrlFromBlob_revocation() {
     let timesCalled = 0;
-    stubs.replace(fsUrl, 'revokeObjectUrl', function(arg) {
+    stubs.replace(fsUrl, 'revokeObjectUrl', (arg) => {
       timesCalled++;
     });
-    SafeUrl.revokeObjectUrl(
-        SafeUrl.fromBlob(new Blob(['test'], {type: 'image/png'})));
+    SafeUrl.revokeObjectUrl(SafeUrl.fromBlob(new Blob(['test'], { type: 'image/png' })));
     assertEquals(1, timesCalled);
-    SafeUrl.revokeObjectUrl(
-        SafeUrl.fromBlob(new Blob(['test'], {type: 'text/html'})));
+    SafeUrl.revokeObjectUrl(SafeUrl.fromBlob(new Blob(['test'], { type: 'text/html' })));
     // No revocation, as object URL was never created.
     assertEquals(1, timesCalled);
   },
@@ -168,8 +162,7 @@ testSuite({
       return;
     }
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const safeUrl =
-        SafeUrl.fromMediaSource(new Blob([''], {type: 'text/plain'}));
+    const safeUrl = SafeUrl.fromMediaSource(new Blob([''], { type: 'text/plain' }));
     const extracted = SafeUrl.unwrap(safeUrl);
     assertEquals(SafeUrl.INNOCUOUS_STRING, extracted);
   },
@@ -177,13 +170,15 @@ testSuite({
   testSafeUrlFromFacebookMessengerUrl_fbMessengerShareUrl() {
     const expected = 'fb-messenger://share?link=https%3A%2F%2Fwww.google.com';
     const observed = SafeUrl.fromFacebookMessengerUrl(
-        'fb-messenger://share?link=https%3A%2F%2Fwww.google.com');
+      'fb-messenger://share?link=https%3A%2F%2Fwww.google.com'
+    );
     assertEquals(expected, SafeUrl.unwrap(observed));
   },
 
   testSafeUrlFromFacebookMessengerUrl_fbMessengerEvilUrl() {
     const observed = SafeUrl.fromFacebookMessengerUrl(
-        'fb-messenger://evil?link=https%3A%2F%2Fwww.google.com');
+      'fb-messenger://evil?link=https%3A%2F%2Fwww.google.com'
+    );
     assertEquals(SafeUrl.INNOCUOUS_STRING, SafeUrl.unwrap(observed));
   },
 
@@ -279,50 +274,56 @@ testSuite({
   testSafeUrlSanitize_sanitizeChromeExtension() {
     const extensionId = Const.from('1234567890abcdef');
     let observed = SafeUrl.sanitizeChromeExtensionUrl(
-        'chrome-extension://1234567890abcdef/foo/bar', extensionId);
-    assertEquals(
-        'chrome-extension://1234567890abcdef/foo/bar',
-        SafeUrl.unwrap(observed));
+      'chrome-extension://1234567890abcdef/foo/bar',
+      extensionId
+    );
+    assertEquals('chrome-extension://1234567890abcdef/foo/bar', SafeUrl.unwrap(observed));
+
+    observed = SafeUrl.sanitizeChromeExtensionUrl('chrome-extension://1234567890abcdef/foo/bar', [
+      extensionId,
+    ]);
+    assertEquals('chrome-extension://1234567890abcdef/foo/bar', SafeUrl.unwrap(observed));
 
     observed = SafeUrl.sanitizeChromeExtensionUrl(
-        'chrome-extension://1234567890abcdef/foo/bar', [extensionId]);
-    assertEquals(
-        'chrome-extension://1234567890abcdef/foo/bar',
-        SafeUrl.unwrap(observed));
-
-    observed = SafeUrl.sanitizeChromeExtensionUrl(
-        'not-a-chrome-extension://1234567890abcdef/foo/bar', extensionId);
+      'not-a-chrome-extension://1234567890abcdef/foo/bar',
+      extensionId
+    );
     assertEquals(SafeUrl.INNOCUOUS_STRING, SafeUrl.unwrap(observed));
 
     observed = SafeUrl.sanitizeChromeExtensionUrl(
-        'chrome-extension://fedcba0987654321/foo/bar', extensionId);
+      'chrome-extension://fedcba0987654321/foo/bar',
+      extensionId
+    );
     assertEquals(SafeUrl.INNOCUOUS_STRING, SafeUrl.unwrap(observed));
   },
 
   testSafeUrlSanitize_sanitizeFirefoxExtension() {
     const extensionId = Const.from('1234-5678-90ab-cdef');
     let observed = SafeUrl.sanitizeFirefoxExtensionUrl(
-        'moz-extension://1234-5678-90ab-cdef/foo/bar', extensionId);
-    assertEquals(
-        'moz-extension://1234-5678-90ab-cdef/foo/bar',
-        SafeUrl.unwrap(observed));
+      'moz-extension://1234-5678-90ab-cdef/foo/bar',
+      extensionId
+    );
+    assertEquals('moz-extension://1234-5678-90ab-cdef/foo/bar', SafeUrl.unwrap(observed));
 
     observed = SafeUrl.sanitizeFirefoxExtensionUrl(
-        'moz-extension://ms-browser-extension://1234-5678-90ab-cdef/foo/bar',
-        extensionId);
+      'moz-extension://ms-browser-extension://1234-5678-90ab-cdef/foo/bar',
+      extensionId
+    );
     assertEquals(SafeUrl.INNOCUOUS_STRING, SafeUrl.unwrap(observed));
   },
 
   testSafeUrlSanitize_sanitizeEdgeExtension() {
     const extensionId = Const.from('1234-5678-90ab-cdef');
     let observed = SafeUrl.sanitizeEdgeExtensionUrl(
-        'ms-browser-extension://1234-5678-90ab-cdef/foo/bar', extensionId);
-    assertEquals(
-        'ms-browser-extension://1234-5678-90ab-cdef/foo/bar',
-        SafeUrl.unwrap(observed));
+      'ms-browser-extension://1234-5678-90ab-cdef/foo/bar',
+      extensionId
+    );
+    assertEquals('ms-browser-extension://1234-5678-90ab-cdef/foo/bar', SafeUrl.unwrap(observed));
 
     observed = SafeUrl.sanitizeEdgeExtensionUrl(
-        'chrome-extension://1234-5678-90ab-cdef/foo/bar', extensionId);
+      'chrome-extension://1234-5678-90ab-cdef/foo/bar',
+      extensionId
+    );
     assertEquals(SafeUrl.INNOCUOUS_STRING, SafeUrl.unwrap(observed));
   },
 
@@ -354,8 +355,7 @@ testSuite({
   testSafeUrlSanitize_trySanitize() {
     for (const v of safeUrlTestVectors.BASE_VECTORS) {
       const isDataUrl = v.input.match(/^data:/i);
-      const observed = isDataUrl ? SafeUrl.tryFromDataUrl(v.input) :
-                                   SafeUrl.trySanitize(v.input);
+      const observed = isDataUrl ? SafeUrl.tryFromDataUrl(v.input) : SafeUrl.trySanitize(v.input);
       if (v.safe) {
         assertEquals(v.expected, SafeUrl.unwrap(assertExists(observed)));
       } else {
@@ -447,11 +447,8 @@ testSuite({
   },
 
   testSafeUrlSanitize_base64ImageSrcWithCRLF() {
-    const dataUrl =
-        'data:image/png;base64,iVBORw0KGgoA%0AAAANSUhEUgA%0DAAT4AAA%0A';
+    const dataUrl = 'data:image/png;base64,iVBORw0KGgoA%0AAAANSUhEUgA%0DAAT4AAA%0A';
     const safeUrl = SafeUrl.fromDataUrl(dataUrl);
-    assertEquals(
-        SafeUrl.unwrap(safeUrl),
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAA');
+    assertEquals(SafeUrl.unwrap(safeUrl), 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAA');
   },
 });

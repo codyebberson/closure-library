@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.plugins.TagOnEnterHandlerTest');
-goog.setTestOnly();
 
 const BrowserFeature = goog.require('goog.editor.BrowserFeature');
 const Field = goog.require('goog.editor.Field');
@@ -36,8 +35,7 @@ let field1;
 function assertPreparedContents(expected, original, tag = undefined) {
   const field = makeField('field1', tag);
   field.makeEditable();
-  assertEquals(
-      expected, field.reduceOp_(Plugin.Op.PREPARE_CONTENTS_HTML, original));
+  assertEquals(expected, field.reduceOp_(Plugin.Op.PREPARE_CONTENTS_HTML, original));
 }
 
 /**
@@ -78,8 +76,7 @@ function makeField(id, tag = undefined) {
  * @suppress {checkTypes,strictMissingProperties} suppression added to enable
  * type checking
  */
-function helpTestSplit(
-    offset, firstHalfString, secondHalfString, isAppend, goToBody = undefined) {
+function helpTestSplit(offset, firstHalfString, secondHalfString, isAppend, goToBody = undefined) {
   const node = dom.createElement(TagName.DIV);
   node.innerHTML = '<b>begin bold<i>italic</i>end bold</b>';
   document.body.appendChild(node);
@@ -87,8 +84,7 @@ function helpTestSplit(
   const italic = dom.getElementsByTagName(TagName.I, node)[0].firstChild;
 
   /** @suppress {visibility} suppression added to enable type checking */
-  const splitFn = isAppend ? TagOnEnterHandler.splitDomAndAppend_ :
-                             TagOnEnterHandler.splitDom_;
+  const splitFn = isAppend ? TagOnEnterHandler.splitDomAndAppend_ : TagOnEnterHandler.splitDom_;
   /** @suppress {checkTypes} suppression added to enable type checking */
   const secondHalf = splitFn(italic, offset, goToBody ? undefined : node);
 
@@ -97,17 +93,21 @@ function helpTestSplit(
   }
 
   assertEquals(
-      'original node should have first half of the html', firstHalfString,
-      node.innerHTML.toLowerCase().replace(Unicode.NBSP, '&nbsp;'));
+    'original node should have first half of the html',
+    firstHalfString,
+    node.innerHTML.toLowerCase().replace(Unicode.NBSP, '&nbsp;')
+  );
   assertEquals(
-      'new node should have second half of the html', secondHalfString,
-      secondHalf.innerHTML.toLowerCase().replace(Unicode.NBSP, '&nbsp;'));
+    'new node should have second half of the html',
+    secondHalfString,
+    secondHalf.innerHTML.toLowerCase().replace(Unicode.NBSP, '&nbsp;')
+  );
 
   if (isAppend) {
     assertTrue(
-        'second half of dom should be the original node\'s next' +
-            'sibling',
-        node.nextSibling == secondHalf);
+      "second half of dom should be the original node's next" + 'sibling',
+      node.nextSibling == secondHalf
+    );
     dom.removeNode(secondHalf);
   }
 
@@ -142,18 +142,18 @@ testSuite({
     // a robot test (see javascript/apps/editor/tests/delete_br_robot.html).
     if (userAgent.GECKO) {
       field1.setSafeHtml(
-          false,
-          SafeHtml.concat(
-              'one', SafeHtml.BR, SafeHtml.BR,
-              SafeHtml.create('div', {}, 'two')));
+        false,
+        SafeHtml.concat('one', SafeHtml.BR, SafeHtml.BR, SafeHtml.create('div', {}, 'two'))
+      );
       const helper = new TestHelper(field1.getElement());
-      helper.select(field1.getElement(), 2);  // Between the two BR's.
+      helper.select(field1.getElement(), 2); // Between the two BR's.
       events.fireKeySequence(field1.getElement(), KeyCodes.DELETE);
       assertEquals(
-          'Should have deleted exactly one <br>', 'one<br><div>two</div>',
-          field1.getElement().innerHTML);
-
-    }  // End if GECKO
+        'Should have deleted exactly one <br>',
+        'one<br><div>two</div>',
+        field1.getElement().innerHTML
+      );
+    } // End if GECKO
   },
 
   /**
@@ -168,18 +168,19 @@ testSuite({
     // a robot test (see javascript/apps/editor/tests/delete_br_robot.html).
     if (userAgent.GECKO) {
       field1.setSafeHtml(
-          false,
-          SafeHtml.concat('one', SafeHtml.BR, SafeHtml.BR, SafeHtml.BR, 'two'));
+        false,
+        SafeHtml.concat('one', SafeHtml.BR, SafeHtml.BR, SafeHtml.BR, 'two')
+      );
       const helper = new TestHelper(field1.getElement());
-      helper.select(
-          field1.getElement(), 2);  // Between the first and second BR's.
+      helper.select(field1.getElement(), 2); // Between the first and second BR's.
       field1.getElement().focus();
       events.fireKeySequence(field1.getElement(), KeyCodes.DELETE);
       assertEquals(
-          'Should have deleted exactly one <br>', 'one<br><br>two',
-          field1.getElement().innerHTML);
-
-    }  // End if GECKO
+        'Should have deleted exactly one <br>',
+        'one<br><br>two',
+        field1.getElement().innerHTML
+      );
+    } // End if GECKO
   },
 
   /**
@@ -193,8 +194,7 @@ testSuite({
    */
   testEnterCreatesBlankLine() {
     if (userAgent.GECKO) {
-      field1.setSafeHtml(
-          false, SafeHtml.create('p', {}, ['one ', SafeHtml.BR]));
+      field1.setSafeHtml(false, SafeHtml.create('p', {}, ['one ', SafeHtml.BR]));
       const helper = new TestHelper(field1.getElement());
       // Place caret after 'one' but keeping a space and a BR as FF does.
       helper.select('one ', 3);
@@ -202,18 +202,21 @@ testSuite({
       events.fireKeySequence(field1.getElement(), KeyCodes.ENTER);
       const range = field1.getRange();
       assertFalse(
-          'Selection should not be in BR tag',
-          range.getStartNode().nodeType == NodeType.ELEMENT &&
-              range.getStartNode().tagName == TagName.BR);
+        'Selection should not be in BR tag',
+        range.getStartNode().nodeType == NodeType.ELEMENT &&
+          range.getStartNode().tagName == TagName.BR
+      );
       assertEquals(
-          'Selection should be in text node to avoid creating adjacent' +
-              ' text nodes',
-          NodeType.TEXT, range.getStartNode().nodeType);
+        'Selection should be in text node to avoid creating adjacent' + ' text nodes',
+        NodeType.TEXT,
+        range.getStartNode().nodeType
+      );
       const rangeStartNode = Range.createFromNodeContents(range.getStartNode());
       assertHTMLEquals(
-          'The value of selected text node should be replaced with' +
-              '&nbsp;',
-          '&nbsp;', rangeStartNode.getHtmlFragment());
+        'The value of selected text node should be replaced with' + '&nbsp;',
+        '&nbsp;',
+        rangeStartNode.getHtmlFragment()
+      );
     }
   },
 
@@ -235,12 +238,14 @@ testSuite({
       events.fireKeySequence(field1.getElement(), KeyCodes.ENTER);
       const range = field1.getRange();
       assertTrue(
-          'Selection should be in P tag',
-          range.getStartNode().nodeType == NodeType.ELEMENT &&
-              range.getStartNode().tagName == TagName.P);
+        'Selection should be in P tag',
+        range.getStartNode().nodeType == NodeType.ELEMENT &&
+          range.getStartNode().tagName == TagName.P
+      );
       assertTrue(
-          'Selection should be at the head and collapsed',
-          range.getStartOffset() == 0 && range.isCollapsed());
+        'Selection should be at the head and collapsed',
+        range.getStartOffset() == 0 && range.isCollapsed()
+      );
     }
   },
 
@@ -252,10 +257,7 @@ testSuite({
    */
   testEnterAtBeginningOfLink() {
     if (userAgent.GECKO) {
-      field1.setSafeHtml(false, SafeHtml.create('a', {'href': '/'}, [
-        'b',
-        SafeHtml.BR,
-      ]));
+      field1.setSafeHtml(false, SafeHtml.create('a', { href: '/' }, ['b', SafeHtml.BR]));
       const helper = new TestHelper(field1.getElement());
       field1.focusAndPlaceCursorAtStart();
       events.fireKeySequence(field1.getElement(), KeyCodes.ENTER);
@@ -266,9 +268,7 @@ testSuite({
   /** Verifies correct handling of pressing enter in an empty list item. */
   testEnterInEmptyListItemInEmptyList() {
     if (userAgent.GECKO) {
-      field1.setSafeHtml(
-          false,
-          SafeHtml.create('ul', {}, SafeHtml.create('li', {}, Unicode.NBSP)));
+      field1.setSafeHtml(false, SafeHtml.create('ul', {}, SafeHtml.create('li', {}, Unicode.NBSP)));
       const helper = new TestHelper(field1.getElement());
       const li = dom.getElementsByTagName(TagName.LI, field1.getElement())[0];
       helper.select(li.firstChild, 0);
@@ -280,149 +280,165 @@ testSuite({
   testEnterInEmptyListItemAtBeginningOfList() {
     if (userAgent.GECKO) {
       field1.setSafeHtml(
-          false, SafeHtml.create('ul', {'style': {'font-weight': 'bold'}}, [
-            SafeHtml.create('li', {}, Unicode.NBSP),
-            SafeHtml.create('li', {}, '1'),
-            SafeHtml.create('li', {}, '2'),
-          ]));
+        false,
+        SafeHtml.create('ul', { style: { 'font-weight': 'bold' } }, [
+          SafeHtml.create('li', {}, Unicode.NBSP),
+          SafeHtml.create('li', {}, '1'),
+          SafeHtml.create('li', {}, '2'),
+        ])
+      );
       const helper = new TestHelper(field1.getElement());
       const li = dom.getElementsByTagName(TagName.LI, field1.getElement())[0];
       helper.select(li.firstChild, 0);
       events.fireKeySequence(field1.getElement(), KeyCodes.ENTER);
       helper.assertHtmlMatches(
-          '<p>&nbsp;</p><ul style="font-weight: bold"><li>1</li><li>2</li></ul>');
+        '<p>&nbsp;</p><ul style="font-weight: bold"><li>1</li><li>2</li></ul>'
+      );
     }
   },
 
   testEnterInEmptyListItemAtEndOfList() {
     if (userAgent.GECKO) {
       field1.setSafeHtml(
-          false, SafeHtml.create('ul', {'style': {'font-weight': 'bold'}}, [
-            SafeHtml.create('li', {}, '1'),
-            SafeHtml.create('li', {}, '2'),
-            SafeHtml.create('li', {}, Unicode.NBSP),
-          ]));
+        false,
+        SafeHtml.create('ul', { style: { 'font-weight': 'bold' } }, [
+          SafeHtml.create('li', {}, '1'),
+          SafeHtml.create('li', {}, '2'),
+          SafeHtml.create('li', {}, Unicode.NBSP),
+        ])
+      );
       const helper = new TestHelper(field1.getElement());
       const li = dom.getElementsByTagName(TagName.LI, field1.getElement())[2];
       helper.select(li.firstChild, 0);
       events.fireKeySequence(field1.getElement(), KeyCodes.ENTER);
       helper.assertHtmlMatches(
-          '<ul style="font-weight: bold"><li>1</li><li>2</li></ul><p>&nbsp;</p>');
+        '<ul style="font-weight: bold"><li>1</li><li>2</li></ul><p>&nbsp;</p>'
+      );
     }
   },
 
   testEnterInEmptyListItemInMiddleOfList() {
     if (userAgent.GECKO) {
       field1.setSafeHtml(
-          false, SafeHtml.create('ul', {'style': {'font-weight': 'bold'}}, [
-            SafeHtml.create('li', {}, '1'),
-            SafeHtml.create('li', {}, Unicode.NBSP),
-            SafeHtml.create('li', {}, '2'),
-          ]));
+        false,
+        SafeHtml.create('ul', { style: { 'font-weight': 'bold' } }, [
+          SafeHtml.create('li', {}, '1'),
+          SafeHtml.create('li', {}, Unicode.NBSP),
+          SafeHtml.create('li', {}, '2'),
+        ])
+      );
       const helper = new TestHelper(field1.getElement());
       const li = dom.getElementsByTagName(TagName.LI, field1.getElement())[1];
       helper.select(li.firstChild, 0);
       events.fireKeySequence(field1.getElement(), KeyCodes.ENTER);
       helper.assertHtmlMatches(
-          '<ul style="font-weight: bold"><li>1</li></ul>' +
+        '<ul style="font-weight: bold"><li>1</li></ul>' +
           '<p>&nbsp;</p>' +
-          '<ul style="font-weight: bold"><li>2</li></ul>');
+          '<ul style="font-weight: bold"><li>2</li></ul>'
+      );
     }
   },
 
   testEnterInEmptyListItemInSublist() {
     if (userAgent.GECKO) {
-      field1.setSafeHtml(false, SafeHtml.create('ul', {}, [
-        SafeHtml.create('li', {}, 'A'),
-        SafeHtml.create(
-            'ul', {'style': {'font-weight': 'bold'}},
-            [
-              SafeHtml.create('li', {}, '1'),
-              SafeHtml.create('li', {}, Unicode.NBSP),
-              SafeHtml.create('li', {}, '2'),
-            ]),
-        SafeHtml.create('li', {}, 'B'),
-      ]));
+      field1.setSafeHtml(
+        false,
+        SafeHtml.create('ul', {}, [
+          SafeHtml.create('li', {}, 'A'),
+          SafeHtml.create('ul', { style: { 'font-weight': 'bold' } }, [
+            SafeHtml.create('li', {}, '1'),
+            SafeHtml.create('li', {}, Unicode.NBSP),
+            SafeHtml.create('li', {}, '2'),
+          ]),
+          SafeHtml.create('li', {}, 'B'),
+        ])
+      );
       const helper = new TestHelper(field1.getElement());
       const li = dom.getElementsByTagName(TagName.LI, field1.getElement())[2];
       helper.select(li.firstChild, 0);
       events.fireKeySequence(field1.getElement(), KeyCodes.ENTER);
       helper.assertHtmlMatches(
-          '<ul>' +
+        '<ul>' +
           '<li>A</li>' +
           '<ul style="font-weight: bold"><li>1</li></ul>' +
           '<li>&nbsp;</li>' +
           '<ul style="font-weight: bold"><li>2</li></ul>' +
           '<li>B</li>' +
-          '</ul>');
+          '</ul>'
+      );
     }
   },
 
   testEnterInEmptyListItemAtBeginningOfSublist() {
     if (userAgent.GECKO) {
-      field1.setSafeHtml(false, SafeHtml.create('ul', {}, [
-        SafeHtml.create('li', {}, 'A'),
-        SafeHtml.create(
-            'ul', {'style': {'font-weight': 'bold'}},
-            [
-              SafeHtml.create('li', {}, Unicode.NBSP),
-              SafeHtml.create('li', {}, '1'),
-              SafeHtml.create('li', {}, '2'),
-            ]),
-        SafeHtml.create('li', {}, 'B'),
-      ]));
+      field1.setSafeHtml(
+        false,
+        SafeHtml.create('ul', {}, [
+          SafeHtml.create('li', {}, 'A'),
+          SafeHtml.create('ul', { style: { 'font-weight': 'bold' } }, [
+            SafeHtml.create('li', {}, Unicode.NBSP),
+            SafeHtml.create('li', {}, '1'),
+            SafeHtml.create('li', {}, '2'),
+          ]),
+          SafeHtml.create('li', {}, 'B'),
+        ])
+      );
       const helper = new TestHelper(field1.getElement());
       const li = dom.getElementsByTagName(TagName.LI, field1.getElement())[1];
       helper.select(li.firstChild, 0);
       events.fireKeySequence(field1.getElement(), KeyCodes.ENTER);
       helper.assertHtmlMatches(
-          '<ul>' +
+        '<ul>' +
           '<li>A</li>' +
           '<li>&nbsp;</li>' +
           '<ul style="font-weight: bold"><li>1</li><li>2</li></ul>' +
           '<li>B</li>' +
-          '</ul>');
+          '</ul>'
+      );
     }
   },
 
   testEnterInEmptyListItemAtEndOfSublist() {
     if (userAgent.GECKO) {
-      field1.setSafeHtml(false, SafeHtml.create('ul', {}, [
-        SafeHtml.create('li', {}, 'A'),
-        SafeHtml.create(
-            'ul', {'style': {'font-weight': 'bold'}},
-            [
-              SafeHtml.create('li', {}, '1'),
-              SafeHtml.create('li', {}, '2'),
-              SafeHtml.create('li', {}, Unicode.NBSP),
-            ]),
-        SafeHtml.create('li', {}, 'B'),
-      ]));
+      field1.setSafeHtml(
+        false,
+        SafeHtml.create('ul', {}, [
+          SafeHtml.create('li', {}, 'A'),
+          SafeHtml.create('ul', { style: { 'font-weight': 'bold' } }, [
+            SafeHtml.create('li', {}, '1'),
+            SafeHtml.create('li', {}, '2'),
+            SafeHtml.create('li', {}, Unicode.NBSP),
+          ]),
+          SafeHtml.create('li', {}, 'B'),
+        ])
+      );
       const helper = new TestHelper(field1.getElement());
       const li = dom.getElementsByTagName(TagName.LI, field1.getElement())[3];
       helper.select(li.firstChild, 0);
       events.fireKeySequence(field1.getElement(), KeyCodes.ENTER);
       helper.assertHtmlMatches(
-          '<ul>' +
+        '<ul>' +
           '<li>A</li>' +
           '<ul style="font-weight: bold"><li>1</li><li>2</li></ul>' +
           '<li>&nbsp;</li>' +
           '<li>B</li>' +
-          '</ul>');
+          '</ul>'
+      );
     }
   },
 
   testPrepareContentForPOnEnter() {
     assertPreparedContents('hi', 'hi');
-    assertPreparedContents(
-        BrowserFeature.COLLAPSES_EMPTY_NODES ? '<p>&nbsp;</p>' : '', '   ');
+    assertPreparedContents(BrowserFeature.COLLAPSES_EMPTY_NODES ? '<p>&nbsp;</p>' : '', '   ');
   },
 
   testPrepareContentForDivOnEnter() {
     assertPreparedContents('hi', 'hi', TagName.DIV);
     assertPreparedContents(
-        BrowserFeature.COLLAPSES_EMPTY_NODES ? '<div><br></div>' : '', '   ',
-        TagName.DIV);
+      BrowserFeature.COLLAPSES_EMPTY_NODES ? '<div><br></div>' : '',
+      '   ',
+      TagName.DIV
+    );
   },
 
   testSplitDom() {
@@ -446,8 +462,7 @@ testSuite({
 
     TagOnEnterHandler.splitDomAndAppend_(node.firstChild, 1, node.firstChild);
 
-    testingDom.assertHtmlContentsMatch(
-        '<div>abc</div><div><br>def</div>', node);
+    testingDom.assertHtmlContentsMatch('<div>abc</div><div><br>def</div>', node);
 
     dom.removeNode(node);
   },
@@ -460,8 +475,7 @@ testSuite({
 
     TagOnEnterHandler.splitDomAndAppend_(node.firstChild, 0, node.firstChild);
 
-    testingDom.assertHtmlContentsMatch(
-        '<div></div><div>abc<br>def</div>', node);
+    testingDom.assertHtmlContentsMatch('<div></div><div>abc<br>def</div>', node);
 
     dom.removeNode(node);
   },
@@ -475,8 +489,7 @@ testSuite({
     const br = dom.getElementsByTagName(TagName.BR, node)[0];
     TagOnEnterHandler.splitDomAndAppend_(br, 0, node.firstChild);
 
-    testingDom.assertHtmlContentsMatch(
-        '<div>abc</div><div><br>def</div>', node);
+    testingDom.assertHtmlContentsMatch('<div>abc</div><div><br>def</div>', node);
 
     dom.removeNode(node);
   },

@@ -13,20 +13,17 @@ goog.provide('goog.style.cursor');
 
 goog.require('goog.userAgent');
 
-
 /**
  * The file name for the open-hand (draggable) cursor.
  * @type {string}
  */
 goog.style.cursor.OPENHAND_FILE = 'openhand.cur';
 
-
 /**
  * The file name for the close-hand (dragging) cursor.
  * @type {string}
  */
 goog.style.cursor.CLOSEDHAND_FILE = 'closedhand.cur';
-
 
 /**
  * Create the style for the draggable cursor based on browser and OS.
@@ -37,14 +34,12 @@ goog.style.cursor.CLOSEDHAND_FILE = 'closedhand.cur';
  * @param {boolean=} opt_obsolete Just for compiler backward compatibility.
  * @return {string} The "draggable" mouse cursor style value.
  */
-goog.style.cursor.getDraggableCursorStyle = function(
-    absoluteDotCurFilePath, opt_obsolete) {
-  'use strict';
-  return goog.style.cursor.getCursorStyle_(
-      '-moz-grab', absoluteDotCurFilePath + goog.style.cursor.OPENHAND_FILE,
-      'default');
-};
-
+goog.style.cursor.getDraggableCursorStyle = (absoluteDotCurFilePath, opt_obsolete) =>
+  goog.style.cursor.getCursorStyle_(
+    '-moz-grab',
+    absoluteDotCurFilePath + goog.style.cursor.OPENHAND_FILE,
+    'default'
+  );
 
 /**
  * Create the style for the dragging cursor based on browser and OS.
@@ -55,14 +50,12 @@ goog.style.cursor.getDraggableCursorStyle = function(
  * @param {boolean=} opt_obsolete Just for compiler backward compatibility.
  * @return {string} The "dragging" mouse cursor style value.
  */
-goog.style.cursor.getDraggingCursorStyle = function(
-    absoluteDotCurFilePath, opt_obsolete) {
-  'use strict';
-  return goog.style.cursor.getCursorStyle_(
-      '-moz-grabbing',
-      absoluteDotCurFilePath + goog.style.cursor.CLOSEDHAND_FILE, 'move');
-};
-
+goog.style.cursor.getDraggingCursorStyle = (absoluteDotCurFilePath, opt_obsolete) =>
+  goog.style.cursor.getCursorStyle_(
+    '-moz-grabbing',
+    absoluteDotCurFilePath + goog.style.cursor.CLOSEDHAND_FILE,
+    'move'
+  );
 
 /**
  * Create the style for the cursor based on browser and OS.
@@ -75,9 +68,11 @@ goog.style.cursor.getDraggingCursorStyle = function(
  * @return {string} The computed mouse cursor style value.
  * @private
  */
-goog.style.cursor.getCursorStyle_ = function(
-    geckoNonWinBuiltInStyleValue, absoluteDotCurFilePath, defaultStyle) {
-  'use strict';
+goog.style.cursor.getCursorStyle_ = (
+  geckoNonWinBuiltInStyleValue,
+  absoluteDotCurFilePath,
+  defaultStyle
+) => {
   // Use built in cursors for Gecko on non Windows OS.
   // We prefer our custom cursor, but Firefox Mac and Firefox Linux
   // cannot do custom cursors. They do have a built-in hand, so use it:

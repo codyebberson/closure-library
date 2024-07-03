@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.labs.testing.JsonFuzzingTest');
-goog.setTestOnly();
 
 const JsonFuzzing = goog.require('goog.labs.testing.JsonFuzzing');
 const asserts = goog.require('goog.testing.asserts');
@@ -14,7 +13,7 @@ const testSuite = goog.require('goog.testing.testSuite');
 
 testSuite({
   testValidJson() {
-    const fuzzing = new JsonFuzzing();  // seeded with now()
+    const fuzzing = new JsonFuzzing(); // seeded with now()
 
     for (let i = 0; i < 10; i++) {
       const data = fuzzing.newArray();

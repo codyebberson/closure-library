@@ -20,12 +20,10 @@ goog.provide('goog.debug.entryPointRegistry');
 
 goog.require('goog.asserts');
 
-
 /**
  * @interface
  */
-goog.debug.entryPointRegistry.EntryPointMonitor = function() {};
-
+goog.debug.entryPointRegistry.EntryPointMonitor = () => {};
 
 /**
  * Instruments a function.
@@ -34,7 +32,6 @@ goog.debug.entryPointRegistry.EntryPointMonitor = function() {};
  * @return {!Function} The instrumented function.
  */
 goog.debug.entryPointRegistry.EntryPointMonitor.prototype.wrap;
-
 
 /**
  * Try to remove an instrumentation wrapper created by this monitor.
@@ -61,14 +58,12 @@ goog.debug.entryPointRegistry.EntryPointMonitor.prototype.unwrap;
  */
 goog.debug.EntryPointMonitor = goog.debug.entryPointRegistry.EntryPointMonitor;
 
-
 /**
  * An array of entry point callbacks.
  * @type {!Array<function(!Function)>}
  * @private
  */
 goog.debug.entryPointRegistry.refList_ = [];
-
 
 /**
  * Monitors that should wrap all the entry points.
@@ -77,7 +72,6 @@ goog.debug.entryPointRegistry.refList_ = [];
  */
 goog.debug.entryPointRegistry.monitors_ = [];
 
-
 /**
  * Whether goog.debug.entryPointRegistry.monitorAll has ever been called.
  * Checking this allows the compiler to optimize out the registrations.
@@ -85,7 +79,6 @@ goog.debug.entryPointRegistry.monitors_ = [];
  * @private
  */
 goog.debug.entryPointRegistry.monitorsMayExist_ = false;
-
 
 /**
  * Register an entry point with this module.
@@ -99,11 +92,9 @@ goog.debug.entryPointRegistry.monitorsMayExist_ = false;
  *     is responsible for wrapping the relevant entry point with the
  *     transforming function.
  */
-goog.debug.entryPointRegistry.register = function(callback) {
-  'use strict';
+goog.debug.entryPointRegistry.register = (callback) => {
   // Don't use push(), so that this can be compiled out.
-  goog.debug.entryPointRegistry
-      .refList_[goog.debug.entryPointRegistry.refList_.length] = callback;
+  goog.debug.entryPointRegistry.refList_[goog.debug.entryPointRegistry.refList_.length] = callback;
   // If no one calls monitorAll, this can be compiled out.
   if (goog.debug.entryPointRegistry.monitorsMayExist_) {
     var monitors = goog.debug.entryPointRegistry.monitors_;
@@ -112,7 +103,6 @@ goog.debug.entryPointRegistry.register = function(callback) {
     }
   }
 };
-
 
 /**
  * Configures a monitor to wrap all entry points.
@@ -123,8 +113,7 @@ goog.debug.entryPointRegistry.register = function(callback) {
  *
  * @param {!goog.debug.EntryPointMonitor} monitor An entry point monitor.
  */
-goog.debug.entryPointRegistry.monitorAll = function(monitor) {
-  'use strict';
+goog.debug.entryPointRegistry.monitorAll = (monitor) => {
   goog.debug.entryPointRegistry.monitorsMayExist_ = true;
   var transformer = goog.bind(monitor.wrap, monitor);
   for (var i = 0; i < goog.debug.entryPointRegistry.refList_.length; i++) {
@@ -132,7 +121,6 @@ goog.debug.entryPointRegistry.monitorAll = function(monitor) {
   }
   goog.debug.entryPointRegistry.monitors_.push(monitor);
 };
-
 
 /**
  * Try to unmonitor all the entry points that have already been registered. If
@@ -144,12 +132,12 @@ goog.debug.entryPointRegistry.monitorAll = function(monitor) {
  *     the entry points.
  * @throws {Error} If the monitor is not the most recently configured monitor.
  */
-goog.debug.entryPointRegistry.unmonitorAllIfPossible = function(monitor) {
-  'use strict';
+goog.debug.entryPointRegistry.unmonitorAllIfPossible = (monitor) => {
   var monitors = goog.debug.entryPointRegistry.monitors_;
   goog.asserts.assert(
-      monitor == monitors[monitors.length - 1],
-      'Only the most recent monitor can be unwrapped.');
+    monitor == monitors[monitors.length - 1],
+    'Only the most recent monitor can be unwrapped.'
+  );
   var transformer = goog.bind(monitor.unwrap, monitor);
   for (var i = 0; i < goog.debug.entryPointRegistry.refList_.length; i++) {
     goog.debug.entryPointRegistry.refList_[i](transformer);

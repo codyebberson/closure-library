@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.events.ImeHandlerTest');
-goog.setTestOnly();
 
 const GoogTestingEvent = goog.require('goog.testing.events.Event');
 const ImeHandler = goog.require('goog.events.ImeHandler');
@@ -26,8 +25,8 @@ const stubs = new PropertyReplacer();
 const eventTypes = ImeHandler.EventType;
 
 function initImeHandler() {
-  ImeHandler.USES_COMPOSITION_EVENTS = googUserAgent.GECKO ||
-      (googUserAgent.WEBKIT && googUserAgent.isVersionOrHigher(532));
+  ImeHandler.USES_COMPOSITION_EVENTS =
+    googUserAgent.GECKO || (googUserAgent.WEBKIT && googUserAgent.isVersionOrHigher(532));
   imeHandler = new ImeHandler(sandbox);
   eventsFired = [];
   events.listen(imeHandler, googObject.getValues(ImeHandler.EventType), (e) => {
@@ -53,9 +52,9 @@ function fireImeKeySequence() {
  */
 function fireKeySequence(keyCode) {
   return (
-      testingEvents.fireBrowserEvent(
-          new GoogTestingEvent('textInput', sandbox)) &
-      testingEvents.fireKeySequence(sandbox, keyCode));
+    testingEvents.fireBrowserEvent(new GoogTestingEvent('textInput', sandbox)) &
+    testingEvents.fireKeySequence(sandbox, keyCode)
+  );
 }
 
 function runChromeCompositionEvents(platform) {
@@ -73,8 +72,7 @@ function runChromeCompositionEvents(platform) {
   fireInputEvent('compositionupdate');
 
   fireInputEvent('compositionend');
-  assertEventsFired(
-      eventTypes.START, eventTypes.UPDATE, eventTypes.UPDATE, eventTypes.END);
+  assertEventsFired(eventTypes.START, eventTypes.UPDATE, eventTypes.UPDATE, eventTypes.END);
   assertNotImeMode();
 }
 
@@ -137,15 +135,14 @@ testSuite({
 
     function unshiftEvent(e) {
       last10Events.unshift(
-          e.type + ':' + e.keyCode + ':' +
-          googString.htmlEscape(dom.getTextContent(sandbox)));
+        e.type + ':' + e.keyCode + ':' + googString.htmlEscape(dom.getTextContent(sandbox))
+      );
       last10Events.length = Math.min(last10Events.length, 10);
       dom.getElement('logger').innerHTML = last10Events.join('<br>');
     }
 
     const last10Events = [];
-    events.listen(
-        imeHandler, googObject.getValues(ImeHandler.EventType), unshiftEvent);
+    events.listen(imeHandler, googObject.getValues(ImeHandler.EventType), unshiftEvent);
     events.listen(sandbox, ['keydown', 'textInput'], unshiftEvent);
   },
 
@@ -166,8 +163,7 @@ testSuite({
 
     fireInputEvent('compositionend');
 
-    assertEventsFired(
-        eventTypes.START, eventTypes.UPDATE, eventTypes.UPDATE, eventTypes.END);
+    assertEventsFired(eventTypes.START, eventTypes.UPDATE, eventTypes.UPDATE, eventTypes.END);
     assertNotImeMode();
   },
 

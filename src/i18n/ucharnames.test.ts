@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.i18n.uCharNamesTest');
-goog.setTestOnly();
 
 const testSuite = goog.require('goog.testing.testSuite');
 const uCharNames = goog.require('goog.i18n.uCharNames');

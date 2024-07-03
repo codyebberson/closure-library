@@ -17,9 +17,8 @@ goog.module('goog.storage.mechanism.mechanismSharingTests');
 goog.setTestOnly('goog.storage.mechanism.mechanismSharingTests');
 
 const IterableMechanism = goog.require('goog.storage.mechanism.IterableMechanism');
-const {assertEquals, assertNull, assertTrue} = goog.require('goog.testing.asserts');
-const {bindTests} = goog.require('goog.storage.mechanism.testhelpers');
-
+const { assertEquals, assertNull, assertTrue } = goog.require('goog.testing.asserts');
+const { bindTests } = goog.require('goog.storage.mechanism.testhelpers');
 
 /**
  * @param {{
@@ -28,19 +27,13 @@ const {bindTests} = goog.require('goog.storage.mechanism.testhelpers');
  * }} state
  * @return {!Object}
  */
-exports.register = function(state) {
-  return bindTests(
-      [
-        testSharedSet,
-        testSharedSetInverse,
-        testSharedRemove,
-        testSharedClean,
-      ],
-      (testCase) => {
-        testCase(state.getMechanism(), state.getMechanismShared());
-      });
-};
-
+exports.register = (state) =>
+  bindTests(
+    [testSharedSet, testSharedSetInverse, testSharedRemove, testSharedClean],
+    (testCase) => {
+      testCase(state.getMechanism(), state.getMechanismShared());
+    }
+  );
 
 /**
  * @param {!IterableMechanism} mechanism
@@ -59,7 +52,6 @@ function testSharedSet(mechanism, mechanismShared) {
   assertEquals(it.value, undefined);
 }
 
-
 /**
  * @param {!IterableMechanism} mechanism
  * @param {!IterableMechanism} mechanismShared
@@ -77,7 +69,6 @@ function testSharedSetInverse(mechanism, mechanismShared) {
   assertEquals(it.value, undefined);
 }
 
-
 /**
  * @param {!IterableMechanism} mechanism
  * @param {!IterableMechanism} mechanismShared
@@ -93,7 +84,6 @@ function testSharedRemove(mechanism, mechanismShared) {
   assertEquals(it.value, undefined);
 }
 
-
 /**
  * @param {!IterableMechanism} mechanism
  * @param {!IterableMechanism} mechanismShared
@@ -103,7 +93,7 @@ function testSharedClean(mechanism, mechanismShared) {
   mechanismShared.clear();
   assertEquals(0, mechanism.getCount());
   const iterator = mechanism[Symbol.iterator]();
-  let it = iterator.next();
+  const it = iterator.next();
   assertTrue(it.done);
   assertEquals(it.value, undefined);
 }

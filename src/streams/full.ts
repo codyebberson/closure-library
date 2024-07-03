@@ -11,8 +11,15 @@ goog.module('goog.streams.full');
 
 const fullImpl = goog.require('goog.streams.fullImpl');
 const fullNativeImpl = goog.require('goog.streams.fullNativeImpl');
-const {ReadableStream, ReadableStreamAsyncIterator, ReadableStreamDefaultController, ReadableStreamDefaultReader, ReadableStreamStrategy, ReadableStreamUnderlyingSource} = goog.require('goog.streams.fullTypes');
-const {USE_NATIVE_IMPLEMENTATION} = goog.require('goog.streams.defines');
+const {
+  ReadableStream,
+  ReadableStreamAsyncIterator,
+  ReadableStreamDefaultController,
+  ReadableStreamDefaultReader,
+  ReadableStreamStrategy,
+  ReadableStreamUnderlyingSource,
+} = goog.require('goog.streams.fullTypes');
+const { USE_NATIVE_IMPLEMENTATION } = goog.require('goog.streams.defines');
 
 /**
  * Creates and returns a new ReadableStream.
@@ -26,8 +33,10 @@ const {USE_NATIVE_IMPLEMENTATION} = goog.require('goog.streams.defines');
  * @template T
  */
 function newReadableStream(underlyingSource = {}, strategy = {}) {
-  if (USE_NATIVE_IMPLEMENTATION === 'true' ||
-      (USE_NATIVE_IMPLEMENTATION === 'detect' && goog.global.ReadableStream)) {
+  if (
+    USE_NATIVE_IMPLEMENTATION === 'true' ||
+    (USE_NATIVE_IMPLEMENTATION === 'detect' && goog.global.ReadableStream)
+  ) {
     return fullNativeImpl.newReadableStream(underlyingSource, strategy);
   } else {
     return fullImpl.newReadableStream(underlyingSource, strategy);

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.net.xpc.NativeMessagingTransportTest');
-goog.setTestOnly();
 
 const CfgFields = goog.require('goog.net.xpc.CfgFields');
 const CrossPageChannel = goog.require('goog.net.xpc.CrossPageChannel');
@@ -20,8 +19,7 @@ const testSuite = goog.require('goog.testing.testSuite');
 // Testing of previous versions and of backward/forward compatibility is done
 // in crosspagechannel_test.html.
 
-function checkSignalConnected(
-    oneSidedHandshake, innerFrame, peerProtocolVersion, protocolVersion) {
+function checkSignalConnected(oneSidedHandshake, innerFrame, peerProtocolVersion, protocolVersion) {
   const xpc = getTestChannel();
   let connected = false;
   xpc.notifyConnected = () => {
@@ -31,13 +29,16 @@ function checkSignalConnected(
       connected = true;
     }
   };
-  xpc.getRole = () =>
-      innerFrame ? CrossPageChannelRole.INNER : CrossPageChannelRole.OUTER;
+  xpc.getRole = () => (innerFrame ? CrossPageChannelRole.INNER : CrossPageChannelRole.OUTER);
   xpc.isConnected = () => false;
 
   const transport = new NativeMessagingTransport(
-      xpc, 'http://g.com', undefined /* opt_domHelper */,
-      oneSidedHandshake /* opt_oneSidedHandshake */, 2 /* protocolVerion */);
+    xpc,
+    'http://g.com',
+    undefined /* opt_domHelper */,
+    oneSidedHandshake /* opt_oneSidedHandshake */,
+    2 /* protocolVerion */
+  );
   let sentPayloads = [];
   transport.send = (service, payload) => {
     assertEquals(netXpc.TRANSPORT_SERVICE, service);
@@ -54,8 +55,7 @@ function checkSignalConnected(
 
   assertFalse(connected);
   if (!oneSidedHandshake || innerFrame) {
-    transport.transportServiceHandler(
-        netXpc.SETUP_NTPV2 + ',' + peerEndpointId1);
+    transport.transportServiceHandler(netXpc.SETUP_NTPV2 + ',' + peerEndpointId1);
     transport.transportServiceHandler(netXpc.SETUP);
     assertSent([netXpc.SETUP_ACK_NTPV2]);
     assertFalse(connected);
@@ -66,8 +66,7 @@ function checkSignalConnected(
     transport.transportServiceHandler(netXpc.SETUP_ACK_NTPV2);
     assertSent([]);
     assertFalse(connected);
-    transport.transportServiceHandler(
-        netXpc.SETUP_NTPV2 + ',' + peerEndpointId1);
+    transport.transportServiceHandler(netXpc.SETUP_NTPV2 + ',' + peerEndpointId1);
     transport.transportServiceHandler(netXpc.SETUP);
     assertSent([netXpc.SETUP_ACK_NTPV2]);
     assertTrue(connected);
@@ -86,10 +85,7 @@ function checkSignalConnected(
   // a new SETUP message should be triggered.
   transport.transportServiceHandler(netXpc.SETUP_NTPV2 + ',' + peerEndpointId2);
   transport.transportServiceHandler(netXpc.SETUP);
-  assertSent([
-    netXpc.SETUP_ACK_NTPV2,
-    netXpc.SETUP_NTPV2 + ',' + endpointId,
-  ]);
+  assertSent([netXpc.SETUP_ACK_NTPV2, netXpc.SETUP_NTPV2 + ',' + endpointId]);
   transport.transportServiceHandler(netXpc.SETUP_ACK_NTPV2);
   assertSent([]);
 }
@@ -102,7 +98,7 @@ function checkSignalConnected(
  */
 function createMockEvent(origin, data) {
   const event = {};
-  event.getBrowserEvent = () => ({origin: origin, data: data});
+  event.getBrowserEvent = () => ({ origin: origin, data: data });
   return event;
 }
 
@@ -112,8 +108,12 @@ function getTestChannel(domHelper = undefined) {
   cfg[CfgFields.CHANNEL_NAME] = 'test_channel';
   cfg[CfgFields.PEER_HOSTNAME] = 'trusted_origin';
   return new CrossPageChannel(
-      cfg, domHelper, undefined /* opt_domHelper */,
-      false /* opt_oneSidedHandshake */, 2 /* opt_protocolVersion */);
+    cfg,
+    domHelper,
+    undefined /* opt_domHelper */,
+    false /* opt_oneSidedHandshake */,
+    2 /* opt_protocolVersion */
+  );
 }
 
 testSuite({
@@ -128,14 +128,22 @@ testSuite({
     const xpc = getTestChannel();
 
     let t = new NativeMessagingTransport(
-        xpc, 'http://g.com:80', undefined /* opt_domHelper */,
-        false /* opt_oneSidedHandshake */, 2 /* opt_protocolVersion */);
+      xpc,
+      'http://g.com:80',
+      undefined /* opt_domHelper */,
+      false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */
+    );
     assertEquals('http://g.com:80', t.peerHostname_);
 
     /** @suppress {checkTypes} suppression added to enable type checking */
     t = new NativeMessagingTransport(
-        xpc, null /* peerHostName */, undefined /* opt_domHelper */,
-        false /* opt_oneSidedHandshake */, 2 /* opt_protocolVersion */);
+      xpc,
+      null /* peerHostName */,
+      undefined /* opt_domHelper */,
+      false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */
+    );
     assertEquals('*', t.peerHostname_);
     t.dispose();
   },
@@ -145,14 +153,21 @@ testSuite({
     const xpc = getTestChannel();
 
     const t = new NativeMessagingTransport(
-        xpc, 'http://g.com:80', dom.getDomHelper(),
-        false /* opt_oneSidedHandshake */, 2 /* opt_protocolVersion */);
+      xpc,
+      'http://g.com:80',
+      dom.getDomHelper(),
+      false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */
+    );
     assertEquals('http://g.com:80', t.peerHostname_);
 
     /** @suppress {checkTypes} suppression added to enable type checking */
     const t2 = new NativeMessagingTransport(
-        xpc, null /* peerHostName */, false /* opt_oneSidedHandshake */,
-        2 /* opt_protocolVersion */);
+      xpc,
+      null /* peerHostName */,
+      false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */
+    );
     assertEquals('*', t2.peerHostname_);
     t2.dispose();
   },
@@ -163,28 +178,40 @@ testSuite({
 
     /** @suppress {checkTypes} suppression added to enable type checking */
     const t0 = new NativeMessagingTransport(
-        xpc, null /* peerHostName */, false /* opt_oneSidedHandshake */,
-        2 /* opt_protocolVersion */);
+      xpc,
+      null /* peerHostName */,
+      false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */
+    );
     assertEquals(0, events.removeAll(listenedObj, 'message'));
     t0.dispose();
     assertEquals(0, events.removeAll(listenedObj, 'message'));
 
     /** @suppress {checkTypes} suppression added to enable type checking */
     const t1 = new NativeMessagingTransport(
-        xpc, null /* peerHostName */, false /* opt_oneSidedHandshake */,
-        2 /* opt_protocolVersion */);
+      xpc,
+      null /* peerHostName */,
+      false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */
+    );
     t1.connect();
     t1.dispose();
     assertEquals(0, events.removeAll(listenedObj, 'message'));
 
     /** @suppress {checkTypes} suppression added to enable type checking */
     const t2 = new NativeMessagingTransport(
-        xpc, null /* peerHostName */, false /* opt_oneSidedHandshake */,
-        2 /* opt_protocolVersion */);
+      xpc,
+      null /* peerHostName */,
+      false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */
+    );
     /** @suppress {checkTypes} suppression added to enable type checking */
     const t3 = new NativeMessagingTransport(
-        xpc, null /* peerHostName */, false /* opt_oneSidedHandshake */,
-        2 /* opt_protocolVersion */);
+      xpc,
+      null /* peerHostName */,
+      false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */
+    );
     t2.connect();
     t3.connect();
     t2.dispose();
@@ -197,28 +224,40 @@ testSuite({
 
     /** @suppress {checkTypes} suppression added to enable type checking */
     const t0 = new NativeMessagingTransport(
-        xpc, null /* peerHostName */, false /* opt_oneSidedHandshake */,
-        2 /* opt_protocolVersion */);
+      xpc,
+      null /* peerHostName */,
+      false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */
+    );
     assertEquals(0, events.removeAll(listenedObj, 'message'));
     t0.dispose();
     assertEquals(0, events.removeAll(listenedObj, 'message'));
 
     /** @suppress {checkTypes} suppression added to enable type checking */
     const t1 = new NativeMessagingTransport(
-        xpc, null /* peerHostName */, false /* opt_oneSidedHandshake */,
-        2 /* opt_protocolVersion */);
+      xpc,
+      null /* peerHostName */,
+      false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */
+    );
     t1.connect();
     t1.dispose();
     assertEquals(0, events.removeAll(listenedObj, 'message'));
 
     /** @suppress {checkTypes} suppression added to enable type checking */
     const t2 = new NativeMessagingTransport(
-        xpc, null /* peerHostName */, false /* opt_oneSidedHandshake */,
-        2 /* opt_protocolVersion */);
+      xpc,
+      null /* peerHostName */,
+      false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */
+    );
     /** @suppress {checkTypes} suppression added to enable type checking */
     const t3 = new NativeMessagingTransport(
-        xpc, null /* peerHostName */, false /* opt_oneSidedHandshake */,
-        2 /* opt_protocolVersion */);
+      xpc,
+      null /* peerHostName */,
+      false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */
+    );
     t2.connect();
     t3.connect();
     t2.dispose();
@@ -260,35 +299,35 @@ testSuite({
     xpc.isConnected = () => false;
     /** @suppress {checkTypes} suppression added to enable type checking */
     const t = new NativeMessagingTransport(
-        xpc, 'http://g.com', false /* opt_oneSidedHandshake */,
-        2 /* opt_protocolVersion */);
+      xpc,
+      'http://g.com',
+      false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */
+    );
 
     // Test a valid message.
-    let e = createMockEvent(
-        'origin_unknown', 'test_channel|test_service:test_payload');
+    let e = createMockEvent('origin_unknown', 'test_channel|test_service:test_payload');
     assertTrue(NativeMessagingTransport.messageReceived_(e));
     assertEquals('test_service', serviceResult);
     assertEquals('test_payload', payloadResult);
-    assertEquals(
-        'Ensure channel name has not been changed.', 'test_channel',
-        t.channel_.name);
+    assertEquals('Ensure channel name has not been changed.', 'test_channel', t.channel_.name);
 
     // Test that sending a SETUP message from an untrusted origin doesn't update
     // the channel name.  This is a regression test for b/33746803.
     e = createMockEvent('untrusted_origin', 'new_channel|tp:SETUP');
     assertFalse(NativeMessagingTransport.messageReceived_(e));
     assertEquals(
-        'Channel name should not change from untrusted origin', 'test_channel',
-        t.channel_.name);
+      'Channel name should not change from untrusted origin',
+      'test_channel',
+      t.channel_.name
+    );
 
     // Test updating a stale inner peer.
     e = createMockEvent('trusted_origin', 'new_channel|tp:SETUP');
     assertTrue(NativeMessagingTransport.messageReceived_(e));
     assertEquals('tp', serviceResult);
     assertEquals('SETUP', payloadResult);
-    assertEquals(
-        'Ensure channel name has been updated.', 'new_channel',
-        t.channel_.name);
+    assertEquals('Ensure channel name has been updated.', 'new_channel', t.channel_.name);
     t.dispose();
   },
 

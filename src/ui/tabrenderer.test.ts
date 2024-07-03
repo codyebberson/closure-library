@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.TabRendererTest');
-goog.setTestOnly();
 
 const Role = goog.require('goog.a11y.aria.Role');
 const TabRenderer = goog.require('goog.ui.TabRenderer');
@@ -38,20 +37,20 @@ testSuite({
 
   testGetCssClass() {
     assertEquals(
-        'CSS class must have expected value', TabRenderer.CSS_CLASS,
-        renderer.getCssClass());
+      'CSS class must have expected value',
+      TabRenderer.CSS_CLASS,
+      renderer.getCssClass()
+    );
   },
 
   testGetAriaRole() {
-    assertEquals(
-        'ARIA role must have expected value', Role.TAB, renderer.getAriaRole());
+    assertEquals('ARIA role must have expected value', Role.TAB, renderer.getAriaRole());
   },
 
   testCreateDom() {
     const element = renderer.createDom(tab);
     assertNotNull('Element must not be null', element);
-    testingDom.assertHtmlMatches(
-        '<div class="goog-tab">Hello</div>', dom.getOuterHtml(element));
+    testingDom.assertHtmlMatches('<div class="goog-tab">Hello</div>', dom.getOuterHtml(element));
   },
 
   testCreateDomWithTooltip() {
@@ -59,8 +58,10 @@ testSuite({
     const element = renderer.createDom(tab);
     assertNotNull('Element must not be null', element);
     assertEquals(
-        'Element must have expected tooltip', 'Hello, world!',
-        renderer.getTooltip(element));
+      'Element must have expected tooltip',
+      'Hello, world!',
+      renderer.getTooltip(element)
+    );
   },
 
   testRender() {
@@ -68,55 +69,55 @@ testSuite({
     tab.render();
     const element = tab.getElementStrict();
     assertNotNull('Element must not be null', element);
-    assertEquals(
-        'aria-selected should be false', 'false',
-        element.getAttribute('aria-selected'));
+    assertEquals('aria-selected should be false', 'false', element.getAttribute('aria-selected'));
   },
 
   testDecorate() {
-    sandbox.innerHTML = '<div id="foo">Foo</div>\n' +
-        '<div id="bar" title="Yes">Bar</div>';
+    sandbox.innerHTML = '<div id="foo">Foo</div>\n' + '<div id="bar" title="Yes">Bar</div>';
 
     const foo = renderer.decorate(tab, dom.getElement('foo'));
     assertNotNull('Decorated element must not be null', foo);
     assertSameElements(
-        'Decorated element must have expected class', ['goog-tab'],
-        classlist.get(foo));
-    assertEquals(
-        'Decorated tab must have expected content', 'Foo',
-        tab.getContent().nodeValue);
+      'Decorated element must have expected class',
+      ['goog-tab'],
+      classlist.get(foo)
+    );
+    assertEquals('Decorated tab must have expected content', 'Foo', tab.getContent().nodeValue);
     assertUndefined('Decorated tab must not have tooltip', tab.getTooltip());
-    assertEquals(
-        'Decorated element must not have title', '', renderer.getTooltip(foo));
+    assertEquals('Decorated element must not have title', '', renderer.getTooltip(foo));
 
     const bar = renderer.decorate(tab, dom.getElement('bar'));
     assertNotNull('Decorated element must not be null', bar);
     assertSameElements(
-        'Decorated element must have expected class', ['goog-tab'],
-        classlist.get(bar));
-    assertEquals(
-        'Decorated tab must have expected content', 'Bar',
-        tab.getContent().nodeValue);
-    assertEquals(
-        'Decorated tab must have expected tooltip', 'Yes', tab.getTooltip());
-    assertEquals(
-        'Decorated element must have expected title', 'Yes',
-        renderer.getTooltip(bar));
+      'Decorated element must have expected class',
+      ['goog-tab'],
+      classlist.get(bar)
+    );
+    assertEquals('Decorated tab must have expected content', 'Bar', tab.getContent().nodeValue);
+    assertEquals('Decorated tab must have expected tooltip', 'Yes', tab.getTooltip());
+    assertEquals('Decorated element must have expected title', 'Yes', renderer.getTooltip(bar));
   },
 
   testGetTooltip() {
-    sandbox.innerHTML = '<div id="foo">Foo</div>\n' +
-        '<div id="bar" title="">Bar</div>\n' +
-        '<div id="baz" title="BazTitle">Baz</div>';
+    sandbox.innerHTML =
+      '<div id="foo">Foo</div>\n' +
+      '<div id="bar" title="">Bar</div>\n' +
+      '<div id="baz" title="BazTitle">Baz</div>';
     assertEquals(
-        'getTooltip() must return empty string for no title', '',
-        renderer.getTooltip(dom.getElement('foo')));
+      'getTooltip() must return empty string for no title',
+      '',
+      renderer.getTooltip(dom.getElement('foo'))
+    );
     assertEquals(
-        'getTooltip() must return empty string for empty title', '',
-        renderer.getTooltip(dom.getElement('bar')));
+      'getTooltip() must return empty string for empty title',
+      '',
+      renderer.getTooltip(dom.getElement('bar'))
+    );
     assertEquals(
-        'Tooltip must have expected value', 'BazTitle',
-        renderer.getTooltip(dom.getElement('baz')));
+      'Tooltip must have expected value',
+      'BazTitle',
+      renderer.getTooltip(dom.getElement('baz'))
+    );
   },
 
   /**
@@ -127,7 +128,7 @@ testSuite({
     sandbox.innerHTML = '<div id="foo">Foo</div>';
     const element = dom.getElement('foo');
 
-    renderer.setTooltip(null, null);  // Must not error.
+    renderer.setTooltip(null, null); // Must not error.
 
     renderer.setTooltip(element, null);
     assertEquals('Tooltip must be the empty string', '', element.title);

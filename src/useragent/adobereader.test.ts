@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.userAgent.adobeReaderTest');
-goog.setTestOnly();
 
 const adobeReader = goog.require('goog.userAgent.adobeReader');
 const testSuite = goog.require('goog.testing.testSuite');

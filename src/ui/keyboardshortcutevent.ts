@@ -22,8 +22,7 @@ goog.require('goog.events.EventTarget');
  * @constructor
  * @final
  */
-goog.ui.KeyboardShortcutEvent = function(type, identifier, target) {
-  'use strict';
+goog.ui.KeyboardShortcutEvent = function (type, identifier, target) {
   goog.events.Event.call(this, type, target);
 
   /**

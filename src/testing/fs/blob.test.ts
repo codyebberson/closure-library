@@ -5,13 +5,12 @@
  */
 
 goog.module('goog.testing.fs.BlobTest');
-goog.setTestOnly();
 
 const FsBlob = goog.require('goog.testing.fs.Blob');
 const dom = goog.require('goog.dom');
 const testSuite = goog.require('goog.testing.testSuite');
 
-const hasArrayBuffer = (globalThis.ArrayBuffer !== undefined);
+const hasArrayBuffer = globalThis.ArrayBuffer !== undefined;
 
 testSuite({
   /** @suppress {visibility} suppression added to enable type checking */
@@ -81,7 +80,7 @@ testSuite({
     assertEquals('text/plain', blob.slice(1, 2, 'text/plain').type);
 
     blob = new FsBlob('ab資cd');
-    assertEquals('ab資', blob.slice(0, 5).toString());  // 資 is 3-bytes long.
+    assertEquals('ab資', blob.slice(0, 5).toString()); // 資 is 3-bytes long.
     assertEquals('資', blob.slice(2, 5).toString());
     assertEquals('資cd', blob.slice(2, 10).toString());
     assertEquals('ab', blob.slice(0, -5).toString());
@@ -91,7 +90,7 @@ testSuite({
     assertEquals('ab資cd', blob.slice().toString());
     assertEquals('ab資', blob.slice(/* opt_start */ undefined, 5).toString());
     assertEquals('cd', blob.slice(5).toString());
-    assertArrayEquals([232], blob.slice(2, 3).data_);  // first byte of 資.
+    assertArrayEquals([232], blob.slice(2, 3).data_); // first byte of 資.
   },
 
   testToArrayBuffer() {

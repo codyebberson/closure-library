@@ -4,14 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 goog.module('goog.html.SafeHtmlFormatter');
 goog.module.declareLegacyNamespace();
 
 const SafeHtml = goog.require('goog.html.SafeHtml');
-const {ENABLE_ASSERTS, assert} = goog.require('goog.asserts');
-const {getRandomString, htmlEscape} = goog.require('goog.string');
-const {isVoidTag} = goog.require('goog.dom.tags');
+const { ENABLE_ASSERTS, assert } = goog.require('goog.asserts');
+const { getRandomString, htmlEscape } = goog.require('goog.string');
+const { isVoidTag } = goog.require('goog.dom.tags');
 
 /**
  * Formatter producing SafeHtml from a plain text format and HTML fragments.
@@ -57,11 +56,13 @@ class SafeHtmlFormatter {
     const openedTags = [];
     const marker = htmlEscape(MARKER);
     const html = htmlEscape(format).replace(
-        new RegExp(`\\{${marker}[\\w&#;]+\\}`, 'g'),
-        goog.bind(this.replaceFormattingString_, this, openedTags));
+      new RegExp(`\\{${marker}[\\w&#;]+\\}`, 'g'),
+      goog.bind(this.replaceFormattingString_, this, openedTags)
+    );
     assert(
-        openedTags.length == 0,
-        'Expected no unclosed tags, got <' + openedTags.join('>, <') + '>.');
+      openedTags.length == 0,
+      'Expected no unclosed tags, got <' + openedTags.join('>, <') + '>.'
+    );
     return SafeHtml.createSafeHtmlSecurityPrivateDoNotAccessOrElse(html);
   }
 
@@ -97,8 +98,9 @@ class SafeHtmlFormatter {
       if (ENABLE_ASSERTS) {
         const lastTag = openedTags.pop();
         assert(
-            lastTag == replacement.endTag.toLowerCase(),
-            `Expected </${lastTag}>, got </` + replacement.endTag + '>.');
+          lastTag == replacement.endTag.toLowerCase(),
+          `Expected </${lastTag}>, got </` + replacement.endTag + '>.'
+        );
       }
     }
     return result;
@@ -134,7 +136,7 @@ class SafeHtmlFormatter {
    */
   endTag(tagName) {
     SafeHtml.verifyTagName(tagName);
-    return this.storeReplacement_({endTag: tagName});
+    return this.storeReplacement_({ endTag: tagName });
   }
 
   /**
@@ -147,7 +149,7 @@ class SafeHtmlFormatter {
    * @return {string} Marker.
    */
   text(text) {
-    return this.storeReplacement_({html: htmlEscape(text)});
+    return this.storeReplacement_({ html: htmlEscape(text) });
   }
 
   /**
@@ -169,13 +171,11 @@ class SafeHtmlFormatter {
    */
   storeReplacement_(replacement) {
     this.replacementsCount_++;
-    const marker =
-        `{${MARKER}` + this.replacementsCount_ + '_' + getRandomString() + '}';
+    const marker = `{${MARKER}` + this.replacementsCount_ + '_' + getRandomString() + '}';
     this.replacements_[htmlEscape(marker)] = replacement;
     return marker;
   }
 }
-
 
 /**
  * @typedef {?{
@@ -187,9 +187,7 @@ class SafeHtmlFormatter {
  */
 SafeHtmlFormatter.Replacement;
 
-
 /** @const {string} Marker used for replacements. */
 const MARKER = 'SafeHtmlFormatter:';
-
 
 exports = SafeHtmlFormatter;

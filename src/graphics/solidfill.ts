@@ -4,18 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Represents a solid color fill goog.graphics.
  */
 
-
 goog.provide('goog.graphics.SolidFill');
 
-
 goog.require('goog.graphics.Fill');
-
-
 
 /**
  * Creates an immutable solid color fill object.
@@ -30,15 +25,13 @@ goog.require('goog.graphics.Fill');
  *     differences before the canvas tag was widely supported.  See
  *     http://en.wikipedia.org/wiki/Canvas_element for details.
  */
-goog.graphics.SolidFill = function(color, opt_opacity) {
-  'use strict';
+goog.graphics.SolidFill = function (color, opt_opacity) {
   /**
    * The color with which to fill.
    * @type {string}
    * @private
    */
   this.color_ = color;
-
 
   /**
    * The opacity of the fill.
@@ -49,20 +42,16 @@ goog.graphics.SolidFill = function(color, opt_opacity) {
 };
 goog.inherits(goog.graphics.SolidFill, goog.graphics.Fill);
 
-
 /**
  * @return {string} The color of this fill.
  */
-goog.graphics.SolidFill.prototype.getColor = function() {
-  'use strict';
+goog.graphics.SolidFill.prototype.getColor = function () {
   return this.color_;
 };
-
 
 /**
  * @return {number} The opacity of this fill.
  */
-goog.graphics.SolidFill.prototype.getOpacity = function() {
-  'use strict';
+goog.graphics.SolidFill.prototype.getOpacity = function () {
   return this.opacity_;
 };

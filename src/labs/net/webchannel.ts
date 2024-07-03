@@ -36,8 +36,6 @@ goog.require('goog.events.Event');
 goog.require('goog.events.Listenable');
 goog.require('goog.net.XmlHttpFactory');
 
-
-
 /**
  * A WebChannel represents a logical bi-directional channel over which the
  * client communicates with a remote server that holds the other endpoint
@@ -49,9 +47,7 @@ goog.require('goog.net.XmlHttpFactory');
  * @interface
  * @extends {goog.events.Listenable}
  */
-goog.net.WebChannel = function() {};
-
-
+goog.net.WebChannel = () => {};
 
 /**
  * This interface defines a pluggable API to allow WebChannel runtime to support
@@ -71,8 +67,7 @@ goog.net.WebChannel = function() {};
  *
  * @interface
  */
-goog.net.WebChannel.FailureRecovery = function() {};
-
+goog.net.WebChannel.FailureRecovery = () => {};
 
 /**
  * Configuration spec for newly created WebChannel instances.
@@ -82,7 +77,7 @@ goog.net.WebChannel.FailureRecovery = function() {};
  * when a new instance of WebChannel is created via {@link WebChannelTransport}.
  * @record
  */
-goog.net.WebChannel.Options = function() {};
+goog.net.WebChannel.Options = () => {};
 
 /**
  * Transport-metadata support.
@@ -327,7 +322,6 @@ goog.net.WebChannel.Options.prototype.useFetchStreams;
  */
 goog.net.WebChannel.Options.prototype.enableOriginTrials;
 
-
 /**
  * Types that are allowed as message data.
  *
@@ -341,12 +335,10 @@ goog.net.WebChannel.Options.prototype.enableOriginTrials;
  */
 goog.net.WebChannel.MessageData;
 
-
 /**
  * Open the WebChannel against the URI specified in the constructor.
  */
 goog.net.WebChannel.prototype.open = goog.abstractMethod;
-
 
 /**
  * Close the WebChannel.
@@ -357,7 +349,6 @@ goog.net.WebChannel.prototype.open = goog.abstractMethod;
  * If you need such a guarantee, see the Half the halfClose() method.
  */
 goog.net.WebChannel.prototype.close = goog.abstractMethod;
-
 
 /**
  * Half-close the WebChannel.
@@ -381,7 +372,6 @@ goog.net.WebChannel.prototype.close = goog.abstractMethod;
  */
 goog.net.WebChannel.prototype.halfClose = goog.abstractMethod;
 
-
 /**
  * Sends a message to the server that maintains the other endpoint of
  * the WebChannel.
@@ -398,7 +388,6 @@ goog.net.WebChannel.prototype.halfClose = goog.abstractMethod;
  * @param {!goog.net.WebChannel.MessageData} message The message to send.
  */
 goog.net.WebChannel.prototype.send = goog.abstractMethod;
-
 
 /**
  * Common events fired by WebChannels.
@@ -421,10 +410,8 @@ goog.net.WebChannel.EventType = {
   ERROR: goog.events.getUniqueId('error'),
 
   /** Dispatched when the channel has received a new message. */
-  MESSAGE: goog.events.getUniqueId('message')
+  MESSAGE: goog.events.getUniqueId('message'),
 };
-
-
 
 /**
  * The event interface for the MESSAGE event.
@@ -432,13 +419,10 @@ goog.net.WebChannel.EventType = {
  * @constructor
  * @extends {goog.events.Event}
  */
-goog.net.WebChannel.MessageEvent = function() {
-  'use strict';
-  goog.net.WebChannel.MessageEvent.base(
-      this, 'constructor', goog.net.WebChannel.EventType.MESSAGE);
+goog.net.WebChannel.MessageEvent = function () {
+  goog.net.WebChannel.MessageEvent.base(this, 'constructor', goog.net.WebChannel.EventType.MESSAGE);
 };
 goog.inherits(goog.net.WebChannel.MessageEvent, goog.events.Event);
-
 
 /**
  * The content of the message received from the server.
@@ -447,14 +431,12 @@ goog.inherits(goog.net.WebChannel.MessageEvent, goog.events.Event);
  */
 goog.net.WebChannel.MessageEvent.prototype.data;
 
-
 /**
  * The metadata key when the MESSAGE event represents a metadata message.
  *
  * @type {string|undefined}
  */
 goog.net.WebChannel.MessageEvent.prototype.metadataKey;
-
 
 /**
  * Metadata as HTTP status code. Typically sent before the channel is
@@ -464,7 +446,6 @@ goog.net.WebChannel.MessageEvent.prototype.metadataKey;
  */
 goog.net.WebChannel.MessageEvent.prototype.statusCode;
 
-
 /**
  * Metadata as HTTP headers. Typically sent before the channel is
  * half-closed by the server.
@@ -472,7 +453,6 @@ goog.net.WebChannel.MessageEvent.prototype.statusCode;
  * @type {!Object<string, string>|undefined}
  */
 goog.net.WebChannel.MessageEvent.prototype.headers;
-
 
 /**
  * WebChannel level error conditions.
@@ -524,10 +504,8 @@ goog.net.WebChannel.ErrorStatus = {
   NETWORK_ERROR: 1,
 
   /** The server fails to accept or process the WebChannel. */
-  SERVER_ERROR: 2
+  SERVER_ERROR: 2,
 };
-
-
 
 /**
  * The event interface for the ERROR event.
@@ -535,13 +513,10 @@ goog.net.WebChannel.ErrorStatus = {
  * @constructor
  * @extends {goog.events.Event}
  */
-goog.net.WebChannel.ErrorEvent = function() {
-  'use strict';
-  goog.net.WebChannel.ErrorEvent.base(
-      this, 'constructor', goog.net.WebChannel.EventType.ERROR);
+goog.net.WebChannel.ErrorEvent = function () {
+  goog.net.WebChannel.ErrorEvent.base(this, 'constructor', goog.net.WebChannel.EventType.ERROR);
 };
 goog.inherits(goog.net.WebChannel.ErrorEvent, goog.events.Event);
-
 
 /**
  * The error status.
@@ -550,14 +525,11 @@ goog.inherits(goog.net.WebChannel.ErrorEvent, goog.events.Event);
  */
 goog.net.WebChannel.ErrorEvent.prototype.status;
 
-
 /**
  * @return {!goog.net.WebChannel.RuntimeProperties} The runtime properties
  * of the WebChannel instance.
  */
 goog.net.WebChannel.prototype.getRuntimeProperties = goog.abstractMethod;
-
-
 
 /**
  * The runtime properties of the WebChannel instance.
@@ -567,17 +539,14 @@ goog.net.WebChannel.prototype.getRuntimeProperties = goog.abstractMethod;
  *
  * @interface
  */
-goog.net.WebChannel.RuntimeProperties = function() {};
-
+goog.net.WebChannel.RuntimeProperties = () => {};
 
 /**
  * @return {number} The effective limit for the number of concurrent HTTP
  * requests that are allowed to be made for sending messages from the client
  * to the server. When SPDY is not enabled, this limit will be one.
  */
-goog.net.WebChannel.RuntimeProperties.prototype.getConcurrentRequestLimit =
-    goog.abstractMethod;
-
+goog.net.WebChannel.RuntimeProperties.prototype.getConcurrentRequestLimit = goog.abstractMethod;
 
 /**
  * For applications that need support multiple channels (e.g. from
@@ -591,9 +560,7 @@ goog.net.WebChannel.RuntimeProperties.prototype.getConcurrentRequestLimit =
  * @return {boolean} Whether SPDY is enabled for the origin against which
  * the channel is created.
  */
-goog.net.WebChannel.RuntimeProperties.prototype.isSpdyEnabled =
-    goog.abstractMethod;
-
+goog.net.WebChannel.RuntimeProperties.prototype.isSpdyEnabled = goog.abstractMethod;
 
 /**
  * @return {number} The number of requests (for sending messages to the server)
@@ -601,9 +568,7 @@ goog.net.WebChannel.RuntimeProperties.prototype.isSpdyEnabled =
  * getConcurrentRequestLimit(), client-to-server message delivery may experience
  * a higher latency.
  */
-goog.net.WebChannel.RuntimeProperties.prototype.getPendingRequestCount =
-    goog.abstractMethod;
-
+goog.net.WebChannel.RuntimeProperties.prototype.getPendingRequestCount = goog.abstractMethod;
 
 /**
  * For applications to query the current HTTP session id, sent by the server
@@ -611,9 +576,7 @@ goog.net.WebChannel.RuntimeProperties.prototype.getPendingRequestCount =
  *
  * @return {?string} the HTTP session id or null if no HTTP session is in use.
  */
-goog.net.WebChannel.RuntimeProperties.prototype.getHttpSessionId =
-    goog.abstractMethod;
-
+goog.net.WebChannel.RuntimeProperties.prototype.getHttpSessionId = goog.abstractMethod;
 
 /**
  * Experimental API.
@@ -647,7 +610,6 @@ goog.net.WebChannel.RuntimeProperties.prototype.getHttpSessionId =
  */
 goog.net.WebChannel.RuntimeProperties.prototype.commit = goog.abstractMethod;
 
-
 /**
  * This method may be used by the application to recover from a peer failure
  * or to enable sender-initiated flow-control.
@@ -661,9 +623,7 @@ goog.net.WebChannel.RuntimeProperties.prototype.commit = goog.abstractMethod;
  * issued, the list of messages that have not been delivered to the server
  * application.
  */
-goog.net.WebChannel.RuntimeProperties.prototype.getNonAckedMessages =
-    goog.abstractMethod;
-
+goog.net.WebChannel.RuntimeProperties.prototype.getNonAckedMessages = goog.abstractMethod;
 
 /**
  * A low water-mark message count to notify the application when the
@@ -684,9 +644,7 @@ goog.net.WebChannel.RuntimeProperties.prototype.getNonAckedMessages =
  * Any previously registered callback is cleared. This new callback will
  * be cleared once it has been fired, or when the channel is closed or aborted.
  */
-goog.net.WebChannel.RuntimeProperties.prototype.notifyNonAckedMessageCount =
-    goog.abstractMethod;
-
+goog.net.WebChannel.RuntimeProperties.prototype.notifyNonAckedMessageCount = goog.abstractMethod;
 
 /**
  * Experimental API.
@@ -703,7 +661,6 @@ goog.net.WebChannel.RuntimeProperties.prototype.notifyNonAckedMessageCount =
  */
 goog.net.WebChannel.RuntimeProperties.prototype.onCommit = goog.abstractMethod;
 
-
 /**
  * Experimental API.
  *
@@ -718,7 +675,6 @@ goog.net.WebChannel.RuntimeProperties.prototype.onCommit = goog.abstractMethod;
  */
 goog.net.WebChannel.RuntimeProperties.prototype.ackCommit = goog.abstractMethod;
 
-
 /**
  * Transport-metadata support.
  *
@@ -729,8 +685,7 @@ goog.net.WebChannel.RuntimeProperties.prototype.ackCommit = goog.abstractMethod;
  * @return {!Object<string, string>|undefined} The response headers received
  * with the non-200 HTTP status code that causes the channel to be aborted.
  */
-goog.net.WebChannel.RuntimeProperties.prototype.getLastResponseHeaders =
-    goog.abstractMethod;
+goog.net.WebChannel.RuntimeProperties.prototype.getLastResponseHeaders = goog.abstractMethod;
 
 /**
  * Transport-metadata support.
@@ -747,9 +702,7 @@ goog.net.WebChannel.RuntimeProperties.prototype.getLastResponseHeaders =
  * @return {number} The non-200 HTTP status code received that causes the
  * channel to be aborted.
  */
-goog.net.WebChannel.RuntimeProperties.prototype.getLastStatusCode =
-    goog.abstractMethod;
-
+goog.net.WebChannel.RuntimeProperties.prototype.getLastStatusCode = goog.abstractMethod;
 
 /**
  * Enum to indicate the current recovery state.
@@ -770,9 +723,8 @@ goog.net.WebChannel.FailureRecovery.State = {
   RECOVERING: 'recovering',
 
   /** The channel has been closed.  */
-  CLOSED: 'closed'
+  CLOSED: 'closed',
 };
-
 
 /**
  * Enum to indicate different failure conditions as detected by the webchannel
@@ -802,16 +754,14 @@ goog.net.WebChannel.FailureRecovery.FailureCondition = {
   /**
    * Exception was thrown while processing the request/response.
    */
-  EXCEPTION: 'exception'
+  EXCEPTION: 'exception',
 };
-
 
 /**
  * @return {!goog.net.WebChannel.FailureRecovery.State} the current state,
  * mainly for debugging use.
  */
 goog.net.WebChannel.FailureRecovery.prototype.getState = goog.abstractMethod;
-
 
 /**
  * This method is for WebChannel runtime to set the current failure condition
@@ -843,7 +793,6 @@ goog.net.WebChannel.FailureRecovery.prototype.getState = goog.abstractMethod;
  */
 goog.net.WebChannel.FailureRecovery.prototype.setFailure = goog.abstractMethod;
 
-
 /**
  * The Webchannel runtime needs call this method when webchannel is closed or
  * aborted.
@@ -851,7 +800,6 @@ goog.net.WebChannel.FailureRecovery.prototype.setFailure = goog.abstractMethod;
  * Once the instance is closed, any access to the instance will be a no-op.
  */
 goog.net.WebChannel.FailureRecovery.prototype.close = goog.abstractMethod;
-
 
 /**
  * A request header to indicate to the server the messaging protocol
@@ -861,14 +809,12 @@ goog.net.WebChannel.FailureRecovery.prototype.close = goog.abstractMethod;
  */
 goog.net.WebChannel.X_CLIENT_PROTOCOL = 'X-Client-Protocol';
 
-
 /**
  * The value for x-client-protocol when the messaging protocol is WebChannel.
  *
  * @type {string}
  */
 goog.net.WebChannel.X_CLIENT_PROTOCOL_WEB_CHANNEL = 'webchannel';
-
 
 /**
  * A response header for the server to signal the wire-protocol that
@@ -880,7 +826,6 @@ goog.net.WebChannel.X_CLIENT_PROTOCOL_WEB_CHANNEL = 'webchannel';
  */
 goog.net.WebChannel.X_CLIENT_WIRE_PROTOCOL = 'X-Client-Wire-Protocol';
 
-
 /**
  * A response header for the server to send back the HTTP session id as part of
  * the initial handshake. The value of the HTTP session id is opaque to the
@@ -889,7 +834,6 @@ goog.net.WebChannel.X_CLIENT_WIRE_PROTOCOL = 'X-Client-Wire-Protocol';
  * @type {string}
  */
 goog.net.WebChannel.X_HTTP_SESSION_ID = 'X-HTTP-Session-Id';
-
 
 /**
  * A response header for the server to send back any initial response data as a
@@ -900,7 +844,6 @@ goog.net.WebChannel.X_HTTP_SESSION_ID = 'X-HTTP-Session-Id';
  */
 goog.net.WebChannel.X_HTTP_INITIAL_RESPONSE = 'X-HTTP-Initial-Response';
 
-
 /**
  * A request header for specifying the content-type of WebChannel messages,
  * e.g. application-defined JSON encoding styles. Currently this header
@@ -909,7 +852,6 @@ goog.net.WebChannel.X_HTTP_INITIAL_RESPONSE = 'X-HTTP-Initial-Response';
  * @type {string}
  */
 goog.net.WebChannel.X_WEBCHANNEL_CONTENT_TYPE = 'X-WebChannel-Content-Type';
-
 
 /**
  * A request header for specifying the client profile in order to apply

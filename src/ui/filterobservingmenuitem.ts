@@ -20,8 +20,6 @@ goog.requireType('goog.dom.DomHelper');
 goog.requireType('goog.ui.ControlContent');
 goog.requireType('goog.ui.MenuItemRenderer');
 
-
-
 /**
  * Class representing a filter observing menu item.
  *
@@ -35,15 +33,16 @@ goog.requireType('goog.ui.MenuItemRenderer');
  * @constructor
  * @extends {goog.ui.MenuItem}
  */
-goog.ui.FilterObservingMenuItem = function(
-    content, opt_model, opt_domHelper, opt_renderer) {
-  'use strict';
+goog.ui.FilterObservingMenuItem = function (content, opt_model, opt_domHelper, opt_renderer) {
   goog.ui.MenuItem.call(
-      this, content, opt_model, opt_domHelper,
-      opt_renderer || new goog.ui.FilterObservingMenuItemRenderer());
+    this,
+    content,
+    opt_model,
+    opt_domHelper,
+    opt_renderer || new goog.ui.FilterObservingMenuItemRenderer()
+  );
 };
 goog.inherits(goog.ui.FilterObservingMenuItem, goog.ui.MenuItem);
-
 
 /**
  * Function called when the filter text changes.
@@ -52,44 +51,35 @@ goog.inherits(goog.ui.FilterObservingMenuItem, goog.ui.MenuItem);
  */
 goog.ui.FilterObservingMenuItem.prototype.observer_ = null;
 
-
 /** @override */
-goog.ui.FilterObservingMenuItem.prototype.enterDocument = function() {
-  'use strict';
+goog.ui.FilterObservingMenuItem.prototype.enterDocument = function () {
   goog.ui.FilterObservingMenuItem.superClass_.enterDocument.call(this);
   this.callObserver();
 };
-
 
 /**
  * Sets the observer functions.
  * @param {Function} f function(goog.ui.FilterObservingMenuItem, string).
  */
-goog.ui.FilterObservingMenuItem.prototype.setObserver = function(f) {
-  'use strict';
+goog.ui.FilterObservingMenuItem.prototype.setObserver = function (f) {
   this.observer_ = f;
   this.callObserver();
 };
-
 
 /**
  * Calls the observer function if one has been specified.
  * @param {?string=} opt_str Filter string.
  */
-goog.ui.FilterObservingMenuItem.prototype.callObserver = function(opt_str) {
-  'use strict';
+goog.ui.FilterObservingMenuItem.prototype.callObserver = function (opt_str) {
   if (this.observer_) {
     this.observer_(this, opt_str || '');
   }
 };
 
-
 // Register a decorator factory function for
 // goog.ui.FilterObservingMenuItemRenderer.
-goog.ui.registry.setDecoratorByClassName(
-    goog.ui.FilterObservingMenuItemRenderer.CSS_CLASS, function() {
-      'use strict';
-      // FilterObservingMenuItem defaults to using
-      // FilterObservingMenuItemRenderer.
-      return new goog.ui.FilterObservingMenuItem(null);
-    });
+goog.ui.registry.setDecoratorByClassName(goog.ui.FilterObservingMenuItemRenderer.CSS_CLASS, () => {
+  // FilterObservingMenuItem defaults to using
+  // FilterObservingMenuItemRenderer.
+  return new goog.ui.FilterObservingMenuItem(null);
+});

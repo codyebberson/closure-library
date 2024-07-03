@@ -9,11 +9,22 @@ const testData = [
     [
       'A',
       [
-        ['Afghanistan'], ['Albania'], ['Algeria'], ['American Samoa'],
-        ['Andorra'], ['Angola'], ['Anguilla'], ['Antarctica'],
-        ['Antigua and Barbuda'], ['Argentina'], ['Armenia'], ['Aruba'],
-        ['Australia'], ['Austria'], ['Azerbaijan']
-      ]
+        ['Afghanistan'],
+        ['Albania'],
+        ['Algeria'],
+        ['American Samoa'],
+        ['Andorra'],
+        ['Angola'],
+        ['Anguilla'],
+        ['Antarctica'],
+        ['Antigua and Barbuda'],
+        ['Argentina'],
+        ['Armenia'],
+        ['Aruba'],
+        ['Australia'],
+        ['Austria'],
+        ['Azerbaijan'],
+      ],
     ],
     [
       'B',
@@ -37,8 +48,8 @@ const testData = [
         ['Brunei Darussalam'],
         ['Bulgaria'],
         ['Burkina Faso'],
-        ['Burundi']
-      ]
+        ['Burundi'],
+      ],
     ],
     [
       'C',
@@ -64,65 +75,107 @@ const testData = [
         ['Cuba'],
         ['Cyprus'],
         ['Czech Republic'],
-        ['C\u00f4te d\u2019Ivoire']
-      ]
+        ['C\u00f4te d\u2019Ivoire'],
+      ],
     ],
     ['D', [['Denmark'], ['Djibouti'], ['Dominica'], ['Dominican Republic']]],
     [
       'E',
       [
-        ['Ecuador'], ['Egypt'], ['El Salvador'], ['Equatorial Guinea'],
-        ['Eritrea'], ['Estonia'], ['Ethiopia']
-      ]
+        ['Ecuador'],
+        ['Egypt'],
+        ['El Salvador'],
+        ['Equatorial Guinea'],
+        ['Eritrea'],
+        ['Estonia'],
+        ['Ethiopia'],
+      ],
     ],
     [
       'F',
       [
-        ['Falkland Islands (Malvinas)'], ['Faroe Islands'], ['Fiji'],
-        ['Finland'], ['France'], ['French Guiana'], ['French Polynesia'],
-        ['French Southern Territories']
-      ]
+        ['Falkland Islands (Malvinas)'],
+        ['Faroe Islands'],
+        ['Fiji'],
+        ['Finland'],
+        ['France'],
+        ['French Guiana'],
+        ['French Polynesia'],
+        ['French Southern Territories'],
+      ],
     ],
     [
       'G',
       [
-        ['Gabon'], ['Gambia'], ['Georgia'], ['Germany'], ['Ghana'],
-        ['Gibraltar'], ['Greece'], ['Greenland'], ['Grenada'], ['Guadeloupe'],
-        ['Guam'], ['Guatemala'], ['Guernsey'], ['Guinea'], ['Guinea-Bissau'],
-        ['Guyana']
-      ]
+        ['Gabon'],
+        ['Gambia'],
+        ['Georgia'],
+        ['Germany'],
+        ['Ghana'],
+        ['Gibraltar'],
+        ['Greece'],
+        ['Greenland'],
+        ['Grenada'],
+        ['Guadeloupe'],
+        ['Guam'],
+        ['Guatemala'],
+        ['Guernsey'],
+        ['Guinea'],
+        ['Guinea-Bissau'],
+        ['Guyana'],
+      ],
     ],
     [
       'H',
       [
-        ['Haiti'], ['Heard Island and McDonald Islands'],
-        ['Holy See (Vatican City State)'], ['Honduras'], ['Hong Kong'],
-        ['Hungary']
-      ]
+        ['Haiti'],
+        ['Heard Island and McDonald Islands'],
+        ['Holy See (Vatican City State)'],
+        ['Honduras'],
+        ['Hong Kong'],
+        ['Hungary'],
+      ],
     ],
     [
       'I',
       [
-        ['Iceland'], ['India'], ['Indonesia'], ['Iran, Islamic Republic of'],
-        ['Iraq'], ['Ireland'], ['Isle of Man'], ['Israel'], ['Italy']
-      ]
+        ['Iceland'],
+        ['India'],
+        ['Indonesia'],
+        ['Iran, Islamic Republic of'],
+        ['Iraq'],
+        ['Ireland'],
+        ['Isle of Man'],
+        ['Israel'],
+        ['Italy'],
+      ],
     ],
     ['J', [['Jamaica'], ['Japan'], ['Jersey'], ['Jordan']]],
     [
       'K',
       [
-        ['Kazakhstan'], ['Kenya'], ['Kiribati'],
-        ['Korea, Democratic People\u2019s Republic of'], ['Korea, Republic of'],
-        ['Kuwait'], ['Kyrgyzstan']
-      ]
+        ['Kazakhstan'],
+        ['Kenya'],
+        ['Kiribati'],
+        ['Korea, Democratic People\u2019s Republic of'],
+        ['Korea, Republic of'],
+        ['Kuwait'],
+        ['Kyrgyzstan'],
+      ],
     ],
     [
       'L',
       [
-        ['Lao People\u2019s Democratic Republic'], ['Latvia'], ['Lebanon'],
-        ['Lesotho'], ['Liberia'], ['Libyan Arab Jamahiriya'], ['Liechtenstein'],
-        ['Lithuania'], ['Luxembourg']
-      ]
+        ['Lao People\u2019s Democratic Republic'],
+        ['Latvia'],
+        ['Lebanon'],
+        ['Lesotho'],
+        ['Liberia'],
+        ['Libyan Arab Jamahiriya'],
+        ['Liechtenstein'],
+        ['Lithuania'],
+        ['Luxembourg'],
+      ],
     ],
     [
       'M',
@@ -149,26 +202,45 @@ const testData = [
         ['Montserrat'],
         ['Morocco'],
         ['Mozambique'],
-        ['Myanmar']
-      ]
+        ['Myanmar'],
+      ],
     ],
     [
       'N',
       [
-        ['Namibia'], ['Nauru'], ['Nepal'], ['Netherlands'],
-        ['Netherlands Antilles'], ['New Caledonia'], ['New Zealand'],
-        ['Nicaragua'], ['Niger'], ['Nigeria'], ['Niue'], ['Norfolk Island'],
-        ['Northern Mariana Islands'], ['Norway']
-      ]
+        ['Namibia'],
+        ['Nauru'],
+        ['Nepal'],
+        ['Netherlands'],
+        ['Netherlands Antilles'],
+        ['New Caledonia'],
+        ['New Zealand'],
+        ['Nicaragua'],
+        ['Niger'],
+        ['Nigeria'],
+        ['Niue'],
+        ['Norfolk Island'],
+        ['Northern Mariana Islands'],
+        ['Norway'],
+      ],
     ],
     ['O', [['Oman']]],
     [
       'P',
       [
-        ['Pakistan'], ['Palau'], ['Palestinian Territory, Occupied'],
-        ['Panama'], ['Papua New Guinea'], ['Paraguay'], ['Peru'],
-        ['Philippines'], ['Pitcairn'], ['Poland'], ['Portugal'], ['Puerto Rico']
-      ]
+        ['Pakistan'],
+        ['Palau'],
+        ['Palestinian Territory, Occupied'],
+        ['Panama'],
+        ['Papua New Guinea'],
+        ['Paraguay'],
+        ['Peru'],
+        ['Philippines'],
+        ['Pitcairn'],
+        ['Poland'],
+        ['Portugal'],
+        ['Puerto Rico'],
+      ],
     ],
     ['Q', [['Qatar']]],
     ['R', [['Romania'], ['Russian Federation'], ['Rwanda'], ['R\u00e9union']]],
@@ -205,36 +277,54 @@ const testData = [
         ['Swaziland'],
         ['Sweden'],
         ['Switzerland'],
-        ['Syrian Arab Republic']
-      ]
+        ['Syrian Arab Republic'],
+      ],
     ],
     [
       'T',
       [
-        ['Taiwan, Province of China'], ['Tajikistan'],
-        ['Tanzania, United Republic of'], ['Thailand'], ['Timor-Leste'],
-        ['Togo'], ['Tokelau'], ['Tonga'], ['Trinidad and Tobago'], ['Tunisia'],
-        ['Turkey'], ['Turkmenistan'], ['Turks and Caicos Islands'], ['Tuvalu']
-      ]
+        ['Taiwan, Province of China'],
+        ['Tajikistan'],
+        ['Tanzania, United Republic of'],
+        ['Thailand'],
+        ['Timor-Leste'],
+        ['Togo'],
+        ['Tokelau'],
+        ['Tonga'],
+        ['Trinidad and Tobago'],
+        ['Tunisia'],
+        ['Turkey'],
+        ['Turkmenistan'],
+        ['Turks and Caicos Islands'],
+        ['Tuvalu'],
+      ],
     ],
     [
       'U',
       [
-        ['Uganda'], ['Ukraine'], ['United Arab Emirates'], ['United Kingdom'],
-        ['United States'], ['United States Minor Outlying Islands'],
-        ['Uruguay'], ['Uzbekistan']
-      ]
+        ['Uganda'],
+        ['Ukraine'],
+        ['United Arab Emirates'],
+        ['United Kingdom'],
+        ['United States'],
+        ['United States Minor Outlying Islands'],
+        ['Uruguay'],
+        ['Uzbekistan'],
+      ],
     ],
     [
       'V',
       [
-        ['Vanuatu'], ['Venezuela'], ['Viet Nam'], ['Virgin Islands, British'],
-        ['Virgin Islands, U.S.']
-      ]
+        ['Vanuatu'],
+        ['Venezuela'],
+        ['Viet Nam'],
+        ['Virgin Islands, British'],
+        ['Virgin Islands, U.S.'],
+      ],
     ],
     ['W', [['Wallis and Futuna'], ['Western Sahara']]],
     ['Y', [['Yemen']]],
     ['Z', [['Zambia'], ['Zimbabwe']]],
-    ['\u00c5', [['\u00c5land Islands']]]
-  ]
+    ['\u00c5', [['\u00c5land Islands']]],
+  ],
 ];

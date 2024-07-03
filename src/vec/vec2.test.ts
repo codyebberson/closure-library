@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.vec.Vec2Test');
-goog.setTestOnly();
 
 const Vec2 = goog.require('goog.vec.Vec2');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -138,10 +137,10 @@ testSuite({
   testMagnitudeOverflow() {
     const x = Number.MAX_VALUE / 2;
     assertEquals(
-        (Number.MAX_VALUE / 2) * Math.sqrt(2),
-        Vec2.magnitude(Vec2.createFloat64FromArray([x, x])));
+      (Number.MAX_VALUE / 2) * Math.sqrt(2),
+      Vec2.magnitude(Vec2.createFloat64FromArray([x, x]))
+    );
   },
-
 
   testNormalize() {
     const v0 = Vec2.createFloat32FromArray([2, 3]);
@@ -196,8 +195,7 @@ testSuite({
     Vec2.setFromValues(v0, 1, 1);
     Vec2.setFromValues(v1, 0, 0);
     Vec2.direction(v0, v1, dirVec);
-    assertElementsRoughlyEqual(
-        [-0.707106781, -0.707106781], dirVec, vec.EPSILON);
+    assertElementsRoughlyEqual([-0.707106781, -0.707106781], dirVec, vec.EPSILON);
   },
 
   testLerp() {
@@ -209,7 +207,7 @@ testSuite({
     assertElementsEquals([1, 2], v2);
     Vec2.lerp(v2, v1, 1, v2);
     assertElementsEquals([10, 20], v2);
-    Vec2.lerp(v0, v1, .5, v2);
+    Vec2.lerp(v0, v1, 0.5, v2);
     assertElementsEquals([5.5, 11], v2);
   },
 

@@ -10,7 +10,6 @@
  */
 goog.module('goog.testing.ui.style');
 goog.module.declareLegacyNamespace();
-goog.setTestOnly();
 
 const asserts = goog.require('goog.asserts');
 const classlist = goog.require('goog.dom.classlist');
@@ -26,8 +25,8 @@ const testingAsserts = goog.require('goog.testing.asserts');
  */
 function writeReferenceFrame(referencePath) {
   document.write(
-      '<iframe id="reference" name="reference" ' +
-      'src="' + referencePath + '"></iframe>');
+    '<iframe id="reference" name="reference" ' + 'src="' + referencePath + '"></iframe>'
+  );
 }
 
 /**
@@ -39,8 +38,7 @@ function writeReferenceFrame(referencePath) {
  * @return {?Node} The root element of the reference structure.
  */
 function getReferenceNode(referenceId) {
-  return dom.getFirstElementChild(
-      window.frames['reference'].document.getElementById(referenceId));
+  return dom.getFirstElementChild(window.frames['reference'].document.getElementById(referenceId));
 }
 
 /**
@@ -56,7 +54,7 @@ function getElementChildren(element) {
   const children = [first];
   let next;
 
-  while (next = dom.getNextElementSibling(children[children.length - 1])) {
+  while ((next = dom.getNextElementSibling(children[children.length - 1]))) {
     children.push(next);
   }
   return children;
@@ -100,15 +98,19 @@ function assertStructureMatchesReferenceInner(element, reference) {
   }
   testingAsserts.assertTrue('Expected two elements.', !!element && !!reference);
   testingAsserts.assertEquals(
-      'Expected nodes to have the same nodeName.', element.nodeName,
-      reference.nodeName);
+    'Expected nodes to have the same nodeName.',
+    element.nodeName,
+    reference.nodeName
+  );
   const testElem = asserts.assertElement(element);
   const refElem = asserts.assertElement(reference);
   const elementClasses = classlist.get(testElem);
   Array.prototype.forEach.call(classlist.get(refElem), (referenceClass) => {
     testingAsserts.assertContains(
-        'Expected test node to have all reference classes.', referenceClass,
-        elementClasses);
+      'Expected test node to have all reference classes.',
+      referenceClass,
+      elementClasses
+    );
   });
   // Call assertStructureMatchesReferenceInner_ on all element children
   // unless this is a content node
@@ -118,8 +120,10 @@ function assertStructureMatchesReferenceInner(element, reference) {
   if (!isContentNode(reference)) {
     if (elChildren.length != refChildren.length) {
       assertEquals(
-          'Expected same number of children for a non-content node.',
-          elChildren.length, refChildren.length);
+        'Expected same number of children for a non-content node.',
+        elChildren.length,
+        refChildren.length
+      );
     }
     for (let i = 0; i < elChildren.length; i++) {
       assertStructureMatchesReferenceInner(elChildren[i], refChildren[i]);

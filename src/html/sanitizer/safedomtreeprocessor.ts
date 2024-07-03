@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview A base class to safely parse and transform an HTML string
  * using an inert DOM, which avoids executing scripts and loading images. Note:
@@ -28,7 +27,7 @@ const noclobber = goog.require('goog.html.sanitizer.noclobber');
 const safe = goog.require('goog.dom.safe');
 const uncheckedconversions = goog.require('goog.html.uncheckedconversions');
 const userAgent = goog.require('goog.userAgent');
-const {createInertDocument} = goog.require('goog.html.sanitizer.inertDocument');
+const { createInertDocument } = goog.require('goog.html.sanitizer.inertDocument');
 
 /** @const {?Logger} */
 var logger = googLog.getLogger('goog.html.sanitizer.SafeDomTreeProcessor');
@@ -38,15 +37,13 @@ var logger = googLog.getLogger('goog.html.sanitizer.SafeDomTreeProcessor');
  * IE9 or below, for which we know the sanitizer is insecure or broken.
  * @const {boolean}
  */
-var SAFE_PARSING_SUPPORTED =
-    !userAgent.IE || userAgent.isDocumentModeOrHigher(10);
+var SAFE_PARSING_SUPPORTED = !userAgent.IE || userAgent.isDocumentModeOrHigher(10);
 
 /**
  * Whether the template tag is supported.
  * @const {boolean}
  */
-var HTML_SANITIZER_TEMPLATE_SUPPORTED =
-    !userAgent.IE || document.documentMode == null;
+var HTML_SANITIZER_TEMPLATE_SUPPORTED = !userAgent.IE || document.documentMode == null;
 
 /**
  * Parses a string of unsanitized HTML and provides an iterator over the
@@ -59,9 +56,10 @@ var HTML_SANITIZER_TEMPLATE_SUPPORTED =
  */
 function getDomTreeWalker(html) {
   var iteratorParent;
-  var safeHtml =
-      uncheckedconversions.safeHtmlFromStringKnownToSatisfyTypeContract(
-          Const.from('Never attached to DOM.'), html);
+  var safeHtml = uncheckedconversions.safeHtmlFromStringKnownToSatisfyTypeContract(
+    Const.from('Never attached to DOM.'),
+    html
+  );
   var templateElement = document.createElement('template');
   if (HTML_SANITIZER_TEMPLATE_SUPPORTED && 'content' in templateElement) {
     safe.unsafeSetInnerHtmlDoNotUseOrElse(templateElement, safeHtml);
@@ -74,8 +72,11 @@ function getDomTreeWalker(html) {
     safe.unsafeSetInnerHtmlDoNotUseOrElse(doc.body, safeHtml);
   }
   return document.createTreeWalker(
-      iteratorParent, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT,
-      null /* filter */, false /* entityReferenceExpansion */);
+    iteratorParent,
+    NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT,
+    null /* filter */,
+    false /* entityReferenceExpansion */
+  );
 }
 
 /**
@@ -88,7 +89,7 @@ function getDomTreeWalker(html) {
  * attributes, etc.
  * @constructor @struct @abstract
  */
-const SafeDomTreeProcessor = function() {
+const SafeDomTreeProcessor = function () {
   /** @protected @const {!Document} */
   this.inertDocument_ = createInertDocument();
 };
@@ -101,7 +102,7 @@ const SafeDomTreeProcessor = function() {
  * @return {string}
  * @protected @final
  */
-SafeDomTreeProcessor.prototype.processToString = function(html) {
+SafeDomTreeProcessor.prototype.processToString = function (html) {
   if (!SAFE_PARSING_SUPPORTED) {
     return '';
   }
@@ -121,7 +122,9 @@ SafeDomTreeProcessor.prototype.processToString = function(html) {
   // Remove the outer span before returning the string representation of the
   // processed copy.
   return serializedNewTree.slice(
-      serializedNewTree.indexOf('>') + 1, serializedNewTree.lastIndexOf('</'));
+    serializedNewTree.indexOf('>') + 1,
+    serializedNewTree.lastIndexOf('</')
+  );
 };
 
 /**
@@ -132,9 +135,8 @@ SafeDomTreeProcessor.prototype.processToString = function(html) {
  * @return {!HTMLSpanElement}
  * @protected @final
  */
-SafeDomTreeProcessor.prototype.processToTree = function(html) {
-  const newRoot = /** @type {!HTMLSpanElement} */ (
-      this.inertDocument_.createElement('span'));
+SafeDomTreeProcessor.prototype.processToTree = function (html) {
+  const newRoot = /** @type {!HTMLSpanElement} */ (this.inertDocument_.createElement('span'));
   if (!SAFE_PARSING_SUPPORTED) {
     return newRoot;
   }
@@ -151,7 +153,7 @@ SafeDomTreeProcessor.prototype.processToTree = function(html) {
   var elementMap = ElementWeakMap.newWeakMap();
 
   var originalNode;
-  while (originalNode = originalTreeWalker.nextNode()) {
+  while ((originalNode = originalTreeWalker.nextNode())) {
     // Make a copy of the node, potentially dropping it or changing its content,
     // tag name, etc.
     var newNode = this.createNode_(originalNode);
@@ -174,21 +176,17 @@ SafeDomTreeProcessor.prototype.processToTree = function(html) {
     var isParentRoot = false;
     if (originalParent) {
       var originalParentNodeType = noclobber.getNodeType(originalParent);
-      var originalParentNodeName =
-          noclobber.getNodeName(originalParent).toLowerCase();
+      var originalParentNodeName = noclobber.getNodeName(originalParent).toLowerCase();
       var originalGrandParent = noclobber.getParentNode(originalParent);
       // The following checks if newParent is an immediate child of the inert
       // parent template element.
-      if (originalParentNodeType == NodeType.DOCUMENT_FRAGMENT &&
-          !originalGrandParent) {
+      if (originalParentNodeType == NodeType.DOCUMENT_FRAGMENT && !originalGrandParent) {
         isParentRoot = true;
       } else if (originalParentNodeName == 'body' && originalGrandParent) {
         // The following checks if newParent is an immediate child of the
         // inert parent HtmlDocument.
-        var dirtyGreatGrandParent =
-            noclobber.getParentNode(originalGrandParent);
-        if (dirtyGreatGrandParent &&
-            !noclobber.getParentNode(dirtyGreatGrandParent)) {
+        var dirtyGreatGrandParent = noclobber.getParentNode(originalGrandParent);
+        if (dirtyGreatGrandParent && !noclobber.getParentNode(dirtyGreatGrandParent)) {
           isParentRoot = true;
         }
       }
@@ -220,7 +218,7 @@ SafeDomTreeProcessor.prototype.processToTree = function(html) {
  * @param {!HTMLSpanElement} newRoot
  * @protected @abstract
  */
-SafeDomTreeProcessor.prototype.processRoot = function(newRoot) {};
+SafeDomTreeProcessor.prototype.processRoot = (newRoot) => {};
 
 /**
  * Pre-processes the input html before the main tree-based transformation.
@@ -228,7 +226,7 @@ SafeDomTreeProcessor.prototype.processRoot = function(newRoot) {};
  * @return {string}
  * @protected @abstract
  */
-SafeDomTreeProcessor.prototype.preProcessHtml = function(html) {};
+SafeDomTreeProcessor.prototype.preProcessHtml = (html) => {};
 
 /**
  * Returns a new node based on the transformation of an original node, or null
@@ -237,7 +235,7 @@ SafeDomTreeProcessor.prototype.preProcessHtml = function(html) {};
  * @return {?Node}
  * @private
  */
-SafeDomTreeProcessor.prototype.createNode_ = function(originalNode) {
+SafeDomTreeProcessor.prototype.createNode_ = function (originalNode) {
   var nodeType = noclobber.getNodeType(originalNode);
   switch (nodeType) {
     case NodeType.TEXT:
@@ -257,7 +255,7 @@ SafeDomTreeProcessor.prototype.createNode_ = function(originalNode) {
  * @return {?Text}
  * @protected @abstract
  */
-SafeDomTreeProcessor.prototype.createTextNode = function(originalNode) {};
+SafeDomTreeProcessor.prototype.createTextNode = (originalNode) => {};
 
 /**
  * Creates a new element from the original element, potentially applying
@@ -266,7 +264,7 @@ SafeDomTreeProcessor.prototype.createTextNode = function(originalNode) {};
  * @return {?Element}
  * @private
  */
-SafeDomTreeProcessor.prototype.createElement_ = function(originalElement) {
+SafeDomTreeProcessor.prototype.createElement_ = function (originalElement) {
   if (noclobber.getNodeName(originalElement).toUpperCase() == 'TEMPLATE') {
     // Processing TEMPLATE tags is not supported, they are automatically
     // dropped.
@@ -292,8 +290,7 @@ SafeDomTreeProcessor.prototype.createElement_ = function(originalElement) {
  * @return {?Element}
  * @protected @abstract
  */
-SafeDomTreeProcessor.prototype.createElementWithoutAttributes = function(
-    originalElement) {};
+SafeDomTreeProcessor.prototype.createElementWithoutAttributes = (originalElement) => {};
 
 /**
  * Copies over the attributes of an original node to its corresponding new node
@@ -302,13 +299,12 @@ SafeDomTreeProcessor.prototype.createElementWithoutAttributes = function(
  * @param {!Element} newElement
  * @private
  */
-SafeDomTreeProcessor.prototype.processElementAttributes_ = function(
-    originalElement, newElement) {
+SafeDomTreeProcessor.prototype.processElementAttributes_ = function (originalElement, newElement) {
   var attributes = noclobber.getElementAttributes(originalElement);
   if (attributes == null) {
     return;
   }
-  for (var i = 0, attribute; attribute = attributes[i]; i++) {
+  for (var i = 0, attribute; (attribute = attributes[i]); i++) {
     if (attribute.specified) {
       var newValue = this.processElementAttribute(originalElement, attribute);
       if (newValue !== null) {
@@ -326,8 +322,7 @@ SafeDomTreeProcessor.prototype.processElementAttributes_ = function(
  * @return {?string}
  * @protected @abstract
  */
-SafeDomTreeProcessor.prototype.processElementAttribute = function(
-    element, attribute) {};
+SafeDomTreeProcessor.prototype.processElementAttribute = (element, attribute) => {};
 
 /** @const {boolean} */
 SafeDomTreeProcessor.SAFE_PARSING_SUPPORTED = SAFE_PARSING_SUPPORTED;

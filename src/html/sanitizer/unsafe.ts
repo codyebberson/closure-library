@@ -26,7 +26,6 @@ goog.require('goog.string');
 goog.require('goog.string.Const');
 goog.requireType('goog.html.sanitizer.HtmlSanitizerAttributePolicy');
 
-
 /**
  * Extends the tag whitelist with the list of tags provided. If the tag is
  * blacklisted, this method also removes it from the blacklist.
@@ -44,14 +43,12 @@ goog.requireType('goog.html.sanitizer.HtmlSanitizerAttributePolicy');
  *     sanitizer. The tag names are case-insensitive.
  * @return {!goog.html.sanitizer.HtmlSanitizer.Builder}
  */
-goog.html.sanitizer.unsafe.alsoAllowTags = function(
-    justification, builder, tags) {
-  'use strict';
-  goog.asserts.assertString(
-      goog.string.Const.unwrap(justification), 'must provide justification');
+goog.html.sanitizer.unsafe.alsoAllowTags = (justification, builder, tags) => {
+  goog.asserts.assertString(goog.string.Const.unwrap(justification), 'must provide justification');
   goog.asserts.assert(
-      !goog.string.isEmptyOrWhitespace(goog.string.Const.unwrap(justification)),
-      'must provide non-empty justification');
+    !goog.string.isEmptyOrWhitespace(goog.string.Const.unwrap(justification)),
+    'must provide non-empty justification'
+  );
   return builder.alsoAllowTagsPrivateDoNotAccessOrElse(tags);
 };
 
@@ -82,13 +79,11 @@ goog.html.sanitizer.unsafe.alsoAllowTags = function(
  *     The tag and attribute names are case-insensitive.
  * @return {!goog.html.sanitizer.HtmlSanitizer.Builder}
  */
-goog.html.sanitizer.unsafe.alsoAllowAttributes = function(
-    justification, builder, attrs) {
-  'use strict';
-  goog.asserts.assertString(
-      goog.string.Const.unwrap(justification), 'must provide justification');
+goog.html.sanitizer.unsafe.alsoAllowAttributes = (justification, builder, attrs) => {
+  goog.asserts.assertString(goog.string.Const.unwrap(justification), 'must provide justification');
   goog.asserts.assert(
-      !goog.string.isEmptyOrWhitespace(goog.string.Const.unwrap(justification)),
-      'must provide non-empty justification');
+    !goog.string.isEmptyOrWhitespace(goog.string.Const.unwrap(justification)),
+    'must provide non-empty justification'
+  );
   return builder.alsoAllowAttributesPrivateDoNotAccessOrElse(attrs);
 };

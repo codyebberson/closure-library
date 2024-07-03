@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.style.bidiTest');
-goog.setTestOnly();
 
 const bidi = goog.require('goog.style.bidi');
 const dom = goog.require('goog.dom');
@@ -20,32 +19,30 @@ function updateInfo() {
    * @suppress {strictMissingProperties} suppression added to enable type
    * checking
    */
-  document.getElementById('elementScrollLeftRtl').innerHTML =
-      element.offsetParent.scrollLeft;
-  document.getElementById('bidiOffsetStartRtl').textContent =
-      bidi.getOffsetStart(element);
+  document.getElementById('elementScrollLeftRtl').innerHTML = element.offsetParent.scrollLeft;
+  document.getElementById('bidiOffsetStartRtl').textContent = bidi.getOffsetStart(element);
   /**
    * @suppress {strictMissingProperties} suppression added to enable type
    * checking
    */
-  document.getElementById('bidiScrollLeftRtl').textContent =
-      bidi.getScrollLeft(element.offsetParent);
+  document.getElementById('bidiScrollLeftRtl').textContent = bidi.getScrollLeft(
+    element.offsetParent
+  );
 
   element = document.getElementById('scrolledElementLtr');
   /**
    * @suppress {strictMissingProperties} suppression added to enable type
    * checking
    */
-  document.getElementById('elementScrollLeftLtr').innerHTML =
-      element.offsetParent.scrollLeft;
-  document.getElementById('bidiOffsetStartLtr').textContent =
-      bidi.getOffsetStart(element);
+  document.getElementById('elementScrollLeftLtr').innerHTML = element.offsetParent.scrollLeft;
+  document.getElementById('bidiOffsetStartLtr').textContent = bidi.getOffsetStart(element);
   /**
    * @suppress {strictMissingProperties} suppression added to enable type
    * checking
    */
-  document.getElementById('bidiScrollLeftLtr').textContent =
-      bidi.getScrollLeft(element.offsetParent);
+  document.getElementById('bidiScrollLeftLtr').textContent = bidi.getScrollLeft(
+    element.offsetParent
+  );
 }
 
 testSuite({
@@ -74,13 +71,13 @@ testSuite({
   testSetScrollOffsetRtl() {
     const scrollElm = document.getElementById('scrollDivRtl');
     const scrolledElm = document.getElementById('scrolledElementRtl');
-    const originalDistance =
-        style.getRelativePosition(scrolledElm, document.body).x;
+    const originalDistance = style.getRelativePosition(scrolledElm, document.body).x;
     const scrollAndAssert = (pixels) => {
       bidi.setScrollOffset(scrollElm, pixels);
       assertEquals(
-          originalDistance + pixels,
-          style.getRelativePosition(scrolledElm, document.body).x);
+        originalDistance + pixels,
+        style.getRelativePosition(scrolledElm, document.body).x
+      );
     };
     scrollAndAssert(0);
     scrollAndAssert(50);
@@ -93,13 +90,13 @@ testSuite({
   testSetScrollOffsetLtr() {
     const scrollElm = document.getElementById('scrollDivLtr');
     const scrolledElm = document.getElementById('scrolledElementLtr');
-    const originalDistance =
-        style.getRelativePosition(scrolledElm, document.body).x;
+    const originalDistance = style.getRelativePosition(scrolledElm, document.body).x;
     const scrollAndAssert = (pixels) => {
       bidi.setScrollOffset(scrollElm, pixels);
       assertEquals(
-          originalDistance - pixels,
-          style.getRelativePosition(scrolledElm, document.body).x);
+        originalDistance - pixels,
+        style.getRelativePosition(scrolledElm, document.body).x
+      );
     };
     scrollAndAssert(0);
     scrollAndAssert(50);
@@ -115,8 +112,7 @@ testSuite({
    */
   testFixedBodyChildLtr() {
     const bodyChild = document.getElementById('bodyChild');
-    assertEquals(
-        userAgent.GECKO ? document.body : null, bodyChild.offsetParent);
+    assertEquals(userAgent.GECKO ? document.body : null, bodyChild.offsetParent);
     assertEquals(60, bidi.getOffsetStart(bodyChild));
   },
 
@@ -129,22 +125,20 @@ testSuite({
     document.body.dir = 'rtl';
 
     const bodyChild = document.getElementById('bodyChild');
-    assertEquals(
-        userAgent.GECKO ? document.body : null, bodyChild.offsetParent);
+    assertEquals(userAgent.GECKO ? document.body : null, bodyChild.offsetParent);
 
     /**
      * @suppress {strictMissingProperties} suppression added to enable type
      * checking
      */
-    let expectedOffsetStart =
-        dom.getViewportSize().width - 60 - bodyChild.offsetWidth;
+    let expectedOffsetStart = dom.getViewportSize().width - 60 - bodyChild.offsetWidth;
 
     // Gecko seems to also add in the marginbox for the body.
     // It's not really clear to me if this is true in the general case,
     // or just under certain conditions.
     if (userAgent.GECKO) {
       const marginBox = style.getMarginBox(document.body);
-      expectedOffsetStart -= (marginBox.left + marginBox.right);
+      expectedOffsetStart -= marginBox.left + marginBox.right;
     }
 
     assertEquals(expectedOffsetStart, bidi.getOffsetStart(bodyChild));

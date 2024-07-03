@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.events.EventObserverTest');
-goog.setTestOnly();
 
 const EventObserver = goog.require('goog.testing.events.EventObserver');
 const GoogEvent = goog.require('goog.events.Event');
@@ -24,30 +23,24 @@ testSuite({
     const target = new GoogEventTarget();
     googEvents.listen(target, ['foo', 'bar', 'baz'], observer);
 
-    const eventTypes =
-        ['bar', 'baz', 'foo', 'qux', 'quux', 'corge', 'foo', 'baz'];
+    const eventTypes = ['bar', 'baz', 'foo', 'qux', 'quux', 'corge', 'foo', 'baz'];
     eventTypes.forEach(goog.bind(target.dispatchEvent, target));
 
     const replayEvents = observer.getEvents();
 
     assertArrayEquals(
-        'Only the listened-for event types should be remembered',
-        ['bar', 'baz', 'foo', 'foo', 'baz'],
-        observer.getEvents().map(getEventType));
+      'Only the listened-for event types should be remembered',
+      ['bar', 'baz', 'foo', 'foo', 'baz'],
+      observer.getEvents().map(getEventType)
+    );
 
     assertArrayEquals(['bar'], observer.getEvents('bar').map(getEventType));
-    assertArrayEquals(
-        ['baz', 'baz'], observer.getEvents('baz').map(getEventType));
-    assertArrayEquals(
-        ['foo', 'foo'], observer.getEvents('foo').map(getEventType));
+    assertArrayEquals(['baz', 'baz'], observer.getEvents('baz').map(getEventType));
+    assertArrayEquals(['foo', 'foo'], observer.getEvents('foo').map(getEventType));
   },
 
   testHandleEvent() {
-    const events = [
-      new GoogEvent('foo'),
-      new GoogEvent('bar'),
-      new GoogEvent('baz'),
-    ];
+    const events = [new GoogEvent('foo'), new GoogEvent('bar'), new GoogEvent('baz')];
 
     const observer = new EventObserver();
     events.forEach(goog.bind(observer.handleEvent, observer));

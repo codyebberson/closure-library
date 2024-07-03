@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.ac.RendererTest');
-goog.setTestOnly();
 
 const AutoComplete = goog.require('goog.ui.ac.AutoComplete');
 const FadeInAndShow = goog.require('goog.fx.dom.FadeInAndShow');
@@ -47,7 +46,7 @@ const rows = [
 ];
 
 for (let i = 0; i < rows.length; i++) {
-  rendRows.push({id: i, data: rows[i]});
+  rendRows.push({ id: i, data: rows[i] });
 }
 
 // ------- Helper functions -------
@@ -56,34 +55,29 @@ for (let i = 0; i < rows.length; i++) {
 // Activating HTML rendering will allow HTML strings to be rendered to DOM
 // instead of being escaped.
 function enableHtmlRendering(renderer) {
-  let customRendererInternal = {
-    renderRow: function(row, token, node) {
+  const customRendererInternal = {
+    renderRow: (row, token, node) => {
       node.innerHTML = row.data.toString();
     },
   };
 }
 
 function assertNumBoldTags(boldTagElArray, expectedNum) {
-  assertEquals(
-      'Incorrect number of bold tags', expectedNum, boldTagElArray.length);
+  assertEquals('Incorrect number of bold tags', expectedNum, boldTagElArray.length);
 }
 
 function assertPreviousNodeText(boldTag, expectedText) {
   const prevNode = boldTag.previousSibling;
-  assertEquals(
-      'Expected text before the token does not match', expectedText,
-      prevNode.nodeValue);
+  assertEquals('Expected text before the token does not match', expectedText, prevNode.nodeValue);
 }
 
 function assertHighlightedText(boldTag, expectedHighlightedText) {
-  assertEquals(
-      'Incorrect text bolded', expectedHighlightedText, boldTag.innerHTML);
+  assertEquals('Incorrect text bolded', expectedHighlightedText, boldTag.innerHTML);
 }
 
 function assertLastNodeText(node, expectedText) {
   const lastNode = node.lastChild;
-  assertEquals(
-      'Incorrect text in the last node', expectedText, lastNode.nodeValue);
+  assertEquals('Incorrect text in the last node', expectedText, lastNode.nodeValue);
 }
 testSuite({
   setUpPage() {
@@ -157,7 +151,7 @@ testSuite({
   },
 
   testBasicStringTokenHighlightingUsingUniversalMatching() {
-    const row = rendRows[0];  // 'Amanda Annie Anderson'
+    const row = rendRows[0]; // 'Amanda Annie Anderson'
     renderer.setMatchWordBoundary(false);
 
     // Should highlight first match only.
@@ -195,7 +189,7 @@ testSuite({
   },
 
   testBasicStringTokenHighlighting() {
-    let row = rendRows[0];  // 'Amanda Annie Anderson'
+    let row = rendRows[0]; // 'Amanda Annie Anderson'
 
     // Should highlight first match only.
     let token = 'A';
@@ -248,7 +242,7 @@ testSuite({
     assertLastNodeText(node, 'Anderson');
 
     // Should match across whitespace.
-    row = rendRows[2];  // 'Louis D Armstrong'
+    row = rendRows[2]; // 'Louis D Armstrong'
     token = 'd a';
     node = renderer.renderRowHtml(row, token);
     boldTagElArray = dom.getElementsByTagName(TagName.B, node);
@@ -273,18 +267,17 @@ testSuite({
   // because it triggers the test runner to go back to the event loop...
   testPathologicalInput() {
     // Should not hang on bizarrely long strings
-    const row = rendRows[3];  // pathological row
+    const row = rendRows[3]; // pathological row
     const token = 'foo';
     const node = renderer.renderRowHtml(row, token);
     const boldTagElArray = dom.getElementsByTagName(TagName.B, node);
     assertNumBoldTags(boldTagElArray, 1);
     assertHighlightedText(boldTagElArray[0], 'Foo');
-    assert(googString.startsWith(
-        boldTagElArray[0].nextSibling.nodeValue, ' Bar...'));
+    assert(googString.startsWith(boldTagElArray[0].nextSibling.nodeValue, ' Bar...'));
   },
 
   testBasicArrayTokenHighlighting() {
-    let row = rendRows[1];  // 'Frankie Manning'
+    let row = rendRows[1]; // 'Frankie Manning'
 
     // Only the first match in the array should be highlighted.
     let token = ['f', 'm'];
@@ -351,7 +344,7 @@ testSuite({
     assertLastNodeText(node, 'ning');
 
     // Whitespace in array entry should match as a whole token.
-    row = rendRows[2];  // 'Louis D Armstrong'
+    row = rendRows[2]; // 'Louis D Armstrong'
     token = ['d arm', 'lou'];
     node = renderer.renderRowHtml(row, token);
     boldTagElArray = dom.getElementsByTagName(TagName.B, node);
@@ -363,7 +356,7 @@ testSuite({
 
   testHighlightAllTokensSingleTokenHighlighting() {
     renderer.setHighlightAllTokens(true);
-    const row = rendRows[0];  // 'Amanda Annie Anderson'
+    const row = rendRows[0]; // 'Amanda Annie Anderson'
 
     // All matches at the start of the word should be highlighted when
     // highlightAllTokens is set.
@@ -425,7 +418,7 @@ testSuite({
 
   testHighlightAllTokensMultipleStringTokenHighlighting() {
     renderer.setHighlightAllTokens(true);
-    const row = rendRows[1];  // 'Frankie Manning'
+    const row = rendRows[1]; // 'Frankie Manning'
 
     // Each individual space-separated token should match.
     const token = 'm F';
@@ -441,7 +434,7 @@ testSuite({
 
   testHighlightAllTokensArrayTokenHighlighting() {
     renderer.setHighlightAllTokens(true);
-    const row = rendRows[0];  // 'Amanda Annie Anderson'
+    const row = rendRows[0]; // 'Amanda Annie Anderson'
 
     // All tokens in the array should match.
     let token = ['AM', 'AN'];
@@ -588,8 +581,7 @@ testSuite({
     renderer.renderRows(rendRows, '');
     renderer.hiliteRow(2);
     assertEquals(2, renderer.hilitedRow_);
-    assertTrue(
-        classlist.contains(renderer.rowDivs_[2], renderer.activeClassName));
+    assertTrue(classlist.contains(renderer.rowDivs_[2], renderer.activeClassName));
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -599,13 +591,13 @@ testSuite({
     // Use a custom renderer that doesn't put the result divs as direct children
     // of this.element_.
     const customRenderer = {
-      render: function(renderer, element, rows, token) {
+      render: (renderer, element, rows, token) => {
         // Put all of the results into a results holder div that is a child of
         // this.element_.
         const resultsHolder = dom.createDom(TagName.DIV);
         dom.appendChild(element, resultsHolder);
         let row;
-        for (let i = 0; row = rows[i]; ++i) {
+        for (let i = 0; (row = rows[i]); ++i) {
           const node = renderer.renderRowHtml(row, token);
           dom.appendChild(resultsHolder, node);
         }
@@ -618,8 +610,7 @@ testSuite({
     renderer.renderRows(rendRows, '');
     renderer.hiliteRow(2);
     assertEquals(2, renderer.hilitedRow_);
-    assertTrue(
-        classlist.contains(renderer.rowDivs_[2], renderer.activeClassName));
+    assertTrue(classlist.contains(renderer.rowDivs_[2], renderer.activeClassName));
   },
 
   testReposition() {
@@ -637,8 +628,7 @@ testSuite({
     const targetSize = style.getSize(target);
 
     assertEquals(0 + targetOffset.x, rendererOffset.x);
-    assertRoughlyEquals(
-        targetOffset.y + targetSize.height, rendererOffset.y, 1);
+    assertRoughlyEquals(targetOffset.y + targetSize.height, rendererOffset.y, 1);
   },
 
   testSetWidthProvider() {
@@ -701,10 +691,11 @@ testSuite({
     const targetSize = style.getSize(target);
 
     assertRoughlyEquals(
-        targetOffset.x + targetSize.width,
-        rendererOffset.x + rendererSize.width, 1);
-    assertRoughlyEquals(
-        targetOffset.y + targetSize.height, rendererOffset.y, 1);
+      targetOffset.x + targetSize.width,
+      rendererOffset.x + rendererSize.width,
+      1
+    );
+    assertRoughlyEquals(targetOffset.y + targetSize.height, rendererOffset.y, 1);
   },
 
   testRepositionResizeHeight() {
@@ -716,7 +707,7 @@ testSuite({
 
     // Stick a huge row in the dropdown element, to make sure it won't
     // fit in the viewport.
-    const hugeRow = dom.createDom(TagName.DIV, {style: 'height:1000px'});
+    const hugeRow = dom.createDom(TagName.DIV, { style: 'height:1000px' });
     dom.appendChild(renderer.getElement(), hugeRow);
 
     renderer.reposition();
@@ -727,8 +718,10 @@ testSuite({
     let viewportSize = style.getSize(viewport);
 
     assertRoughlyEquals(
-        viewportOffset.y + viewportSize.height,
-        rendererSize.height + rendererOffset.y, 1);
+      viewportOffset.y + viewportSize.height,
+      rendererSize.height + rendererOffset.y,
+      1
+    );
 
     // Remove the huge row, and make sure that the dropdown element gets shrunk.
     renderer.getElement().removeChild(hugeRow);
@@ -739,9 +732,7 @@ testSuite({
     viewportOffset = style.getPageOffset(viewport);
     viewportSize = style.getSize(viewport);
 
-    assertTrue(
-        (rendererSize.height + rendererOffset.y) <
-        (viewportOffset.y + viewportSize.height));
+    assertTrue(rendererSize.height + rendererOffset.y < viewportOffset.y + viewportSize.height);
   },
 
   testHiliteEvent() {
@@ -760,7 +751,7 @@ testSuite({
       hiliteEventFired = true;
       assertNull(e.row);
     });
-    renderer.hiliteRow(rendRows.length);  // i.e. out of bounds.
+    renderer.hiliteRow(rendRows.length); // i.e. out of bounds.
     assertTrue(hiliteEventFired);
   },
 });

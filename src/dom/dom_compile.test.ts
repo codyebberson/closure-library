@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dom.DomCompileTest');
-goog.setTestOnly();
 
 const TagName = goog.require('goog.dom.TagName');
 const googDom = goog.require('goog.dom');

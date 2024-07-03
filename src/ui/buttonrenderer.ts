@@ -16,10 +16,8 @@ goog.require('goog.a11y.aria.State');
 goog.require('goog.asserts');
 goog.require('goog.ui.ButtonSide');
 goog.require('goog.ui.Component');
-goog.require('goog.ui.ControlRenderer');  // circular
+goog.require('goog.ui.ControlRenderer'); // circular
 goog.requireType('goog.ui.Button');
-
-
 
 /**
  * Default renderer for {@link goog.ui.Button}s.  Extends the superclass with
@@ -37,13 +35,11 @@ goog.requireType('goog.ui.Button');
  * @constructor
  * @extends {goog.ui.ControlRenderer}
  */
-goog.ui.ButtonRenderer = function() {
-  'use strict';
+goog.ui.ButtonRenderer = function () {
   goog.ui.ControlRenderer.call(this);
 };
 goog.inherits(goog.ui.ButtonRenderer, goog.ui.ControlRenderer);
 goog.addSingletonGetter(goog.ui.ButtonRenderer);
-
 
 /**
  * Default CSS class to be applied to the root element of components rendered
@@ -52,17 +48,12 @@ goog.addSingletonGetter(goog.ui.ButtonRenderer);
  */
 goog.ui.ButtonRenderer.CSS_CLASS = goog.getCssName('goog-button');
 
-
 /**
  * Returns the ARIA role to be applied to buttons.
  * @return {goog.a11y.aria.Role|undefined} ARIA role.
  * @override
  */
-goog.ui.ButtonRenderer.prototype.getAriaRole = function() {
-  'use strict';
-  return goog.a11y.aria.Role.BUTTON;
-};
-
+goog.ui.ButtonRenderer.prototype.getAriaRole = () => goog.a11y.aria.Role.BUTTON;
 
 /**
  * Updates the button's ARIA (accessibility) state if the button is being
@@ -75,9 +66,7 @@ goog.ui.ButtonRenderer.prototype.getAriaRole = function() {
  * @protected
  * @override
  */
-goog.ui.ButtonRenderer.prototype.updateAriaState = function(
-    element, state, enable) {
-  'use strict';
+goog.ui.ButtonRenderer.prototype.updateAriaState = function (element, state, enable) {
   switch (state) {
     // If button has CHECKED or SELECTED state, assign aria-pressed
     case goog.ui.Component.State.SELECTED:
@@ -88,19 +77,16 @@ goog.ui.ButtonRenderer.prototype.updateAriaState = function(
     default:
     case goog.ui.Component.State.OPENED:
     case goog.ui.Component.State.DISABLED:
-      goog.ui.ButtonRenderer.base(
-          this, 'updateAriaState', element, state, enable);
+      goog.ui.ButtonRenderer.base(this, 'updateAriaState', element, state, enable);
       break;
   }
 };
-
 
 /**
  * @override
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.ui.ButtonRenderer.prototype.createDom = function(button) {
-  'use strict';
+goog.ui.ButtonRenderer.prototype.createDom = function (button) {
   var element = goog.ui.ButtonRenderer.base(this, 'createDom', button);
   this.setTooltip(element, button.getTooltip());
 
@@ -112,37 +98,31 @@ goog.ui.ButtonRenderer.prototype.createDom = function(button) {
 
   // If this is a toggle button, set ARIA state
   if (button.isSupportedState(goog.ui.Component.State.CHECKED)) {
-    this.updateAriaState(
-        element, goog.ui.Component.State.CHECKED, button.isChecked());
+    this.updateAriaState(element, goog.ui.Component.State.CHECKED, button.isChecked());
   }
 
   return element;
 };
 
-
 /**
  * @override
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.ui.ButtonRenderer.prototype.decorate = function(button, element) {
-  'use strict';
+goog.ui.ButtonRenderer.prototype.decorate = function (button, element) {
   // The superclass implementation takes care of common attributes; we only
   // need to set the value and the tooltip.
-  element =
-      goog.ui.ButtonRenderer.superClass_.decorate.call(this, button, element);
+  element = goog.ui.ButtonRenderer.superClass_.decorate.call(this, button, element);
 
   button.setValueInternal(this.getValue(element));
   button.setTooltipInternal(this.getTooltip(element));
 
   // If this is a toggle button, set ARIA state
   if (button.isSupportedState(goog.ui.Component.State.CHECKED)) {
-    this.updateAriaState(
-        element, goog.ui.Component.State.CHECKED, button.isChecked());
+    this.updateAriaState(element, goog.ui.Component.State.CHECKED, button.isChecked());
   }
 
   return element;
 };
-
 
 /**
  * Takes a button's root element, and returns the value associated with it.
@@ -150,8 +130,7 @@ goog.ui.ButtonRenderer.prototype.decorate = function(button, element) {
  * @param {Element} element The button's root element.
  * @return {string|undefined} The button's value (undefined if none).
  */
-goog.ui.ButtonRenderer.prototype.getValue = function(element) {};
-
+goog.ui.ButtonRenderer.prototype.getValue = (element) => {};
 
 /**
  * Takes a button's root element and a value, and updates the element to reflect
@@ -159,8 +138,7 @@ goog.ui.ButtonRenderer.prototype.getValue = function(element) {};
  * @param {Element} element The button's root element.
  * @param {string} value New value.
  */
-goog.ui.ButtonRenderer.prototype.setValue = function(element, value) {};
-
+goog.ui.ButtonRenderer.prototype.setValue = (element, value) => {};
 
 /**
  * Takes a button's root element, and returns its tooltip text.
@@ -168,11 +146,7 @@ goog.ui.ButtonRenderer.prototype.setValue = function(element, value) {};
  * @return {string|undefined} The tooltip text.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.ui.ButtonRenderer.prototype.getTooltip = function(element) {
-  'use strict';
-  return element.title;
-};
-
+goog.ui.ButtonRenderer.prototype.getTooltip = (element) => element.title;
 
 /**
  * Takes a button's root element and a tooltip string, and updates the element
@@ -181,8 +155,7 @@ goog.ui.ButtonRenderer.prototype.getTooltip = function(element) {
  * @param {string} tooltip New tooltip text.
  * @protected
  */
-goog.ui.ButtonRenderer.prototype.setTooltip = function(element, tooltip) {
-  'use strict';
+goog.ui.ButtonRenderer.prototype.setTooltip = (element, tooltip) => {
   if (element) {
     // Don't set a title attribute if there isn't a tooltip. Blank title
     // attributes can be interpreted incorrectly by screen readers.
@@ -197,7 +170,6 @@ goog.ui.ButtonRenderer.prototype.setTooltip = function(element, tooltip) {
   }
 };
 
-
 /**
  * Collapses the border on one or both sides of the button, allowing it to be
  * combined with the adjacent button(s), forming a single UI componenet with
@@ -207,25 +179,20 @@ goog.ui.ButtonRenderer.prototype.setTooltip = function(element, tooltip) {
  *     which borders should be collapsed.
  * @protected
  */
-goog.ui.ButtonRenderer.prototype.setCollapsed = function(button, sides) {
-  'use strict';
+goog.ui.ButtonRenderer.prototype.setCollapsed = function (button, sides) {
   var isRtl = button.isRightToLeft();
-  var collapseLeftClassName =
-      goog.getCssName(this.getStructuralCssClass(), 'collapse-left');
-  var collapseRightClassName =
-      goog.getCssName(this.getStructuralCssClass(), 'collapse-right');
+  var collapseLeftClassName = goog.getCssName(this.getStructuralCssClass(), 'collapse-left');
+  var collapseRightClassName = goog.getCssName(this.getStructuralCssClass(), 'collapse-right');
 
   button.enableClassName(
-      isRtl ? collapseRightClassName : collapseLeftClassName,
-      !!(sides & goog.ui.ButtonSide.START));
+    isRtl ? collapseRightClassName : collapseLeftClassName,
+    !!(sides & goog.ui.ButtonSide.START)
+  );
   button.enableClassName(
-      isRtl ? collapseLeftClassName : collapseRightClassName,
-      !!(sides & goog.ui.ButtonSide.END));
+    isRtl ? collapseLeftClassName : collapseRightClassName,
+    !!(sides & goog.ui.ButtonSide.END)
+  );
 };
-
 
 /** @override */
-goog.ui.ButtonRenderer.prototype.getCssClass = function() {
-  'use strict';
-  return goog.ui.ButtonRenderer.CSS_CLASS;
-};
+goog.ui.ButtonRenderer.prototype.getCssClass = () => goog.ui.ButtonRenderer.CSS_CLASS;

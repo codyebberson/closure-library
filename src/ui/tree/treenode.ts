@@ -17,10 +17,8 @@ goog.provide('goog.ui.tree.TreeNode');
 goog.require('goog.asserts');
 goog.require('goog.ui.tree.BaseNode');
 goog.requireType('goog.dom.DomHelper');
-goog.requireType('goog.html.SafeHtml');  // circular
+goog.requireType('goog.html.SafeHtml'); // circular
 goog.requireType('goog.ui.tree.TreeControl');
-
-
 
 /**
  * A single node in the tree.
@@ -33,20 +31,17 @@ goog.requireType('goog.ui.tree.TreeControl');
  * @constructor
  * @extends {goog.ui.tree.BaseNode}
  */
-goog.ui.tree.TreeNode = function(content, opt_config, opt_domHelper) {
-  'use strict';
+goog.ui.tree.TreeNode = function (content, opt_config, opt_domHelper) {
   goog.ui.tree.BaseNode.call(this, content, opt_config, opt_domHelper);
 };
 goog.inherits(goog.ui.tree.TreeNode, goog.ui.tree.BaseNode);
-
 
 /**
  * Returns the tree.
  * @return {?goog.ui.tree.TreeControl} The tree.
  * @override
  */
-goog.ui.tree.TreeNode.prototype.getTree = function() {
-  'use strict';
+goog.ui.tree.TreeNode.prototype.getTree = function () {
   if (this.tree) {
     return this.tree;
   }
@@ -62,15 +57,13 @@ goog.ui.tree.TreeNode.prototype.getTree = function() {
   return null;
 };
 
-
 /**
  * Returns the source for the icon.
  * @return {string} Src for the icon.
  * @override
  * @suppress {strictMissingProperties}
  */
-goog.ui.tree.TreeNode.prototype.getCalculatedIconClass = function() {
-  'use strict';
+goog.ui.tree.TreeNode.prototype.getCalculatedIconClass = function () {
   const expanded = this.getExpanded();
   const expandedIconClass = this.getExpandedIconClass();
   if (expanded && expandedIconClass) {

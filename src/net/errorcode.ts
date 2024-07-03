@@ -11,13 +11,11 @@
 
 goog.provide('goog.net.ErrorCode');
 
-
 /**
  * Error codes
  * @enum {number}
  */
 goog.net.ErrorCode = {
-
   /**
    * There is no error condition.
    */
@@ -77,15 +75,13 @@ goog.net.ErrorCode = {
   OFFLINE: 9,
 };
 
-
 /**
  * Returns a friendly error message for an error code. These messages are for
  * debugging and are not localized.
  * @param {goog.net.ErrorCode} errorCode An error code.
  * @return {string} A message for debugging.
  */
-goog.net.ErrorCode.getDebugMessage = function(errorCode) {
-  'use strict';
+goog.net.ErrorCode.getDebugMessage = (errorCode) => {
   switch (errorCode) {
     case goog.net.ErrorCode.NO_ERROR:
       return 'No Error';

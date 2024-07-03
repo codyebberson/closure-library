@@ -5,14 +5,13 @@
  */
 
 goog.module('goog.objectTest');
-goog.setTestOnly();
 
 const functions = goog.require('goog.functions');
 const googArray = goog.require('goog.array');
 const googObject = goog.require('goog.object');
 const recordFunction = goog.require('goog.testing.recordFunction');
 const testSuite = goog.require('goog.testing.testSuite');
-const {assertInstanceof} = goog.require('goog.asserts');
+const { assertInstanceof } = goog.require('goog.asserts');
 
 function stringifyObject(m) {
   const keys = googObject.getKeys(m);
@@ -24,7 +23,7 @@ function stringifyObject(m) {
 }
 
 function getObject() {
-  return {a: 0, b: 1, c: 2, d: 3};
+  return { a: 0, b: 1, c: 2, d: 3 };
 }
 
 function createRecordedGetFoo() {
@@ -47,60 +46,48 @@ function createTestDeepObject() {
 testSuite({
   testKeys() {
     const m = getObject();
-    assertEquals(
-        'getKeys, The keys should be a,b,c', 'a,b,c,d',
-        googObject.getKeys(m).join(','));
+    assertEquals('getKeys, The keys should be a,b,c', 'a,b,c,d', googObject.getKeys(m).join(','));
   },
 
   testValues() {
     const m = getObject();
     assertEquals(
-        'getValues, The values should be 0,1,2', '0,1,2,3',
-        googObject.getValues(m).join(','));
+      'getValues, The values should be 0,1,2',
+      '0,1,2,3',
+      googObject.getValues(m).join(',')
+    );
   },
 
   testGetAnyKey() {
     const m = getObject();
-    assertTrue(
-        'getAnyKey, The key should be a,b,c or d',
-        googObject.getAnyKey(m) in m);
-    assertUndefined(
-        'getAnyKey, The key should be undefined', googObject.getAnyKey({}));
+    assertTrue('getAnyKey, The key should be a,b,c or d', googObject.getAnyKey(m) in m);
+    assertUndefined('getAnyKey, The key should be undefined', googObject.getAnyKey({}));
   },
 
   testGetAnyValue() {
     const m = getObject();
     assertTrue(
-        'getAnyValue, The value should be 0,1,2 or 3',
-        googObject.containsValue(m, googObject.getAnyValue(m)));
-    assertUndefined(
-        'getAnyValue, The value should be undefined',
-        googObject.getAnyValue({}));
+      'getAnyValue, The value should be 0,1,2 or 3',
+      googObject.containsValue(m, googObject.getAnyValue(m))
+    );
+    assertUndefined('getAnyValue, The value should be undefined', googObject.getAnyValue({}));
   },
 
   testContainsKey() {
     const m = getObject();
-    assertTrue(
-        'containsKey, Should contain the \'a\' key',
-        googObject.containsKey(m, 'a'));
-    assertFalse(
-        'containsKey, Should not contain the \'e\' key',
-        googObject.containsKey(m, 'e'));
+    assertTrue("containsKey, Should contain the 'a' key", googObject.containsKey(m, 'a'));
+    assertFalse("containsKey, Should not contain the 'e' key", googObject.containsKey(m, 'e'));
   },
 
   testContainsValue() {
     const m = getObject();
-    assertTrue(
-        'containsValue, Should contain the value 0',
-        googObject.containsValue(m, 0));
-    assertFalse(
-        'containsValue, Should not contain the value 4',
-        googObject.containsValue(m, 4));
+    assertTrue('containsValue, Should contain the value 0', googObject.containsValue(m, 0));
+    assertFalse('containsValue, Should not contain the value 4', googObject.containsValue(m, 4));
     assertTrue('isEmpty, The map should not be empty', !googObject.isEmpty(m));
   },
 
   testFindKey() {
-    const dict = {'a': 1, 'b': 2, 'c': 3, 'd': 4};
+    const dict = { a: 1, b: 2, c: 3, d: 4 };
     const key = googObject.findKey(dict, (v, k, d) => {
       assertEquals('valid 3rd argument', dict, d);
       assertTrue('valid 1st argument', googObject.containsValue(d, v));
@@ -114,7 +101,7 @@ testSuite({
   },
 
   testFindValue() {
-    const dict = {'a': 1, 'b': 2, 'c': 3, 'd': 4};
+    const dict = { a: 1, b: 2, c: 3, d: 4 };
     const value = googObject.findValue(dict, (v, k, d) => {
       assertEquals('valid 3rd argument', dict, d);
       assertTrue('valid 1st argument', googObject.containsValue(d, v));
@@ -131,30 +118,28 @@ testSuite({
     const m = getObject();
     googObject.clear(m);
     assertTrue('cleared so it should be empty', googObject.isEmpty(m));
-    assertFalse(
-        'cleared so it should not contain \'a\' key',
-        googObject.containsKey(m, 'a'));
+    assertFalse("cleared so it should not contain 'a' key", googObject.containsKey(m, 'a'));
   },
 
   testClone() {
     const m = getObject();
     const m2 = googObject.clone(m);
     assertFalse('clone so it should not be empty', googObject.isEmpty(m2));
-    assertTrue(
-        'clone so it should contain \'c\' key',
-        googObject.containsKey(m2, 'c'));
+    assertTrue("clone so it should contain 'c' key", googObject.containsKey(m2, 'c'));
   },
 
   testUnsafeClonePrimitive() {
     assertEquals(
-        'cloning a primitive should return an equal primitive', 5,
-        googObject.unsafeClone(5));
+      'cloning a primitive should return an equal primitive',
+      5,
+      googObject.unsafeClone(5)
+    );
   },
 
   testUnsafeCloneObjectThatHasACloneMethod() {
     const original = {
       name: 'original',
-      clone: functions.constant({name: 'clone'}),
+      clone: functions.constant({ name: 'clone' }),
     };
 
     const clone = googObject.unsafeClone(original);
@@ -163,7 +148,7 @@ testSuite({
   },
 
   testUnsafeCloneObjectThatHasACloneNonMethod() {
-    const originalIndex = {red: [0, 4], clone: [1, 3, 5, 7], yellow: [2, 6]};
+    const originalIndex = { red: [0, 4], clone: [1, 3, 5, 7], yellow: [2, 6] };
 
     const clone = googObject.unsafeClone(originalIndex);
     assertArrayEquals([1, 3, 5, 7], originalIndex.clone);
@@ -171,14 +156,14 @@ testSuite({
   },
 
   testUnsafeCloneFlatObject() {
-    const original = {a: 1, b: 2, c: 3};
+    const original = { a: 1, b: 2, c: 3 };
     const clone = googObject.unsafeClone(original);
     assertNotEquals(original, clone);
     assertObjectEquals(original, clone);
   },
 
   testUnsafeCloneDeepObject() {
-    const original = {a: 1, b: {c: 2, d: 3}, e: {f: {g: 4, h: 5}}};
+    const original = { a: 1, b: { c: 2, d: 3 }, e: { f: { g: 4, h: 5 } } };
     const clone = googObject.unsafeClone(original);
 
     assertNotEquals(original, clone);
@@ -193,8 +178,11 @@ testSuite({
   },
 
   testUnsafeCloneMapWithDeepObject() {
-    const original =
-        new Map([['a', 1], ['b', {c: 2, d: 3}], ['e', {f: {g: 4, h: 5}}]]);
+    const original = new Map([
+      ['a', 1],
+      ['b', { c: 2, d: 3 }],
+      ['e', { f: { g: 4, h: 5 } }],
+    ]);
     const clone = googObject.unsafeClone(original);
 
     assertInstanceof(clone, Map);
@@ -211,8 +199,8 @@ testSuite({
   },
 
   testUnsafeCloneSetWithDeepObject() {
-    const container1 = {c: 2, d: 3};
-    const container2 = {f: {g: 4, h: 5}};
+    const container1 = { c: 2, d: 3 };
+    const container2 = { f: { g: 4, h: 5 } };
     const original = new Set([container1, container2]);
     const clone = googObject.unsafeClone(original);
 
@@ -230,11 +218,11 @@ testSuite({
   },
 
   testUnsafeCloneTypedArray() {
-    if (typeof ArrayBuffer !== 'function' ||
-        typeof ArrayBuffer.isView !== 'function') {
+    if (typeof ArrayBuffer !== 'function' || typeof ArrayBuffer.isView !== 'function') {
       return;
     }
-    function array(ctor, ...elems) {  // IE 11 does not support TypedArray.of
+    function array(ctor, ...elems) {
+      // IE 11 does not support TypedArray.of
       const arr = new ctor(elems.length);
       for (let i = 0; i < elems.length; i++) {
         arr[i] = elems[i];
@@ -242,7 +230,7 @@ testSuite({
       return arr;
     }
 
-    const original = {a: array(Uint8Array, 1, 2), b: array(Int16Array, 3, 4)};
+    const original = { a: array(Uint8Array, 1, 2), b: array(Int16Array, 3, 4) };
     const clone = googObject.unsafeClone(original);
 
     assertNotEquals(original, clone);
@@ -260,7 +248,7 @@ testSuite({
   },
 
   testUnsafeCloneFunctions() {
-    const original = {f: functions.constant('hi')};
+    const original = { f: functions.constant('hi') };
     const clone = googObject.unsafeClone(original);
 
     assertNotEquals(original, clone);
@@ -269,7 +257,7 @@ testSuite({
   },
 
   testUnsafeCloneDates() {
-    const original = {d: new Date(5000)};
+    const original = { d: new Date(5000) };
     const clone = googObject.unsafeClone(original);
 
     assertNotEquals(original, clone);
@@ -393,8 +381,7 @@ testSuite({
     const f = createRecordedGetFoo();
     const obj = {};
     obj['key'] = undefined;
-    assertEquals(
-        undefined, googObject.setWithReturnValueIfNotSet(obj, 'key', f));
+    assertEquals(undefined, googObject.setWithReturnValueIfNotSet(obj, 'key', f));
     f.assertCallCount(0);
   },
 
@@ -410,33 +397,33 @@ testSuite({
   /** @suppress {missingProperties} suppression added to enable type checking */
   testExtend() {
     let o = {};
-    let o2 = {a: 0, b: 1};
+    let o2 = { a: 0, b: 1 };
     googObject.extend(o, o2);
     assertEquals(0, o.a);
     assertEquals(1, o.b);
     assertTrue('a' in o);
     assertTrue('b' in o);
 
-    o2 = {c: 2};
+    o2 = { c: 2 };
     googObject.extend(o, o2);
     assertEquals(2, o.c);
     assertTrue('c' in o);
 
-    o2 = {c: 3};
+    o2 = { c: 3 };
     googObject.extend(o, o2);
     assertEquals(3, o.c);
     assertTrue('c' in o);
 
     o = {};
-    o2 = {c: 2};
-    let o3 = {c: 3};
+    o2 = { c: 2 };
+    let o3 = { c: 3 };
     googObject.extend(o, o2, o3);
     assertEquals(3, o.c);
     assertTrue('c' in o);
 
     o = {};
-    o2 = {a: 0, b: 1};
-    o3 = {c: 2, d: 3};
+    o2 = { a: 0, b: 1 };
+    o3 = { c: 2, d: 3 };
     googObject.extend(o, o2, o3);
     assertEquals(0, o.a);
     assertEquals(1, o.b);
@@ -449,13 +436,13 @@ testSuite({
 
     o = {};
     o2 = {
-      'constructor': 0,
-      'hasOwnProperty': 1,
-      'isPrototypeOf': 2,
-      'propertyIsEnumerable': 3,
-      'toLocaleString': 4,
-      'toString': 5,
-      'valueOf': 6,
+      constructor: 0,
+      hasOwnProperty: 1,
+      isPrototypeOf: 2,
+      propertyIsEnumerable: 3,
+      toLocaleString: 4,
+      toString: 5,
+      valueOf: 6,
     };
     googObject.extend(o, o2);
     assertEquals(0, o['constructor']);
@@ -476,15 +463,18 @@ testSuite({
 
   testCreate() {
     assertObjectEquals(
-        'With multiple arguments', {a: 0, b: 1},
-        googObject.create('a', 0, 'b', 1));
+      'With multiple arguments',
+      { a: 0, b: 1 },
+      googObject.create('a', 0, 'b', 1)
+    );
     assertObjectEquals(
-        'With an array argument', {a: 0, b: 1},
-        googObject.create(['a', 0, 'b', 1]));
+      'With an array argument',
+      { a: 0, b: 1 },
+      googObject.create(['a', 0, 'b', 1])
+    );
 
     assertObjectEquals('With no arguments', {}, googObject.create());
-    assertObjectEquals(
-        'With an ampty array argument', {}, googObject.create([]));
+    assertObjectEquals('With an ampty array argument', {}, googObject.create([]));
 
     assertThrows('Should throw due to uneven arguments', () => {
       googObject.create('a');
@@ -502,15 +492,18 @@ testSuite({
 
   testCreateSet() {
     assertObjectEquals(
-        'With multiple arguments', {a: true, b: true},
-        googObject.createSet('a', 'b'));
+      'With multiple arguments',
+      { a: true, b: true },
+      googObject.createSet('a', 'b')
+    );
     assertObjectEquals(
-        'With an array argument', {a: true, b: true},
-        googObject.createSet(['a', 'b']));
+      'With an array argument',
+      { a: true, b: true },
+      googObject.createSet(['a', 'b'])
+    );
 
     assertObjectEquals('With no arguments', {}, googObject.createSet());
-    assertObjectEquals(
-        'With an ampty array argument', {}, googObject.createSet([]));
+    assertObjectEquals('With an ampty array argument', {}, googObject.createSet([]));
   },
 
   testGetValueByKeys() {
@@ -519,18 +512,13 @@ testSuite({
     assertEquals(obj.a, googObject.getValueByKeys(obj, 'a'));
     assertEquals(obj.a.b, googObject.getValueByKeys(obj, 'a', 'b'));
     assertEquals(obj.a.b.c, googObject.getValueByKeys(obj, 'a', 'b', 'c'));
-    assertEquals(
-        obj.a.b.c.d, googObject.getValueByKeys(obj, 'a', 'b', 'c', 'd'));
+    assertEquals(obj.a.b.c.d, googObject.getValueByKeys(obj, 'a', 'b', 'c', 'd'));
     assertEquals(8, googObject.getValueByKeys(obj, 'a', 'b', 'c', 'fooArr', 3));
     assertNull(googObject.getValueByKeys(obj, 'a', 'b', 'c', 'knownNull'));
-    assertUndefined(
-        googObject.getValueByKeys(obj, 'a', 'b', 'c', 'knownNull', 'd'));
+    assertUndefined(googObject.getValueByKeys(obj, 'a', 'b', 'c', 'knownNull', 'd'));
     assertUndefined(googObject.getValueByKeys(obj, 'e', 'f', 'g'));
-    assertEquals(
-        0, googObject.getValueByKeys(obj, 'knownEmptyString', 'length'));
-    assertEquals(
-        1,
-        googObject.getValueByKeys(obj, 'knownSingleCharacterString', 'length'));
+    assertEquals(0, googObject.getValueByKeys(obj, 'knownEmptyString', 'length'));
+    assertEquals(1, googObject.getValueByKeys(obj, 'knownSingleCharacterString', 'length'));
   },
 
   testGetValueByKeysArraySyntax() {
@@ -540,13 +528,10 @@ testSuite({
 
     assertEquals(obj.a.b, googObject.getValueByKeys(obj, ['a', 'b']));
     assertEquals(obj.a.b.c, googObject.getValueByKeys(obj, ['a', 'b', 'c']));
-    assertEquals(
-        obj.a.b.c.d, googObject.getValueByKeys(obj, ['a', 'b', 'c', 'd']));
-    assertEquals(
-        8, googObject.getValueByKeys(obj, ['a', 'b', 'c', 'fooArr', 3]));
+    assertEquals(obj.a.b.c.d, googObject.getValueByKeys(obj, ['a', 'b', 'c', 'd']));
+    assertEquals(8, googObject.getValueByKeys(obj, ['a', 'b', 'c', 'fooArr', 3]));
     assertNull(googObject.getValueByKeys(obj, ['a', 'b', 'c', 'knownNull']));
-    assertUndefined(
-        googObject.getValueByKeys(obj, ['a', 'b', 'c', 'knownNull', 'd']));
+    assertUndefined(googObject.getValueByKeys(obj, ['a', 'b', 'c', 'knownNull', 'd']));
     assertUndefined(googObject.getValueByKeys(obj, 'e', 'f', 'g'));
   },
 
@@ -554,7 +539,7 @@ testSuite({
     if (!Object.isFrozen) {
       return;
     }
-    const x = {propA: 3};
+    const x = { propA: 3 };
     const y = googObject.createImmutableView(x);
     x.propA = 4;
     x.propB = 6;
@@ -569,8 +554,7 @@ testSuite({
        * checking
        */
       y.propB = 7;
-    } catch (e) {
-    }
+    } catch (e) {}
     assertEquals(4, x.propA);
     assertEquals(6, x.propB);
     assertFalse(googObject.isImmutableView(x));
@@ -581,21 +565,22 @@ testSuite({
 
     assertFalse('x and y should be different references', x == y);
     assertTrue(
-        'createImmutableView should not create a new view of an immutable object',
-        y == googObject.createImmutableView(y));
+      'createImmutableView should not create a new view of an immutable object',
+      y == googObject.createImmutableView(y)
+    );
   },
 
   testImmutableViewStrict() {
     // IE9 supports isFrozen, but does not support strict mode. Exit early if we
     // are not actually running in strict mode.
-    const isStrict = (function() {
+    const isStrict = (function () {
       return !this;
     })();
 
     if (!Object.isFrozen || !isStrict) {
       return;
     }
-    const x = {propA: 3};
+    const x = { propA: 3 };
     const y = googObject.createImmutableView(x);
     assertThrows(() => {
       /**
@@ -618,46 +603,46 @@ testSuite({
   },
 
   testObjectsWithDifferentKeysAreUnequal() {
-    assertFalse(googObject.equals({'a': 1}, {'b': 1}));
+    assertFalse(googObject.equals({ a: 1 }, { b: 1 }));
   },
 
   testObjectsWithDifferentValuesAreUnequal() {
-    assertFalse(googObject.equals({'a': 1}, {'a': 2}));
+    assertFalse(googObject.equals({ a: 1 }, { a: 2 }));
   },
 
   testObjectsWithSameKeysAndValuesAreEqual() {
-    assertTrue(googObject.equals({'a': 1}, {'a': 1}));
+    assertTrue(googObject.equals({ a: 1 }, { a: 1 }));
   },
 
   testObjectsWithSameKeysInDifferentOrderAreEqual() {
-    assertTrue(googObject.equals({'a': 1, 'b': 2}, {'b': 2, 'a': 1}));
+    assertTrue(googObject.equals({ a: 1, b: 2 }, { b: 2, a: 1 }));
   },
 
   testGetAllPropertyNames_enumerableProperties() {
-    const obj = {a: function() {}, b: 'b', c: function(x) {}};
+    const obj = { a: () => {}, b: 'b', c: (x) => {} };
     assertSameElements(['a', 'b', 'c'], googObject.getAllPropertyNames(obj));
   },
 
   testGetAllPropertyNames_nonEnumerableProperties() {
     const obj = {};
     try {
-      Object.defineProperty(obj, 'foo', {value: 'bar', enumerable: false});
+      Object.defineProperty(obj, 'foo', { value: 'bar', enumerable: false });
     } catch (ex) {
       // IE8 doesn't allow Object.defineProperty on non-DOM elements.
-      if (ex.message == 'Object doesn\'t support this action') {
+      if (ex.message == "Object doesn't support this action") {
         return;
       }
     }
 
-    const expected = (Object.getOwnPropertyNames !== undefined) ? ['foo'] : [];
+    const expected = Object.getOwnPropertyNames !== undefined ? ['foo'] : [];
     assertSameElements(expected, googObject.getAllPropertyNames(obj));
   },
 
   testGetAllPropertyNames_inheritedProperties() {
-    const parent = function() {};
+    const parent = () => {};
     parent.prototype.a = null;
 
-    const child = function() {};
+    const child = () => {};
     goog.inherits(child, parent);
     child.prototype.b = null;
 
@@ -666,8 +651,7 @@ testSuite({
       expected.push('constructor');
     }
 
-    assertSameElements(
-        expected, googObject.getAllPropertyNames(child.prototype));
+    assertSameElements(expected, googObject.getAllPropertyNames(child.prototype));
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -677,26 +661,26 @@ testSuite({
     let Foo, Bar;
     try {
       eval(
-          'Foo = class {' +
+        'Foo = class {' +
           '  a() {}' +
           '};' +
           'Foo.prototype.b = null;' +
           'Bar = class extends Foo {' +
           '  c() {}' +
           '  static d() {}' +
-          '};');
+          '};'
+      );
     } catch (e) {
       if (e instanceof SyntaxError) {
         return;
       }
     }
 
+    assertSameElements(['a', 'b', 'constructor'], googObject.getAllPropertyNames(Foo.prototype));
     assertSameElements(
-        ['a', 'b', 'constructor'],
-        googObject.getAllPropertyNames(Foo.prototype));
-    assertSameElements(
-        ['a', 'b', 'c', 'constructor'],
-        googObject.getAllPropertyNames(Bar.prototype));
+      ['a', 'b', 'c', 'constructor'],
+      googObject.getAllPropertyNames(Bar.prototype)
+    );
 
     const expectedBarProperties = ['d', 'prototype', 'length', 'name'];
 
@@ -706,36 +690,36 @@ testSuite({
       googArray.remove(expectedBarProperties, 'name');
     }
 
-    assertSameElements(
-        expectedBarProperties, googObject.getAllPropertyNames(Bar));
+    assertSameElements(expectedBarProperties, googObject.getAllPropertyNames(Bar));
   },
 
   testGetAllPropertyNames_includeObjectPrototype() {
-    const obj = {a: function() {}, b: 'b', c: function(x) {}};
+    const obj = { a: () => {}, b: 'b', c: (x) => {} };
 
     // There's slightly different behavior depending on what APIs the browser
     // under test supports.
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const additionalProps = !!Object.getOwnPropertyNames ?
-        Object.getOwnPropertyNames(Object.prototype) :
-        [];
+    const additionalProps = !!Object.getOwnPropertyNames
+      ? Object.getOwnPropertyNames(Object.prototype)
+      : [];
     // __proto__ is a bit special and should be excluded from the result set.
     googArray.remove(additionalProps, '__proto__');
 
     assertSameElements(
-        ['a', 'b', 'c'].concat(additionalProps),
-        googObject.getAllPropertyNames(obj, true));
+      ['a', 'b', 'c'].concat(additionalProps),
+      googObject.getAllPropertyNames(obj, true)
+    );
   },
 
   testGetAllPropertyNames_includeFunctionPrototype() {
-    const obj = function() {};
+    const obj = () => {};
     obj.a = () => {};
 
     // There's slightly different behavior depending on what APIs the browser
     // under test supports.
-    const additionalProps = !!Object.getOwnPropertyNames ?
-        Object.getOwnPropertyNames(Function.prototype) :
-        [];
+    const additionalProps = !!Object.getOwnPropertyNames
+      ? Object.getOwnPropertyNames(Function.prototype)
+      : [];
 
     const expectedElements = ['a'].concat(additionalProps);
     googArray.removeDuplicates(expectedElements);
@@ -743,7 +727,7 @@ testSuite({
     // There's slightly different behavior depending on what APIs the browser
     // under test supports.
     let results = googObject.getAllPropertyNames(obj, false, true);
-    results = results.filter(word => word != 'prototype');
+    results = results.filter((word) => word != 'prototype');
 
     assertSameElements(expectedElements.sort(), results.sort());
   },

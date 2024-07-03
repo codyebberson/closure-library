@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.FunctionMockTest');
-goog.setTestOnly();
 
 const FunctionMock = goog.require('goog.testing.FunctionMock');
 const Mock = goog.require('goog.testing.Mock');
@@ -26,17 +25,13 @@ let mockGlobal;
  * @suppress {strictMissingProperties} suppression added to enable type
  * checking
  */
-window.globalFoo = function() {
-  return 'I am Spartacus!';
-};
+window.globalFoo = () => 'I am Spartacus!';
 
 /**
  * @suppress {strictMissingProperties} suppression added to enable type
  * checking
  */
-window.globalBar = function(who, what) {
-  return [who, 'is', what].join(' ');
-};
+window.globalBar = (who, what) => [who, 'is', what].join(' ');
 
 //----- Functions for goog.testing.MethodMock to mock
 
@@ -71,9 +66,7 @@ constructornamespace.MyConstructorWithClassMembers = class {};
  *
  * @return {string}
  */
-constructornamespace.MyConstructorWithClassMembers.classMethod = function() {
-  return 'class method return value';
-};
+constructornamespace.MyConstructorWithClassMembers.classMethod = () => 'class method return value';
 
 constructornamespace.MyConstructorWithClassMembers.CONSTANT = 42;
 
@@ -82,10 +75,7 @@ constructornamespace.MyConstructorWithClassMembers.CONSTANT = 42;
 function assertQuacksLike(obj, target) {
   for (const meth in target.prototype) {
     if (!googString.endsWith(meth, '_')) {
-      assertNotUndefined(
-          `Should have implemented ${meth}` +
-              '()',
-          obj[meth]);
+      assertNotUndefined(`Should have implemented ${meth}` + '()', obj[meth]);
     }
   }
 }
@@ -118,17 +108,20 @@ testSuite({
     };
 
     const doTest = (strict_ok, loose_ok, expected_args, actual_args) => {
+      doOneTest(testing.createFunctionMock(), strict_ok, expected_args, actual_args);
+      doOneTest(testing.createFunctionMock('name'), strict_ok, expected_args, actual_args);
       doOneTest(
-          testing.createFunctionMock(), strict_ok, expected_args, actual_args);
+        testing.createFunctionMock('name', Mock.STRICT),
+        strict_ok,
+        expected_args,
+        actual_args
+      );
       doOneTest(
-          testing.createFunctionMock('name'), strict_ok, expected_args,
-          actual_args);
-      doOneTest(
-          testing.createFunctionMock('name', Mock.STRICT), strict_ok,
-          expected_args, actual_args);
-      doOneTest(
-          testing.createFunctionMock('name', Mock.LOOSE), loose_ok,
-          expected_args, actual_args);
+        testing.createFunctionMock('name', Mock.LOOSE),
+        loose_ok,
+        expected_args,
+        actual_args
+      );
     };
 
     doTest(true, true, [1, 2], [1, 2]);
@@ -172,68 +165,80 @@ testSuite({
 
     mockFoo();
     mockFoo.$replay();
-    assertThrowsJsUnitException(/**
+    assertThrowsJsUnitException(
+      /**
                                    @suppress {checkTypes} suppression added to
                                    enable type checking
                                  */
-                                () => {
-                                  mockFoo('x');
-                                });
+      () => {
+        mockFoo('x');
+      }
+    );
     mockFoo.$reset();
 
     mockFoo('x');
     mockFoo.$replay();
-    assertThrowsJsUnitException(/**
+    assertThrowsJsUnitException(
+      /**
                                    @suppress {checkTypes} suppression added to
                                    enable type checking
                                  */
-                                () => {
-                                  mockFoo();
-                                });
+      () => {
+        mockFoo();
+      }
+    );
     mockFoo.$reset();
 
     mockFoo('x');
     mockFoo.$replay();
-    assertThrowsJsUnitException(/**
+    assertThrowsJsUnitException(
+      /**
                                    @suppress {checkTypes} suppression added to
                                    enable type checking
                                  */
-                                () => {
-                                  mockFoo('x', 'y');
-                                });
+      () => {
+        mockFoo('x', 'y');
+      }
+    );
     mockFoo.$reset();
 
     mockFoo('x', 'y');
     mockFoo.$replay();
-    assertThrowsJsUnitException(/**
+    assertThrowsJsUnitException(
+      /**
                                    @suppress {checkTypes} suppression added to
                                    enable type checking
                                  */
-                                () => {
-                                  mockFoo('x');
-                                });
+      () => {
+        mockFoo('x');
+      }
+    );
     mockFoo.$reset();
 
     mockFoo('correct');
     mockFoo.$replay();
-    assertThrowsJsUnitException(/**
+    assertThrowsJsUnitException(
+      /**
                                    @suppress {checkTypes} suppression added to
                                    enable type checking
                                  */
-                                () => {
-                                  mockFoo('wrong');
-                                });
+      () => {
+        mockFoo('wrong');
+      }
+    );
     mockFoo.$reset();
 
     mockFoo('correct', 'args');
     mockFoo.$replay();
-    assertThrowsJsUnitException(/**
+    assertThrowsJsUnitException(
+      /**
                                    @suppress {checkTypes} suppression added to
                                    enable type checking
                                  */
-                                () => {
-                                  mockFoo('wrong', 'args');
-                                });
+      () => {
+        mockFoo('wrong', 'args');
+      }
+    );
     mockFoo.$reset();
   },
 
@@ -249,11 +254,11 @@ testSuite({
   /** @suppress {checkTypes} suppression added to enable type checking */
   testFunctionMockWorksWhenPassedAsACallback() {
     const invoker = {
-      register: function(callback) {
+      register: function (callback) {
         this.callback = callback;
       },
 
-      invoke: function(args) {
+      invoke: function (args) {
         return this.callback(args);
       },
     };
@@ -459,13 +464,15 @@ testSuite({
     mynamespace.myMethod(1);
     mynamespace.myMethod(2);
     mynamespace.myMethod.$replay();
-    assertThrowsJsUnitException(/**
+    assertThrowsJsUnitException(
+      /**
                                    @suppress {checkTypes} suppression added to
                                    enable type checking
                                  */
-                                () => {
-                                  mynamespace.myMethod(2);
-                                });
+      () => {
+        mynamespace.myMethod(2);
+      }
+    );
     mynamespace.myMethod.$tearDown();
 
     testing.createMethodMock(mynamespace, 'myMethod', Mock.STRICT);
@@ -481,13 +488,15 @@ testSuite({
     mynamespace.myMethod(1);
     mynamespace.myMethod(2);
     mynamespace.myMethod.$replay();
-    assertThrowsJsUnitException(/**
+    assertThrowsJsUnitException(
+      /**
                                    @suppress {checkTypes} suppression added to
                                    enable type checking
                                  */
-                                () => {
-                                  mynamespace.myMethod(2);
-                                });
+      () => {
+        mynamespace.myMethod(2);
+      }
+    );
     mynamespace.myMethod.$tearDown();
 
     testing.createMethodMock(mynamespace, 'myMethod', Mock.LOOSE);
@@ -506,16 +515,13 @@ testSuite({
    */
   testConstructorMock() {
     const mockObject = new StrictMock(constructornamespace.MyConstructor);
-    const mockConstructor =
-        testing.createConstructorMock(constructornamespace, 'MyConstructor');
+    const mockConstructor = testing.createConstructorMock(constructornamespace, 'MyConstructor');
     mockConstructor().$returns(mockObject);
     mockObject.myMethod().$returns('I have been mocked!');
 
     mockConstructor.$replay();
     mockObject.$replay();
-    assertEquals(
-        'I have been mocked!',
-        new constructornamespace.MyConstructor().myMethod());
+    assertEquals('I have been mocked!', new constructornamespace.MyConstructor().myMethod());
     mockConstructor.$verify();
     mockObject.$verify();
     mockConstructor.$tearDown();
@@ -526,20 +532,20 @@ testSuite({
      checking
    */
   testConstructorMockWithArgument() {
-    const mockObject =
-        new StrictMock(constructornamespace.MyConstructorWithArgument);
+    const mockObject = new StrictMock(constructornamespace.MyConstructorWithArgument);
     const mockConstructor = testing.createConstructorMock(
-        constructornamespace, 'MyConstructorWithArgument');
+      constructornamespace,
+      'MyConstructorWithArgument'
+    );
     mockConstructor(mockmatchers.isString).$returns(mockObject);
     mockObject.myMethod().$returns('I have been mocked!');
 
     mockConstructor.$replay();
     mockObject.$replay();
     assertEquals(
-        'I have been mocked!',
-        new constructornamespace
-            .MyConstructorWithArgument('I should be mocked.')
-            .myMethod());
+      'I have been mocked!',
+      new constructornamespace.MyConstructorWithArgument('I should be mocked.').myMethod()
+    );
     mockConstructor.$verify();
     mockObject.$verify();
     mockConstructor.$tearDown();
@@ -551,12 +557,14 @@ testSuite({
    */
   testConstructorMockWithClassMembers() {
     const mockConstructor = testing.createConstructorMock(
-        constructornamespace, 'MyConstructorWithClassMembers');
+      constructornamespace,
+      'MyConstructorWithClassMembers'
+    );
+    assertEquals(42, constructornamespace.MyConstructorWithClassMembers.CONSTANT);
     assertEquals(
-        42, constructornamespace.MyConstructorWithClassMembers.CONSTANT);
-    assertEquals(
-        'class method return value',
-        constructornamespace.MyConstructorWithClassMembers.classMethod());
+      'class method return value',
+      constructornamespace.MyConstructorWithClassMembers.classMethod()
+    );
     mockConstructor.$tearDown();
   },
 
@@ -567,8 +575,7 @@ testSuite({
   testConstructorMockCallOrdering() {
     const instance = {};
 
-    testing.createConstructorMock(
-        constructornamespace, 'MyConstructorWithArgument');
+    testing.createConstructorMock(constructornamespace, 'MyConstructorWithArgument');
     constructornamespace.MyConstructorWithArgument(1).$returns(instance);
     constructornamespace.MyConstructorWithArgument(2).$returns(instance);
     constructornamespace.MyConstructorWithArgument.$replay();
@@ -577,8 +584,7 @@ testSuite({
     });
     constructornamespace.MyConstructorWithArgument.$tearDown();
 
-    testing.createConstructorMock(
-        constructornamespace, 'MyConstructorWithArgument', Mock.STRICT);
+    testing.createConstructorMock(constructornamespace, 'MyConstructorWithArgument', Mock.STRICT);
     constructornamespace.MyConstructorWithArgument(1).$returns(instance);
     constructornamespace.MyConstructorWithArgument(2).$returns(instance);
     constructornamespace.MyConstructorWithArgument.$replay();
@@ -587,8 +593,7 @@ testSuite({
     constructornamespace.MyConstructorWithArgument.$verify();
     constructornamespace.MyConstructorWithArgument.$tearDown();
 
-    testing.createConstructorMock(
-        constructornamespace, 'MyConstructorWithArgument', Mock.STRICT);
+    testing.createConstructorMock(constructornamespace, 'MyConstructorWithArgument', Mock.STRICT);
     constructornamespace.MyConstructorWithArgument(1).$returns(instance);
     constructornamespace.MyConstructorWithArgument(2).$returns(instance);
     constructornamespace.MyConstructorWithArgument.$replay();
@@ -597,8 +602,7 @@ testSuite({
     });
     constructornamespace.MyConstructorWithArgument.$tearDown();
 
-    testing.createConstructorMock(
-        constructornamespace, 'MyConstructorWithArgument', Mock.LOOSE);
+    testing.createConstructorMock(constructornamespace, 'MyConstructorWithArgument', Mock.LOOSE);
     constructornamespace.MyConstructorWithArgument(1).$returns(instance);
     constructornamespace.MyConstructorWithArgument(2).$returns(instance);
     constructornamespace.MyConstructorWithArgument.$replay();

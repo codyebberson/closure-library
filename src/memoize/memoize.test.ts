@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.memoizeTest');
-goog.setTestOnly();
 
 const memoize = goog.require('goog.memoize');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -26,7 +25,7 @@ testSuite({
 
   testOneOptionalArgSimple() {
     let called = 0;
-    const f = memoize(function(opt_x) {
+    const f = memoize((opt_x) => {
       called++;
       return arguments.length == 0 ? 'no args' : opt_x;
     });
@@ -50,14 +49,14 @@ testSuite({
   testProtoFunctions() {
     let fcalled = 0;
     let gcalled = 0;
-    const Class = function(x) {
+    const Class = function (x) {
       this.x = x;
-      this.f = memoize(function(y) {
+      this.f = memoize(function (y) {
         fcalled++;
         return this.x + y;
       });
     };
-    Class.prototype.g = memoize(function(z) {
+    Class.prototype.g = memoize(function (z) {
       gcalled++;
       return this.x - z;
     });
@@ -96,10 +95,8 @@ testSuite({
       return date.getFullYear();
     }, serializer);
 
-    assertEquals(
-        'getYear(2008, 0, 1), 1st', 2008, getYear(new Date(2008, 0, 1)));
-    assertEquals(
-        'getYear(2008, 0, 1), 2nd', 2008, getYear(new Date(2008, 0, 1)));
+    assertEquals('getYear(2008, 0, 1), 1st', 2008, getYear(new Date(2008, 0, 1)));
+    assertEquals('getYear(2008, 0, 1), 2nd', 2008, getYear(new Date(2008, 0, 1)));
     assertEquals('getYear called once', 1, called);
 
     assertEquals('getYear(2007, 0, 1)', 2007, getYear(new Date(2007, 0, 1)));

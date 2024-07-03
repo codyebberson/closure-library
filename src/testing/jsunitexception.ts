@@ -5,10 +5,8 @@
  */
 
 goog.provide('goog.testing.JsUnitException');
-goog.setTestOnly();
 
 goog.require('goog.testing.stacktrace');
-
 
 /**
  * @param {string} comment A summary for the exception.
@@ -17,11 +15,9 @@ goog.require('goog.testing.stacktrace');
  * @extends {Error}
  * @final
  */
-goog.testing.JsUnitException = function(comment, opt_message) {
-  'use strict';
+goog.testing.JsUnitException = function (comment, opt_message) {
   this.isJsUnitException = true;
-  this.message =
-      goog.testing.JsUnitException.generateMessage(comment, opt_message);
+  this.message = goog.testing.JsUnitException.generateMessage(comment, opt_message);
   this.stackTrace = goog.testing.stacktrace.get();
   // These fields are for compatibility with jsUnitTestManager.
   this.comment = comment || null;
@@ -42,15 +38,10 @@ goog.inherits(goog.testing.JsUnitException, Error);
  * @return {string} Concatenated message
  * @package
  */
-goog.testing.JsUnitException.generateMessage = function(comment, opt_message) {
-  'use strict';
-  return (comment || '') + (comment && opt_message ? '\n' : '') +
-      (opt_message || '');
-};
-
+goog.testing.JsUnitException.generateMessage = (comment, opt_message) =>
+  (comment || '') + (comment && opt_message ? '\n' : '') + (opt_message || '');
 
 /** @override */
-goog.testing.JsUnitException.prototype.toString = function() {
-  'use strict';
+goog.testing.JsUnitException.prototype.toString = function () {
   return this.message || this.jsUnitMessage;
 };

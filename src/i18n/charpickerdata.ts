@@ -13,14 +13,11 @@
 // clang-format off
 goog.provide('goog.i18n.CharPickerData');
 
-
-
 /**
  * Object holding two level character organization and character listing.
  * @constructor
  */
-goog.i18n.CharPickerData = function() {};
-
+goog.i18n.CharPickerData = () => {};
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -32,7 +29,6 @@ goog.i18n.CharPickerData = function() {};
  */
 goog.i18n.CharPickerData.MSG_CP_SYMBOL = goog.getMsg('Symbol');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -42,7 +38,6 @@ goog.i18n.CharPickerData.MSG_CP_SYMBOL = goog.getMsg('Symbol');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_ARROWS = goog.getMsg('Arrows');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -54,7 +49,6 @@ goog.i18n.CharPickerData.MSG_CP_ARROWS = goog.getMsg('Arrows');
  */
 goog.i18n.CharPickerData.MSG_CP_BRAILLE = goog.getMsg('Braille');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -63,9 +57,7 @@ goog.i18n.CharPickerData.MSG_CP_BRAILLE = goog.getMsg('Braille');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_CONTROL_PICTURES =
-    goog.getMsg('Control Pictures');
-
+goog.i18n.CharPickerData.MSG_CP_CONTROL_PICTURES = goog.getMsg('Control Pictures');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -77,7 +69,6 @@ goog.i18n.CharPickerData.MSG_CP_CONTROL_PICTURES =
  */
 goog.i18n.CharPickerData.MSG_CP_CURRENCY = goog.getMsg('Currency');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -87,7 +78,6 @@ goog.i18n.CharPickerData.MSG_CP_CURRENCY = goog.getMsg('Currency');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_EMOTICONS = goog.getMsg('Emoticons');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -99,6 +89,15 @@ goog.i18n.CharPickerData.MSG_CP_EMOTICONS = goog.getMsg('Emoticons');
  */
 goog.i18n.CharPickerData.MSG_CP_GAME_PIECES = goog.getMsg('Game Pieces');
 
+/**
+ * @desc Name for a symbol or character category. Used in a pull-down list
+ *   shown to a  document editing user trying to insert a special character.
+ *   Newlines are not allowed; translation should be a noun and as consise as
+ *   possible. More details:
+ *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+ * @type {string}
+ */
+goog.i18n.CharPickerData.MSG_CP_GENDER_AND_GENEALOGICAL = goog.getMsg('Gender and Genealogical');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -108,9 +107,7 @@ goog.i18n.CharPickerData.MSG_CP_GAME_PIECES = goog.getMsg('Game Pieces');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_GENDER_AND_GENEALOGICAL =
-    goog.getMsg('Gender and Genealogical');
-
+goog.i18n.CharPickerData.MSG_CP_GEOMETRIC_SHAPES = goog.getMsg('Geometric Shapes');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -120,9 +117,7 @@ goog.i18n.CharPickerData.MSG_CP_GENDER_AND_GENEALOGICAL =
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_GEOMETRIC_SHAPES =
-    goog.getMsg('Geometric Shapes');
-
+goog.i18n.CharPickerData.MSG_CP_KEYBOARD_AND_UI = goog.getMsg('Keyboard and UI');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -132,21 +127,7 @@ goog.i18n.CharPickerData.MSG_CP_GEOMETRIC_SHAPES =
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_KEYBOARD_AND_UI =
-    goog.getMsg('Keyboard and UI');
-
-
-/**
- * @desc Name for a symbol or character category. Used in a pull-down list
- *   shown to a  document editing user trying to insert a special character.
- *   Newlines are not allowed; translation should be a noun and as consise as
- *   possible. More details:
- *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- * @type {string}
- */
-goog.i18n.CharPickerData.MSG_CP_LATIN_1_SUPPLEMENT =
-    goog.getMsg('Latin 1 Supplement');
-
+goog.i18n.CharPickerData.MSG_CP_LATIN_1_SUPPLEMENT = goog.getMsg('Latin 1 Supplement');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -158,7 +139,6 @@ goog.i18n.CharPickerData.MSG_CP_LATIN_1_SUPPLEMENT =
  */
 goog.i18n.CharPickerData.MSG_CP_MATH = goog.getMsg('Math');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -167,9 +147,7 @@ goog.i18n.CharPickerData.MSG_CP_MATH = goog.getMsg('Math');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_MATH_ALPHANUMERIC =
-    goog.getMsg('Math Alphanumeric');
-
+goog.i18n.CharPickerData.MSG_CP_MATH_ALPHANUMERIC = goog.getMsg('Math Alphanumeric');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -181,7 +159,6 @@ goog.i18n.CharPickerData.MSG_CP_MATH_ALPHANUMERIC =
  */
 goog.i18n.CharPickerData.MSG_CP_MISCELLANEOUS = goog.getMsg('Miscellaneous');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -192,7 +169,6 @@ goog.i18n.CharPickerData.MSG_CP_MISCELLANEOUS = goog.getMsg('Miscellaneous');
  */
 goog.i18n.CharPickerData.MSG_CP_MUSICAL = goog.getMsg('Musical');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -201,9 +177,7 @@ goog.i18n.CharPickerData.MSG_CP_MUSICAL = goog.getMsg('Musical');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_STARS_ASTERISKS =
-    goog.getMsg('Stars/Asterisks');
-
+goog.i18n.CharPickerData.MSG_CP_STARS_ASTERISKS = goog.getMsg('Stars/Asterisks');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -215,7 +189,6 @@ goog.i18n.CharPickerData.MSG_CP_STARS_ASTERISKS =
  */
 goog.i18n.CharPickerData.MSG_CP_SUBSCRIPT = goog.getMsg('Subscript');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -225,7 +198,6 @@ goog.i18n.CharPickerData.MSG_CP_SUBSCRIPT = goog.getMsg('Subscript');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_SUPERSCRIPT = goog.getMsg('Superscript');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -237,6 +209,15 @@ goog.i18n.CharPickerData.MSG_CP_SUPERSCRIPT = goog.getMsg('Superscript');
  */
 goog.i18n.CharPickerData.MSG_CP_TECHNICAL = goog.getMsg('Technical');
 
+/**
+ * @desc Name for a symbol or character category. Used in a pull-down list
+ *   shown to a  document editing user trying to insert a special character.
+ *   Newlines are not allowed; translation should be a noun and as consise as
+ *   possible. More details:
+ *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+ * @type {string}
+ */
+goog.i18n.CharPickerData.MSG_CP_TRANSPORT_AND_MAP = goog.getMsg('Transport And Map');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -246,9 +227,7 @@ goog.i18n.CharPickerData.MSG_CP_TECHNICAL = goog.getMsg('Technical');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_TRANSPORT_AND_MAP =
-    goog.getMsg('Transport And Map');
-
+goog.i18n.CharPickerData.MSG_CP_WEATHER_AND_ASTROLOGICAL = goog.getMsg('Weather and Astrological');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -258,21 +237,7 @@ goog.i18n.CharPickerData.MSG_CP_TRANSPORT_AND_MAP =
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_WEATHER_AND_ASTROLOGICAL =
-    goog.getMsg('Weather and Astrological');
-
-
-/**
- * @desc Name for a symbol or character category. Used in a pull-down list
- *   shown to a  document editing user trying to insert a special character.
- *   Newlines are not allowed; translation should be a noun and as consise as
- *   possible. More details:
- *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- * @type {string}
- */
-goog.i18n.CharPickerData.MSG_CP_YIJING_TAI_XUAN_JING =
-    goog.getMsg('Yijing / Tai Xuan Jing');
-
+goog.i18n.CharPickerData.MSG_CP_YIJING_TAI_XUAN_JING = goog.getMsg('Yijing / Tai Xuan Jing');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -284,7 +249,6 @@ goog.i18n.CharPickerData.MSG_CP_YIJING_TAI_XUAN_JING =
  */
 goog.i18n.CharPickerData.MSG_CP_HISTORIC = goog.getMsg('Historic');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -294,7 +258,6 @@ goog.i18n.CharPickerData.MSG_CP_HISTORIC = goog.getMsg('Historic');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY = goog.getMsg('Compatibility');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -306,6 +269,15 @@ goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY = goog.getMsg('Compatibility');
  */
 goog.i18n.CharPickerData.MSG_CP_EMOJI = goog.getMsg('Emoji');
 
+/**
+ * @desc Name for a symbol or character category. Used in a pull-down list
+ *   shown to a  document editing user trying to insert a special character.
+ *   Newlines are not allowed; translation should be a noun and as consise as
+ *   possible. More details:
+ *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+ * @type {string}
+ */
+goog.i18n.CharPickerData.MSG_CP_PEOPLE_AND_EMOTIONS = goog.getMsg('People and Emotions');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -315,21 +287,7 @@ goog.i18n.CharPickerData.MSG_CP_EMOJI = goog.getMsg('Emoji');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_PEOPLE_AND_EMOTIONS =
-    goog.getMsg('People and Emotions');
-
-
-/**
- * @desc Name for a symbol or character category. Used in a pull-down list
- *   shown to a  document editing user trying to insert a special character.
- *   Newlines are not allowed; translation should be a noun and as consise as
- *   possible. More details:
- *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- * @type {string}
- */
-goog.i18n.CharPickerData.MSG_CP_ANIMALS_PLANTS_AND_FOOD =
-    goog.getMsg('Animals, Plants and Food');
-
+goog.i18n.CharPickerData.MSG_CP_ANIMALS_PLANTS_AND_FOOD = goog.getMsg('Animals, Plants and Food');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -341,6 +299,17 @@ goog.i18n.CharPickerData.MSG_CP_ANIMALS_PLANTS_AND_FOOD =
  */
 goog.i18n.CharPickerData.MSG_CP_OBJECTS = goog.getMsg('Objects');
 
+/**
+ * @desc Name for a symbol or character category. Used in a pull-down list
+ *   shown to a  document editing user trying to insert a special character.
+ *   Newlines are not allowed; translation should be a noun and as consise as
+ *   possible. More details:
+ *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+ * @type {string}
+ */
+goog.i18n.CharPickerData.MSG_CP_SPORTS_CELEBRATIONS_AND_ACTIVITIES = goog.getMsg(
+  'Sports, Celebrations and Activities'
+);
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -350,21 +319,9 @@ goog.i18n.CharPickerData.MSG_CP_OBJECTS = goog.getMsg('Objects');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_SPORTS_CELEBRATIONS_AND_ACTIVITIES =
-    goog.getMsg('Sports, Celebrations and Activities');
-
-
-/**
- * @desc Name for a symbol or character category. Used in a pull-down list
- *   shown to a  document editing user trying to insert a special character.
- *   Newlines are not allowed; translation should be a noun and as consise as
- *   possible. More details:
- *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- * @type {string}
- */
-goog.i18n.CharPickerData.MSG_CP_TRANSPORT_MAPS_AND_SIGNAGE =
-    goog.getMsg('Transport, Maps and Signage');
-
+goog.i18n.CharPickerData.MSG_CP_TRANSPORT_MAPS_AND_SIGNAGE = goog.getMsg(
+  'Transport, Maps and Signage'
+);
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -374,9 +331,9 @@ goog.i18n.CharPickerData.MSG_CP_TRANSPORT_MAPS_AND_SIGNAGE =
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_WEATHER_SCENES_AND_ZODIAC_SIGNS =
-    goog.getMsg('Weather, Scenes and Zodiac signs');
-
+goog.i18n.CharPickerData.MSG_CP_WEATHER_SCENES_AND_ZODIAC_SIGNS = goog.getMsg(
+  'Weather, Scenes and Zodiac signs'
+);
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -388,7 +345,6 @@ goog.i18n.CharPickerData.MSG_CP_WEATHER_SCENES_AND_ZODIAC_SIGNS =
  */
 goog.i18n.CharPickerData.MSG_CP_ENCLOSED = goog.getMsg('Enclosed');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -398,7 +354,6 @@ goog.i18n.CharPickerData.MSG_CP_ENCLOSED = goog.getMsg('Enclosed');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_MARKS = goog.getMsg('Marks');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -410,7 +365,6 @@ goog.i18n.CharPickerData.MSG_CP_MARKS = goog.getMsg('Marks');
  */
 goog.i18n.CharPickerData.MSG_CP_SYMBOLS = goog.getMsg('Symbols');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -420,7 +374,6 @@ goog.i18n.CharPickerData.MSG_CP_SYMBOLS = goog.getMsg('Symbols');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_PUNCTUATION = goog.getMsg('Punctuation');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -432,7 +385,6 @@ goog.i18n.CharPickerData.MSG_CP_PUNCTUATION = goog.getMsg('Punctuation');
  */
 goog.i18n.CharPickerData.MSG_CP_ASCII_BASED = goog.getMsg('ASCII Based');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -442,7 +394,6 @@ goog.i18n.CharPickerData.MSG_CP_ASCII_BASED = goog.getMsg('ASCII Based');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_DASH_CONNECTOR = goog.getMsg('Dash/Connector');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -454,7 +405,6 @@ goog.i18n.CharPickerData.MSG_CP_DASH_CONNECTOR = goog.getMsg('Dash/Connector');
  */
 goog.i18n.CharPickerData.MSG_CP_OTHER = goog.getMsg('Other');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -464,7 +414,6 @@ goog.i18n.CharPickerData.MSG_CP_OTHER = goog.getMsg('Other');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_PAIRED = goog.getMsg('Paired');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -476,7 +425,6 @@ goog.i18n.CharPickerData.MSG_CP_PAIRED = goog.getMsg('Paired');
  */
 goog.i18n.CharPickerData.MSG_CP_NUMBER = goog.getMsg('Number');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -487,6 +435,15 @@ goog.i18n.CharPickerData.MSG_CP_NUMBER = goog.getMsg('Number');
  */
 goog.i18n.CharPickerData.MSG_CP_DECIMAL = goog.getMsg('Decimal');
 
+/**
+ * @desc Name for a symbol or character category. Used in a pull-down list
+ *   shown to a  document editing user trying to insert a special character.
+ *   Newlines are not allowed; translation should be a noun and as consise as
+ *   possible. More details:
+ *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+ * @type {string}
+ */
+goog.i18n.CharPickerData.MSG_CP_ENCLOSED_DOTTED = goog.getMsg('Enclosed/Dotted');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -496,9 +453,7 @@ goog.i18n.CharPickerData.MSG_CP_DECIMAL = goog.getMsg('Decimal');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_ENCLOSED_DOTTED =
-    goog.getMsg('Enclosed/Dotted');
-
+goog.i18n.CharPickerData.MSG_CP_FRACTIONS_RELATED = goog.getMsg('Fractions/Related');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -508,21 +463,7 @@ goog.i18n.CharPickerData.MSG_CP_ENCLOSED_DOTTED =
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_FRACTIONS_RELATED =
-    goog.getMsg('Fractions/Related');
-
-
-/**
- * @desc Name for a symbol or character category. Used in a pull-down list
- *   shown to a  document editing user trying to insert a special character.
- *   Newlines are not allowed; translation should be a noun and as consise as
- *   possible. More details:
- *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- * @type {string}
- */
-goog.i18n.CharPickerData.MSG_CP_FORMAT_WHITESPACE =
-    goog.getMsg('Format & Whitespace');
-
+goog.i18n.CharPickerData.MSG_CP_FORMAT_WHITESPACE = goog.getMsg('Format & Whitespace');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -534,7 +475,6 @@ goog.i18n.CharPickerData.MSG_CP_FORMAT_WHITESPACE =
  */
 goog.i18n.CharPickerData.MSG_CP_FORMAT = goog.getMsg('Format');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -543,9 +483,7 @@ goog.i18n.CharPickerData.MSG_CP_FORMAT = goog.getMsg('Format');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_VARIATION_SELECTOR =
-    goog.getMsg('Variation Selector');
-
+goog.i18n.CharPickerData.MSG_CP_VARIATION_SELECTOR = goog.getMsg('Variation Selector');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -557,7 +495,6 @@ goog.i18n.CharPickerData.MSG_CP_VARIATION_SELECTOR =
  */
 goog.i18n.CharPickerData.MSG_CP_WHITESPACE = goog.getMsg('Whitespace');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -567,7 +504,6 @@ goog.i18n.CharPickerData.MSG_CP_WHITESPACE = goog.getMsg('Whitespace');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_MODIFIER = goog.getMsg('Modifier');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -579,7 +515,6 @@ goog.i18n.CharPickerData.MSG_CP_MODIFIER = goog.getMsg('Modifier');
  */
 goog.i18n.CharPickerData.MSG_CP_ENCLOSING = goog.getMsg('Enclosing');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -589,7 +524,6 @@ goog.i18n.CharPickerData.MSG_CP_ENCLOSING = goog.getMsg('Enclosing');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_NONSPACING = goog.getMsg('Nonspacing');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -601,7 +535,6 @@ goog.i18n.CharPickerData.MSG_CP_NONSPACING = goog.getMsg('Nonspacing');
  */
 goog.i18n.CharPickerData.MSG_CP_SPACING = goog.getMsg('Spacing');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -611,7 +544,6 @@ goog.i18n.CharPickerData.MSG_CP_SPACING = goog.getMsg('Spacing');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_LATIN = goog.getMsg('Latin');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -623,7 +555,6 @@ goog.i18n.CharPickerData.MSG_CP_LATIN = goog.getMsg('Latin');
  */
 goog.i18n.CharPickerData.MSG_CP_COMMON = goog.getMsg('Common');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -632,9 +563,7 @@ goog.i18n.CharPickerData.MSG_CP_COMMON = goog.getMsg('Common');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_FLIPPED_MIRRORED =
-    goog.getMsg('Flipped/Mirrored');
-
+goog.i18n.CharPickerData.MSG_CP_FLIPPED_MIRRORED = goog.getMsg('Flipped/Mirrored');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -646,6 +575,15 @@ goog.i18n.CharPickerData.MSG_CP_FLIPPED_MIRRORED =
  */
 goog.i18n.CharPickerData.MSG_CP_PHONETICS_IPA = goog.getMsg('Phonetics (IPA)');
 
+/**
+ * @desc Name for a symbol or character category. Used in a pull-down list
+ *   shown to a  document editing user trying to insert a special character.
+ *   Newlines are not allowed; translation should be a noun and as consise as
+ *   possible. More details:
+ *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+ * @type {string}
+ */
+goog.i18n.CharPickerData.MSG_CP_PHONETICS_X_IPA = goog.getMsg('Phonetics (X-IPA)');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -655,21 +593,7 @@ goog.i18n.CharPickerData.MSG_CP_PHONETICS_IPA = goog.getMsg('Phonetics (IPA)');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_PHONETICS_X_IPA =
-    goog.getMsg('Phonetics (X-IPA)');
-
-
-/**
- * @desc Name for a symbol or character category. Used in a pull-down list
- *   shown to a  document editing user trying to insert a special character.
- *   Newlines are not allowed; translation should be a noun and as consise as
- *   possible. More details:
- *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- * @type {string}
- */
-goog.i18n.CharPickerData.MSG_CP_OTHER_EUROPEAN_SCRIPTS =
-    goog.getMsg('Other European Scripts');
-
+goog.i18n.CharPickerData.MSG_CP_OTHER_EUROPEAN_SCRIPTS = goog.getMsg('Other European Scripts');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -681,7 +605,6 @@ goog.i18n.CharPickerData.MSG_CP_OTHER_EUROPEAN_SCRIPTS =
  */
 goog.i18n.CharPickerData.MSG_CP_ARMENIAN = goog.getMsg('Armenian');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -691,7 +614,6 @@ goog.i18n.CharPickerData.MSG_CP_ARMENIAN = goog.getMsg('Armenian');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_CYRILLIC = goog.getMsg('Cyrillic');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -703,7 +625,6 @@ goog.i18n.CharPickerData.MSG_CP_CYRILLIC = goog.getMsg('Cyrillic');
  */
 goog.i18n.CharPickerData.MSG_CP_GEORGIAN = goog.getMsg('Georgian');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -713,7 +634,6 @@ goog.i18n.CharPickerData.MSG_CP_GEORGIAN = goog.getMsg('Georgian');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_GREEK = goog.getMsg('Greek');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -725,7 +645,6 @@ goog.i18n.CharPickerData.MSG_CP_GREEK = goog.getMsg('Greek');
  */
 goog.i18n.CharPickerData.MSG_CP_CYPRIOT = goog.getMsg('Cypriot');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -735,7 +654,6 @@ goog.i18n.CharPickerData.MSG_CP_CYPRIOT = goog.getMsg('Cypriot');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_GLAGOLITIC = goog.getMsg('Glagolitic');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -747,7 +665,6 @@ goog.i18n.CharPickerData.MSG_CP_GLAGOLITIC = goog.getMsg('Glagolitic');
  */
 goog.i18n.CharPickerData.MSG_CP_GOTHIC = goog.getMsg('Gothic');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -757,7 +674,6 @@ goog.i18n.CharPickerData.MSG_CP_GOTHIC = goog.getMsg('Gothic');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_LINEAR_B = goog.getMsg('Linear B');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -769,7 +685,6 @@ goog.i18n.CharPickerData.MSG_CP_LINEAR_B = goog.getMsg('Linear B');
  */
 goog.i18n.CharPickerData.MSG_CP_OGHAM = goog.getMsg('Ogham');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -779,7 +694,6 @@ goog.i18n.CharPickerData.MSG_CP_OGHAM = goog.getMsg('Ogham');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_OLD_ITALIC = goog.getMsg('Old Italic');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -791,7 +705,6 @@ goog.i18n.CharPickerData.MSG_CP_OLD_ITALIC = goog.getMsg('Old Italic');
  */
 goog.i18n.CharPickerData.MSG_CP_RUNIC = goog.getMsg('Runic');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -802,6 +715,15 @@ goog.i18n.CharPickerData.MSG_CP_RUNIC = goog.getMsg('Runic');
  */
 goog.i18n.CharPickerData.MSG_CP_SHAVIAN = goog.getMsg('Shavian');
 
+/**
+ * @desc Name for a symbol or character category. Used in a pull-down list
+ *   shown to a  document editing user trying to insert a special character.
+ *   Newlines are not allowed; translation should be a noun and as consise as
+ *   possible. More details:
+ *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+ * @type {string}
+ */
+goog.i18n.CharPickerData.MSG_CP_AMERICAN_SCRIPTS = goog.getMsg('American Scripts');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -811,21 +733,7 @@ goog.i18n.CharPickerData.MSG_CP_SHAVIAN = goog.getMsg('Shavian');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_AMERICAN_SCRIPTS =
-    goog.getMsg('American Scripts');
-
-
-/**
- * @desc Name for a symbol or character category. Used in a pull-down list
- *   shown to a  document editing user trying to insert a special character.
- *   Newlines are not allowed; translation should be a noun and as consise as
- *   possible. More details:
- *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- * @type {string}
- */
-goog.i18n.CharPickerData.MSG_CP_CANADIAN_ABORIGINAL =
-    goog.getMsg('Canadian Aboriginal');
-
+goog.i18n.CharPickerData.MSG_CP_CANADIAN_ABORIGINAL = goog.getMsg('Canadian Aboriginal');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -837,7 +745,6 @@ goog.i18n.CharPickerData.MSG_CP_CANADIAN_ABORIGINAL =
  */
 goog.i18n.CharPickerData.MSG_CP_CHEROKEE = goog.getMsg('Cherokee');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -848,6 +755,15 @@ goog.i18n.CharPickerData.MSG_CP_CHEROKEE = goog.getMsg('Cherokee');
  */
 goog.i18n.CharPickerData.MSG_CP_DESERET = goog.getMsg('Deseret');
 
+/**
+ * @desc Name for a symbol or character category. Used in a pull-down list
+ *   shown to a  document editing user trying to insert a special character.
+ *   Newlines are not allowed; translation should be a noun and as consise as
+ *   possible. More details:
+ *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+ * @type {string}
+ */
+goog.i18n.CharPickerData.MSG_CP_AFRICAN_SCRIPTS = goog.getMsg('African Scripts');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -857,21 +773,7 @@ goog.i18n.CharPickerData.MSG_CP_DESERET = goog.getMsg('Deseret');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_AFRICAN_SCRIPTS =
-    goog.getMsg('African Scripts');
-
-
-/**
- * @desc Name for a symbol or character category. Used in a pull-down list
- *   shown to a  document editing user trying to insert a special character.
- *   Newlines are not allowed; translation should be a noun and as consise as
- *   possible. More details:
- *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- * @type {string}
- */
-goog.i18n.CharPickerData.MSG_CP_EGYPTIAN_HIEROGLYPHS =
-    goog.getMsg('Egyptian Hieroglyphs');
-
+goog.i18n.CharPickerData.MSG_CP_EGYPTIAN_HIEROGLYPHS = goog.getMsg('Egyptian Hieroglyphs');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -883,6 +785,15 @@ goog.i18n.CharPickerData.MSG_CP_EGYPTIAN_HIEROGLYPHS =
  */
 goog.i18n.CharPickerData.MSG_CP_ETHIOPIC = goog.getMsg('Ethiopic');
 
+/**
+ * @desc Name for a symbol or character category. Used in a pull-down list
+ *   shown to a  document editing user trying to insert a special character.
+ *   Newlines are not allowed; translation should be a noun and as consise as
+ *   possible. More details:
+ *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+ * @type {string}
+ */
+goog.i18n.CharPickerData.MSG_CP_MEROITIC_CURSIVE = goog.getMsg('Meroitic Cursive');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -892,21 +803,7 @@ goog.i18n.CharPickerData.MSG_CP_ETHIOPIC = goog.getMsg('Ethiopic');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_MEROITIC_CURSIVE =
-    goog.getMsg('Meroitic Cursive');
-
-
-/**
- * @desc Name for a symbol or character category. Used in a pull-down list
- *   shown to a  document editing user trying to insert a special character.
- *   Newlines are not allowed; translation should be a noun and as consise as
- *   possible. More details:
- *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- * @type {string}
- */
-goog.i18n.CharPickerData.MSG_CP_MEROITIC_HIEROGLYPHS =
-    goog.getMsg('Meroitic Hieroglyphs');
-
+goog.i18n.CharPickerData.MSG_CP_MEROITIC_HIEROGLYPHS = goog.getMsg('Meroitic Hieroglyphs');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -918,7 +815,6 @@ goog.i18n.CharPickerData.MSG_CP_MEROITIC_HIEROGLYPHS =
  */
 goog.i18n.CharPickerData.MSG_CP_NKO = goog.getMsg('Nko');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -928,7 +824,6 @@ goog.i18n.CharPickerData.MSG_CP_NKO = goog.getMsg('Nko');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_TIFINAGH = goog.getMsg('Tifinagh');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -940,7 +835,6 @@ goog.i18n.CharPickerData.MSG_CP_TIFINAGH = goog.getMsg('Tifinagh');
  */
 goog.i18n.CharPickerData.MSG_CP_VAI = goog.getMsg('Vai');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -950,7 +844,6 @@ goog.i18n.CharPickerData.MSG_CP_VAI = goog.getMsg('Vai');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_BAMUM = goog.getMsg('Bamum');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -962,7 +855,6 @@ goog.i18n.CharPickerData.MSG_CP_BAMUM = goog.getMsg('Bamum');
  */
 goog.i18n.CharPickerData.MSG_CP_COPTIC = goog.getMsg('Coptic');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -973,7 +865,6 @@ goog.i18n.CharPickerData.MSG_CP_COPTIC = goog.getMsg('Coptic');
  */
 goog.i18n.CharPickerData.MSG_CP_OSMANYA = goog.getMsg('Osmanya');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -982,9 +873,7 @@ goog.i18n.CharPickerData.MSG_CP_OSMANYA = goog.getMsg('Osmanya');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_MIDDLE_EASTERN_SCRIPTS =
-    goog.getMsg('Middle Eastern Scripts');
-
+goog.i18n.CharPickerData.MSG_CP_MIDDLE_EASTERN_SCRIPTS = goog.getMsg('Middle Eastern Scripts');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -996,7 +885,6 @@ goog.i18n.CharPickerData.MSG_CP_MIDDLE_EASTERN_SCRIPTS =
  */
 goog.i18n.CharPickerData.MSG_CP_ARABIC = goog.getMsg('Arabic');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1007,6 +895,15 @@ goog.i18n.CharPickerData.MSG_CP_ARABIC = goog.getMsg('Arabic');
  */
 goog.i18n.CharPickerData.MSG_CP_HEBREW = goog.getMsg('Hebrew');
 
+/**
+ * @desc Name for a symbol or character category. Used in a pull-down list
+ *   shown to a  document editing user trying to insert a special character.
+ *   Newlines are not allowed; translation should be a noun and as consise as
+ *   possible. More details:
+ *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+ * @type {string}
+ */
+goog.i18n.CharPickerData.MSG_CP_IMPERIAL_ARAMAIC = goog.getMsg('Imperial Aramaic');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1016,9 +913,7 @@ goog.i18n.CharPickerData.MSG_CP_HEBREW = goog.getMsg('Hebrew');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_IMPERIAL_ARAMAIC =
-    goog.getMsg('Imperial Aramaic');
-
+goog.i18n.CharPickerData.MSG_CP_INSCRIPTIONAL_PAHLAVI = goog.getMsg('Inscriptional Pahlavi');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1028,21 +923,7 @@ goog.i18n.CharPickerData.MSG_CP_IMPERIAL_ARAMAIC =
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_INSCRIPTIONAL_PAHLAVI =
-    goog.getMsg('Inscriptional Pahlavi');
-
-
-/**
- * @desc Name for a symbol or character category. Used in a pull-down list
- *   shown to a  document editing user trying to insert a special character.
- *   Newlines are not allowed; translation should be a noun and as consise as
- *   possible. More details:
- *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- * @type {string}
- */
-goog.i18n.CharPickerData.MSG_CP_INSCRIPTIONAL_PARTHIAN =
-    goog.getMsg('Inscriptional Parthian');
-
+goog.i18n.CharPickerData.MSG_CP_INSCRIPTIONAL_PARTHIAN = goog.getMsg('Inscriptional Parthian');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1054,7 +935,6 @@ goog.i18n.CharPickerData.MSG_CP_INSCRIPTIONAL_PARTHIAN =
  */
 goog.i18n.CharPickerData.MSG_CP_MANDAIC = goog.getMsg('Mandaic');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1063,9 +943,7 @@ goog.i18n.CharPickerData.MSG_CP_MANDAIC = goog.getMsg('Mandaic');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_OLD_SOUTH_ARABIAN =
-    goog.getMsg('Old South Arabian');
-
+goog.i18n.CharPickerData.MSG_CP_OLD_SOUTH_ARABIAN = goog.getMsg('Old South Arabian');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1077,7 +955,6 @@ goog.i18n.CharPickerData.MSG_CP_OLD_SOUTH_ARABIAN =
  */
 goog.i18n.CharPickerData.MSG_CP_SAMARITAN = goog.getMsg('Samaritan');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1087,7 +964,6 @@ goog.i18n.CharPickerData.MSG_CP_SAMARITAN = goog.getMsg('Samaritan');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_SYRIAC = goog.getMsg('Syriac');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1099,7 +975,6 @@ goog.i18n.CharPickerData.MSG_CP_SYRIAC = goog.getMsg('Syriac');
  */
 goog.i18n.CharPickerData.MSG_CP_AVESTAN = goog.getMsg('Avestan');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1109,7 +984,6 @@ goog.i18n.CharPickerData.MSG_CP_AVESTAN = goog.getMsg('Avestan');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_CARIAN = goog.getMsg('Carian');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1121,7 +995,6 @@ goog.i18n.CharPickerData.MSG_CP_CARIAN = goog.getMsg('Carian');
  */
 goog.i18n.CharPickerData.MSG_CP_CUNEIFORM = goog.getMsg('Cuneiform');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1131,7 +1004,6 @@ goog.i18n.CharPickerData.MSG_CP_CUNEIFORM = goog.getMsg('Cuneiform');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_LYCIAN = goog.getMsg('Lycian');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1143,7 +1015,6 @@ goog.i18n.CharPickerData.MSG_CP_LYCIAN = goog.getMsg('Lycian');
  */
 goog.i18n.CharPickerData.MSG_CP_LYDIAN = goog.getMsg('Lydian');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1153,7 +1024,6 @@ goog.i18n.CharPickerData.MSG_CP_LYDIAN = goog.getMsg('Lydian');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_OLD_PERSIAN = goog.getMsg('Old Persian');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1165,7 +1035,6 @@ goog.i18n.CharPickerData.MSG_CP_OLD_PERSIAN = goog.getMsg('Old Persian');
  */
 goog.i18n.CharPickerData.MSG_CP_PHOENICIAN = goog.getMsg('Phoenician');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1176,7 +1045,6 @@ goog.i18n.CharPickerData.MSG_CP_PHOENICIAN = goog.getMsg('Phoenician');
  */
 goog.i18n.CharPickerData.MSG_CP_UGARITIC = goog.getMsg('Ugaritic');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1185,9 +1053,7 @@ goog.i18n.CharPickerData.MSG_CP_UGARITIC = goog.getMsg('Ugaritic');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_SOUTH_ASIAN_SCRIPTS =
-    goog.getMsg('South Asian Scripts');
-
+goog.i18n.CharPickerData.MSG_CP_SOUTH_ASIAN_SCRIPTS = goog.getMsg('South Asian Scripts');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1199,7 +1065,6 @@ goog.i18n.CharPickerData.MSG_CP_SOUTH_ASIAN_SCRIPTS =
  */
 goog.i18n.CharPickerData.MSG_CP_BENGALI = goog.getMsg('Bengali');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1209,7 +1074,6 @@ goog.i18n.CharPickerData.MSG_CP_BENGALI = goog.getMsg('Bengali');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_CHAKMA = goog.getMsg('Chakma');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1221,7 +1085,6 @@ goog.i18n.CharPickerData.MSG_CP_CHAKMA = goog.getMsg('Chakma');
  */
 goog.i18n.CharPickerData.MSG_CP_DEVANAGARI = goog.getMsg('Devanagari');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1231,7 +1094,6 @@ goog.i18n.CharPickerData.MSG_CP_DEVANAGARI = goog.getMsg('Devanagari');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_GUJARATI = goog.getMsg('Gujarati');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1243,7 +1105,6 @@ goog.i18n.CharPickerData.MSG_CP_GUJARATI = goog.getMsg('Gujarati');
  */
 goog.i18n.CharPickerData.MSG_CP_GURMUKHI = goog.getMsg('Gurmukhi');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1253,7 +1114,6 @@ goog.i18n.CharPickerData.MSG_CP_GURMUKHI = goog.getMsg('Gurmukhi');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_KANNADA = goog.getMsg('Kannada');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1265,7 +1125,6 @@ goog.i18n.CharPickerData.MSG_CP_KANNADA = goog.getMsg('Kannada');
  */
 goog.i18n.CharPickerData.MSG_CP_LEPCHA = goog.getMsg('Lepcha');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1275,7 +1134,6 @@ goog.i18n.CharPickerData.MSG_CP_LEPCHA = goog.getMsg('Lepcha');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_LIMBU = goog.getMsg('Limbu');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1287,7 +1145,6 @@ goog.i18n.CharPickerData.MSG_CP_LIMBU = goog.getMsg('Limbu');
  */
 goog.i18n.CharPickerData.MSG_CP_MALAYALAM = goog.getMsg('Malayalam');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1297,7 +1154,6 @@ goog.i18n.CharPickerData.MSG_CP_MALAYALAM = goog.getMsg('Malayalam');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_MEETEI_MAYEK = goog.getMsg('Meetei Mayek');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1309,7 +1165,6 @@ goog.i18n.CharPickerData.MSG_CP_MEETEI_MAYEK = goog.getMsg('Meetei Mayek');
  */
 goog.i18n.CharPickerData.MSG_CP_OL_CHIKI = goog.getMsg('Ol Chiki');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1319,7 +1174,6 @@ goog.i18n.CharPickerData.MSG_CP_OL_CHIKI = goog.getMsg('Ol Chiki');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_ORIYA = goog.getMsg('Oriya');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1331,7 +1185,6 @@ goog.i18n.CharPickerData.MSG_CP_ORIYA = goog.getMsg('Oriya');
  */
 goog.i18n.CharPickerData.MSG_CP_SAURASHTRA = goog.getMsg('Saurashtra');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1341,7 +1194,6 @@ goog.i18n.CharPickerData.MSG_CP_SAURASHTRA = goog.getMsg('Saurashtra');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_SINHALA = goog.getMsg('Sinhala');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1353,7 +1205,6 @@ goog.i18n.CharPickerData.MSG_CP_SINHALA = goog.getMsg('Sinhala');
  */
 goog.i18n.CharPickerData.MSG_CP_SORA_SOMPENG = goog.getMsg('Sora Sompeng');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1363,7 +1214,6 @@ goog.i18n.CharPickerData.MSG_CP_SORA_SOMPENG = goog.getMsg('Sora Sompeng');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_TAMIL = goog.getMsg('Tamil');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1375,7 +1225,6 @@ goog.i18n.CharPickerData.MSG_CP_TAMIL = goog.getMsg('Tamil');
  */
 goog.i18n.CharPickerData.MSG_CP_TELUGU = goog.getMsg('Telugu');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1385,7 +1234,6 @@ goog.i18n.CharPickerData.MSG_CP_TELUGU = goog.getMsg('Telugu');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_THAANA = goog.getMsg('Thaana');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1397,7 +1245,6 @@ goog.i18n.CharPickerData.MSG_CP_THAANA = goog.getMsg('Thaana');
  */
 goog.i18n.CharPickerData.MSG_CP_TIBETAN = goog.getMsg('Tibetan');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1407,7 +1254,6 @@ goog.i18n.CharPickerData.MSG_CP_TIBETAN = goog.getMsg('Tibetan');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_BRAHMI = goog.getMsg('Brahmi');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1419,7 +1265,6 @@ goog.i18n.CharPickerData.MSG_CP_BRAHMI = goog.getMsg('Brahmi');
  */
 goog.i18n.CharPickerData.MSG_CP_KAITHI = goog.getMsg('Kaithi');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1429,7 +1274,6 @@ goog.i18n.CharPickerData.MSG_CP_KAITHI = goog.getMsg('Kaithi');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_KHAROSHTHI = goog.getMsg('Kharoshthi');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1441,7 +1285,6 @@ goog.i18n.CharPickerData.MSG_CP_KHAROSHTHI = goog.getMsg('Kharoshthi');
  */
 goog.i18n.CharPickerData.MSG_CP_SHARADA = goog.getMsg('Sharada');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1451,7 +1294,6 @@ goog.i18n.CharPickerData.MSG_CP_SHARADA = goog.getMsg('Sharada');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_SYLOTI_NAGRI = goog.getMsg('Syloti Nagri');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1463,7 +1305,6 @@ goog.i18n.CharPickerData.MSG_CP_SYLOTI_NAGRI = goog.getMsg('Syloti Nagri');
  */
 goog.i18n.CharPickerData.MSG_CP_TAKRI = goog.getMsg('Takri');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1472,9 +1313,7 @@ goog.i18n.CharPickerData.MSG_CP_TAKRI = goog.getMsg('Takri');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_SOUTHEAST_ASIAN_SCRIPTS =
-    goog.getMsg('Southeast Asian Scripts');
-
+goog.i18n.CharPickerData.MSG_CP_SOUTHEAST_ASIAN_SCRIPTS = goog.getMsg('Southeast Asian Scripts');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1486,7 +1325,6 @@ goog.i18n.CharPickerData.MSG_CP_SOUTHEAST_ASIAN_SCRIPTS =
  */
 goog.i18n.CharPickerData.MSG_CP_BALINESE = goog.getMsg('Balinese');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1496,7 +1334,6 @@ goog.i18n.CharPickerData.MSG_CP_BALINESE = goog.getMsg('Balinese');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_BATAK = goog.getMsg('Batak');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1508,7 +1345,6 @@ goog.i18n.CharPickerData.MSG_CP_BATAK = goog.getMsg('Batak');
  */
 goog.i18n.CharPickerData.MSG_CP_CHAM = goog.getMsg('Cham');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1518,7 +1354,6 @@ goog.i18n.CharPickerData.MSG_CP_CHAM = goog.getMsg('Cham');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_JAVANESE = goog.getMsg('Javanese');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1530,7 +1365,6 @@ goog.i18n.CharPickerData.MSG_CP_JAVANESE = goog.getMsg('Javanese');
  */
 goog.i18n.CharPickerData.MSG_CP_KAYAH_LI = goog.getMsg('Kayah Li');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1540,7 +1374,6 @@ goog.i18n.CharPickerData.MSG_CP_KAYAH_LI = goog.getMsg('Kayah Li');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_KHMER = goog.getMsg('Khmer');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1552,7 +1385,6 @@ goog.i18n.CharPickerData.MSG_CP_KHMER = goog.getMsg('Khmer');
  */
 goog.i18n.CharPickerData.MSG_CP_LAO = goog.getMsg('Lao');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1562,7 +1394,6 @@ goog.i18n.CharPickerData.MSG_CP_LAO = goog.getMsg('Lao');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_MYANMAR = goog.getMsg('Myanmar');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1574,7 +1405,6 @@ goog.i18n.CharPickerData.MSG_CP_MYANMAR = goog.getMsg('Myanmar');
  */
 goog.i18n.CharPickerData.MSG_CP_NEW_TAI_LUE = goog.getMsg('New Tai Lue');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1584,7 +1414,6 @@ goog.i18n.CharPickerData.MSG_CP_NEW_TAI_LUE = goog.getMsg('New Tai Lue');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_TAI_LE = goog.getMsg('Tai Le');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1596,7 +1425,6 @@ goog.i18n.CharPickerData.MSG_CP_TAI_LE = goog.getMsg('Tai Le');
  */
 goog.i18n.CharPickerData.MSG_CP_TAI_THAM = goog.getMsg('Tai Tham');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1606,7 +1434,6 @@ goog.i18n.CharPickerData.MSG_CP_TAI_THAM = goog.getMsg('Tai Tham');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_TAI_VIET = goog.getMsg('Tai Viet');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1618,7 +1445,6 @@ goog.i18n.CharPickerData.MSG_CP_TAI_VIET = goog.getMsg('Tai Viet');
  */
 goog.i18n.CharPickerData.MSG_CP_THAI = goog.getMsg('Thai');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1628,7 +1454,6 @@ goog.i18n.CharPickerData.MSG_CP_THAI = goog.getMsg('Thai');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_BUGINESE = goog.getMsg('Buginese');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1640,7 +1465,6 @@ goog.i18n.CharPickerData.MSG_CP_BUGINESE = goog.getMsg('Buginese');
  */
 goog.i18n.CharPickerData.MSG_CP_BUHID = goog.getMsg('Buhid');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1650,7 +1474,6 @@ goog.i18n.CharPickerData.MSG_CP_BUHID = goog.getMsg('Buhid');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_HANUNOO = goog.getMsg('Hanunoo');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1662,7 +1485,6 @@ goog.i18n.CharPickerData.MSG_CP_HANUNOO = goog.getMsg('Hanunoo');
  */
 goog.i18n.CharPickerData.MSG_CP_REJANG = goog.getMsg('Rejang');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1672,7 +1494,6 @@ goog.i18n.CharPickerData.MSG_CP_REJANG = goog.getMsg('Rejang');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_SUNDANESE = goog.getMsg('Sundanese');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1684,7 +1505,6 @@ goog.i18n.CharPickerData.MSG_CP_SUNDANESE = goog.getMsg('Sundanese');
  */
 goog.i18n.CharPickerData.MSG_CP_TAGALOG = goog.getMsg('Tagalog');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1694,7 +1514,6 @@ goog.i18n.CharPickerData.MSG_CP_TAGALOG = goog.getMsg('Tagalog');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_TAGBANWA = goog.getMsg('Tagbanwa');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1706,7 +1525,6 @@ goog.i18n.CharPickerData.MSG_CP_TAGBANWA = goog.getMsg('Tagbanwa');
  */
 goog.i18n.CharPickerData.MSG_CP_HANGUL = goog.getMsg('Hangul');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1715,9 +1533,7 @@ goog.i18n.CharPickerData.MSG_CP_HANGUL = goog.getMsg('Hangul');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_OTHER_EAST_ASIAN_SCRIPTS =
-    goog.getMsg('Other East Asian Scripts');
-
+goog.i18n.CharPickerData.MSG_CP_OTHER_EAST_ASIAN_SCRIPTS = goog.getMsg('Other East Asian Scripts');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1729,7 +1545,6 @@ goog.i18n.CharPickerData.MSG_CP_OTHER_EAST_ASIAN_SCRIPTS =
  */
 goog.i18n.CharPickerData.MSG_CP_BOPOMOFO = goog.getMsg('Bopomofo');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1739,7 +1554,6 @@ goog.i18n.CharPickerData.MSG_CP_BOPOMOFO = goog.getMsg('Bopomofo');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_HIRAGANA = goog.getMsg('Hiragana');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1751,7 +1565,6 @@ goog.i18n.CharPickerData.MSG_CP_HIRAGANA = goog.getMsg('Hiragana');
  */
 goog.i18n.CharPickerData.MSG_CP_KATAKANA = goog.getMsg('Katakana');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1761,7 +1574,6 @@ goog.i18n.CharPickerData.MSG_CP_KATAKANA = goog.getMsg('Katakana');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_LISU = goog.getMsg('Lisu');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1773,7 +1585,6 @@ goog.i18n.CharPickerData.MSG_CP_LISU = goog.getMsg('Lisu');
  */
 goog.i18n.CharPickerData.MSG_CP_MIAO = goog.getMsg('Miao');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1783,7 +1594,6 @@ goog.i18n.CharPickerData.MSG_CP_MIAO = goog.getMsg('Miao');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_MONGOLIAN = goog.getMsg('Mongolian');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1795,7 +1605,6 @@ goog.i18n.CharPickerData.MSG_CP_MONGOLIAN = goog.getMsg('Mongolian');
  */
 goog.i18n.CharPickerData.MSG_CP_OLD_TURKIC = goog.getMsg('Old Turkic');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1805,7 +1614,6 @@ goog.i18n.CharPickerData.MSG_CP_OLD_TURKIC = goog.getMsg('Old Turkic');
  * @type {string}
  */
 goog.i18n.CharPickerData.MSG_CP_PHAGS_PA = goog.getMsg('Phags Pa');
-
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1817,7 +1625,6 @@ goog.i18n.CharPickerData.MSG_CP_PHAGS_PA = goog.getMsg('Phags Pa');
  */
 goog.i18n.CharPickerData.MSG_CP_YI = goog.getMsg('Yi');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1826,9 +1633,7 @@ goog.i18n.CharPickerData.MSG_CP_YI = goog.getMsg('Yi');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_HAN_1_STROKE_RADICALS =
-    goog.getMsg('Han 1-Stroke Radicals');
-
+goog.i18n.CharPickerData.MSG_CP_HAN_1_STROKE_RADICALS = goog.getMsg('Han 1-Stroke Radicals');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1840,6 +1645,15 @@ goog.i18n.CharPickerData.MSG_CP_HAN_1_STROKE_RADICALS =
  */
 goog.i18n.CharPickerData.MSG_CP_LESS_COMMON = goog.getMsg('Less Common');
 
+/**
+ * @desc Name for a symbol or character category. Used in a pull-down list
+ *   shown to a  document editing user trying to insert a special character.
+ *   Newlines are not allowed; translation should be a noun and as consise as
+ *   possible. More details:
+ *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+ * @type {string}
+ */
+goog.i18n.CharPickerData.MSG_CP_HAN_2_STROKE_RADICALS = goog.getMsg('Han 2-Stroke Radicals');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1849,9 +1663,7 @@ goog.i18n.CharPickerData.MSG_CP_LESS_COMMON = goog.getMsg('Less Common');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_HAN_2_STROKE_RADICALS =
-    goog.getMsg('Han 2-Stroke Radicals');
-
+goog.i18n.CharPickerData.MSG_CP_HAN_3_STROKE_RADICALS = goog.getMsg('Han 3-Stroke Radicals');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1861,9 +1673,7 @@ goog.i18n.CharPickerData.MSG_CP_HAN_2_STROKE_RADICALS =
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_HAN_3_STROKE_RADICALS =
-    goog.getMsg('Han 3-Stroke Radicals');
-
+goog.i18n.CharPickerData.MSG_CP_HAN_4_STROKE_RADICALS = goog.getMsg('Han 4-Stroke Radicals');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1873,9 +1683,7 @@ goog.i18n.CharPickerData.MSG_CP_HAN_3_STROKE_RADICALS =
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_HAN_4_STROKE_RADICALS =
-    goog.getMsg('Han 4-Stroke Radicals');
-
+goog.i18n.CharPickerData.MSG_CP_HAN_5_STROKE_RADICALS = goog.getMsg('Han 5-Stroke Radicals');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1885,9 +1693,7 @@ goog.i18n.CharPickerData.MSG_CP_HAN_4_STROKE_RADICALS =
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_HAN_5_STROKE_RADICALS =
-    goog.getMsg('Han 5-Stroke Radicals');
-
+goog.i18n.CharPickerData.MSG_CP_HAN_6_STROKE_RADICALS = goog.getMsg('Han 6-Stroke Radicals');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1897,9 +1703,7 @@ goog.i18n.CharPickerData.MSG_CP_HAN_5_STROKE_RADICALS =
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_HAN_6_STROKE_RADICALS =
-    goog.getMsg('Han 6-Stroke Radicals');
-
+goog.i18n.CharPickerData.MSG_CP_HAN_7_STROKE_RADICALS = goog.getMsg('Han 7-Stroke Radicals');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1909,9 +1713,7 @@ goog.i18n.CharPickerData.MSG_CP_HAN_6_STROKE_RADICALS =
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_HAN_7_STROKE_RADICALS =
-    goog.getMsg('Han 7-Stroke Radicals');
-
+goog.i18n.CharPickerData.MSG_CP_HAN_8_STROKE_RADICALS = goog.getMsg('Han 8-Stroke Radicals');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1921,9 +1723,7 @@ goog.i18n.CharPickerData.MSG_CP_HAN_7_STROKE_RADICALS =
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_HAN_8_STROKE_RADICALS =
-    goog.getMsg('Han 8-Stroke Radicals');
-
+goog.i18n.CharPickerData.MSG_CP_HAN_9_STROKE_RADICALS = goog.getMsg('Han 9-Stroke Radicals');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1933,9 +1733,7 @@ goog.i18n.CharPickerData.MSG_CP_HAN_8_STROKE_RADICALS =
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_HAN_9_STROKE_RADICALS =
-    goog.getMsg('Han 9-Stroke Radicals');
-
+goog.i18n.CharPickerData.MSG_CP_HAN_10_STROKE_RADICALS = goog.getMsg('Han 10-Stroke Radicals');
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1945,21 +1743,9 @@ goog.i18n.CharPickerData.MSG_CP_HAN_9_STROKE_RADICALS =
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_HAN_10_STROKE_RADICALS =
-    goog.getMsg('Han 10-Stroke Radicals');
-
-
-/**
- * @desc Name for a symbol or character category. Used in a pull-down list
- *   shown to a  document editing user trying to insert a special character.
- *   Newlines are not allowed; translation should be a noun and as consise as
- *   possible. More details:
- *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- * @type {string}
- */
-goog.i18n.CharPickerData.MSG_CP_HAN_11_17_STROKE_RADICALS =
-    goog.getMsg('Han 11..17-Stroke Radicals');
-
+goog.i18n.CharPickerData.MSG_CP_HAN_11_17_STROKE_RADICALS = goog.getMsg(
+  'Han 11..17-Stroke Radicals'
+);
 
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
@@ -1971,7 +1757,6 @@ goog.i18n.CharPickerData.MSG_CP_HAN_11_17_STROKE_RADICALS =
  */
 goog.i18n.CharPickerData.MSG_CP_HAN_OTHER = goog.getMsg('Han - Other');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1982,7 +1767,6 @@ goog.i18n.CharPickerData.MSG_CP_HAN_OTHER = goog.getMsg('Han - Other');
  */
 goog.i18n.CharPickerData.MSG_CP_CJK_STROKES = goog.getMsg('CJK Strokes');
 
-
 /**
  * @desc Name for a symbol or character category. Used in a pull-down list
  *   shown to a  document editing user trying to insert a special character.
@@ -1991,9 +1775,7 @@ goog.i18n.CharPickerData.MSG_CP_CJK_STROKES = goog.getMsg('CJK Strokes');
  *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
  * @type {string}
  */
-goog.i18n.CharPickerData.MSG_CP_IDEOGRAPHIC_DESCRIPTION =
-    goog.getMsg('Ideographic Description');
-
+goog.i18n.CharPickerData.MSG_CP_IDEOGRAPHIC_DESCRIPTION = goog.getMsg('Ideographic Description');
 
 /**
  * Top catagory names of character organization.
@@ -2026,9 +1808,8 @@ goog.i18n.CharPickerData.prototype.categories = [
   goog.i18n.CharPickerData.MSG_CP_HAN_9_STROKE_RADICALS,
   goog.i18n.CharPickerData.MSG_CP_HAN_10_STROKE_RADICALS,
   goog.i18n.CharPickerData.MSG_CP_HAN_11_17_STROKE_RADICALS,
-  goog.i18n.CharPickerData.MSG_CP_HAN_OTHER
+  goog.i18n.CharPickerData.MSG_CP_HAN_OTHER,
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -2059,9 +1840,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_SYMBOL = [
   goog.i18n.CharPickerData.MSG_CP_WEATHER_AND_ASTROLOGICAL,
   goog.i18n.CharPickerData.MSG_CP_YIJING_TAI_XUAN_JING,
   goog.i18n.CharPickerData.MSG_CP_HISTORIC,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -2093,9 +1873,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_SYMBOL = [
   'Q4A0F1mv3}1v8,uUe^zX171',
   'w8A0sf7c2WA0#5A>E1-7',
   'I{)0%4!P7|%4}3A,$0dA',
-  '(PD0M(ZU16H1-3e!u6'
+  '(PD0M(ZU16H1-3e!u6',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -2112,9 +1891,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_EMOJI = [
   goog.i18n.CharPickerData.MSG_CP_WEATHER_SCENES_AND_ZODIAC_SIGNS,
   goog.i18n.CharPickerData.MSG_CP_ENCLOSED,
   goog.i18n.CharPickerData.MSG_CP_MARKS,
-  goog.i18n.CharPickerData.MSG_CP_SYMBOLS
+  goog.i18n.CharPickerData.MSG_CP_SYMBOLS,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -2132,9 +1910,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_EMOJI = [
   'Q4A0F1mv4|HAUe98(rX1@2]k',
   'Y#90;v308ICU1d2W-3H9EH1-3e!u6',
   ';5A09M9188:48WE8n5EH2',
-  'Y%C0(wV1P7N3[EP1M'
+  'Y%C0(wV1P7N3[EP1M',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -2148,9 +1925,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_PUNCTUATION = [
   goog.i18n.CharPickerData.MSG_CP_OTHER,
   goog.i18n.CharPickerData.MSG_CP_PAIRED,
   goog.i18n.CharPickerData.MSG_CP_HISTORIC,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -2165,9 +1941,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_PUNCTUATION = [
   '(s70:<.MOEmEGGG8OEms88Iu3068G6n1!',
   'n36f48v2894X1;P80sP26[6]46P16nvMPF6f3c1^F1H76:2,va@1%5M]26;7106G,fh,Gs2Ms06nPcXF6f48v288686',
   'gm808kQT30MnN72v1U8U(%t0Eb(t0',
-  'Ig80e91E91686W8$EH1X36P162pw0,12-1G|8F18W86nDE8c8M[6O6X2E8f2886'
+  'Ig80e91E91686W8$EH1X36P162pw0,12-1G|8F18W86nDE8c8M[6O6X2E8f2886',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -2181,9 +1956,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_NUMBER = [
   goog.i18n.CharPickerData.MSG_CP_FRACTIONS_RELATED,
   goog.i18n.CharPickerData.MSG_CP_OTHER,
   goog.i18n.CharPickerData.MSG_CP_HISTORIC,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -2198,9 +1972,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_NUMBER = [
   '9G6eGEoX80Ocm,1IV1%3',
   'ot20cHYc]AE9Ck]Lcvd,^910#1oF10,vh2}1073GMQ:30P2!P1EHVMI2V0,9Ts8^aP0sHn6%JsH2s](#2fg#1wnp0l1;-70?',
   'o560EgM10,Yk10EGMo230w6u0}39175n1:aMv2$HCUXI,^E10cnQso,60@8',
-  'w.80-2o?30EHVMoSU1?b}#0,'
+  'w.80-2o?30EHVMoSU1?b}#0,',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -2213,9 +1986,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_FORMAT_WHITESPACE = [
   goog.i18n.CharPickerData.MSG_CP_VARIATION_SELECTOR,
   goog.i18n.CharPickerData.MSG_CP_WHITESPACE,
   goog.i18n.CharPickerData.MSG_CP_HISTORIC,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -2229,9 +2001,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_FORMAT_WHITESPACE = [
   ']=oY506%7E^$zA#LDF1AV1',
   'fEIH602920,H3P4wB40;#s0',
   'w-10f4^#206IV10(970ols0',
-  'fEAQ80?P3P4wB40^@s0'
+  'fEAQ80?P3P4wB40^@s0',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -2244,9 +2015,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_MODIFIER = [
   goog.i18n.CharPickerData.MSG_CP_NONSPACING,
   goog.i18n.CharPickerData.MSG_CP_SPACING,
   goog.i18n.CharPickerData.MSG_CP_HISTORIC,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -2260,9 +2030,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_MODIFIER = [
   '%+#5GG,8t1(#60E8718kWm:I,H46v%71WO|oWQ1En1sGk%2MT_t0k',
   'f!!.M%3M91gz30(C30f1695E8?8l18d2X4N32D40XH',
   '%?71HP62x60M[F2926^Py0',
-  'n<686'
+  'n<686',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -2278,9 +2047,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_LATIN = [
   goog.i18n.CharPickerData.MSG_CP_PHONETICS_IPA,
   goog.i18n.CharPickerData.MSG_CP_PHONETICS_X_IPA,
   goog.i18n.CharPickerData.MSG_CP_HISTORIC,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -2297,9 +2065,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_LATIN = [
   '%8N2%96$uH4H3u:9M%CF28718M868UO?86G68E8868GHOeP1I>70EO6LF80E8GW11OO6918Of26868886OV3WU%2W',
   '1uH1WGeE11G6GO8G868s',
   'HZ6uP268691s15P36Al7068H8cHw!Y?20UwdW0#58s:BUbvh0d1g{A06AZW0sH2697',
-  'XFX1:A6116v5H6!P3E(o706vtM8E8?86GUGE8O8M8E86W8.U12-2Qd40HBMvE,et8:2Qtq0kg710N2mN2bV)0mWOXnc'
+  'XFX1:A6116v5H6!P3E(o706vtM8E8?86GUGE8O8M8E86W8.U12-2Qd40HBMvE,et8:2Qtq0kg710N2mN2bV)0mWOXnc',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -2312,34 +2079,20 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_OTHER_EUROPEAN_SCRIPTS = [
   goog.i18n.CharPickerData.MSG_CP_CYRILLIC,
   goog.i18n.CharPickerData.MSG_CP_GEORGIAN,
   goog.i18n.CharPickerData.MSG_CP_GREEK,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_CYPRIOT,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_CYRILLIC,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_GEORGIAN,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_GLAGOLITIC,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_GOTHIC,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_GREEK,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_LINEAR_B,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_OGHAM,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_OLD_ITALIC,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_RUNIC,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_SHAVIAN,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_ARMENIAN,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_GREEK
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_CYPRIOT,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_CYRILLIC,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_GEORGIAN,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_GLAGOLITIC,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_GOTHIC,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_GREEK,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_LINEAR_B,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_OGHAM,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_OLD_ITALIC,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_RUNIC,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_SHAVIAN,
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' + goog.i18n.CharPickerData.MSG_CP_ARMENIAN,
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' + goog.i18n.CharPickerData.MSG_CP_GREEK,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -2365,9 +2118,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_OTHER_EUROPEAN_SCRIPTS = [
   'g|50N7',
   'A;*0N4',
   'oe10g^$0U',
-  'XG%$$%6Ef26OoN70888888n5G[8uuuuH189Rr:706we708E11EH1EH1EH16'
+  'XG%$$%6Ef26OoN70888888n5G[8uuuuH189Rr:706we708E11EH1EH1EH16',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -2378,10 +2130,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_OTHER_EUROPEAN_SCRIPTS = [
 goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_AMERICAN_SCRIPTS = [
   goog.i18n.CharPickerData.MSG_CP_CANADIAN_ABORIGINAL,
   goog.i18n.CharPickerData.MSG_CP_CHEROKEE,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_DESERET
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_DESERET,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -2390,12 +2140,7 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_AMERICAN_SCRIPTS = [
  * scheme is described in `goog.i18n.CharListDecompressor`.
  * @type {!Array<string>}
  */
-goog.i18n.CharPickerData.CHARLIST_OF_AMERICAN_SCRIPTS = [
-  'YP507w]oN6',
-  'wG50t7',
-  ';(*0F7'
-];
-
+goog.i18n.CharPickerData.CHARLIST_OF_AMERICAN_SCRIPTS = ['YP507w]oN6', 'wG50t7', ';(*0F7'];
 
 /**
  * Names of subcategories. Each message this array is the
@@ -2411,16 +2156,11 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_AFRICAN_SCRIPTS = [
   goog.i18n.CharPickerData.MSG_CP_NKO,
   goog.i18n.CharPickerData.MSG_CP_TIFINAGH,
   goog.i18n.CharPickerData.MSG_CP_VAI,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_BAMUM,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_COPTIC,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_NKO,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_OSMANYA
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_BAMUM,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_COPTIC,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_NKO,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_OSMANYA,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -2440,9 +2180,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_AFRICAN_SCRIPTS = [
   '(5i0F7GcY4p0tpzup06',
   'Q210F12$A0}9O6eka1E',
   '^720E',
-  'g?*0t2G,'
+  'g?*0t2G,',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -2460,34 +2199,20 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_MIDDLE_EASTERN_SCRIPTS = [
   goog.i18n.CharPickerData.MSG_CP_OLD_SOUTH_ARABIAN,
   goog.i18n.CharPickerData.MSG_CP_SAMARITAN,
   goog.i18n.CharPickerData.MSG_CP_SYRIAC,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_ARABIC,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_AVESTAN,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_CARIAN,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_CUNEIFORM,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_HEBREW,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_LYCIAN,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_LYDIAN,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_OLD_PERSIAN,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_PHOENICIAN,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_SYRIAC,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_UGARITIC,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_ARABIC,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_HEBREW
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_ARABIC,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_AVESTAN,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_CARIAN,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_CUNEIFORM,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_HEBREW,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_LYCIAN,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_LYDIAN,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_OLD_PERSIAN,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_PHOENICIAN,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_SYRIAC,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_UGARITIC,
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' + goog.i18n.CharPickerData.MSG_CP_ARABIC,
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' + goog.i18n.CharPickerData.MSG_CP_HEBREW,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -2518,9 +2243,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_MIDDLE_EASTERN_SCRIPTS = [
   ';;10F1868t2v2Eq5%2V2',
   'It*0t28',
   'I!10MA^e1M8V2868G8,8M88mW888E868G8888868GM8k8M8M88,8d1eE8U8d1{W$0-813@Wv1#5G-4v371fAE88FC',
-  '2a(08.F18U886868!'
+  '2a(08.F18U886868!',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -2549,32 +2273,21 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_SOUTH_ASIAN_SCRIPTS = [
   goog.i18n.CharPickerData.MSG_CP_THAANA,
   goog.i18n.CharPickerData.MSG_CP_TIBETAN,
   goog.i18n.CharPickerData.MSG_CP_HISTORIC,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_BRAHMI,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_KAITHI,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_KANNADA,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_KHAROSHTHI,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_SHARADA,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_SYLOTI_NAGRI,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_TAKRI,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_BENGALI,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_DEVANAGARI,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_GURMUKHI,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_ORIYA,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_TIBETAN
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_BRAHMI,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_KAITHI,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_KANNADA,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_KHAROSHTHI,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_SHARADA,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_SYLOTI_NAGRI,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_TAKRI,
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' + goog.i18n.CharPickerData.MSG_CP_BENGALI,
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY +
+    ' - ' +
+    goog.i18n.CharPickerData.MSG_CP_DEVANAGARI,
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' + goog.i18n.CharPickerData.MSG_CP_GURMUKHI,
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' + goog.i18n.CharPickerData.MSG_CP_ORIYA,
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' + goog.i18n.CharPickerData.MSG_CP_TIBETAN,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -2615,9 +2328,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_SOUTH_ASIAN_SCRIPTS = [
   'Yf20s',
   'Qz20G93EG',
   'Q0306',
-  'A|30]4.WWW91we#0M5e#0868$n1.WWW91'
+  'A|30]4.WWW91we#0M5e#0868$n1.WWW91',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -2639,24 +2351,15 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_SOUTHEAST_ASIAN_SCRIPTS = [
   goog.i18n.CharPickerData.MSG_CP_TAI_THAM,
   goog.i18n.CharPickerData.MSG_CP_TAI_VIET,
   goog.i18n.CharPickerData.MSG_CP_THAI,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_BUGINESE,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_BUHID,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_HANUNOO,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_KHMER,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_REJANG,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_SUNDANESE,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_TAGALOG,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_TAGBANWA
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_BUGINESE,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_BUHID,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_HANUNOO,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_KHMER,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_REJANG,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_SUNDANESE,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_TAGALOG,
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_TAGBANWA,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -2686,9 +2389,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_SOUTHEAST_ASIAN_SCRIPTS = [
   'Y%i0}1H2C271',
   'IO70t2H1l1PNsyTE%271',
   'I760718MH36K3E',
-  '2C606%3718E86'
+  '2C606%3718E86',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -2714,9 +2416,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_HANGUL = [
   '\u1112',
   '\u1159',
   goog.i18n.CharPickerData.MSG_CP_HISTORIC,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -2743,9 +2444,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_HANGUL = [
   'I.i0(qB0Vr',
   'Q.i0',
   'oh40FN^L80d8',
-  'oJD0#2]5#2IGs0MX5#2OcGcGcGE'
+  'oJD0#2]5#2IGs0MX5#2OcGcGcGE',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -2763,20 +2463,13 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_OTHER_EAST_ASIAN_SCRIPTS = [
   goog.i18n.CharPickerData.MSG_CP_OLD_TURKIC,
   goog.i18n.CharPickerData.MSG_CP_PHAGS_PA,
   goog.i18n.CharPickerData.MSG_CP_YI,
-  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_PHAGS_PA,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_BOPOMOFO,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_HIRAGANA,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_KATAKANA,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_PHAGS_PA,
-  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' +
-      goog.i18n.CharPickerData.MSG_CP_YI
+  goog.i18n.CharPickerData.MSG_CP_HISTORIC + ' - ' + goog.i18n.CharPickerData.MSG_CP_PHAGS_PA,
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' + goog.i18n.CharPickerData.MSG_CP_BOPOMOFO,
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' + goog.i18n.CharPickerData.MSG_CP_HIRAGANA,
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' + goog.i18n.CharPickerData.MSG_CP_KATAKANA,
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' + goog.i18n.CharPickerData.MSG_CP_PHAGS_PA,
+  goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY + ' - ' + goog.i18n.CharPickerData.MSG_CP_YI,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -2800,9 +2493,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_OTHER_EAST_ASIAN_SCRIPTS = [
   '^%C0f91MF1^oU1bE$0Ujys06',
   '^%C0HIPDF1vRF48@7g`r0N18}3r%s06',
   'Ql)0M',
-  'Ql)0M'
+  'Ql)0M',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -2818,9 +2510,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_HAN_1_STROKE_RADICALS = [
   '\u4E59',
   '\u4E85',
   goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY,
-  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON
+  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -2837,9 +2528,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_HAN_1_STROKE_RADICALS = [
   'Q#K0sG}2YfL0',
   'Q)K0k',
   '(bC0c]R]q8O8f2EgqB2E5Cl1]116$f7fG',
-  'A(D0t3(rX1V288k8!8k8868|8l188U8718M8N48E88GE8#48MG@3oA20]G2P60;QB0]9^(20^7L0t2'
+  'A(D0t3(rX1V288k8!8k8868|8l188U8718M8N48E88GE8#48MG@3oA20]G2P60;QB0]9^(20^7L0t2',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -2873,9 +2563,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_HAN_2_STROKE_RADICALS = [
   '\u53C8',
   '\u8BA0',
   goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY,
-  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON
+  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -2910,9 +2599,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_HAN_2_STROKE_RADICALS = [
   '(DM0V2IS10',
   'Y]a0tD',
   'QcC0}1%P8]qG688P1W6G6mO8^pB2F28d292%B6f6%A15P1ODrl1f1E9386H18e11Ee[n16[91e11.G$H1n18611$X2cX5k',
-  ';+D0tN8l49H2i40kAsS1uH3v1H788]9@18}2872Gk8E8|8s88E8G-18778@28lF8-6G,8@48#486GF28d28t18t48N3874868-78F58V18}28F48l48lG868d18N18#18!8FN8@98FP8s8}F8N28,8VG8F18tF8}2(s30%U;@101bI-50QE60^{40;X60IhB0}Oo_20d3j%S1'
+  ';+D0tN8l49H2i40kAsS1uH3v1H788]9@18}2872Gk8E8|8s88E8G-18778@28lF8-6G,8@48#486GF28d28t18t48N3874868-78F58V18}28F48l48lG868d18N18#18!8FN8@98FP8s8}F8N28,8VG8F18tF8}2(s30%U;@101bI-50QE60^{40;X60IhB0}Oo_20d3j%S1',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -2958,9 +2646,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_HAN_3_STROKE_RADICALS = [
   '\u9963',
   '\u9A6C',
   goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY,
-  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON
+  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -3007,9 +2694,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_HAN_3_STROKE_RADICALS = [
   'wne0l4',
   '(:e0V5',
   'YeC0#2P=11Wm11686W(uB2}18l58E8EGMP8:5]6]9Lvl1G86:1mP26m6%1me%1E11X1OmEf1692Ge6H1%1Gm8GX3kX4[F1',
-  'YAE0@G8V(I!20|I!10E:5fX18EwYR1%1u8Gn3v11B1693P2uO91$8OH2H713vMXG%1%K:6]SG13%2H@vX93tU8F587w8}V8-68tA8dO8db8V38758V28t58F18k8#C8t!8V78V98tU8lT8de8}}V98lB8}B8#387987H8#38NJ8@78U8N18U8kgE10(L10v_X4ngA6109Nn2v2Ac101O1}HSQ*1094^.50N2:BP6Ay10Q<40]5;s20AE20V1H9^j20l1%g-3YY20YU10}zAv10@2;310F1]E72X3}1DeT18'
+  'YAE0@G8V(I!20|I!10E:5fX18EwYR1%1u8Gn3v11B1693P2uO91$8OH2H713vMXG%1%K:6]SG13%2H@vX93tU8F587w8}V8-68tA8dO8db8V38758V28t58F18k8#C8t!8V78V98tU8lT8de8}}V98lB8}B8#387987H8#38NJ8@78U8N18U8kgE10(L10v_X4ngA6109Nn2v2Ac101O1}HSQ*1094^.50N2:BP6Ay10Q<40]5;s20AE20V1H9^j20l1%g-3YY20YU10}zAv10@2;310F1]E72X3}1DeT18',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -3058,9 +2744,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_HAN_4_STROKE_RADICALS = [
   '\u97E6',
   '\u98CE',
   goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY,
-  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON
+  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -3110,9 +2795,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_HAN_4_STROKE_RADICALS = [
   '2Fe0k',
   'Aae071',
   '^SC0HE}2::MGEG.OovB2:8e#4G6G-28}2871]7$65ml1G$mEm6OGOEWE%1eE916Ou6m868W$6m6GU11OE8W91WEWGMmOG6eM$8e6W6mG611Of371136P2}18EH4M',
-  '^aE0]uFq8#@^U20U%LEwSS1f7HLfkX2vCH4vM(a10gv10IO10Yg30Hz}}VE8to8-w8@J8-28tK8td8N48FC8E8l68cGNM8V#8#98lK8-A8-A8|8728E8l287N8}}#E8@N8V%8tC88V88-88lC8N18@48t38l`;Y20(>101dYk201)XQ6nUv^Xao940kAi10cv3QF40UHdXG|fe8o^40}}l3YD10c]Ak]7@19YcX4UjUT16'
+  '^aE0]uFq8#@^U20U%LEwSS1f7HLfkX2vCH4vM(a10gv10IO10Yg30Hz}}VE8to8-w8@J8-28tK8td8N48FC8E8l68cGNM8V#8#98lK8-A8-A8|8728E8l287N8}}#E8@N8V%8tC88V88-88lC8N18@48t38l`;Y20(>101dYk201)XQ6nUv^Xao940kAi10cv3QF40UHdXG|fe8o^40}}l3YD10c]Ak]7@19YcX4UjUT16',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -3149,9 +2833,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_HAN_5_STROKE_RADICALS = [
   '\u9E1F',
   '\u9F99',
   goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY,
-  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON
+  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -3189,9 +2872,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_HAN_5_STROKE_RADICALS = [
   ';-f0#7',
   'IIg0E',
   'QkC0}1n.O86n1^?B2V18V3{gl1$f2u6[P1[68$$P1P16926u[[E91$6.u:2UH4|f6O|11X1[E',
-  'AoG0@:;12071n^kXD6I4R1:4WnB9d[15:49lHkX.1pP5Hw]nf]^H20()109d;u101@]2%KY!10:9f.;(307k8dL8}38@88-98?8V?WdA8}S87Q8748l!8-T8#d8d28lI8FK8#12@30nQI,10w^402B20F22,50-1AQ30}b(F10V49f}3]3'
+  'AoG0@:;12071n^kXD6I4R1:4WnB9d[15:49lHkX.1pP5Hw]nf]^H20()109d;u101@]2%KY!10:9f.;(307k8dL8}38@88-98?8V?WdA8}S87Q8748l!8-T8#d8d28lI8FK8#12@30nQI,10w^402B20F22,50-1AQ30}b(F10V49f}3]3',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -3232,9 +2914,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_HAN_6_STROKE_RADICALS = [
   '\u9875',
   '\u9F50',
   goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY,
-  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON
+  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -3276,9 +2957,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_HAN_6_STROKE_RADICALS = [
   '2Se0l4',
   'oBg06',
   'YmC0l2onC2Wn56XC-28U86G68M8@4jql1MemO68691Em6e6.6GO6n1Oem6P268me$6n19112Eue86WWW:168:4?v6G?%2',
-  'o5E0oq10;%10VE8VH91l;P^w0S1Q0101Io3102E20XZoi10n>2;10XUPN18e]1;n30v6m6(L40vHvCX1:8;g10A{30HM}}N@X2#B8F68@D8VI8@(8NQG#L8#68t18tO8#v8Na8##8VC8#^8tt(j10wB30YE30E(870NF13#hfxd1>RT18'
+  'o5E0oq10;%10VE8VH91l;P^w0S1Q0101Io3102E20XZoi10n>2;10XUPN18e]1;n30v6m6(L40vHvCX1:8;g10A{30HM}}N@X2#B8F68@D8VI8@(8NQG#L8#68t18tO8#v8Na8##8VC8#^8tt(j10wB30YE30E(870NF13#hfxd1>RT18',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -3310,9 +2990,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_HAN_7_STROKE_RADICALS = [
   '\u91CC',
   '\u9F9F',
   goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY,
-  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON
+  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -3345,9 +3024,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_HAN_7_STROKE_RADICALS = [
   '2nc0U',
   '(Ig0',
   'oaC0XE#1X*en1;}B2n5F18E8!jul186X1ev1[.mn1Gn18116P1[8m]111%1n1v1[G92G6un4kX7|v1',
-  'QAE0gj40lFu-8etLO#D^DT1PL9,AY30v9]_A^60Yl10;N50Az10oi10(I80F`8M8V58Nh8lCu}}}hml3Glb8N@;820o{80|m-3n3V3u-712#9nwv3+zT16'
+  'QAE0gj40lFu-8etLO#D^DT1PL9,AY30v9]_A^60Yl10;N50Az10oi10(I80F`8M8V58Nh8lCu}}}hml3Glb8N@;820o{80|m-3n3V3u-712#9nwv3+zT16',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -3368,9 +3046,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_HAN_8_STROKE_RADICALS = [
   '\u9C7C',
   '\u9F7F',
   goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY,
-  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON
+  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -3392,9 +3069,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_HAN_8_STROKE_RADICALS = [
   '(Xf0d9',
   ';Fg0F1',
   ';qC0!:(IvB2vf71865vl194m.uu14:1]1EWH191$H1m92v1v195X8M',
-  'QTJ0l8H1F4OV68-5:ssQMR1AQ50Q>U0#88@yP2dcf1798N#8FJQn30@1^;106;y30l8f4@1P1N61OV39B!DzT1E'
+  'QTJ0l8H1F4OV68-5:ssQMR1AQ50Q>U0#88@yP2dcf1798N#8FJQn30@1^;106;y30l8f4@1P1N61OV39B!DzT1E',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -3415,9 +3091,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_HAN_9_STROKE_RADICALS = [
   '\u9996',
   '\u9999',
   goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY,
-  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON
+  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -3439,9 +3114,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_HAN_9_STROKE_RADICALS = [
   'Qse0E',
   'ose0t1',
   'wrC0?f)(AC2N1{gl1f298Ef56n8M',
-  'ooH0g520-Q8!IHS1:_P32-30ARC0YA40](^b70gd807Y8lBelaW728NG91}Zv1t288-4Iz70d1mt1n1|el1H2N1'
+  'ooH0g520-Q8!IHS1:_P32-30ARC0YA40](^b70gd807Y8lBelaW728NG91}Zv1t288-4Iz70d1mt1n1|el1H2N1',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -3459,9 +3133,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_HAN_10_STROKE_RADICALS = [
   '\u9B32',
   '\u9B3C',
   goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY,
-  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON
+  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -3480,9 +3153,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_HAN_10_STROKE_RADICALS = [
   '(3f0,',
   'w4f0t2',
   'wsC0s^?C2Ubvl1:9nT',
-  '^_J077O#9wM(1gQ10#Y]3};gl60@192l2'
+  '^_J077O#9wM(1gQ10#Y]3};gl60@192l2',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -3514,9 +3186,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_HAN_11_17_STROKE_RADICALS = [
   '\u9F9C',
   '\u9FA0',
   goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY,
-  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON
+  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -3549,9 +3220,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_HAN_11_17_STROKE_RADICALS = [
   'gIg0E',
   ';Ig0c',
   'YtC0#12hC2fYt1>yl1692H26ef66P5946H5nE.6',
-  'IDK0t9$@9uNDGkoOR1fk^x102.20nDQf301=^N50;g202j30M^>90od80g320to12t!]1-H8F[GN6284075f3@394E8l2.G'
+  'IDK0t9$@9uNDGkoOR1fk^x102.20nDQf301=^N50;g202j30M^>90od80g320to12t!]1-H8F[GN6284075f3@394E8l2.G',
 ];
-
 
 /**
  * Names of subcategories. Each message this array is the
@@ -3564,9 +3234,8 @@ goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_HAN_OTHER = [
   goog.i18n.CharPickerData.MSG_CP_IDEOGRAPHIC_DESCRIPTION,
   goog.i18n.CharPickerData.MSG_CP_OTHER,
   goog.i18n.CharPickerData.MSG_CP_COMPATIBILITY,
-  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON
+  goog.i18n.CharPickerData.MSG_CP_LESS_COMMON,
 ];
-
 
 /**
  * List of characters in base88 encoding scheme. Each base88 encoded
@@ -3580,9 +3249,8 @@ goog.i18n.CharPickerData.CHARLIST_OF_HAN_OTHER = [
   'oxC0|',
   'AzC0M8|8}1mmWM2iT0o|O065ms0P3MH1',
   'gMD0F3PB|%CF2[U%8#2Q+r0M',
-  'Q=727K'
+  'Q=727K',
 ];
-
 
 /**
  * Subcategory names. Each subarray in this array is a list of subcategory
@@ -3617,9 +3285,8 @@ goog.i18n.CharPickerData.prototype.subcategories = [
   goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_HAN_9_STROKE_RADICALS,
   goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_HAN_10_STROKE_RADICALS,
   goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_HAN_11_17_STROKE_RADICALS,
-  goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_HAN_OTHER
+  goog.i18n.CharPickerData.SUBCATEGORY_NAMES_OF_HAN_OTHER,
 ];
-
 
 /**
  * Character lists in base88 encoding scheme. Each subarray is a list of
@@ -3655,5 +3322,5 @@ goog.i18n.CharPickerData.prototype.charList = [
   goog.i18n.CharPickerData.CHARLIST_OF_HAN_9_STROKE_RADICALS,
   goog.i18n.CharPickerData.CHARLIST_OF_HAN_10_STROKE_RADICALS,
   goog.i18n.CharPickerData.CHARLIST_OF_HAN_11_17_STROKE_RADICALS,
-  goog.i18n.CharPickerData.CHARLIST_OF_HAN_OTHER
+  goog.i18n.CharPickerData.CHARLIST_OF_HAN_OTHER,
 ];

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.structs.CollectionTest');
-goog.setTestOnly();
 
 const AvlTree = goog.require('goog.structs.AvlTree');
 const StructsSet = goog.require('goog.structs.Set');

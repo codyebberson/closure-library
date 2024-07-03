@@ -9,7 +9,6 @@ goog.provide('goog.events.MouseAsMouseEventType');
 goog.require('goog.events.EventType');
 goog.require('goog.events.MouseEvents');
 
-
 /**
  * An alias for `goog.events.EventType.MOUSE*` event types that continue to use
  * mouse events.
@@ -23,5 +22,5 @@ goog.events.MouseAsMouseEventType = {
   MOUSEOVER: goog.events.EventType.MOUSEOVER,
   MOUSEOUT: goog.events.EventType.MOUSEOUT,
   MOUSEENTER: goog.events.EventType.MOUSEENTER,
-  MOUSELEAVE: goog.events.EventType.MOUSELEAVE
+  MOUSELEAVE: goog.events.EventType.MOUSELEAVE,
 };

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.ui.styleTest');
-goog.setTestOnly();
 
 const dom = goog.require('goog.dom');
 const style = goog.require('goog.testing.ui.style');
@@ -32,7 +31,6 @@ style.writeReferenceFrame(refPath);
 // node somewhere in the DOM structure.
 
 testSuite({
-
   testCorrect() {
     const el = dom.getFirstElementChild(dom.getElement('correct'));
     style.assertStructureMatchesReference(el, 'reference');

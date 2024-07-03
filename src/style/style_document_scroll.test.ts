@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.style.style_document_scroll_test');
-goog.setTestOnly();
 
 const dom = goog.require('goog.dom');
 const style = goog.require('goog.style');
@@ -31,41 +30,57 @@ testSuite({
 
   testDocumentScrollWithZeroedBodyProperties() {
     assertRoughlyEquals(
-        200, style.getContainerOffsetToScrollInto(dom.getElement('testEl1')).y,
-        EPSILON);
+      200,
+      style.getContainerOffsetToScrollInto(dom.getElement('testEl1')).y,
+      EPSILON
+    );
     assertRoughlyEquals(
-        300, style.getContainerOffsetToScrollInto(dom.getElement('testEl2')).x,
-        EPSILON);
+      300,
+      style.getContainerOffsetToScrollInto(dom.getElement('testEl2')).x,
+      EPSILON
+    );
   },
 
   testDocumentScrollWithMargin() {
     documentScroll.style.margin = '20px 0 0 30px';
     assertRoughlyEquals(
-        220, style.getContainerOffsetToScrollInto(dom.getElement('testEl1')).y,
-        EPSILON);
+      220,
+      style.getContainerOffsetToScrollInto(dom.getElement('testEl1')).y,
+      EPSILON
+    );
     assertRoughlyEquals(
-        330, style.getContainerOffsetToScrollInto(dom.getElement('testEl2')).x,
-        EPSILON);
+      330,
+      style.getContainerOffsetToScrollInto(dom.getElement('testEl2')).x,
+      EPSILON
+    );
   },
 
   testDocumentScrollWithPadding() {
     documentScroll.style.padding = '20px 0 0 30px';
     assertRoughlyEquals(
-        220, style.getContainerOffsetToScrollInto(dom.getElement('testEl1')).y,
-        EPSILON);
+      220,
+      style.getContainerOffsetToScrollInto(dom.getElement('testEl1')).y,
+      EPSILON
+    );
     assertRoughlyEquals(
-        330, style.getContainerOffsetToScrollInto(dom.getElement('testEl2')).x,
-        EPSILON);
+      330,
+      style.getContainerOffsetToScrollInto(dom.getElement('testEl2')).x,
+      EPSILON
+    );
   },
 
   testDocumentScrollWithBorder() {
     documentScroll.style.border = '20px solid green';
     assertRoughlyEquals(
-        220, style.getContainerOffsetToScrollInto(dom.getElement('testEl1')).y,
-        EPSILON);
+      220,
+      style.getContainerOffsetToScrollInto(dom.getElement('testEl1')).y,
+      EPSILON
+    );
     assertRoughlyEquals(
-        320, style.getContainerOffsetToScrollInto(dom.getElement('testEl2')).x,
-        EPSILON);
+      320,
+      style.getContainerOffsetToScrollInto(dom.getElement('testEl2')).x,
+      EPSILON
+    );
   },
 
   testDocumentScrollWithAllProperties() {
@@ -73,17 +88,20 @@ testSuite({
     documentScroll.style.padding = '40px 0 0 50px';
     documentScroll.style.border = '10px solid green';
     assertRoughlyEquals(
-        270, style.getContainerOffsetToScrollInto(dom.getElement('testEl1')).y,
-        EPSILON);
+      270,
+      style.getContainerOffsetToScrollInto(dom.getElement('testEl1')).y,
+      EPSILON
+    );
     assertRoughlyEquals(
-        390, style.getContainerOffsetToScrollInto(dom.getElement('testEl2')).x,
-        EPSILON);
+      390,
+      style.getContainerOffsetToScrollInto(dom.getElement('testEl2')).x,
+      EPSILON
+    );
   },
 
   testDocumentScrollNoOpIfElementAlreadyInView() {
     // Scroll once to make testEl3 visible.
-    documentScroll.scrollTop =
-        style.getContainerOffsetToScrollInto(dom.getElement('testEl3')).y;
+    documentScroll.scrollTop = style.getContainerOffsetToScrollInto(dom.getElement('testEl3')).y;
 
     // Scroll a bit more so that now the element is approximately at the middle.
     const viewportHeight = documentScroll.clientHeight;
@@ -92,8 +110,9 @@ testSuite({
     // Since the element is fully within viewport, additional calls to
     // getContainerOffsetToScrollInto should be a no-op.
     assertEquals(
-        documentScroll.scrollTop,
-        style.getContainerOffsetToScrollInto(dom.getElement('testEl3')).y);
+      documentScroll.scrollTop,
+      style.getContainerOffsetToScrollInto(dom.getElement('testEl3')).y
+    );
   },
 
   testScrollIntoContainerView() {

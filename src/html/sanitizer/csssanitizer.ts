@@ -28,8 +28,6 @@ goog.require('goog.string.Const');
 goog.require('goog.userAgent');
 goog.require('goog.userAgent.product');
 
-
-
 /**
  * A regular expression to match each selector in a CSS rule. Selectors are
  * separated by commas, but can have strings within them (e.g. foo[name="bar"])
@@ -37,39 +35,39 @@ goog.require('goog.userAgent.product');
  * @private {?RegExp}
  */
 goog.html.sanitizer.CssSanitizer.SELECTOR_REGEX_ =
-    // Don't even evaluate it on older browsers (IE8 and IE9), it throws a
-    // syntax error and we don't use it anyway.
-    !(goog.userAgent.IE && document.documentMode < 10) ?
-    new RegExp(
-        '\\s*' +              // Discard initial space
-            '([^\\s\'",]+' +  // Beginning of the match. Anything but a comma,
-                              // spaces or a string delimiter. This is the only
-                              // non-optional component of the regex.
-            '[^\'",]*' +      // Spaces are fine afterwards (e.g. "a > b").
-            ('(' +  // A series of optional strings with matching delimiters
-                    // that can contain anything, and optional non-quoted text
-                    // without commas.
-             '(\'([^\'\\r\\n\\f\\\\]|\\\\[^])*\')|' +  // Optional single-quoted
-                                                       // string.
-             '("([^"\\r\\n\\f\\\\]|\\\\[^])*")|' +     // Optional double-quoted
-                                                       // string.
-             '[^\'",]' +  // Optional non-string content.
-             ')*') +      // String and non-string
-                          // content can come in any
-                          // order.
-            ')',          // End of the match.
-        'g') :
-    null;
-
+  // Don't even evaluate it on older browsers (IE8 and IE9), it throws a
+  // syntax error and we don't use it anyway.
+  !(goog.userAgent.IE && document.documentMode < 10)
+    ? new RegExp(
+        '\\s*' + // Discard initial space
+          '([^\\s\'",]+' + // Beginning of the match. Anything but a comma,
+          // spaces or a string delimiter. This is the only
+          // non-optional component of the regex.
+          '[^\'",]*' + // Spaces are fine afterwards (e.g. "a > b").
+          ('(' + // A series of optional strings with matching delimiters
+            // that can contain anything, and optional non-quoted text
+            // without commas.
+            "('([^'\\r\\n\\f\\\\]|\\\\[^])*')|" + // Optional single-quoted
+            // string.
+            '("([^"\\r\\n\\f\\\\]|\\\\[^])*")|' + // Optional double-quoted
+            // string.
+            '[^\'",]' + // Optional non-string content.
+            ')*') + // String and non-string
+          // content can come in any
+          // order.
+          ')', // End of the match.
+        'g'
+      )
+    : null;
 
 /**
  * A whitelist of properties that can retain the prefix in Chrome.
  * @private @const {!Object<string,boolean>}
  */
-goog.html.sanitizer.CssSanitizer.CHROME_INCLUDE_VENDOR_PREFIX_WHITELIST_ =
-    goog.object.createSet(
-        '-webkit-border-horizontal-spacing', '-webkit-border-vertical-spacing');
-
+goog.html.sanitizer.CssSanitizer.CHROME_INCLUDE_VENDOR_PREFIX_WHITELIST_ = goog.object.createSet(
+  '-webkit-border-horizontal-spacing',
+  '-webkit-border-vertical-spacing'
+);
 
 /**
  * Removes a vendor prefix from a property name.
@@ -77,17 +75,17 @@ goog.html.sanitizer.CssSanitizer.CHROME_INCLUDE_VENDOR_PREFIX_WHITELIST_ =
  * @return {string} A property name without vendor prefixes.
  * @private
  */
-goog.html.sanitizer.CssSanitizer.withoutVendorPrefix_ = function(propName) {
-  'use strict';
+goog.html.sanitizer.CssSanitizer.withoutVendorPrefix_ = (propName) => {
   // A few property names are only valid with the prefix on specific browsers.
   // The recommendation is of course to avoid them, but in specific cases a
   // non-prefixed property gets transformed into one or more prefixed
   // properties by the browser. In this case, the best option to avoid having
   // the non-prefixed property be dropped silently is to allow the prefixed
   // property in the output.
-  if (goog.userAgent.WEBKIT &&
-      propName in goog.html.sanitizer.CssSanitizer
-                      .CHROME_INCLUDE_VENDOR_PREFIX_WHITELIST_) {
+  if (
+    goog.userAgent.WEBKIT &&
+    propName in goog.html.sanitizer.CssSanitizer.CHROME_INCLUDE_VENDOR_PREFIX_WHITELIST_
+  ) {
     return propName;
   }
   // http://stackoverflow.com/a/5411098/20394 has a fairly extensive list
@@ -96,10 +94,8 @@ goog.html.sanitizer.CssSanitizer.withoutVendorPrefix_ = function(propName) {
   // how Mozilla recognizes some -webkit- prefixes.
   // http://wiki.csswg.org/spec/vendor-prefixes talks more about
   // cross-implementation, and lists other prefixes.
-  return propName.replace(
-      /^-(?:apple|css|epub|khtml|moz|mso?|o|rim|wap|webkit|xv)-(?=[a-z])/i, '');
+  return propName.replace(/^-(?:apple|css|epub|khtml|moz|mso?|o|rim|wap|webkit|xv)-(?=[a-z])/i, '');
 };
-
 
 /**
  * Sanitizes a {@link CSSStyleSheet}.
@@ -111,20 +107,26 @@ goog.html.sanitizer.CssSanitizer.withoutVendorPrefix_ = function(propName) {
  * @return {!goog.html.SafeStyleSheet}
  * @private
  */
-goog.html.sanitizer.CssSanitizer.sanitizeStyleSheet_ = function(
-    cssStyleSheet, containerId, uriRewriter) {
-  'use strict';
+goog.html.sanitizer.CssSanitizer.sanitizeStyleSheet_ = (
+  cssStyleSheet,
+  containerId,
+  uriRewriter
+) => {
   var sanitizedRules = [];
   var cssRules = goog.html.sanitizer.CssSanitizer.getOnlyStyleRules_(
-      goog.array.toArray(cssStyleSheet.cssRules));
-  cssRules.forEach(function(cssRule) {
-    'use strict';
+    goog.array.toArray(cssStyleSheet.cssRules)
+  );
+  cssRules.forEach((cssRule) => {
     if (containerId && !/[a-zA-Z][\w-:\.]*/.test(containerId)) {
       // Sanity check on the element ID that will confine the new CSS rules.
       throw new Error('Invalid container id');
     }
-    if (containerId && goog.userAgent.product.IE &&
-        document.documentMode == 10 && /\\['"]/.test(cssRule.selectorText)) {
+    if (
+      containerId &&
+      goog.userAgent.product.IE &&
+      document.documentMode == 10 &&
+      /\\['"]/.test(cssRule.selectorText)
+    ) {
       // If a container ID was specified, drop selectors with escaped quotes in
       // strings on IE 10 due to a regex bug.
       return;
@@ -132,19 +134,21 @@ goog.html.sanitizer.CssSanitizer.sanitizeStyleSheet_ = function(
     // If a container ID was specified, restrict all selectors in this rule to
     // be descendants of the node with such an ID. Use a regex to exclude commas
     // within selector strings.
-    var scopedSelector = containerId ?
-        cssRule.selectorText.replace(
-            goog.html.sanitizer.CssSanitizer.SELECTOR_REGEX_,
-            '#' + containerId + ' $1') :
-        cssRule.selectorText;
-    sanitizedRules.push(goog.html.SafeStyleSheet.createRule(
+    var scopedSelector = containerId
+      ? cssRule.selectorText.replace(
+          goog.html.sanitizer.CssSanitizer.SELECTOR_REGEX_,
+          '#' + containerId + ' $1'
+        )
+      : cssRule.selectorText;
+    sanitizedRules.push(
+      goog.html.SafeStyleSheet.createRule(
         scopedSelector,
-        goog.html.sanitizer.CssSanitizer.sanitizeInlineStyle(
-            cssRule.style, uriRewriter)));
+        goog.html.sanitizer.CssSanitizer.sanitizeInlineStyle(cssRule.style, uriRewriter)
+      )
+    );
   });
   return goog.html.SafeStyleSheet.concat(sanitizedRules);
 };
-
 
 /**
  * Used to filter out at-rules like @media, @font, etc. Currently, none of these
@@ -155,16 +159,10 @@ goog.html.sanitizer.CssSanitizer.sanitizeStyleSheet_ = function(
  */
 // TODO(pelizzi): some of these at-rules are safe, consider adding partial
 // support for them.
-goog.html.sanitizer.CssSanitizer.getOnlyStyleRules_ = function(cssRules) {
-  'use strict';
-  return /** @type {!Array<!CSSStyleRule>} */ (
-      cssRules.filter(function(cssRule) {
-        'use strict';
-        return cssRule instanceof CSSStyleRule ||
-            cssRule.type == CSSRule.STYLE_RULE;
-      }));
-};
-
+goog.html.sanitizer.CssSanitizer.getOnlyStyleRules_ = (cssRules) =>
+  cssRules.filter(
+    (cssRule) => cssRule instanceof CSSStyleRule || cssRule.type == CSSRule.STYLE_RULE
+  );
 
 /**
  * Sanitizes the contents of a STYLE tag.
@@ -180,21 +178,28 @@ goog.html.sanitizer.CssSanitizer.getOnlyStyleRules_ = function(cssRules) {
  *     is unreliable, and some (but not all!) rules containing these are
  *     silently dropped.
  */
-goog.html.sanitizer.CssSanitizer.sanitizeStyleSheetString = function(
-    textContent, opt_containerId, opt_uriRewriter) {
-  'use strict';
-  var styleTag = /** @type {?HTMLStyleElement} */
-      (goog.html.sanitizer.CssSanitizer.safeParseHtmlAndGetInertElement(
-          '<style>' + textContent + '</style>'));
+goog.html.sanitizer.CssSanitizer.sanitizeStyleSheetString = (
+  textContent,
+  opt_containerId,
+  opt_uriRewriter
+) => {
+  var styleTag =
+    /** @type {?HTMLStyleElement} */
+    (
+      goog.html.sanitizer.CssSanitizer.safeParseHtmlAndGetInertElement(
+        '<style>' + textContent + '</style>'
+      )
+    );
   if (styleTag == null || styleTag.sheet == null) {
     return goog.html.SafeStyleSheet.EMPTY;
   }
   var containerId = opt_containerId != undefined ? opt_containerId : null;
   return goog.html.sanitizer.CssSanitizer.sanitizeStyleSheet_(
-      /** @type {!CSSStyleSheet} */ (styleTag.sheet), containerId,
-      opt_uriRewriter);
+    /** @type {!CSSStyleSheet} */ (styleTag.sheet),
+    containerId,
+    opt_uriRewriter
+  );
 };
-
 
 /**
  * Returns an inert DOM tree produced by parsing the provided html using
@@ -206,17 +211,13 @@ goog.html.sanitizer.CssSanitizer.sanitizeStyleSheetString = function(
  * @param {string} html
  * @return {?Element}
  */
-goog.html.sanitizer.CssSanitizer.safeParseHtmlAndGetInertElement = function(
-    html) {
-  'use strict';
-  var safeHtml = goog.html.uncheckedconversions
-                     .safeHtmlFromStringKnownToSatisfyTypeContract(
-                         goog.string.Const.from('Never attached to DOM.'),
-                         '<html><head></head><body>' + html + '</body></html>');
-  return goog.dom.safe.parseFromStringHtml(new DOMParser(), safeHtml)
-      .body.children[0];
+goog.html.sanitizer.CssSanitizer.safeParseHtmlAndGetInertElement = (html) => {
+  var safeHtml = goog.html.uncheckedconversions.safeHtmlFromStringKnownToSatisfyTypeContract(
+    goog.string.Const.from('Never attached to DOM.'),
+    '<html><head></head><body>' + html + '</body></html>'
+  );
+  return goog.dom.safe.parseFromStringHtml(new DOMParser(), safeHtml).body.children[0];
 };
-
 
 /**
  * Sanitizes an inline style attribute. Short-hand attributes are expanded to
@@ -227,40 +228,40 @@ goog.html.sanitizer.CssSanitizer.safeParseHtmlAndGetInertElement = function(
  *     rewriter that returns a goog.html.SafeUrl.
  * @return {!goog.html.SafeStyle} A sanitized inline cssText.
  */
-goog.html.sanitizer.CssSanitizer.sanitizeInlineStyle = function(
-    cssStyle, opt_uriRewriter) {
-  'use strict';
+goog.html.sanitizer.CssSanitizer.sanitizeInlineStyle = (cssStyle, opt_uriRewriter) => {
   if (!cssStyle) {
     return goog.html.SafeStyle.EMPTY;
   }
 
   var cleanCssStyle = document.createElement('div').style;
-  var cssPropNames =
-      goog.html.sanitizer.CssSanitizer.getCssPropNames_(cssStyle);
+  var cssPropNames = goog.html.sanitizer.CssSanitizer.getCssPropNames_(cssStyle);
 
-  cssPropNames.forEach(function(propName) {
-    'use strict';
-    var propNameWithoutPrefix =
-        goog.html.sanitizer.CssSanitizer.withoutVendorPrefix_(propName);
-    if (!goog.html.sanitizer.CssSanitizer.isDisallowedPropertyName_(
-            propNameWithoutPrefix)) {
+  cssPropNames.forEach((propName) => {
+    var propNameWithoutPrefix = goog.html.sanitizer.CssSanitizer.withoutVendorPrefix_(propName);
+    if (!goog.html.sanitizer.CssSanitizer.isDisallowedPropertyName_(propNameWithoutPrefix)) {
       var propValue = goog.html.sanitizer.noclobber.getCssPropertyValue(
-          /** @type {!CSSStyleDeclaration} */ (cssStyle), propName);
-      var sanitizedValue =
-          goog.html.sanitizer.CssPropertySanitizer.sanitizeProperty(
-              propNameWithoutPrefix, propValue, opt_uriRewriter);
+        /** @type {!CSSStyleDeclaration} */ (cssStyle),
+        propName
+      );
+      var sanitizedValue = goog.html.sanitizer.CssPropertySanitizer.sanitizeProperty(
+        propNameWithoutPrefix,
+        propValue,
+        opt_uriRewriter
+      );
       if (sanitizedValue != null) {
         goog.html.sanitizer.noclobber.setCssProperty(
-            cleanCssStyle, propNameWithoutPrefix, sanitizedValue);
+          cleanCssStyle,
+          propNameWithoutPrefix,
+          sanitizedValue
+        );
       }
     }
   });
-  return goog.html.uncheckedconversions
-      .safeStyleFromStringKnownToSatisfyTypeContract(
-          goog.string.Const.from('Output of CSS sanitizer'),
-          cleanCssStyle.cssText || '');
+  return goog.html.uncheckedconversions.safeStyleFromStringKnownToSatisfyTypeContract(
+    goog.string.Const.from('Output of CSS sanitizer'),
+    cleanCssStyle.cssText || ''
+  );
 };
-
 
 /**
  * Sanitizes inline CSS text and returns it as a SafeStyle object. When adequate
@@ -271,22 +272,16 @@ goog.html.sanitizer.CssSanitizer.sanitizeInlineStyle = function(
  *     rewriter that returns a goog.html.SafeUrl.
  * @return {!goog.html.SafeStyle} A sanitized inline cssText.
  */
-goog.html.sanitizer.CssSanitizer.sanitizeInlineStyleString = function(
-    cssText, opt_uriRewriter) {
-  'use strict';
+goog.html.sanitizer.CssSanitizer.sanitizeInlineStyleString = (cssText, opt_uriRewriter) => {
   // same check as in goog.html.sanitizer.HTML_SANITIZER_SUPPORTED_
   if (goog.userAgent.IE && document.documentMode < 10) {
     return goog.html.SafeStyle.EMPTY;
   }
 
-  const div =
-      goog.html.sanitizer.inertDocument.createInertDocument().createElement(
-          'DIV');
+  const div = goog.html.sanitizer.inertDocument.createInertDocument().createElement('DIV');
   div.style.cssText = cssText;
-  return goog.html.sanitizer.CssSanitizer.sanitizeInlineStyle(
-      div.style, opt_uriRewriter);
+  return goog.html.sanitizer.CssSanitizer.sanitizeInlineStyle(div.style, opt_uriRewriter);
 };
-
 
 /**
  * Converts rules in STYLE tags into style attributes on the tags they apply to.
@@ -294,8 +289,7 @@ goog.html.sanitizer.CssSanitizer.sanitizeInlineStyleString = function(
  * @param {!Element} element
  * @package
  */
-goog.html.sanitizer.CssSanitizer.inlineStyleRules = function(element) {
-  'use strict';
+goog.html.sanitizer.CssSanitizer.inlineStyleRules = (element) => {
   // Note that Webkit used to offer the perfect function for the job:
   // getMatchedCSSRules. Unfortunately, it was never supported cross-browser and
   // is deprecated now. On the other hand, getComputedStyle cannot be used to
@@ -306,27 +300,21 @@ goog.html.sanitizer.CssSanitizer.inlineStyleRules = function(element) {
 
   // Extract all rules from STYLE tags found in the subtree.
   /** @type {!Array<!HTMLStyleElement>} */
-  var styleTags =
-      goog.html.sanitizer.noclobber.getElementsByTagName(element, 'STYLE');
-  var cssRules = goog.array.concatMap(styleTags, function(styleTag) {
-    'use strict';
-    return goog.array.toArray(
-        goog.html.sanitizer.noclobber.getElementStyleSheet(styleTag).cssRules);
-  });
+  var styleTags = goog.html.sanitizer.noclobber.getElementsByTagName(element, 'STYLE');
+  var cssRules = goog.array.concatMap(styleTags, (styleTag) =>
+    goog.array.toArray(goog.html.sanitizer.noclobber.getElementStyleSheet(styleTag).cssRules)
+  );
   cssRules = goog.html.sanitizer.CssSanitizer.getOnlyStyleRules_(cssRules);
 
-  let sortedMap = [];
+  const sortedMap = [];
   for (var i = 0; i < cssRules.length; i++) {
-    sortedMap[i] = {index: i, rule: /** @type {!CSSStyleRule} */ (cssRules[i])};
+    sortedMap[i] = { index: i, rule: /** @type {!CSSStyleRule} */ (cssRules[i]) };
   }
   // Sorts the array in ascending order of specificity. Preserves the initial
   // order of appearance if two rules have the same specificity.
-  sortedMap.sort(function(a, b) {
-    'use strict';
-    var aSpecificity =
-        goog.html.CssSpecificity.getSpecificity(a.rule.selectorText);
-    var bSpecificity =
-        goog.html.CssSpecificity.getSpecificity(b.rule.selectorText);
+  sortedMap.sort((a, b) => {
+    var aSpecificity = goog.html.CssSpecificity.getSpecificity(a.rule.selectorText);
+    var bSpecificity = goog.html.CssSpecificity.getSpecificity(b.rule.selectorText);
     return goog.array.compare3(aSpecificity, bSpecificity) || a.index - b.index;
   });
   for (var i = 0; i < sortedMap.length; i++) {
@@ -341,27 +329,26 @@ goog.html.sanitizer.CssSanitizer.inlineStyleRules = function(element) {
   // properties defined in the style attribute itself) have precedence over
   // lower priority ones.
   var subTreeWalker = document.createTreeWalker(
-      element, NodeFilter.SHOW_ELEMENT, null /* filter */,
-      false /* entityReferenceExpansion */);
+    element,
+    NodeFilter.SHOW_ELEMENT,
+    null /* filter */,
+    false /* entityReferenceExpansion */
+  );
   var currentElement;
-  while (currentElement = /** @type {!Element} */ (subTreeWalker.nextNode())) {
-    cssRules.forEach(function(rule) {
-      'use strict';
-      if (!goog.html.sanitizer.noclobber.elementMatches(
-              currentElement, rule.selectorText)) {
+  while ((currentElement = /** @type {!Element} */ (subTreeWalker.nextNode()))) {
+    cssRules.forEach((rule) => {
+      if (!goog.html.sanitizer.noclobber.elementMatches(currentElement, rule.selectorText)) {
         return;
       }
       if (!rule.style) {
         return;
       }
-      goog.html.sanitizer.CssSanitizer.mergeStyleDeclarations_(
-          currentElement, rule.style);
+      goog.html.sanitizer.CssSanitizer.mergeStyleDeclarations_(currentElement, rule.style);
     });
   }
   // Delete the STYLE tags.
   styleTags.forEach(goog.dom.removeNode);
 };
-
 
 /**
  * Merges style properties from `styleDeclaration` into
@@ -370,25 +357,18 @@ goog.html.sanitizer.CssSanitizer.inlineStyleRules = function(element) {
  * @param {!CSSStyleDeclaration} styleDeclaration
  * @private
  */
-goog.html.sanitizer.CssSanitizer.mergeStyleDeclarations_ = function(
-    element, styleDeclaration) {
-  'use strict';
-  var existingPropNames =
-      goog.html.sanitizer.CssSanitizer.getCssPropNames_(element.style);
-  var newPropNames =
-      goog.html.sanitizer.CssSanitizer.getCssPropNames_(styleDeclaration);
+goog.html.sanitizer.CssSanitizer.mergeStyleDeclarations_ = (element, styleDeclaration) => {
+  var existingPropNames = goog.html.sanitizer.CssSanitizer.getCssPropNames_(element.style);
+  var newPropNames = goog.html.sanitizer.CssSanitizer.getCssPropNames_(styleDeclaration);
 
-  newPropNames.forEach(function(propName) {
-    'use strict';
+  newPropNames.forEach((propName) => {
     if (existingPropNames.indexOf(propName) >= 0) {
       // This was either a property set by the style attribute or a stylesheet
       // rule with a higher priority. Leave the existing value.
       return;
     }
-    var propValue = goog.html.sanitizer.noclobber.getCssPropertyValue(
-        styleDeclaration, propName);
-    goog.html.sanitizer.noclobber.setCssProperty(
-        element.style, propName, propValue);
+    var propValue = goog.html.sanitizer.noclobber.getCssPropertyValue(styleDeclaration, propName);
+    goog.html.sanitizer.noclobber.setCssProperty(element.style, propName, propValue);
   });
 };
 
@@ -398,8 +378,7 @@ goog.html.sanitizer.CssSanitizer.mergeStyleDeclarations_ = function(
  * @return {!Array<string>} CSS property names.
  * @private
  */
-goog.html.sanitizer.CssSanitizer.getCssPropNames_ = function(cssStyle) {
-  'use strict';
+goog.html.sanitizer.CssSanitizer.getCssPropNames_ = (cssStyle) => {
   var propNames = [];
   if (goog.isArrayLike(cssStyle)) {
     // Gets property names via item().
@@ -415,19 +394,15 @@ goog.html.sanitizer.CssSanitizer.getCssPropNames_ = function(cssStyle) {
   return propNames;
 };
 
-
 /**
  * Checks whether the property name specified should be disallowed.
  * @param {string} propName A property name.
  * @return {boolean} Whether the property name is disallowed.
  * @private
  */
-goog.html.sanitizer.CssSanitizer.isDisallowedPropertyName_ = function(
-    propName) {
-  'use strict';
+goog.html.sanitizer.CssSanitizer.isDisallowedPropertyName_ = (propName) => {
   // getPropertyValue doesn't deal with custom variables properly and will NOT
   // decode CSS escapes (but the browser will do so silently). Simply disallow
   // custom variables (http://www.w3.org/TR/css-variables/#defining-variables).
-  return goog.string.startsWith(propName, '--') ||
-      goog.string.startsWith(propName, 'var');
+  return goog.string.startsWith(propName, '--') || goog.string.startsWith(propName, 'var');
 };

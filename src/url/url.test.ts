@@ -8,15 +8,20 @@
  * @fileoverview Tests for the URL package.
  */
 goog.module('goog.urltest');
-goog.setTestOnly();
 
 const testSuite = goog.require('goog.testing.testSuite');
 const userAgent = goog.require('goog.labs.userAgent.browser');
-const {UrlLike, createUrl, getSearchParams, resolveRelativeUrl, resolveUrl, setUrlBaseForTesting} = goog.require('goog.url');
-const {assertArrayEquals, raiseException} = goog.require('goog.testing.asserts');
+const {
+  UrlLike,
+  createUrl,
+  getSearchParams,
+  resolveRelativeUrl,
+  resolveUrl,
+  setUrlBaseForTesting,
+} = goog.require('goog.url');
+const { assertArrayEquals, raiseException } = goog.require('goog.testing.asserts');
 
-const COMPLIANT_BROWSER =
-    userAgent.isChrome() || userAgent.isFirefox() || userAgent.isSafari();
+const COMPLIANT_BROWSER = userAgent.isChrome() || userAgent.isFirefox() || userAgent.isSafari();
 
 /**
  * This is a wrapper around the resolveUrl call from the URL package that will
@@ -31,7 +36,7 @@ const COMPLIANT_BROWSER =
  * @param {string=} baseStr
  * @return {!UrlLike}
  */
-const resolveWithTestChecks = function(urlStr, baseStr = undefined) {
+const resolveWithTestChecks = (urlStr, baseStr = undefined) => {
   let packageThrow = null;
   let nativeThrow = null;
   let packageResolve;
@@ -53,9 +58,9 @@ const resolveWithTestChecks = function(urlStr, baseStr = undefined) {
     // Did only one impl throw?
     if ((!packageThrow && nativeThrow) || (packageThrow && !nativeThrow)) {
       // Fail test case here
-      raiseException(`parsing of (${urlStr}, ${
-          baseStr}) caused mismatch between native and package tests:\npackage: ${
-          packageThrow}\nnative throw: ${nativeThrow}`);
+      raiseException(
+        `parsing of (${urlStr}, ${baseStr}) caused mismatch between native and package tests:\npackage: ${packageThrow}\nnative throw: ${nativeThrow}`
+      );
     }
     if (packageThrow) {
       throw packageThrow;
@@ -80,7 +85,6 @@ const resolveWithTestChecks = function(urlStr, baseStr = undefined) {
 };
 
 testSuite({
-
   testResolveURL: {
     testUrlParse() {
       const url = resolveWithTestChecks('http://www.google.com');
@@ -147,8 +151,7 @@ testSuite({
     },
 
     testComplex() {
-      const url = resolveWithTestChecks(
-          'http://www.google.com:8080/path?q=query#fragmento');
+      const url = resolveWithTestChecks('http://www.google.com:8080/path?q=query#fragmento');
       assertEquals('http:', url.protocol);
       assertEquals('', url.username);
       assertEquals('', url.password);
@@ -159,15 +162,12 @@ testSuite({
       assertEquals('/path', url.pathname);
       assertEquals('?q=query', url.search);
       assertEquals('#fragmento', url.hash);
-      assertEquals(
-          'http://www.google.com:8080/path?q=query#fragmento', url.toString());
-      assertEquals(
-          'http://www.google.com:8080/path?q=query#fragmento', url.href);
+      assertEquals('http://www.google.com:8080/path?q=query#fragmento', url.toString());
+      assertEquals('http://www.google.com:8080/path?q=query#fragmento', url.href);
     },
 
     testWithNewline() {
-      const url = resolveWithTestChecks(
-          'http://www.google.com:8080/path?q=query#frag\nmento');
+      const url = resolveWithTestChecks('http://www.google.com:8080/path?q=query#frag\nmento');
       assertEquals('http:', url.protocol);
       assertEquals('', url.username);
       assertEquals('', url.password);
@@ -176,15 +176,12 @@ testSuite({
       assertEquals('/path', url.pathname);
       assertEquals('?q=query', url.search);
       assertEquals('#fragmento', url.hash);
-      assertEquals(
-          'http://www.google.com:8080/path?q=query#fragmento', url.toString());
-      assertEquals(
-          'http://www.google.com:8080/path?q=query#fragmento', url.href);
+      assertEquals('http://www.google.com:8080/path?q=query#fragmento', url.toString());
+      assertEquals('http://www.google.com:8080/path?q=query#fragmento', url.href);
     },
 
     testWithRelativeParam() {
-      const url = resolveWithTestChecks(
-          '/path?q=query#fragmento', 'http://www.google.com:8080');
+      const url = resolveWithTestChecks('/path?q=query#fragmento', 'http://www.google.com:8080');
       assertEquals('http:', url.protocol);
       assertEquals('', url.username);
       assertEquals('', url.password);
@@ -193,10 +190,8 @@ testSuite({
       assertEquals('/path', url.pathname);
       assertEquals('?q=query', url.search);
       assertEquals('#fragmento', url.hash);
-      assertEquals(
-          'http://www.google.com:8080/path?q=query#fragmento', url.toString());
-      assertEquals(
-          'http://www.google.com:8080/path?q=query#fragmento', url.href);
+      assertEquals('http://www.google.com:8080/path?q=query#fragmento', url.toString());
+      assertEquals('http://www.google.com:8080/path?q=query#fragmento', url.href);
     },
 
     testWithRelativeParamThatIsAbsolute() {
@@ -204,8 +199,9 @@ testSuite({
       // if it happens to be an absolute URL then its values take precidence
       // over the base.
       const url = resolveWithTestChecks(
-          'https://docs.google.com/path?q=query#fragmento',
-          'https://google.com:80');
+        'https://docs.google.com/path?q=query#fragmento',
+        'https://google.com:80'
+      );
       assertEquals('https:', url.protocol);
       assertEquals('', url.username);
       assertEquals('', url.password);
@@ -214,15 +210,15 @@ testSuite({
       assertEquals('/path', url.pathname);
       assertEquals('?q=query', url.search);
       assertEquals('#fragmento', url.hash);
-      assertEquals(
-          'https://docs.google.com/path?q=query#fragmento', url.toString());
+      assertEquals('https://docs.google.com/path?q=query#fragmento', url.toString());
       assertEquals('https://docs.google.com/path?q=query#fragmento', url.href);
     },
 
     testWithBaseThatHasRelativeParts() {
       const url = resolveWithTestChecks(
-          'https://docs.google.com/path1?q=query#fragmento',
-          'https://google.com:80/path?query=q#hash');
+        'https://docs.google.com/path1?q=query#fragmento',
+        'https://google.com:80/path?query=q#hash'
+      );
       assertEquals('https:', url.protocol);
       assertEquals('', url.username);
       assertEquals('', url.password);
@@ -231,14 +227,12 @@ testSuite({
       assertEquals('/path1', url.pathname);
       assertEquals('?q=query', url.search);
       assertEquals('#fragmento', url.hash);
-      assertEquals(
-          'https://docs.google.com/path1?q=query#fragmento', url.toString());
+      assertEquals('https://docs.google.com/path1?q=query#fragmento', url.toString());
       assertEquals('https://docs.google.com/path1?q=query#fragmento', url.href);
     },
 
     testWithBaseThatHasRelativePartsAndOnlySearchRelative() {
-      const url = resolveWithTestChecks(
-          '?q=query', 'https://google.com/path?query=q#hash');
+      const url = resolveWithTestChecks('?q=query', 'https://google.com/path?query=q#hash');
       assertEquals('https:', url.protocol);
       assertEquals('', url.username);
       assertEquals('', url.password);
@@ -253,8 +247,7 @@ testSuite({
     },
 
     testWithBaseThatHasRelativePartsAndOnlyHashRelative() {
-      const url = resolveWithTestChecks(
-          '#query', 'https://google.com/path?query=q#hash');
+      const url = resolveWithTestChecks('#query', 'https://google.com/path?query=q#hash');
       assertEquals('https:', url.protocol);
       assertEquals('', url.username);
       assertEquals('', url.password);
@@ -270,8 +263,7 @@ testSuite({
     },
 
     testWithBaseAndNoIndicatorsInRelative() {
-      const url = resolveWithTestChecks(
-          'query', 'https://google.com/path?query=q#hash');
+      const url = resolveWithTestChecks('query', 'https://google.com/path?query=q#hash');
       assertEquals('https:', url.protocol);
       assertEquals('', url.username);
       assertEquals('', url.password);
@@ -286,8 +278,7 @@ testSuite({
     },
 
     testResolvesRelativeToRelativePath() {
-      const url = resolveWithTestChecks(
-          '/new?q=query', 'https://google.com/path?query=q#hash');
+      const url = resolveWithTestChecks('/new?q=query', 'https://google.com/path?query=q#hash');
       assertEquals('https:', url.protocol);
       assertEquals('', url.username);
       assertEquals('', url.password);
@@ -301,8 +292,7 @@ testSuite({
     },
 
     testResolvesRelativeToRelativePathBackslash() {
-      const url = resolveWithTestChecks(
-          '\\new?q=query', 'https://google.com/path?query=q#hash');
+      const url = resolveWithTestChecks('\\new?q=query', 'https://google.com/path?query=q#hash');
       assertEquals('https:', url.protocol);
       assertEquals('', url.username);
       assertEquals('', url.password);
@@ -316,8 +306,7 @@ testSuite({
     },
 
     testResolvesTwoDots() {
-      const url = resolveWithTestChecks(
-          '..', 'https://google.com/maps/search/new?hl=de#one');
+      const url = resolveWithTestChecks('..', 'https://google.com/maps/search/new?hl=de#one');
       assertEquals(url.hostname, 'google.com');
       assertEquals(url.protocol, 'https:');
       // Providing a path of '..' in urlStr removes everything after the second
@@ -347,8 +336,7 @@ testSuite({
     },
 
     testResolvesTwoDotsShortBasePath() {
-      const url =
-          resolveWithTestChecks('..', 'https://google.com/maps?hl=de#one');
+      const url = resolveWithTestChecks('..', 'https://google.com/maps?hl=de#one');
       assertEquals(url.hostname, 'google.com');
       assertEquals(url.protocol, 'https:');
       // Providing a path of '..' in urlStr removes everything after the second
@@ -362,8 +350,7 @@ testSuite({
     },
 
     testResolvesDot() {
-      const url = resolveWithTestChecks(
-          '.', 'https://google.com/maps/search/new?hl=de#one');
+      const url = resolveWithTestChecks('.', 'https://google.com/maps/search/new?hl=de#one');
       assertEquals(url.hostname, 'google.com');
       assertEquals(url.protocol, 'https:');
       // Providing a path of '.' in urlStr removes everything after the last '/'
@@ -391,8 +378,7 @@ testSuite({
     },
 
     testResolvesDotShortBasePath() {
-      const url =
-          resolveWithTestChecks('.', 'https://google.com/maps?hl=de#one');
+      const url = resolveWithTestChecks('.', 'https://google.com/maps?hl=de#one');
       assertEquals(url.hostname, 'google.com');
       assertEquals(url.protocol, 'https:');
       // Providing a path of '.' in urlStr removes everything after the last '/'
@@ -406,16 +392,14 @@ testSuite({
     },
 
     testResolvesEmptyString() {
-      const url = resolveWithTestChecks(
-          '', 'https://google.com/maps/search/new?hl=de#one');
+      const url = resolveWithTestChecks('', 'https://google.com/maps/search/new?hl=de#one');
       assertEquals(url.hostname, 'google.com');
       assertEquals(url.protocol, 'https:');
 
       if (!userAgent.isEdge()) {
         assertEquals(url.pathname, '/maps/search/new');
         assertEquals(url.search, '?hl=de');
-        assertEquals(
-            'https://google.com/maps/search/new?hl=de', url.toString());
+        assertEquals('https://google.com/maps/search/new?hl=de', url.toString());
         assertEquals('https://google.com/maps/search/new?hl=de', url.href);
       } else {
         // Edge is weird here and instead follows the same conventions for '.'
@@ -430,15 +414,13 @@ testSuite({
 
     testErrorsOnInvalidBaseURL() {
       assertThrows(() => {
-        resolveWithTestChecks(
-            'https://docs.google.com/path?q=query#fragmento', 'abc');
+        resolveWithTestChecks('https://docs.google.com/path?q=query#fragmento', 'abc');
       });
       assertThrows(() => {
         resolveWithTestChecks('/path?q=query#fragmento', 'abc');
       });
       assertThrows(() => {
-        resolveWithTestChecks(
-            'https://docs.google.com/path?q=query#fragmento', 'https://');
+        resolveWithTestChecks('https://docs.google.com/path?q=query#fragmento', 'https://');
       });
     },
 
@@ -451,8 +433,7 @@ testSuite({
 
   testGetSearchParams: {
     testGetOne() {
-      const url =
-          resolveWithTestChecks('https://google.com?a=b&b=c&b=d&d=f&f=g&g&h=');
+      const url = resolveWithTestChecks('https://google.com?a=b&b=c&b=d&d=f&f=g&g&h=');
       const sp = getSearchParams(url);
       // Get should return the only value if the key is specified once.
       assertEquals('b', sp.get('a'));
@@ -467,8 +448,7 @@ testSuite({
     },
 
     testGetAll() {
-      const url =
-          resolveWithTestChecks('https://google.com?a=b&b=c&b=d&d=f&f=g&g&h=');
+      const url = resolveWithTestChecks('https://google.com?a=b&b=c&b=d&d=f&f=g&g&h=');
       const sp = getSearchParams(url);
       assertArrayEquals(['b'], sp.getAll('a'));
       assertArrayEquals(['c', 'd'], sp.getAll('b'));
@@ -480,8 +460,7 @@ testSuite({
     },
 
     testHas() {
-      const url =
-          resolveWithTestChecks('https://google.com?a=b&b=c&b=d&d=f&f=g&g&h=');
+      const url = resolveWithTestChecks('https://google.com?a=b&b=c&b=d&d=f&f=g&g&h=');
       const sp = getSearchParams(url);
       assertEquals(true, sp.has('a'));
       assertEquals(true, sp.has('b'));
@@ -492,7 +471,8 @@ testSuite({
 
     testGetUrlDecode() {
       const url = resolveWithTestChecks(
-          'https://google.com?key1=value%201&key2=value%40%21%242&key3=value%253&%26=%26&value4=%5C');
+        'https://google.com?key1=value%201&key2=value%40%21%242&key3=value%253&%26=%26&value4=%5C'
+      );
       const sp = getSearchParams(url);
       // Get should return the only value if the key is specified once.
       assertEquals('value 1', sp.get('key1'));
@@ -506,22 +486,23 @@ testSuite({
 
     testToString() {
       const url = resolveWithTestChecks(
-          'https://google.com?key1=value%201&key2=value%40%21%242&key3=value%253&%26=%26');
+        'https://google.com?key1=value%201&key2=value%40%21%242&key3=value%253&%26=%26'
+      );
       const sp = getSearchParams(url);
-      assertEquals(
-          'key1=value+1&key2=value%40%21%242&key3=value%253&%26=%26',
-          sp.toString());
+      assertEquals('key1=value+1&key2=value%40%21%242&key3=value%253&%26=%26', sp.toString());
     },
 
     testFormEncoding() {
       const url = resolveWithTestChecks(
-          'https://google.com?key1=%3A%2F%3F%23%5B%5D%40%21%24%26%27%28%29*%2B%2C%3B%3D%25%5C%7E+');
+        'https://google.com?key1=%3A%2F%3F%23%5B%5D%40%21%24%26%27%28%29*%2B%2C%3B%3D%25%5C%7E+'
+      );
       const sp = getSearchParams(url);
-      assertEquals(':/?#[]@!$&\'()*+,;=%\\~ ', sp.get('key1'));
+      assertEquals(":/?#[]@!$&'()*+,;=%\\~ ", sp.get('key1'));
       assertEquals(
-          'key1=%3A%2F%3F%23%5B%5D%40%21%24%26%27%28%29*%2B%2C%3B%3D%25%5C%7E+',
-          sp.toString());
-    }
+        'key1=%3A%2F%3F%23%5B%5D%40%21%24%26%27%28%29*%2B%2C%3B%3D%25%5C%7E+',
+        sp.toString()
+      );
+    },
   },
 
   testParseHostCasefolding() {
@@ -547,8 +528,7 @@ testSuite({
 
   testParseUserInfo: {
     testWithUsername() {
-      const urlStr =
-          'http://testuser@www.google.com:8080/path?q=query#fragmento';
+      const urlStr = 'http://testuser@www.google.com:8080/path?q=query#fragmento';
       if (userAgent.isIE() || userAgent.isEdge()) {
         assertThrows(() => {
           resolveWithTestChecks(urlStr);
@@ -567,8 +547,7 @@ testSuite({
     },
 
     testWithUsernameAndPassword() {
-      const urlStr =
-          'http://testuser:passwd@www.google.com:8080/path?q=query#fragmento';
+      const urlStr = 'http://testuser:passwd@www.google.com:8080/path?q=query#fragmento';
       if (userAgent.isIE() || userAgent.isEdge()) {
         assertThrows(() => {
           resolveWithTestChecks(urlStr);
@@ -587,10 +566,12 @@ testSuite({
     },
 
     testWithPassword() {
-      const urlStr =
-          'http://:passwd@www.google.com:8080/path?q=query#fragmento';
-      if ((userAgent.isFirefox() && !userAgent.isVersionOrHigher('64')) ||
-          userAgent.isIE() || userAgent.isEdge()) {
+      const urlStr = 'http://:passwd@www.google.com:8080/path?q=query#fragmento';
+      if (
+        (userAgent.isFirefox() && !userAgent.isVersionOrHigher('64')) ||
+        userAgent.isIE() ||
+        userAgent.isEdge()
+      ) {
         assertThrows(() => {
           resolveWithTestChecks(urlStr);
         });
@@ -608,8 +589,7 @@ testSuite({
     },
 
     testWithUsernameHasAtSymbol() {
-      const urlStr =
-          'http://testuser@@www.google.com:8080/path?q=query#fragmento';
+      const urlStr = 'http://testuser@@www.google.com:8080/path?q=query#fragmento';
       if (userAgent.isIE() || userAgent.isEdge()) {
         assertThrows(() => {
           resolveWithTestChecks(urlStr);
@@ -652,12 +632,12 @@ testSuite({
 
     testWithBase() {
       const url = createUrl(
-          {
-            protocol: 'https:',
-            port: '5000',
-          },
-          resolveWithTestChecks(
-              'http://www.google.com:8080/path?q=query#fragmento'));
+        {
+          protocol: 'https:',
+          port: '5000',
+        },
+        resolveWithTestChecks('http://www.google.com:8080/path?q=query#fragmento')
+      );
       assertEquals('https:', url.protocol);
       assertEquals('', url.username);
       assertEquals('', url.password);
@@ -681,8 +661,7 @@ testSuite({
         search: '?a=b&b=c',
         hash: '#newhash',
       };
-      const base = resolveWithTestChecks(
-          'https://www.google.com:8080/path?q=query#fragmento');
+      const base = resolveWithTestChecks('https://www.google.com:8080/path?q=query#fragmento');
       if (userAgent.isIE() || userAgent.isEdge()) {
         // IE and Edge don't support userinfo in URLs.
         assertThrows(() => {
@@ -703,19 +682,18 @@ testSuite({
       assertEquals('#newhash', url.hash);
     },
 
-
     testBaseOverrideEverythingButUserInfo() {
       const url = createUrl(
-          {
-            protocol: 'https:',
-            hostname: 'docs.google.com',
-            port: '5000',
-            pathname: '/newpathname',
-            search: '?a=b&b=c',
-            hash: '#newhash',
-          },
-          resolveWithTestChecks(
-              'http://www.google.com:8080/path?q=query#fragmento'));
+        {
+          protocol: 'https:',
+          hostname: 'docs.google.com',
+          port: '5000',
+          pathname: '/newpathname',
+          search: '?a=b&b=c',
+          hash: '#newhash',
+        },
+        resolveWithTestChecks('http://www.google.com:8080/path?q=query#fragmento')
+      );
       assertEquals('https:', url.protocol);
 
       assertEquals('', url.username);
@@ -730,13 +708,16 @@ testSuite({
     },
 
     testUsesSearchParams() {
-      const newSearchParams = [['a', 'b'], ['b', 'c']];
+      const newSearchParams = [
+        ['a', 'b'],
+        ['b', 'c'],
+      ];
       const url = createUrl(
-          {
-            searchParams: newSearchParams,
-          },
-          resolveWithTestChecks(
-              'https://www.google.com:8080/path?q=query#fragmento'));
+        {
+          searchParams: newSearchParams,
+        },
+        resolveWithTestChecks('https://www.google.com:8080/path?q=query#fragmento')
+      );
       assertEquals('https:', url.protocol);
       assertEquals('www.google.com', url.hostname);
       assertEquals('www.google.com:8080', url.host);
@@ -749,11 +730,11 @@ testSuite({
 
     testUsesSearch() {
       const url = createUrl(
-          {
-            search: '?a=b&b=c',
-          },
-          resolveWithTestChecks(
-              'https://www.google.com:8080/path?q=query#fragmento'));
+        {
+          search: '?a=b&b=c',
+        },
+        resolveWithTestChecks('https://www.google.com:8080/path?q=query#fragmento')
+      );
       assertEquals('https:', url.protocol);
       assertEquals('www.google.com', url.hostname);
       assertEquals('www.google.com:8080', url.host);
@@ -768,11 +749,15 @@ testSuite({
       const base = resolveWithTestChecks('https://www.google.com');
       assertThrows(() => {
         createUrl(
-            {
-              search: '?a=b&b=c',
-              searchParams: [['a', 'b'], ['b', 'c']],
-            },
-            base);
+          {
+            search: '?a=b&b=c',
+            searchParams: [
+              ['a', 'b'],
+              ['b', 'c'],
+            ],
+          },
+          base
+        );
       });
     },
 
@@ -780,22 +765,23 @@ testSuite({
       const base = resolveWithTestChecks('https://www.google.com');
       assertThrows(() => {
         createUrl(
-            {
-              port: ':5000',
-            },
-            base);
+          {
+            port: ':5000',
+          },
+          base
+        );
       });
     },
 
     testOptionalLeadingCharsForSearchAndHash() {
-      const base = resolveWithTestChecks(
-          'https://www.google.com:8080/path?q=query#fragmento');
+      const base = resolveWithTestChecks('https://www.google.com:8080/path?q=query#fragmento');
       const url = createUrl(
-          {
-            search: 'a=b&b=c',
-            hash: 'newhash',
-          },
-          base);
+        {
+          search: 'a=b&b=c',
+          hash: 'newhash',
+        },
+        base
+      );
       assertEquals('https:', url.protocol);
       assertEquals('www.google.com', url.hostname);
       assertEquals('www.google.com:8080', url.host);
@@ -813,8 +799,7 @@ testSuite({
         // Compliant browsers technically can resolve this, but the polyfills
         // cannot do so with any accuracy, so we whitelist URL protocols we
         // support.
-        resolveUrl(
-            'blob:https://whatwg.org/d0360e2f-caee-469f-9a2f-87d5b0456f6f');
+        resolveUrl('blob:https://whatwg.org/d0360e2f-caee-469f-9a2f-87d5b0456f6f');
       });
     },
 
@@ -839,8 +824,7 @@ testSuite({
     },
 
     testParsesWssUrl() {
-      const url =
-          resolveWithTestChecks('wss://google.com:8080/path?with=query');
+      const url = resolveWithTestChecks('wss://google.com:8080/path?with=query');
       assertEquals('wss:', url.protocol);
       assertEquals('google.com', url.hostname);
       assertEquals('wss://google.com:8080', url.origin);
@@ -851,8 +835,7 @@ testSuite({
     },
 
     testParsesFtpUrl() {
-      const url =
-          resolveWithTestChecks('ftp://google.com:8080/path?with=query');
+      const url = resolveWithTestChecks('ftp://google.com:8080/path?with=query');
       assertEquals('ftp:', url.protocol);
       assertEquals('google.com', url.hostname);
       assertEquals('ftp://google.com:8080', url.origin);

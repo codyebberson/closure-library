@@ -45,12 +45,10 @@ let shouldStubAtRuntime = true;
  * loaded), and A2 (A1 but code stubbed at runtime).
  * @return {boolean}
  */
-exports.shouldStubAtRuntime = function() {
-  return shouldStubAtRuntime;
-};
+exports.shouldStubAtRuntime = () => shouldStubAtRuntime;
 
 /** See above. */
-exports.disableStubbingAtRuntime = function() {
+exports.disableStubbingAtRuntime = () => {
   shouldStubAtRuntime = false;
 };
 
@@ -110,7 +108,9 @@ function renderHtml(element, templateResult) {
     return;
   }
   safe.unsafeSetInnerHtmlDoNotUseOrElse(
-      asserts.assert(element), ensureTemplateOutputHtml(templateResult));
+    asserts.assert(element),
+    ensureTemplateOutputHtml(templateResult)
+  );
 }
 exports.renderHtml = renderHtml;
 
@@ -127,10 +127,10 @@ exports.renderHtml = renderHtml;
  * @param {?Object=} injectedData The injected data for the template.
  * @template ARG_TYPES
  */
-function renderElement(
-    element, template, templateData = undefined, injectedData = undefined) {
+function renderElement(element, template, templateData = undefined, injectedData = undefined) {
   const output = /** @type {?SanitizedContent} */ (
-      template(templateData || defaultTemplateData, injectedData));
+    template(templateData || defaultTemplateData, injectedData)
+  );
   if (output && output.renderElement && element) {
     output.renderElement(element);
     return;
@@ -157,11 +157,15 @@ exports.renderElement = renderElement;
  * @template ARG_TYPES
  */
 function renderAsFragment(
-    template, templateData = undefined, injectedData = undefined,
-    domHelper = undefined) {
+  template,
+  templateData = undefined,
+  injectedData = undefined,
+  domHelper = undefined
+) {
   const dom = domHelper || googDom.getDomHelper();
   const output = /** @type {?SanitizedContent} */ (
-      template(templateData || defaultTemplateData, injectedData));
+    template(templateData || defaultTemplateData, injectedData)
+  );
   if (output && output.renderAsElement) {
     return output.renderAsElement();
   }
@@ -186,10 +190,15 @@ exports.renderAsFragment = renderAsFragment;
  * @template ARG_TYPES
  */
 function renderAsElement(
-    template, templateData = undefined, injectedData = undefined,
-    domHelper = undefined) {
+  template,
+  templateData = undefined,
+  injectedData = undefined,
+  domHelper = undefined
+) {
   return convertToElementInternal(
-      template(templateData || defaultTemplateData, injectedData), domHelper);
+    template(templateData || defaultTemplateData, injectedData),
+    domHelper
+  );
 }
 exports.renderAsElement = renderAsElement;
 
@@ -220,10 +229,8 @@ exports.convertToElement = convertToElement;
 function convertToElementInternal(templateResult, domHelper = undefined) {
   const dom = domHelper || googDom.getDomHelper();
   let wrapper;
-  if (templateResult &&
-      (/** @type {!SanitizedContent} */ (templateResult)).renderAsElement) {
-    wrapper =
-        (/** @type {!SanitizedContent} */ (templateResult)).renderAsElement();
+  if (templateResult && /** @type {!SanitizedContent} */ (templateResult).renderAsElement) {
+    wrapper = /** @type {!SanitizedContent} */ (templateResult).renderAsElement();
   } else {
     wrapper = dom.createElement(TagName.DIV);
     const html = ensureTemplateOutputHtml(templateResult);
@@ -269,8 +276,7 @@ function ensureTemplateOutputHtml(templateResult) {
     }
   }
 
-  asserts.fail(
-      `Soy template output is unsafe for use as HTML: ${templateResult}`);
+  asserts.fail(`Soy template output is unsafe for use as HTML: ${templateResult}`);
 
   // In production, return a safe string, rather than failing hard.
   return SafeHtml.htmlEscape('zSoyz');
@@ -287,11 +293,13 @@ function assertFirstTagValid(html) {
   if (asserts.ENABLE_ASSERTS) {
     const matches = html.match(INVALID_TAG_TO_RENDER);
     asserts.assert(
-        !matches,
-        'This template starts with a %s, which ' +
-            'cannot be a child of a <div>, as required by soy internals. ' +
-            'Consider using goog.soy.renderElement instead.\nTemplate output: %s',
-        matches && matches[0], html);
+      !matches,
+      'This template starts with a %s, which ' +
+        'cannot be a child of a <div>, as required by soy internals. ' +
+        'Consider using goog.soy.renderElement instead.\nTemplate output: %s',
+      matches && matches[0],
+      html
+    );
   }
 }
 
@@ -301,7 +309,7 @@ function assertFirstTagValid(html) {
  * @type {!RegExp}
  */
 const INVALID_TAG_TO_RENDER =
-    /^<(body|caption|col|colgroup|head|html|tr|td|th|tbody|thead|tfoot)>/i;
+  /^<(body|caption|col|colgroup|head|html|tr|td|th|tbody|thead|tfoot)>/i;
 
 /**
  * Renders a Soy template as text.
@@ -312,12 +320,9 @@ const INVALID_TAG_TO_RENDER =
  * @return {string}
  * @template ARG_TYPES
  */
-function renderAsText(
-    template, templateData = undefined, injectedData = undefined) {
+function renderAsText(template, templateData = undefined, injectedData = undefined) {
   const result = template(templateData || defaultTemplateData, injectedData);
-  asserts.assertString(
-      result,
-      'renderText was called with a template of kind other than "text"');
+  asserts.assertString(result, 'renderText was called with a template of kind other than "text"');
   return String(result);
 }
 exports.renderAsText = renderAsText;

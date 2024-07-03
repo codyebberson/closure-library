@@ -33,8 +33,6 @@ goog.require('goog.log');
 goog.require('goog.net.EventType');
 goog.require('goog.net.XhrIo');
 
-
-
 /**
  * Builds the RemoteNameFetcher object. This object retrieves codepoint names
  * from a remote data source.
@@ -45,8 +43,7 @@ goog.require('goog.net.XhrIo');
  * @extends {goog.Disposable}
  * @final
  */
-goog.i18n.uChar.RemoteNameFetcher = function(dataSourceUri) {
-  'use strict';
+goog.i18n.uChar.RemoteNameFetcher = function (dataSourceUri) {
   goog.i18n.uChar.RemoteNameFetcher.base(this, 'constructor');
 
   /**
@@ -83,7 +80,6 @@ goog.i18n.uChar.RemoteNameFetcher = function(dataSourceUri) {
 };
 goog.inherits(goog.i18n.uChar.RemoteNameFetcher, goog.Disposable);
 
-
 /**
  * Key to the listener on XHR for prefetch(). Used to clear previous listeners.
  *
@@ -91,7 +87,6 @@ goog.inherits(goog.i18n.uChar.RemoteNameFetcher, goog.Disposable);
  * @private
  */
 goog.i18n.uChar.RemoteNameFetcher.prototype.prefetchLastListenerKey_;
-
 
 /**
  * Key to the listener on XHR for getName(). Used to clear previous listeners.
@@ -101,34 +96,29 @@ goog.i18n.uChar.RemoteNameFetcher.prototype.prefetchLastListenerKey_;
  */
 goog.i18n.uChar.RemoteNameFetcher.prototype.getNameLastListenerKey_;
 
-
 /**
  * A reference to the RemoteNameFetcher logger.
  *
  * @type {goog.log.Logger}
  * @private
  */
-goog.i18n.uChar.RemoteNameFetcher.logger_ =
-    goog.log.getLogger('goog.i18n.uChar.RemoteNameFetcher');
-
+goog.i18n.uChar.RemoteNameFetcher.logger_ = goog.log.getLogger('goog.i18n.uChar.RemoteNameFetcher');
 
 /** @override */
-goog.i18n.uChar.RemoteNameFetcher.prototype.disposeInternal = function() {
-  'use strict';
+goog.i18n.uChar.RemoteNameFetcher.prototype.disposeInternal = function () {
   goog.i18n.uChar.RemoteNameFetcher.base(this, 'disposeInternal');
   this.prefetchXhrIo_.dispose();
   this.getNameXhrIo_.dispose();
 };
 
-
 /** @override */
-goog.i18n.uChar.RemoteNameFetcher.prototype.prefetch = function(characters) {
-  'use strict';
+goog.i18n.uChar.RemoteNameFetcher.prototype.prefetch = function (characters) {
   // Abort the current request if there is one
   if (this.prefetchXhrIo_.isActive()) {
     goog.log.info(
-        goog.i18n.uChar.RemoteNameFetcher.logger_,
-        'Aborted previous prefetch() call for new incoming request');
+      goog.i18n.uChar.RemoteNameFetcher.logger_,
+      'Aborted previous prefetch() call for new incoming request'
+    );
     this.prefetchXhrIo_.abort();
   }
   if (this.prefetchLastListenerKey_) {
@@ -138,29 +128,29 @@ goog.i18n.uChar.RemoteNameFetcher.prototype.prefetch = function(characters) {
   // Set up new listener
   const preFetchCallback = goog.bind(this.prefetchCallback_, this);
   this.prefetchLastListenerKey_ = goog.events.listenOnce(
-      this.prefetchXhrIo_, goog.net.EventType.COMPLETE, preFetchCallback);
+    this.prefetchXhrIo_,
+    goog.net.EventType.COMPLETE,
+    preFetchCallback
+  );
 
   this.fetch_(
-      goog.i18n.uChar.RemoteNameFetcher.RequestType_.BASE_88, characters,
-      this.prefetchXhrIo_);
+    goog.i18n.uChar.RemoteNameFetcher.RequestType_.BASE_88,
+    characters,
+    this.prefetchXhrIo_
+  );
 };
-
 
 /**
  * Callback on completion of the prefetch operation.
  *
  * @private
  */
-goog.i18n.uChar.RemoteNameFetcher.prototype.prefetchCallback_ = function() {
-  'use strict';
+goog.i18n.uChar.RemoteNameFetcher.prototype.prefetchCallback_ = function () {
   this.processResponse_(this.prefetchXhrIo_);
 };
 
-
 /** @override */
-goog.i18n.uChar.RemoteNameFetcher.prototype.getName = function(
-    character, callback) {
-  'use strict';
+goog.i18n.uChar.RemoteNameFetcher.prototype.getName = function (character, callback) {
   const codepoint = goog.i18n.uChar.toCharCode(character).toString(16);
 
   if (this.charNames_.has(codepoint)) {
@@ -172,8 +162,9 @@ goog.i18n.uChar.RemoteNameFetcher.prototype.getName = function(
   // Abort the current request if there is one
   if (this.getNameXhrIo_.isActive()) {
     goog.log.info(
-        goog.i18n.uChar.RemoteNameFetcher.logger_,
-        'Aborted previous getName() call for new incoming request');
+      goog.i18n.uChar.RemoteNameFetcher.logger_,
+      'Aborted previous getName() call for new incoming request'
+    );
     this.getNameXhrIo_.abort();
   }
   if (this.getNameLastListenerKey_) {
@@ -181,16 +172,19 @@ goog.i18n.uChar.RemoteNameFetcher.prototype.getName = function(
   }
 
   // Set up new listener
-  const getNameCallback =
-      goog.bind(this.getNameCallback_, this, codepoint, callback);
+  const getNameCallback = goog.bind(this.getNameCallback_, this, codepoint, callback);
   this.getNameLastListenerKey_ = goog.events.listenOnce(
-      this.getNameXhrIo_, goog.net.EventType.COMPLETE, getNameCallback);
+    this.getNameXhrIo_,
+    goog.net.EventType.COMPLETE,
+    getNameCallback
+  );
 
   this.fetch_(
-      goog.i18n.uChar.RemoteNameFetcher.RequestType_.CODEPOINT, codepoint,
-      this.getNameXhrIo_);
+    goog.i18n.uChar.RemoteNameFetcher.RequestType_.CODEPOINT,
+    codepoint,
+    this.getNameXhrIo_
+  );
 };
-
 
 /**
  * Callback on completion of the getName operation.
@@ -202,15 +196,11 @@ goog.i18n.uChar.RemoteNameFetcher.prototype.getName = function(
  *     defined.
  * @private
  */
-goog.i18n.uChar.RemoteNameFetcher.prototype.getNameCallback_ = function(
-    codepoint, callback) {
-  'use strict';
+goog.i18n.uChar.RemoteNameFetcher.prototype.getNameCallback_ = function (codepoint, callback) {
   this.processResponse_(this.getNameXhrIo_);
-  const name =
-      this.charNames_.has(codepoint) ? this.charNames_.get(codepoint) : null;
+  const name = this.charNames_.has(codepoint) ? this.charNames_.get(codepoint) : null;
   callback(name);
 };
-
 
 /**
  * Process the response received from the server and store results in the cache.
@@ -218,22 +208,21 @@ goog.i18n.uChar.RemoteNameFetcher.prototype.getNameCallback_ = function(
  * @param {!goog.net.XhrIo} xhrIo The XhrIo object used to make the request.
  * @private
  */
-goog.i18n.uChar.RemoteNameFetcher.prototype.processResponse_ = function(xhrIo) {
-  'use strict';
+goog.i18n.uChar.RemoteNameFetcher.prototype.processResponse_ = function (xhrIo) {
   if (!xhrIo.isSuccess()) {
     goog.log.error(
-        goog.i18n.uChar.RemoteNameFetcher.logger_,
-        'Problem with data source: ' + xhrIo.getLastError());
+      goog.i18n.uChar.RemoteNameFetcher.logger_,
+      'Problem with data source: ' + xhrIo.getLastError()
+    );
     return;
   }
   const result = xhrIo.getResponseJson();
-  for (let codepoint in result) {
+  for (const codepoint in result) {
     if (result[codepoint].hasOwnProperty('name')) {
       this.charNames_.set(codepoint, result[codepoint]['name']);
     }
   }
 };
-
 
 /**
  * Enum for the different request types.
@@ -242,7 +231,6 @@ goog.i18n.uChar.RemoteNameFetcher.prototype.processResponse_ = function(xhrIo) {
  * @private
  */
 goog.i18n.uChar.RemoteNameFetcher.RequestType_ = {
-
   /**
    * Request type that uses a base 88 string containing a set of codepoints to
    * be fetched from the server (see goog.i18n.charpickerdata for more
@@ -253,9 +241,8 @@ goog.i18n.uChar.RemoteNameFetcher.RequestType_ = {
   /**
    * Request type that uses a a string of comma separated codepoint values.
    */
-  CODEPOINT: 'c'
+  CODEPOINT: 'c',
 };
-
 
 /**
  * Fetches a set of codepoint names from the data source.
@@ -268,21 +255,13 @@ goog.i18n.uChar.RemoteNameFetcher.RequestType_ = {
  * @param {!goog.net.XhrIo} xhrIo The XHRIo object to execute the server call.
  * @private
  */
-goog.i18n.uChar.RemoteNameFetcher.prototype.fetch_ = function(
-    requestType, requestInput, xhrIo) {
-  'use strict';
+goog.i18n.uChar.RemoteNameFetcher.prototype.fetch_ = function (requestType, requestInput, xhrIo) {
   const url = new goog.Uri(this.dataSourceUri_);
   url.setParameterValue(requestType, requestInput);
   url.setParameterValue('p', 'name');
-  goog.log.info(
-      goog.i18n.uChar.RemoteNameFetcher.logger_, 'Request: ' + url.toString());
+  goog.log.info(goog.i18n.uChar.RemoteNameFetcher.logger_, 'Request: ' + url.toString());
   xhrIo.send(url);
 };
 
-
 /** @override */
-goog.i18n.uChar.RemoteNameFetcher.prototype.isNameAvailable = function(
-    character) {
-  'use strict';
-  return true;
-};
+goog.i18n.uChar.RemoteNameFetcher.prototype.isNameAvailable = (character) => true;

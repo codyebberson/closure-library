@@ -19,18 +19,14 @@ goog.require('goog.functions');
 goog.require('goog.ui.editor.AbstractDialog');
 goog.requireType('goog.dom.DomHelper');
 
-
 // *** Public interface ***************************************************** //
-
-
 
 /**
  * A plugin that opens the hello world dialog.
  * @final
  * @unrestricted
  */
-goog.demos.editor.HelloWorldDialogPlugin =
-    class extends goog.editor.plugins.AbstractDialogPlugin {
+goog.demos.editor.HelloWorldDialogPlugin = class extends goog.editor.plugins.AbstractDialogPlugin {
   constructor() {
     super(goog.demos.editor.HelloWorldDialogPlugin.Command.HELLO_WORLD_DIALOG);
   }
@@ -46,8 +42,11 @@ goog.demos.editor.HelloWorldDialogPlugin =
   createDialog(dialogDomHelper) {
     const dialog = new goog.demos.editor.HelloWorldDialog(dialogDomHelper);
     dialog.addEventListener(
-        goog.ui.editor.AbstractDialog.EventType.OK, this.handleOk_, false,
-        this);
+      goog.ui.editor.AbstractDialog.EventType.OK,
+      this.handleOk_,
+      false,
+      this
+    );
     return dialog;
   }
 
@@ -69,8 +68,7 @@ goog.demos.editor.HelloWorldDialogPlugin =
     const range = this.getFieldObject().getRange();
     range.removeContents();
     // And replace it with a span containing our hello world message.
-    let createdNode = this.getFieldDomHelper().createDom(
-        goog.dom.TagName.SPAN, null, e.message);
+    let createdNode = this.getFieldDomHelper().createDom(goog.dom.TagName.SPAN, null, e.message);
     createdNode = range.insertNode(createdNode, false);
     // Place the cursor at the end of the new text node (false == to the right).
     goog.editor.range.placeCursorNextTo(createdNode, false);
@@ -82,24 +80,18 @@ goog.demos.editor.HelloWorldDialogPlugin =
   }
 };
 
-
-
 /**
  * Commands implemented by this plugin.
  * @enum {string}
  */
 goog.demos.editor.HelloWorldDialogPlugin.Command = {
-  HELLO_WORLD_DIALOG: 'helloWorldDialog'
+  HELLO_WORLD_DIALOG: 'helloWorldDialog',
 };
-
 
 /** @override */
 goog.demos.editor.HelloWorldDialogPlugin.prototype.getTrogClassId =
-    goog.functions.constant('HelloWorldDialog');
-
+  goog.functions.constant('HelloWorldDialog');
 
 // *** Protected interface ************************************************** //
-
-
 
 // *** Private implementation *********************************************** //

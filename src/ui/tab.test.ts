@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.TabTest');
-goog.setTestOnly();
 
 const Component = goog.require('goog.ui.Component');
 const TabRenderer = goog.require('goog.ui.TabRenderer');
@@ -31,27 +30,29 @@ testSuite({
     assertNotNull('Tab must not be null', tab);
     assertEquals('Tab must have expected content', 'Hello', tab.getContent());
     assertEquals(
-        'Tab\'s renderer must default to TabRenderer',
-        TabRenderer.getInstance(), tab.getRenderer());
+      "Tab's renderer must default to TabRenderer",
+      TabRenderer.getInstance(),
+      tab.getRenderer()
+    );
     assertTrue(
-        'Tab must support the SELECTED state',
-        tab.isSupportedState(Component.State.SELECTED));
+      'Tab must support the SELECTED state',
+      tab.isSupportedState(Component.State.SELECTED)
+    );
+    assertTrue('SELECTED must be an auto-state', tab.isAutoState(Component.State.SELECTED));
     assertTrue(
-        'SELECTED must be an auto-state',
-        tab.isAutoState(Component.State.SELECTED));
+      'Tab must dispatch transition events for the DISABLED state',
+      tab.isDispatchTransitionEvents(Component.State.DISABLED)
+    );
     assertTrue(
-        'Tab must dispatch transition events for the DISABLED state',
-        tab.isDispatchTransitionEvents(Component.State.DISABLED));
-    assertTrue(
-        'Tab must dispatch transition events for the SELECTED state',
-        tab.isDispatchTransitionEvents(Component.State.SELECTED));
+      'Tab must dispatch transition events for the SELECTED state',
+      tab.isDispatchTransitionEvents(Component.State.SELECTED)
+    );
   },
 
   testGetSetTooltip() {
     assertUndefined('Tooltip must be undefined by default', tab.getTooltip());
     tab.setTooltip('Hello, world!');
-    assertEquals(
-        'Tooltip must have expected value', 'Hello, world!', tab.getTooltip());
+    assertEquals('Tooltip must have expected value', 'Hello, world!', tab.getTooltip());
   },
 
   testSetAriaLabel() {
@@ -61,17 +62,17 @@ testSuite({
     const element = tab.getElementStrict();
     assertNotNull('Element must not be null', element);
     assertEquals(
-        'Tab element must have expected aria-label', 'My tab',
-        element.getAttribute('aria-label'));
-    assertEquals(
-        'Tab element must have expected aria role', 'tab',
-        element.getAttribute('role'));
+      'Tab element must have expected aria-label',
+      'My tab',
+      element.getAttribute('aria-label')
+    );
+    assertEquals('Tab element must have expected aria role', 'tab', element.getAttribute('role'));
     tab.setAriaLabel('My new tab');
     assertEquals(
-        'Tab element must have updated aria-label', 'My new tab',
-        element.getAttribute('aria-label'));
-    assertEquals(
-        'Tab element must have expected aria role', 'tab',
-        element.getAttribute('role'));
+      'Tab element must have updated aria-label',
+      'My new tab',
+      element.getAttribute('aria-label')
+    );
+    assertEquals('Tab element must have expected aria role', 'tab', element.getAttribute('role'));
   },
 });

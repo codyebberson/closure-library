@@ -28,8 +28,6 @@ goog.require('goog.ui.SyntheticKeyboardEvent');
 goog.require('goog.userAgent');
 goog.requireType('goog.events.BrowserEvent');
 
-
-
 /**
  * Component for handling keyboard shortcuts. A shortcut is registered and bound
  * to a specific identifier. Once the shortcut is triggered an event is fired
@@ -45,8 +43,7 @@ goog.requireType('goog.events.BrowserEvent');
  * @constructor
  * @extends {goog.events.EventTarget}
  */
-goog.ui.KeyboardShortcutHandler = function(keyTarget) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler = function (keyTarget) {
   goog.events.EventTarget.call(this);
 
   /**
@@ -82,16 +79,14 @@ goog.ui.KeyboardShortcutHandler = function(keyTarget) {
    * @type {Object}
    * @private
    */
-  this.globalKeys_ = goog.object.createSet(
-      goog.ui.KeyboardShortcutHandler.DEFAULT_GLOBAL_KEYS_);
+  this.globalKeys_ = goog.object.createSet(goog.ui.KeyboardShortcutHandler.DEFAULT_GLOBAL_KEYS_);
 
   /**
    * List of input types that should only accept ENTER as a shortcut.
    * @type {Object}
    * @private
    */
-  this.textInputs_ = goog.object.createSet(
-      goog.ui.KeyboardShortcutHandler.DEFAULT_TEXT_INPUTS_);
+  this.textInputs_ = goog.object.createSet(goog.ui.KeyboardShortcutHandler.DEFAULT_TEXT_INPUTS_);
 
   /**
    * Whether to always prevent the default action if a shortcut event is fired.
@@ -143,8 +138,6 @@ goog.ui.KeyboardShortcutHandler = function(keyTarget) {
 };
 goog.inherits(goog.ui.KeyboardShortcutHandler, goog.events.EventTarget);
 
-
-
 /**
  * A node in a keyboard shortcut sequence tree. A node is either:
  * 1. A terminal node with a non-nullable shortcut string which is the
@@ -159,8 +152,7 @@ goog.inherits(goog.ui.KeyboardShortcutHandler, goog.events.EventTarget);
  * @struct
  * @private
  */
-goog.ui.KeyboardShortcutHandler.SequenceNode_ = function(opt_shortcut) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.SequenceNode_ = function (opt_shortcut) {
   /** @const {?string} The shorcut action identifier, for terminal nodes. */
   this.shortcut = opt_shortcut || null;
 
@@ -168,18 +160,14 @@ goog.ui.KeyboardShortcutHandler.SequenceNode_ = function(opt_shortcut) {
   this.next = opt_shortcut ? null : {};
 };
 
-
 /**
  * Creates a terminal shortcut sequence node for the given shortcut identifier.
  * @param {string} shortcut The shortcut identifier.
  * @return {!goog.ui.KeyboardShortcutHandler.SequenceNode_}
  * @private
  */
-goog.ui.KeyboardShortcutHandler.createTerminalNode_ = function(shortcut) {
-  'use strict';
-  return new goog.ui.KeyboardShortcutHandler.SequenceNode_(shortcut);
-};
-
+goog.ui.KeyboardShortcutHandler.createTerminalNode_ = (shortcut) =>
+  new goog.ui.KeyboardShortcutHandler.SequenceNode_(shortcut);
 
 /**
  * Creates an internal shortcut sequence node - a non-terminal part of a
@@ -187,11 +175,8 @@ goog.ui.KeyboardShortcutHandler.createTerminalNode_ = function(shortcut) {
  * @return {!goog.ui.KeyboardShortcutHandler.SequenceNode_}
  * @private
  */
-goog.ui.KeyboardShortcutHandler.createInternalNode_ = function() {
-  'use strict';
-  return new goog.ui.KeyboardShortcutHandler.SequenceNode_();
-};
-
+goog.ui.KeyboardShortcutHandler.createInternalNode_ = () =>
+  new goog.ui.KeyboardShortcutHandler.SequenceNode_();
 
 /**
  * A map of strokes (represented as strings) to the nodes reached by those
@@ -201,14 +186,12 @@ goog.ui.KeyboardShortcutHandler.createInternalNode_ = function() {
  */
 goog.ui.KeyboardShortcutHandler.SequenceTree_;
 
-
 /**
  * Maximum allowed delay, in milliseconds, allowed between the first and second
  * key in a key sequence.
  * @type {number}
  */
-goog.ui.KeyboardShortcutHandler.MAX_KEY_SEQUENCE_DELAY = 1500;  // 1.5 sec
-
+goog.ui.KeyboardShortcutHandler.MAX_KEY_SEQUENCE_DELAY = 1500; // 1.5 sec
 
 /**
  * Bit values for modifier keys.
@@ -219,9 +202,8 @@ goog.ui.KeyboardShortcutHandler.Modifiers = {
   SHIFT: 1,
   CTRL: 2,
   ALT: 4,
-  META: 8
+  META: 8,
 };
-
 
 /**
  * Keys marked as global by default.
@@ -229,13 +211,21 @@ goog.ui.KeyboardShortcutHandler.Modifiers = {
  * @private
  */
 goog.ui.KeyboardShortcutHandler.DEFAULT_GLOBAL_KEYS_ = [
-  goog.events.KeyCodes.ESC, goog.events.KeyCodes.F1, goog.events.KeyCodes.F2,
-  goog.events.KeyCodes.F3, goog.events.KeyCodes.F4, goog.events.KeyCodes.F5,
-  goog.events.KeyCodes.F6, goog.events.KeyCodes.F7, goog.events.KeyCodes.F8,
-  goog.events.KeyCodes.F9, goog.events.KeyCodes.F10, goog.events.KeyCodes.F11,
-  goog.events.KeyCodes.F12, goog.events.KeyCodes.PAUSE
+  goog.events.KeyCodes.ESC,
+  goog.events.KeyCodes.F1,
+  goog.events.KeyCodes.F2,
+  goog.events.KeyCodes.F3,
+  goog.events.KeyCodes.F4,
+  goog.events.KeyCodes.F5,
+  goog.events.KeyCodes.F6,
+  goog.events.KeyCodes.F7,
+  goog.events.KeyCodes.F8,
+  goog.events.KeyCodes.F9,
+  goog.events.KeyCodes.F10,
+  goog.events.KeyCodes.F11,
+  goog.events.KeyCodes.F12,
+  goog.events.KeyCodes.PAUSE,
 ];
-
 
 /**
  * Text input types to allow only ENTER shortcuts.
@@ -244,10 +234,21 @@ goog.ui.KeyboardShortcutHandler.DEFAULT_GLOBAL_KEYS_ = [
  * @private
  */
 goog.ui.KeyboardShortcutHandler.DEFAULT_TEXT_INPUTS_ = [
-  'color', 'date', 'datetime', 'datetime-local', 'email', 'month', 'number',
-  'password', 'search', 'tel', 'text', 'time', 'url', 'week'
+  'color',
+  'date',
+  'datetime',
+  'datetime-local',
+  'email',
+  'month',
+  'number',
+  'password',
+  'search',
+  'tel',
+  'text',
+  'time',
+  'url',
+  'week',
 ];
-
 
 /**
  * Events.
@@ -255,9 +256,8 @@ goog.ui.KeyboardShortcutHandler.DEFAULT_TEXT_INPUTS_ = [
  */
 goog.ui.KeyboardShortcutHandler.EventType = {
   SHORTCUT_TRIGGERED: 'shortcut',
-  SHORTCUT_PREFIX: 'shortcut_'
+  SHORTCUT_PREFIX: 'shortcut_',
 };
-
 
 /**
  * Cache for name to key code lookup.
@@ -266,14 +266,12 @@ goog.ui.KeyboardShortcutHandler.EventType = {
  */
 goog.ui.KeyboardShortcutHandler.nameToKeyCodeCache_;
 
-
 /**
  * Target on which to listen for key events.
  * @type {goog.events.EventTarget|EventTarget}
  * @private
  */
 goog.ui.KeyboardShortcutHandler.prototype.keyTarget_;
-
 
 /**
  * Whether a key event is a printable-key event. Windows uses ctrl+alt
@@ -287,21 +285,20 @@ goog.ui.KeyboardShortcutHandler.prototype.keyTarget_;
  */
 goog.ui.KeyboardShortcutHandler.prototype.isPrintableKey_;
 
-
 /**
  * Static method for getting the key code for a given key.
  * @param {string} name Name of key.
  * @return {number} The key code.
  */
-goog.ui.KeyboardShortcutHandler.getKeyCode = function(name) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.getKeyCode = (name) => {
   // Build reverse lookup object the first time this method is called.
   if (!goog.ui.KeyboardShortcutHandler.nameToKeyCodeCache_) {
     var map = {};
     for (var key in goog.events.KeyNames) {
       // Explicitly convert the stringified map keys to numbers and normalize.
-      map[goog.events.KeyNames[key]] =
-          goog.events.KeyCodes.normalizeKeyCode(parseInt(key, 10));
+      map[goog.events.KeyNames[key]] = goog.events.KeyCodes.normalizeKeyCode(
+        Number.parseInt(key, 10)
+      );
     }
     goog.ui.KeyboardShortcutHandler.nameToKeyCodeCache_ = map;
   }
@@ -309,7 +306,6 @@ goog.ui.KeyboardShortcutHandler.getKeyCode = function(name) {
   // Check if key is in cache.
   return goog.ui.KeyboardShortcutHandler.nameToKeyCodeCache_[name];
 };
-
 
 /**
  * Sets whether to always prevent the default action when a shortcut event is
@@ -319,12 +315,11 @@ goog.ui.KeyboardShortcutHandler.getKeyCode = function(name) {
  * is fired. The default value is true.
  * @param {boolean} alwaysPreventDefault Whether to always call preventDefault.
  */
-goog.ui.KeyboardShortcutHandler.prototype.setAlwaysPreventDefault = function(
-    alwaysPreventDefault) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.setAlwaysPreventDefault = function (
+  alwaysPreventDefault
+) {
   this.alwaysPreventDefault_ = alwaysPreventDefault;
 };
-
 
 /**
  * Returns whether the default action will always be prevented when a shortcut
@@ -332,11 +327,9 @@ goog.ui.KeyboardShortcutHandler.prototype.setAlwaysPreventDefault = function(
  * @see #setAlwaysPreventDefault
  * @return {boolean} Whether preventDefault will always be called.
  */
-goog.ui.KeyboardShortcutHandler.prototype.getAlwaysPreventDefault = function() {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.getAlwaysPreventDefault = function () {
   return this.alwaysPreventDefault_;
 };
-
 
 /**
  * Sets whether to always stop propagation for the event when fired. If false,
@@ -347,12 +340,11 @@ goog.ui.KeyboardShortcutHandler.prototype.getAlwaysPreventDefault = function() {
  * @param {boolean} alwaysStopPropagation Whether to always call
  *     stopPropagation.
  */
-goog.ui.KeyboardShortcutHandler.prototype.setAlwaysStopPropagation = function(
-    alwaysStopPropagation) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.setAlwaysStopPropagation = function (
+  alwaysStopPropagation
+) {
   this.alwaysStopPropagation_ = alwaysStopPropagation;
 };
-
 
 /**
  * Returns whether the event will always be stopped from propagating beyond its
@@ -360,24 +352,18 @@ goog.ui.KeyboardShortcutHandler.prototype.setAlwaysStopPropagation = function(
  * @see #setAlwaysStopPropagation
  * @return {boolean} Whether stopPropagation will always be called.
  */
-goog.ui.KeyboardShortcutHandler.prototype.getAlwaysStopPropagation =
-    function() {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.getAlwaysStopPropagation = function () {
   return this.alwaysStopPropagation_;
 };
-
 
 /**
  * Sets whether to treat all shortcuts (including modifier shortcuts) as if the
  * keys had been passed to the setGlobalKeys function.
  * @param {boolean} allShortcutsGlobal Whether to treat all shortcuts as global.
  */
-goog.ui.KeyboardShortcutHandler.prototype.setAllShortcutsAreGlobal = function(
-    allShortcutsGlobal) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.setAllShortcutsAreGlobal = function (allShortcutsGlobal) {
   this.allShortcutsAreGlobal_ = allShortcutsGlobal;
 };
-
 
 /**
  * Returns whether all shortcuts (including modifier shortcuts) are treated as
@@ -385,12 +371,9 @@ goog.ui.KeyboardShortcutHandler.prototype.setAllShortcutsAreGlobal = function(
  * @see #setAllShortcutsAreGlobal
  * @return {boolean} Whether all shortcuts are treated as globals.
  */
-goog.ui.KeyboardShortcutHandler.prototype.getAllShortcutsAreGlobal =
-    function() {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.getAllShortcutsAreGlobal = function () {
   return this.allShortcutsAreGlobal_;
 };
-
 
 /**
  * Sets whether to treat shortcuts with modifiers as if the keys had been
@@ -400,12 +383,11 @@ goog.ui.KeyboardShortcutHandler.prototype.getAllShortcutsAreGlobal =
  * @param {boolean} modifierShortcutsGlobal Whether to treat shortcuts with
  *     modifiers as global.
  */
-goog.ui.KeyboardShortcutHandler.prototype.setModifierShortcutsAreGlobal =
-    function(modifierShortcutsGlobal) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.setModifierShortcutsAreGlobal = function (
+  modifierShortcutsGlobal
+) {
   this.modifierShortcutsAreGlobal_ = modifierShortcutsGlobal;
 };
-
 
 /**
  * Returns whether shortcuts with modifiers are treated as if the keys had been
@@ -415,12 +397,9 @@ goog.ui.KeyboardShortcutHandler.prototype.setModifierShortcutsAreGlobal =
  * @see #setModifierShortcutsAreGlobal
  * @return {boolean} Whether shortcuts with modifiers are treated as globals.
  */
-goog.ui.KeyboardShortcutHandler.prototype.getModifierShortcutsAreGlobal =
-    function() {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.getModifierShortcutsAreGlobal = function () {
   return this.modifierShortcutsAreGlobal_;
 };
-
 
 /**
  * Sets whether to treat space key as a shortcut when the focused element is a
@@ -428,12 +407,11 @@ goog.ui.KeyboardShortcutHandler.prototype.getModifierShortcutsAreGlobal =
  * @param {boolean} allowSpaceKeyOnButtons Whether to treat space key as a
  *     shortcut when the focused element is a checkbox, radiobutton or button.
  */
-goog.ui.KeyboardShortcutHandler.prototype.setAllowSpaceKeyOnButtons = function(
-    allowSpaceKeyOnButtons) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.setAllowSpaceKeyOnButtons = function (
+  allowSpaceKeyOnButtons
+) {
   this.allowSpaceKeyOnButtons_ = allowSpaceKeyOnButtons;
 };
-
 
 /**
  * Registers a keyboard shortcut.
@@ -469,14 +447,14 @@ goog.ui.KeyboardShortcutHandler.prototype.setAllowSpaceKeyOnButtons = function(
  *   Ctrl+g a        registerShortcut(str, 'ctrl+g a')
  *   Ctrl+g Shift+a  registerShortcut(str, 'ctrl+g shift+a')
  */
-goog.ui.KeyboardShortcutHandler.prototype.registerShortcut = function(
-    identifier, var_args) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.registerShortcut = function (identifier, var_args) {
   // Add shortcut to shortcuts_ tree
   goog.ui.KeyboardShortcutHandler.setShortcut_(
-      this.shortcuts_, this.interpretStrokes_(1, arguments), identifier);
+    this.shortcuts_,
+    this.interpretStrokes_(1, arguments),
+    identifier
+  );
 };
-
 
 /**
  * Unregisters a keyboard shortcut by keyCode and modifiers or string
@@ -497,14 +475,13 @@ goog.ui.KeyboardShortcutHandler.prototype.registerShortcut = function(
  * @param {...(number|string|Array<number>)} var_args String representation, or
  *     array or list of alternating key codes and modifiers.
  */
-goog.ui.KeyboardShortcutHandler.prototype.unregisterShortcut = function(
-    var_args) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.unregisterShortcut = function (var_args) {
   // Remove shortcut from tree.
   goog.ui.KeyboardShortcutHandler.unsetShortcut_(
-      this.shortcuts_, this.interpretStrokes_(0, arguments));
+    this.shortcuts_,
+    this.interpretStrokes_(0, arguments)
+  );
 };
-
 
 /**
  * Verifies if a particular keyboard shortcut is registered already. It has
@@ -526,13 +503,9 @@ goog.ui.KeyboardShortcutHandler.prototype.unregisterShortcut = function(
  *     array or list of alternating key codes and modifiers.
  * @return {boolean} Whether the specified keyboard shortcut is registered.
  */
-goog.ui.KeyboardShortcutHandler.prototype.isShortcutRegistered = function(
-    var_args) {
-  'use strict';
-  return this.checkShortcut_(
-      this.shortcuts_, this.interpretStrokes_(0, arguments));
+goog.ui.KeyboardShortcutHandler.prototype.isShortcutRegistered = function (var_args) {
+  return this.checkShortcut_(this.shortcuts_, this.interpretStrokes_(0, arguments));
 };
-
 
 /**
  * Parses the variable arguments for registerShortcut and unregisterShortcut.
@@ -545,27 +518,26 @@ goog.ui.KeyboardShortcutHandler.prototype.isShortcutRegistered = function(
  *     represented as arrays of strings.
  * @private
  */
-goog.ui.KeyboardShortcutHandler.prototype.interpretStrokes_ = function(
-    initialIndex, args) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.interpretStrokes_ = (initialIndex, args) => {
   var strokes;
 
   // Build strokes array from string.
-  if (typeof (args[initialIndex]) === 'string') {
-    strokes =
-        goog.ui.KeyboardShortcutHandler.parseStringShortcut(args[initialIndex])
-            .map(function(stroke) {
-              'use strict';
-              goog.asserts.assertNumber(
-                  stroke.keyCode,
-                  'A non-modifier key is needed in each stroke.');
-              return goog.ui.KeyboardShortcutHandler.makeStroke_(
-                  stroke.key || '', stroke.keyCode, stroke.modifiers);
-            });
+  if (typeof args[initialIndex] === 'string') {
+    strokes = goog.ui.KeyboardShortcutHandler.parseStringShortcut(args[initialIndex]).map(
+      (stroke) => {
+        goog.asserts.assertNumber(stroke.keyCode, 'A non-modifier key is needed in each stroke.');
+        return goog.ui.KeyboardShortcutHandler.makeStroke_(
+          stroke.key || '',
+          stroke.keyCode,
+          stroke.modifiers
+        );
+      }
+    );
 
     // Build strokes array from arguments list or from array.
   } else {
-    var strokesArgs = args, i = initialIndex;
+    var strokesArgs = args,
+      i = initialIndex;
     if (Array.isArray(args[initialIndex])) {
       strokesArgs = args[initialIndex];
       i = 0;
@@ -575,64 +547,53 @@ goog.ui.KeyboardShortcutHandler.prototype.interpretStrokes_ = function(
     for (; i < strokesArgs.length; i += 2) {
       // keyName == '' because this branch is only run on numbers
       // (corresponding to keyCodes).
-      strokes.push(goog.ui.KeyboardShortcutHandler.makeStroke_(
-          '', strokesArgs[i], strokesArgs[i + 1]));
+      strokes.push(
+        goog.ui.KeyboardShortcutHandler.makeStroke_('', strokesArgs[i], strokesArgs[i + 1])
+      );
     }
   }
 
   return strokes;
 };
 
-
 /**
  * Unregisters all keyboard shortcuts.
  */
-goog.ui.KeyboardShortcutHandler.prototype.unregisterAll = function() {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.unregisterAll = function () {
   this.shortcuts_ = {};
 };
-
 
 /**
  * Sets the global keys; keys that are safe to always regarded as shortcuts,
  * even if entered in a textarea or input field.
  * @param {Array<number>} keys List of keys.
  */
-goog.ui.KeyboardShortcutHandler.prototype.setGlobalKeys = function(keys) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.setGlobalKeys = function (keys) {
   this.globalKeys_ = goog.object.createSet(keys);
 };
-
 
 /**
  * @return {!Array<string>} The global keys, i.e. keys that are safe to always
  *     regard as shortcuts, even if entered in a textarea or input field.
  */
-goog.ui.KeyboardShortcutHandler.prototype.getGlobalKeys = function() {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.getGlobalKeys = function () {
   return goog.object.getKeys(this.globalKeys_);
 };
 
-
 /** @override */
-goog.ui.KeyboardShortcutHandler.prototype.disposeInternal = function() {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.disposeInternal = function () {
   goog.ui.KeyboardShortcutHandler.superClass_.disposeInternal.call(this);
   this.unregisterAll();
   this.clearKeyListener();
 };
-
 
 /**
  * Returns event type for a specific shortcut.
  * @param {string} identifier Identifier for the shortcut task.
  * @return {string} The event type.
  */
-goog.ui.KeyboardShortcutHandler.prototype.getEventType = function(identifier) {
-  'use strict';
-  return goog.ui.KeyboardShortcutHandler.EventType.SHORTCUT_PREFIX + identifier;
-};
-
+goog.ui.KeyboardShortcutHandler.prototype.getEventType = (identifier) =>
+  goog.ui.KeyboardShortcutHandler.EventType.SHORTCUT_PREFIX + identifier;
 
 /**
  * Builds stroke array from string representation of shortcut.
@@ -641,22 +602,24 @@ goog.ui.KeyboardShortcutHandler.prototype.getEventType = function(identifier) {
  *     stroke array.  A null keyCode means no non-modifier key was part of the
  *     stroke.
  */
-goog.ui.KeyboardShortcutHandler.parseStringShortcut = function(s) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.parseStringShortcut = (s) => {
   // Normalize whitespace and force to lower case.
-  s = s.replace(/[ +]*\+[ +]*/g, '+').replace(/[ ]+/g, ' ').toLowerCase();
+  s = s
+    .replace(/[ +]*\+[ +]*/g, '+')
+    .replace(/[ ]+/g, ' ')
+    .toLowerCase();
 
   // Build strokes array from string, space separates strokes, plus separates
   // individual keys.
   var groups = s.split(' ');
   var strokes = [];
-  for (var group, i = 0; group = groups[i]; i++) {
+  for (var group, i = 0; (group = groups[i]); i++) {
     var keys = group.split('+');
     // Explicitly re-initialize key data (JS does not have block scoping).
     var keyName = null;
     var keyCode = null;
     var modifiers = goog.ui.KeyboardShortcutHandler.Modifiers.NONE;
-    for (var key, j = 0; key = keys[j]; j++) {
+    for (var key, j = 0; (key = keys[j]); j++) {
       switch (key) {
         case 'shift':
           modifiers |= goog.ui.KeyboardShortcutHandler.Modifiers.SHIFT;
@@ -675,17 +638,15 @@ goog.ui.KeyboardShortcutHandler.parseStringShortcut = function(s) {
         goog.asserts.fail('At most one non-modifier key can be in a stroke.');
       }
       keyCode = goog.ui.KeyboardShortcutHandler.getKeyCode(key);
-      goog.asserts.assertNumber(
-          keyCode, 'Key name not found in goog.events.KeyNames: ' + key);
+      goog.asserts.assertNumber(keyCode, 'Key name not found in goog.events.KeyNames: ' + key);
       keyName = key;
       break;
     }
-    strokes.push({key: keyName, keyCode: keyCode, modifiers: modifiers});
+    strokes.push({ key: keyName, keyCode: keyCode, modifiers: modifiers });
   }
 
   return strokes;
 };
-
 
 /**
  * Adds a key event listener that triggers {@link #handleKeyDown_} when keys
@@ -694,17 +655,23 @@ goog.ui.KeyboardShortcutHandler.parseStringShortcut = function(s) {
  *     event listener should be attached to.
  * @protected
  */
-goog.ui.KeyboardShortcutHandler.prototype.initializeKeyListener = function(
-    keyTarget) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.initializeKeyListener = function (keyTarget) {
   this.keyTarget_ = keyTarget;
 
   goog.events.listen(
-      this.keyTarget_, goog.events.EventType.KEYDOWN,
-      this.handleBrowserKeyDown_, undefined /* opt_capture */, this);
+    this.keyTarget_,
+    goog.events.EventType.KEYDOWN,
+    this.handleBrowserKeyDown_,
+    undefined /* opt_capture */,
+    this
+  );
   goog.events.listen(
-      this.keyTarget_, goog.ui.SyntheticKeyboardEvent.Type.KEYDOWN,
-      this.handleSyntheticKeyDown_, undefined /* opt_capture */, this);
+    this.keyTarget_,
+    goog.ui.SyntheticKeyboardEvent.Type.KEYDOWN,
+    this.handleSyntheticKeyDown_,
+    undefined /* opt_capture */,
+    this
+  );
 
   // Windows uses ctrl+alt keys (a.k.a. alt-graph keys) for typing characters
   // on European keyboards (e.g. ctrl+alt+e for an an euro sign.) Unfortunately,
@@ -714,44 +681,54 @@ goog.ui.KeyboardShortcutHandler.prototype.initializeKeyListener = function(
   // shortcut-key events if ctrl+alt keys are used for typing characters.
   if (goog.userAgent.WINDOWS) {
     goog.events.listen(
-        this.keyTarget_, goog.events.EventType.KEYPRESS,
-        this.handleWindowsBrowserKeyPress_, undefined /* opt_capture */, this);
+      this.keyTarget_,
+      goog.events.EventType.KEYPRESS,
+      this.handleWindowsBrowserKeyPress_,
+      undefined /* opt_capture */,
+      this
+    );
     goog.events.listen(
-        this.keyTarget_, goog.ui.SyntheticKeyboardEvent.Type.KEYPRESS,
-        this.handleWindowsSyntheticKeyPress_, undefined /* opt_capture */,
-        this);
+      this.keyTarget_,
+      goog.ui.SyntheticKeyboardEvent.Type.KEYPRESS,
+      this.handleWindowsSyntheticKeyPress_,
+      undefined /* opt_capture */,
+      this
+    );
   }
 
   goog.events.listen(
-      this.keyTarget_, goog.events.EventType.KEYUP, this.handleBrowserKeyUp_,
-      undefined /* opt_capture */, this);
+    this.keyTarget_,
+    goog.events.EventType.KEYUP,
+    this.handleBrowserKeyUp_,
+    undefined /* opt_capture */,
+    this
+  );
   goog.events.listen(
-      this.keyTarget_, goog.ui.SyntheticKeyboardEvent.Type.KEYUP,
-      this.handleSyntheticKeyUp_, undefined /* opt_capture */, this);
+    this.keyTarget_,
+    goog.ui.SyntheticKeyboardEvent.Type.KEYUP,
+    this.handleSyntheticKeyUp_,
+    undefined /* opt_capture */,
+    this
+  );
 };
-
 
 /**
  * Keyup handler for events initiated from the browser.
  * @param {!goog.events.BrowserEvent} e The key event.
  * @private
  */
-goog.ui.KeyboardShortcutHandler.prototype.handleBrowserKeyUp_ = function(e) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.handleBrowserKeyUp_ = function (e) {
   this.handleKeyUp_(goog.ui.KeyboardEventData.fromBrowserEvent(e));
 };
-
 
 /**
  * Keyup handler for synthetic events.
  * @param {!goog.ui.SyntheticKeyboardEvent} e
  * @private
  */
-goog.ui.KeyboardShortcutHandler.prototype.handleSyntheticKeyUp_ = function(e) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.handleSyntheticKeyUp_ = function (e) {
   this.handleKeyUp_(e.getData());
 };
-
 
 /**
  * Handler for when a keyup event is fired. Currently only handled on Windows
@@ -759,8 +736,7 @@ goog.ui.KeyboardShortcutHandler.prototype.handleSyntheticKeyUp_ = function(e) {
  * @param {!goog.ui.KeyboardEventData} data
  * @private
  */
-goog.ui.KeyboardShortcutHandler.prototype.handleKeyUp_ = function(data) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.handleKeyUp_ = function (data) {
   if (goog.userAgent.GECKO) {
     this.handleGeckoKeyUp_(data);
   }
@@ -770,23 +746,22 @@ goog.ui.KeyboardShortcutHandler.prototype.handleKeyUp_ = function(data) {
   }
 };
 
-
 /**
  * Handler for when a keyup event is fired in Firefox (Gecko).
  * @param {!goog.ui.KeyboardEventData} data
  * @private
  */
-goog.ui.KeyboardShortcutHandler.prototype.handleGeckoKeyUp_ = function(data) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.handleGeckoKeyUp_ = function (data) {
   // Firefox triggers buttons on space keyUp instead of keyDown.  So if space
   // keyDown activated a shortcut, do NOT also trigger the focused button.
-  if (goog.events.KeyCodes.SPACE == this.activeShortcutKeyForGecko_ &&
-      goog.events.KeyCodes.SPACE == data.getKeyCode()) {
+  if (
+    goog.events.KeyCodes.SPACE == this.activeShortcutKeyForGecko_ &&
+    goog.events.KeyCodes.SPACE == data.getKeyCode()
+  ) {
     data.getPreventDefaultFn()();
   }
   this.activeShortcutKeyForGecko_ = null;
 };
-
 
 /**
  * Returns whether this event is possibly used for typing a printable character.
@@ -799,45 +774,33 @@ goog.ui.KeyboardShortcutHandler.prototype.handleGeckoKeyUp_ = function(data) {
  * @return {boolean} Whether this event is a possible printable-key event.
  * @private
  */
-goog.ui.KeyboardShortcutHandler.prototype.isPossiblePrintableKey_ = function(
-    data) {
-  'use strict';
-  return goog.userAgent.WINDOWS && data.getCtrlKey() && data.getAltKey();
-};
-
+goog.ui.KeyboardShortcutHandler.prototype.isPossiblePrintableKey_ = (data) =>
+  goog.userAgent.WINDOWS && data.getCtrlKey() && data.getAltKey();
 
 /**
  * Handler for when a keypress event is fired on Windows.
  * @param {!goog.events.BrowserEvent} e The key event.
  * @private
  */
-goog.ui.KeyboardShortcutHandler.prototype.handleWindowsBrowserKeyPress_ =
-    function(e) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.handleWindowsBrowserKeyPress_ = function (e) {
   this.handleWindowsKeyPress_(goog.ui.KeyboardEventData.fromBrowserEvent(e));
 };
-
 
 /**
  * Handler for when a synthetic keypress event is fired on Windows.
  * @param {!goog.ui.SyntheticKeyboardEvent} e
  * @private
  */
-goog.ui.KeyboardShortcutHandler.prototype.handleWindowsSyntheticKeyPress_ =
-    function(e) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.handleWindowsSyntheticKeyPress_ = function (e) {
   this.handleWindowsKeyPress_(e.getData());
 };
-
 
 /**
  * Handler for when a keypress event is fired on Windows.
  * @param {!goog.ui.KeyboardEventData} data
  * @private
  */
-goog.ui.KeyboardShortcutHandler.prototype.handleWindowsKeyPress_ = function(
-    data) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.handleWindowsKeyPress_ = function (data) {
   // When this keypress event consists of a printable character, set the flag to
   // prevent firing shortcut key events when we receive the succeeding keyup
   // event. We accept all Unicode characters except control ones since this
@@ -847,14 +810,12 @@ goog.ui.KeyboardShortcutHandler.prototype.handleWindowsKeyPress_ = function(
   }
 };
 
-
 /**
  * Handler for when a keyup event is fired on Windows.
  * @param {!goog.ui.KeyboardEventData} data
  * @private
  */
-goog.ui.KeyboardShortcutHandler.prototype.handleWindowsKeyUp_ = function(data) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.handleWindowsKeyUp_ = function (data) {
   // For possible printable-key events, try firing a shortcut-key event only
   // when this event is not used for typing a character.
   if (!this.isPrintableKey_ && this.isPossiblePrintableKey_(data)) {
@@ -865,36 +826,57 @@ goog.ui.KeyboardShortcutHandler.prototype.handleWindowsKeyUp_ = function(data) {
   }
 };
 
-
 /**
  * Removes the listener that was added by link {@link #initializeKeyListener}.
  * @protected
  */
-goog.ui.KeyboardShortcutHandler.prototype.clearKeyListener = function() {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.clearKeyListener = function () {
   goog.events.unlisten(
-      this.keyTarget_, goog.events.EventType.KEYDOWN,
-      this.handleBrowserKeyDown_, false, this);
+    this.keyTarget_,
+    goog.events.EventType.KEYDOWN,
+    this.handleBrowserKeyDown_,
+    false,
+    this
+  );
   goog.events.unlisten(
-      this.keyTarget_, goog.ui.SyntheticKeyboardEvent.Type.KEYDOWN,
-      this.handleSyntheticKeyDown_, false, this);
+    this.keyTarget_,
+    goog.ui.SyntheticKeyboardEvent.Type.KEYDOWN,
+    this.handleSyntheticKeyDown_,
+    false,
+    this
+  );
   if (goog.userAgent.WINDOWS) {
     goog.events.unlisten(
-        this.keyTarget_, goog.events.EventType.KEYPRESS,
-        this.handleWindowsBrowserKeyPress_, false, this);
+      this.keyTarget_,
+      goog.events.EventType.KEYPRESS,
+      this.handleWindowsBrowserKeyPress_,
+      false,
+      this
+    );
     goog.events.unlisten(
-        this.keyTarget_, goog.ui.SyntheticKeyboardEvent.Type.KEYPRESS,
-        this.handleWindowsSyntheticKeyPress_, false, this);
+      this.keyTarget_,
+      goog.ui.SyntheticKeyboardEvent.Type.KEYPRESS,
+      this.handleWindowsSyntheticKeyPress_,
+      false,
+      this
+    );
   }
   goog.events.unlisten(
-      this.keyTarget_, goog.events.EventType.KEYUP, this.handleBrowserKeyUp_,
-      false, this);
+    this.keyTarget_,
+    goog.events.EventType.KEYUP,
+    this.handleBrowserKeyUp_,
+    false,
+    this
+  );
   goog.events.unlisten(
-      this.keyTarget_, goog.ui.SyntheticKeyboardEvent.Type.KEYUP,
-      this.handleSyntheticKeyUp_, false, this);
+    this.keyTarget_,
+    goog.ui.SyntheticKeyboardEvent.Type.KEYUP,
+    this.handleSyntheticKeyUp_,
+    false,
+    this
+  );
   this.keyTarget_ = null;
 };
-
 
 /**
  * Adds a shortcut stroke sequence to the given sequence tree. Recursive.
@@ -904,46 +886,41 @@ goog.ui.KeyboardShortcutHandler.prototype.clearKeyListener = function() {
  * @param {string} identifier Identifier for the task performed by shortcut.
  * @private
  */
-goog.ui.KeyboardShortcutHandler.setShortcut_ = function(
-    tree, strokes, identifier) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.setShortcut_ = (tree, strokes, identifier) => {
   var stroke = strokes.shift();
-  stroke.forEach(function(s) {
-    'use strict';
+  stroke.forEach((s) => {
     var node = tree[s];
     if (node && (strokes.length == 0 || node.shortcut)) {
       // This new shortcut would override an existing shortcut or shortcut
       // prefix (since the new strokes end at an existing node), or an existing
       // shortcut would be triggered by the prefix to this new shortcut (since
       // there is already a terminal node on the path we are trying to create).
-      throw new Error(
-          'Keyboard shortcut conflicts with existing shortcut: ' +
-          node.shortcut);
+      throw new Error('Keyboard shortcut conflicts with existing shortcut: ' + node.shortcut);
     }
   });
 
   if (strokes.length) {
-    stroke.forEach(function(s) {
-      'use strict';
+    stroke.forEach((s) => {
       var node = goog.object.setIfUndefined(
-          tree, s.toString(),
-          goog.ui.KeyboardShortcutHandler.createInternalNode_());
+        tree,
+        s.toString(),
+        goog.ui.KeyboardShortcutHandler.createInternalNode_()
+      );
       // setShortcut_ modifies strokes
       var strokesCopy = strokes.slice(0);
       goog.ui.KeyboardShortcutHandler.setShortcut_(
-          goog.asserts.assert(
-              node.next, 'An internal node must have a next map'),
-          strokesCopy, identifier);
+        goog.asserts.assert(node.next, 'An internal node must have a next map'),
+        strokesCopy,
+        identifier
+      );
     });
   } else {
-    stroke.forEach(function(s) {
-      'use strict';
+    stroke.forEach((s) => {
       // Add a terminal node.
       tree[s] = goog.ui.KeyboardShortcutHandler.createTerminalNode_(identifier);
     });
   }
 };
-
 
 /**
  * Removes a shortcut stroke sequence from the given sequence tree, pruning any
@@ -954,11 +931,9 @@ goog.ui.KeyboardShortcutHandler.setShortcut_ = function(
  *     remove.
  * @private
  */
-goog.ui.KeyboardShortcutHandler.unsetShortcut_ = function(tree, strokes) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.unsetShortcut_ = (tree, strokes) => {
   var stroke = strokes.shift();
-  stroke.forEach(function(s) {
-    'use strict';
+  stroke.forEach((s) => {
     var node = tree[s];
     if (!node) {
       // The given stroke sequence is not in the tree.
@@ -990,7 +965,6 @@ goog.ui.KeyboardShortcutHandler.unsetShortcut_ = function(tree, strokes) {
   });
 };
 
-
 /**
  * Checks tree for a node matching one of stroke.
  * @param {!goog.ui.KeyboardShortcutHandler.SequenceTree_} tree The
@@ -999,8 +973,7 @@ goog.ui.KeyboardShortcutHandler.unsetShortcut_ = function(tree, strokes) {
  * @return {!goog.ui.KeyboardShortcutHandler.SequenceNode_|undefined} Node matching stroke.
  * @private
  */
-goog.ui.KeyboardShortcutHandler.prototype.getNode_ = function(tree, stroke) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.getNode_ = (tree, stroke) => {
   for (var i = 0; i < stroke.length; i++) {
     var node = tree[stroke[i]];
     if (!node) {
@@ -1019,9 +992,7 @@ goog.ui.KeyboardShortcutHandler.prototype.getNode_ = function(tree, stroke) {
  * @return {boolean} True iff the keyboard shortcut is registred.
  * @private
  */
-goog.ui.KeyboardShortcutHandler.prototype.checkShortcut_ = function(
-    tree, strokes) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.checkShortcut_ = function (tree, strokes) {
   while (strokes.length > 0 && tree) {
     var stroke = strokes.shift();
     var node = this.getNode_(tree, stroke);
@@ -1040,7 +1011,6 @@ goog.ui.KeyboardShortcutHandler.prototype.checkShortcut_ = function(
   return false;
 };
 
-
 /**
  * Constructs key identification string from key name, key code and modifiers.
  *
@@ -1051,9 +1021,7 @@ goog.ui.KeyboardShortcutHandler.prototype.checkShortcut_ = function(
  *     combinations.
  * @private
  */
-goog.ui.KeyboardShortcutHandler.makeStroke_ = function(
-    keyName, keyCode, modifiers) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.makeStroke_ = (keyName, keyCode, modifiers) => {
   var mods = modifiers || 0;
   // entries must be usable as key in a map
   var strokes = ['c_' + keyCode + '_' + mods];
@@ -1065,30 +1033,23 @@ goog.ui.KeyboardShortcutHandler.makeStroke_ = function(
   return strokes;
 };
 
-
 /**
  * Keydown handler for events initiated from the browser.
  * @param {!goog.events.BrowserEvent} event Keypress event.
  * @private
  */
-goog.ui.KeyboardShortcutHandler.prototype.handleBrowserKeyDown_ = function(
-    event) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.handleBrowserKeyDown_ = function (event) {
   this.handleKeyDown_(goog.ui.KeyboardEventData.fromBrowserEvent(event));
 };
-
 
 /**
  * Keydown handler for synthetic events.
  * @param {!goog.ui.SyntheticKeyboardEvent} event
  * @private
  */
-goog.ui.KeyboardShortcutHandler.prototype.handleSyntheticKeyDown_ = function(
-    event) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.handleSyntheticKeyDown_ = function (event) {
   this.handleKeyDown_(event.getData());
 };
-
 
 /**
  * Keydown handler.
@@ -1099,9 +1060,10 @@ goog.ui.KeyboardShortcutHandler.prototype.handleSyntheticKeyDown_ = function(
  * @private
  * @suppress {strictPrimitiveOperators} Part of the go/strict_warnings_migration
  */
-goog.ui.KeyboardShortcutHandler.prototype.handleKeyDown_ = function(
-    data, opt_handlePossiblePrintableKeys) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.handleKeyDown_ = function (
+  data,
+  opt_handlePossiblePrintableKeys
+) {
   if (!this.isValidShortcut_(data)) {
     return;
   }
@@ -1119,13 +1081,11 @@ goog.ui.KeyboardShortcutHandler.prototype.handleKeyDown_ = function(
   var keyName = data.getKey();
 
   var modifiers =
-      (data.getShiftKey() ? goog.ui.KeyboardShortcutHandler.Modifiers.SHIFT :
-                            0) |
-      (data.getCtrlKey() ? goog.ui.KeyboardShortcutHandler.Modifiers.CTRL : 0) |
-      (data.getAltKey() ? goog.ui.KeyboardShortcutHandler.Modifiers.ALT : 0) |
-      (data.getMetaKey() ? goog.ui.KeyboardShortcutHandler.Modifiers.META : 0);
-  var stroke =
-      goog.ui.KeyboardShortcutHandler.makeStroke_(keyName, keyCode, modifiers);
+    (data.getShiftKey() ? goog.ui.KeyboardShortcutHandler.Modifiers.SHIFT : 0) |
+    (data.getCtrlKey() ? goog.ui.KeyboardShortcutHandler.Modifiers.CTRL : 0) |
+    (data.getAltKey() ? goog.ui.KeyboardShortcutHandler.Modifiers.ALT : 0) |
+    (data.getMetaKey() ? goog.ui.KeyboardShortcutHandler.Modifiers.META : 0);
+  var stroke = goog.ui.KeyboardShortcutHandler.makeStroke_(keyName, keyCode, modifiers);
   var node = this.getNode_(this.currentTree_, stroke);
 
   if (!node || this.hasSequenceTimedOut_()) {
@@ -1169,17 +1129,23 @@ goog.ui.KeyboardShortcutHandler.prototype.handleKeyDown_ = function(
   }
 
   var shortcut = goog.asserts.assertString(
-      node.shortcut, 'A terminal node must have a string shortcut identifier.');
+    node.shortcut,
+    'A terminal node must have a string shortcut identifier.'
+  );
   // Dispatch SHORTCUT_TRIGGERED event
   var triggerEvent = new goog.ui.KeyboardShortcutEvent(
-      goog.ui.KeyboardShortcutHandler.EventType.SHORTCUT_TRIGGERED, shortcut,
-      data.getTarget());
+    goog.ui.KeyboardShortcutHandler.EventType.SHORTCUT_TRIGGERED,
+    shortcut,
+    data.getTarget()
+  );
   var retVal = this.dispatchEvent(triggerEvent);
 
   // Dispatch SHORTCUT_PREFIX_<identifier> event
   var prefixEvent = new goog.ui.KeyboardShortcutEvent(
-      goog.ui.KeyboardShortcutHandler.EventType.SHORTCUT_PREFIX + shortcut,
-      shortcut, data.getTarget());
+    goog.ui.KeyboardShortcutHandler.EventType.SHORTCUT_PREFIX + shortcut,
+    shortcut,
+    data.getTarget()
+  );
   retVal &= this.dispatchEvent(prefixEvent);
 
   // The default action is prevented if 'preventDefault' was
@@ -1194,7 +1160,6 @@ goog.ui.KeyboardShortcutHandler.prototype.handleKeyDown_ = function(
   }
 };
 
-
 /**
  * Checks if a given keypress event may be treated as a shortcut.
  * @param {!goog.ui.KeyboardEventData} data
@@ -1202,21 +1167,25 @@ goog.ui.KeyboardShortcutHandler.prototype.handleKeyDown_ = function(
  * @private
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.ui.KeyboardShortcutHandler.prototype.isValidShortcut_ = function(data) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.isValidShortcut_ = function (data) {
   // Ignore Ctrl, Shift and ALT
   var keyCode = data.getKeyCode();
   if (data.getKey() != '') {
     var keyName = data.getKey();
-    if (keyName == goog.events.Keys.CTRL || keyName == goog.events.Keys.SHIFT ||
-        keyName == goog.events.Keys.ALT ||
-        keyName == goog.events.Keys.ALTGRAPH) {
+    if (
+      keyName == goog.events.Keys.CTRL ||
+      keyName == goog.events.Keys.SHIFT ||
+      keyName == goog.events.Keys.ALT ||
+      keyName == goog.events.Keys.ALTGRAPH
+    ) {
       return false;
     }
   } else {
-    if (keyCode == goog.events.KeyCodes.SHIFT ||
-        keyCode == goog.events.KeyCodes.CTRL ||
-        keyCode == goog.events.KeyCodes.ALT) {
+    if (
+      keyCode == goog.events.KeyCodes.SHIFT ||
+      keyCode == goog.events.KeyCodes.CTRL ||
+      keyCode == goog.events.KeyCodes.ALT
+    ) {
       return false;
     }
   }
@@ -1225,14 +1194,15 @@ goog.ui.KeyboardShortcutHandler.prototype.isValidShortcut_ = function(data) {
   // Note, the type of shadow dom root is limited, and could never be
   // INPUT, TEXTAREA, BUTTON, SELECT, etc.
   var el = /** @type {!Element} */ (data.getRootTarget());
-  var isFormElement = el.tagName == goog.dom.TagName.TEXTAREA ||
-      el.tagName == goog.dom.TagName.INPUT ||
-      el.tagName == goog.dom.TagName.BUTTON ||
-      el.tagName == goog.dom.TagName.SELECT;
+  var isFormElement =
+    el.tagName == goog.dom.TagName.TEXTAREA ||
+    el.tagName == goog.dom.TagName.INPUT ||
+    el.tagName == goog.dom.TagName.BUTTON ||
+    el.tagName == goog.dom.TagName.SELECT;
 
-  var isContentEditable = !isFormElement &&
-      (el.isContentEditable ||
-       (el.ownerDocument && el.ownerDocument.designMode == 'on'));
+  var isContentEditable =
+    !isFormElement &&
+    (el.isContentEditable || (el.ownerDocument && el.ownerDocument.designMode == 'on'));
 
   if (!isFormElement && !isContentEditable) {
     return true;
@@ -1249,8 +1219,10 @@ goog.ui.KeyboardShortcutHandler.prototype.isValidShortcut_ = function(data) {
   }
   // Event target is one of (TEXTAREA, INPUT, BUTTON, SELECT).
   // Allow modifier shortcuts, unless we shouldn't.
-  if (this.modifierShortcutsAreGlobal_ &&
-      (data.getAltKey() || data.getCtrlKey() || data.getMetaKey())) {
+  if (
+    this.modifierShortcutsAreGlobal_ &&
+    (data.getAltKey() || data.getCtrlKey() || data.getMetaKey())
+  ) {
     return true;
   }
   // Allow ENTER to be used as shortcut for text inputs.
@@ -1258,8 +1230,7 @@ goog.ui.KeyboardShortcutHandler.prototype.isValidShortcut_ = function(data) {
     return keyCode == goog.events.KeyCodes.ENTER;
   }
   // Checkboxes, radiobuttons and buttons. Allow all but SPACE as shortcut.
-  if (el.tagName == goog.dom.TagName.INPUT ||
-      el.tagName == goog.dom.TagName.BUTTON) {
+  if (el.tagName == goog.dom.TagName.INPUT || el.tagName == goog.dom.TagName.BUTTON) {
     // TODO(gboyer): If more flexibility is needed, create protected helper
     // methods for each case (e.g. button, input, etc).
     if (this.allowSpaceKeyOnButtons_) {
@@ -1272,17 +1243,15 @@ goog.ui.KeyboardShortcutHandler.prototype.isValidShortcut_ = function(data) {
   return false;
 };
 
-
 /**
  * @return {boolean} True iff the current stroke sequence has timed out.
  * @private
  */
-goog.ui.KeyboardShortcutHandler.prototype.hasSequenceTimedOut_ = function() {
-  'use strict';
-  return Date.now() - this.lastStrokeTime_ >=
-      goog.ui.KeyboardShortcutHandler.MAX_KEY_SEQUENCE_DELAY;
+goog.ui.KeyboardShortcutHandler.prototype.hasSequenceTimedOut_ = function () {
+  return (
+    Date.now() - this.lastStrokeTime_ >= goog.ui.KeyboardShortcutHandler.MAX_KEY_SEQUENCE_DELAY
+  );
 };
-
 
 /**
  * Sets the current keyboard shortcut sequence tree and updates the last stroke
@@ -1290,8 +1259,7 @@ goog.ui.KeyboardShortcutHandler.prototype.hasSequenceTimedOut_ = function() {
  * @param {!goog.ui.KeyboardShortcutHandler.SequenceTree_} tree
  * @private
  */
-goog.ui.KeyboardShortcutHandler.prototype.setCurrentTree_ = function(tree) {
-  'use strict';
+goog.ui.KeyboardShortcutHandler.prototype.setCurrentTree_ = function (tree) {
   this.currentTree_ = tree;
   this.lastStrokeTime_ = Date.now();
 };

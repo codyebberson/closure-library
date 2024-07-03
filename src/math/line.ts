@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Represents a line in 2D space.
  */
@@ -13,8 +12,6 @@ goog.provide('goog.math.Line');
 
 goog.require('goog.math');
 goog.require('goog.math.Coordinate');
-
-
 
 /**
  * Object representing a line.
@@ -26,8 +23,7 @@ goog.require('goog.math.Coordinate');
  * @constructor
  * @final
  */
-goog.math.Line = function(x0, y0, x1, y1) {
-  'use strict';
+goog.math.Line = function (x0, y0, x1, y1) {
   /**
    * X coordinate of the first point.
    * @type {number}
@@ -53,48 +49,38 @@ goog.math.Line = function(x0, y0, x1, y1) {
   this.y1 = y1;
 };
 
-
 /**
  * @return {!goog.math.Line} A copy of this line.
  */
-goog.math.Line.prototype.clone = function() {
-  'use strict';
+goog.math.Line.prototype.clone = function () {
   return new goog.math.Line(this.x0, this.y0, this.x1, this.y1);
 };
-
 
 /**
  * Tests whether the given line is exactly the same as this one.
  * @param {goog.math.Line} other The other line.
  * @return {boolean} Whether the given line is the same as this one.
  */
-goog.math.Line.prototype.equals = function(other) {
-  'use strict';
-  return this.x0 == other.x0 && this.y0 == other.y0 && this.x1 == other.x1 &&
-      this.y1 == other.y1;
+goog.math.Line.prototype.equals = function (other) {
+  return this.x0 == other.x0 && this.y0 == other.y0 && this.x1 == other.x1 && this.y1 == other.y1;
 };
-
 
 /**
  * @return {number} The squared length of the line segment used to define the
  *     line.
  */
-goog.math.Line.prototype.getSegmentLengthSquared = function() {
-  'use strict';
+goog.math.Line.prototype.getSegmentLengthSquared = function () {
   var xdist = this.x1 - this.x0;
   var ydist = this.y1 - this.y0;
   return xdist * xdist + ydist * ydist;
 };
 
-
 /**
  * @return {number} The length of the line segment used to define the line.
  */
-goog.math.Line.prototype.getSegmentLength = function() {
-  'use strict';
+goog.math.Line.prototype.getSegmentLength = function () {
   return Math.sqrt(this.getSegmentLengthSquared());
 };
-
 
 /**
  * Computes the interpolation parameter for the point on the line closest to
@@ -107,8 +93,7 @@ goog.math.Line.prototype.getSegmentLength = function() {
  *     closest to the given point.
  * @private
  */
-goog.math.Line.prototype.getClosestLinearInterpolation_ = function(x, opt_y) {
-  'use strict';
+goog.math.Line.prototype.getClosestLinearInterpolation_ = function (x, opt_y) {
   var y;
   if (x instanceof goog.math.Coordinate) {
     y = x.y;
@@ -123,10 +108,8 @@ goog.math.Line.prototype.getClosestLinearInterpolation_ = function(x, opt_y) {
   var xChange = this.x1 - x0;
   var yChange = this.y1 - y0;
 
-  return ((Number(x) - x0) * xChange + (Number(y) - y0) * yChange) /
-      this.getSegmentLengthSquared();
+  return ((Number(x) - x0) * xChange + (Number(y) - y0) * yChange) / this.getSegmentLengthSquared();
 };
-
 
 /**
  * Returns the point on the line segment proportional to t, where for t = 0 we
@@ -135,12 +118,12 @@ goog.math.Line.prototype.getClosestLinearInterpolation_ = function(x, opt_y) {
  * @param {number} t The interpolation parameter along the line segment.
  * @return {!goog.math.Coordinate} The point on the line segment at t.
  */
-goog.math.Line.prototype.getInterpolatedPoint = function(t) {
-  'use strict';
+goog.math.Line.prototype.getInterpolatedPoint = function (t) {
   return new goog.math.Coordinate(
-      goog.math.lerp(this.x0, this.x1, t), goog.math.lerp(this.y0, this.y1, t));
+    goog.math.lerp(this.x0, this.x1, t),
+    goog.math.lerp(this.y0, this.y1, t)
+  );
 };
-
 
 /**
  * Computes the point on the line closest to a given point.  Note that a line
@@ -154,12 +137,9 @@ goog.math.Line.prototype.getInterpolatedPoint = function(t) {
  * @return {!goog.math.Coordinate} The point on the line closest to the given
  *     point.
  */
-goog.math.Line.prototype.getClosestPoint = function(x, opt_y) {
-  'use strict';
-  return this.getInterpolatedPoint(
-      this.getClosestLinearInterpolation_(x, opt_y));
+goog.math.Line.prototype.getClosestPoint = function (x, opt_y) {
+  return this.getInterpolatedPoint(this.getClosestLinearInterpolation_(x, opt_y));
 };
-
 
 /**
  * Computes the point on the line segment closest to a given point.
@@ -170,8 +150,8 @@ goog.math.Line.prototype.getClosestPoint = function(x, opt_y) {
  * @return {!goog.math.Coordinate} The point on the line segment closest to the
  *     given point.
  */
-goog.math.Line.prototype.getClosestSegmentPoint = function(x, opt_y) {
-  'use strict';
+goog.math.Line.prototype.getClosestSegmentPoint = function (x, opt_y) {
   return this.getInterpolatedPoint(
-      goog.math.clamp(this.getClosestLinearInterpolation_(x, opt_y), 0, 1));
+    goog.math.clamp(this.getClosestLinearInterpolation_(x, opt_y), 0, 1)
+  );
 };

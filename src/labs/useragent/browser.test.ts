@@ -7,7 +7,6 @@
 /** @fileoverview Unit tests for userAgentBrowser. */
 
 goog.module('goog.labs.userAgent.browserTest');
-goog.setTestOnly();
 
 const googObject = goog.require('goog.object');
 const testAgentData = goog.require('goog.labs.userAgent.testAgentData');
@@ -15,8 +14,8 @@ const testAgents = goog.require('goog.labs.userAgent.testAgents');
 const testSuite = goog.require('goog.testing.testSuite');
 const userAgentBrowser = goog.require('goog.labs.userAgent.browser');
 const util = goog.require('goog.labs.userAgent.util');
-const {ChromiumRebrand} = goog.require('goog.labs.userAgent.chromiumRebrands');
-const {setUseClientHintsForTesting} = goog.require('goog.labs.userAgent');
+const { ChromiumRebrand } = goog.require('goog.labs.userAgent.chromiumRebrands');
+const { setUseClientHintsForTesting } = goog.require('goog.labs.userAgent');
 
 /*
  * Map of browser name to checking method.
@@ -31,7 +30,7 @@ const Browser = {
   IE: userAgentBrowser.isIE,
   IOS_WEBVIEW: userAgentBrowser.isIosWebview,
   SAFARI: userAgentBrowser.isSafari,
-  EDGE: userAgentBrowser.isEdge
+  EDGE: userAgentBrowser.isEdge,
 };
 
 /*
@@ -41,7 +40,7 @@ const Browser = {
 const NonChromeChromiumBrowser = {
   EDGE_CHROMIUM: userAgentBrowser.isEdgeChromium,
   OPERA_CHROMIUM: userAgentBrowser.isOperaChromium,
-  SILK: userAgentBrowser.isSilk
+  SILK: userAgentBrowser.isSilk,
 };
 
 /*
@@ -49,8 +48,9 @@ const NonChromeChromiumBrowser = {
  */
 function assertBrowser(browser) {
   assertTrue(
-      'Supplied argument "browser" not in Browser object',
-      googObject.containsValue(Browser, browser));
+    'Supplied argument "browser" not in Browser object',
+    googObject.containsValue(Browser, browser)
+  );
 
   // Verify that the method is true for the given browser
   // and false for all others.
@@ -68,8 +68,9 @@ function assertBrowser(browser) {
  */
 function assertNonChromeChromiumBrowser(browser) {
   assertTrue(
-      'Supplied argument "browser" not in ChromiumBrowser object',
-      googObject.containsValue(NonChromeChromiumBrowser, browser));
+    'Supplied argument "browser" not in ChromiumBrowser object',
+    googObject.containsValue(NonChromeChromiumBrowser, browser)
+  );
 
   // Verify that the method is true for the given browser
   // and false for all others.
@@ -104,8 +105,7 @@ function assertPreUachVersionBetween(lowVersion, highVersion) {
 /**
  * A string that is definitely not a browser brand, even as a GREASE value.
  */
-const DEFINITELY_NOT_A_BROWSER =
-    /** @type {!userAgentBrowser.Brand} */ ('Def1nitely not a browser');
+const DEFINITELY_NOT_A_BROWSER = /** @type {!userAgentBrowser.Brand} */ 'Def1nitely not a browser';
 
 /**
  * A list of brands used in assertVersionOf.
@@ -158,55 +158,57 @@ class BrandFullVersion {
 function assertVersionOf(brandVersions) {
   // Examples for [{brand: MyBrowser, version: 10}]:
 
-  for (const {brand, version} of brandVersions) {
+  for (const { brand, version } of brandVersions) {
     // Ex. isAtLeast(MyBrowser, 9) should be TRUE
     assertTrue(
-        `isAtLeast(${brand}, ${version - 1}) returns false for ${brand} ${
-            version}`,
-        userAgentBrowser.isAtLeast(brand, version - 1));
+      `isAtLeast(${brand}, ${version - 1}) returns false for ${brand} ${version}`,
+      userAgentBrowser.isAtLeast(brand, version - 1)
+    );
     // Ex. isAtLeast(MyBrowser, 10) should be TRUE
     assertTrue(
-        `isAtLeast(${brand}, ${version}) returns false for ${brand} ${version}`,
-        userAgentBrowser.isAtLeast(brand, version));
+      `isAtLeast(${brand}, ${version}) returns false for ${brand} ${version}`,
+      userAgentBrowser.isAtLeast(brand, version)
+    );
     // Ex. isAtLeast(MyBrowser, 11) should be FALSE
     assertFalse(
-        `isAtLeast(${brand}, ${version + 1}) returns true for ${brand} ${
-            version}`,
-        userAgentBrowser.isAtLeast(brand, version + 1));
+      `isAtLeast(${brand}, ${version + 1}) returns true for ${brand} ${version}`,
+      userAgentBrowser.isAtLeast(brand, version + 1)
+    );
 
     // Ex. isAtMost(MyBrowser, 9) should be FALSE
     assertFalse(
-        `isAtMost(${brand}, ${version - 1}) returns true for ${brand} ${
-            version}`,
-        userAgentBrowser.isAtMost(brand, version - 1));
+      `isAtMost(${brand}, ${version - 1}) returns true for ${brand} ${version}`,
+      userAgentBrowser.isAtMost(brand, version - 1)
+    );
     // Ex. isAtMost(MyBrowser, 10) should be TRUE
     assertTrue(
-        `isAtMost(${brand}, ${version}) returns false for ${brand} ${version}`,
-        userAgentBrowser.isAtMost(brand, version));
+      `isAtMost(${brand}, ${version}) returns false for ${brand} ${version}`,
+      userAgentBrowser.isAtMost(brand, version)
+    );
     // Ex. isAtMost(MyBrowser, 11) should be TRUE
     assertTrue(
-        `isAtMost(${brand}, ${version + 1}) returns false for ${brand} ${
-            version}`,
-        userAgentBrowser.isAtMost(brand, version + 1));
+      `isAtMost(${brand}, ${version + 1}) returns false for ${brand} ${version}`,
+      userAgentBrowser.isAtMost(brand, version + 1)
+    );
   }
 
   for (const brand of brands) {
-    if (!brandVersions.find(brandVersion => brandVersion.brand === brand)) {
+    if (!brandVersions.find((brandVersion) => brandVersion.brand === brand)) {
       // Ex. isAtLeast(TheirBrowser, any) should be FALSE
       assertFalse(
-          `isAtLeast(${
-              brand}, X) returns true for a browser that is not one of [${
-              brandVersions.map(brandVersion => brandVersion.brand)
-                  .join(', ')}]`,
-          userAgentBrowser.isAtLeast(brand, -Infinity));
+        `isAtLeast(${brand}, X) returns true for a browser that is not one of [${brandVersions
+          .map((brandVersion) => brandVersion.brand)
+          .join(', ')}]`,
+        userAgentBrowser.isAtLeast(brand, Number.NEGATIVE_INFINITY)
+      );
 
       // Ex. isAtLeast(TheirBrowser, any) should be FALSE
       assertFalse(
-          `isAtMost(${
-              brand}, X) returns true for a browser that is not one of [${
-              brandVersions.map(brandVersion => brandVersion.brand)
-                  .join(', ')}]`,
-          userAgentBrowser.isAtMost(brand, Infinity));
+        `isAtMost(${brand}, X) returns true for a browser that is not one of [${brandVersions
+          .map((brandVersion) => brandVersion.brand)
+          .join(', ')}]`,
+        userAgentBrowser.isAtMost(brand, Number.POSITIVE_INFINITY)
+      );
     }
   }
 }
@@ -225,7 +227,7 @@ async function assertFullVersionOf(brandVersions, alreadyLoaded = false) {
   // expected that versions will be synchronously available without calling
   // load() for the first time. Otherwise, it should be expected that
   // getIfLoaded returns undefined.
-  for (const {brand, version} of brandVersions) {
+  for (const { brand, version } of brandVersions) {
     const fullVersion = userAgentBrowser.fullVersionOf(brand);
     assertNotNullNorUndefined(fullVersion);
     if (!alreadyLoaded) {
@@ -235,19 +237,17 @@ async function assertFullVersionOf(brandVersions, alreadyLoaded = false) {
 
     // Check that for each given brand-version pair, the requested version
     // matches what is expected for the given brand.
-    assertEquals(
-        version, (await fullVersion.load()).toVersionStringForLogging());
-    assertEquals(
-        version, fullVersion.getIfLoaded()?.toVersionStringForLogging());
+    assertEquals(version, (await fullVersion.load()).toVersionStringForLogging());
+    assertEquals(version, fullVersion.getIfLoaded()?.toVersionStringForLogging());
   }
 
   // Check that for all other browsers, there is no version for each brand.
   for (const brand of brands) {
-    if (!brandVersions.find(brandVersion => brandVersion.brand === brand)) {
+    if (!brandVersions.find((brandVersion) => brandVersion.brand === brand)) {
       assertUndefined(
-          `fullVersionOf(${brand}) returns a value for a browser that is not ${
-              brand}`,
-          userAgentBrowser.fullVersionOf(brand));
+        `fullVersionOf(${brand}) returns a value for a browser that is not ${brand}`,
+        userAgentBrowser.fullVersionOf(brand)
+      );
     }
   }
 }
@@ -282,20 +282,16 @@ async function assertFullVersionOfBetween(brand, lowVersion, highVersion) {
  * @param {string=} highEntropy The string that should be returned when the full
  *     version is available.
  */
-async function assertGetVersionStringForLogging(
-    brand, lowEntropy, highEntropy) {
+async function assertGetVersionStringForLogging(brand, lowEntropy, highEntropy) {
   if (highEntropy === undefined) {
     highEntropy = lowEntropy;
   }
-  const lowEntropyVersion =
-      await userAgentBrowser.getVersionStringForLogging(brand);
+  const lowEntropyVersion = await userAgentBrowser.getVersionStringForLogging(brand);
   assertEquals(lowEntropy, lowEntropyVersion);
   try {
     await userAgentBrowser.fullVersionOf(brand)?.load();
-  } catch (e) {
-  }
-  const highEntropyVersion =
-      await userAgentBrowser.getVersionStringForLogging(brand);
+  } catch (e) {}
+  const highEntropyVersion = await userAgentBrowser.getVersionStringForLogging(brand);
   assertEquals(highEntropy, highEntropyVersion);
 }
 
@@ -305,8 +301,9 @@ async function assertGetVersionStringForLogging(
  */
 function assertHighEntropyAPIsInUACHFallbackMode() {
   assertNull(
-      'UserAgentData present - high-entropy APIs will be unexpectedly running in UACH mode',
-      util.getUserAgentData());
+    'UserAgentData present - high-entropy APIs will be unexpectedly running in UACH mode',
+    util.getUserAgentData()
+  );
 }
 
 testSuite({
@@ -325,15 +322,12 @@ testSuite({
     assertPreUachVersion('10.00');
     assertPreUachVersionBetween('10.00', '10.10');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.OPERA, version: 10}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.OPERA, version: 10 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.OPERA, version: '10.00'}], true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.OPERA, '10.00', '10.10');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.OPERA, '10.00', '10.00');
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.OPERA, version: '10.00' }], true);
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.OPERA, '10.00', '10.10');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.OPERA, '10.00', '10.00');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -343,15 +337,12 @@ testSuite({
     assertPreUachVersion('11.52');
     assertPreUachVersionBetween('11.50', '12.00');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.OPERA, version: 11}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.OPERA, version: 11 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.OPERA, version: '11.52'}], true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.OPERA, '11.50', '12.00');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.OPERA, '11.52', '11.52');
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.OPERA, version: '11.52' }], true);
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.OPERA, '11.50', '12.00');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.OPERA, '11.52', '11.52');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -361,15 +352,12 @@ testSuite({
     assertPreUachVersion('11.50');
     assertPreUachVersionBetween('11.00', '12.00');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.OPERA, version: 11}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.OPERA, version: 11 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.OPERA, version: '11.50'}], true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.OPERA, '11.00', '12.00');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.OPERA, '11.50', '11.50');
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.OPERA, version: '11.50' }], true);
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.OPERA, '11.00', '12.00');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.OPERA, '11.50', '11.50');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -382,19 +370,19 @@ testSuite({
     assertPreUachVersionBetween('28.00', '29.00');
 
     assertVersionOf([
-      {brand: userAgentBrowser.Brand.CHROMIUM, version: 28},
-      {brand: userAgentBrowser.Brand.OPERA, version: 15}
+      { brand: userAgentBrowser.Brand.CHROMIUM, version: 28 },
+      { brand: userAgentBrowser.Brand.OPERA, version: 15 },
     ]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
     await assertFullVersionOf(
-        [
-          {brand: userAgentBrowser.Brand.CHROMIUM, version: '28.0.1500.52'},
-          {brand: userAgentBrowser.Brand.OPERA, version: '15.0.1147.100'}
-        ],
-        true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.CHROMIUM, '28.00', '29.00');
+      [
+        { brand: userAgentBrowser.Brand.CHROMIUM, version: '28.0.1500.52' },
+        { brand: userAgentBrowser.Brand.OPERA, version: '15.0.1147.100' },
+      ],
+      true
+    );
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.CHROMIUM, '28.00', '29.00');
   },
 
   async testOperaMini() {
@@ -403,15 +391,12 @@ testSuite({
     assertPreUachVersion('11.10');
     assertPreUachVersionBetween('11.00', '12.00');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.OPERA, version: 11}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.OPERA, version: 11 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.OPERA, version: '11.10'}], true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.OPERA, '11.00', '12.00');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.OPERA, '11.10', '11.10');
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.OPERA, version: '11.10' }], true);
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.OPERA, '11.00', '12.00');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.OPERA, '11.10', '11.10');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -421,14 +406,12 @@ testSuite({
     assertPreUachVersion('6.0');
     assertPreUachVersionBetween('5.0', '7.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.IE, version: 6}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.IE, version: 6 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.IE, version: '6.0'}], true);
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.IE, version: '6.0' }], true);
     await assertFullVersionOfBetween(userAgentBrowser.Brand.IE, '5.0', '7.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.IE, '6.0', '6.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.IE, '6.0', '6.0');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -444,14 +427,12 @@ testSuite({
     assertPreUachVersion('8.0');
     assertPreUachVersionBetween('7.0', '9.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.IE, version: 8}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.IE, version: 8 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.IE, version: '8.0'}], true);
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.IE, version: '8.0' }], true);
     await assertFullVersionOfBetween(userAgentBrowser.Brand.IE, '7.0', '9.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.IE, '8.0', '8.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.IE, '8.0', '8.0');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -467,14 +448,12 @@ testSuite({
     assertPreUachVersion('9.0');
     assertPreUachVersionBetween('8.0', '10.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.IE, version: 9}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.IE, version: 9 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.IE, version: '9.0'}], true);
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.IE, version: '9.0' }], true);
     await assertFullVersionOfBetween(userAgentBrowser.Brand.IE, '8.0', '10.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.IE, '9.0', '9.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.IE, '9.0', '9.0');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -490,14 +469,12 @@ testSuite({
     assertPreUachVersion('10.0');
     assertPreUachVersionBetween('10.0', '11.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.IE, version: 10}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.IE, version: 10 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.IE, version: '10.0'}], true);
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.IE, version: '10.0' }], true);
     await assertFullVersionOfBetween(userAgentBrowser.Brand.IE, '10.0', '11.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.IE, '10.0', '10.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.IE, '10.0', '10.0');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -519,14 +496,12 @@ testSuite({
     assertPreUachVersion('11.0');
     assertPreUachVersionBetween('10.0', '12.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.IE, version: 11}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.IE, version: 11 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.IE, version: '11.0'}], true);
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.IE, version: '11.0' }], true);
     await assertFullVersionOfBetween(userAgentBrowser.Brand.IE, '10.0', '12.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.IE, '11.0', '11.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.IE, '11.0', '11.0');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -548,15 +523,12 @@ testSuite({
     assertPreUachVersion('12.0');
     assertPreUachVersionBetween('11.0', '13.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.EDGE, version: 12}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.EDGE, version: 12 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.EDGE, version: '12.0'}], true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.EDGE, '11.0', '13.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.EDGE, '12.0', '12.0');
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.EDGE, version: '12.0' }], true);
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.EDGE, '11.0', '13.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.EDGE, '12.0', '12.0');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -566,15 +538,12 @@ testSuite({
     assertPreUachVersion('12.9600');
     assertPreUachVersionBetween('11.0', '13.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.EDGE, version: 12}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.EDGE, version: 12 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.EDGE, version: '12.9600'}], true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.EDGE, '11.0', '13.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.EDGE, '12.9600', '12.9600');
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.EDGE, version: '12.9600' }], true);
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.EDGE, '11.0', '13.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.EDGE, '12.9600', '12.9600');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -586,19 +555,19 @@ testSuite({
     assertPreUachVersionBetween('74.1', '74.2');
 
     assertVersionOf([
-      {brand: userAgentBrowser.Brand.CHROMIUM, version: 74},
-      {brand: userAgentBrowser.Brand.EDGE, version: 74}
+      { brand: userAgentBrowser.Brand.CHROMIUM, version: 74 },
+      { brand: userAgentBrowser.Brand.EDGE, version: 74 },
     ]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
     await assertFullVersionOf(
-        [
-          {brand: userAgentBrowser.Brand.CHROMIUM, version: '74.0.3729.48'},
-          {brand: userAgentBrowser.Brand.EDGE, version: '74.1.96.24'}
-        ],
-        true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.EDGE, '74.1', '74.2');
+      [
+        { brand: userAgentBrowser.Brand.CHROMIUM, version: '74.0.3729.48' },
+        { brand: userAgentBrowser.Brand.EDGE, version: '74.1.96.24' },
+      ],
+      true
+    );
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.EDGE, '74.1', '74.2');
   },
 
   async testFirefox19() {
@@ -607,15 +576,12 @@ testSuite({
     assertPreUachVersion('19.0');
     assertPreUachVersionBetween('18.0', '20.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.FIREFOX, version: 19}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.FIREFOX, version: 19 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.FIREFOX, version: '19.0'}], true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.FIREFOX, '18.0', '20.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.FIREFOX, '19.0', '19.0');
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.FIREFOX, version: '19.0' }], true);
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.FIREFOX, '18.0', '20.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.FIREFOX, '19.0', '19.0');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -625,15 +591,12 @@ testSuite({
     assertPreUachVersion('14.0.1');
     assertPreUachVersionBetween('14.0', '15.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.FIREFOX, version: 14}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.FIREFOX, version: 14 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.FIREFOX, version: '14.0.1'}], true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.FIREFOX, '14.0', '15.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.FIREFOX, '14.0.1', '14.0.1');
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.FIREFOX, version: '14.0.1' }], true);
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.FIREFOX, '14.0', '15.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.FIREFOX, '14.0.1', '14.0.1');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -659,16 +622,19 @@ testSuite({
     assertPreUachVersion('18.0.1025.133');
     assertPreUachVersionBetween('18.0', '19.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.CHROMIUM, version: 18}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.CHROMIUM, version: 18 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
     await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.CHROMIUM, version: '18.0.1025.133'}],
-        true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.CHROMIUM, '18.0', '19.0');
+      [{ brand: userAgentBrowser.Brand.CHROMIUM, version: '18.0.1025.133' }],
+      true
+    );
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.CHROMIUM, '18.0', '19.0');
     await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.CHROMIUM, '18.0.1025.133', '18.0.1025.133');
+      userAgentBrowser.Brand.CHROMIUM,
+      '18.0.1025.133',
+      '18.0.1025.133'
+    );
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
     assertPreUachVersionBetween('17.0', '18.1');
   },
@@ -680,16 +646,19 @@ testSuite({
     assertPreUachVersion('79.0.3945.84');
     assertPreUachVersionBetween('78.0', '80.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.CHROMIUM, version: 79}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.CHROMIUM, version: 79 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
     await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.CHROMIUM, version: '79.0.3945.84'}],
-        true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.CHROMIUM, '78.0', '80.0');
+      [{ brand: userAgentBrowser.Brand.CHROMIUM, version: '79.0.3945.84' }],
+      true
+    );
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.CHROMIUM, '78.0', '80.0');
     await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.CHROMIUM, '79.0.3945.84', '79.0.3945.84');
+      userAgentBrowser.Brand.CHROMIUM,
+      '79.0.3945.84',
+      '79.0.3945.84'
+    );
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
     assertPreUachVersionBetween('79.0', '79.1');
   },
@@ -701,16 +670,19 @@ testSuite({
     assertPreUachVersion('22.0.1194.0');
     assertPreUachVersionBetween('22.0', '23.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.CHROMIUM, version: 22}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.CHROMIUM, version: 22 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
     await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.CHROMIUM, version: '22.0.1194.0'}],
-        true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.CHROMIUM, '22.0', '23.0');
+      [{ brand: userAgentBrowser.Brand.CHROMIUM, version: '22.0.1194.0' }],
+      true
+    );
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.CHROMIUM, '22.0', '23.0');
     await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.CHROMIUM, '22.0.1194.0', '22.0.1194.0');
+      userAgentBrowser.Brand.CHROMIUM,
+      '22.0.1194.0',
+      '22.0.1194.0'
+    );
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
     assertPreUachVersionBetween('22.0', '22.10');
   },
@@ -722,16 +694,19 @@ testSuite({
     assertPreUachVersion('32.0.1700.20');
     assertPreUachVersionBetween('32.0', '33.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.CHROMIUM, version: 32}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.CHROMIUM, version: 32 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
     await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.CHROMIUM, version: '32.0.1700.20'}],
-        true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.CHROMIUM, '32.0', '33.0');
+      [{ brand: userAgentBrowser.Brand.CHROMIUM, version: '32.0.1700.20' }],
+      true
+    );
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.CHROMIUM, '32.0', '33.0');
     await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.CHROMIUM, '32.0.1700.20', '32.0.1700.20');
+      userAgentBrowser.Brand.CHROMIUM,
+      '32.0.1700.20',
+      '32.0.1700.20'
+    );
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
     assertPreUachVersionBetween('32.0', '32.10');
   },
@@ -743,16 +718,19 @@ testSuite({
     assertPreUachVersion('24.0.1309.0');
     assertPreUachVersionBetween('24.0', '25.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.CHROMIUM, version: 24}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.CHROMIUM, version: 24 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
     await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.CHROMIUM, version: '24.0.1309.0'}],
-        true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.CHROMIUM, '24.0', '25.0');
+      [{ brand: userAgentBrowser.Brand.CHROMIUM, version: '24.0.1309.0' }],
+      true
+    );
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.CHROMIUM, '24.0', '25.0');
     await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.CHROMIUM, '24.0.1309.0', '24.0.1309.0');
+      userAgentBrowser.Brand.CHROMIUM,
+      '24.0.1309.0',
+      '24.0.1309.0'
+    );
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
     assertPreUachVersionBetween('24.0', '24.10');
   },
@@ -764,15 +742,12 @@ testSuite({
     assertPreUachVersion('6.0');
     assertPreUachVersionBetween('5.1', '7.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.SAFARI, version: 6}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.SAFARI, version: 6 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.SAFARI, version: '6.0'}], true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.SAFARI, '5.1', '7.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.SAFARI, '6.0', '6.0');
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.SAFARI, version: '6.0' }], true);
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.SAFARI, '5.1', '7.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.SAFARI, '6.0', '6.0');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -783,15 +758,12 @@ testSuite({
     assertPreUachVersion('6.0');
     assertPreUachVersionBetween('6.0', '7.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.SAFARI, version: 6}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.SAFARI, version: 6 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.SAFARI, version: '6.0'}], true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.SAFARI, '6.0', '7.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.SAFARI, '6.0', '6.0');
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.SAFARI, version: '6.0' }], true);
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.SAFARI, '6.0', '7.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.SAFARI, '6.0', '6.0');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -802,15 +774,12 @@ testSuite({
     assertPreUachVersion('6.0');
     assertPreUachVersionBetween('5.0', '7.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.SAFARI, version: 6}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.SAFARI, version: 6 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.SAFARI, version: '6.0'}], true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.SAFARI, '5.0', '7.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.SAFARI, '6.0', '6.0');
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.SAFARI, version: '6.0' }], true);
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.SAFARI, '5.0', '7.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.SAFARI, '6.0', '6.0');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -821,15 +790,12 @@ testSuite({
     assertPreUachVersion('14.1.1');
     assertPreUachVersionBetween('14.0', '15.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.SAFARI, version: 14}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.SAFARI, version: 14 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.SAFARI, version: '14.1.1'}], true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.SAFARI, '14.0', '15.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.SAFARI, '14.1.1', '14.1.1');
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.SAFARI, version: '14.1.1' }], true);
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.SAFARI, '14.0', '15.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.SAFARI, '14.1.1', '14.1.1');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -840,15 +806,12 @@ testSuite({
     assertPreUachVersion('15.0');
     assertPreUachVersionBetween('15.0', '16.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.SAFARI, version: 15}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.SAFARI, version: 15 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.SAFARI, version: '15.0'}], true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.SAFARI, '15.0', '16.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.SAFARI, '15.0', '15.0');
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.SAFARI, version: '15.0' }], true);
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.SAFARI, '15.0', '16.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.SAFARI, '15.0', '15.0');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -859,15 +822,12 @@ testSuite({
     assertPreUachVersion('15.0');
     assertPreUachVersionBetween('15.0', '16.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.SAFARI, version: 15}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.SAFARI, version: 15 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.SAFARI, version: '15.0'}], true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.SAFARI, '15.0', '16.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.SAFARI, '15.0', '15.0');
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.SAFARI, version: '15.0' }], true);
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.SAFARI, '15.0', '16.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.SAFARI, '15.0', '15.0');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -878,15 +838,12 @@ testSuite({
     assertPreUachVersion('15.0');
     assertPreUachVersionBetween('15.0', '16.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.SAFARI, version: 15}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.SAFARI, version: 15 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.SAFARI, version: '15.0'}], true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.SAFARI, '15.0', '16.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.SAFARI, '15.0', '15.0');
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.SAFARI, version: '15.0' }], true);
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.SAFARI, '15.0', '16.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.SAFARI, '15.0', '15.0');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -897,15 +854,12 @@ testSuite({
     assertPreUachVersion('14.1.2');
     assertPreUachVersionBetween('14.1', '14.2');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.SAFARI, version: 14}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.SAFARI, version: 14 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.SAFARI, version: '14.1.2'}], true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.SAFARI, '14.1', '14.2');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.SAFARI, '14.1.2', '14.1.2');
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.SAFARI, version: '14.1.2' }], true);
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.SAFARI, '14.1', '14.2');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.SAFARI, '14.1.2', '14.1.2');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -927,17 +881,15 @@ testSuite({
     assertPreUachVersion('4.0');
     assertPreUachVersionBetween('3.0', '5.0');
 
-    assertVersionOf(
-        [{brand: userAgentBrowser.Brand.ANDROID_BROWSER, version: 4}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.ANDROID_BROWSER, version: 4 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
     await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.ANDROID_BROWSER, version: '4.0'}],
-        true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.ANDROID_BROWSER, '3.0', '5.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.ANDROID_BROWSER, '4.0', '4.0');
+      [{ brand: userAgentBrowser.Brand.ANDROID_BROWSER, version: '4.0' }],
+      true
+    );
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.ANDROID_BROWSER, '3.0', '5.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.ANDROID_BROWSER, '4.0', '4.0');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -947,17 +899,15 @@ testSuite({
     assertPreUachVersion('4.0');
     assertPreUachVersionBetween('3.0', '5.0');
 
-    assertVersionOf(
-        [{brand: userAgentBrowser.Brand.ANDROID_BROWSER, version: 4}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.ANDROID_BROWSER, version: 4 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
     await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.ANDROID_BROWSER, version: '4.0'}],
-        true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.ANDROID_BROWSER, '3.0', '5.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.ANDROID_BROWSER, '4.0', '4.0');
+      [{ brand: userAgentBrowser.Brand.ANDROID_BROWSER, version: '4.0' }],
+      true
+    );
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.ANDROID_BROWSER, '3.0', '5.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.ANDROID_BROWSER, '4.0', '4.0');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -967,17 +917,15 @@ testSuite({
     assertPreUachVersion('4.0');
     assertPreUachVersionBetween('3.0', '5.0');
 
-    assertVersionOf(
-        [{brand: userAgentBrowser.Brand.ANDROID_BROWSER, version: 4}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.ANDROID_BROWSER, version: 4 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
     await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.ANDROID_BROWSER, version: '4.0'}],
-        true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.ANDROID_BROWSER, '3.0', '5.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.ANDROID_BROWSER, '4.0', '4.0');
+      [{ brand: userAgentBrowser.Brand.ANDROID_BROWSER, version: '4.0' }],
+      true
+    );
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.ANDROID_BROWSER, '3.0', '5.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.ANDROID_BROWSER, '4.0', '4.0');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -987,17 +935,15 @@ testSuite({
     assertPreUachVersion('4.0');
     assertPreUachVersionBetween('3.0', '5.0');
 
-    assertVersionOf(
-        [{brand: userAgentBrowser.Brand.ANDROID_BROWSER, version: 4}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.ANDROID_BROWSER, version: 4 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
     await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.ANDROID_BROWSER, version: '4.0'}],
-        true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.ANDROID_BROWSER, '3.0', '5.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.ANDROID_BROWSER, '4.0', '4.0');
+      [{ brand: userAgentBrowser.Brand.ANDROID_BROWSER, version: '4.0' }],
+      true
+    );
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.ANDROID_BROWSER, '3.0', '5.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.ANDROID_BROWSER, '4.0', '4.0');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -1007,15 +953,15 @@ testSuite({
     assertPreUachVersion('30.0.0.0');
     assertPreUachVersionBetween('29.0', '31.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.CHROMIUM, version: 30}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.CHROMIUM, version: 30 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
     await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.CHROMIUM, version: '30.0.0.0'}], true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.CHROMIUM, '29.0', '31.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.CHROMIUM, '30.0.0.0', '30.0.0.0');
+      [{ brand: userAgentBrowser.Brand.CHROMIUM, version: '30.0.0.0' }],
+      true
+    );
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.CHROMIUM, '29.0', '31.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.CHROMIUM, '30.0.0.0', '30.0.0.0');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -1025,11 +971,10 @@ testSuite({
     assertNonChromeChromiumBrowser(NonChromeChromiumBrowser.SILK);
     assertPreUachVersion('2.1');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.SILK, version: 2}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.SILK, version: 2 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.SILK, version: '2.1'}], true);
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.SILK, version: '2.1' }], true);
   },
 
   async testFirefoxOnAndroidTablet() {
@@ -1038,15 +983,12 @@ testSuite({
     assertPreUachVersion('28.0');
     assertPreUachVersionBetween('27.0', '29.0');
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.FIREFOX, version: 28}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.FIREFOX, version: 28 }]);
 
     assertHighEntropyAPIsInUACHFallbackMode();
-    await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.FIREFOX, version: '28.0'}], true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.FIREFOX, '27.0', '29.0');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.FIREFOX, '28.0', '28.0');
+    await assertFullVersionOf([{ brand: userAgentBrowser.Brand.FIREFOX, version: '28.0' }], true);
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.FIREFOX, '27.0', '29.0');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.FIREFOX, '28.0', '28.0');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -1054,12 +996,14 @@ testSuite({
     // Note: The full versions listed here are fictional, made up by bumping
     // a legitimate version's major version number by 10 (e.g. 91.* -> 101.*).
     const userAgentDataWithVersion = testAgentData.withHighEntropyData(
-        testAgentData.OPERACHROMIUM_USERAGENT_DATA, {
-          fullVersionList: [
-            {brand: 'Chromium', version: '101.0.4472.164'},
-            {brand: 'Opera', version: '87.0.4054.80'},
-          ]
-        });
+      testAgentData.OPERACHROMIUM_USERAGENT_DATA,
+      {
+        fullVersionList: [
+          { brand: 'Chromium', version: '101.0.4472.164' },
+          { brand: 'Opera', version: '87.0.4054.80' },
+        ],
+      }
+    );
     util.setUserAgentData(userAgentDataWithVersion);
 
     // Using only UACH data to get these answers requires enabling
@@ -1073,12 +1017,15 @@ testSuite({
     assertFalse(userAgentBrowser.isOpera());
 
     assertVersionOf([
-      {brand: userAgentBrowser.Brand.CHROMIUM, version: 101},
-      {brand: userAgentBrowser.Brand.OPERA, version: 87}
+      { brand: userAgentBrowser.Brand.CHROMIUM, version: 101 },
+      { brand: userAgentBrowser.Brand.OPERA, version: 87 },
     ]);
 
     await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.CHROMIUM, '101', '101.0.4472.164');
+      userAgentBrowser.Brand.CHROMIUM,
+      '101',
+      '101.0.4472.164'
+    );
 
     // Reset caches to test low-entropy version for Opera
     userAgentBrowser.resetForTesting();
@@ -1086,19 +1033,17 @@ testSuite({
     // High-entropy APIs should function even when useClientHints returns false
     setUseClientHintsForTesting(false);
 
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.OPERA, '87', '87.0.4054.80');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.OPERA, '87', '87.0.4054.80');
 
     await assertFullVersionOf(
-        [
-          {brand: userAgentBrowser.Brand.OPERA, version: '87.0.4054.80'},
-          {brand: userAgentBrowser.Brand.CHROMIUM, version: '101.0.4472.164'}
-        ],
-        true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.OPERA, '86.1', '87.1');
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.CHROMIUM, '101.0', '109.1.4500');
+      [
+        { brand: userAgentBrowser.Brand.OPERA, version: '87.0.4054.80' },
+        { brand: userAgentBrowser.Brand.CHROMIUM, version: '101.0.4472.164' },
+      ],
+      true
+    );
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.OPERA, '86.1', '87.1');
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.CHROMIUM, '101.0', '109.1.4500');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -1106,12 +1051,14 @@ testSuite({
     // Note: The full versions listed here are fictional, made up by bumping
     // a legitimate version's major version number by 10 (e.g. 91.* -> 101.*).
     const userAgentDataWithVersion = testAgentData.withHighEntropyData(
-        testAgentData.EDGECHROMIUM_USERAGENT_DATA, {
-          fullVersionList: [
-            {brand: 'Chromium', version: '101.0.4472.77'},
-            {brand: 'Microsoft Edge', version: '101.0.864.37'},
-          ]
-        });
+      testAgentData.EDGECHROMIUM_USERAGENT_DATA,
+      {
+        fullVersionList: [
+          { brand: 'Chromium', version: '101.0.4472.77' },
+          { brand: 'Microsoft Edge', version: '101.0.864.37' },
+        ],
+      }
+    );
     util.setUserAgentData(userAgentDataWithVersion);
 
     // Using only UACH data to get these answers requires enabling
@@ -1125,43 +1072,42 @@ testSuite({
     assertFalse(userAgentBrowser.isEdge());
 
     assertVersionOf([
-      {brand: userAgentBrowser.Brand.CHROMIUM, version: 101},
-      {brand: userAgentBrowser.Brand.EDGE, version: 101}
+      { brand: userAgentBrowser.Brand.CHROMIUM, version: 101 },
+      { brand: userAgentBrowser.Brand.EDGE, version: 101 },
     ]);
 
     // High-entropy APIs should function even when useClientHints returns false
     setUseClientHintsForTesting(false);
 
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.CHROMIUM, '101', '101.0.4472.77');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.CHROMIUM, '101', '101.0.4472.77');
 
     // Clear test caches so that we can check the low-entropy value for Edge.
     userAgentBrowser.resetForTesting();
 
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.EDGE, '101', '101.0.864.37');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.EDGE, '101', '101.0.864.37');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
 
     await assertFullVersionOf(
-        [
-          {brand: userAgentBrowser.Brand.CHROMIUM, version: '101.0.4472.77'},
-          {brand: userAgentBrowser.Brand.EDGE, version: '101.0.864.37'}
-        ],
-        true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.CHROMIUM, '101.0', '101.1');
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.EDGE, '101.0', '101.1');
+      [
+        { brand: userAgentBrowser.Brand.CHROMIUM, version: '101.0.4472.77' },
+        { brand: userAgentBrowser.Brand.EDGE, version: '101.0.864.37' },
+      ],
+      true
+    );
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.CHROMIUM, '101.0', '101.1');
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.EDGE, '101.0', '101.1');
   },
 
   async testSilkUserAgentData() {
-    const userAgentDataWithVersion =
-        testAgentData.withHighEntropyData(testAgentData.SILK_USERAGENT_DATA, {
-          fullVersionList: [
-            {brand: 'Chromium', version: '93.0.4577.82'},
-            // No Silk brand yet.
-          ]
-        });
+    const userAgentDataWithVersion = testAgentData.withHighEntropyData(
+      testAgentData.SILK_USERAGENT_DATA,
+      {
+        fullVersionList: [
+          { brand: 'Chromium', version: '93.0.4577.82' },
+          // No Silk brand yet.
+        ],
+      }
+    );
     util.setUserAgent(testAgents.KINDLE_FIRE_SILK_93);
     util.setUserAgentData(userAgentDataWithVersion);
 
@@ -1170,25 +1116,22 @@ testSuite({
 
     assertPreUachVersion('93.2.7');
     assertVersionOf([
-      {brand: userAgentBrowser.Brand.CHROMIUM, version: 93},
-      {brand: userAgentBrowser.Brand.SILK, version: 93}
+      { brand: userAgentBrowser.Brand.CHROMIUM, version: 93 },
+      { brand: userAgentBrowser.Brand.SILK, version: 93 },
     ]);
 
     await assertFullVersionOf(
-        [
-          {brand: userAgentBrowser.Brand.CHROMIUM, version: '93.0.4577.82'},
-          {brand: userAgentBrowser.Brand.SILK, version: '93.2.7'}
-        ],
-        true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.CHROMIUM, '93.0', '93.1');
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.SILK, '93.2.6', '93.2.8');
+      [
+        { brand: userAgentBrowser.Brand.CHROMIUM, version: '93.0.4577.82' },
+        { brand: userAgentBrowser.Brand.SILK, version: '93.2.7' },
+      ],
+      true
+    );
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.CHROMIUM, '93.0', '93.1');
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.SILK, '93.2.6', '93.2.8');
 
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.CHROMIUM, '93.0.4577.82');
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.SILK, '93.2.7');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.CHROMIUM, '93.0.4577.82');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.SILK, '93.2.7');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -1196,12 +1139,14 @@ testSuite({
     // Note: The full versions listed here are fictional, made up by bumping
     // a legitimate version's major version number by 10 (e.g. 91.* -> 101.*).
     const userAgentDataWithVersion = testAgentData.withHighEntropyData(
-        testAgentData.CHROME_USERAGENT_DATA_LINUX, {
-          fullVersionList: [
-            {brand: 'Chromium', version: '101.0.4472.77'},
-            {brand: 'Google Chrome', version: '102.0.4472.77'}
-          ]
-        });
+      testAgentData.CHROME_USERAGENT_DATA_LINUX,
+      {
+        fullVersionList: [
+          { brand: 'Chromium', version: '101.0.4472.77' },
+          { brand: 'Google Chrome', version: '102.0.4472.77' },
+        ],
+      }
+    );
     util.setUserAgentData(userAgentDataWithVersion);
 
     // Using only UACH data to get these answers requires enabling
@@ -1213,19 +1158,18 @@ testSuite({
     assertBrowser(Browser.CHROME);
     assertTrue(userAgentBrowser.isChrome());
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.CHROMIUM, version: 101}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.CHROMIUM, version: 101 }]);
 
     // High-entropy APIs should function even when useClientHints returns false
     setUseClientHintsForTesting(false);
 
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.CHROMIUM, '101', '101.0.4472.77');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.CHROMIUM, '101', '101.0.4472.77');
 
     await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.CHROMIUM, version: '101.0.4472.77'}],
-        true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.CHROMIUM, '101.0', '101.1');
+      [{ brand: userAgentBrowser.Brand.CHROMIUM, version: '101.0.4472.77' }],
+      true
+    );
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.CHROMIUM, '101.0', '101.1');
 
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
@@ -1236,22 +1180,20 @@ testSuite({
     // is no version of Chrome where (1) fullVersionList is not implemented and
     // (2) the user agent string is at least partially frozen.
     util.setUserAgent(testAgents.CHROME_LINUX_91);
-    util.setUserAgentData(
-        testAgentData.CHROME_NO_FULLVERSIONLIST_USERAGENT_DATA);
+    util.setUserAgentData(testAgentData.CHROME_NO_FULLVERSIONLIST_USERAGENT_DATA);
 
     assertBrowser(Browser.CHROME);
     assertTrue(userAgentBrowser.isChrome());
 
-    assertVersionOf([{brand: userAgentBrowser.Brand.CHROMIUM, version: 91}]);
+    assertVersionOf([{ brand: userAgentBrowser.Brand.CHROMIUM, version: 91 }]);
 
     await assertFullVersionOf(
-        [{brand: userAgentBrowser.Brand.CHROMIUM, version: '91.0.4472.77'}],
-        true);
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.CHROMIUM, '91.0', '91.1');
+      [{ brand: userAgentBrowser.Brand.CHROMIUM, version: '91.0.4472.77' }],
+      true
+    );
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.CHROMIUM, '91.0', '91.1');
 
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.CHROMIUM, '91.0.4472.77');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.CHROMIUM, '91.0.4472.77');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -1265,16 +1207,14 @@ testSuite({
   async testChromeUserAgentDataWithRejectedHighEntropyValues() {
     util.setUserAgentData(testAgentData.CHROME_USERAGENT_DATA_LINUX);
 
-    const fullChromeVersion =
-        userAgentBrowser.fullVersionOf(userAgentBrowser.Brand.CHROMIUM);
+    const fullChromeVersion = userAgentBrowser.fullVersionOf(userAgentBrowser.Brand.CHROMIUM);
     assertNotNullNorUndefined(fullChromeVersion);
     assertEquals(undefined, fullChromeVersion.getIfLoaded());
 
     await assertRejects(fullChromeVersion.load());
     assertEquals(undefined, fullChromeVersion.getIfLoaded());
 
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.CHROMIUM, '101', '101');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.CHROMIUM, '101', '101');
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
@@ -1282,29 +1222,25 @@ testSuite({
     // Note: The full versions listed here are fictional, made up by bumping
     // a legitimate version's major version number by 10 (e.g. 91.* -> 101.*).
     const userAgentDataWithVersion = testAgentData.withHighEntropyData(
-        testAgentData.CHROME_USERAGENT_DATA_LINUX,
-        {fullVersionList: [{brand: 'Chromium', version: '101.0.4472.77'}]});
+      testAgentData.CHROME_USERAGENT_DATA_LINUX,
+      { fullVersionList: [{ brand: 'Chromium', version: '101.0.4472.77' }] }
+    );
     util.setUserAgentData(userAgentDataWithVersion);
 
-    const fullChromeVersion =
-        userAgentBrowser.fullVersionOf(userAgentBrowser.Brand.CHROMIUM);
+    const fullChromeVersion = userAgentBrowser.fullVersionOf(userAgentBrowser.Brand.CHROMIUM);
     assertNotNullNorUndefined(fullChromeVersion);
     assertEquals(undefined, fullChromeVersion.getIfLoaded());
 
     // Preload the full version list.
     await userAgentBrowser.loadFullVersions();
-    assertEquals(
-        '101.0.4472.77',
-        fullChromeVersion.getIfLoaded().toVersionStringForLogging());
+    assertEquals('101.0.4472.77', fullChromeVersion.getIfLoaded().toVersionStringForLogging());
   },
 
   async testChromeNoFullVersionUserAgentDataPreloadedFullVersion() {
     util.setUserAgent(testAgents.CHROME_LINUX_91);
-    util.setUserAgentData(
-        testAgentData.CHROME_NO_FULLVERSIONLIST_USERAGENT_DATA);
+    util.setUserAgentData(testAgentData.CHROME_NO_FULLVERSIONLIST_USERAGENT_DATA);
 
-    const fullChromeVersion =
-        userAgentBrowser.fullVersionOf(userAgentBrowser.Brand.CHROMIUM);
+    const fullChromeVersion = userAgentBrowser.fullVersionOf(userAgentBrowser.Brand.CHROMIUM);
     assertNotNullNorUndefined(fullChromeVersion);
     // The version info should not have been available yet.
     assertUndefined(fullChromeVersion.getIfLoaded());
@@ -1312,151 +1248,150 @@ testSuite({
     // Preload the full version list.
     await userAgentBrowser.loadFullVersions();
     // This should have no effect.
-    assertEquals(
-        '91.0.4472.77',
-        fullChromeVersion.getIfLoaded().toVersionStringForLogging());
+    assertEquals('91.0.4472.77', fullChromeVersion.getIfLoaded().toVersionStringForLogging());
   },
 
   async testCachingSemanticsUACHFallback_load() {
     util.setUserAgent(testAgents.EDGE_CHROMIUM);
     assertHighEntropyAPIsInUACHFallbackMode();
 
-    const fullChromeVersion =
-        userAgentBrowser.fullVersionOf(userAgentBrowser.Brand.CHROMIUM);
+    const fullChromeVersion = userAgentBrowser.fullVersionOf(userAgentBrowser.Brand.CHROMIUM);
     assertNotNullNorUndefined(fullChromeVersion);
     // The version info should not have been available yet.
     assertUndefined(fullChromeVersion.getIfLoaded());
 
     // Preload all full version list data.
     await fullChromeVersion.load();
-    assertEquals(
-        '74.0.3729.48',
-        fullChromeVersion.getIfLoaded().toVersionStringForLogging());
+    assertEquals('74.0.3729.48', fullChromeVersion.getIfLoaded().toVersionStringForLogging());
 
     // Any other retrieved object from fullVersionOf shouldn't need load to be
     // called to get the data as it should be globally cached.
     // In this case, we can check the Edge value instead of the Chromium one.
     assertEquals(
-        '74.1.96.24',
-        userAgentBrowser.fullVersionOf(userAgentBrowser.Brand.EDGE)
-            .getIfLoaded()
-            .toVersionStringForLogging());
+      '74.1.96.24',
+      userAgentBrowser
+        .fullVersionOf(userAgentBrowser.Brand.EDGE)
+        .getIfLoaded()
+        .toVersionStringForLogging()
+    );
   },
 
   async testCachingSemanticsUACHFallback_loadFullVersions() {
     util.setUserAgent(testAgents.EDGE_CHROMIUM);
     assertHighEntropyAPIsInUACHFallbackMode();
 
-    const fullChromeVersion =
-        userAgentBrowser.fullVersionOf(userAgentBrowser.Brand.CHROMIUM);
+    const fullChromeVersion = userAgentBrowser.fullVersionOf(userAgentBrowser.Brand.CHROMIUM);
     assertNotNullNorUndefined(fullChromeVersion);
     // The version info should not have been available yet.
     assertUndefined(fullChromeVersion.getIfLoaded());
 
     // Preload the full version list.
     await userAgentBrowser.loadFullVersions();
-    assertEquals(
-        '74.0.3729.48',
-        fullChromeVersion.getIfLoaded().toVersionStringForLogging());
+    assertEquals('74.0.3729.48', fullChromeVersion.getIfLoaded().toVersionStringForLogging());
 
     // Any other retrieved object from fullVersionOf shouldn't need load to be
     // called to get the data as it should be globally cached.
     assertEquals(
-        '74.1.96.24',
-        userAgentBrowser.fullVersionOf(userAgentBrowser.Brand.EDGE)
-            .getIfLoaded()
-            .toVersionStringForLogging());
+      '74.1.96.24',
+      userAgentBrowser
+        .fullVersionOf(userAgentBrowser.Brand.EDGE)
+        .getIfLoaded()
+        .toVersionStringForLogging()
+    );
   },
 
   async testCachingSemanticsUACH_load() {
     // Note: The full versions listed here are fictional, made up by bumping
     // a legitimate version's major version number by 10 (e.g. 91.* -> 101.*).
     const userAgentDataWithVersion = testAgentData.withHighEntropyData(
-        testAgentData.EDGECHROMIUM_USERAGENT_DATA, {
-          fullVersionList: [
-            {brand: 'Chromium', version: '101.0.4472.77'},
-            {brand: 'Microsoft Edge', version: '101.0.864.37'},
-          ]
-        });
+      testAgentData.EDGECHROMIUM_USERAGENT_DATA,
+      {
+        fullVersionList: [
+          { brand: 'Chromium', version: '101.0.4472.77' },
+          { brand: 'Microsoft Edge', version: '101.0.864.37' },
+        ],
+      }
+    );
     util.setUserAgentData(userAgentDataWithVersion);
 
-    const fullChromeVersion =
-        userAgentBrowser.fullVersionOf(userAgentBrowser.Brand.CHROMIUM);
+    const fullChromeVersion = userAgentBrowser.fullVersionOf(userAgentBrowser.Brand.CHROMIUM);
     assertNotNullNorUndefined(fullChromeVersion);
     // The version info should not have been available yet.
     assertUndefined(fullChromeVersion.getIfLoaded());
 
     // Preload all full version list data.
     await fullChromeVersion.load();
-    assertEquals(
-        '101.0.4472.77',
-        fullChromeVersion.getIfLoaded().toVersionStringForLogging());
+    assertEquals('101.0.4472.77', fullChromeVersion.getIfLoaded().toVersionStringForLogging());
 
     // Any other retrieved object from fullVersionOf shouldn't need load to be
     // called to get the data as it should be globally cached.
     // In this case, we can check the Edge value instead of the Chromium one.
     assertEquals(
-        '101.0.864.37',
-        userAgentBrowser.fullVersionOf(userAgentBrowser.Brand.EDGE)
-            .getIfLoaded()
-            .toVersionStringForLogging());
+      '101.0.864.37',
+      userAgentBrowser
+        .fullVersionOf(userAgentBrowser.Brand.EDGE)
+        .getIfLoaded()
+        .toVersionStringForLogging()
+    );
   },
 
   async testCachingSemanticsUACH_loadFullVersions() {
     // Note: The full versions listed here are fictional, made up by bumping
     // a legitimate version's major version number by 10 (e.g. 91.* -> 101.*).
     const userAgentDataWithVersion = testAgentData.withHighEntropyData(
-        testAgentData.EDGECHROMIUM_USERAGENT_DATA, {
-          fullVersionList: [
-            {brand: 'Chromium', version: '101.0.4472.77'},
-            {brand: 'Microsoft Edge', version: '101.0.864.37'},
-          ]
-        });
+      testAgentData.EDGECHROMIUM_USERAGENT_DATA,
+      {
+        fullVersionList: [
+          { brand: 'Chromium', version: '101.0.4472.77' },
+          { brand: 'Microsoft Edge', version: '101.0.864.37' },
+        ],
+      }
+    );
     util.setUserAgentData(userAgentDataWithVersion);
 
-    const fullChromeVersion =
-        userAgentBrowser.fullVersionOf(userAgentBrowser.Brand.CHROMIUM);
+    const fullChromeVersion = userAgentBrowser.fullVersionOf(userAgentBrowser.Brand.CHROMIUM);
     assertNotNullNorUndefined(fullChromeVersion);
     // The version info should not have been available yet.
     assertUndefined(fullChromeVersion.getIfLoaded());
 
     // Preload the full version list.
     await userAgentBrowser.loadFullVersions();
-    assertEquals(
-        '101.0.4472.77',
-        fullChromeVersion.getIfLoaded().toVersionStringForLogging());
+    assertEquals('101.0.4472.77', fullChromeVersion.getIfLoaded().toVersionStringForLogging());
 
     // Any other retrieved object from fullVersionOf shouldn't need load to be
     // called to get the data as it should be globally cached.
     assertEquals(
-        '101.0.864.37',
-        userAgentBrowser.fullVersionOf(userAgentBrowser.Brand.EDGE)
-            .getIfLoaded()
-            .toVersionStringForLogging());
+      '101.0.864.37',
+      userAgentBrowser
+        .fullVersionOf(userAgentBrowser.Brand.EDGE)
+        .getIfLoaded()
+        .toVersionStringForLogging()
+    );
   },
 
   async testChromeUserAgentDataWithDivergingVersions() {
     // These versions and scenario are ficticious - as of August 2023 the
     // versions of 'Google Chrome' and 'Chromium' have been identical.
     const userAgentDataWithVersion = testAgentData.withHighEntropyData(
-        Object.freeze({
-          brands: [
-            {brand: 'Not; A Brand', version: '0'},
-            {brand: 'Google Chrome', version: '102'},
-            {brand: 'Chromium', version: '101'},
-          ],
-          mobile: false,
-          getHighEntropyValues: () => {
-            throw new Error('high-entropy data not available');
-          },
-          platform: 'Linux',
-        }),
-        {
-          fullVersionList: [
-            {brand: 'Chromium', version: '101.0.4472.77'},
-            {brand: 'Google Chrome', version: '102.0.4472.77'},
-          ]
-        });
+      Object.freeze({
+        brands: [
+          { brand: 'Not; A Brand', version: '0' },
+          { brand: 'Google Chrome', version: '102' },
+          { brand: 'Chromium', version: '101' },
+        ],
+        mobile: false,
+        getHighEntropyValues: () => {
+          throw new Error('high-entropy data not available');
+        },
+        platform: 'Linux',
+      }),
+      {
+        fullVersionList: [
+          { brand: 'Chromium', version: '101.0.4472.77' },
+          { brand: 'Google Chrome', version: '102.0.4472.77' },
+        ],
+      }
+    );
     util.setUserAgentData(userAgentDataWithVersion);
 
     // Using only UACH data to get these answers requires enabling
@@ -1469,50 +1404,49 @@ testSuite({
     assertTrue(userAgentBrowser.isChrome());
 
     assertVersionOf([
-      {brand: ChromiumRebrand.GOOGLE_CHROME, version: 102},
-      {brand: userAgentBrowser.Brand.CHROMIUM, version: 101},
+      { brand: ChromiumRebrand.GOOGLE_CHROME, version: 102 },
+      { brand: userAgentBrowser.Brand.CHROMIUM, version: 101 },
     ]);
 
     // High-entropy APIs should function even when useClientHints returns false
     setUseClientHintsForTesting(false);
 
-    await assertGetVersionStringForLogging(
-        ChromiumRebrand.GOOGLE_CHROME, '102', '102.0.4472.77');
+    await assertGetVersionStringForLogging(ChromiumRebrand.GOOGLE_CHROME, '102', '102.0.4472.77');
 
     await assertFullVersionOf(
-        [
-          {brand: ChromiumRebrand.GOOGLE_CHROME, version: '102.0.4472.77'},
-          {brand: userAgentBrowser.Brand.CHROMIUM, version: '101.0.4472.77'}
-        ],
-        true);
-    await assertFullVersionOfBetween(
-        ChromiumRebrand.GOOGLE_CHROME, '102.0', '102.1');
+      [
+        { brand: ChromiumRebrand.GOOGLE_CHROME, version: '102.0.4472.77' },
+        { brand: userAgentBrowser.Brand.CHROMIUM, version: '101.0.4472.77' },
+      ],
+      true
+    );
+    await assertFullVersionOfBetween(ChromiumRebrand.GOOGLE_CHROME, '102.0', '102.1');
 
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },
 
-
   async testBraveUserAgentData() {
     // These versions are ficticious.
     const userAgentDataWithVersion = testAgentData.withHighEntropyData(
-        {
-          brands: [
-            {brand: 'Not; A Brand', version: '0'},
-            {brand: 'Brave', version: '2'},
-            {brand: 'Chromium', version: '101'},
-          ],
-          mobile: false,
-          getHighEntropyValues: () => {
-            throw new Error('high-entropy values not available');
-          },
-          platform: 'Linux',
+      {
+        brands: [
+          { brand: 'Not; A Brand', version: '0' },
+          { brand: 'Brave', version: '2' },
+          { brand: 'Chromium', version: '101' },
+        ],
+        mobile: false,
+        getHighEntropyValues: () => {
+          throw new Error('high-entropy values not available');
         },
-        {
-          fullVersionList: [
-            {brand: 'Chromium', version: '101.0.4472.77'},
-            {brand: 'Brave', version: '2.0.1'},
-          ]
-        });
+        platform: 'Linux',
+      },
+      {
+        fullVersionList: [
+          { brand: 'Chromium', version: '101.0.4472.77' },
+          { brand: 'Brave', version: '2.0.1' },
+        ],
+      }
+    );
     util.setUserAgentData(userAgentDataWithVersion);
 
     // Using only UACH data to get these answers requires enabling
@@ -1525,8 +1459,8 @@ testSuite({
     assertTrue(userAgentBrowser.isChrome());
 
     assertVersionOf([
-      {brand: ChromiumRebrand.BRAVE, version: 2},
-      {brand: userAgentBrowser.Brand.CHROMIUM, version: 101},
+      { brand: ChromiumRebrand.BRAVE, version: 2 },
+      { brand: userAgentBrowser.Brand.CHROMIUM, version: 101 },
     ]);
 
     // High-entropy APIs should function even when useClientHints returns false
@@ -1535,11 +1469,12 @@ testSuite({
     await assertGetVersionStringForLogging(ChromiumRebrand.BRAVE, '2', '2.0.1');
 
     await assertFullVersionOf(
-        [
-          {brand: ChromiumRebrand.BRAVE, version: '2.0.1'},
-          {brand: userAgentBrowser.Brand.CHROMIUM, version: '101.0.4472.77'}
-        ],
-        true);
+      [
+        { brand: ChromiumRebrand.BRAVE, version: '2.0.1' },
+        { brand: userAgentBrowser.Brand.CHROMIUM, version: '101.0.4472.77' },
+      ],
+      true
+    );
     await assertFullVersionOfBetween(ChromiumRebrand.BRAVE, '2.0', '2.1');
 
     // Check that we can also get this data for Chromium as well as Brave
@@ -1549,10 +1484,8 @@ testSuite({
     userAgentBrowser.resetForTesting();
     util.setUserAgentData(userAgentDataWithVersion);
 
-    await assertGetVersionStringForLogging(
-        userAgentBrowser.Brand.CHROMIUM, '101', '101.0.4472.77');
-    await assertFullVersionOfBetween(
-        userAgentBrowser.Brand.CHROMIUM, '101.0', '101.1');
+    await assertGetVersionStringForLogging(userAgentBrowser.Brand.CHROMIUM, '101', '101.0.4472.77');
+    await assertFullVersionOfBetween(userAgentBrowser.Brand.CHROMIUM, '101.0', '101.1');
 
     await assertGetVersionStringForLogging(DEFINITELY_NOT_A_BROWSER, '', '');
   },

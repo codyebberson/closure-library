@@ -10,7 +10,6 @@
  */
 
 goog.module('goog.date.durationTest');
-goog.setTestOnly();
 
 const DateTimeFormat = goog.require('goog.i18n.DateTimeFormat');
 /** @suppress {extraRequire} */
@@ -66,8 +65,7 @@ testSuite({
     assertEquals('11 hours', duration(11 * HOUR_MS));
     assertEquals('11 hours', duration(11 * HOUR_MS + 1));
     assertEquals('11 hours 1 minute', duration(11 * HOUR_MS + MINUTE_MS));
-    assertEquals(
-        '11 hours 45 minutes', duration(11 * HOUR_MS + 45 * MINUTE_MS));
+    assertEquals('11 hours 45 minutes', duration(11 * HOUR_MS + 45 * MINUTE_MS));
   },
 
   testFormatDurationDays() {
@@ -77,15 +75,10 @@ testSuite({
     assertEquals('1 day 45 minutes', duration(DAY_MS + 45 * MINUTE_MS));
     assertEquals('1 day 1 hour', duration(DAY_MS + HOUR_MS));
     assertEquals('1 day 11 hours', duration(DAY_MS + 11 * HOUR_MS));
-    assertEquals(
-        '1 day 1 hour 1 minute', duration(DAY_MS + HOUR_MS + MINUTE_MS));
-    assertEquals(
-        '1 day 1 hour 45 minutes', duration(DAY_MS + HOUR_MS + 45 * MINUTE_MS));
-    assertEquals(
-        '1 day 11 hours 1 minute', duration(DAY_MS + 11 * HOUR_MS + MINUTE_MS));
-    assertEquals(
-        '1 day 11 hours 45 minutes',
-        duration(DAY_MS + 11 * HOUR_MS + 45 * MINUTE_MS));
+    assertEquals('1 day 1 hour 1 minute', duration(DAY_MS + HOUR_MS + MINUTE_MS));
+    assertEquals('1 day 1 hour 45 minutes', duration(DAY_MS + HOUR_MS + 45 * MINUTE_MS));
+    assertEquals('1 day 11 hours 1 minute', duration(DAY_MS + 11 * HOUR_MS + MINUTE_MS));
+    assertEquals('1 day 11 hours 45 minutes', duration(DAY_MS + 11 * HOUR_MS + 45 * MINUTE_MS));
 
     assertEquals('11 days', duration(11 * DAY_MS));
     assertEquals('11 days', duration(11 * DAY_MS + 1));
@@ -93,17 +86,13 @@ testSuite({
     assertEquals('11 days 45 minutes', duration(11 * DAY_MS + 45 * MINUTE_MS));
     assertEquals('11 days 1 hour', duration(11 * DAY_MS + HOUR_MS));
     assertEquals('11 days 11 hours', duration(11 * DAY_MS + 11 * HOUR_MS));
+    assertEquals('11 days 1 hour 1 minute', duration(11 * DAY_MS + HOUR_MS + MINUTE_MS));
+    assertEquals('11 days 1 hour 45 minutes', duration(11 * DAY_MS + HOUR_MS + 45 * MINUTE_MS));
+    assertEquals('11 days 11 hours 1 minute', duration(11 * DAY_MS + 11 * HOUR_MS + MINUTE_MS));
     assertEquals(
-        '11 days 1 hour 1 minute', duration(11 * DAY_MS + HOUR_MS + MINUTE_MS));
-    assertEquals(
-        '11 days 1 hour 45 minutes',
-        duration(11 * DAY_MS + HOUR_MS + 45 * MINUTE_MS));
-    assertEquals(
-        '11 days 11 hours 1 minute',
-        duration(11 * DAY_MS + 11 * HOUR_MS + MINUTE_MS));
-    assertEquals(
-        '11 days 11 hours 45 minutes',
-        duration(11 * DAY_MS + 11 * HOUR_MS + 45 * MINUTE_MS));
+      '11 days 11 hours 45 minutes',
+      duration(11 * DAY_MS + 11 * HOUR_MS + 45 * MINUTE_MS)
+    );
   },
 
   testFormatDurationPersianDigits() {

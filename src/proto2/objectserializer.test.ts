@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.proto2.ObjectSerializerTest');
-goog.setTestOnly();
 
 const ObjectSerializer = goog.require('goog.proto2.ObjectSerializer');
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
@@ -85,8 +84,7 @@ testSuite({
     assertEquals(202, simplified[31][1]);
 
     // Serialize to a simplified object (with key as name).
-    simplified = new ObjectSerializer(ObjectSerializer.KeyOption.NAME)
-                     .serialize(message);
+    simplified = new ObjectSerializer(ObjectSerializer.KeyOption.NAME).serialize(message);
 
     // Assert that everything serialized properly.
     assertEquals(101, simplified['optional_int32']);
@@ -108,8 +106,7 @@ testSuite({
     assertEquals(111, simplified['optionalgroup']['a']);
     assertEquals(112, simplified['optional_nested_message']['b']);
 
-    assertEquals(
-        TestAllTypes.NestedEnum.FOO, simplified['optional_nested_enum']);
+    assertEquals(TestAllTypes.NestedEnum.FOO, simplified['optional_nested_enum']);
 
     assertEquals(201, simplified['repeated_int32'][0]);
     assertEquals(202, simplified['repeated_int32'][1]);
@@ -147,13 +144,12 @@ testSuite({
      checking
    */
   testDeserializationOfUnknown() {
-    const simplified = {1: 101, 2: '102', 1000: 103, 1001: 104};
+    const simplified = { 1: 101, 2: '102', 1000: 103, 1001: 104 };
 
     const serializer = new ObjectSerializer();
 
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const message =
-        serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
+    const message = serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
 
     assertNotNull(message);
     assertTrue(message.hasOptionalInt32());
@@ -190,15 +186,14 @@ testSuite({
       42: [],
       43: [true, false],
       44: ['he', 'llo'],
-      46: [{47: [101]}, {47: [102]}],
-      48: [{1: 201}, {1: 202}],
+      46: [{ 47: [101] }, { 47: [102] }],
+      48: [{ 1: 201 }, { 1: 202 }],
     };
 
     const serializer = new ObjectSerializer();
 
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const message =
-        serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
+    const message = serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
 
     assertNotNull(message);
 
@@ -265,16 +260,15 @@ testSuite({
       13: true,
       14: 'test',
       15: 'abcd',
-      16: {17: 113},
-      18: {1: 114},
+      16: { 17: 113 },
+      18: { 1: 114 },
       21: TestAllTypes.NestedEnum.FOO,
     };
 
     const serializer = new ObjectSerializer();
 
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const message =
-        serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
+    const message = serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
 
     assertNotNull(message);
 
@@ -343,31 +337,30 @@ testSuite({
    */
   testDeserializationByName() {
     const simplified = {
-      'optional_int32': 101,
-      'optional_int64': '102',
-      'optional_uint32': 103,
-      'optional_uint64': '104',
-      'optional_sint32': 105,
-      'optional_sint64': '106',
-      'optional_fixed32': 107,
-      'optional_fixed64': '108',
-      'optional_sfixed32': 109,
-      'optional_sfixed64': '110',
-      'optional_float': 111.5,
-      'optional_double': 112.5,
-      'optional_bool': true,
-      'optional_string': 'test',
-      'optional_bytes': 'abcd',
-      'optionalgroup': {'a': 113},
-      'optional_nested_message': {'b': 114},
-      'optional_nested_enum': TestAllTypes.NestedEnum.FOO,
+      optional_int32: 101,
+      optional_int64: '102',
+      optional_uint32: 103,
+      optional_uint64: '104',
+      optional_sint32: 105,
+      optional_sint64: '106',
+      optional_fixed32: 107,
+      optional_fixed64: '108',
+      optional_sfixed32: 109,
+      optional_sfixed64: '110',
+      optional_float: 111.5,
+      optional_double: 112.5,
+      optional_bool: true,
+      optional_string: 'test',
+      optional_bytes: 'abcd',
+      optionalgroup: { a: 113 },
+      optional_nested_message: { b: 114 },
+      optional_nested_enum: TestAllTypes.NestedEnum.FOO,
     };
 
     const serializer = new ObjectSerializer(ObjectSerializer.KeyOption.NAME);
 
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const message =
-        serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
+    const message = serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
 
     assertNotNull(message);
 
@@ -436,32 +429,30 @@ testSuite({
    */
   testDeserializationByCamelCaseName() {
     const simplified = {
-      'optionalInt32': 101,
-      'optionalInt64': '102',
-      'optionalUint32': 103,
-      'optionalUint64': '104',
-      'optionalSint32': 105,
-      'optionalSint64': '106',
-      'optionalFixed32': 107,
-      'optionalFixed64': '108',
-      'optionalSfixed32': 109,
-      'optionalSfixed64': '110',
-      'optionalFloat': 111.5,
-      'optionalDouble': 112.5,
-      'optionalBool': true,
-      'optionalString': 'test',
-      'optionalBytes': 'abcd',
-      'optionalgroup': {'a': 113},
-      'optionalNestedMessage': {'b': 114},
-      'optionalNestedEnum': TestAllTypes.NestedEnum.FOO,
+      optionalInt32: 101,
+      optionalInt64: '102',
+      optionalUint32: 103,
+      optionalUint64: '104',
+      optionalSint32: 105,
+      optionalSint64: '106',
+      optionalFixed32: 107,
+      optionalFixed64: '108',
+      optionalSfixed32: 109,
+      optionalSfixed64: '110',
+      optionalFloat: 111.5,
+      optionalDouble: 112.5,
+      optionalBool: true,
+      optionalString: 'test',
+      optionalBytes: 'abcd',
+      optionalgroup: { a: 113 },
+      optionalNestedMessage: { b: 114 },
+      optionalNestedEnum: TestAllTypes.NestedEnum.FOO,
     };
 
-    const serializer =
-        new ObjectSerializer(ObjectSerializer.KeyOption.CAMEL_CASE_NAME);
+    const serializer = new ObjectSerializer(ObjectSerializer.KeyOption.CAMEL_CASE_NAME);
 
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const message =
-        serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
+    const message = serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
 
     assertNotNull(message);
 
@@ -529,13 +520,12 @@ testSuite({
      checking
    */
   testDeserializationUnknownEnumValue() {
-    const simplified = {21: 1001};
+    const simplified = { 21: 1001 };
 
     const serializer = new ObjectSerializer();
 
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const message =
-        serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
+    const message = serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
 
     assertNotNull(message);
 
@@ -547,15 +537,14 @@ testSuite({
      checking
    */
   testDeserializationSymbolicEnumValue() {
-    const simplified = {21: 'BAR'};
+    const simplified = { 21: 'BAR' };
 
     propertyReplacer.set(Serializer, 'DECODE_SYMBOLIC_ENUMS', true);
 
     const serializer = new ObjectSerializer();
 
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const message =
-        serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
+    const message = serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
 
     assertNotNull(message);
 
@@ -563,39 +552,41 @@ testSuite({
   },
 
   testDeserializationSymbolicEnumValueTurnedOff() {
-    const simplified = {21: 'BAR'};
+    const simplified = { 21: 'BAR' };
 
     const serializer = new ObjectSerializer();
 
     assertThrows(
-        'Should have an assertion failure in deserialization', /**
+      'Should have an assertion failure in deserialization' /**
                                                                   @suppress {checkTypes}
                                                                   suppression
                                                                   added to
                                                                   enable type
                                                                   checking
-                                                                */
-        () => {
-          serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
-        });
+                                                                */,
+      () => {
+        serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
+      }
+    );
   },
 
   testDeserializationUnknownSymbolicEnumValue() {
-    const simplified = {21: 'BARRED'};
+    const simplified = { 21: 'BARRED' };
 
     const serializer = new ObjectSerializer();
 
     assertThrows(
-        'Should have an assertion failure in deserialization', /**
+      'Should have an assertion failure in deserialization' /**
                                                                   @suppress {checkTypes}
                                                                   suppression
                                                                   added to
                                                                   enable type
                                                                   checking
-                                                                */
-        () => {
-          serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
-        });
+                                                                */,
+      () => {
+        serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
+      }
+    );
   },
 
   /**
@@ -603,13 +594,12 @@ testSuite({
      checking
    */
   testDeserializationEnumValueAsNumericString() {
-    const simplified = {21: '2'};
+    const simplified = { 21: '2' };
 
     const serializer = new ObjectSerializer();
 
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const message =
-        serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
+    const message = serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
 
     assertNotNull(message);
 
@@ -617,21 +607,22 @@ testSuite({
   },
 
   testDeserializationEnumValueWithNegativeString() {
-    const simplified = {21: '-2'};
+    const simplified = { 21: '-2' };
 
     const serializer = new ObjectSerializer();
 
     assertThrows(
-        'Should have an assertion failure in deserialization', /**
+      'Should have an assertion failure in deserialization' /**
                                                                   @suppress {checkTypes}
                                                                   suppression
                                                                   added to
                                                                   enable type
                                                                   checking
-                                                                */
-        () => {
-          serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
-        });
+                                                                */,
+      () => {
+        serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
+      }
+    );
   },
 
   /**
@@ -642,17 +633,24 @@ testSuite({
     // 64-bit types may have been serialized as numbers or strings.
     // Deserialization should be able to handle either.
 
-    const simplifiedWithNumbers =
-        {50: 5000, 51: 5100, 52: [5200, 5201], 53: [5300, 5301]};
+    const simplifiedWithNumbers = {
+      50: 5000,
+      51: 5100,
+      52: [5200, 5201],
+      53: [5300, 5301],
+    };
 
-    const simplifiedWithStrings =
-        {50: '5000', 51: '5100', 52: ['5200', '5201'], 53: ['5300', '5301']};
+    const simplifiedWithStrings = {
+      50: '5000',
+      51: '5100',
+      52: ['5200', '5201'],
+      53: ['5300', '5301'],
+    };
 
     const serializer = new ObjectSerializer();
 
     /** @suppress {checkTypes} suppression added to enable type checking */
-    let message = serializer.deserialize(
-        TestAllTypes.getDescriptor(), simplifiedWithNumbers);
+    let message = serializer.deserialize(TestAllTypes.getDescriptor(), simplifiedWithNumbers);
 
     assertNotNull(message);
 
@@ -667,8 +665,7 @@ testSuite({
     assertArrayEquals(['5300', '5301'], message.repeatedInt64StringArray());
 
     /** @suppress {checkTypes} suppression added to enable type checking */
-    message = serializer.deserialize(
-        TestAllTypes.getDescriptor(), simplifiedWithStrings);
+    message = serializer.deserialize(TestAllTypes.getDescriptor(), simplifiedWithStrings);
 
     assertNotNull(message);
 
@@ -686,14 +683,14 @@ testSuite({
   testSerializationSpecialFloatDoubleValues() {
     // NaN, Infinity and -Infinity should get serialized as strings.
     const message = new TestAllTypes();
-    message.setOptionalFloat(Infinity);
-    message.setOptionalDouble(-Infinity);
-    message.addRepeatedFloat(Infinity);
-    message.addRepeatedFloat(-Infinity);
-    message.addRepeatedFloat(NaN);
-    message.addRepeatedDouble(Infinity);
-    message.addRepeatedDouble(-Infinity);
-    message.addRepeatedDouble(NaN);
+    message.setOptionalFloat(Number.POSITIVE_INFINITY);
+    message.setOptionalDouble(Number.NEGATIVE_INFINITY);
+    message.addRepeatedFloat(Number.POSITIVE_INFINITY);
+    message.addRepeatedFloat(Number.NEGATIVE_INFINITY);
+    message.addRepeatedFloat(Number.NaN);
+    message.addRepeatedDouble(Number.POSITIVE_INFINITY);
+    message.addRepeatedDouble(Number.NEGATIVE_INFINITY);
+    message.addRepeatedDouble(Number.NaN);
     const simplified = new ObjectSerializer().serialize(message);
 
     // Assert that everything serialized properly.
@@ -718,8 +715,7 @@ testSuite({
     const serializer = new ObjectSerializer();
 
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const message =
-        serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
+    const message = serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
 
     assertNotNull(message);
 
@@ -728,8 +724,8 @@ testSuite({
      * checking
      */
     const floatArray = message.repeatedFloatArray();
-    assertEquals(Infinity, floatArray[0]);
-    assertEquals(-Infinity, floatArray[1]);
+    assertEquals(Number.POSITIVE_INFINITY, floatArray[0]);
+    assertEquals(Number.NEGATIVE_INFINITY, floatArray[1]);
     assertTrue(isNaN(floatArray[2]));
 
     /**
@@ -737,8 +733,8 @@ testSuite({
      * checking
      */
     const doubleArray = message.repeatedDoubleArray();
-    assertEquals(Infinity, doubleArray[0]);
-    assertEquals(-Infinity, doubleArray[1]);
+    assertEquals(Number.POSITIVE_INFINITY, doubleArray[0]);
+    assertEquals(Number.NEGATIVE_INFINITY, doubleArray[1]);
     assertTrue(isNaN(doubleArray[2]));
   },
 
@@ -748,21 +744,22 @@ testSuite({
     // Test deserialization fails on 32-bit numbers as strings.
 
     const simplified = {
-      1: '1000'  // optionalInt32
+      1: '1000', // optionalInt32
     };
     const serializer = new ObjectSerializer();
 
     assertThrows(
-        'Should have an assertion failure in deserialization', /**
+      'Should have an assertion failure in deserialization' /**
                                                                   @suppress {checkTypes}
                                                                   suppression
                                                                   added to
                                                                   enable type
                                                                   checking
-                                                                */
-        () => {
-          serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
-        });
+                                                                */,
+      () => {
+        serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
+      }
+    );
   },
 
   /**
@@ -789,11 +786,10 @@ testSuite({
     assertEquals(1000000000000000000, value);
     assertEquals(1000000000000000001, value);
     assertEquals(1000000000000000002, value);
-    assertEquals('1000000000000000000', String(value));  // Value is rounded!
+    assertEquals('1000000000000000000', String(value)); // Value is rounded!
 
     // When using a String, the value is preserved.
-    assertEquals(
-        '1000000000000000001', message.getOptionalInt64StringOrDefault());
+    assertEquals('1000000000000000001', message.getOptionalInt64StringOrDefault());
   },
 
   testSerializationBooleanAsNumberFalse() {
@@ -803,8 +799,9 @@ testSuite({
     message.setOptionalBool(false);
 
     const serializer = new ObjectSerializer(
-        ObjectSerializer.KeyOption.TAG,
-        true /* opt_serializeBooleanAsNumber */);
+      ObjectSerializer.KeyOption.TAG,
+      true /* opt_serializeBooleanAsNumber */
+    );
     const simplified = serializer.serialize(message);
 
     assertEquals(0, simplified[13]);
@@ -815,8 +812,9 @@ testSuite({
     message.setOptionalBool(true);
 
     const serializer = new ObjectSerializer(
-        ObjectSerializer.KeyOption.TAG,
-        true /* opt_serializeBooleanAsNumber */);
+      ObjectSerializer.KeyOption.TAG,
+      true /* opt_serializeBooleanAsNumber */
+    );
     const simplified = serializer.serialize(message);
 
     assertEquals(1, simplified[13]);
@@ -829,13 +827,12 @@ testSuite({
   testDeserializationBooleanAsNumberFalse() {
     // Some libraries, such as GWT, can serialize boolean values as 0/1
 
-    const simplified = {13: 0};
+    const simplified = { 13: 0 };
 
     const serializer = new ObjectSerializer();
 
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const message =
-        serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
+    const message = serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
 
     assertNotNull(message);
 
@@ -847,13 +844,12 @@ testSuite({
      checking
    */
   testDeserializationBooleanAsNumberTrue() {
-    const simplified = {13: 1};
+    const simplified = { 13: 1 };
 
     const serializer = new ObjectSerializer();
 
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const message =
-        serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
+    const message = serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
 
     assertNotNull(message);
 
@@ -861,21 +857,22 @@ testSuite({
   },
 
   testDeserializationIgnoreUnknownFieldsFalse() {
-    const simplified = {'unknownTag': 0, 13: 1};
+    const simplified = { unknownTag: 0, 13: 1 };
 
     const serializer = new ObjectSerializer();
 
     assertThrows(
-        'Should have an assertion failure in deserialization', /**
+      'Should have an assertion failure in deserialization' /**
                                                                   @suppress {checkTypes}
                                                                   suppression
                                                                   added to
                                                                   enable type
                                                                   checking
-                                                                */
-        () => {
-          serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
-        });
+                                                                */,
+      () => {
+        serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
+      }
+    );
   },
 
   /**
@@ -883,16 +880,16 @@ testSuite({
      checking
    */
   testDeserializationIgnoreUnknownFieldsTrue() {
-    const simplified = {'unknownTag': 0, 13: 1};
+    const simplified = { unknownTag: 0, 13: 1 };
 
     const serializer = new ObjectSerializer(
-        ObjectSerializer.KeyOption.CAMEL_CASE_NAME,
-        false /* opt_serializeBooleanAsNumber */,
-        true /* opt_ignoreUnknownFields */);
+      ObjectSerializer.KeyOption.CAMEL_CASE_NAME,
+      false /* opt_serializeBooleanAsNumber */,
+      true /* opt_ignoreUnknownFields */
+    );
 
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const message =
-        serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
+    const message = serializer.deserialize(TestAllTypes.getDescriptor(), simplified);
 
     assertNotNull(message);
 
@@ -940,94 +937,91 @@ testSuite({
 
     const message_serialized_by_tag_deserialized_by_tag = new TestAllTypes();
     new ObjectSerializer().deserializeTo(
-        message_serialized_by_tag_deserialized_by_tag,
-        message_serialized_by_tag);
+      message_serialized_by_tag_deserialized_by_tag,
+      message_serialized_by_tag
+    );
     assertObjectEquals(message, message_serialized_by_tag_deserialized_by_tag);
 
     const message_serialized_by_tag_deserialized_by_name = new TestAllTypes();
     // Deserializing by name still works since the parser will use the tags.
-    new ObjectSerializer(ObjectSerializer.KeyOption.NAME)
-        .deserializeTo(
-            message_serialized_by_tag_deserialized_by_name,
-            message_serialized_by_tag);
+    new ObjectSerializer(ObjectSerializer.KeyOption.NAME).deserializeTo(
+      message_serialized_by_tag_deserialized_by_name,
+      message_serialized_by_tag
+    );
     assertObjectEquals(message, message_serialized_by_tag_deserialized_by_name);
 
-    const message_serialized_by_tag_deserialized_by_camel_case_name =
-        new TestAllTypes();
+    const message_serialized_by_tag_deserialized_by_camel_case_name = new TestAllTypes();
     // Deserializing by camel case name still works since the parser will use
     // the tags.
-    new ObjectSerializer(ObjectSerializer.KeyOption.CAMEL_CASE_NAME)
-        .deserializeTo(
-            message_serialized_by_tag_deserialized_by_camel_case_name,
-            message_serialized_by_tag);
-    assertObjectEquals(
-        message, message_serialized_by_tag_deserialized_by_camel_case_name);
+    new ObjectSerializer(ObjectSerializer.KeyOption.CAMEL_CASE_NAME).deserializeTo(
+      message_serialized_by_tag_deserialized_by_camel_case_name,
+      message_serialized_by_tag
+    );
+    assertObjectEquals(message, message_serialized_by_tag_deserialized_by_camel_case_name);
 
-    const message_serialized_by_name =
-        new ObjectSerializer(ObjectSerializer.KeyOption.NAME)
-            .serialize(message);
+    const message_serialized_by_name = new ObjectSerializer(
+      ObjectSerializer.KeyOption.NAME
+    ).serialize(message);
 
     const message_serialized_by_name_deserialized_by_tag = new TestAllTypes();
     assertThrows(() => {
       // Attempting to deserialize by tag will fail since names were used for
       // serialization.
       new ObjectSerializer().deserializeTo(
-          message_serialized_by_name_deserialized_by_tag,
-          message_serialized_by_name);
+        message_serialized_by_name_deserialized_by_tag,
+        message_serialized_by_name
+      );
     });
 
     const message_serialized_by_name_deserialized_by_name = new TestAllTypes();
-    new ObjectSerializer(ObjectSerializer.KeyOption.NAME)
-        .deserializeTo(
-            message_serialized_by_name_deserialized_by_name,
-            message_serialized_by_name);
-    assertObjectEquals(
-        message, message_serialized_by_name_deserialized_by_name);
+    new ObjectSerializer(ObjectSerializer.KeyOption.NAME).deserializeTo(
+      message_serialized_by_name_deserialized_by_name,
+      message_serialized_by_name
+    );
+    assertObjectEquals(message, message_serialized_by_name_deserialized_by_name);
 
-    const message_serialized_by_name_deserialized_by_camel_case_name =
-        new TestAllTypes();
+    const message_serialized_by_name_deserialized_by_camel_case_name = new TestAllTypes();
     // Deserializing by camel case name works since the transforming
     // underscore_delimited to underscore_delimited is a no-op.
-    new ObjectSerializer(ObjectSerializer.KeyOption.CAMEL_CASE_NAME)
-        .deserializeTo(
-            message_serialized_by_name_deserialized_by_camel_case_name,
-            message_serialized_by_name);
-    assertObjectEquals(
-        message, message_serialized_by_name_deserialized_by_camel_case_name);
+    new ObjectSerializer(ObjectSerializer.KeyOption.CAMEL_CASE_NAME).deserializeTo(
+      message_serialized_by_name_deserialized_by_camel_case_name,
+      message_serialized_by_name
+    );
+    assertObjectEquals(message, message_serialized_by_name_deserialized_by_camel_case_name);
 
-    const message_serialized_by_camel_case_name =
-        new ObjectSerializer(ObjectSerializer.KeyOption.CAMEL_CASE_NAME)
-            .serialize(message);
+    const message_serialized_by_camel_case_name = new ObjectSerializer(
+      ObjectSerializer.KeyOption.CAMEL_CASE_NAME
+    ).serialize(message);
 
-    const message_serialized_by_camel_case_name_deserialized_by_tag =
-        new TestAllTypes();
+    const message_serialized_by_camel_case_name_deserialized_by_tag = new TestAllTypes();
     assertThrows(() => {
       // Attempting to deserialize by tag will fail since camel case names were
       // used for serialization.
       new ObjectSerializer().deserializeTo(
-          message_serialized_by_camel_case_name_deserialized_by_tag,
-          message_serialized_by_camel_case_name);
+        message_serialized_by_camel_case_name_deserialized_by_tag,
+        message_serialized_by_camel_case_name
+      );
     });
 
-    const message_serialized_by_camel_case_name_deserialized_by_name =
-        new TestAllTypes();
+    const message_serialized_by_camel_case_name_deserialized_by_name = new TestAllTypes();
     assertThrows(() => {
       // Attempting to deserialize by original name will fail since camel case
       // names were used for serialization.
-      new ObjectSerializer(ObjectSerializer.KeyOption.NAME)
-          .deserializeTo(
-              message_serialized_by_camel_case_name_deserialized_by_name,
-              message_serialized_by_camel_case_name);
+      new ObjectSerializer(ObjectSerializer.KeyOption.NAME).deserializeTo(
+        message_serialized_by_camel_case_name_deserialized_by_name,
+        message_serialized_by_camel_case_name
+      );
     });
 
     const message_serialized_by_camel_case_name_deserialized_by_camel_case_name =
-        new TestAllTypes();
-    new ObjectSerializer(ObjectSerializer.KeyOption.CAMEL_CASE_NAME)
-        .deserializeTo(
-            message_serialized_by_camel_case_name_deserialized_by_camel_case_name,
-            message_serialized_by_camel_case_name);
+      new TestAllTypes();
+    new ObjectSerializer(ObjectSerializer.KeyOption.CAMEL_CASE_NAME).deserializeTo(
+      message_serialized_by_camel_case_name_deserialized_by_camel_case_name,
+      message_serialized_by_camel_case_name
+    );
     assertObjectEquals(
-        message,
-        message_serialized_by_camel_case_name_deserialized_by_camel_case_name);
+      message,
+      message_serialized_by_camel_case_name_deserialized_by_camel_case_name
+    );
   },
 });

@@ -38,7 +38,7 @@ let workQueue = new WorkQueue();
  *     provided function.
  * @template THIS
  */
-let run = (callback, context = undefined) => {
+const run = (callback, context = undefined) => {
   if (!schedule) {
     initializeRunner();
   }
@@ -53,9 +53,8 @@ let run = (callback, context = undefined) => {
 };
 
 /** Initializes the function to use to process the work queue. */
-let initializeRunner = () => {
-  if (goog.ASSUME_NATIVE_PROMISE ||
-      (goog.global.Promise && goog.global.Promise.resolve)) {
+const initializeRunner = () => {
+  if (goog.ASSUME_NATIVE_PROMISE || (goog.global.Promise && goog.global.Promise.resolve)) {
     // Use goog.global.Promise instead of just Promise because the relevant
     // externs may be missing, and don't alias it because this could confuse the
     // compiler into thinking the polyfill is required when it should be treated
@@ -111,7 +110,7 @@ if (goog.DEBUG) {
 run.processWorkQueue = () => {
   // NOTE: additional work queue items may be added while processing.
   let item = null;
-  while (item = workQueue.remove()) {
+  while ((item = workQueue.remove())) {
     try {
       item.fn.call(item.scope);
     } catch (e) {

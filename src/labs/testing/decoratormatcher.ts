@@ -12,7 +12,6 @@ goog.provide('goog.labs.testing.decoratormatcher');
 
 goog.require('goog.labs.testing.Matcher');
 
-
 /**
  * The Anything matcher. Matches all possible inputs.
  *
@@ -20,20 +19,14 @@ goog.require('goog.labs.testing.Matcher');
  * @implements {goog.labs.testing.Matcher}
  * @final
  */
-goog.labs.testing.decoratormatcher.AnythingMatcher = function() {};
-
+goog.labs.testing.decoratormatcher.AnythingMatcher = () => {};
 
 /**
  * Matches anything. Useful if one doesn't care what the object under test is.
  *
  * @override
  */
-goog.labs.testing.decoratormatcher.AnythingMatcher.prototype.matches = function(
-    actualObject) {
-  'use strict';
-  return true;
-};
-
+goog.labs.testing.decoratormatcher.AnythingMatcher.prototype.matches = (actualObject) => true;
 
 /**
  * This method is never called but is needed so AnythingMatcher implements the
@@ -41,12 +34,9 @@ goog.labs.testing.decoratormatcher.AnythingMatcher.prototype.matches = function(
  *
  * @override
  */
-goog.labs.testing.decoratormatcher.AnythingMatcher.prototype.describe =
-    function(actualObject) {
-  'use strict';
+goog.labs.testing.decoratormatcher.AnythingMatcher.prototype.describe = (actualObject) => {
   throw new Error('AnythingMatcher should never fail!');
 };
-
 
 /**
  * Returns a matcher that matches anything.
@@ -54,11 +44,8 @@ goog.labs.testing.decoratormatcher.AnythingMatcher.prototype.describe =
  * @return {!goog.labs.testing.decoratormatcher.AnythingMatcher} A
  *     AnythingMatcher.
  */
-goog.labs.testing.decoratormatcher.AnythingMatcher.anything = function() {
-  'use strict';
-  return new goog.labs.testing.decoratormatcher.AnythingMatcher();
-};
-
+goog.labs.testing.decoratormatcher.AnythingMatcher.anything = () =>
+  new goog.labs.testing.decoratormatcher.AnythingMatcher();
 
 /**
  * Returns any matcher that is passed to it (aids readability).
@@ -66,11 +53,7 @@ goog.labs.testing.decoratormatcher.AnythingMatcher.anything = function() {
  * @param {!goog.labs.testing.Matcher} matcher A matcher.
  * @return {!goog.labs.testing.Matcher} The wrapped matcher.
  */
-goog.labs.testing.decoratormatcher.AnythingMatcher.is = function(matcher) {
-  'use strict';
-  return matcher;
-};
-
+goog.labs.testing.decoratormatcher.AnythingMatcher.is = (matcher) => matcher;
 
 /**
  * Returns a matcher with a customized description for the given matcher.
@@ -79,17 +62,7 @@ goog.labs.testing.decoratormatcher.AnythingMatcher.is = function(matcher) {
  * @param {!goog.labs.testing.Matcher} matcher The matcher.
  * @return {!goog.labs.testing.Matcher} The matcher with custom description.
  */
-goog.labs.testing.decoratormatcher.AnythingMatcher.describedAs = function(
-    description, matcher) {
-  'use strict';
-  return /** @type {!goog.labs.testing.Matcher} */ ({
-    matches: function(value) {
-      'use strict';
-      return matcher.matches(value);
-    },
-    describe: function() {
-      'use strict';
-      return description;
-    }
-  });
-};
+goog.labs.testing.decoratormatcher.AnythingMatcher.describedAs = (description, matcher) => ({
+  matches: (value) => matcher.matches(value),
+  describe: () => description,
+});

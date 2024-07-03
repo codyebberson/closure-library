@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.events.ActionHandlerTest');
-goog.setTestOnly();
 
 const ActionHandler = goog.require('goog.events.ActionHandler');
 const dom = goog.require('goog.dom');

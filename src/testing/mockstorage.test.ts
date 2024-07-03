@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.MockStorageTest');
-goog.setTestOnly();
 
 const MockStorage = goog.require('goog.testing.MockStorage');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -44,7 +43,7 @@ testSuite({
     assertEquals('12', instance.getItem('a'));
     instance.setItem('b', false);
     assertEquals('false', instance.getItem('b'));
-    instance.setItem('c', {a: 1, b: 12});
+    instance.setItem('c', { a: 1, b: 12 });
     assertEquals('[object Object]', instance.getItem('c'));
 
     instance.clear();

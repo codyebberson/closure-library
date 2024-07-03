@@ -7,7 +7,6 @@
 /** @fileoverview Tests for animationFrame. */
 
 goog.module('goog.dom.AnimationFrameTest');
-goog.setTestOnly();
 
 const MockClock = goog.require('goog.testing.MockClock');
 const animationFrame = goog.require('goog.dom.animationFrame');
@@ -25,18 +24,18 @@ testSuite({
     mockClock = new MockClock(true);
     result = '';
     t0 = animationFrame.createTask({
-      measure: function() {
+      measure: () => {
         result += 'me0';
       },
-      mutate: function() {
+      mutate: () => {
         result += 'mu0';
       },
     });
     t1 = animationFrame.createTask({
-      measure: function() {
+      measure: () => {
         result += 'me1';
       },
-      mutate: function() {
+      mutate: () => {
         result += 'mu1';
       },
     });
@@ -55,16 +54,16 @@ testSuite({
     mockClock.tick(NEXT_FRAME);
     assertEquals('me0mu0', result);
     t0();
-    t0();  // Should do nothing.
+    t0(); // Should do nothing.
     mockClock.tick(NEXT_FRAME);
     assertEquals('me0mu0me0mu0', result);
   },
 
   testCreateTask_onlyMutate() {
     t0 = animationFrame.createTask({
-      mutate: function() {
+      mutate: () => {
         result += 'mu0';
-      }
+      },
     });
     t0();
     assertEquals('', result);
@@ -74,9 +73,9 @@ testSuite({
 
   testCreateTask_onlyMeasure() {
     t0 = animationFrame.createTask({
-      mutate: function() {
+      mutate: () => {
         result += 'me0';
-      }
+      },
     });
     t0();
     assertEquals('', result);
@@ -104,13 +103,13 @@ testSuite({
   testCreateTask_recurse() {
     let stop = false;
     const recurse = animationFrame.createTask({
-      measure: function() {
+      measure: () => {
         if (!stop) {
           recurse();
         }
         result += 're0';
       },
-      mutate: function() {
+      mutate: () => {
         result += 'ru0';
       },
     });
@@ -139,26 +138,26 @@ testSuite({
   testCreateTask_recurseTwoMethodsWithState() {
     let stop = false;
     const recurse1 = animationFrame.createTask({
-      measure: function(state) {
+      measure: (state) => {
         if (!stop) {
           recurse2();
         }
         result += 'r1e0';
         state.text = 'T0';
       },
-      mutate: function(state) {
+      mutate: (state) => {
         result += 'r1u0' + state.text;
       },
     });
     const recurse2 = animationFrame.createTask({
-      measure: function(state) {
+      measure: (state) => {
         if (!stop) {
           recurse1();
         }
         result += 'r2e0';
         state.text = 'T1';
       },
-      mutate: function(state) {
+      mutate: (state) => {
         result += 'r2u0' + state.text;
       },
     });
@@ -195,30 +194,31 @@ testSuite({
   },
 
   testCreateTask_args() {
-    const context = {context: true};
+    const context = { context: true };
     const s = animationFrame.createTask(
-        {
-          measure: function(state) {
-            assertEquals(context, this);
-            assertUndefined(state.foo);
-            state.foo = 'foo';
-          },
-          mutate: function(state) {
-            assertEquals(context, this);
-            result += state.foo;
-          },
+      {
+        measure: function (state) {
+          assertEquals(context, this);
+          assertUndefined(state.foo);
+          state.foo = 'foo';
         },
-        context);
+        mutate: function (state) {
+          assertEquals(context, this);
+          result += state.foo;
+        },
+      },
+      context
+    );
     s();
     mockClock.tick(NEXT_FRAME);
     assertEquals('foo', result);
 
     const moreArgs = animationFrame.createTask({
-      measure: function(event, state) {
+      measure: (event, state) => {
         assertEquals('event', event);
         state.baz = 'baz';
       },
-      mutate: function(event, state) {
+      mutate: (event, state) => {
         assertEquals('event', event);
         result += state.baz;
       },
@@ -231,11 +231,11 @@ testSuite({
   testIsRunning() {
     let result = '';
     const task = animationFrame.createTask({
-      measure: function() {
+      measure: () => {
         result += 'me';
         assertTrue(animationFrame.isRunning());
       },
-      mutate: function() {
+      mutate: () => {
         result += 'mu';
         assertTrue(animationFrame.isRunning());
       },

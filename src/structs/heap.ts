@@ -24,13 +24,11 @@
 // TODO(user): Should this rely on natural ordering via some Comparable
 //     interface?
 
-
 goog.module('goog.structs.Heap');
 goog.module.declareLegacyNamespace();
 
 const Node = goog.require('goog.structs.Node');
 const object = goog.require('goog.object');
-
 
 /**
  * Class for a Heap datastructure.
@@ -159,15 +157,15 @@ class Heap {
     // Save the node being moved down.
     const node = nodes[index];
     // While the current node has a child.
-    while (index < (count >> 1)) {
+    while (index < count >> 1) {
       const leftChildIndex = this.getLeftChildIndex_(index);
       const rightChildIndex = this.getRightChildIndex_(index);
 
       // Determine the index of the smaller child.
-      const smallerChildIndex = rightChildIndex < count &&
-              nodes[rightChildIndex].getKey() < nodes[leftChildIndex].getKey() ?
-          rightChildIndex :
-          leftChildIndex;
+      const smallerChildIndex =
+        rightChildIndex < count && nodes[rightChildIndex].getKey() < nodes[leftChildIndex].getKey()
+          ? rightChildIndex
+          : leftChildIndex;
 
       // If the node being moved down is smaller than its children, the node
       // has found the correct index it should be at.

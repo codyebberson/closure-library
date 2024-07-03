@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.events.eventTargetTester');
-goog.setTestOnly();
 
 const GoogEventsEvent = goog.require('goog.events.Event');
 const GoogEventsEventTarget = goog.require('goog.events.EventTarget');
@@ -70,12 +69,13 @@ function createListener(opt_listenerFn) {
  */
 function assertListenerIsCalled(listener, numCount) {
   assertEquals(
-      'Listeners is not called the correct number of times.', numCount,
-      listener.getCallCount());
+    'Listeners is not called the correct number of times.',
+    numCount,
+    listener.getCallCount()
+  );
   listener[exports.ALREADY_CHECKED_PROP] = true;
   listener[exports.NUM_CALLED_PROP] = numCount;
 }
-
 
 /**
  * Asserts that no other listeners, other than those verified via
@@ -83,30 +83,28 @@ function assertListenerIsCalled(listener, numCount) {
  * resetListeners().
  */
 function assertNoOtherListenerIsCalled() {
-  listeners.forEach(function(l, index) {
+  listeners.forEach((l, index) => {
     if (!l[exports.ALREADY_CHECKED_PROP]) {
-      assertEquals(
-          'Listeners ' + index + ' is unexpectedly called.', 0,
-          l.getCallCount());
+      assertEquals('Listeners ' + index + ' is unexpectedly called.', 0, l.getCallCount());
     } else {
       assertEquals(
-          'Listeners ' + index + ' is unexpectedly called.',
-          l[exports.NUM_CALLED_PROP], l.getCallCount());
+        'Listeners ' + index + ' is unexpectedly called.',
+        l[exports.NUM_CALLED_PROP],
+        l.getCallCount()
+      );
     }
   });
 }
-
 
 /**
  * Resets all listeners call count to 0.
  */
 function resetListeners() {
-  listeners.forEach(function(l) {
+  listeners.forEach((l) => {
     l.reset();
     l[exports.ALREADY_CHECKED_PROP] = false;
   });
 }
-
 
 /**
  * The type of key returned by key-returning functions (listen).
@@ -121,7 +119,7 @@ const KeyType = {
   /**
    * Returns undefined (no return value).
    */
-  UNDEFINED: 1
+  UNDEFINED: 1,
 };
 
 /**
@@ -137,7 +135,7 @@ const UnlistenReturnType = {
   /**
    * Returns undefind (no return value).
    */
-  UNDEFINED: 1
+  UNDEFINED: 1,
 };
 
 /**
@@ -147,7 +145,7 @@ const UnlistenReturnType = {
 var EventType = {
   A: events.getUniqueId('a'),
   B: events.getUniqueId('b'),
-  C: events.getUniqueId('c')
+  C: events.getUniqueId('c'),
 };
 
 /**
@@ -219,10 +217,20 @@ exports = {
    *     Object is supported.
    */
   setUp(
-      listenableFactoryFn, listenFn, unlistenFn, unlistenByKeyFn, listenOnceFn,
-      dispatchEventFn, removeAllFn, getListenersFn, getListenerFn,
-      hasListenerFn, listenKeyType, unlistenFnReturnType,
-      objectListenerSupported) {
+    listenableFactoryFn,
+    listenFn,
+    unlistenFn,
+    unlistenByKeyFn,
+    listenOnceFn,
+    dispatchEventFn,
+    removeAllFn,
+    getListenersFn,
+    getListenerFn,
+    hasListenerFn,
+    listenKeyType,
+    unlistenFnReturnType,
+    objectListenerSupported
+  ) {
     listenableFactory = listenableFactoryFn;
     listen = listenFn;
     unlisten = unlistenFn;
@@ -248,7 +256,6 @@ exports = {
     }
   },
 
-
   /**
    * Teardown step for the test functions. This needs to be called from
    * test teardown.
@@ -265,7 +272,6 @@ exports = {
   /** @const */
   EventType,
 
-
   /** @const */
   UnlistenReturnType,
 
@@ -279,7 +285,6 @@ exports = {
    * @type {string}
    */
   ALREADY_CHECKED_PROP: '__alreadyChecked',
-
 
   /**
    * Expando property used on "listener" function to record the number
@@ -349,14 +354,14 @@ exports = {
     },
 
     testScope() {
-      listeners[0] = createListener(function(e) {
+      listeners[0] = createListener(function (e) {
         assertEquals('Wrong scope with undefined scope', eventTargets[0], this);
       });
-      listeners[1] = createListener(function(e) {
+      listeners[1] = createListener(function (e) {
         assertEquals('Wrong scope with null scope', eventTargets[0], this);
       });
       var scope = {};
-      listeners[2] = createListener(function(e) {
+      listeners[2] = createListener(function (e) {
         assertEquals('Wrong scope with specific scope object', scope, this);
       });
       listen(eventTargets[0], EventType.A, listeners[0]);
@@ -377,7 +382,7 @@ exports = {
     testDispatchEventWithObjectLiteral() {
       listen(eventTargets[0], EventType.A, listeners[0]);
 
-      assertTrue(dispatchEvent(eventTargets[0], {type: EventType.A}));
+      assertTrue(dispatchEvent(eventTargets[0], { type: EventType.A }));
       assertListenerIsCalled(listeners[0], times(1));
       assertNoOtherListenerIsCalled();
     },
@@ -406,7 +411,6 @@ exports = {
 
       assertNoOtherListenerIsCalled();
     },
-
 
     /**
      * Unlisten/unlistenByKey should still work after disposal. There are
@@ -466,19 +470,19 @@ exports = {
       eventTargets[9].setParentEventTarget(eventTargets[0]);
 
       var ordering = 0;
-      listeners[0] = createListener(function(e) {
+      listeners[0] = createListener((e) => {
         assertEquals(eventTargets[2], e.currentTarget);
         assertEquals(eventTargets[0], e.target);
         assertEquals('First capture listener is not called first', 0, ordering);
         ordering++;
       });
-      listeners[1] = createListener(function(e) {
+      listeners[1] = createListener((e) => {
         assertEquals(eventTargets[1], e.currentTarget);
         assertEquals(eventTargets[0], e.target);
         assertEquals('2nd capture listener is not called 2nd', 1, ordering);
         ordering++;
       });
-      listeners[2] = createListener(function(e) {
+      listeners[2] = createListener((e) => {
         assertEquals(eventTargets[0], e.currentTarget);
         assertEquals(eventTargets[0], e.target);
         assertEquals('3rd capture listener is not called 3rd', 2, ordering);
@@ -513,19 +517,19 @@ exports = {
       eventTargets[9].setParentEventTarget(eventTargets[0]);
 
       var ordering = 0;
-      listeners[0] = createListener(function(e) {
+      listeners[0] = createListener((e) => {
         assertEquals(eventTargets[0], e.currentTarget);
         assertEquals(eventTargets[0], e.target);
         assertEquals('First bubble listener is not called first', 0, ordering);
         ordering++;
       });
-      listeners[1] = createListener(function(e) {
+      listeners[1] = createListener((e) => {
         assertEquals(eventTargets[1], e.currentTarget);
         assertEquals(eventTargets[0], e.target);
         assertEquals('2nd bubble listener is not called 2nd', 1, ordering);
         ordering++;
       });
-      listeners[2] = createListener(function(e) {
+      listeners[2] = createListener((e) => {
         assertEquals(eventTargets[2], e.currentTarget);
         assertEquals(eventTargets[0], e.target);
         assertEquals('3rd bubble listener is not called 3rd', 2, ordering);
@@ -576,12 +580,8 @@ exports = {
     },
 
     testPreventDefaultByReturningFalse() {
-      listeners[0] = createListener(function(e) {
-        return false;
-      });
-      listeners[1] = createListener(function(e) {
-        return true;
-      });
+      listeners[0] = createListener((e) => false);
+      listeners[1] = createListener((e) => true);
       listen(eventTargets[0], EventType.A, listeners[0]);
       listen(eventTargets[0], EventType.A, listeners[1]);
 
@@ -590,12 +590,10 @@ exports = {
     },
 
     testPreventDefault() {
-      listeners[0] = createListener(function(e) {
+      listeners[0] = createListener((e) => {
         e.preventDefault();
       });
-      listeners[1] = createListener(function(e) {
-        return true;
-      });
+      listeners[1] = createListener((e) => true);
       listen(eventTargets[0], EventType.A, listeners[0]);
       listen(eventTargets[0], EventType.A, listeners[1]);
 
@@ -604,12 +602,10 @@ exports = {
     },
 
     testPreventDefaultAtCapture() {
-      listeners[0] = createListener(function(e) {
+      listeners[0] = createListener((e) => {
         e.preventDefault();
       });
-      listeners[1] = createListener(function(e) {
-        return true;
-      });
+      listeners[1] = createListener((e) => true);
       listen(eventTargets[0], EventType.A, listeners[0], true);
       listen(eventTargets[0], EventType.A, listeners[1], true);
 
@@ -621,7 +617,7 @@ exports = {
       eventTargets[0].setParentEventTarget(eventTargets[1]);
       eventTargets[1].setParentEventTarget(eventTargets[2]);
 
-      listeners[0] = createListener(function(e) {
+      listeners[0] = createListener((e) => {
         e.stopPropagation();
       });
       listen(eventTargets[0], EventType.A, listeners[0]);
@@ -640,7 +636,7 @@ exports = {
       eventTargets[0].setParentEventTarget(eventTargets[1]);
       eventTargets[1].setParentEventTarget(eventTargets[2]);
 
-      listeners[1] = createListener(function(e) {
+      listeners[1] = createListener((e) => {
         e.stopPropagation();
       });
       listen(eventTargets[0], EventType.A, listeners[0]);
@@ -659,7 +655,7 @@ exports = {
       eventTargets[0].setParentEventTarget(eventTargets[1]);
       eventTargets[1].setParentEventTarget(eventTargets[2]);
 
-      listeners[2] = createListener(function(e) {
+      listeners[2] = createListener((e) => {
         e.stopPropagation();
       });
       listen(eventTargets[0], EventType.A, listeners[0]);
@@ -679,7 +675,7 @@ exports = {
       eventTargets[0].setParentEventTarget(eventTargets[1]);
       eventTargets[1].setParentEventTarget(eventTargets[2]);
 
-      listeners[0] = createListener(function(e) {
+      listeners[0] = createListener((e) => {
         e.stopPropagation();
       });
       listen(eventTargets[2], EventType.A, listeners[0], true);
@@ -738,7 +734,7 @@ exports = {
     },
 
     testUnlistenInListen() {
-      listeners[1] = createListener(function(e) {
+      listeners[1] = createListener((e) => {
         unlisten(eventTargets[0], EventType.A, listeners[1]);
         unlisten(eventTargets[0], EventType.A, listeners[2]);
       });
@@ -770,7 +766,7 @@ exports = {
       }
 
       var key1, key2;
-      listeners[1] = createListener(function(e) {
+      listeners[1] = createListener((e) => {
         unlistenByKey(eventTargets[0], key1);
         unlistenByKey(eventTargets[0], key2);
       });
@@ -987,10 +983,8 @@ exports = {
 
       listen(eventTargets[0], EventType.A, listeners[0], true);
 
-      assertNotNull(
-          getListener(eventTargets[0], EventType.A, listeners[0], true));
-      assertNull(
-          getListener(eventTargets[0], EventType.A, listeners[0], true, {}));
+      assertNotNull(getListener(eventTargets[0], EventType.A, listeners[0], true));
+      assertNull(getListener(eventTargets[0], EventType.A, listeners[0], true, {}));
       assertNull(getListener(eventTargets[1], EventType.A, listeners[0], true));
       assertNull(getListener(eventTargets[0], EventType.B, listeners[0], true));
       assertNull(getListener(eventTargets[0], EventType.A, listeners[1], true));
@@ -1022,13 +1016,13 @@ exports = {
        * @constructor
        * @final
        */
-      var MockTarget = function() {
+      var MockTarget = function () {
         MockTarget.base(this, 'constructor');
       };
       goog.inherits(MockTarget, GoogEventsEventTarget);
 
       /** @suppress {visibility} */
-      MockTarget.prototype.disposeInternal = function() {
+      MockTarget.prototype.disposeInternal = function () {
         dispatchEvent(this, EventType.A);
         MockTarget.base(this, 'disposeInternal');
       };
@@ -1053,6 +1047,6 @@ exports = {
       } catch (e) {
         assertContains('infinite', e.message);
       }
-    }
-  }
+    },
+  },
 };

@@ -15,8 +15,6 @@ goog.provide('goog.async.Debouncer');
 goog.require('goog.Disposable');
 goog.require('goog.Timer');
 
-
-
 /**
  * Debouncer will perform a specified action exactly once for any sequence of
  * signals fired repeatedly so long as they are fired less than a specified
@@ -34,16 +32,14 @@ goog.require('goog.Timer');
  * @final
  * @template T
  */
-goog.async.Debouncer = function(listener, interval, opt_handler) {
-  'use strict';
+goog.async.Debouncer = function (listener, interval, opt_handler) {
   goog.async.Debouncer.base(this, 'constructor');
 
   /**
    * Function to callback
    * @const @private {function(this: T, ...?)}
    */
-  this.listener_ =
-      opt_handler != null ? goog.bind(listener, opt_handler) : listener;
+  this.listener_ = opt_handler != null ? goog.bind(listener, opt_handler) : listener;
 
   /**
    * Interval for the debounce time
@@ -92,7 +88,6 @@ goog.async.Debouncer = function(listener, interval, opt_handler) {
 };
 goog.inherits(goog.async.Debouncer, goog.Disposable);
 
-
 /**
  * Notifies the debouncer that the action has happened. It will debounce the
  * call so that the callback is only called after the last action in a sequence
@@ -101,8 +96,7 @@ goog.inherits(goog.async.Debouncer, goog.Disposable);
  * the debounced function.
  * @param {...?} var_args Arguments to pass on to the debounced function.
  */
-goog.async.Debouncer.prototype.fire = function(var_args) {
-  'use strict';
+goog.async.Debouncer.prototype.fire = function (var_args) {
   this.args_ = arguments;
   // When this method is called, we need to prevent fire() calls from within the
   // previous interval from calling the callback. The simplest way of doing this
@@ -117,29 +111,24 @@ goog.async.Debouncer.prototype.fire = function(var_args) {
   this.timer_ = goog.Timer.callOnce(this.callback_, this.interval_);
 };
 
-
 /**
  * Cancels any pending action callback. The debouncer can be restarted by
  * calling {@link #fire}.
  */
-goog.async.Debouncer.prototype.stop = function() {
-  'use strict';
+goog.async.Debouncer.prototype.stop = function () {
   this.clearTimer_();
   this.refireAt_ = null;
   this.shouldFire_ = false;
   this.args_ = [];
 };
 
-
 /**
  * Pauses the debouncer. All pending and future action callbacks will be delayed
  * until the debouncer is resumed. Pauses can be nested.
  */
-goog.async.Debouncer.prototype.pause = function() {
-  'use strict';
+goog.async.Debouncer.prototype.pause = function () {
   ++this.pauseCount_;
 };
-
 
 /**
  * Resumes the debouncer. If doing so drops the pausing count to zero, pending
@@ -147,8 +136,7 @@ goog.async.Debouncer.prototype.pause = function() {
  * than an interval's delay after the previous call. Future action callbacks
  * will be executed as normal.
  */
-goog.async.Debouncer.prototype.resume = function() {
-  'use strict';
+goog.async.Debouncer.prototype.resume = function () {
   if (!this.pauseCount_) {
     return;
   }
@@ -159,27 +147,22 @@ goog.async.Debouncer.prototype.resume = function() {
   }
 };
 
-
 /** @override */
-goog.async.Debouncer.prototype.disposeInternal = function() {
-  'use strict';
+goog.async.Debouncer.prototype.disposeInternal = function () {
   this.stop();
   goog.async.Debouncer.base(this, 'disposeInternal');
 };
-
 
 /**
  * Handler for the timer to fire the debouncer.
  * @private
  */
-goog.async.Debouncer.prototype.onTimer_ = function() {
-  'use strict';
+goog.async.Debouncer.prototype.onTimer_ = function () {
   this.clearTimer_();
   // There is a newer call to fire() within the debounce interval.
   // Reschedule the callback and return.
   if (this.refireAt_) {
-    this.timer_ =
-        goog.Timer.callOnce(this.callback_, this.refireAt_ - goog.now());
+    this.timer_ = goog.Timer.callOnce(this.callback_, this.refireAt_ - goog.now());
     this.refireAt_ = null;
     return;
   }
@@ -191,26 +174,22 @@ goog.async.Debouncer.prototype.onTimer_ = function() {
   }
 };
 
-
 /**
  * Cleans the initialized timer.
  * @private
  */
-goog.async.Debouncer.prototype.clearTimer_ = function() {
-  'use strict';
+goog.async.Debouncer.prototype.clearTimer_ = function () {
   if (this.timer_) {
     goog.Timer.clear(this.timer_);
     this.timer_ = null;
   }
 };
 
-
 /**
  * Calls the callback.
  * @private
  */
-goog.async.Debouncer.prototype.doAction_ = function() {
-  'use strict';
+goog.async.Debouncer.prototype.doAction_ = function () {
   this.shouldFire_ = false;
   this.listener_.apply(null, this.args_);
 };

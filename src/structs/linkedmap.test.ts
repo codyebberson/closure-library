@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.structs.LinkedMapTest');
-goog.setTestOnly();
 
 const LinkedMap = goog.require('goog.structs.LinkedMap');
 const recordFunction = goog.require('goog.testing.recordFunction');
@@ -73,7 +72,7 @@ testSuite({
     const cb = recordFunction();
     const m = new LinkedMap(4, true, cb);
     fillLinkedMap(m);
-    assertEquals(0, cb.getCallCount());  // But cache is full.
+    assertEquals(0, cb.getCallCount()); // But cache is full.
     assertArrayEquals(['d', 'c', 'b', 'a'], m.getKeys());
     m.set('d', 'exists');
     assertEquals(0, cb.getCallCount());
@@ -141,7 +140,7 @@ testSuite({
     const m = new LinkedMap();
     fillLinkedMap(m);
 
-    m.forEach(function(val, key, linkedMap) {
+    m.forEach(function (val, key, linkedMap) {
       linkedMap.set(key, val * 2);
       assertEquals('forEach should run in provided context.', someObj, this);
     }, someObj);
@@ -154,7 +153,7 @@ testSuite({
     const m = new LinkedMap();
     fillLinkedMap(m);
 
-    const result = m.map(function(val, key, linkedMap) {
+    const result = m.map(function (val, key, linkedMap) {
       assertEquals('The LinkedMap object should get passed in', m, linkedMap);
       assertEquals('map should run in provided context', someObj, this);
       return key + val;
@@ -167,7 +166,7 @@ testSuite({
     const m = new LinkedMap();
     fillLinkedMap(m);
 
-    const result = m.some(function(val, key, linkedMap) {
+    const result = m.some(function (val, key, linkedMap) {
       assertEquals('The LinkedMap object should get passed in', m, linkedMap);
       assertEquals('map should run in provided context', someObj, this);
       return val > 2;
@@ -184,7 +183,7 @@ testSuite({
     const m = new LinkedMap();
     fillLinkedMap(m);
 
-    const result = m.every(function(val, key, linkedMap) {
+    const result = m.every(function (val, key, linkedMap) {
       assertEquals('The LinkedMap object should get passed in', m, linkedMap);
       assertEquals('map should run in provided context', someObj, this);
       return val < 5;
@@ -261,65 +260,72 @@ testSuite({
     m.removeNode = recordFunction(m.removeNode);
 
     m.set('1', 1);
-    assertEquals(
-        'removeNode not called after adding an element', 0,
-        m.removeNode.getCallCount());
+    assertEquals('removeNode not called after adding an element', 0, m.removeNode.getCallCount());
     m.set('1', 2);
-    assertEquals(
-        'removeNode not called after updating an element', 0,
-        m.removeNode.getCallCount());
+    assertEquals('removeNode not called after updating an element', 0, m.removeNode.getCallCount());
     m.set('2', 2);
     assertEquals(
-        'removeNode called after adding an overflowing element', 1,
-        m.removeNode.getCallCount());
+      'removeNode called after adding an overflowing element',
+      1,
+      m.removeNode.getCallCount()
+    );
 
     m.remove('3');
     assertEquals(
-        'removeNode not called after removing a non-existing element', 1,
-        m.removeNode.getCallCount());
+      'removeNode not called after removing a non-existing element',
+      1,
+      m.removeNode.getCallCount()
+    );
     m.remove('2');
     assertEquals(
-        'removeNode called after removing an existing element', 2,
-        m.removeNode.getCallCount());
+      'removeNode called after removing an existing element',
+      2,
+      m.removeNode.getCallCount()
+    );
 
     m.set('1', 1);
     m.clear();
-    assertEquals(
-        'removeNode called after clearing the map', 3,
-        m.removeNode.getCallCount());
+    assertEquals('removeNode called after clearing the map', 3, m.removeNode.getCallCount());
     m.clear();
     assertEquals(
-        'removeNode not called after clearing an empty map', 3,
-        m.removeNode.getCallCount());
+      'removeNode not called after clearing an empty map',
+      3,
+      m.removeNode.getCallCount()
+    );
 
     m.set('1', 1);
     m.pop();
-    assertEquals(
-        'removeNode called after calling pop', 4, m.removeNode.getCallCount());
+    assertEquals('removeNode called after calling pop', 4, m.removeNode.getCallCount());
     m.pop();
     assertEquals(
-        'removeNode not called after calling pop on an empty map', 4,
-        m.removeNode.getCallCount());
+      'removeNode not called after calling pop on an empty map',
+      4,
+      m.removeNode.getCallCount()
+    );
 
     m.set('1', 1);
     m.shift();
-    assertEquals(
-        'removeNode called after calling shift', 5,
-        m.removeNode.getCallCount());
+    assertEquals('removeNode called after calling shift', 5, m.removeNode.getCallCount());
     m.shift();
     assertEquals(
-        'removeNode not called after calling shift on an empty map', 5,
-        m.removeNode.getCallCount());
+      'removeNode not called after calling shift on an empty map',
+      5,
+      m.removeNode.getCallCount()
+    );
 
     m.setMaxCount(2);
     m.set('1', 1);
     m.set('2', 2);
     assertEquals(
-        'removeNode not called after increasing the maximum map size', 5,
-        m.removeNode.getCallCount());
+      'removeNode not called after increasing the maximum map size',
+      5,
+      m.removeNode.getCallCount()
+    );
     m.setMaxCount(1);
     assertEquals(
-        'removeNode called after decreasing the maximum map size', 6,
-        m.removeNode.getCallCount());
+      'removeNode called after decreasing the maximum map size',
+      6,
+      m.removeNode.getCallCount()
+    );
   },
 });

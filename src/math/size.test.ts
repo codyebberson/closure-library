@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.math.SizeTest');
-goog.setTestOnly();
 
 const Size = goog.require('goog.math.Size');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -72,7 +71,7 @@ testSuite({
 
     s.width = 4;
     s.height = 0;
-    assertEquals(Infinity, s.aspectRatio());
+    assertEquals(Number.POSITIVE_INFINITY, s.aspectRatio());
 
     s.height = 5;
     assertEquals(0.8, s.aspectRatio());

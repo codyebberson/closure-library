@@ -17,9 +17,9 @@ goog.module.declareLegacyNamespace();
 
 const googString = goog.require('goog.string.internal');
 const util = goog.require('goog.labs.userAgent.util');
-const {AsyncValue, Version} = goog.require('goog.labs.userAgent.highEntropy.highEntropyValue');
-const {platformVersion} = goog.require('goog.labs.userAgent.highEntropy.highEntropyData');
-const {useClientHints} = goog.require('goog.labs.userAgent');
+const { AsyncValue, Version } = goog.require('goog.labs.userAgent.highEntropy.highEntropyValue');
+const { platformVersion } = goog.require('goog.labs.userAgent.highEntropy.highEntropyData');
+const { useClientHints } = goog.require('goog.labs.userAgent');
 
 /**
  * @param {boolean=} ignoreClientHintsFlag Iff truthy, the `useClientHints`
@@ -71,8 +71,9 @@ function isIpod() {
 function isIphone() {
   // navigator.userAgentData is currently not supported on any iOS browser, so
   // rely only on navigator.userAgent.
-  return util.matchUserAgent('iPhone') && !util.matchUserAgent('iPod') &&
-      !util.matchUserAgent('iPad');
+  return (
+    util.matchUserAgent('iPhone') && !util.matchUserAgent('iPod') && !util.matchUserAgent('iPad')
+  );
 }
 
 /**
@@ -172,7 +173,8 @@ function isKaiOS() {
  */
 function getVersion() {
   const userAgentString = util.getUserAgent();
-  let version = '', re;
+  let version = '',
+    re;
   if (isWindows()) {
     re = /Windows (?:NT|Phone) ([0-9.]+)/;
     const match = re.exec(userAgentString);

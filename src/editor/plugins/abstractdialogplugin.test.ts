@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.plugins.AbstractDialogPluginTest');
-goog.setTestOnly();
 
 const AbstractDialog = goog.require('goog.ui.editor.AbstractDialog');
 const AbstractDialogPlugin = goog.require('goog.editor.plugins.AbstractDialogPlugin');
@@ -46,9 +45,7 @@ function setUpMockRange() {
   mockSavedRange = mockCtrl.createLooseMock(SavedRange);
   mockSavedRange.restore();
 
-  stubs.setPath(
-      'goog.editor.range.saveUsingNormalizedCarets',
-      functions.constant(mockSavedRange));
+  stubs.setPath('goog.editor.range.saveUsingNormalizedCarets', functions.constant(mockSavedRange));
 }
 
 /**
@@ -82,10 +79,8 @@ function createDialogPlugin() {
    */
   plugin.returnControlToEditableField = plugin.restoreOriginalSelection;
   plugin.registerFieldObject(mockField);
-  plugin.addEventListener(
-      AbstractDialogPlugin.EventType.OPENED, mockOpenedHandler);
-  plugin.addEventListener(
-      AbstractDialogPlugin.EventType.CLOSED, mockClosedHandler);
+  plugin.addEventListener(AbstractDialogPlugin.EventType.OPENED, mockOpenedHandler);
+  plugin.addEventListener(AbstractDialogPlugin.EventType.CLOSED, mockClosedHandler);
   return plugin;
 }
 
@@ -94,8 +89,9 @@ function createDialogPlugin() {
  * @suppress {missingProperties} suppression added to enable type checking
  */
 function expectOpened(/** number= */ times = undefined) {
-  mockOpenedHandler.handleEvent(new ArgumentMatcher(
-      (arg) => arg.type == AbstractDialogPlugin.EventType.OPENED));
+  mockOpenedHandler.handleEvent(
+    new ArgumentMatcher((arg) => arg.type == AbstractDialogPlugin.EventType.OPENED)
+  );
   mockField.dispatchSelectionChangeEvent();
   if (times) {
     mockOpenedHandler.$times(times);
@@ -108,8 +104,9 @@ function expectOpened(/** number= */ times = undefined) {
  * @suppress {missingProperties} suppression added to enable type checking
  */
 function expectClosed(/** number= */ times = undefined) {
-  mockClosedHandler.handleEvent(new ArgumentMatcher(
-      (arg) => arg.type == AbstractDialogPlugin.EventType.CLOSED));
+  mockClosedHandler.handleEvent(
+    new ArgumentMatcher((arg) => arg.type == AbstractDialogPlugin.EventType.CLOSED)
+  );
   mockField.dispatchSelectionChangeEvent();
   if (times) {
     mockClosedHandler.$times(times);
@@ -189,19 +186,17 @@ testSuite({
       plugin.setReuseDialog(true);
     }
     assertFalse(
-        'Dialog should not be open yet',
-        !!plugin.getDialog() && plugin.getDialog().isOpen());
+      'Dialog should not be open yet',
+      !!plugin.getDialog() && plugin.getDialog().isOpen()
+    );
 
     plugin.execCommand(COMMAND);
-    assertTrue(
-        'Dialog should be open now',
-        !!plugin.getDialog() && plugin.getDialog().isOpen());
+    assertTrue('Dialog should be open now', !!plugin.getDialog() && plugin.getDialog().isOpen());
 
     /** @suppress {visibility} suppression added to enable type checking */
     const tempDialog = plugin.getDialog();
     plugin.dispose();
-    assertFalse(
-        'Dialog should not still be open after disposal', tempDialog.isOpen());
+    assertFalse('Dialog should not still be open after disposal', tempDialog.isOpen());
     mockCtrl.$verifyAll();
   },
 
@@ -228,26 +223,24 @@ testSuite({
       plugin.setReuseDialog(true);
     }
     assertFalse(
-        'Dialog should not be open yet',
-        !!plugin.getDialog() && plugin.getDialog().isOpen());
+      'Dialog should not be open yet',
+      !!plugin.getDialog() && plugin.getDialog().isOpen()
+    );
 
     plugin.execCommand(COMMAND);
-    assertTrue(
-        'Dialog should be open now',
-        !!plugin.getDialog() && plugin.getDialog().isOpen());
+    assertTrue('Dialog should be open now', !!plugin.getDialog() && plugin.getDialog().isOpen());
 
     /** @suppress {visibility} suppression added to enable type checking */
     const tempDialog = plugin.getDialog();
     plugin.getDialog().hide();
-    assertFalse(
-        'Dialog should not still be open after hiding', tempDialog.isOpen());
+    assertFalse('Dialog should not still be open after hiding', tempDialog.isOpen());
     if (reuse) {
       assertFalse(
-          'Dialog should not be disposed after hiding (will be reused)',
-          tempDialog.isDisposed());
+        'Dialog should not be disposed after hiding (will be reused)',
+        tempDialog.isDisposed()
+      );
     } else {
-      assertTrue(
-          'Dialog should be disposed after hiding', tempDialog.isDisposed());
+      assertTrue('Dialog should be disposed after hiding', tempDialog.isDisposed());
     }
     plugin.dispose();
     mockCtrl.$verifyAll();
@@ -272,49 +265,46 @@ testSuite({
   testExecTwice(reuse = undefined) {
     setUpMockRange();
     if (reuse) {
-      expectOpened(2);  // The second exec should cause a second OPENED event.
+      expectOpened(2); // The second exec should cause a second OPENED event.
       // But the dialog was not closed between exec calls, so only one CLOSED is
       // expected.
       expectClosed();
       plugin.setReuseDialog(true);
       mockField.debounceEvent(Field.EventType.SELECTIONCHANGE);
     } else {
-      expectOpened(2);  // The second exec should cause a second OPENED event.
+      expectOpened(2); // The second exec should cause a second OPENED event.
       // The first dialog will be disposed so there should be two CLOSED events.
       expectClosed(2);
-      mockSavedRange.restore();  // Expected 2x, once already recorded in setup.
-      mockField.focus();         // Expected 2x, once already recorded in setup.
+      mockSavedRange.restore(); // Expected 2x, once already recorded in setup.
+      mockField.focus(); // Expected 2x, once already recorded in setup.
       mockField.debounceEvent(Field.EventType.SELECTIONCHANGE);
       mockField.$times(2);
     }
     mockCtrl.$replayAll();
 
     assertFalse(
-        'Dialog should not be open yet',
-        !!plugin.getDialog() && plugin.getDialog().isOpen());
+      'Dialog should not be open yet',
+      !!plugin.getDialog() && plugin.getDialog().isOpen()
+    );
 
     plugin.execCommand(COMMAND);
-    assertTrue(
-        'Dialog should be open now',
-        !!plugin.getDialog() && plugin.getDialog().isOpen());
+    assertTrue('Dialog should be open now', !!plugin.getDialog() && plugin.getDialog().isOpen());
 
     /** @suppress {visibility} suppression added to enable type checking */
     const tempDialog = plugin.getDialog();
     plugin.execCommand(COMMAND);
     if (reuse) {
-      assertTrue(
-          'Reused dialog should still be open after second exec',
-          tempDialog.isOpen());
+      assertTrue('Reused dialog should still be open after second exec', tempDialog.isOpen());
       assertFalse(
-          'Reused dialog should not be disposed after second exec',
-          tempDialog.isDisposed());
+        'Reused dialog should not be disposed after second exec',
+        tempDialog.isDisposed()
+      );
     } else {
       assertFalse(
-          'First dialog should not still be open after opening second',
-          tempDialog.isOpen());
-      assertTrue(
-          'First dialog should be disposed after opening second',
-          tempDialog.isDisposed());
+        'First dialog should not still be open after opening second',
+        tempDialog.isOpen()
+      );
+      assertTrue('First dialog should be disposed after opening second', tempDialog.isDisposed());
     }
     plugin.dispose();
     mockCtrl.$verifyAll();
@@ -336,23 +326,25 @@ testSuite({
     fieldObj.setSafeHtml(false, SafeHtml.htmlEscape('12345'));
     const elem = fieldObj.getElement();
     const helper = new TestHelper(elem);
-    helper.select('12345', 1, '12345', 4);  // Selects '234'.
+    helper.select('12345', 1, '12345', 4); // Selects '234'.
 
     assertEquals(
-        'Incorrect text selected before dialog is opened', '234',
-        fieldObj.getRange().getText());
+      'Incorrect text selected before dialog is opened',
+      '234',
+      fieldObj.getRange().getText()
+    );
     plugin.execCommand(COMMAND);
     if (!userAgent.IE) {
       // IE returns some bogus range when field doesn't have selection.
       // Opera can't remove the selection from a whitebox field.
-      assertNull(
-          'There should be no selection while dialog is open',
-          fieldObj.getRange());
+      assertNull('There should be no selection while dialog is open', fieldObj.getRange());
     }
     plugin.getDialog().hide();
     assertEquals(
-        'Incorrect text selected after dialog is closed', '234',
-        fieldObj.getRange().getText());
+      'Incorrect text selected after dialog is closed',
+      '234',
+      fieldObj.getRange().getText()
+    );
   },
 
   /**

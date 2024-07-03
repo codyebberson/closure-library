@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.vec.QuaternionTest');
-goog.setTestOnly();
 
 const Mat3 = goog.require('goog.vec.Mat3');
 const Mat4 = goog.require('goog.vec.Mat4');
@@ -27,8 +26,7 @@ testSuite({
 
     Quaternion.invert(q0, q1);
     assertElementsRoughlyEqual([1, 2, 3, 4], q0, vec.EPSILON);
-    assertElementsRoughlyEqual(
-        [-0.033333, -0.066666, -0.1, 0.133333], q1, vec.EPSILON);
+    assertElementsRoughlyEqual([-0.033333, -0.066666, -0.1, 0.133333], q1, vec.EPSILON);
   },
 
   testConjugate() {
@@ -127,7 +125,7 @@ testSuite({
     Quaternion.normalize(q0, q0);
     Quaternion.normalize(q1, q1);
 
-    Quaternion.slerp(q0, q0, .5, q2);
+    Quaternion.slerp(q0, q0, 0.5, q2);
     assertElementsEquals(q0, q2);
 
     Quaternion.slerp(q0, q1, 0, q2);
@@ -139,61 +137,100 @@ testSuite({
     }
     assertElementsEquals(q1, q2);
 
-    Quaternion.slerp(q0, q1, .3, q2);
+    Quaternion.slerp(q0, q1, 0.3, q2);
     assertElementsRoughlyEqual(
-        [-0.000501537327541, 0.4817612034640, 0.2398775270769, 0.842831337398],
-        q2, vec.EPSILON);
+      [-0.000501537327541, 0.481761203464, 0.2398775270769, 0.842831337398],
+      q2,
+      vec.EPSILON
+    );
 
-    Quaternion.slerp(q0, q1, .5, q2);
+    Quaternion.slerp(q0, q1, 0.5, q2);
     assertElementsRoughlyEqual(
-        [-0.1243045421171, 0.51879732466, 0.0107895780990, 0.845743047108], q2,
-        vec.EPSILON);
+      [-0.1243045421171, 0.51879732466, 0.010789578099, 0.845743047108],
+      q2,
+      vec.EPSILON
+    );
 
-    Quaternion.slerp(q0, q1, .8, q0);
+    Quaternion.slerp(q0, q1, 0.8, q0);
     assertElementsRoughlyEqual(
-        [-0.291353561485, 0.506925588797, -0.3292443285721, 0.741442999653], q0,
-        vec.EPSILON);
+      [-0.291353561485, 0.506925588797, -0.3292443285721, 0.741442999653],
+      q0,
+      vec.EPSILON
+    );
   },
 
   testFromRotMatrix() {
     const m0 = Mat3.createFloat32FromValues(
-        -0.408248, 0.8796528, -0.244016935, -0.4082482, 0.06315623, 0.9106836,
-        0.8164965, 0.47140452, 0.3333333);
+      -0.408248,
+      0.8796528,
+      -0.244016935,
+      -0.4082482,
+      0.06315623,
+      0.9106836,
+      0.8164965,
+      0.47140452,
+      0.3333333
+    );
     const q0 = Quaternion.createFloat32();
     Quaternion.fromRotationMatrix3(m0, q0);
     assertElementsRoughlyEqual(
-        [
-          0.22094256606638, 0.53340203646030, 0.64777022739548,
-          0.497051689967954
-        ],
-        q0, vec.EPSILON);
+      [0.22094256606638, 0.5334020364603, 0.64777022739548, 0.497051689967954],
+      q0,
+      vec.EPSILON
+    );
 
-    const m1 = Mat3.createFloat32FromValues(
-        -0.544310, 0, 0.838884, 0, 1, 0, -0.838884, 0, -0.544310);
+    const m1 = Mat3.createFloat32FromValues(-0.54431, 0, 0.838884, 0, 1, 0, -0.838884, 0, -0.54431);
     const q1 = Quaternion.createFloat32();
     Quaternion.fromRotationMatrix3(m1, q1);
-    assertElementsRoughlyEqual(
-        [0, -0.87872350215912, 0, 0.477331042289734], q1, vec.EPSILON);
+    assertElementsRoughlyEqual([0, -0.87872350215912, 0, 0.477331042289734], q1, vec.EPSILON);
 
     const m2 = Mat4.createFloat32FromValues(
-        -0.408248, 0.8796528, -0.244016935, 0, -0.4082482, 0.06315623,
-        0.9106836, 0, 0.8164965, 0.47140452, 0.3333333, 0, 0, 0, 0, 1);
+      -0.408248,
+      0.8796528,
+      -0.244016935,
+      0,
+      -0.4082482,
+      0.06315623,
+      0.9106836,
+      0,
+      0.8164965,
+      0.47140452,
+      0.3333333,
+      0,
+      0,
+      0,
+      0,
+      1
+    );
     const q2 = Quaternion.createFloat32();
     Quaternion.fromRotationMatrix4(m2, q2);
     assertElementsRoughlyEqual(
-        [
-          0.22094256606638, 0.53340203646030, 0.64777022739548,
-          0.497051689967954
-        ],
-        q2, vec.EPSILON);
+      [0.22094256606638, 0.5334020364603, 0.64777022739548, 0.497051689967954],
+      q2,
+      vec.EPSILON
+    );
 
     const m3 = Mat4.createFloat32FromValues(
-        -0.544310, 0, 0.838884, 0, 0, 1, 0, 0, -0.838884, 0, -0.544310, 0, 0, 0,
-        0, 1);
+      -0.54431,
+      0,
+      0.838884,
+      0,
+      0,
+      1,
+      0,
+      0,
+      -0.838884,
+      0,
+      -0.54431,
+      0,
+      0,
+      0,
+      0,
+      1
+    );
     const q3 = Quaternion.createFloat32();
     Quaternion.fromRotationMatrix4(m3, q3);
-    assertElementsRoughlyEqual(
-        [0, -0.87872350215912, 0, 0.477331042289734], q3, vec.EPSILON);
+    assertElementsRoughlyEqual([0, -0.87872350215912, 0, 0.477331042289734], q3, vec.EPSILON);
 
     assertElementsRoughlyEqual(q0, q2, vec.EPSILON);
     assertElementsRoughlyEqual(q1, q3, vec.EPSILON);
@@ -201,27 +238,34 @@ testSuite({
 
   testToRotMatrix() {
     const q0 = Quaternion.createFloat32FromValues(
-        0.22094256606638, 0.53340203646030, 0.64777022739548,
-        0.497051689967954);
+      0.22094256606638,
+      0.5334020364603,
+      0.64777022739548,
+      0.497051689967954
+    );
     const m0 = Mat3.createFloat32();
     Quaternion.toRotationMatrix3(q0, m0);
 
     assertElementsRoughlyEqual(
-        [
-          -0.408248, 0.8796528, -0.244016935, -0.4082482, 0.06315623, 0.9106836,
-          0.8164965, 0.47140452, 0.3333333
-        ],
-        m0, vec.EPSILON);
+      [
+        -0.408248, 0.8796528, -0.244016935, -0.4082482, 0.06315623, 0.9106836, 0.8164965,
+        0.47140452, 0.3333333,
+      ],
+      m0,
+      vec.EPSILON
+    );
 
     const m1 = Mat4.createFloat32();
     Quaternion.toRotationMatrix4(q0, m1);
 
     assertElementsRoughlyEqual(
-        [
-          -0.408248, 0.8796528, -0.244016935, 0, -0.4082482, 0.06315623,
-          0.9106836, 0, 0.8164965, 0.47140452, 0.3333333, 0, 0, 0, 0, 1
-        ],
-        m1, vec.EPSILON);
+      [
+        -0.408248, 0.8796528, -0.244016935, 0, -0.4082482, 0.06315623, 0.9106836, 0, 0.8164965,
+        0.47140452, 0.3333333, 0, 0, 0, 0, 1,
+      ],
+      m1,
+      vec.EPSILON
+    );
   },
 
   testToAngleAxis() {
@@ -233,26 +277,22 @@ testSuite({
     assertElementsRoughlyEqual([1, 0, 0], axis, vec.EPSILON);
 
     // Check equivalent representations of the same rotation.
-    Quaternion.setFromValues(
-        q0, -0.288675032, 0.622008682, -0.17254543, 0.70710678);
+    Quaternion.setFromValues(q0, -0.288675032, 0.622008682, -0.17254543, 0.70710678);
     angle = Quaternion.toAngleAxis(q0, axis);
     assertRoughlyEquals(Math.PI / 2, angle, vec.EPSILON);
-    assertElementsRoughlyEqual(
-        [-0.408248, 0.8796528, -0.244016], axis, vec.EPSILON);
+    assertElementsRoughlyEqual([-0.408248, 0.8796528, -0.244016], axis, vec.EPSILON);
     // The polar opposite unit quaternion is the same rotation, so we
     // check that the negated quaternion yields the negated angle and axis.
     Quaternion.negate(q0, q0);
     angle = Quaternion.toAngleAxis(q0, axis);
     assertRoughlyEquals(-Math.PI / 2, angle, vec.EPSILON);
-    assertElementsRoughlyEqual(
-        [0.408248, -0.8796528, 0.244016], axis, vec.EPSILON);
+    assertElementsRoughlyEqual([0.408248, -0.8796528, 0.244016], axis, vec.EPSILON);
 
     // Verify that the inverse rotation yields the inverse axis.
     Quaternion.conjugate(q0, q0);
     angle = Quaternion.toAngleAxis(q0, axis);
     assertRoughlyEquals(-Math.PI / 2, angle, vec.EPSILON);
-    assertElementsRoughlyEqual(
-        [-0.408248, 0.8796528, -0.244016], axis, vec.EPSILON);
+    assertElementsRoughlyEqual([-0.408248, 0.8796528, -0.244016], axis, vec.EPSILON);
   },
 
   testFromAngleAxis() {
@@ -270,31 +310,44 @@ testSuite({
     angle = Math.PI / 2;
     Quaternion.fromAngleAxis(angle, axis, q0);
     assertElementsRoughlyEqual(
-        [-0.288675032, 0.622008682, -0.17254543, 0.70710678], q0, vec.EPSILON);
+      [-0.288675032, 0.622008682, -0.17254543, 0.70710678],
+      q0,
+      vec.EPSILON
+    );
     // Angle multiples of TWO_PI with a scaled axis should be the same.
     angle += 4 * Math.PI;
     Vec3.scale(axis, 7.0, axis);
     Quaternion.fromAngleAxis(angle, axis, q0);
     assertElementsRoughlyEqual(
-        [-0.288675032, 0.622008682, -0.17254543, 0.70710678], q0, vec.EPSILON);
+      [-0.288675032, 0.622008682, -0.17254543, 0.70710678],
+      q0,
+      vec.EPSILON
+    );
     Vec3.setFromValues(axis, 1, 5, 8);
     Quaternion.fromAngleAxis(angle, axis, q0);
     assertElementsRoughlyEqual(
-        [0.074535599, 0.372677996, 0.596284794, 0.70710678], q0, vec.EPSILON);
+      [0.074535599, 0.372677996, 0.596284794, 0.70710678],
+      q0,
+      vec.EPSILON
+    );
 
     // Check equivalent representations of the same rotation.
     angle = Math.PI / 5;
     Vec3.setFromValues(axis, 5, -2, -10);
     Quaternion.fromAngleAxis(angle, axis, q0);
     assertElementsRoughlyEqual(
-        [0.136037146, -0.0544148586, -0.27207429, 0.951056516], q0,
-        vec.EPSILON);
+      [0.136037146, -0.0544148586, -0.27207429, 0.951056516],
+      q0,
+      vec.EPSILON
+    );
     // The negated angle and axis should yield the same rotation.
     angle = -Math.PI / 5;
     Vec3.negate(axis, axis);
     Quaternion.fromAngleAxis(angle, axis, q0);
     assertElementsRoughlyEqual(
-        [0.136037146, -0.0544148586, -0.27207429, 0.951056516], q0,
-        vec.EPSILON);
+      [0.136037146, -0.0544148586, -0.27207429, 0.951056516],
+      q0,
+      vec.EPSILON
+    );
   },
 });

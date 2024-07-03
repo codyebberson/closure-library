@@ -20,8 +20,6 @@ goog.require('goog.dom.safe');
 goog.require('goog.string.Const');
 goog.require('goog.testing.PerformanceTimer');
 
-
-
 /**
  * A UI widget that runs performance tests and displays the results.
  * @param {Element} root The element where the table should be attached.
@@ -33,9 +31,7 @@ goog.require('goog.testing.PerformanceTimer');
  * @constructor
  * @final
  */
-goog.testing.PerformanceTable = function(
-    root, opt_timer, opt_precision, opt_numSamples) {
-  'use strict';
+goog.testing.PerformanceTable = function (root, opt_timer, opt_precision, opt_numSamples) {
   /**
    * Where the table should be attached.
    * @private {Element}
@@ -65,56 +61,50 @@ goog.testing.PerformanceTable = function(
   this.initRoot_();
 };
 
-
 /**
  * @return {goog.testing.PerformanceTimer} The timer being used.
  */
-goog.testing.PerformanceTable.prototype.getTimer = function() {
-  'use strict';
+goog.testing.PerformanceTable.prototype.getTimer = function () {
   return this.timer_;
 };
-
 
 /**
  * Render the initial table.
  * @private
  */
-goog.testing.PerformanceTable.prototype.initRoot_ = function() {
-  'use strict';
+goog.testing.PerformanceTable.prototype.initRoot_ = function () {
   goog.dom.safe.setInnerHtmlFromConstant(
-      goog.asserts.assert(this.root_),
-      goog.string.Const.from(
-          '<table class="test-results" cellspacing="1">' +
-          '  <thead>' +
-          '    <tr>' +
-          '      <th rowspan="2">Test Description</th>' +
-          '      <th rowspan="2">Runs</th>' +
-          '      <th colspan="4">Results (ms)</th>' +
-          '    </tr>' +
-          '    <tr>' +
-          '      <th>Average</th>' +
-          '      <th>Median</th>' +
-          '      <th>Std Dev</th>' +
-          '      <th>Minimum</th>' +
-          '      <th>Maximum</th>' +
-          '    </tr>' +
-          '  </thead>' +
-          '  <tbody>' +
-          '  </tbody>' +
-          '</table>'));
+    goog.asserts.assert(this.root_),
+    goog.string.Const.from(
+      '<table class="test-results" cellspacing="1">' +
+        '  <thead>' +
+        '    <tr>' +
+        '      <th rowspan="2">Test Description</th>' +
+        '      <th rowspan="2">Runs</th>' +
+        '      <th colspan="4">Results (ms)</th>' +
+        '    </tr>' +
+        '    <tr>' +
+        '      <th>Average</th>' +
+        '      <th>Median</th>' +
+        '      <th>Std Dev</th>' +
+        '      <th>Minimum</th>' +
+        '      <th>Maximum</th>' +
+        '    </tr>' +
+        '  </thead>' +
+        '  <tbody>' +
+        '  </tbody>' +
+        '</table>'
+    )
+  );
 };
-
 
 /**
  * @return {!Element} The body of the table.
  * @private
  */
-goog.testing.PerformanceTable.prototype.getTableBody_ = function() {
-  'use strict';
-  return goog.dom.getElementsByTagName(
-      goog.dom.TagName.TBODY, goog.asserts.assert(this.root_))[0];
+goog.testing.PerformanceTable.prototype.getTableBody_ = function () {
+  return goog.dom.getElementsByTagName(goog.dom.TagName.TBODY, goog.asserts.assert(this.root_))[0];
 };
-
 
 /**
  * Round to the specified precision.
@@ -122,25 +112,19 @@ goog.testing.PerformanceTable.prototype.getTableBody_ = function() {
  * @return {string} The rounded number, as a string.
  * @private
  */
-goog.testing.PerformanceTable.prototype.round_ = function(num) {
-  'use strict';
+goog.testing.PerformanceTable.prototype.round_ = function (num) {
   var factor = Math.pow(10, this.precision_);
   return String(Math.round(num * factor) / factor);
 };
-
 
 /**
  * Run the given function with the performance timer, and show the results.
  * @param {Function} fn The function to run.
  * @param {string=} opt_desc A description to associate with this run.
  */
-goog.testing.PerformanceTable.prototype.run = function(fn, opt_desc) {
-  'use strict';
-  this.runTask(
-      new goog.testing.PerformanceTimer.Task(/** @type {function()} */ (fn)),
-      opt_desc);
+goog.testing.PerformanceTable.prototype.run = function (fn, opt_desc) {
+  this.runTask(new goog.testing.PerformanceTimer.Task(/** @type {function()} */ (fn)), opt_desc);
 };
-
 
 /**
  * Run the given task with the performance timer, and show the results.
@@ -148,12 +132,10 @@ goog.testing.PerformanceTable.prototype.run = function(fn, opt_desc) {
  *     to run.
  * @param {string=} opt_desc A description to associate with this run.
  */
-goog.testing.PerformanceTable.prototype.runTask = function(task, opt_desc) {
-  'use strict';
+goog.testing.PerformanceTable.prototype.runTask = function (task, opt_desc) {
   var results = this.timer_.runTask(task);
   this.recordResults(results, opt_desc);
 };
-
 
 /**
  * Record a performance timer results object to the performance table. See
@@ -162,46 +144,41 @@ goog.testing.PerformanceTable.prototype.runTask = function(task, opt_desc) {
  * @param {Object} results The performance timer results object.
  * @param {string=} opt_desc A description to associate with these results.
  */
-goog.testing.PerformanceTable.prototype.recordResults = function(
-    results, opt_desc) {
-  'use strict';
+goog.testing.PerformanceTable.prototype.recordResults = function (results, opt_desc) {
   var average = results['average'];
   var standardDeviation = results['standardDeviation'];
-  var isSuspicious = average < 0 || standardDeviation > average * .5;
+  var isSuspicious = average < 0 || standardDeviation > average * 0.5;
   var resultsRow = goog.dom.createDom(
-      goog.dom.TagName.TR, null,
-      goog.dom.createDom(
-          goog.dom.TagName.TD, 'test-description',
-          opt_desc || 'No description'),
-      goog.dom.createDom(
-          goog.dom.TagName.TD, 'test-count', String(results['count'])),
-      goog.dom.createDom(
-          goog.dom.TagName.TD, 'test-average', this.round_(average)),
-      goog.dom.createDom(
-          goog.dom.TagName.TD, 'test-median', String(results['median'])),
-      goog.dom.createDom(
-          goog.dom.TagName.TD, 'test-standard-deviation',
-          this.round_(standardDeviation)),
-      goog.dom.createDom(
-          goog.dom.TagName.TD, 'test-minimum', String(results['minimum'])),
-      goog.dom.createDom(
-          goog.dom.TagName.TD, 'test-maximum', String(results['maximum'])));
+    goog.dom.TagName.TR,
+    null,
+    goog.dom.createDom(goog.dom.TagName.TD, 'test-description', opt_desc || 'No description'),
+    goog.dom.createDom(goog.dom.TagName.TD, 'test-count', String(results['count'])),
+    goog.dom.createDom(goog.dom.TagName.TD, 'test-average', this.round_(average)),
+    goog.dom.createDom(goog.dom.TagName.TD, 'test-median', String(results['median'])),
+    goog.dom.createDom(
+      goog.dom.TagName.TD,
+      'test-standard-deviation',
+      this.round_(standardDeviation)
+    ),
+    goog.dom.createDom(goog.dom.TagName.TD, 'test-minimum', String(results['minimum'])),
+    goog.dom.createDom(goog.dom.TagName.TD, 'test-maximum', String(results['maximum']))
+  );
   if (isSuspicious) {
     resultsRow.className = 'test-suspicious';
   }
   this.getTableBody_().appendChild(resultsRow);
 };
 
-
 /**
  * Report an error in the table.
  * @param {*} reason The reason for the error.
  */
-goog.testing.PerformanceTable.prototype.reportError = function(reason) {
-  'use strict';
-  this.getTableBody_().appendChild(goog.dom.createDom(
-      goog.dom.TagName.TR, null,
-      goog.dom.createDom(
-          goog.dom.TagName.TD, {'class': 'test-error', 'colSpan': 5},
-          String(reason))));
+goog.testing.PerformanceTable.prototype.reportError = function (reason) {
+  this.getTableBody_().appendChild(
+    goog.dom.createDom(
+      goog.dom.TagName.TR,
+      null,
+      goog.dom.createDom(goog.dom.TagName.TD, { class: 'test-error', colSpan: 5 }, String(reason))
+    )
+  );
 };

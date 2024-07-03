@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.labs.testing.logicMatcherTest');
-goog.setTestOnly();
 
 const MatcherError = goog.require('goog.labs.testing.MatcherError');
 const assertThat = goog.require('goog.labs.testing.assertThat');

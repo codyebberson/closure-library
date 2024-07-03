@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.KeyboardShortcutHandlerTest');
-goog.setTestOnly();
 
 const BrowserEvent = goog.require('goog.events.BrowserEvent');
 const KeyCodes = goog.require('goog.events.KeyCodes');
@@ -33,8 +32,7 @@ const stubs = new PropertyReplacer();
  *     was called on any of the events, true otherwise.
  */
 function fire(keycode, extraProperties = undefined, element = undefined) {
-  return testingEvents.fireKeySequence(
-      element || targetDiv, keycode, extraProperties);
+  return testingEvents.fireKeySequence(element || targetDiv, keycode, extraProperties);
 }
 
 /**
@@ -49,10 +47,17 @@ function fire(keycode, extraProperties = undefined, element = undefined) {
  *     was called on any of the events, true otherwise.
  */
 function fireAltGraphKey(
-    keycode, keyPressKeyCode, extraProperties = undefined,
-    element = undefined) {
+  keycode,
+  keyPressKeyCode,
+  extraProperties = undefined,
+  element = undefined
+) {
   return testingEvents.fireNonAsciiKeySequence(
-      element || targetDiv, keycode, keyPressKeyCode, extraProperties);
+    element || targetDiv,
+    keycode,
+    keyPressKeyCode,
+    extraProperties
+  );
 }
 
 /**
@@ -86,7 +91,7 @@ function fireEnterSpaceXF1AltY(target, extraProperties) {
   fire(KeyCodes.SPACE, extraProperties, target);
   fire(KeyCodes.X, extraProperties, target);
   fire(KeyCodes.F1, extraProperties, target);
-  fire(KeyCodes.Y, Object.assign({}, {altKey: true}, extraProperties), target);
+  fire(KeyCodes.Y, Object.assign({}, { altKey: true }, extraProperties), target);
 }
 
 /**
@@ -118,16 +123,18 @@ testSuite({
     // Create a mock event listener in order to set expectations on what
     // events are fired.  We create a fake class whose only method is
     // shortcutFired(shortcut identifier).
-    listener = new StrictMock({shortcutFired: () => {}});
+    listener = new StrictMock({ shortcutFired: () => {} });
     events.listen(
-        handler, KeyboardShortcutHandler.EventType.SHORTCUT_TRIGGERED,
-        /**
+      handler,
+      KeyboardShortcutHandler.EventType.SHORTCUT_TRIGGERED,
+      /**
            @suppress {missingProperties} suppression added to enable type
            checking
          */
-        (event) => {
-          listener.shortcutFired(event.identifier);
-        });
+      (event) => {
+        listener.shortcutFired(event.identifier);
+      }
+    );
 
     // Set up a fake clock, because keyboard shortcuts *are* time
     // sensitive.
@@ -174,7 +181,7 @@ testSuite({
   },
 
   testDoesntFireWhenWrongKeyIsPressed() {
-    listener.$replay();  // no events expected
+    listener.$replay(); // no events expected
 
     handler.registerShortcut('letterjay', 'j');
     fire(KeyCodes.G);
@@ -189,7 +196,7 @@ testSuite({
     listener.$replay();
 
     handler.registerShortcut('lettergee', 'ctrl+g');
-    fire(KeyCodes.G, {ctrlKey: true});
+    fire(KeyCodes.G, { ctrlKey: true });
 
     listener.$verify();
   },
@@ -200,7 +207,7 @@ testSuite({
     listener.$replay();
 
     handler.registerShortcut('lettergee', 'ctrl+g');
-    fire('g', {ctrlKey: true});
+    fire('g', { ctrlKey: true });
 
     listener.$verify();
   },
@@ -211,7 +218,7 @@ testSuite({
     listener.$replay();
 
     handler.registerShortcut('lettergeectrl', KeyCodes.G, Modifiers.CTRL);
-    fire(KeyCodes.G, {ctrlKey: true});
+    fire(KeyCodes.G, { ctrlKey: true });
 
     listener.$verify();
   },
@@ -222,7 +229,7 @@ testSuite({
     listener.$replay();
 
     handler.registerShortcut('lettergeectrl', [KeyCodes.G, Modifiers.CTRL]);
-    fire(KeyCodes.G, {ctrlKey: true});
+    fire(KeyCodes.G, { ctrlKey: true });
 
     listener.$verify();
   },
@@ -233,7 +240,7 @@ testSuite({
     listener.$replay();
 
     handler.registerShortcut('lettergeeshift', [KeyCodes.G, Modifiers.SHIFT]);
-    fire(KeyCodes.G, {shiftKey: true});
+    fire(KeyCodes.G, { shiftKey: true });
 
     listener.$verify();
   },
@@ -244,7 +251,7 @@ testSuite({
     listener.$replay();
 
     handler.registerShortcut('lettergeealt', [KeyCodes.G, Modifiers.ALT]);
-    fire(KeyCodes.G, {altKey: true});
+    fire(KeyCodes.G, { altKey: true });
 
     listener.$verify();
   },
@@ -255,7 +262,7 @@ testSuite({
     listener.$replay();
 
     handler.registerShortcut('lettergeemeta', [KeyCodes.G, Modifiers.META]);
-    fire(KeyCodes.G, {metaKey: true});
+    fire(KeyCodes.G, { metaKey: true });
 
     listener.$verify();
   },
@@ -266,10 +273,15 @@ testSuite({
     listener.$replay();
 
     handler.registerShortcut(
-        'lettergeectrlaltshift', KeyCodes.G,
-        Modifiers.CTRL | Modifiers.ALT | Modifiers.SHIFT);
-    fireAltGraphKey(
-        KeyCodes.G, 0, {ctrlKey: true, altKey: true, shiftKey: true});
+      'lettergeectrlaltshift',
+      KeyCodes.G,
+      Modifiers.CTRL | Modifiers.ALT | Modifiers.SHIFT
+    );
+    fireAltGraphKey(KeyCodes.G, 0, {
+      ctrlKey: true,
+      altKey: true,
+      shiftKey: true,
+    });
 
     listener.$verify();
   },
@@ -279,11 +291,13 @@ testSuite({
     listener.shortcutFired('lettergeectrlaltshiftmeta');
     listener.$replay();
 
-    handler.registerShortcut(
-        'lettergeectrlaltshiftmeta', 'ctrl+shift+alt+meta+g');
-    fireAltGraphKey(
-        KeyCodes.G, 0,
-        {ctrlKey: true, altKey: true, shiftKey: true, metaKey: true});
+    handler.registerShortcut('lettergeectrlaltshiftmeta', 'ctrl+shift+alt+meta+g');
+    fireAltGraphKey(KeyCodes.G, 0, {
+      ctrlKey: true,
+      altKey: true,
+      shiftKey: true,
+      metaKey: true,
+    });
 
     listener.$verify();
   },
@@ -295,11 +309,12 @@ testSuite({
 
     handler.registerShortcut('x', 'x');
     const key = events.listen(
-        handler, KeyboardShortcutHandler.EventType.SHORTCUT_TRIGGERED,
-        (event) => false);
+      handler,
+      KeyboardShortcutHandler.EventType.SHORTCUT_TRIGGERED,
+      (event) => false
+    );
 
-    assertFalse(
-        'return false in listener must prevent default', fire(KeyCodes.X));
+    assertFalse('return false in listener must prevent default', fire(KeyCodes.X));
 
     listener.$verify();
 
@@ -309,11 +324,9 @@ testSuite({
   testPreventsDefaultWhenExceptionThrown() {
     handler.registerShortcut('x', 'x');
     handler.setAlwaysPreventDefault(true);
-    events.listenOnce(
-        handler, KeyboardShortcutHandler.EventType.SHORTCUT_TRIGGERED,
-        (event) => {
-          throw new Error('x');
-        });
+    events.listenOnce(handler, KeyboardShortcutHandler.EventType.SHORTCUT_TRIGGERED, (event) => {
+      throw new Error('x');
+    });
 
     // We can't use the standard infrastructure to detect that
     // the event was preventDefaulted, because of the exception.
@@ -329,7 +342,7 @@ testSuite({
   },
 
   testDoesntFireWhenUserForgetsRequiredModifier() {
-    listener.$replay();  // no events expected
+    listener.$replay(); // no events expected
 
     handler.registerShortcut('lettergeectrl', KeyCodes.G, Modifiers.CTRL);
     fire(KeyCodes.G);
@@ -338,21 +351,23 @@ testSuite({
   },
 
   testDoesntFireIfTooManyModifiersPressed() {
-    listener.$replay();  // no events expected
+    listener.$replay(); // no events expected
 
     handler.registerShortcut('lettergeectrl', KeyCodes.G, Modifiers.CTRL);
-    fire(KeyCodes.G, {ctrlKey: true, metaKey: true});
+    fire(KeyCodes.G, { ctrlKey: true, metaKey: true });
 
     listener.$verify();
   },
 
   testDoesntFireIfAnyRequiredModifierForgotten() {
-    listener.$replay();  // no events expected
+    listener.$replay(); // no events expected
 
     handler.registerShortcut(
-        'lettergeectrlaltshift', KeyCodes.G,
-        Modifiers.CTRL | Modifiers.ALT | Modifiers.SHIFT);
-    fire(KeyCodes.G, {altKey: true, shiftKey: true});
+      'lettergeectrlaltshift',
+      KeyCodes.G,
+      Modifiers.CTRL | Modifiers.ALT | Modifiers.SHIFT
+    );
+    fire(KeyCodes.G, { altKey: true, shiftKey: true });
 
     listener.$verify();
   },
@@ -362,9 +377,8 @@ testSuite({
     listener.shortcutFired('quitemacs');
     listener.$replay();
 
-    handler.registerShortcut(
-        'quitemacs', [KeyCodes.X, Modifiers.CTRL, KeyCodes.C]);
-    assertFalse(fire(KeyCodes.X, {ctrlKey: true}));
+    handler.registerShortcut('quitemacs', [KeyCodes.X, Modifiers.CTRL, KeyCodes.C]);
+    assertFalse(fire(KeyCodes.X, { ctrlKey: true }));
     fire(KeyCodes.C);
 
     listener.$verify();
@@ -376,9 +390,15 @@ testSuite({
     listener.$replay();
 
     handler.registerShortcut(
-        'quitvi', KeyCodes.SEMICOLON, Modifiers.SHIFT, KeyCodes.Q,
-        Modifiers.NONE, KeyCodes.NUM_ONE, Modifiers.SHIFT);
-    const shiftProperties = {shiftKey: true};
+      'quitvi',
+      KeyCodes.SEMICOLON,
+      Modifiers.SHIFT,
+      KeyCodes.Q,
+      Modifiers.NONE,
+      KeyCodes.NUM_ONE,
+      Modifiers.SHIFT
+    );
+    const shiftProperties = { shiftKey: true };
     assertFalse(fire(KeyCodes.SEMICOLON, shiftProperties));
     assertFalse(fire(KeyCodes.Q));
     fire(KeyCodes.NUM_ONE, shiftProperties);
@@ -387,12 +407,11 @@ testSuite({
   },
 
   testMultiKeyEventIsNotFiredIfUserIsTooSlow() {
-    listener.$replay();  // no events expected
+    listener.$replay(); // no events expected
 
-    handler.registerShortcut(
-        'quitemacs', [KeyCodes.X, Modifiers.CTRL, KeyCodes.C]);
+    handler.registerShortcut('quitemacs', [KeyCodes.X, Modifiers.CTRL, KeyCodes.C]);
 
-    fire(KeyCodes.X, {ctrlKey: true});
+    fire(KeyCodes.X, { ctrlKey: true });
 
     // Wait 3 seconds before hitting C.  Although the actual limit is 1500
     // at time of writing, it's best not to over-specify functionality.
@@ -412,14 +431,19 @@ testSuite({
 
     // register 3 handlers in 3 diferent ways
     handler.registerShortcut(
-        'quitvi', KeyCodes.SEMICOLON, Modifiers.SHIFT, KeyCodes.Q,
-        Modifiers.NONE, KeyCodes.NUM_ONE, Modifiers.SHIFT);
-    handler.registerShortcut(
-        'quitemacs', [KeyCodes.X, Modifiers.CTRL, KeyCodes.C]);
+      'quitvi',
+      KeyCodes.SEMICOLON,
+      Modifiers.SHIFT,
+      KeyCodes.Q,
+      Modifiers.NONE,
+      KeyCodes.NUM_ONE,
+      Modifiers.SHIFT
+    );
+    handler.registerShortcut('quitemacs', [KeyCodes.X, Modifiers.CTRL, KeyCodes.C]);
     handler.registerShortcut('letterex', 'x');
 
     // quit vi
-    const shiftProperties = {shiftKey: true};
+    const shiftProperties = { shiftKey: true };
     fire(KeyCodes.SEMICOLON, shiftProperties);
     fire(KeyCodes.Q);
     fire(KeyCodes.NUM_ONE, shiftProperties);
@@ -428,7 +452,7 @@ testSuite({
     fire(KeyCodes.X);
 
     // then quit emacs
-    fire(KeyCodes.X, {ctrlKey: true});
+    fire(KeyCodes.X, { ctrlKey: true });
     fire(KeyCodes.C);
 
     listener.$verify();
@@ -441,12 +465,23 @@ testSuite({
 
     // register 2 handlers, then remove quitvi
     handler.registerShortcut(
-        'quitvi', KeyCodes.SEMICOLON, Modifiers.SHIFT, KeyCodes.Q,
-        Modifiers.NONE, KeyCodes.ONE, Modifiers.SHIFT);
+      'quitvi',
+      KeyCodes.SEMICOLON,
+      Modifiers.SHIFT,
+      KeyCodes.Q,
+      Modifiers.NONE,
+      KeyCodes.ONE,
+      Modifiers.SHIFT
+    );
     handler.registerShortcut('letterex', 'x');
     handler.unregisterShortcut(
-        KeyCodes.SEMICOLON, Modifiers.SHIFT, KeyCodes.Q, Modifiers.NONE,
-        KeyCodes.ONE, Modifiers.SHIFT);
+      KeyCodes.SEMICOLON,
+      Modifiers.SHIFT,
+      KeyCodes.Q,
+      Modifiers.NONE,
+      KeyCodes.ONE,
+      Modifiers.SHIFT
+    );
 
     // call the "quit VI" keycodes, even though it is removed
     fire(KeyCodes.SEMICOLON, Modifiers.SHIFT);
@@ -460,15 +495,14 @@ testSuite({
   },
 
   testCanRemoveTwoHandlers() {
-    listener.$replay();  // no events expected
+    listener.$replay(); // no events expected
 
-    handler.registerShortcut(
-        'quitemacs', [KeyCodes.X, Modifiers.CTRL, KeyCodes.C]);
+    handler.registerShortcut('quitemacs', [KeyCodes.X, Modifiers.CTRL, KeyCodes.C]);
     handler.registerShortcut('letterex', 'x');
     handler.unregisterShortcut([KeyCodes.X, Modifiers.CTRL, KeyCodes.C]);
     handler.unregisterShortcut('x');
 
-    fire(KeyCodes.X, {ctrlKey: true});
+    fire(KeyCodes.X, { ctrlKey: true });
     fire(KeyCodes.C);
     fire(KeyCodes.X);
 
@@ -504,17 +538,17 @@ testSuite({
   testRegisterShortcutThrowsIfShortcutsConflict() {
     handler.registerShortcut('ab', 'a b');
     assertThrows(
-        'Registering a shortcut that triggers a pre-existing shortcut when' +
-            'its sequence is typed out should throw',
-        () => handler.registerShortcut('abc', 'a b c'));
+      'Registering a shortcut that triggers a pre-existing shortcut when' +
+        'its sequence is typed out should throw',
+      () => handler.registerShortcut('abc', 'a b c')
+    );
     assertTrue(handler.isShortcutRegistered('a b'));
     assertFalse(handler.isShortcutRegistered('a b c'));
     // Check that the error message displays the name of the existing shortcut.
     try {
       handler.registerShortcut('abc', 'a b c');
     } catch (e) {
-      assertEquals(
-          'Keyboard shortcut conflicts with existing shortcut: ab', e.message);
+      assertEquals('Keyboard shortcut conflicts with existing shortcut: ab', e.message);
     }
   },
 
@@ -595,8 +629,7 @@ testSuite({
       'targetWeek',
     ];
     registerEnterSpaceXF1AltY();
-    expectShortcutsOnTargets(
-        ['enter', 'global', 'withAlt'], targets, fireEnterSpaceXF1AltY);
+    expectShortcutsOnTargets(['enter', 'global', 'withAlt'], targets, fireEnterSpaceXF1AltY);
   },
 
   /**
@@ -610,7 +643,7 @@ testSuite({
       return;
     }
     const shadowInput = dom.createElement('input');
-    shadowDiv.attachShadow({mode: 'open'});
+    shadowDiv.attachShadow({ mode: 'open' });
     shadowDiv.shadowRoot.appendChild(shadowInput);
 
     registerEnterSpaceXF1AltY();
@@ -621,9 +654,7 @@ testSuite({
 
     const shadowProps = {
       composed: true,
-      composedPath: function() {
-        return [shadowInput];
-      },
+      composedPath: () => [shadowInput],
     };
 
     fireEnterSpaceXF1AltY(shadowDiv, shadowProps);
@@ -634,8 +665,10 @@ testSuite({
   testIgnoreSpaceInCheckBoxAndButton() {
     registerEnterSpaceXF1AltY();
     expectShortcutsOnTargets(
-        ['enter', 'x', 'global', 'withAlt'], ['targetCheckBox', 'targetButton'],
-        fireEnterSpaceXF1AltY);
+      ['enter', 'x', 'global', 'withAlt'],
+      ['targetCheckBox', 'targetButton'],
+      fireEnterSpaceXF1AltY
+    );
   },
 
   /** @suppress {missingProperties} suppression added to enable type checking */
@@ -670,16 +703,17 @@ testSuite({
     registerEnterSpaceXF1AltY();
 
     expectShortcutsOnTargets(
-        ['enter', 'space', 'x', 'global', 'withAlt'], ['targetTextArea'],
-        fireEnterSpaceXF1AltY);
+      ['enter', 'space', 'x', 'global', 'withAlt'],
+      ['targetTextArea'],
+      fireEnterSpaceXF1AltY
+    );
   },
 
   testSetModifierShortcutsAreGlobalFalse() {
     handler.setModifierShortcutsAreGlobal(false);
     registerEnterSpaceXF1AltY();
 
-    expectShortcutsOnTargets(
-        ['global'], ['targetTextArea'], fireEnterSpaceXF1AltY);
+    expectShortcutsOnTargets(['global'], ['targetTextArea'], fireEnterSpaceXF1AltY);
   },
 
   /** @suppress {missingProperties} suppression added to enable type checking */
@@ -702,11 +736,11 @@ testSuite({
       handler.registerShortcut('letterFive', 'ctrl+alt+5');
 
       // Send key events on the English (United States) layout.
-      fireAltGraphKey(KeyCodes.ONE, 0, {ctrlKey: true, altKey: true});
-      fireAltGraphKey(KeyCodes.TWO, 0, {ctrlKey: true, altKey: true});
-      fireAltGraphKey(KeyCodes.THREE, 0, {ctrlKey: true, altKey: true});
-      fireAltGraphKey(KeyCodes.FOUR, 0, {ctrlKey: true, altKey: true});
-      fireAltGraphKey(KeyCodes.FIVE, 0, {ctrlKey: true, altKey: true});
+      fireAltGraphKey(KeyCodes.ONE, 0, { ctrlKey: true, altKey: true });
+      fireAltGraphKey(KeyCodes.TWO, 0, { ctrlKey: true, altKey: true });
+      fireAltGraphKey(KeyCodes.THREE, 0, { ctrlKey: true, altKey: true });
+      fireAltGraphKey(KeyCodes.FOUR, 0, { ctrlKey: true, altKey: true });
+      fireAltGraphKey(KeyCodes.FIVE, 0, { ctrlKey: true, altKey: true });
 
       listener.$verify();
     }
@@ -728,11 +762,11 @@ testSuite({
       handler.registerShortcut('letterFive', 'ctrl+alt+5');
 
       // Send key events on the French (France) layout.
-      fireAltGraphKey(KeyCodes.ONE, 0, {ctrlKey: true, altKey: true});
-      fireAltGraphKey(KeyCodes.TWO, 0x0303, {ctrlKey: true, altKey: true});
-      fireAltGraphKey(KeyCodes.THREE, 0x0023, {ctrlKey: true, altKey: true});
-      fireAltGraphKey(KeyCodes.FOUR, 0x007b, {ctrlKey: true, altKey: true});
-      fireAltGraphKey(KeyCodes.FIVE, 0x205b, {ctrlKey: true, altKey: true});
+      fireAltGraphKey(KeyCodes.ONE, 0, { ctrlKey: true, altKey: true });
+      fireAltGraphKey(KeyCodes.TWO, 0x0303, { ctrlKey: true, altKey: true });
+      fireAltGraphKey(KeyCodes.THREE, 0x0023, { ctrlKey: true, altKey: true });
+      fireAltGraphKey(KeyCodes.FOUR, 0x007b, { ctrlKey: true, altKey: true });
+      fireAltGraphKey(KeyCodes.FIVE, 0x205b, { ctrlKey: true, altKey: true });
 
       listener.$verify();
     }
@@ -752,11 +786,11 @@ testSuite({
       handler.registerShortcut('letterFive', 'ctrl+alt+5');
 
       // Send key events on the Spanish (Spain) layout.
-      fireAltGraphKey(KeyCodes.ONE, 0x007c, {ctrlKey: true, altKey: true});
-      fireAltGraphKey(KeyCodes.TWO, 0x0040, {ctrlKey: true, altKey: true});
-      fireAltGraphKey(KeyCodes.THREE, 0x0023, {ctrlKey: true, altKey: true});
-      fireAltGraphKey(KeyCodes.FOUR, 0x0303, {ctrlKey: true, altKey: true});
-      fireAltGraphKey(KeyCodes.FIVE, 0x20ac, {ctrlKey: true, altKey: true});
+      fireAltGraphKey(KeyCodes.ONE, 0x007c, { ctrlKey: true, altKey: true });
+      fireAltGraphKey(KeyCodes.TWO, 0x0040, { ctrlKey: true, altKey: true });
+      fireAltGraphKey(KeyCodes.THREE, 0x0023, { ctrlKey: true, altKey: true });
+      fireAltGraphKey(KeyCodes.FOUR, 0x0303, { ctrlKey: true, altKey: true });
+      fireAltGraphKey(KeyCodes.FIVE, 0x20ac, { ctrlKey: true, altKey: true });
 
       listener.$verify();
     }
@@ -775,10 +809,20 @@ testSuite({
       handler.registerShortcut('letterQ', 'ctrl+alt+shift+Q');
 
       // Send key events on the Polish (Programmer) layout.
-      assertTrue(fireAltGraphKey(
-          KeyCodes.A, 0x0104, {ctrlKey: true, altKey: true, shiftKey: true}));
-      assertFalse(fireAltGraphKey(
-          KeyCodes.Q, 0, {ctrlKey: true, altKey: true, shiftKey: true}));
+      assertTrue(
+        fireAltGraphKey(KeyCodes.A, 0x0104, {
+          ctrlKey: true,
+          altKey: true,
+          shiftKey: true,
+        })
+      );
+      assertFalse(
+        fireAltGraphKey(KeyCodes.Q, 0, {
+          ctrlKey: true,
+          altKey: true,
+          shiftKey: true,
+        })
+      );
 
       listener.$verify();
     }
@@ -842,10 +886,8 @@ testSuite({
       // We need to specify a keyPressKeyCode of 0 here because on Windows,
       // keystrokes that don't produce printable characters don't cause a
       // keyPress event to fire.
-      assertFalse(
-          fireAltGraphKey(KeyCodes.N, 0, {ctrlKey: true, altKey: true}));
-      assertFalse(
-          fireAltGraphKey(KeyCodes.C, 0, {ctrlKey: true, altKey: true}));
+      assertFalse(fireAltGraphKey(KeyCodes.N, 0, { ctrlKey: true, altKey: true }));
+      assertFalse(fireAltGraphKey(KeyCodes.C, 0, { ctrlKey: true, altKey: true }));
       listener.$verify();
     }
   },
@@ -857,16 +899,13 @@ testSuite({
       listener.$replay();
 
       handler.registerShortcut('announceAnchorText', 'ctrl+alt+a ctrl+alt+a');
-      handler.registerShortcut(
-          'announceCursorLocation', 'ctrl+alt+a ctrl+alt+l');
+      handler.registerShortcut('announceCursorLocation', 'ctrl+alt+a ctrl+alt+l');
 
       // We need to specify a keyPressKeyCode of 0 here because on Windows,
       // keystrokes that don't produce printable characters don't cause a
       // keyPress event to fire.
-      assertFalse(
-          fireAltGraphKey(KeyCodes.A, 0, {ctrlKey: true, altKey: true}));
-      assertFalse(
-          fireAltGraphKey(KeyCodes.L, 0, {ctrlKey: true, altKey: true}));
+      assertFalse(fireAltGraphKey(KeyCodes.A, 0, { ctrlKey: true, altKey: true }));
+      assertFalse(fireAltGraphKey(KeyCodes.L, 0, { ctrlKey: true, altKey: true }));
       listener.$verify();
     }
   },
@@ -875,34 +914,32 @@ testSuite({
     if (userAgent.WINDOWS) {
       listener.$replay();
 
-      handler.registerShortcut(
-          'announceCursorLocation', 'ctrl+alt+a ctrl+alt+l');
+      handler.registerShortcut('announceCursorLocation', 'ctrl+alt+a ctrl+alt+l');
 
       // If a Polish key is a subsection of a keyboard shortcut, then
       // the key should still be written.
-      assertTrue(
-          fireAltGraphKey(KeyCodes.A, 0x0105, {ctrlKey: true, altKey: true}));
+      assertTrue(fireAltGraphKey(KeyCodes.A, 0x0105, { ctrlKey: true, altKey: true }));
       listener.$verify();
     }
   },
 
   testRegisterShortcut_modifierOnly() {
     assertThrows(
-        'Registering a shortcut with just modifiers should fail.',
-        goog.bind(handler.registerShortcut, handler, 'name', 'Shift'));
+      'Registering a shortcut with just modifiers should fail.',
+      goog.bind(handler.registerShortcut, handler, 'name', 'Shift')
+    );
   },
 
   testParseStringShortcut_unknownKey() {
     assertThrows(
-        'Unknown keys should fail.',
-        goog.bind(
-            KeyboardShortcutHandler.parseStringShortcut, null, 'NotAKey'));
+      'Unknown keys should fail.',
+      goog.bind(KeyboardShortcutHandler.parseStringShortcut, null, 'NotAKey')
+    );
   },
 
   testParseStringShortcut_resetKeyCode() {
     const strokes = KeyboardShortcutHandler.parseStringShortcut('A Shift');
-    assertNull(
-        'The second stroke only has a modifier key.', strokes[1].keyCode);
+    assertNull('The second stroke only has a modifier key.', strokes[1].keyCode);
   },
 
   /** @suppress {missingProperties} suppression added to enable type checking */
@@ -915,7 +952,7 @@ testSuite({
     listener.$replay();
 
     handler.registerShortcut('copy', [KeyCodes.C, Modifiers.META]);
-    fire(KeyCodes.C, {metaKey: true});
+    fire(KeyCodes.C, { metaKey: true });
 
     listener.$verify();
   },

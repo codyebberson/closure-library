@@ -10,7 +10,6 @@
 
 goog.provide('goog.net.HttpStatus');
 
-
 /**
  * HTTP Status Codes defined in RFC 2616, RFC 6585, RFC 4918 and RFC 7538.
  * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
@@ -69,7 +68,7 @@ goog.net.HttpStatus = {
   PRECONDITION_REQUIRED: 428,
   TOO_MANY_REQUESTS: 429,
   REQUEST_HEADER_FIELDS_TOO_LARGE: 431,
-  CLIENT_CLOSED_REQUEST: 499,  // Nonstandard, used by GRPC
+  CLIENT_CLOSED_REQUEST: 499, // Nonstandard, used by GRPC
 
   // Server Error 5xx
   INTERNAL_SERVER_ERROR: 500,
@@ -89,7 +88,6 @@ goog.net.HttpStatus = {
   QUIRK_IE_NO_CONTENT: 1223,
 };
 
-
 /**
  * Returns whether the given status should be considered successful.
  *
@@ -100,8 +98,7 @@ goog.net.HttpStatus = {
  * @param {number} status The status code to test.
  * @return {boolean} Whether the status code should be considered successful.
  */
-goog.net.HttpStatus.isSuccess = function(status) {
-  'use strict';
+goog.net.HttpStatus.isSuccess = (status) => {
   switch (status) {
     case goog.net.HttpStatus.OK:
     case goog.net.HttpStatus.CREATED:

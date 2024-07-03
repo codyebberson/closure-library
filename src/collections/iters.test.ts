@@ -15,7 +15,6 @@ const iters = goog.require('goog.collections.iters');
 const recordFunction = goog.require('goog.testing.recordFunction');
 const testSuite = goog.require('goog.testing.testSuite');
 
-
 /**
  * Create an Iterator starting at start and increments up to
  * (but not including) stop.
@@ -27,13 +26,13 @@ function createRangeIterator(start, stop) {
   let value = start;
   const next = () => {
     if (value < stop) {
-      return {value: value++, done: false};
+      return { value: value++, done: false };
     }
 
-    return {value: undefined, done: true};
+    return { value: undefined, done: true };
   };
 
-  return /** @type {!Iterator<number>} */ ({next});
+  return /** @type {!Iterator<number>} */ ({ next });
 }
 
 /**
@@ -81,11 +80,11 @@ testSuite({
     const rangeIterator = createRangeIterator(0, 3);
 
     for (let i = 0; i < 3; i++) {
-      assertObjectEquals({value: i, done: false}, rangeIterator.next());
+      assertObjectEquals({ value: i, done: false }, rangeIterator.next());
     }
 
     for (let i = 0; i < 3; i++) {
-      assertObjectEquals({value: undefined, done: true}, rangeIterator.next());
+      assertObjectEquals({ value: undefined, done: true }, rangeIterator.next());
     }
   },
 
@@ -145,8 +144,7 @@ testSuite({
   },
 
   testMap_3Items() {
-    assertArrayEquals(
-        [0, 2, 4], [...iters.map(createRangeIterable(0, 3), (x) => x * 2)]);
+    assertArrayEquals([0, 2, 4], [...iters.map(createRangeIterable(0, 3), (x) => x * 2)]);
   },
 
   // Make sure that generator return values are ignored
@@ -158,12 +156,12 @@ testSuite({
     const childIter = rangeGeneratorWithReturn(0, 3);
     const iter = iters.map(childIter, (x) => x * 2);
 
-    assertObjectEquals({value: 0, done: false}, iter.next());
-    assertObjectEquals({value: 2, done: false}, iter.next());
-    assertObjectEquals({value: 4, done: false}, iter.next());
-    assertObjectEquals({value: undefined, done: true}, iter.next());
-    assertObjectEquals({value: undefined, done: true}, iter.next());
-    assertObjectEquals({value: undefined, done: true}, iter.next());
+    assertObjectEquals({ value: 0, done: false }, iter.next());
+    assertObjectEquals({ value: 2, done: false }, iter.next());
+    assertObjectEquals({ value: 4, done: false }, iter.next());
+    assertObjectEquals({ value: undefined, done: true }, iter.next());
+    assertObjectEquals({ value: undefined, done: true }, iter.next());
+    assertObjectEquals({ value: undefined, done: true }, iter.next());
   },
 
   testFilter() {
@@ -197,9 +195,7 @@ testSuite({
 
   testFilterLongGap() {
     const tenNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].values();
-    assertArrayEquals(
-        [1, 10],
-        [...iters.filter(tenNumbers, (n) => String(n).startsWith('1'))]);
+    assertArrayEquals([1, 10], [...iters.filter(tenNumbers, (n) => String(n).startsWith('1'))]);
   },
 
   // Make sure the implementation tests `childResult.done` and not
@@ -208,10 +204,14 @@ testSuite({
     const miscValues = [1, 'two', undefined, 4.4].values();
     let count = 0;
     assertArrayEquals(
-        [1, 'two', undefined, 4.4], [...iters.filter(miscValues, () => {
+      [1, 'two', undefined, 4.4],
+      [
+        ...iters.filter(miscValues, () => {
           count++;
           return true;
-        })]);
+        }),
+      ]
+    );
     assertEquals(4, count);
   },
 
@@ -224,12 +224,12 @@ testSuite({
     const childIter = rangeGeneratorWithReturn(0, 3);
     const filterIter = iters.filter(childIter, () => true);
 
-    assertObjectEquals({value: 0, done: false}, filterIter.next());
-    assertObjectEquals({value: 1, done: false}, filterIter.next());
-    assertObjectEquals({value: 2, done: false}, filterIter.next());
-    assertObjectEquals({value: undefined, done: true}, filterIter.next());
-    assertObjectEquals({value: undefined, done: true}, filterIter.next());
-    assertObjectEquals({value: undefined, done: true}, filterIter.next());
+    assertObjectEquals({ value: 0, done: false }, filterIter.next());
+    assertObjectEquals({ value: 1, done: false }, filterIter.next());
+    assertObjectEquals({ value: 2, done: false }, filterIter.next());
+    assertObjectEquals({ value: undefined, done: true }, filterIter.next());
+    assertObjectEquals({ value: undefined, done: true }, filterIter.next());
+    assertObjectEquals({ value: undefined, done: true }, filterIter.next());
   },
 
   testConcat_2Iterators() {
@@ -237,15 +237,15 @@ testSuite({
     const iter2 = createRangeIterable(3, 6);
     const concatIter = iters.concat(iter1, iter2);
 
-    assertObjectEquals({value: 0, done: false}, concatIter.next());
-    assertObjectEquals({value: 1, done: false}, concatIter.next());
-    assertObjectEquals({value: 2, done: false}, concatIter.next());
-    assertObjectEquals({value: 3, done: false}, concatIter.next());
-    assertObjectEquals({value: 4, done: false}, concatIter.next());
-    assertObjectEquals({value: 5, done: false}, concatIter.next());
-    assertObjectEquals({done: true}, concatIter.next());
-    assertObjectEquals({done: true}, concatIter.next());
-    assertObjectEquals({done: true}, concatIter.next());
+    assertObjectEquals({ value: 0, done: false }, concatIter.next());
+    assertObjectEquals({ value: 1, done: false }, concatIter.next());
+    assertObjectEquals({ value: 2, done: false }, concatIter.next());
+    assertObjectEquals({ value: 3, done: false }, concatIter.next());
+    assertObjectEquals({ value: 4, done: false }, concatIter.next());
+    assertObjectEquals({ value: 5, done: false }, concatIter.next());
+    assertObjectEquals({ done: true }, concatIter.next());
+    assertObjectEquals({ done: true }, concatIter.next());
+    assertObjectEquals({ done: true }, concatIter.next());
   },
 
   testConcat_3Iterators() {
@@ -254,18 +254,18 @@ testSuite({
     const iter3 = createRangeIterable(6, 9);
     const concatIter = iters.concat(iter1, iter2, iter3);
 
-    assertObjectEquals({value: 0, done: false}, concatIter.next());
-    assertObjectEquals({value: 1, done: false}, concatIter.next());
-    assertObjectEquals({value: 2, done: false}, concatIter.next());
-    assertObjectEquals({value: 3, done: false}, concatIter.next());
-    assertObjectEquals({value: 4, done: false}, concatIter.next());
-    assertObjectEquals({value: 5, done: false}, concatIter.next());
-    assertObjectEquals({value: 6, done: false}, concatIter.next());
-    assertObjectEquals({value: 7, done: false}, concatIter.next());
-    assertObjectEquals({value: 8, done: false}, concatIter.next());
-    assertObjectEquals({done: true}, concatIter.next());
-    assertObjectEquals({done: true}, concatIter.next());
-    assertObjectEquals({done: true}, concatIter.next());
+    assertObjectEquals({ value: 0, done: false }, concatIter.next());
+    assertObjectEquals({ value: 1, done: false }, concatIter.next());
+    assertObjectEquals({ value: 2, done: false }, concatIter.next());
+    assertObjectEquals({ value: 3, done: false }, concatIter.next());
+    assertObjectEquals({ value: 4, done: false }, concatIter.next());
+    assertObjectEquals({ value: 5, done: false }, concatIter.next());
+    assertObjectEquals({ value: 6, done: false }, concatIter.next());
+    assertObjectEquals({ value: 7, done: false }, concatIter.next());
+    assertObjectEquals({ value: 8, done: false }, concatIter.next());
+    assertObjectEquals({ done: true }, concatIter.next());
+    assertObjectEquals({ done: true }, concatIter.next());
+    assertObjectEquals({ done: true }, concatIter.next());
   },
 
   testConcat_generatorReturnValuesAreIgnored() {
@@ -276,15 +276,15 @@ testSuite({
     const iter2 = rangeGeneratorWithReturn(3, 6);
     const concatIter = iters.concat(iter1, iter2);
 
-    assertObjectEquals({value: 0, done: false}, concatIter.next());
-    assertObjectEquals({value: 1, done: false}, concatIter.next());
-    assertObjectEquals({value: 2, done: false}, concatIter.next());
-    assertObjectEquals({value: 3, done: false}, concatIter.next());
-    assertObjectEquals({value: 4, done: false}, concatIter.next());
-    assertObjectEquals({value: 5, done: false}, concatIter.next());
-    assertObjectEquals({done: true}, concatIter.next());
-    assertObjectEquals({done: true}, concatIter.next());
-    assertObjectEquals({done: true}, concatIter.next());
+    assertObjectEquals({ value: 0, done: false }, concatIter.next());
+    assertObjectEquals({ value: 1, done: false }, concatIter.next());
+    assertObjectEquals({ value: 2, done: false }, concatIter.next());
+    assertObjectEquals({ value: 3, done: false }, concatIter.next());
+    assertObjectEquals({ value: 4, done: false }, concatIter.next());
+    assertObjectEquals({ value: 5, done: false }, concatIter.next());
+    assertObjectEquals({ done: true }, concatIter.next());
+    assertObjectEquals({ done: true }, concatIter.next());
+    assertObjectEquals({ done: true }, concatIter.next());
   },
 
   // Ensure that concat behaves the same as if you had used the array spread
@@ -302,7 +302,6 @@ testSuite({
   },
 
   testToArray() {
-    assertArrayEquals(
-        [0, 1, 2, 3, 4], iters.toArray(createRangeIterator(0, 5)));
-  }
+    assertArrayEquals([0, 1, 2, 3, 4], iters.toArray(createRangeIterator(0, 5)));
+  },
 });

@@ -20,7 +20,6 @@ goog.require('goog.async.Deferred');
 goog.require('goog.fs.Error');
 goog.require('goog.fs.FileSystemImpl');
 
-
 /**
  * Get a wrapped FileSystem object.
  *
@@ -30,10 +29,8 @@ goog.require('goog.fs.FileSystemImpl');
  *     error occurs, the errback is called with a {@link goog.fs.Error}.
  * @private
  */
-goog.fs.get_ = function(type, size) {
-  'use strict';
-  const requestFileSystem =
-      goog.global.requestFileSystem || goog.global.webkitRequestFileSystem;
+goog.fs.get_ = (type, size) => {
+  const requestFileSystem = goog.global.requestFileSystem || goog.global.webkitRequestFileSystem;
 
   if (typeof requestFileSystem !== 'function') {
     return goog.async.Deferred.fail(new Error('File API unsupported'));
@@ -41,18 +38,17 @@ goog.fs.get_ = function(type, size) {
 
   const d = new goog.async.Deferred();
   requestFileSystem(
-      type, size,
-      function(fs) {
-        'use strict';
-        d.callback(new goog.fs.FileSystemImpl(fs));
-      },
-      function(err) {
-        'use strict';
-        d.errback(new goog.fs.Error(err, 'requesting filesystem'));
-      });
+    type,
+    size,
+    (fs) => {
+      d.callback(new goog.fs.FileSystemImpl(fs));
+    },
+    (err) => {
+      d.errback(new goog.fs.Error(err, 'requesting filesystem'));
+    }
+  );
   return d;
 };
-
 
 /**
  * The two types of filesystem.
@@ -69,9 +65,8 @@ goog.fs.FileSystemType_ = {
    * A persistent filesystem will never be deleted without the user's or
    * application's authorization.
    */
-  PERSISTENT: 1
+  PERSISTENT: 1,
 };
-
 
 /**
  * Returns a temporary FileSystem object. A temporary filesystem may be deleted
@@ -81,11 +76,7 @@ goog.fs.FileSystemType_ = {
  * @return {!goog.async.Deferred} The deferred {@link goog.fs.FileSystem}. If an
  *     error occurs, the errback is called with a {@link goog.fs.Error}.
  */
-goog.fs.getTemporary = function(size) {
-  'use strict';
-  return goog.fs.get_(goog.fs.FileSystemType_.TEMPORARY, size);
-};
-
+goog.fs.getTemporary = (size) => goog.fs.get_(goog.fs.FileSystemType_.TEMPORARY, size);
 
 /**
  * Returns a persistent FileSystem object. A persistent filesystem will never be
@@ -95,11 +86,7 @@ goog.fs.getTemporary = function(size) {
  * @return {!goog.async.Deferred} The deferred {@link goog.fs.FileSystem}. If an
  *     error occurs, the errback is called with a {@link goog.fs.Error}.
  */
-goog.fs.getPersistent = function(size) {
-  'use strict';
-  return goog.fs.get_(goog.fs.FileSystemType_.PERSISTENT, size);
-};
-
+goog.fs.getPersistent = (size) => goog.fs.get_(goog.fs.FileSystemType_.PERSISTENT, size);
 
 /**
  * Slices the blob. The returned blob contains data from the start byte
@@ -113,8 +100,7 @@ goog.fs.getPersistent = function(size) {
  * @param {number=} opt_end Index of the ending byte.
  * @return {Blob} The blob slice or null if not supported.
  */
-goog.fs.sliceBlob = function(blob, start, opt_end) {
-  'use strict';
+goog.fs.sliceBlob = (blob, start, opt_end) => {
   if (opt_end === undefined) {
     opt_end = blob.size;
   }

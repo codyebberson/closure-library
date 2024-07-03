@@ -10,7 +10,6 @@
 
 goog.provide('goog.net.HttpStatusName');
 
-
 /**
  * HTTP Status Code Names defined in RFC 2616, RFC 6585, and RFC 4918.
  * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
@@ -67,7 +66,7 @@ goog.net.HttpStatusName = {
   428: 'Precondition Required',
   429: 'Too Many Requests',
   431: 'Request Header Fields Too Large',
-  499: 'Client Closed Request',  // Nonstandard, used by GRPC
+  499: 'Client Closed Request', // Nonstandard, used by GRPC
 
   // Server Error 5xx
   500: 'Internal Server Error',

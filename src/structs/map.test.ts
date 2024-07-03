@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.structs.MapTest');
-goog.setTestOnly();
 
 const StructsMap = goog.require('goog.structs.Map');
 const googIter = goog.require('goog.iter');
@@ -22,7 +21,7 @@ function stringifyMap(m) {
 }
 
 function getMap() {
-  const m = new StructsMap;
+  const m = new StructsMap();
   m.set('a', 0);
   m.set('b', 1);
   m.set('c', 2);
@@ -47,79 +46,76 @@ testSuite({
 
   testKeys() {
     const m = getMap();
-    assertEquals(
-        'getKeys, The keys should be a,b,c', m.getKeys().join(','), 'a,b,c,d');
+    assertEquals('getKeys, The keys should be a,b,c', m.getKeys().join(','), 'a,b,c,d');
   },
 
   testKeysIterator() {
     const m = getMap();
-    assertEquals(
-        'keys, The keys should be a,b,c', Array.from(m.keys()).join(','),
-        'a,b,c,d');
+    assertEquals('keys, The keys should be a,b,c', Array.from(m.keys()).join(','), 'a,b,c,d');
   },
 
   testValues() {
     const m = getMap();
-    assertEquals(
-        'getValues, The values should be 0,1,2', m.getValues().join(','),
-        '0,1,2,3');
+    assertEquals('getValues, The values should be 0,1,2', m.getValues().join(','), '0,1,2,3');
   },
 
   testValuesIterator() {
     const m = getMap();
-    assertEquals(
-        'values, The values should be 0,1,2', Array.from(m.values()).join(','),
-        '0,1,2,3');
+    assertEquals('values, The values should be 0,1,2', Array.from(m.values()).join(','), '0,1,2,3');
   },
 
   testEntriesIterator() {
     const m = getMap();
     assertElementsEquals(
-        'entries, The values should be 0,1,2', Array.from(m.entries()).flat(),
-        [['a', 0], ['b', 1], ['c', 2], ['d', 3]].flat());
+      'entries, The values should be 0,1,2',
+      Array.from(m.entries()).flat(),
+      [
+        ['a', 0],
+        ['b', 1],
+        ['c', 2],
+        ['d', 3],
+      ].flat()
+    );
   },
 
   testContainsKey() {
     const m = getMap();
-    assertTrue('containsKey, Should contain the \'a\' key', m.containsKey('a'));
-    assertFalse(
-        'containsKey, Should not contain the \'e\' key', m.containsKey('e'));
+    assertTrue("containsKey, Should contain the 'a' key", m.containsKey('a'));
+    assertFalse("containsKey, Should not contain the 'e' key", m.containsKey('e'));
   },
 
   testHas() {
     const m = getMap();
-    assertTrue('has, Should contain the \'a\' key', m.has('a'));
-    assertFalse('has, Should not contain the \'e\' key', m.has('e'));
+    assertTrue("has, Should contain the 'a' key", m.has('a'));
+    assertFalse("has, Should not contain the 'e' key", m.has('e'));
   },
 
   testClear() {
     const m = getMap();
     m.clear();
     assertTrue('cleared so it should be empty', m.isEmpty());
-    assertTrue(
-        'cleared so it should not contain \'a\' key', !m.containsKey('a'));
+    assertTrue("cleared so it should not contain 'a' key", !m.containsKey('a'));
   },
 
   testAddAll() {
-    const m = new StructsMap;
-    m.addAll({a: 0, b: 1, c: 2, d: 3});
+    const m = new StructsMap();
+    m.addAll({ a: 0, b: 1, c: 2, d: 3 });
     assertTrue('addAll so it should not be empty', !m.isEmpty());
-    assertTrue('addAll so it should contain \'c\' key', m.containsKey('c'));
+    assertTrue("addAll so it should contain 'c' key", m.containsKey('c'));
 
-    const m2 = new StructsMap;
+    const m2 = new StructsMap();
     m2.addAll(m);
     assertTrue('addAll so it should not be empty', !m2.isEmpty());
-    assertTrue('addAll so it should contain \'c\' key', m2.containsKey('c'));
+    assertTrue("addAll so it should contain 'c' key", m2.containsKey('c'));
 
-    m2.addAll(null);  // Ensure that passing a null object does not err.
+    m2.addAll(null); // Ensure that passing a null object does not err.
   },
 
   testConstructor() {
     const m = getMap();
     const m2 = new StructsMap(m);
     assertTrue('constr with Map so it should not be empty', !m2.isEmpty());
-    assertTrue(
-        'constr with Map so it should contain \'c\' key', m2.containsKey('c'));
+    assertTrue("constr with Map so it should contain 'c' key", m2.containsKey('c'));
   },
 
   testConstructorWithVarArgs() {
@@ -141,7 +137,7 @@ testSuite({
     const m = getMap();
     const m2 = m.clone();
     assertTrue('clone so it should not be empty', !m2.isEmpty());
-    assertTrue('clone so it should contain \'c\' key', m2.containsKey('c'));
+    assertTrue("clone so it should contain 'c' key", m2.containsKey('c'));
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -249,7 +245,7 @@ testSuite({
   },
 
   testObjectProperties() {
-    const m = new StructsMap;
+    const m = new StructsMap();
 
     assertEquals(m.get('toString'), undefined);
     assertEquals(m.get('valueOf'), undefined);
@@ -275,15 +271,14 @@ testSuite({
     assertEquals(m.get(':foo'), 'happy');
 
     const keys = m.getKeys().join(',');
-    assertEquals(
-        keys, 'toString,valueOf,eval,toSource,prototype,hasOwnProperty,:foo');
+    assertEquals(keys, 'toString,valueOf,eval,toSource,prototype,hasOwnProperty,:foo');
 
     const values = m.getValues().join(',');
     assertEquals(values, 'once,upon,a,midnight,dreary,dark,happy');
   },
 
   testDuplicateKeys() {
-    const m = new StructsMap;
+    const m = new StructsMap();
 
     m.set('a', 1);
     m.set('b', 2);
@@ -306,7 +301,7 @@ testSuite({
   },
 
   testGetKeyIterator() {
-    const m = new StructsMap;
+    const m = new StructsMap();
     m.set('a', 1);
     m.set('b', 2);
     m.set('c', 3);
@@ -319,12 +314,11 @@ testSuite({
     m.remove('b');
     m.remove('d');
     iter = m.getKeyIterator();
-    assertEquals(
-        'Should not contain the removed keys', 'ace', googIter.join(iter, ''));
+    assertEquals('Should not contain the removed keys', 'ace', googIter.join(iter, ''));
   },
 
   testGetValueIterator() {
-    const m = new StructsMap;
+    const m = new StructsMap();
     m.set('a', 1);
     m.set('b', 2);
     m.set('c', 3);
@@ -337,14 +331,13 @@ testSuite({
     m.remove('b');
     m.remove('d');
     iter = m.getValueIterator();
-    assertEquals(
-        'Should not contain the removed keys', '135', googIter.join(iter, ''));
+    assertEquals('Should not contain the removed keys', '135', googIter.join(iter, ''));
   },
 
   testDefaultIterator() {
     // The default iterator should behave like the value iterator
 
-    const m = new StructsMap;
+    const m = new StructsMap();
     m.set('a', 1);
     m.set('b', 2);
     m.set('c', 3);
@@ -355,8 +348,7 @@ testSuite({
 
     m.remove('b');
     m.remove('d');
-    assertEquals(
-        'Should not contain the removed keys', '135', googIter.join(m, ''));
+    assertEquals('Should not contain the removed keys', '135', googIter.join(m, ''));
   },
 
   testMutatedIteratorSetChange() {
@@ -369,10 +361,9 @@ testSuite({
     map.set('d', 4);
     const iter = map.getValueIterator();
     map.set('e', 5);
-    const ex =
-        assertThrows('Expected an exception since the map has changed', () => {
-          iter.next();
-        });
+    const ex = assertThrows('Expected an exception since the map has changed', () => {
+      iter.next();
+    });
     assertEquals(message, ex.message);
   },
 
@@ -386,10 +377,9 @@ testSuite({
 
     const iter = map.getValueIterator();
     map.remove('d');
-    const ex =
-        assertThrows('Expected an exception since the map has changed', () => {
-          iter.next();
-        });
+    const ex = assertThrows('Expected an exception since the map has changed', () => {
+      iter.next();
+    });
     assertEquals(message, ex.message);
   },
 
@@ -408,7 +398,7 @@ testSuite({
   },
 
   testTranspose() {
-    const m = new StructsMap;
+    const m = new StructsMap();
     m.set('a', 1);
     m.set('b', 2);
     m.set('c', 3);
@@ -417,11 +407,15 @@ testSuite({
 
     const transposed = m.transpose();
     assertEquals(
-        'Should contain the keys from the original map as values', 'abcde',
-        googIter.join(transposed, ''));
+      'Should contain the keys from the original map as values',
+      'abcde',
+      googIter.join(transposed, '')
+    );
     assertEquals(
-        'Should contain the values from the original map as keys', '12345',
-        Array.from(transposed.keys()).join(''));
+      'Should contain the values from the original map as keys',
+      '12345',
+      Array.from(transposed.keys()).join('')
+    );
   },
 
   testToObject() {
@@ -431,9 +425,7 @@ testSuite({
       map.set('a', 0);
       const obj = map.toObject();
       assertTrue('object representation has key "a"', obj.hasOwnProperty('a'));
-      assertFalse(
-          'object representation does not have key "b"',
-          obj.hasOwnProperty('b'));
+      assertFalse('object representation does not have key "b"', obj.hasOwnProperty('b'));
       assertEquals('value for key "a"', 0, obj['a']);
     } finally {
       delete Object.prototype.b;
@@ -463,7 +455,7 @@ testSuite({
     assertTrue('maps are the same', map1.equals(map2));
 
     map2.set('d', '3');
-    assertFalse('maps have 3 and \'3\'', map1.equals(map2));
+    assertFalse("maps have 3 and '3'", map1.equals(map2));
   },
 
   testEqualsWithCustomEqualityFn() {

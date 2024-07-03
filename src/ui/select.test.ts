@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.SelectTest');
-goog.setTestOnly();
 
 const Component = goog.require('goog.ui.Component');
 const CustomButtonRenderer = goog.require('goog.ui.CustomButtonRenderer');
@@ -89,8 +88,7 @@ testSuite({
     assertEquals(Role.OPTION, aria.getRole(item1.getElement()));
     assertEquals(Role.OPTION, aria.getRole(item2.getElement()));
     assertNotNull(aria.getState(select.getElement(), State.ACTIVEDESCENDANT));
-    const contentElement =
-        select.getRenderer().getContentElement(select.getElement());
+    const contentElement = select.getRenderer().getContentElement(select.getElement());
     assertEquals('2', aria.getState(contentElement, State.SETSIZE));
     assertEquals('0', aria.getState(contentElement, State.POSINSET));
     select.setSelectedItem(item1);
@@ -191,23 +189,31 @@ testSuite({
 
     select.setSelectedItem(item2);
     assertEquals(
-        'Selecting new item should fire CHANGE event.', 1,
-        recordingHandler.getCallCount());
+      'Selecting new item should fire CHANGE event.',
+      1,
+      recordingHandler.getCallCount()
+    );
 
     select.setSelectedItem(item2);
     assertEquals(
-        'Selecting the same item should not fire CHANGE event.', 1,
-        recordingHandler.getCallCount());
+      'Selecting the same item should not fire CHANGE event.',
+      1,
+      recordingHandler.getCallCount()
+    );
 
     select.setSelectedIndex(0);
     assertEquals(
-        'Selecting new item should fire CHANGE event.', 2,
-        recordingHandler.getCallCount());
+      'Selecting new item should fire CHANGE event.',
+      2,
+      recordingHandler.getCallCount()
+    );
 
     select.setSelectedIndex(0);
     assertEquals(
-        'Selecting the same item should not fire CHANGE event.', 2,
-        recordingHandler.getCallCount());
+      'Selecting the same item should not fire CHANGE event.',
+      2,
+      recordingHandler.getCallCount()
+    );
   },
 
   testSelectEventFiresForUserInitiatedAction() {
@@ -225,16 +231,20 @@ testSuite({
 
     item2.dispatchEvent(Component.EventType.ACTION);
     assertEquals(
-        'Selecting new item should fire CHANGE event.', 1,
-        recordingHandler.getCallCount());
+      'Selecting new item should fire CHANGE event.',
+      1,
+      recordingHandler.getCallCount()
+    );
     assertFalse(select.isOpen());
 
     select.setOpen(true);
 
     item2.dispatchEvent(Component.EventType.ACTION);
     assertEquals(
-        'Selecting the same item should not fire CHANGE event.', 1,
-        recordingHandler.getCallCount());
+      'Selecting the same item should not fire CHANGE event.',
+      1,
+      recordingHandler.getCallCount()
+    );
     assertFalse(select.isOpen());
   },
 
@@ -273,8 +283,7 @@ testSuite({
 
     // Verify default state.
     assertEquals(defaultCaption, select.getCaption());
-    assertFalse(!!aria.getLabel(
-        select.getRenderer().getContentElement(select.getElement())));
+    assertFalse(!!aria.getLabel(select.getRenderer().getContentElement(select.getElement())));
 
     // Add and select an item with aria-label.
     /** @suppress {checkTypes} suppression added to enable type checking */
@@ -283,23 +292,21 @@ testSuite({
     item1.getElement().setAttribute('aria-label', 'item1');
     select.setSelectedIndex(0);
     assertEquals(
-        'item1',
-        aria.getLabel(
-            select.getRenderer().getContentElement(select.getElement())));
+      'item1',
+      aria.getLabel(select.getRenderer().getContentElement(select.getElement()))
+    );
 
     // Add and select an item without a label.
     /** @suppress {checkTypes} suppression added to enable type checking */
     const item2 = new MenuItem();
     select.addItem(item2);
     select.setSelectedIndex(1);
-    assertFalse(!!aria.getLabel(
-        select.getRenderer().getContentElement(select.getElement())));
+    assertFalse(!!aria.getLabel(select.getRenderer().getContentElement(select.getElement())));
   },
 
   testDisposeWhenInnerHTMLHasBeenClearedInIE10() {
     assertNotThrows(() => {
-      const customSelect =
-          new Select(null /* label */, new Menu(), new CustomButtonRenderer());
+      const customSelect = new Select(null /* label */, new Menu(), new CustomButtonRenderer());
       customSelect.render(sandboxEl);
 
       // In IE10 setting the innerHTML of a node invalidates the parent child

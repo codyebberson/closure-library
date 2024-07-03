@@ -21,7 +21,6 @@ goog.module('goog.test_module');
 goog.module.declareLegacyNamespace();
 goog.setTestOnly('goog.test_module');
 
-
 /** @suppress {extraRequire} */
 var testModuleDep = goog.require('goog.test_module_dep');
 
@@ -29,8 +28,6 @@ var testModuleDep = goog.require('goog.test_module_dep');
 // line doesn't cause the script tag it is loaded in to be closed
 // prematurely.
 var aScriptTagShouldntBreakAnything = '<script>hello</script>world';
-
-
 
 /** @unrestricted */
 class test {

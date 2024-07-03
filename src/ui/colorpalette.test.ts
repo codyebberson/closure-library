@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.ColorPaletteTest');
-goog.setTestOnly();
 
 const ColorPalette = goog.require('goog.ui.ColorPalette');
 const TagName = goog.require('goog.dom.TagName');
@@ -140,17 +139,17 @@ testSuite({
 
     samplePalette.setSelectedColor('red');
     assertEquals('#ff0000', samplePalette.getSelectedColor());
-    samplePalette.setSelectedColor(17);  // Invalid color spec.
+    samplePalette.setSelectedColor(17); // Invalid color spec.
     assertNull(samplePalette.getSelectedColor());
 
     samplePalette.setSelectedColor('rgb(0, 255, 0)');
     assertEquals('#00ff00', samplePalette.getSelectedColor());
-    samplePalette.setSelectedColor(false);  // Invalid color spec.
+    samplePalette.setSelectedColor(false); // Invalid color spec.
     assertNull(samplePalette.getSelectedColor());
 
     samplePalette.setSelectedColor('#0000FF');
     assertEquals('#0000ff', samplePalette.getSelectedColor());
-    samplePalette.setSelectedColor(null);  // Invalid color spec.
+    samplePalette.setSelectedColor(null); // Invalid color spec.
     assertNull(samplePalette.getSelectedColor());
   },
 });

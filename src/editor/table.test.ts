@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.TableTest');
-goog.setTestOnly();
 
 const Table = goog.require('goog.editor.Table');
 const TagName = goog.require('goog.dom.TagName');
@@ -13,16 +12,12 @@ const dom = goog.require('goog.dom');
 const testSuite = goog.require('goog.testing.testSuite');
 
 function tableSanityCheck(editableTable, rowCount, colCount) {
-  assertEquals(
-      'Table has expected number of rows', rowCount, editableTable.rows.length);
+  assertEquals('Table has expected number of rows', rowCount, editableTable.rows.length);
   let row;
-  for (let i = 0; row = editableTable.rows[i]; i++) {
-    assertEquals(
-        `Row ${i} has expected number of columns`, colCount,
-        row.columns.length);
+  for (let i = 0; (row = editableTable.rows[i]); i++) {
+    assertEquals(`Row ${i} has expected number of columns`, colCount, row.columns.length);
   }
 }
-
 
 /** @suppress {missingProperties} suppression added to enable type checking */
 function _testInsertRowResult(element, editableTable, newTr, index) {
@@ -34,29 +29,38 @@ function _testInsertRowResult(element, editableTable, newTr, index) {
   }
 
   assertEquals(
-      'Row was added to table', originalRowCount + 1,
-      dom.getElementsByTagName(TagName.TR, element).length);
+    'Row was added to table',
+    originalRowCount + 1,
+    dom.getElementsByTagName(TagName.TR, element).length
+  );
   assertEquals(
-      `Row was added at position ${index}`,
-      dom.getElementsByTagName(TagName.TR, element)[index], newTr);
+    `Row was added at position ${index}`,
+    dom.getElementsByTagName(TagName.TR, element)[index],
+    newTr
+  );
+  assertEquals('Row knows its own position', index, editableTable.rows[index].index);
   assertEquals(
-      'Row knows its own position', index, editableTable.rows[index].index);
+    `EditableTable shows row at position ${index}`,
+    newTr,
+    editableTable.rows[index].element
+  );
   assertEquals(
-      `EditableTable shows row at position ${index}`, newTr,
-      editableTable.rows[index].element);
-  assertEquals(
-      'New row has correct number of TDs', 3,
-      dom.getElementsByTagName(TagName.TD, newTr).length);
+    'New row has correct number of TDs',
+    3,
+    dom.getElementsByTagName(TagName.TD, newTr).length
+  );
 }
 
 function _testInsertColumnResult(newCells, element, editableTable, index) {
   let row;
-  for (let rowNo = 0; row = editableTable.rows[rowNo]; rowNo++) {
+  for (let rowNo = 0; (row = editableTable.rows[rowNo]); rowNo++) {
     assertEquals('Row includes new column', 4, row.columns.length);
   }
   assertEquals(
-      'New cell in correct position', newCells[0],
-      editableTable.rows[0].columns[index].element);
+    'New cell in correct position',
+    newCells[0],
+    editableTable.rows[0].columns[index].element
+  );
 }
 
 /** @suppress {missingProperties} suppression added to enable type checking */
@@ -69,10 +73,11 @@ function _testRemoveColumn(index) {
   /** @suppress {missingProperties} suppression added to enable type checking */
   tr = dom.getElementsByTagName(TagName.TR, testElements.basic)[0];
   assertNotEquals(
-      'Test cell removed from column', sampleCell,
-      dom.getElementsByTagName(TagName.TH, tr)[index]);
+    'Test cell removed from column',
+    sampleCell,
+    dom.getElementsByTagName(TagName.TH, tr)[index]
+  );
 }
-
 
 /*
   // TODO(user): write more unit tests for selection stuff.
@@ -138,25 +143,25 @@ testSuite({
      * @suppress {missingProperties} suppression added to enable type
      * checking
      */
-    const originalRows =
-        dom.getElementsByTagName(TagName.TR, testElements.basic);
+    const originalRows = dom.getElementsByTagName(TagName.TR, testElements.basic);
     assertEquals(
-        'Basic table row count, compared to source', originalRows.length,
-        testObjects.basic.rows.length);
+      'Basic table row count, compared to source',
+      originalRows.length,
+      testObjects.basic.rows.length
+    );
+    assertEquals('Basic table row count, known value', 4, testObjects.basic.rows.length);
     assertEquals(
-        'Basic table row count, known value', 4, testObjects.basic.rows.length);
+      'Basic table first row element',
+      originalRows[0],
+      testObjects.basic.rows[0].element
+    );
     assertEquals(
-        'Basic table first row element', originalRows[0],
-        testObjects.basic.rows[0].element);
-    assertEquals(
-        'Basic table last row element', originalRows[3],
-        testObjects.basic.rows[3].element);
-    assertEquals(
-        'Basic table first row length', 3,
-        testObjects.basic.rows[0].columns.length);
-    assertEquals(
-        'Basic table last row length', 3,
-        testObjects.basic.rows[3].columns.length);
+      'Basic table last row element',
+      originalRows[3],
+      testObjects.basic.rows[3].element
+    );
+    assertEquals('Basic table first row length', 3, testObjects.basic.rows[0].columns.length);
+    assertEquals('Basic table last row length', 3, testObjects.basic.rows[3].columns.length);
   },
 
   /**
@@ -170,14 +175,13 @@ testSuite({
      * @suppress {missingProperties} suppression added to enable type
      * checking
      */
-    const originalRows =
-        dom.getElementsByTagName(TagName.TR, testElements.torture);
+    const originalRows = dom.getElementsByTagName(TagName.TR, testElements.torture);
     assertEquals(
-        'Torture table row count, compared to source', originalRows.length,
-        testObjects.torture.rows.length);
-    assertEquals(
-        'Torture table row count, known value', 9,
-        testObjects.torture.rows.length);
+      'Torture table row count, compared to source',
+      originalRows.length,
+      testObjects.torture.rows.length
+    );
+    assertEquals('Torture table row count, known value', 9, testObjects.torture.rows.length);
   },
 
   /**
@@ -211,9 +215,7 @@ testSuite({
      checking
    */
   testInsertRowAtEnd() {
-    assertEquals(
-        'Table has expected number of existing rows', 4,
-        testObjects.basic.rows.length);
+    assertEquals('Table has expected number of existing rows', 4, testObjects.basic.rows.length);
     /**
      * @suppress {missingProperties} suppression added to enable type
      * checking
@@ -227,9 +229,7 @@ testSuite({
      checking
    */
   testInsertRowAtEndNoIndexArgument() {
-    assertEquals(
-        'Table has expected number of existing rows', 4,
-        testObjects.basic.rows.length);
+    assertEquals('Table has expected number of existing rows', 4, testObjects.basic.rows.length);
     /**
      * @suppress {missingProperties} suppression added to enable type
      * checking
@@ -247,10 +247,11 @@ testSuite({
     // a cell with a rowspan. This should be just like a regular insert -
     // the rowspan shouldn't have any effect.
     assertEquals(
-        'Cell has starting rowspan', 2,
-        dom.getFirstElementChild(
-               dom.getElementsByTagName(TagName.TR, testElements.torture)[0])
-            .rowSpan);
+      'Cell has starting rowspan',
+      2,
+      dom.getFirstElementChild(dom.getElementsByTagName(TagName.TR, testElements.torture)[0])
+        .rowSpan
+    );
     /**
      * @suppress {missingProperties} suppression added to enable type
      * checking
@@ -270,10 +271,10 @@ testSuite({
     // and ends there. This should be just like a regular insert -
     // the rowspan shouldn't have any effect.
     assertEquals(
-        'Cell has ending rowspan', 4,
-        dom.getLastElementChild(
-               dom.getElementsByTagName(TagName.TR, testElements.torture)[5])
-            .rowSpan);
+      'Cell has ending rowspan',
+      4,
+      dom.getLastElementChild(dom.getElementsByTagName(TagName.TR, testElements.torture)[5]).rowSpan
+    );
     /**
      * @suppress {missingProperties} suppression added to enable type
      * checking
@@ -298,20 +299,24 @@ testSuite({
      */
     const rowSpannedCell = testObjects.torture.rows[7].columns[2];
     assertTrue(
-        'Existing cell has overlapping rowspan',
-        rowSpannedCell.startRow == 5 && rowSpannedCell.endRow == 8);
+      'Existing cell has overlapping rowspan',
+      rowSpannedCell.startRow == 5 && rowSpannedCell.endRow == 8
+    );
     /**
      * @suppress {missingProperties} suppression added to enable type
      * checking
      */
     const tr = testObjects.torture.insertRow(7);
     assertEquals(
-        'New DOM row has one less cell', 2,
-        dom.getElementsByTagName(TagName.TD, tr).length);
+      'New DOM row has one less cell',
+      2,
+      dom.getElementsByTagName(TagName.TD, tr).length
+    );
     assertEquals(
-        'Rowspanned cell listed in new EditableRow\'s columns',
-        testObjects.torture.rows[6].columns[2].element,
-        testObjects.torture.rows[7].columns[2].element);
+      "Rowspanned cell listed in new EditableRow's columns",
+      testObjects.torture.rows[6].columns[2].element,
+      testObjects.torture.rows[7].columns[2].element
+    );
   },
 
   /**
@@ -329,12 +334,12 @@ testSuite({
      * checking
      */
     const newCells = testObjects.basic.insertColumn(0);
+    assertEquals('New cell added for each row', testObjects.basic.rows.length, newCells.length);
     assertEquals(
-        'New cell added for each row', testObjects.basic.rows.length,
-        newCells.length);
-    assertEquals(
-        'Insert column incremented column length', startColCount + 1,
-        testObjects.basic.rows[0].columns.length);
+      'Insert column incremented column length',
+      startColCount + 1,
+      testObjects.basic.rows[0].columns.length
+    );
     _testInsertColumnResult(newCells, testElements.basic, testObjects.basic, 0);
   },
 
@@ -353,12 +358,12 @@ testSuite({
      * checking
      */
     const newCells = testObjects.basic.insertColumn(3);
+    assertEquals('New cell added for each row', testObjects.basic.rows.length, newCells.length);
     assertEquals(
-        'New cell added for each row', testObjects.basic.rows.length,
-        newCells.length);
-    assertEquals(
-        'Insert column incremented column length', startColCount + 1,
-        testObjects.basic.rows[0].columns.length);
+      'Insert column incremented column length',
+      startColCount + 1,
+      testObjects.basic.rows[0].columns.length
+    );
     _testInsertColumnResult(newCells, testElements.basic, testObjects.basic, 3);
   },
 
@@ -377,12 +382,12 @@ testSuite({
      * checking
      */
     const newCells = testObjects.basic.insertColumn();
+    assertEquals('New cell added for each row', testObjects.basic.rows.length, newCells.length);
     assertEquals(
-        'New cell added for each row', testObjects.basic.rows.length,
-        newCells.length);
-    assertEquals(
-        'Insert column incremented column length', startColCount + 1,
-        testObjects.basic.rows[0].columns.length);
+      'Insert column incremented column length',
+      startColCount + 1,
+      testObjects.basic.rows[0].columns.length
+    );
     _testInsertColumnResult(newCells, testElements.basic, testObjects.basic, 3);
   },
 
@@ -401,12 +406,12 @@ testSuite({
      * checking
      */
     const newCells = testObjects.basic.insertColumn(2);
+    assertEquals('New cell added for each row', testObjects.basic.rows.length, newCells.length);
     assertEquals(
-        'New cell added for each row', testObjects.basic.rows.length,
-        newCells.length);
-    assertEquals(
-        'Insert column incremented column length', startColCount + 1,
-        testObjects.basic.rows[0].columns.length);
+      'Insert column incremented column length',
+      startColCount + 1,
+      testObjects.basic.rows[0].columns.length
+    );
     _testInsertColumnResult(newCells, testElements.basic, testObjects.basic, 2);
   },
 
@@ -422,11 +427,15 @@ testSuite({
     const cells = testObjects.torture.insertColumn(0);
     tableSanityCheck(testObjects.torture, 9, 4);
     assertEquals(
-        'New cell was added before colspanned cell', 1,
-        testObjects.torture.rows[3].columns[0].colSpan);
+      'New cell was added before colspanned cell',
+      1,
+      testObjects.torture.rows[3].columns[0].colSpan
+    );
     assertEquals(
-        'New cell was added and returned',
-        testObjects.torture.rows[3].columns[0].element, cells[3]);
+      'New cell was added and returned',
+      testObjects.torture.rows[3].columns[0].element,
+      cells[3]
+    );
   },
 
   /**
@@ -441,11 +450,15 @@ testSuite({
     const cells = testObjects.torture.insertColumn();
     tableSanityCheck(testObjects.torture, 9, 4);
     assertEquals(
-        'New cell was added after colspanned cell', 1,
-        testObjects.torture.rows[0].columns[3].colSpan);
+      'New cell was added after colspanned cell',
+      1,
+      testObjects.torture.rows[0].columns[3].colSpan
+    );
     assertEquals(
-        'New cell was added and returned',
-        testObjects.torture.rows[0].columns[3].element, cells[0]);
+      'New cell was added and returned',
+      testObjects.torture.rows[0].columns[3].element,
+      cells[0]
+    );
   },
 
   /**
@@ -454,8 +467,10 @@ testSuite({
    */
   testInsertColumnAtSpanningColSpan() {
     assertEquals(
-        'Existing cell has expected colspan', 3,
-        testObjects.torture.rows[4].columns[1].colSpan);
+      'Existing cell has expected colspan',
+      3,
+      testObjects.torture.rows[4].columns[1].colSpan
+    );
     /**
      * @suppress {missingProperties} suppression added to enable type
      * checking
@@ -463,10 +478,11 @@ testSuite({
     const cells = testObjects.torture.insertColumn(1);
     tableSanityCheck(testObjects.torture, 9, 4);
     assertEquals(
-        'Existing cell increased colspan', 4,
-        testObjects.torture.rows[4].columns[1].colSpan);
-    assertEquals(
-        '3 cells weren\'t created due to existing colspans', 6, cells.length);
+      'Existing cell increased colspan',
+      4,
+      testObjects.torture.rows[4].columns[1].colSpan
+    );
+    assertEquals("3 cells weren't created due to existing colspans", 6, cells.length);
   },
 
   /**
@@ -478,13 +494,14 @@ testSuite({
      * @suppress {missingProperties} suppression added to enable type
      * checking
      */
-    const originalRow =
-        dom.getElementsByTagName(TagName.TR, testElements.basic)[0];
+    const originalRow = dom.getElementsByTagName(TagName.TR, testElements.basic)[0];
     testObjects.basic.removeRow(0);
     tableSanityCheck(testObjects.basic, 3, 3);
     assertNotEquals(
-        'Row was removed from table element', originalRow,
-        dom.getElementsByTagName(TagName.TR, testElements.basic)[0]);
+      'Row was removed from table element',
+      originalRow,
+      dom.getElementsByTagName(TagName.TR, testElements.basic)[0]
+    );
   },
 
   /**
@@ -496,13 +513,14 @@ testSuite({
      * @suppress {missingProperties} suppression added to enable type
      * checking
      */
-    const originalRow =
-        dom.getElementsByTagName(TagName.TR, testElements.basic)[3];
+    const originalRow = dom.getElementsByTagName(TagName.TR, testElements.basic)[3];
     testObjects.basic.removeRow(3);
     tableSanityCheck(testObjects.basic, 3, 3);
     assertNotEquals(
-        'Row was removed from table element', originalRow,
-        dom.getElementsByTagName(TagName.TR, testElements.basic)[3]);
+      'Row was removed from table element',
+      originalRow,
+      dom.getElementsByTagName(TagName.TR, testElements.basic)[3]
+    );
   },
 
   /**
@@ -514,13 +532,14 @@ testSuite({
      * @suppress {missingProperties} suppression added to enable type
      * checking
      */
-    const originalRow =
-        dom.getElementsByTagName(TagName.TR, testElements.basic)[2];
+    const originalRow = dom.getElementsByTagName(TagName.TR, testElements.basic)[2];
     testObjects.basic.removeRow(2);
     tableSanityCheck(testObjects.basic, 3, 3);
     assertNotEquals(
-        'Row was removed from table element', originalRow,
-        dom.getElementsByTagName(TagName.TR, testElements.basic)[2]);
+      'Row was removed from table element',
+      originalRow,
+      dom.getElementsByTagName(TagName.TR, testElements.basic)[2]
+    );
   },
 
   /**
@@ -535,11 +554,11 @@ testSuite({
     const originalRow = testObjects.torture.removeRow(0);
     tableSanityCheck(testObjects.torture, 8, 3);
     assertNotEquals(
-        'Row was removed from table element', originalRow,
-        dom.getElementsByTagName(TagName.TR, testElements.basic)[0]);
-    assertEquals(
-        'Rowspan correctly adjusted', 1,
-        testObjects.torture.rows[0].columns[0].rowSpan);
+      'Row was removed from table element',
+      originalRow,
+      dom.getElementsByTagName(TagName.TR, testElements.basic)[0]
+    );
+    assertEquals('Rowspan correctly adjusted', 1, testObjects.torture.rows[0].columns[0].rowSpan);
   },
 
   /**
@@ -551,16 +570,15 @@ testSuite({
      * @suppress {missingProperties} suppression added to enable type
      * checking
      */
-    const originalRow =
-        dom.getElementsByTagName(TagName.TR, testElements.torture)[8];
+    const originalRow = dom.getElementsByTagName(TagName.TR, testElements.torture)[8];
     testObjects.torture.removeRow(8);
     tableSanityCheck(testObjects.torture, 8, 3);
     assertNotEquals(
-        'Row was removed from table element', originalRow,
-        dom.getElementsByTagName(TagName.TR, testElements.basic)[8]);
-    assertEquals(
-        'Rowspan correctly adjusted', 3,
-        testObjects.torture.rows[7].columns[2].rowSpan);
+      'Row was removed from table element',
+      originalRow,
+      dom.getElementsByTagName(TagName.TR, testElements.basic)[8]
+    );
+    assertEquals('Rowspan correctly adjusted', 3, testObjects.torture.rows[7].columns[2].rowSpan);
   },
 
   /**
@@ -572,16 +590,15 @@ testSuite({
      * @suppress {missingProperties} suppression added to enable type
      * checking
      */
-    const originalRow =
-        dom.getElementsByTagName(TagName.TR, testElements.torture)[7];
+    const originalRow = dom.getElementsByTagName(TagName.TR, testElements.torture)[7];
     testObjects.torture.removeRow(7);
     tableSanityCheck(testObjects.torture, 8, 3);
     assertNotEquals(
-        'Row was removed from table element', originalRow,
-        dom.getElementsByTagName(TagName.TR, testElements.basic)[7]);
-    assertEquals(
-        'Rowspan correctly adjusted', 3,
-        testObjects.torture.rows[6].columns[2].rowSpan);
+      'Row was removed from table element',
+      originalRow,
+      dom.getElementsByTagName(TagName.TR, testElements.basic)[7]
+    );
+    assertEquals('Rowspan correctly adjusted', 3, testObjects.torture.rows[6].columns[2].rowSpan);
   },
 
   testRemoveFirstColumn() {
@@ -609,8 +626,10 @@ testSuite({
      */
     const tr = dom.getElementsByTagName(TagName.TR, testElements.torture)[5];
     assertEquals(
-        'Colspan was decremented correctly', 1,
-        dom.getElementsByTagName(TagName.TH, tr)[0].colSpan);
+      'Colspan was decremented correctly',
+      1,
+      dom.getElementsByTagName(TagName.TH, tr)[0].colSpan
+    );
   },
 
   /**
@@ -626,8 +645,10 @@ testSuite({
      */
     const tr = dom.getElementsByTagName(TagName.TR, testElements.torture)[1];
     assertEquals(
-        'Colspan was decremented correctly', 1,
-        dom.getElementsByTagName(TagName.TD, tr)[0].colSpan);
+      'Colspan was decremented correctly',
+      1,
+      dom.getElementsByTagName(TagName.TD, tr)[0].colSpan
+    );
   },
 
   /**
@@ -643,8 +664,10 @@ testSuite({
      */
     const tr = dom.getElementsByTagName(TagName.TR, testElements.torture)[4];
     assertEquals(
-        'Colspan was decremented correctly', 2,
-        dom.getElementsByTagName(TagName.TH, tr)[0].colSpan);
+      'Colspan was decremented correctly',
+      2,
+      dom.getElementsByTagName(TagName.TH, tr)[0].colSpan
+    );
   },
 
   /**
@@ -659,14 +682,17 @@ testSuite({
      * checking
      */
     const trs = dom.getElementsByTagName(TagName.TR, testElements.basic);
+    assertEquals('Cells merged', 1, dom.getElementsByTagName(TagName.TH, trs[0]).length);
     assertEquals(
-        'Cells merged', 1, dom.getElementsByTagName(TagName.TH, trs[0]).length);
+      'Merged cell has correct colspan',
+      3,
+      dom.getElementsByTagName(TagName.TH, trs[0])[0].colSpan
+    );
     assertEquals(
-        'Merged cell has correct colspan', 3,
-        dom.getElementsByTagName(TagName.TH, trs[0])[0].colSpan);
-    assertEquals(
-        'Merged cell has correct rowspan', 1,
-        dom.getElementsByTagName(TagName.TH, trs[0])[0].rowSpan);
+      'Merged cell has correct rowspan',
+      1,
+      dom.getElementsByTagName(TagName.TH, trs[0])[0].rowSpan
+    );
   },
 
   /**
@@ -682,18 +708,24 @@ testSuite({
      */
     const trs = dom.getElementsByTagName(TagName.TR, testElements.basic);
     assertEquals(
-        'Other cells still in row', 3,
-        dom.getElementsByTagName(TagName.TH, trs[0]).length);
+      'Other cells still in row',
+      3,
+      dom.getElementsByTagName(TagName.TH, trs[0]).length
+    );
     assertEquals(
-        'Merged cell has correct colspan', 1,
-        dom.getElementsByTagName(TagName.TH, trs[0])[0].colSpan);
+      'Merged cell has correct colspan',
+      1,
+      dom.getElementsByTagName(TagName.TH, trs[0])[0].colSpan
+    );
     assertEquals(
-        'Merged cell has correct rowspan', 3,
-        dom.getElementsByTagName(TagName.TH, trs[0])[0].rowSpan);
+      'Merged cell has correct rowspan',
+      3,
+      dom.getElementsByTagName(TagName.TH, trs[0])[0].rowSpan
+    );
     assert(
-        'Cell appears in multiple rows after merge',
-        testObjects.basic.rows[0].columns[0] ==
-            testObjects.basic.rows[2].columns[0]);
+      'Cell appears in multiple rows after merge',
+      testObjects.basic.rows[0].columns[0] == testObjects.basic.rows[2].columns[0]
+    );
   },
 
   /**
@@ -778,11 +810,15 @@ testSuite({
      */
     const trs = dom.getElementsByTagName(TagName.TR, testElements.torture);
     assertEquals(
-        'Cell was split into multiple columns in row 1', 3,
-        trs[1].getElementsByTagName('*').length);
+      'Cell was split into multiple columns in row 1',
+      3,
+      trs[1].getElementsByTagName('*').length
+    );
     assertEquals(
-        'Cell was split into multiple columns in row 2', 3,
-        trs[2].getElementsByTagName('*').length);
+      'Cell was split into multiple columns in row 2',
+      3,
+      trs[2].getElementsByTagName('*').length
+    );
   },
 
   /**
@@ -801,9 +837,7 @@ testSuite({
       // make sure the ancestor table is as expected. This means
       // that none of the child table's rows have been erroneously
       // loaded into the EditableTable.
-      assertEquals(
-          'Row is child of parent table', testElements.nested,
-          tr.parentNode.parentNode);
+      assertEquals('Row is child of parent table', testElements.nested, tr.parentNode.parentNode);
     }
   },
 });

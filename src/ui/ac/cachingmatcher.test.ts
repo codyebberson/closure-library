@@ -10,14 +10,13 @@
  */
 
 goog.module('goog.ui.ac.CachingMatcherTest');
-goog.setTestOnly();
 
 const CachingMatcher = goog.require('goog.ui.ac.CachingMatcher');
 const MockControl = goog.require('goog.testing.MockControl');
 const mockmatchers = goog.require('goog.testing.mockmatchers');
 const testSuite = goog.require('goog.testing.testSuite');
 
-let ignoreArgument = mockmatchers.ignoreArgument;
+const ignoreArgument = mockmatchers.ignoreArgument;
 
 /**
  * Fake version of Throttle which only fires when we call permitOne().
@@ -55,8 +54,7 @@ testSuite({
   setUp() {
     mockControl = new MockControl();
     mockMatcher = {
-      requestMatchingRows:
-          mockControl.createFunctionMock('requestMatchingRows'),
+      requestMatchingRows: mockControl.createFunctionMock('requestMatchingRows'),
     };
     mockHandler = mockControl.createFunctionMock('matchHandler');
     matcher = new CachingMatcher(mockMatcher);
@@ -80,10 +78,11 @@ testSuite({
 
     // Now we run the remote match.
     mockHandler('foo', ['foo1', 'foo2'], ignoreArgument);
-    mockMatcher.requestMatchingRows('foo', 100, ignoreArgument)
-        .$does((token, maxResults, matchHandler) => {
-          matchHandler('foo', ['foo1', 'foo2', 'bar3']);
-        });
+    mockMatcher
+      .requestMatchingRows('foo', 100, ignoreArgument)
+      .$does((token, maxResults, matchHandler) => {
+        matchHandler('foo', ['foo1', 'foo2', 'bar3']);
+      });
     mockControl.$replayAll();
     matcher.throttledTriggerBaseMatch_.permitOne();
     mockControl.$verifyAll();
@@ -100,10 +99,11 @@ testSuite({
     // First we populate, but not overflow the cache.
     mockHandler('foo', []);
     mockHandler('foo', ['foo111', 'foo222'], ignoreArgument);
-    mockMatcher.requestMatchingRows('foo', 100, ignoreArgument)
-        .$does((token, maxResults, matchHandler) => {
-          matchHandler('foo', ['foo111', 'foo222', 'bar333']);
-        });
+    mockMatcher
+      .requestMatchingRows('foo', 100, ignoreArgument)
+      .$does((token, maxResults, matchHandler) => {
+        matchHandler('foo', ['foo111', 'foo222', 'bar333']);
+      });
     mockControl.$replayAll();
     matcher.requestMatchingRows('foo', 12, mockHandler);
     matcher.throttledTriggerBaseMatch_.permitOne();
@@ -120,12 +120,12 @@ testSuite({
     // Now we overflow the cache. Check that the remote results show the first
     // time we get them back, even though they overflow the cache.
     mockHandler('foo11', ['foo111']);
-    mockHandler(
-        'foo11', ['foo111', 'foo112', 'foo113', 'foo114'], ignoreArgument);
-    mockMatcher.requestMatchingRows('foo11', 100, ignoreArgument)
-        .$does((token, maxResults, matchHandler) => {
-          matchHandler('foo11', ['foo111', 'foo112', 'foo113', 'foo114']);
-        });
+    mockHandler('foo11', ['foo111', 'foo112', 'foo113', 'foo114'], ignoreArgument);
+    mockMatcher
+      .requestMatchingRows('foo11', 100, ignoreArgument)
+      .$does((token, maxResults, matchHandler) => {
+        matchHandler('foo11', ['foo111', 'foo112', 'foo113', 'foo114']);
+      });
     mockControl.$replayAll();
     matcher.requestMatchingRows('foo11', 12, mockHandler);
     matcher.throttledTriggerBaseMatch_.permitOne();
@@ -148,10 +148,11 @@ testSuite({
     // First we populate the cache.
     mockHandler('foo', []);
     mockHandler('foo', ['foo111', 'foo222'], ignoreArgument);
-    mockMatcher.requestMatchingRows('foo', 100, ignoreArgument)
-        .$does((token, maxResults, matchHandler) => {
-          matchHandler('foo', ['foo111', 'foo222', 'bar333']);
-        });
+    mockMatcher
+      .requestMatchingRows('foo', 100, ignoreArgument)
+      .$does((token, maxResults, matchHandler) => {
+        matchHandler('foo', ['foo111', 'foo222', 'bar333']);
+      });
     mockControl.$replayAll();
     matcher.requestMatchingRows('foo', 12, mockHandler);
     matcher.throttledTriggerBaseMatch_.permitOne();
@@ -184,10 +185,11 @@ testSuite({
     // Populate the cache. We get two prefix matches.
     mockHandler('ba', []);
     mockHandler('ba', ['bar', 'baz', 'bam'], ignoreArgument);
-    mockMatcher.requestMatchingRows('ba', 100, ignoreArgument)
-        .$does((token, maxResults, matchHandler) => {
-          matchHandler('ba', ['bar', 'baz', 'bam']);
-        });
+    mockMatcher
+      .requestMatchingRows('ba', 100, ignoreArgument)
+      .$does((token, maxResults, matchHandler) => {
+        matchHandler('ba', ['bar', 'baz', 'bam']);
+      });
     mockControl.$replayAll();
     matcher.requestMatchingRows('ba', 12, mockHandler);
     matcher.throttledTriggerBaseMatch_.permitOne();
@@ -200,13 +202,12 @@ testSuite({
     // below the similar matches because the user hasn't typed any more
     // characters.
     mockHandler('bad', ['bar', 'baz', 'bam']);
-    mockHandler(
-        'bad', ['bar', 'baz', 'bam', 'bad', 'badder', 'baddest'],
-        ignoreArgument);
-    mockMatcher.requestMatchingRows('bad', 100, ignoreArgument)
-        .$does((token, maxResults, matchHandler) => {
-          matchHandler('bad', ['bad', 'badder', 'baddest']);
-        });
+    mockHandler('bad', ['bar', 'baz', 'bam', 'bad', 'badder', 'baddest'], ignoreArgument);
+    mockMatcher
+      .requestMatchingRows('bad', 100, ignoreArgument)
+      .$does((token, maxResults, matchHandler) => {
+        matchHandler('bad', ['bad', 'badder', 'baddest']);
+      });
     mockControl.$replayAll();
     matcher.requestMatchingRows('bad', 12, mockHandler);
     matcher.throttledTriggerBaseMatch_.permitOne();
@@ -231,7 +232,7 @@ testSuite({
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testSetBaseMatcherMaxMatches() {
-    mockHandler('foo', []);  // Local match
+    mockHandler('foo', []); // Local match
     mockMatcher.requestMatchingRows('foo', 789, ignoreArgument);
     mockControl.$replayAll();
     matcher.setBaseMatcherMaxMatches();
@@ -252,10 +253,11 @@ testSuite({
 
     mockHandler('foo', []);
     mockHandler('foo', ['a', 'b', 'c'], ignoreArgument);
-    mockMatcher.requestMatchingRows('foo', 100, ignoreArgument)
-        .$does((token, maxResults, matchHandler) => {
-          matchHandler('foo', ['b', 'a', 'c']);
-        });
+    mockMatcher
+      .requestMatchingRows('foo', 100, ignoreArgument)
+      .$does((token, maxResults, matchHandler) => {
+        matchHandler('foo', ['b', 'a', 'c']);
+      });
     mockControl.$replayAll();
     matcher.setLocalMatcher(sillyMatcher);
     matcher.requestMatchingRows('foo', 12, mockHandler);

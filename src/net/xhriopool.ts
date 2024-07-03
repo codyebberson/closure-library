@@ -16,8 +16,6 @@ goog.require('goog.net.XhrIo');
 goog.require('goog.structs.PriorityPool');
 goog.requireType('goog.structs.Map');
 
-
-
 /**
  * A pool of XhrIo objects.
  * @param {goog.structs.Map=} opt_headers Map of default headers to add to every
@@ -29,9 +27,7 @@ goog.requireType('goog.structs.Map');
  * @constructor
  * @extends {goog.structs.PriorityPool}
  */
-goog.net.XhrIoPool = function(
-    opt_headers, opt_minCount, opt_maxCount, opt_withCredentials) {
-  'use strict';
+goog.net.XhrIoPool = function (opt_headers, opt_minCount, opt_maxCount, opt_withCredentials) {
   /**
    * Map of default headers to add to every request.
    * @type {goog.structs.Map|undefined}
@@ -59,19 +55,16 @@ goog.net.XhrIoPool = function(
 };
 goog.inherits(goog.net.XhrIoPool, goog.structs.PriorityPool);
 
-
 /**
  * Creates an instance of an XhrIo object to use in the pool.
  * @return {!goog.net.XhrIo} The created object.
  * @override
  */
-goog.net.XhrIoPool.prototype.createObject = function() {
-  'use strict';
+goog.net.XhrIoPool.prototype.createObject = function () {
   const xhrIo = new goog.net.XhrIo();
   const headers = this.headers_;
   if (headers) {
-    headers.forEach(function(value, key) {
-      'use strict';
+    headers.forEach((value, key) => {
       xhrIo.headers.set(key, value);
     });
   }
@@ -81,7 +74,6 @@ goog.net.XhrIoPool.prototype.createObject = function() {
   return xhrIo;
 };
 
-
 /**
  * Determine if an object has become unusable and should not be used.
  * @param {Object} obj The object to test.
@@ -89,8 +81,7 @@ goog.net.XhrIoPool.prototype.createObject = function() {
  *     object is not disposed and not active.
  * @override
  */
-goog.net.XhrIoPool.prototype.objectCanBeReused = function(obj) {
-  'use strict';
+goog.net.XhrIoPool.prototype.objectCanBeReused = (obj) => {
   // An active XhrIo object should never be used.
   const xhr = /** @type {goog.net.XhrIo} */ (obj);
   return !xhr.isDisposed() && !xhr.isActive();

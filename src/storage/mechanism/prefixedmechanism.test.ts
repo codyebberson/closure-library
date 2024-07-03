@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.storage.mechanism.PrefixedMechanismTest');
-goog.setTestOnly();
 
 const HTML5LocalStorage = goog.require('goog.storage.mechanism.HTML5LocalStorage');
 const PrefixedMechanism = goog.require('goog.storage.mechanism.PrefixedMechanism');
@@ -54,35 +53,21 @@ testSuite({
   },
 
   ...mechanismTests.register({
-    getMechanism: function() {
-      return mechanism;
-    },
-    getMinimumQuota: function() {
-      return 0;
-    },
+    getMechanism: () => mechanism,
+    getMinimumQuota: () => 0,
   }),
 
   ...iterableMechanismTests.register({
-    getMechanism: function() {
-      return mechanism;
-    },
+    getMechanism: () => mechanism,
   }),
 
   ...mechanismSharingTests.register({
-    getMechanism: function() {
-      return mechanism;
-    },
-    getMechanismShared: function() {
-      return mechanismShared;
-    },
+    getMechanism: () => mechanism,
+    getMechanismShared: () => mechanismShared,
   }),
 
   ...mechanismSeparationTests.register({
-    getMechanism: function() {
-      return mechanism;
-    },
-    getMechanismSeparate: function() {
-      return mechanismSeparate;
-    },
+    getMechanism: () => mechanism,
+    getMechanismSeparate: () => mechanismSeparate,
   }),
 });

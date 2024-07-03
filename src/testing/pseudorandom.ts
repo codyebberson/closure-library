@@ -15,8 +15,6 @@ goog.provide('goog.testing.PseudoRandom');
 
 goog.require('goog.Disposable');
 
-
-
 /**
  * Class for unit testing code that uses Math.random. Generates deterministic
  * random numbers.
@@ -28,8 +26,7 @@ goog.require('goog.Disposable');
  * @constructor
  * @final
  */
-goog.testing.PseudoRandom = function(opt_seed, opt_install) {
-  'use strict';
+goog.testing.PseudoRandom = function (opt_seed, opt_install) {
   goog.Disposable.call(this);
 
   if (opt_seed === undefined) {
@@ -43,7 +40,6 @@ goog.testing.PseudoRandom = function(opt_seed, opt_install) {
 };
 goog.inherits(goog.testing.PseudoRandom, goog.Disposable);
 
-
 /**
  * Helps create a unique seed.
  * @type {number}
@@ -51,13 +47,11 @@ goog.inherits(goog.testing.PseudoRandom, goog.Disposable);
  */
 goog.testing.PseudoRandom.seedUniquifier_ = 0;
 
-
 /**
  * Constant used as part of the algorithm.
  * @type {number}
  */
 goog.testing.PseudoRandom.A = 48271;
-
 
 /**
  * Constant used as part of the algorithm. 2^31 - 1.
@@ -65,13 +59,11 @@ goog.testing.PseudoRandom.A = 48271;
  */
 goog.testing.PseudoRandom.M = 2147483647;
 
-
 /**
  * Constant used as part of the algorithm. It is equal to M / A.
  * @type {number}
  */
 goog.testing.PseudoRandom.Q = 44488;
-
 
 /**
  * Constant used as part of the algorithm. It is equal to M % A.
@@ -79,14 +71,11 @@ goog.testing.PseudoRandom.Q = 44488;
  */
 goog.testing.PseudoRandom.R = 3399;
 
-
 /**
  * Constant used as part of the algorithm to get values from range [0, 1).
  * @type {number}
  */
-goog.testing.PseudoRandom.ONE_OVER_M_MINUS_ONE =
-    1.0 / (goog.testing.PseudoRandom.M - 1);
-
+goog.testing.PseudoRandom.ONE_OVER_M_MINUS_ONE = 1.0 / (goog.testing.PseudoRandom.M - 1);
 
 /**
  * The seed of the random sequence and also the next returned value (before
@@ -96,14 +85,12 @@ goog.testing.PseudoRandom.ONE_OVER_M_MINUS_ONE =
  */
 goog.testing.PseudoRandom.prototype.seed_ = 1;
 
-
 /**
  * Whether this PseudoRandom has been installed.
  * @type {boolean}
  * @private
  */
 goog.testing.PseudoRandom.prototype.installed_;
-
 
 /**
  * The original Math.random function.
@@ -112,12 +99,10 @@ goog.testing.PseudoRandom.prototype.installed_;
  */
 goog.testing.PseudoRandom.prototype.mathRandom_;
 
-
 /**
  * Installs this PseudoRandom as the system number generator.
  */
-goog.testing.PseudoRandom.prototype.install = function() {
-  'use strict';
+goog.testing.PseudoRandom.prototype.install = function () {
   if (!this.installed_) {
     this.mathRandom_ = Math.random;
     Math.random = goog.bind(this.random, this);
@@ -125,50 +110,41 @@ goog.testing.PseudoRandom.prototype.install = function() {
   }
 };
 
-
 /** @override */
-goog.testing.PseudoRandom.prototype.disposeInternal = function() {
-  'use strict';
+goog.testing.PseudoRandom.prototype.disposeInternal = function () {
   goog.testing.PseudoRandom.superClass_.disposeInternal.call(this);
   this.uninstall();
 };
 
-
 /**
  * Uninstalls the PseudoRandom.
  */
-goog.testing.PseudoRandom.prototype.uninstall = function() {
-  'use strict';
+goog.testing.PseudoRandom.prototype.uninstall = function () {
   if (this.installed_) {
     Math.random = this.mathRandom_;
     this.installed_ = false;
   }
 };
 
-
 /**
  * Seed the generator.
  *
  * @param {number=} opt_seed The seed to use.
  */
-goog.testing.PseudoRandom.prototype.seed = function(opt_seed) {
-  'use strict';
+goog.testing.PseudoRandom.prototype.seed = function (opt_seed) {
   this.seed_ = (opt_seed || 0) % (goog.testing.PseudoRandom.M - 1);
   if (this.seed_ <= 0) {
     this.seed_ += goog.testing.PseudoRandom.M - 1;
   }
 };
 
-
 /**
  * @return {number} The next number in the sequence.
  */
-goog.testing.PseudoRandom.prototype.random = function() {
-  'use strict';
+goog.testing.PseudoRandom.prototype.random = function () {
   var hi = Math.floor(this.seed_ / goog.testing.PseudoRandom.Q);
   var lo = this.seed_ % goog.testing.PseudoRandom.Q;
-  var test =
-      goog.testing.PseudoRandom.A * lo - goog.testing.PseudoRandom.R * hi;
+  var test = goog.testing.PseudoRandom.A * lo - goog.testing.PseudoRandom.R * hi;
   if (test > 0) {
     this.seed_ = test;
   } else {

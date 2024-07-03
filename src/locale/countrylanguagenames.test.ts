@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.locale.countryLanguageNamesTest');
-goog.setTestOnly();
 
 const locale = goog.require('goog.locale');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -18,15 +17,15 @@ testSuite({
     // //googledata/i18n/js_locale_data/LocaleNameConstants__de.js
     const LocaleNameConstants_de = {
       LANGUAGE: {
-        'cad': 'Caddo',
-        'fr': 'Franz\u00f6sisch',
-        'fr_CA': 'Canadian French',
-        'fr_CH': 'Swiss French',
-        'zh': 'Chinesisch',
-        'zh_Hans': 'Chinesisch (vereinfacht)',
-        'zh_Hant': 'Chinesisch (traditionell)',
+        cad: 'Caddo',
+        fr: 'Franz\u00f6sisch',
+        fr_CA: 'Canadian French',
+        fr_CH: 'Swiss French',
+        zh: 'Chinesisch',
+        zh_Hans: 'Chinesisch (vereinfacht)',
+        zh_Hant: 'Chinesisch (traditionell)',
       },
-      COUNTRY: {'CN': 'China', 'ES': 'Spanien', 'FR': 'Frankreich'},
+      COUNTRY: { CN: 'China', ES: 'Spanien', FR: 'Frankreich' },
     };
     registerLocalNameConstants(LocaleNameConstants_de, 'de');
 
@@ -34,15 +33,15 @@ testSuite({
     // //googledata/i18n/js_locale_data/LocaleNameConstants__en.js
     LocaleNameConstants_en = {
       LANGUAGE: {
-        'cad': 'Caddo',
-        'fr': 'French',
-        'fr_CA': 'Canadian French',
-        'fr_CH': 'Swiss French',
-        'zh': 'Chinese',
-        'zh_Hans': 'Simplified Chinese',
-        'zh_Hant': 'Traditional Chinese',
+        cad: 'Caddo',
+        fr: 'French',
+        fr_CA: 'Canadian French',
+        fr_CH: 'Swiss French',
+        zh: 'Chinese',
+        zh_Hans: 'Simplified Chinese',
+        zh_Hant: 'Traditional Chinese',
       },
-      COUNTRY: {'CN': 'China', 'ES': 'Spain', 'FR': 'France'},
+      COUNTRY: { CN: 'China', ES: 'Spain', FR: 'France' },
     };
     registerLocalNameConstants(LocaleNameConstants_en, 'en');
 
@@ -97,8 +96,7 @@ testSuite({
     let result = locale.getLocalizedRegionNameFromRegionCode('ES');
     assertEquals('Spanien', result);
 
-    result = locale.getLocalizedRegionNameFromRegionCode(
-        'ES', LocaleNameConstants_en);
+    result = locale.getLocalizedRegionNameFromRegionCode('ES', LocaleNameConstants_en);
     assertEquals('Spain', result);
 
     result = locale.getLocalizedRegionNameFromRegionCode('CN');

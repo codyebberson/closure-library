@@ -7,7 +7,6 @@
 /** @fileoverview Unit tests for the storage interface. */
 
 goog.module('goog.storage.storage_test');
-goog.setTestOnly();
 
 const ErrorCode = goog.require('goog.storage.ErrorCode');
 const FakeMechanism = goog.require('goog.testing.storage.FakeMechanism');
@@ -30,13 +29,19 @@ testSuite({
 
     // Invalid JSON.
     mechanism.set('first', '');
-    assertEquals(ErrorCode.INVALID_VALUE, assertThrows(() => {
-                   storage.get('first');
-                 }));
+    assertEquals(
+      ErrorCode.INVALID_VALUE,
+      assertThrows(() => {
+        storage.get('first');
+      })
+    );
     mechanism.set('second', '(');
-    assertEquals(ErrorCode.INVALID_VALUE, assertThrows(() => {
-                   storage.get('second');
-                 }));
+    assertEquals(
+      ErrorCode.INVALID_VALUE,
+      assertThrows(() => {
+        storage.get('second');
+      })
+    );
 
     // Cleaning up.
     storage.remove('first');

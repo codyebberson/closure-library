@@ -15,7 +15,6 @@ goog.provide('goog.events.KeyCodes');
 goog.require('goog.userAgent');
 goog.requireType('goog.events.BrowserEvent');
 
-
 /**
  * Key codes for common characters.
  *
@@ -29,7 +28,7 @@ goog.events.KeyCodes = {
   MAC_ENTER: 3,
   BACKSPACE: 8,
   TAB: 9,
-  NUM_CENTER: 12,  // NUMLOCK on FF/Safari Mac
+  NUM_CENTER: 12, // NUMLOCK on FF/Safari Mac
   ENTER: 13,
   SHIFT: 16,
   CTRL: 17,
@@ -38,18 +37,18 @@ goog.events.KeyCodes = {
   CAPS_LOCK: 20,
   ESC: 27,
   SPACE: 32,
-  PAGE_UP: 33,    // also NUM_NORTH_EAST
-  PAGE_DOWN: 34,  // also NUM_SOUTH_EAST
-  END: 35,        // also NUM_SOUTH_WEST
-  HOME: 36,       // also NUM_NORTH_WEST
-  LEFT: 37,       // also NUM_WEST
-  UP: 38,         // also NUM_NORTH
-  RIGHT: 39,      // also NUM_EAST
-  DOWN: 40,       // also NUM_SOUTH
-  PLUS_SIGN: 43,  // NOT numpad plus
+  PAGE_UP: 33, // also NUM_NORTH_EAST
+  PAGE_DOWN: 34, // also NUM_SOUTH_EAST
+  END: 35, // also NUM_SOUTH_WEST
+  HOME: 36, // also NUM_NORTH_WEST
+  LEFT: 37, // also NUM_WEST
+  UP: 38, // also NUM_NORTH
+  RIGHT: 39, // also NUM_EAST
+  DOWN: 40, // also NUM_SOUTH
+  PLUS_SIGN: 43, // NOT numpad plus
   PRINT_SCREEN: 44,
-  INSERT: 45,  // also NUM_INSERT
-  DELETE: 46,  // also NUM_DELETE
+  INSERT: 45, // also NUM_INSERT
+  DELETE: 46, // also NUM_DELETE
   ZERO: 48,
   ONE: 49,
   TWO: 50,
@@ -60,9 +59,9 @@ goog.events.KeyCodes = {
   SEVEN: 55,
   EIGHT: 56,
   NINE: 57,
-  FF_SEMICOLON: 59,  // Firefox (Gecko) fires this for semicolon instead of 186
-  FF_EQUALS: 61,     // Firefox (Gecko) fires this for equals instead of 187
-  FF_DASH: 173,      // Firefox (Gecko) fires this for dash instead of 189
+  FF_SEMICOLON: 59, // Firefox (Gecko) fires this for semicolon instead of 186
+  FF_EQUALS: 61, // Firefox (Gecko) fires this for equals instead of 187
+  FF_DASH: 173, // Firefox (Gecko) fires this for dash instead of 189
   // Firefox (Gecko) fires this for # on UK keyboards, rather than
   // Shift+SINGLE_QUOTE.
   FF_HASH: 163,
@@ -70,9 +69,9 @@ goog.events.KeyCodes = {
   // SINGLE_QUOTE (US keyboard layout) or SEMICOLON (JP keyboard layout in
   // chrome)
   FF_JP_QUOTE: 58,
-  FF_DE_PLUS: 171,    // Firefox (Gecko) fires this for +/* on DE keyboards
-                      // rather than CLOSE_SQUARE_BRACKET (DE layout in Chrome)
-  QUESTION_MARK: 63,  // needs localization
+  FF_DE_PLUS: 171, // Firefox (Gecko) fires this for +/* on DE keyboards
+  // rather than CLOSE_SQUARE_BRACKET (DE layout in Chrome)
+  QUESTION_MARK: 63, // needs localization
   AT_SIGN: 64,
   A: 65,
   B: 66,
@@ -100,7 +99,7 @@ goog.events.KeyCodes = {
   X: 88,
   Y: 89,
   Z: 90,
-  META: 91,  // WIN_KEY_LEFT
+  META: 91, // WIN_KEY_LEFT
   WIN_KEY_RIGHT: 92,
   CONTEXT_MENU: 93,
   NUM_ZERO: 96,
@@ -137,23 +136,22 @@ goog.events.KeyCodes = {
   FIRST_MEDIA_KEY: 166,
   LAST_MEDIA_KEY: 183,
 
-  SEMICOLON: 186,             // needs localization
-  DASH: 189,                  // needs localization
-  EQUALS: 187,                // needs localization
-  COMMA: 188,                 // needs localization
-  PERIOD: 190,                // needs localization
-  SLASH: 191,                 // needs localization
-  APOSTROPHE: 192,            // needs localization
-  TILDE: 192,                 // needs localization
-  SINGLE_QUOTE: 222,          // needs localization
-  OPEN_SQUARE_BRACKET: 219,   // needs localization
-  BACKSLASH: 220,             // needs localization
-  CLOSE_SQUARE_BRACKET: 221,  // needs localization
+  SEMICOLON: 186, // needs localization
+  DASH: 189, // needs localization
+  EQUALS: 187, // needs localization
+  COMMA: 188, // needs localization
+  PERIOD: 190, // needs localization
+  SLASH: 191, // needs localization
+  APOSTROPHE: 192, // needs localization
+  TILDE: 192, // needs localization
+  SINGLE_QUOTE: 222, // needs localization
+  OPEN_SQUARE_BRACKET: 219, // needs localization
+  BACKSLASH: 220, // needs localization
+  CLOSE_SQUARE_BRACKET: 221, // needs localization
   WIN_KEY: 224,
-  MAC_FF_META:
-      224,  // Firefox (Gecko) fires this for the meta key instead of 91
-  MAC_WK_CMD_LEFT: 91,   // WebKit Left Command key fired, same as META
-  MAC_WK_CMD_RIGHT: 93,  // WebKit Right Command key fired, different from META
+  MAC_FF_META: 224, // Firefox (Gecko) fires this for the meta key instead of 91
+  MAC_WK_CMD_LEFT: 91, // WebKit Left Command key fired, same as META
+  MAC_WK_CMD_RIGHT: 93, // WebKit Right Command key fired, different from META
   WIN_IME: 229,
 
   // "Reserved for future use". Some programs (e.g. the SlingPlayer 2.4 ActiveX
@@ -165,9 +163,8 @@ goog.events.KeyCodes = {
   // they're all using Dell Inspiron laptops, so we suspect that this
   // indicates a hardware/bios problem.
   // http://en.community.dell.com/support-forums/laptop/f/3518/p/19285957/19523128.aspx
-  PHANTOM: 255
+  PHANTOM: 255,
 };
-
 
 /**
  * Returns false if the event does not contain a text modifying key.
@@ -182,12 +179,13 @@ goog.events.KeyCodes = {
  * @param {goog.events.BrowserEvent} e A key event.
  * @return {boolean} Whether it's a text modifying key.
  */
-goog.events.KeyCodes.isTextModifyingKeyEvent = function(e) {
-  'use strict';
-  if (e.altKey && !e.ctrlKey || e.metaKey ||
-      // Function keys don't generate text
-      e.keyCode >= goog.events.KeyCodes.F1 &&
-          e.keyCode <= goog.events.KeyCodes.F12) {
+goog.events.KeyCodes.isTextModifyingKeyEvent = (e) => {
+  if (
+    (e.altKey && !e.ctrlKey) ||
+    e.metaKey ||
+    // Function keys don't generate text
+    (e.keyCode >= goog.events.KeyCodes.F1 && e.keyCode <= goog.events.KeyCodes.F12)
+  ) {
     return false;
   }
 
@@ -228,11 +226,12 @@ goog.events.KeyCodes.isTextModifyingKeyEvent = function(e) {
     case goog.events.KeyCodes.WIN_KEY_FF_LINUX:
       return !goog.userAgent.GECKO;
     default:
-      return e.keyCode < goog.events.KeyCodes.FIRST_MEDIA_KEY ||
-          e.keyCode > goog.events.KeyCodes.LAST_MEDIA_KEY;
+      return (
+        e.keyCode < goog.events.KeyCodes.FIRST_MEDIA_KEY ||
+        e.keyCode > goog.events.KeyCodes.LAST_MEDIA_KEY
+      );
   }
 };
-
 
 /**
  * Returns true if the key fires a keypress event in the current browser.
@@ -262,10 +261,14 @@ goog.events.KeyCodes.isTextModifyingKeyEvent = function(e) {
  * @param {boolean=} opt_metaKey Whether the meta key is held down.
  * @return {boolean} Whether it's a key that fires a keypress event.
  */
-goog.events.KeyCodes.firesKeyPressEvent = function(
-    keyCode, opt_heldKeyCode, opt_shiftKey, opt_ctrlKey, opt_altKey,
-    opt_metaKey) {
-  'use strict';
+goog.events.KeyCodes.firesKeyPressEvent = (
+  keyCode,
+  opt_heldKeyCode,
+  opt_shiftKey,
+  opt_ctrlKey,
+  opt_altKey,
+  opt_metaKey
+) => {
   if (goog.userAgent.MAC && opt_altKey) {
     return goog.events.KeyCodes.isCharacterKey(keyCode);
   }
@@ -283,22 +286,24 @@ goog.events.KeyCodes.firesKeyPressEvent = function(
     if (typeof opt_heldKeyCode === 'number') {
       opt_heldKeyCode = goog.events.KeyCodes.normalizeKeyCode(opt_heldKeyCode);
     }
-    var heldKeyIsModifier = opt_heldKeyCode == goog.events.KeyCodes.CTRL ||
-        opt_heldKeyCode == goog.events.KeyCodes.ALT ||
-        goog.userAgent.MAC && opt_heldKeyCode == goog.events.KeyCodes.META;
+    var heldKeyIsModifier =
+      opt_heldKeyCode == goog.events.KeyCodes.CTRL ||
+      opt_heldKeyCode == goog.events.KeyCodes.ALT ||
+      (goog.userAgent.MAC && opt_heldKeyCode == goog.events.KeyCodes.META);
     // The Shift key blocks keypresses on Mac iff accompanied by another
     // modifier.
-    var modifiedShiftKey = opt_heldKeyCode == goog.events.KeyCodes.SHIFT &&
-        (opt_ctrlKey || opt_metaKey);
-    if ((!opt_shiftKey || goog.userAgent.MAC) && heldKeyIsModifier ||
-        goog.userAgent.MAC && modifiedShiftKey) {
+    var modifiedShiftKey =
+      opt_heldKeyCode == goog.events.KeyCodes.SHIFT && (opt_ctrlKey || opt_metaKey);
+    if (
+      ((!opt_shiftKey || goog.userAgent.MAC) && heldKeyIsModifier) ||
+      (goog.userAgent.MAC && modifiedShiftKey)
+    ) {
       return false;
     }
   }
 
   // Some keys with Ctrl/Shift do not issue keypress in WEBKIT.
-  if ((goog.userAgent.WEBKIT || goog.userAgent.EDGE) && opt_ctrlKey &&
-      opt_shiftKey) {
+  if ((goog.userAgent.WEBKIT || goog.userAgent.EDGE) && opt_ctrlKey && opt_shiftKey) {
     switch (keyCode) {
       case goog.events.KeyCodes.BACKSLASH:
       case goog.events.KeyCodes.OPEN_SQUARE_BRACKET:
@@ -335,8 +340,7 @@ goog.events.KeyCodes.firesKeyPressEvent = function(
         return true;
       }
     case goog.events.KeyCodes.ESC:
-      return !(
-          goog.userAgent.WEBKIT || goog.userAgent.EDGE || goog.userAgent.GECKO);
+      return !(goog.userAgent.WEBKIT || goog.userAgent.EDGE || goog.userAgent.GECKO);
   }
 
   // Gecko won't fire a keypress event even when the key is a character key if
@@ -349,7 +353,6 @@ goog.events.KeyCodes.firesKeyPressEvent = function(
   }
 };
 
-
 /**
  * Returns true if the key produces a character.
  * This does not cover characters on non-US keyboards (Russian, Hebrew, etc.).
@@ -357,15 +360,12 @@ goog.events.KeyCodes.firesKeyPressEvent = function(
  * @param {number} keyCode A key code.
  * @return {boolean} Whether it's a character key.
  */
-goog.events.KeyCodes.isCharacterKey = function(keyCode) {
-  'use strict';
-  if (keyCode >= goog.events.KeyCodes.ZERO &&
-      keyCode <= goog.events.KeyCodes.NINE) {
+goog.events.KeyCodes.isCharacterKey = (keyCode) => {
+  if (keyCode >= goog.events.KeyCodes.ZERO && keyCode <= goog.events.KeyCodes.NINE) {
     return true;
   }
 
-  if (keyCode >= goog.events.KeyCodes.NUM_ZERO &&
-      keyCode <= goog.events.KeyCodes.NUM_MULTIPLY) {
+  if (keyCode >= goog.events.KeyCodes.NUM_ZERO && keyCode <= goog.events.KeyCodes.NUM_MULTIPLY) {
     return true;
   }
 
@@ -411,14 +411,12 @@ goog.events.KeyCodes.isCharacterKey = function(keyCode) {
   }
 };
 
-
 /**
  * Normalizes key codes from OS/Browser-specific value to the general one.
  * @param {number} keyCode The native key code.
  * @return {number} The normalized key code.
  */
-goog.events.KeyCodes.normalizeKeyCode = function(keyCode) {
-  'use strict';
+goog.events.KeyCodes.normalizeKeyCode = (keyCode) => {
   if (goog.userAgent.GECKO) {
     return goog.events.KeyCodes.normalizeGeckoKeyCode(keyCode);
   } else if (goog.userAgent.MAC && goog.userAgent.WEBKIT) {
@@ -428,14 +426,12 @@ goog.events.KeyCodes.normalizeKeyCode = function(keyCode) {
   }
 };
 
-
 /**
  * Normalizes key codes from their Gecko-specific value to the general one.
  * @param {number} keyCode The native key code.
  * @return {number} The normalized key code.
  */
-goog.events.KeyCodes.normalizeGeckoKeyCode = function(keyCode) {
-  'use strict';
+goog.events.KeyCodes.normalizeGeckoKeyCode = (keyCode) => {
   switch (keyCode) {
     case goog.events.KeyCodes.FF_EQUALS:
       return goog.events.KeyCodes.EQUALS;
@@ -452,17 +448,15 @@ goog.events.KeyCodes.normalizeGeckoKeyCode = function(keyCode) {
   }
 };
 
-
 /**
  * Normalizes key codes from their Mac WebKit-specific value to the general one.
  * @param {number} keyCode The native key code.
  * @return {number} The normalized key code.
  */
-goog.events.KeyCodes.normalizeMacWebKitKeyCode = function(keyCode) {
-  'use strict';
+goog.events.KeyCodes.normalizeMacWebKitKeyCode = (keyCode) => {
   switch (keyCode) {
-    case goog.events.KeyCodes.MAC_WK_CMD_RIGHT:  // 93
-      return goog.events.KeyCodes.META;          // 91
+    case goog.events.KeyCodes.MAC_WK_CMD_RIGHT: // 93
+      return goog.events.KeyCodes.META; // 91
     default:
       return keyCode;
   }

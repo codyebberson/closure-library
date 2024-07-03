@@ -6,7 +6,6 @@
 
 goog.module('goog.net.streams.utils');
 
-
 /**
  * Returns whether a character is whitespace in the context of parsing JSON
  * stream.
@@ -16,6 +15,4 @@ goog.module('goog.net.streams.utils');
  * @param {string} c The char to check
  * @return {boolean} true if a char is a whitespace
  */
-exports.isJsonWhitespace = function(c) {
-  return c == '\r' || c == '\n' || c == ' ' || c == '\t';
-};
+exports.isJsonWhitespace = (c) => c == '\r' || c == '\n' || c == ' ' || c == '\t';

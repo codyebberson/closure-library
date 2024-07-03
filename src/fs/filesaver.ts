@@ -16,8 +16,6 @@ goog.require('goog.events.EventTarget');
 goog.require('goog.fs.Error');
 goog.require('goog.fs.ProgressEvent');
 
-
-
 /**
  * An object for monitoring the saving of files. This emits ProgressEvents of
  * the types listed in {@link goog.fs.FileSaver.EventType}.
@@ -30,8 +28,7 @@ goog.require('goog.fs.ProgressEvent');
  * @constructor
  * @extends {goog.events.EventTarget}
  */
-goog.fs.FileSaver = function(fileSaver) {
-  'use strict';
+goog.fs.FileSaver = function (fileSaver) {
   goog.fs.FileSaver.base(this, 'constructor');
 
   /**
@@ -51,7 +48,6 @@ goog.fs.FileSaver = function(fileSaver) {
 };
 goog.inherits(goog.fs.FileSaver, goog.events.EventTarget);
 
-
 /**
  * Possible states for a FileSaver.
  *
@@ -70,9 +66,8 @@ goog.fs.FileSaver.ReadyState = {
    * The data has been written to the file, the write was aborted, or an error
    * occurred.
    */
-  DONE: 2
+  DONE: 2,
 };
-
 
 /**
  * Events emitted by a FileSaver.
@@ -107,15 +102,13 @@ goog.fs.FileSaver.EventType = {
    * Emitted when the writing is finished, whether successfully or not.
    * readyState will be DONE.
    */
-  WRITE_END: 'writeend'
+  WRITE_END: 'writeend',
 };
-
 
 /**
  * Abort the writing of the file.
  */
-goog.fs.FileSaver.prototype.abort = function() {
-  'use strict';
+goog.fs.FileSaver.prototype.abort = function () {
   try {
     this.saver_.abort();
   } catch (e) {
@@ -123,25 +116,19 @@ goog.fs.FileSaver.prototype.abort = function() {
   }
 };
 
-
 /**
  * @return {goog.fs.FileSaver.ReadyState} The current state of the FileSaver.
  */
-goog.fs.FileSaver.prototype.getReadyState = function() {
-  'use strict';
+goog.fs.FileSaver.prototype.getReadyState = function () {
   return /** @type {goog.fs.FileSaver.ReadyState} */ (this.saver_.readyState);
 };
-
 
 /**
  * @return {goog.fs.Error} The error encountered while writing, if any.
  */
-goog.fs.FileSaver.prototype.getError = function() {
-  'use strict';
-  return this.saver_.error &&
-      new goog.fs.Error(this.saver_.error, 'saving file');
+goog.fs.FileSaver.prototype.getError = function () {
+  return this.saver_.error && new goog.fs.Error(this.saver_.error, 'saving file');
 };
-
 
 /**
  * Wrap a progress event emitted by the underlying file saver and re-emit it.
@@ -149,15 +136,12 @@ goog.fs.FileSaver.prototype.getError = function() {
  * @param {!ProgressEvent} event The underlying event.
  * @private
  */
-goog.fs.FileSaver.prototype.dispatchProgressEvent_ = function(event) {
-  'use strict';
+goog.fs.FileSaver.prototype.dispatchProgressEvent_ = function (event) {
   this.dispatchEvent(new goog.fs.ProgressEvent(event, this));
 };
 
-
 /** @override */
-goog.fs.FileSaver.prototype.disposeInternal = function() {
-  'use strict';
+goog.fs.FileSaver.prototype.disposeInternal = function () {
   delete this.saver_;
   goog.fs.FileSaver.base(this, 'disposeInternal');
 };

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.async.DebouncerTest');
-goog.setTestOnly();
 
 const Debouncer = goog.require('goog.async.Debouncer');
 const MockClock = goog.require('goog.testing.MockClock');
@@ -21,35 +20,35 @@ testSuite({
     //   r: resume
     //   s: stop
     const expectedCommandSequenceCalls = {
-      'f': 0,
-      'ff': 0,
-      'fw': 1,
-      'ffw': 1,
-      'fpr': 0,
-      'fsf': 0,
-      'fsw': 0,
-      'fprw': 1,
-      'fpwr': 1,
-      'fsfw': 1,
-      'fswf': 0,
-      'fprfw': 1,
-      'fprsw': 0,
-      'fpswr': 0,
-      'fpwfr': 0,
-      'fpwsr': 0,
-      'fswfw': 1,
-      'fpswrw': 0,
-      'fpwfrw': 1,
-      'fpwsfr': 0,
-      'fpwsrw': 0,
-      'fspwrw': 0,
-      'fpwsfrw': 1,
-      'ffwfwfffw': 3,
+      f: 0,
+      ff: 0,
+      fw: 1,
+      ffw: 1,
+      fpr: 0,
+      fsf: 0,
+      fsw: 0,
+      fprw: 1,
+      fpwr: 1,
+      fsfw: 1,
+      fswf: 0,
+      fprfw: 1,
+      fprsw: 0,
+      fpswr: 0,
+      fpwfr: 0,
+      fpwsr: 0,
+      fswfw: 1,
+      fpswrw: 0,
+      fpwfrw: 1,
+      fpwsfr: 0,
+      fpwsrw: 0,
+      fspwrw: 0,
+      fpwsfrw: 1,
+      ffwfwfffw: 3,
     };
     const interval = 500;
 
     const mockClock = new MockClock(true);
-    for (let commandSequence in expectedCommandSequenceCalls) {
+    for (const commandSequence in expectedCommandSequenceCalls) {
       const recordFn = recordFunction();
       const debouncer = new Debouncer(recordFn, interval);
 
@@ -75,28 +74,29 @@ testSuite({
 
       const expectedCalls = expectedCommandSequenceCalls[commandSequence];
       assertEquals(
-          `Expected ${expectedCalls} calls for command sequence "` +
-              commandSequence + '" (' +
-              Array.prototype.map
-                  .call(
-                      commandSequence,
-                      command => {
-                        switch (command) {
-                          case 'f':
-                            return 'fire';
-                          case 'w':
-                            return 'wait';
-                          case 'p':
-                            return 'pause';
-                          case 'r':
-                            return 'resume';
-                          case 's':
-                            return 'stop';
-                        }
-                      })
-                  .join(' -> ') +
-              ')',
-          expectedCalls, recordFn.getCallCount());
+        `Expected ${expectedCalls} calls for command sequence "` +
+          commandSequence +
+          '" (' +
+          Array.prototype.map
+            .call(commandSequence, (command) => {
+              switch (command) {
+                case 'f':
+                  return 'fire';
+                case 'w':
+                  return 'wait';
+                case 'p':
+                  return 'pause';
+                case 'r':
+                  return 'resume';
+                case 's':
+                  return 'stop';
+              }
+            })
+            .join(' -> ') +
+          ')',
+        expectedCalls,
+        recordFn.getCallCount()
+      );
       debouncer.dispose();
     }
     mockClock.uninstall();
@@ -106,10 +106,14 @@ testSuite({
     const interval = 500;
     const mockClock = new MockClock(true);
 
-    const x = {'y': 0};
-    const debouncer = new Debouncer(function() {
-      ++this['y'];
-    }, interval, x);
+    const x = { y: 0 };
+    const debouncer = new Debouncer(
+      function () {
+        ++this['y'];
+      },
+      interval,
+      x
+    );
     debouncer.fire();
     assertEquals(0, x['y']);
 
@@ -151,13 +155,17 @@ testSuite({
     const interval = 500;
     const mockClock = new MockClock(true);
 
-    const x = {'calls': 0};
-    const debouncer = new Debouncer(function(a, b, c) {
-      ++this['calls'];
-      assertEquals(3, a);
-      assertEquals('string', b);
-      assertEquals(false, c);
-    }, interval, x);
+    const x = { calls: 0 };
+    const debouncer = new Debouncer(
+      function (a, b, c) {
+        ++this['calls'];
+        assertEquals(3, a);
+        assertEquals('string', b);
+        assertEquals(false, c);
+      },
+      interval,
+      x
+    );
 
     debouncer.fire(3, 'string', false);
     mockClock.tick(interval);

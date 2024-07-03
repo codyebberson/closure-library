@@ -7,12 +7,11 @@
 /** @fileoverview Implementation of `goog.net.WebChannel` for use in tests. */
 
 goog.module('goog.labs.net.webChannel.testing.FakeWebChannel');
-goog.setTestOnly();
 
 const EventTarget = goog.require('goog.events.EventTarget');
 const WebChannel = goog.requireType('goog.net.WebChannel');
-const {clear} = goog.require('goog.array');
-const {fail} = goog.require('goog.testing.asserts');
+const { clear } = goog.require('goog.array');
+const { fail } = goog.require('goog.testing.asserts');
 
 /**
  * A fake web channel that captures all "sent" messages to memory, for testing.
@@ -58,7 +57,7 @@ class FakeWebChannel extends EventTarget {
    * @override
    */
   getRuntimeProperties() {
-    return /** @type {!WebChannel.RuntimeProperties} */ ({});
+    return /** @type {!WebChannel.RuntimeProperties} */ {};
   }
 
   /**
@@ -92,4 +91,4 @@ class FakeWebChannel extends EventTarget {
   }
 }
 
-exports = {FakeWebChannel};
+exports = { FakeWebChannel };

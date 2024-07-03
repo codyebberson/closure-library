@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.math.tdmaTest');
-goog.setTestOnly();
 
 const tdma = goog.require('goog.math.tdma');
 const testSuite = goog.require('goog.testing.testSuite');

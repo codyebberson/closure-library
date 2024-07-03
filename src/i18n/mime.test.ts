@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.i18n.mime.encodeTest');
-goog.setTestOnly();
 
 const encode = goog.require('goog.i18n.mime.encode');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -16,8 +15,8 @@ testSuite({
     // Double-quote is doubled to avoid annoying syntax highlighting in emacs,
     // which doesn't recognize the double-quote as being in a string constant.
     const identity =
-        '!""#$%&\'()*+,-./0123456789:;<>@ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
-        '[\\]^`abcdefghijklmnopqrstuvwxyz{|}~';
+      '!""#$%&\'()*+,-./0123456789:;<>@ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+      '[\\]^`abcdefghijklmnopqrstuvwxyz{|}~';
     assertEquals(identity, encode(identity));
   },
 

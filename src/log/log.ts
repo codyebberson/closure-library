@@ -18,7 +18,6 @@ goog.provide('goog.log.Logger');
 goog.require('goog.asserts');
 goog.require('goog.debug');
 
-
 /**
  * A message value that can be handled by a goog.log.Logger.
  *
@@ -35,7 +34,6 @@ goog.log.ENABLED = goog.define('goog.log.ENABLED', goog.debug.LOGGING_ENABLED);
 
 /** @const */
 goog.log.ROOT_LOGGER_NAME = '';
-
 
 // TODO(user): Make goog.log.Level an enum.
 /**
@@ -92,14 +90,12 @@ goog.log.Level = class Level {
   }
 };
 
-
 /**
  * OFF is a special level that can be used to turn off logging.
  * This level is initialized to <CODE>Infinity</CODE>.
  * @type {!goog.log.Level}
  */
-goog.log.Level.OFF = new goog.log.Level('OFF', Infinity);
-
+goog.log.Level.OFF = new goog.log.Level('OFF', Number.POSITIVE_INFINITY);
 
 /**
  * SHOUT is a message level for extra debugging loudness.
@@ -108,14 +104,12 @@ goog.log.Level.OFF = new goog.log.Level('OFF', Infinity);
  */
 goog.log.Level.SHOUT = new goog.log.Level('SHOUT', 1200);
 
-
 /**
  * SEVERE is a message level indicating a serious failure.
  * This level is initialized to <CODE>1000</CODE>.
  * @type {!goog.log.Level}
  */
 goog.log.Level.SEVERE = new goog.log.Level('SEVERE', 1000);
-
 
 /**
  * WARNING is a message level indicating a potential problem.
@@ -124,14 +118,12 @@ goog.log.Level.SEVERE = new goog.log.Level('SEVERE', 1000);
  */
 goog.log.Level.WARNING = new goog.log.Level('WARNING', 900);
 
-
 /**
  * INFO is a message level for informational messages.
  * This level is initialized to <CODE>800</CODE>.
  * @type {!goog.log.Level}
  */
 goog.log.Level.INFO = new goog.log.Level('INFO', 800);
-
 
 /**
  * CONFIG is a message level for static configuration messages.
@@ -140,14 +132,12 @@ goog.log.Level.INFO = new goog.log.Level('INFO', 800);
  */
 goog.log.Level.CONFIG = new goog.log.Level('CONFIG', 700);
 
-
 /**
  * FINE is a message level providing tracing information.
  * This level is initialized to <CODE>500</CODE>.
  * @type {!goog.log.Level}
  */
 goog.log.Level.FINE = new goog.log.Level('FINE', 500);
-
 
 /**
  * FINER indicates a fairly detailed tracing message.
@@ -164,7 +154,6 @@ goog.log.Level.FINER = new goog.log.Level('FINER', 400);
 
 goog.log.Level.FINEST = new goog.log.Level('FINEST', 300);
 
-
 /**
  * ALL indicates that all messages should be logged.
  * This level is initialized to <CODE>0</CODE>.
@@ -172,19 +161,23 @@ goog.log.Level.FINEST = new goog.log.Level('FINEST', 300);
  */
 goog.log.Level.ALL = new goog.log.Level('ALL', 0);
 
-
 /**
  * The predefined levels.
  * @type {!Array<!goog.log.Level>}
  * @final
  */
 goog.log.Level.PREDEFINED_LEVELS = [
-  goog.log.Level.OFF, goog.log.Level.SHOUT, goog.log.Level.SEVERE,
-  goog.log.Level.WARNING, goog.log.Level.INFO, goog.log.Level.CONFIG,
-  goog.log.Level.FINE, goog.log.Level.FINER, goog.log.Level.FINEST,
-  goog.log.Level.ALL
+  goog.log.Level.OFF,
+  goog.log.Level.SHOUT,
+  goog.log.Level.SEVERE,
+  goog.log.Level.WARNING,
+  goog.log.Level.INFO,
+  goog.log.Level.CONFIG,
+  goog.log.Level.FINE,
+  goog.log.Level.FINER,
+  goog.log.Level.FINEST,
+  goog.log.Level.ALL,
 ];
-
 
 /**
  * A lookup map used to find the level object based on the name or value of
@@ -194,26 +187,24 @@ goog.log.Level.PREDEFINED_LEVELS = [
  */
 goog.log.Level.predefinedLevelsCache_ = null;
 
-
 /**
  * Creates the predefined levels cache and populates it.
  * @private
  */
-goog.log.Level.createPredefinedLevelsCache_ = function() {
+goog.log.Level.createPredefinedLevelsCache_ = () => {
   goog.log.Level.predefinedLevelsCache_ = {};
-  for (let i = 0, level; level = goog.log.Level.PREDEFINED_LEVELS[i]; i++) {
+  for (let i = 0, level; (level = goog.log.Level.PREDEFINED_LEVELS[i]); i++) {
     goog.log.Level.predefinedLevelsCache_[level.value] = level;
     goog.log.Level.predefinedLevelsCache_[level.name] = level;
   }
 };
-
 
 /**
  * Gets the predefined level with the given name.
  * @param {string} name The name of the level.
  * @return {!goog.log.Level|null} The level, or null if none found.
  */
-goog.log.Level.getPredefinedLevel = function(name) {
+goog.log.Level.getPredefinedLevel = (name) => {
   if (!goog.log.Level.predefinedLevelsCache_) {
     goog.log.Level.createPredefinedLevelsCache_();
   }
@@ -221,13 +212,12 @@ goog.log.Level.getPredefinedLevel = function(name) {
   return goog.log.Level.predefinedLevelsCache_[name] || null;
 };
 
-
 /**
  * Gets the highest predefined level <= #value.
  * @param {number} value goog.log.Level value.
  * @return {!goog.log.Level|null} The level, or null if none found.
  */
-goog.log.Level.getPredefinedLevelByValue = function(value) {
+goog.log.Level.getPredefinedLevelByValue = (value) => {
   if (!goog.log.Level.predefinedLevelsCache_) {
     goog.log.Level.createPredefinedLevelsCache_();
   }
@@ -237,14 +227,13 @@ goog.log.Level.getPredefinedLevelByValue = function(value) {
   }
 
   for (let i = 0; i < goog.log.Level.PREDEFINED_LEVELS.length; ++i) {
-    let level = goog.log.Level.PREDEFINED_LEVELS[i];
+    const level = goog.log.Level.PREDEFINED_LEVELS[i];
     if (level.value <= value) {
       return level;
     }
   }
   return null;
 };
-
 
 /** @interface */
 goog.log.Logger = class Logger {
@@ -256,7 +245,6 @@ goog.log.Logger = class Logger {
   getName() {}
 };
 
-
 /**
  * Only for compatibility with goog.debug.Logger.Level, which is how many users
  * access Level.
@@ -264,7 +252,6 @@ goog.log.Logger = class Logger {
  * @final
  */
 goog.log.Logger.Level = goog.log.Level;
-
 
 /**
  * A buffer for log records. The purpose of this is to improve
@@ -284,8 +271,7 @@ goog.log.LogBuffer = class LogBuffer {
      * @type {number}
      * @private
      */
-    this.capacity_ =
-        typeof capacity === 'number' ? capacity : goog.log.LogBuffer.CAPACITY;
+    this.capacity_ = typeof capacity === 'number' ? capacity : goog.log.LogBuffer.CAPACITY;
 
     /**
      * The array to store the records.
@@ -312,7 +298,6 @@ goog.log.LogBuffer = class LogBuffer {
     this.clear();
   }
 
-
   /**
    * Adds a log record to the buffer, possibly overwriting the oldest record.
    * @param {!goog.log.Level} level One of the level identifiers.
@@ -332,8 +317,7 @@ goog.log.LogBuffer = class LogBuffer {
       return ret;
     }
     this.isFull_ = curIndex == this.capacity_ - 1;
-    return this.buffer_[curIndex] =
-               new goog.log.LogRecord(level, msg, loggerName);
+    return (this.buffer_[curIndex] = new goog.log.LogRecord(level, msg, loggerName));
   }
 
   /**
@@ -381,13 +365,11 @@ goog.log.LogBuffer = class LogBuffer {
   }
 };
 
-
 /**
  * @type {!goog.log.LogBuffer|undefined}
  * @private
  */
 goog.log.LogBuffer.instance_;
-
 
 /**
  * @define {number} The number of log records to buffer. 0 means disable
@@ -395,28 +377,22 @@ goog.log.LogBuffer.instance_;
  */
 goog.log.LogBuffer.CAPACITY = goog.define('goog.debug.LogBuffer.CAPACITY', 0);
 
-
 /**
  * A static method that always returns the same instance of goog.log.LogBuffer.
  * @return {!goog.log.LogBuffer} The goog.log.LogBuffer singleton instance.
  */
-goog.log.LogBuffer.getInstance = function() {
+goog.log.LogBuffer.getInstance = () => {
   if (!goog.log.LogBuffer.instance_) {
-    goog.log.LogBuffer.instance_ =
-        new goog.log.LogBuffer(goog.log.LogBuffer.CAPACITY);
+    goog.log.LogBuffer.instance_ = new goog.log.LogBuffer(goog.log.LogBuffer.CAPACITY);
   }
   return goog.log.LogBuffer.instance_;
 };
-
 
 /**
  * Whether the log buffer is enabled.
  * @return {boolean}
  */
-goog.log.LogBuffer.isBufferingEnabled = function() {
-  return goog.log.LogBuffer.getInstance().isBufferingEnabled();
-};
-
+goog.log.LogBuffer.isBufferingEnabled = () => goog.log.LogBuffer.getInstance().isBufferingEnabled();
 
 /**
  * LogRecord objects are used to pass logging requests between the logging
@@ -478,9 +454,8 @@ goog.log.LogRecord = class LogRecord {
      */
     this.exception_ = undefined;
 
-    this.reset(
-        level || goog.log.Level.OFF, msg, loggerName, time, sequenceNumber);
-  };
+    this.reset(level || goog.log.Level.OFF, msg, loggerName, time, sequenceNumber);
+  }
 
   /**
    * Sets all fields of the log record.
@@ -499,11 +474,9 @@ goog.log.LogRecord = class LogRecord {
     this.msg_ = msg;
     this.loggerName_ = loggerName;
     this.exception_ = undefined;
-    this.sequenceNumber_ = typeof sequenceNumber === 'number' ?
-        sequenceNumber :
-        goog.log.LogRecord.nextSequenceNumber_;
-  };
-
+    this.sequenceNumber_ =
+      typeof sequenceNumber === 'number' ? sequenceNumber : goog.log.LogRecord.nextSequenceNumber_;
+  }
 
   /**
    * Gets the source Logger's name.
@@ -512,8 +485,7 @@ goog.log.LogRecord = class LogRecord {
    */
   getLoggerName() {
     return this.loggerName_;
-  };
-
+  }
 
   /**
    * Sets the source Logger's name.
@@ -522,8 +494,7 @@ goog.log.LogRecord = class LogRecord {
    */
   setLoggerName(name) {
     this.loggerName_ = name;
-  };
-
+  }
 
   /**
    * Gets the exception that is part of the log record.
@@ -532,8 +503,7 @@ goog.log.LogRecord = class LogRecord {
    */
   getException() {
     return this.exception_;
-  };
-
+  }
 
   /**
    * Sets the exception that is part of the log record.
@@ -541,8 +511,7 @@ goog.log.LogRecord = class LogRecord {
    */
   setException(exception) {
     this.exception_ = exception;
-  };
-
+  }
 
   /**
    * Gets the logging message level, for example Level.SEVERE.
@@ -550,8 +519,7 @@ goog.log.LogRecord = class LogRecord {
    */
   getLevel() {
     return this.level_;
-  };
-
+  }
 
   /**
    * Sets the logging message level, for example Level.SEVERE.
@@ -559,8 +527,7 @@ goog.log.LogRecord = class LogRecord {
    */
   setLevel(level) {
     this.level_ = level;
-  };
-
+  }
 
   /**
    * Gets the "raw" log message, before localization or formatting.
@@ -568,8 +535,7 @@ goog.log.LogRecord = class LogRecord {
    */
   getMessage() {
     return this.msg_;
-  };
-
+  }
 
   /**
    * Sets the "raw" log message, before localization or formatting.
@@ -578,8 +544,7 @@ goog.log.LogRecord = class LogRecord {
    */
   setMessage(msg) {
     this.msg_ = msg;
-  };
-
+  }
 
   /**
    * Gets event time in milliseconds since 1970.
@@ -587,8 +552,7 @@ goog.log.LogRecord = class LogRecord {
    */
   getMillis() {
     return this.time_;
-  };
-
+  }
 
   /**
    * Sets event time in milliseconds since 1970.
@@ -596,8 +560,7 @@ goog.log.LogRecord = class LogRecord {
    */
   setMillis(time) {
     this.time_ = time;
-  };
-
+  }
 
   /**
    * Gets the sequence number. Sequence numbers are normally assigned when a
@@ -606,9 +569,8 @@ goog.log.LogRecord = class LogRecord {
    */
   getSequenceNumber() {
     return this.sequenceNumber_;
-  };
+  }
 };
-
 
 /**
  * A sequence counter for assigning increasing sequence numbers to LogRecord
@@ -618,13 +580,11 @@ goog.log.LogRecord = class LogRecord {
  */
 goog.log.LogRecord.nextSequenceNumber_ = 0;
 
-
 /**
  * A type that describes a function that handles logs.
  * @typedef {function(!goog.log.LogRecord): ?}
  */
 goog.log.LogRecordHandler;
-
 
 /**
  * A LogRegistryEntry_ contains data about a Logger.
@@ -671,7 +631,7 @@ goog.log.LogRegistryEntry_ = class LogRegistryEntry_ {
      * A reference to the Logger itself.
      * @type {!goog.log.Logger}
      */
-    this.logger = /** @type {!goog.log.Logger} */ ({getName: () => name});
+    this.logger = /** @type {!goog.log.Logger} */ ({ getName: () => name });
   }
 
   /**
@@ -686,7 +646,7 @@ goog.log.LogRegistryEntry_ = class LogRegistryEntry_ {
     }
     goog.asserts.fail('Root logger has no level set.');
     return goog.log.Level.OFF;
-  };
+  }
 
   /**
    * Calls the log handlers associated with this Logger, followed by those of
@@ -698,14 +658,13 @@ goog.log.LogRegistryEntry_ = class LogRegistryEntry_ {
   publish(logRecord) {
     let target = this;
     while (target) {
-      target.handlers.forEach(handler => {
+      target.handlers.forEach((handler) => {
         handler(logRecord);
       });
       target = target.parent;
     }
   }
 };
-
 
 /**
  * A LogRegistry_ owns references to all loggers, and is responsible for storing
@@ -722,8 +681,7 @@ goog.log.LogRegistry_ = class LogRegistry_ {
     this.entries = {};
 
     // The root logger.
-    const rootLogRegistryEntry =
-        new goog.log.LogRegistryEntry_(goog.log.ROOT_LOGGER_NAME);
+    const rootLogRegistryEntry = new goog.log.LogRegistryEntry_(goog.log.ROOT_LOGGER_NAME);
     rootLogRegistryEntry.level = goog.log.Level.CONFIG;
     this.entries[goog.log.ROOT_LOGGER_NAME] = rootLogRegistryEntry;
   }
@@ -752,8 +710,7 @@ goog.log.LogRegistry_ = class LogRegistry_ {
       const parentLogRegistryEntry = this.getLogRegistryEntry(parentName);
 
       // Now create the new entry, linking it with its parent.
-      const logRegistryEntry =
-          new goog.log.LogRegistryEntry_(name, parentLogRegistryEntry);
+      const logRegistryEntry = new goog.log.LogRegistryEntry_(name, parentLogRegistryEntry);
       this.entries[name] = logRegistryEntry;
       parentLogRegistryEntry.children.push(logRegistryEntry);
 
@@ -770,8 +727,7 @@ goog.log.LogRegistry_ = class LogRegistry_ {
    * @return {!Array<!goog.log.Logger>}
    */
   getAllLoggers() {
-    return Object.keys(this.entries)
-        .map(loggerName => this.entries[loggerName].logger);
+    return Object.keys(this.entries).map((loggerName) => this.entries[loggerName].logger);
   }
 };
 
@@ -779,12 +735,11 @@ goog.log.LogRegistry_ = class LogRegistry_ {
  * A static method that always returns the same instance of LogRegistry_.
  * @return {!goog.log.LogRegistry_} The LogRegistry_ singleton instance.
  */
-goog.log.LogRegistry_.getInstance = function() {
+goog.log.LogRegistry_.getInstance = () => {
   if (!goog.log.LogRegistry_.instance_) {
     goog.log.LogRegistry_.instance_ = new goog.log.LogRegistry_();
   }
-  return /** @type {!goog.log.LogRegistry_} */ (
-      goog.log.LogRegistry_.instance_);
+  return /** @type {!goog.log.LogRegistry_} */ (goog.log.LogRegistry_.instance_);
 };
 
 /**
@@ -792,7 +747,6 @@ goog.log.LogRegistry_.getInstance = function() {
  * @private
  */
 goog.log.LogRegistry_.instance_;
-
 
 /**
  * Finds or creates a logger for a named subsystem. If a logger has already been
@@ -810,16 +764,14 @@ goog.log.LogRegistry_.instance_;
  * @return {!goog.log.Logger|null} The named logger, or null if logging is
  *     disabled.
  */
-goog.log.getLogger = function(name, level) {
+goog.log.getLogger = (name, level) => {
   if (goog.log.ENABLED) {
-    const loggerEntry =
-        goog.log.LogRegistry_.getInstance().getLogRegistryEntry(name, level);
+    const loggerEntry = goog.log.LogRegistry_.getInstance().getLogRegistryEntry(name, level);
     return loggerEntry.logger;
   } else {
     return null;
   }
 };
-
 
 /**
  * Returns the root logger.
@@ -827,16 +779,16 @@ goog.log.getLogger = function(name, level) {
  * @return {!goog.log.Logger|null} The root logger, or null if logging is
  *     disabled.
  */
-goog.log.getRootLogger = function() {
+goog.log.getRootLogger = () => {
   if (goog.log.ENABLED) {
     const loggerEntry = goog.log.LogRegistry_.getInstance().getLogRegistryEntry(
-        goog.log.ROOT_LOGGER_NAME);
+      goog.log.ROOT_LOGGER_NAME
+    );
     return loggerEntry.logger;
   } else {
     return null;
   }
 };
-
 
 // TODO(johnlenz): try to tighten the types to these functions.
 /**
@@ -846,14 +798,12 @@ goog.log.getRootLogger = function() {
  * @param {!goog.log.LogRecordHandler} handler Handler function to
  *     add.
  */
-goog.log.addHandler = function(logger, handler) {
+goog.log.addHandler = (logger, handler) => {
   if (goog.log.ENABLED && logger) {
-    const loggerEntry = goog.log.LogRegistry_.getInstance().getLogRegistryEntry(
-        logger.getName());
+    const loggerEntry = goog.log.LogRegistry_.getInstance().getLogRegistryEntry(logger.getName());
     loggerEntry.handlers.push(handler);
   }
 };
-
 
 /**
  * Removes a handler from the logger. This doesn't use the event system because
@@ -863,10 +813,9 @@ goog.log.addHandler = function(logger, handler) {
  *     remove.
  * @return {boolean} Whether the handler was removed.
  */
-goog.log.removeHandler = function(logger, handler) {
+goog.log.removeHandler = (logger, handler) => {
   if (goog.log.ENABLED && logger) {
-    const loggerEntry = goog.log.LogRegistry_.getInstance().getLogRegistryEntry(
-        logger.getName());
+    const loggerEntry = goog.log.LogRegistry_.getInstance().getLogRegistryEntry(logger.getName());
     const indexOfHandler = loggerEntry.handlers.indexOf(handler);
     if (indexOfHandler !== -1) {
       loggerEntry.handlers.splice(indexOfHandler, 1);
@@ -875,7 +824,6 @@ goog.log.removeHandler = function(logger, handler) {
   }
   return false;
 };
-
 
 /**
  * Set the log level specifying which message levels will be logged by this
@@ -887,14 +835,12 @@ goog.log.removeHandler = function(logger, handler) {
  * @param {?goog.log.Logger} logger
  * @param {!goog.log.Level|null} level The new level.
  */
-goog.log.setLevel = function(logger, level) {
+goog.log.setLevel = (logger, level) => {
   if (goog.log.ENABLED && logger) {
-    const loggerEntry = goog.log.LogRegistry_.getInstance().getLogRegistryEntry(
-        logger.getName());
+    const loggerEntry = goog.log.LogRegistry_.getInstance().getLogRegistryEntry(logger.getName());
     loggerEntry.level = level;
   }
 };
-
 
 /**
  * Gets the log level specifying which message levels will be logged by this
@@ -906,30 +852,26 @@ goog.log.setLevel = function(logger, level) {
  * @param {?goog.log.Logger} logger
  * @return {!goog.log.Level|null} The level.
  */
-goog.log.getLevel = function(logger) {
+goog.log.getLevel = (logger) => {
   if (goog.log.ENABLED && logger) {
-    const loggerEntry = goog.log.LogRegistry_.getInstance().getLogRegistryEntry(
-        logger.getName());
+    const loggerEntry = goog.log.LogRegistry_.getInstance().getLogRegistryEntry(logger.getName());
     return loggerEntry.level;
   }
   return null;
 };
-
 
 /**
  * Returns the effective level of the logger based on its ancestors' levels.
  * @param {?goog.log.Logger} logger
  * @return {!goog.log.Level} The level.
  */
-goog.log.getEffectiveLevel = function(logger) {
+goog.log.getEffectiveLevel = (logger) => {
   if (goog.log.ENABLED && logger) {
-    const loggerEntry = goog.log.LogRegistry_.getInstance().getLogRegistryEntry(
-        logger.getName());
+    const loggerEntry = goog.log.LogRegistry_.getInstance().getLogRegistryEntry(logger.getName());
     return loggerEntry.getEffectiveLevel();
   }
   return goog.log.Level.OFF;
 };
-
 
 /**
  * Checks if a message of the given level would actually be logged by this
@@ -939,25 +881,23 @@ goog.log.getEffectiveLevel = function(logger) {
  * @param {?goog.log.Level} level The level to check.
  * @return {boolean} Whether the message would be logged.
  */
-goog.log.isLoggable = function(logger, level) {
+goog.log.isLoggable = (logger, level) => {
   if (goog.log.ENABLED && logger && level) {
     return level.value >= goog.log.getEffectiveLevel(logger).value;
   }
   return false;
 };
 
-
 /**
  * Gets a list of all loggers.
  * @return {!Array<!goog.log.Logger>}
  */
-goog.log.getAllLoggers = function() {
+goog.log.getAllLoggers = () => {
   if (goog.log.ENABLED) {
     return goog.log.LogRegistry_.getInstance().getAllLoggers();
   }
   return [];
 };
-
 
 /**
  * Creates a log record. If the logger is currently enabled for the
@@ -970,13 +910,15 @@ goog.log.getAllLoggers = function() {
  * @param {*=} exception An exception associated with the message.
  * @return {!goog.log.LogRecord}
  */
-goog.log.getLogRecord = function(logger, level, msg, exception = undefined) {
+goog.log.getLogRecord = (logger, level, msg, exception = undefined) => {
   const logRecord = goog.log.LogBuffer.getInstance().addRecord(
-      level || goog.log.Level.OFF, msg, logger.getName());
+    level || goog.log.Level.OFF,
+    msg,
+    logger.getName()
+  );
   logRecord.setException(exception);
   return logRecord;
 };
-
 
 /**
  * Logs a goog.log.LogRecord. If the logger is currently enabled for the
@@ -986,15 +928,12 @@ goog.log.getLogRecord = function(logger, level, msg, exception = undefined) {
  * @param {?goog.log.Logger} logger
  * @param {!goog.log.LogRecord} logRecord A log record to log.
  */
-goog.log.publishLogRecord = function(logger, logRecord) {
-  if (goog.log.ENABLED && logger &&
-      goog.log.isLoggable(logger, logRecord.getLevel())) {
-    const loggerEntry = goog.log.LogRegistry_.getInstance().getLogRegistryEntry(
-        logger.getName());
+goog.log.publishLogRecord = (logger, logRecord) => {
+  if (goog.log.ENABLED && logger && goog.log.isLoggable(logger, logRecord.getLevel())) {
+    const loggerEntry = goog.log.LogRegistry_.getInstance().getLogRegistryEntry(logger.getName());
     loggerEntry.publish(logRecord);
   }
 };
-
 
 /**
  * Logs a message. If the logger is currently enabled for the
@@ -1006,23 +945,20 @@ goog.log.publishLogRecord = function(logger, logRecord) {
  * @param {!goog.log.Loggable} msg The message to log.
  * @param {*=} exception An exception associated with the message.
  */
-goog.log.log = function(logger, level, msg, exception = undefined) {
+goog.log.log = (logger, level, msg, exception = undefined) => {
   if (goog.log.ENABLED && logger && goog.log.isLoggable(logger, level)) {
     level = level || goog.log.Level.OFF;
-    const loggerEntry = goog.log.LogRegistry_.getInstance().getLogRegistryEntry(
-        logger.getName());
+    const loggerEntry = goog.log.LogRegistry_.getInstance().getLogRegistryEntry(logger.getName());
     // Message callbacks can be useful when a log message is expensive to build.
     if (typeof msg === 'function') {
       msg = msg();
     }
-    const logRecord = goog.log.LogBuffer.getInstance().addRecord(
-        level, msg, logger.getName());
+    const logRecord = goog.log.LogBuffer.getInstance().addRecord(level, msg, logger.getName());
     logRecord.setException(exception);
     // Publish logs.
     loggerEntry.publish(logRecord);
   }
 };
-
 
 /**
  * Logs a message at the goog.log.Level.SEVERE level.
@@ -1032,12 +968,11 @@ goog.log.log = function(logger, level, msg, exception = undefined) {
  * @param {!goog.log.Loggable} msg The message to log.
  * @param {*=} exception An exception associated with the message.
  */
-goog.log.error = function(logger, msg, exception = undefined) {
+goog.log.error = (logger, msg, exception = undefined) => {
   if (goog.log.ENABLED && logger) {
     goog.log.log(logger, goog.log.Level.SEVERE, msg, exception);
   }
 };
-
 
 /**
  * Logs a message at the goog.log.Level.WARNING level.
@@ -1047,12 +982,11 @@ goog.log.error = function(logger, msg, exception = undefined) {
  * @param {!goog.log.Loggable} msg The message to log.
  * @param {*=} exception An exception associated with the message.
  */
-goog.log.warning = function(logger, msg, exception = undefined) {
+goog.log.warning = (logger, msg, exception = undefined) => {
   if (goog.log.ENABLED && logger) {
     goog.log.log(logger, goog.log.Level.WARNING, msg, exception);
   }
 };
-
 
 /**
  * Logs a message at the goog.log.Level.INFO level.
@@ -1062,12 +996,11 @@ goog.log.warning = function(logger, msg, exception = undefined) {
  * @param {!goog.log.Loggable} msg The message to log.
  * @param {*=} exception An exception associated with the message.
  */
-goog.log.info = function(logger, msg, exception = undefined) {
+goog.log.info = (logger, msg, exception = undefined) => {
   if (goog.log.ENABLED && logger) {
     goog.log.log(logger, goog.log.Level.INFO, msg, exception);
   }
 };
-
 
 /**
  * Logs a message at the goog.log.Level.FINE level.
@@ -1077,7 +1010,7 @@ goog.log.info = function(logger, msg, exception = undefined) {
  * @param {!goog.log.Loggable} msg The message to log.
  * @param {*=} exception An exception associated with the message.
  */
-goog.log.fine = function(logger, msg, exception = undefined) {
+goog.log.fine = (logger, msg, exception = undefined) => {
   if (goog.log.ENABLED && logger) {
     goog.log.log(logger, goog.log.Level.FINE, msg, exception);
   }

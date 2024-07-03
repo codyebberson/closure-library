@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dom.FontSizeMonitorTest');
-goog.setTestOnly();
 
 const FontSizeMonitor = goog.require('goog.dom.FontSizeMonitor');
 const GoogEvent = goog.require('goog.events.Event');
@@ -21,8 +20,7 @@ let monitor;
 
 /** @suppress {visibility} suppression added to enable type checking */
 function getResizeTarget() {
-  return userAgent.IE ? monitor.sizeElement_ :
-                        dom.getFrameContentWindow(monitor.sizeElement_);
+  return userAgent.IE ? monitor.sizeElement_ : dom.getFrameContentWindow(monitor.sizeElement_);
 }
 
 testSuite({
@@ -82,18 +80,16 @@ testSuite({
     monitor.dispose();
 
     const newFrameCount = window.frames.length;
-    const newIframeElementCount =
-        dom.getElementsByTagName(TagName.IFRAME).length;
+    const newIframeElementCount = dom.getElementsByTagName(TagName.IFRAME).length;
     const newDivElementCount = dom.getElementsByTagName(TagName.DIV).length;
 
+    assertEquals('There should be no trailing frames', frameCount, newFrameCount);
     assertEquals(
-        'There should be no trailing frames', frameCount, newFrameCount);
-    assertEquals(
-        'There should be no trailing iframe elements', iframeElementCount,
-        newIframeElementCount);
-    assertEquals(
-        'There should be no trailing div elements', divElementCount,
-        newDivElementCount);
+      'There should be no trailing iframe elements',
+      iframeElementCount,
+      newIframeElementCount
+    );
+    assertEquals('There should be no trailing div elements', divElementCount, newDivElementCount);
   },
 
   testWithDomHelper() {
@@ -104,20 +100,18 @@ testSuite({
     const monitor = new FontSizeMonitor(dom.getDomHelper());
 
     const newFrameCount = window.frames.length;
-    const newIframeElementCount =
-        dom.getElementsByTagName(TagName.IFRAME).length;
+    const newIframeElementCount = dom.getElementsByTagName(TagName.IFRAME).length;
     const newDivElementCount = dom.getElementsByTagName(TagName.DIV).length;
 
     if (userAgent.IE) {
-      assertEquals(
-          'There should be one new div element', divElementCount + 1,
-          newDivElementCount);
+      assertEquals('There should be one new div element', divElementCount + 1, newDivElementCount);
     } else {
+      assertEquals('There should be one new frame', frameCount + 1, newFrameCount);
       assertEquals(
-          'There should be one new frame', frameCount + 1, newFrameCount);
-      assertEquals(
-          'There should be one new iframe element', iframeElementCount + 1,
-          newIframeElementCount);
+        'There should be one new iframe element',
+        iframeElementCount + 1,
+        newIframeElementCount
+      );
     }
 
     // Use the first iframe in the doc.  This is added in the HTML markup.
@@ -129,28 +123,28 @@ testSuite({
     const domHelper = dom.getDomHelper(doc);
 
     const frameCount2 = win.frames.length;
-    const iframeElementCount2 =
-        dom.getElementsByTagName(TagName.IFRAME, doc).length;
+    const iframeElementCount2 = dom.getElementsByTagName(TagName.IFRAME, doc).length;
     const divElementCount2 = dom.getElementsByTagName(TagName.DIV, doc).length;
 
     const monitor2 = new FontSizeMonitor(domHelper);
 
     const newFrameCount2 = win.frames.length;
-    const newIframeElementCount2 =
-        dom.getElementsByTagName(TagName.IFRAME, doc).length;
-    const newDivElementCount2 =
-        dom.getElementsByTagName(TagName.DIV, doc).length;
+    const newIframeElementCount2 = dom.getElementsByTagName(TagName.IFRAME, doc).length;
+    const newDivElementCount2 = dom.getElementsByTagName(TagName.DIV, doc).length;
 
     if (userAgent.IE) {
       assertEquals(
-          'There should be one new div element', divElementCount2 + 1,
-          newDivElementCount2);
+        'There should be one new div element',
+        divElementCount2 + 1,
+        newDivElementCount2
+      );
     } else {
+      assertEquals('There should be one new frame', frameCount2 + 1, newFrameCount2);
       assertEquals(
-          'There should be one new frame', frameCount2 + 1, newFrameCount2);
-      assertEquals(
-          'There should be one new iframe element', iframeElementCount2 + 1,
-          newIframeElementCount2);
+        'There should be one new iframe element',
+        iframeElementCount2 + 1,
+        newIframeElementCount2
+      );
     }
 
     monitor.dispose();
@@ -166,14 +160,14 @@ testSuite({
     let closeCalled = false;
     const instance = {
       document: {
-        open: function() {
+        open: () => {
           openCalled = true;
         },
-        close: function() {
+        close: () => {
           closeCalled = true;
         },
       },
-      attachEvent: function() {},
+      attachEvent: () => {},
     };
 
     pr.set(dom, 'getFrameContentWindow', () => instance);
@@ -205,29 +199,25 @@ testSuite({
       userAgent.isVersionOrHigherCache_ = {};
 
       const frameCount = window.frames.length;
-      const iframeElementCount =
-          dom.getElementsByTagName(TagName.IFRAME).length;
+      const iframeElementCount = dom.getElementsByTagName(TagName.IFRAME).length;
       const divElementCount = dom.getElementsByTagName(TagName.DIV).length;
 
       const monitor = new FontSizeMonitor();
       monitor.dispose();
 
       const newFrameCount = window.frames.length;
-      const newIframeElementCount =
-          dom.getElementsByTagName(TagName.IFRAME).length;
+      const newIframeElementCount = dom.getElementsByTagName(TagName.IFRAME).length;
       const newDivElementCount = dom.getElementsByTagName(TagName.DIV).length;
 
+      assertEquals('There should be no trailing frames', frameCount, newFrameCount);
       assertEquals(
-          'There should be no trailing frames', frameCount, newFrameCount);
-      assertEquals(
-          'There should be no trailing iframe elements', iframeElementCount,
-          newIframeElementCount);
-      assertEquals(
-          'There should be no trailing div elements', divElementCount,
-          newDivElementCount);
+        'There should be no trailing iframe elements',
+        iframeElementCount,
+        newIframeElementCount
+      );
+      assertEquals('There should be no trailing div elements', divElementCount, newDivElementCount);
     } finally {
       pr.reset();
     }
   },
-
 });

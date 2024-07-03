@@ -24,7 +24,6 @@ goog.require('goog.dom.safe');
 goog.require('goog.html.TrustedResourceUrl');
 goog.require('goog.object');
 
-
 /**
  * The name of the property of goog.global under which the JavaScript
  * verification object is stored by the loaded script.
@@ -32,14 +31,12 @@ goog.require('goog.object');
  */
 goog.net.jsloader.GLOBAL_VERIFY_OBJS_ = 'closure_verification';
 
-
 /**
  * The default length of time, in milliseconds, we are prepared to wait for a
  * load request to complete.
  * @type {number}
  */
 goog.net.jsloader.DEFAULT_TIMEOUT = 5000;
-
 
 /**
  * Optional parameters for goog.net.jsloader.send.
@@ -62,13 +59,11 @@ goog.net.jsloader.DEFAULT_TIMEOUT = 5000;
  */
 goog.net.jsloader.Options;
 
-
 /**
  * Scripts (URIs) waiting to be loaded.
  * @private {!Array<!goog.html.TrustedResourceUrl>}
  */
 goog.net.jsloader.scriptsToLoad_ = [];
-
 
 /**
  * The deferred result of loading the URIs in scriptsToLoad_.
@@ -77,8 +72,6 @@ goog.net.jsloader.scriptsToLoad_ = [];
  * @private {!goog.async.Deferred<null>}
  */
 goog.net.jsloader.scriptLoadingDeferred_;
-
-
 
 /**
  * Loads and evaluates the JavaScript files at the specified URIs, guaranteeing
@@ -100,8 +93,7 @@ goog.net.jsloader.scriptLoadingDeferred_;
  * @return {!goog.async.Deferred} The deferred result, that may be used to add
  *     callbacks
  */
-goog.net.jsloader.safeLoadMany = function(trustedUris, opt_options) {
-  'use strict';
+goog.net.jsloader.safeLoadMany = (trustedUris, opt_options) => {
   // Loading the scripts in serial introduces asynchronosity into the flow.
   // Therefore, there are race conditions where client A can kick off the load
   // sequence for client B, even though client A's scripts haven't all been
@@ -124,8 +116,7 @@ goog.net.jsloader.safeLoadMany = function(trustedUris, opt_options) {
   }
 
   trustedUris = goog.net.jsloader.scriptsToLoad_;
-  const popAndLoadNextScript = function() {
-    'use strict';
+  const popAndLoadNextScript = () => {
     const trustedUri = trustedUris.shift();
     const deferred = goog.net.jsloader.safeLoad(trustedUri, opt_options);
     if (trustedUris.length) {
@@ -136,7 +127,6 @@ goog.net.jsloader.safeLoadMany = function(trustedUris, opt_options) {
   goog.net.jsloader.scriptLoadingDeferred_ = popAndLoadNextScript();
   return goog.net.jsloader.scriptLoadingDeferred_;
 };
-
 
 /**
  * Loads and evaluates a JavaScript file.
@@ -151,30 +141,28 @@ goog.net.jsloader.safeLoadMany = function(trustedUris, opt_options) {
  *     The error callback will be called with a single goog.net.jsloader.Error
  *     parameter.
  */
-goog.net.jsloader.safeLoad = function(trustedUri, opt_options) {
-  'use strict';
+goog.net.jsloader.safeLoad = (trustedUri, opt_options) => {
   const options = opt_options || /** @type {!goog.net.jsloader.Options} */ ({});
   const doc = options.document || document;
   const uri = goog.html.TrustedResourceUrl.unwrap(trustedUri);
 
-  const script =
-      new goog.dom.DomHelper(doc).createElement(goog.dom.TagName.SCRIPT);
-  const request = {script_: script, timeout_: undefined};
+  const script = new goog.dom.DomHelper(doc).createElement(goog.dom.TagName.SCRIPT);
+  const request = { script_: script, timeout_: undefined };
   const deferred = new goog.async.Deferred(goog.net.jsloader.cancel_, request);
 
   // Set a timeout.
   let timeout = null;
-  const timeoutDuration = (options.timeout != null) ?
-      options.timeout :
-      goog.net.jsloader.DEFAULT_TIMEOUT;
+  const timeoutDuration =
+    options.timeout != null ? options.timeout : goog.net.jsloader.DEFAULT_TIMEOUT;
   if (timeoutDuration > 0) {
-    timeout = window.setTimeout(function() {
-      'use strict';
+    timeout = window.setTimeout(() => {
       goog.net.jsloader.cleanup_(script, true);
       deferred.errback(
-          new goog.net.jsloader.Error(
-              goog.net.jsloader.ErrorCode.TIMEOUT,
-              'Timeout reached for loading script ' + uri));
+        new goog.net.jsloader.Error(
+          goog.net.jsloader.ErrorCode.TIMEOUT,
+          'Timeout reached for loading script ' + uri
+        )
+      );
     }, timeoutDuration);
     request.timeout_ = timeout;
   }
@@ -183,10 +171,8 @@ goog.net.jsloader.safeLoad = function(trustedUri, opt_options) {
   // NOTE(user): This callback will be called in IE even upon error. In any
   // case it is the client's responsibility to verify that the script ran
   // successfully.
-  script.onload = script.onreadystatechange = function() {
-    'use strict';
-    if (!script.readyState || script.readyState == 'loaded' ||
-        script.readyState == 'complete') {
+  script.onload = script.onreadystatechange = () => {
+    if (!script.readyState || script.readyState == 'loaded' || script.readyState == 'complete') {
       const removeScriptNode = options.cleanupWhenDone || false;
       goog.net.jsloader.cleanup_(script, removeScriptNode, timeout);
       deferred.callback(null);
@@ -195,18 +181,18 @@ goog.net.jsloader.safeLoad = function(trustedUri, opt_options) {
 
   // Add an error callback.
   // NOTE(user): Not supported in IE.
-  script.onerror = function() {
-    'use strict';
+  script.onerror = () => {
     goog.net.jsloader.cleanup_(script, true, timeout);
     deferred.errback(
-        new goog.net.jsloader.Error(
-            goog.net.jsloader.ErrorCode.LOAD_ERROR,
-            'Error while loading script ' + uri));
+      new goog.net.jsloader.Error(
+        goog.net.jsloader.ErrorCode.LOAD_ERROR,
+        'Error while loading script ' + uri
+      )
+    );
   };
 
   const properties = options.attributes || {};
-  goog.object.extend(
-      properties, {'type': 'text/javascript', 'charset': 'UTF-8'});
+  goog.object.extend(properties, { type: 'text/javascript', charset: 'UTF-8' });
   goog.dom.setProperties(script, properties);
   // NOTE(user): Safari never loads the script if we don't set the src
   // attribute before appending.
@@ -216,7 +202,6 @@ goog.net.jsloader.safeLoad = function(trustedUri, opt_options) {
 
   return deferred;
 };
-
 
 /**
  * Loads a JavaScript file and verifies it was evaluated successfully, using a
@@ -238,9 +223,7 @@ goog.net.jsloader.safeLoad = function(trustedUri, opt_options) {
  *     The error callback will be called with a single goog.net.jsloader.Error
  *     parameter.
  */
-goog.net.jsloader.safeLoadAndVerify = function(
-    trustedUri, verificationObjName, options) {
-  'use strict';
+goog.net.jsloader.safeLoadAndVerify = (trustedUri, verificationObjName, options) => {
   // Define the global objects variable.
   if (!goog.global[goog.net.jsloader.GLOBAL_VERIFY_OBJS_]) {
     goog.global[goog.net.jsloader.GLOBAL_VERIFY_OBJS_] = {};
@@ -252,22 +235,21 @@ goog.net.jsloader.safeLoadAndVerify = function(
   if (verifyObjs[verificationObjName] !== undefined) {
     // TODO(user): Error or reset variable?
     return goog.async.Deferred.fail(
-        new goog.net.jsloader.Error(
-            goog.net.jsloader.ErrorCode.VERIFY_OBJECT_ALREADY_EXISTS,
-            'Verification object ' + verificationObjName +
-                ' already defined.'));
+      new goog.net.jsloader.Error(
+        goog.net.jsloader.ErrorCode.VERIFY_OBJECT_ALREADY_EXISTS,
+        'Verification object ' + verificationObjName + ' already defined.'
+      )
+    );
   }
 
   // Send request to load the JavaScript.
   const sendDeferred = goog.net.jsloader.safeLoad(trustedUri, options);
 
   // Create a deferred object wrapping the send result.
-  const deferred =
-      new goog.async.Deferred(goog.bind(sendDeferred.cancel, sendDeferred));
+  const deferred = new goog.async.Deferred(goog.bind(sendDeferred.cancel, sendDeferred));
 
   // Call user back with object that was set by the script.
-  sendDeferred.addCallback(function() {
-    'use strict';
+  sendDeferred.addCallback(() => {
     const result = verifyObjs[verificationObjName];
     if (result !== undefined) {
       deferred.callback(result);
@@ -275,16 +257,20 @@ goog.net.jsloader.safeLoadAndVerify = function(
     } else {
       // Error: script was not loaded properly.
       deferred.errback(
-          new goog.net.jsloader.Error(
-              goog.net.jsloader.ErrorCode.VERIFY_ERROR, 'Script ' + uri +
-                  ' loaded, but verification object ' + verificationObjName +
-                  ' was not defined.'));
+        new goog.net.jsloader.Error(
+          goog.net.jsloader.ErrorCode.VERIFY_ERROR,
+          'Script ' +
+            uri +
+            ' loaded, but verification object ' +
+            verificationObjName +
+            ' was not defined.'
+        )
+      );
     }
   });
 
   // Pass error to new deferred object.
-  sendDeferred.addErrback(function(error) {
-    'use strict';
+  sendDeferred.addErrback((error) => {
     if (verifyObjs[verificationObjName] !== undefined) {
       delete verifyObjs[verificationObjName];
     }
@@ -293,7 +279,6 @@ goog.net.jsloader.safeLoadAndVerify = function(
 
   return deferred;
 };
-
 
 /**
  * Gets the DOM element under which we should add new script elements.
@@ -304,10 +289,8 @@ goog.net.jsloader.safeLoadAndVerify = function(
  * @return {!Element} The script parent element.
  * @private
  */
-goog.net.jsloader.getScriptParentElement_ = function(doc) {
-  'use strict';
-  const headElements =
-      goog.dom.getElementsByTagName(goog.dom.TagName.HEAD, doc);
+goog.net.jsloader.getScriptParentElement_ = (doc) => {
+  const headElements = goog.dom.getElementsByTagName(goog.dom.TagName.HEAD, doc);
   if (!headElements || headElements.length === 0) {
     return doc.documentElement;
   } else {
@@ -315,23 +298,19 @@ goog.net.jsloader.getScriptParentElement_ = function(doc) {
   }
 };
 
-
 /**
  * Cancels a given request.
  * @this {{script_: Element, timeout_: number}} The request context.
  * @private
  */
-goog.net.jsloader.cancel_ = function() {
-  'use strict';
-  const request = this;
-  if (request && request.script_) {
-    const scriptNode = request.script_;
+goog.net.jsloader.cancel_ = function () {
+  if (this && this.script_) {
+    const scriptNode = this.script_;
     if (scriptNode && scriptNode.tagName == goog.dom.TagName.SCRIPT) {
-      goog.net.jsloader.cleanup_(scriptNode, true, request.timeout_);
+      goog.net.jsloader.cleanup_(scriptNode, true, this.timeout_);
     }
   }
 };
-
 
 /**
  * Removes the script node and the timeout.
@@ -341,9 +320,7 @@ goog.net.jsloader.cancel_ = function() {
  * @private
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.net.jsloader.cleanup_ = function(
-    scriptNode, removeScriptNode, opt_timeout) {
-  'use strict';
+goog.net.jsloader.cleanup_ = (scriptNode, removeScriptNode, opt_timeout) => {
   if (opt_timeout != null) {
     goog.global.clearTimeout(opt_timeout);
   }
@@ -355,13 +332,11 @@ goog.net.jsloader.cleanup_ = function(
   // Do this after a delay (removing the script node of a running script can
   // confuse older IEs).
   if (removeScriptNode) {
-    window.setTimeout(function() {
-      'use strict';
+    window.setTimeout(() => {
       goog.dom.removeNode(scriptNode);
     }, 0);
   }
 };
-
 
 /**
  * Possible error codes for jsloader.
@@ -374,8 +349,6 @@ goog.net.jsloader.ErrorCode = {
   VERIFY_OBJECT_ALREADY_EXISTS: 3,
 };
 
-
-
 /**
  * A jsloader error.
  *
@@ -385,8 +358,7 @@ goog.net.jsloader.ErrorCode = {
  * @extends {goog.debug.Error}
  * @final
  */
-goog.net.jsloader.Error = function(code, opt_message) {
-  'use strict';
+goog.net.jsloader.Error = function (code, opt_message) {
   let msg = 'Jsloader error (code #' + code + ')';
   if (opt_message) {
     msg += ': ' + opt_message;

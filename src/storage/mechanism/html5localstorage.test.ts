@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.storage.mechanism.HTML5LocalStorageTest');
-goog.setTestOnly();
 
 const HTML5LocalStorage = goog.require('goog.storage.mechanism.HTML5LocalStorage');
 const iterableMechanismTests = goog.require('goog.storage.mechanism.iterableMechanismTests');
@@ -55,26 +54,16 @@ testSuite({
   },
 
   ...mechanismTests.register({
-    getMechanism: function() {
-      return mechanism;
-    },
-    getMinimumQuota: function() {
-      return minimumQuota;
-    },
+    getMechanism: () => mechanism,
+    getMinimumQuota: () => minimumQuota,
   }),
 
   ...iterableMechanismTests.register({
-    getMechanism: function() {
-      return mechanism;
-    },
+    getMechanism: () => mechanism,
   }),
 
   ...mechanismSharingTests.register({
-    getMechanism: function() {
-      return mechanism;
-    },
-    getMechanismShared: function() {
-      return mechanismShared;
-    },
+    getMechanism: () => mechanism,
+    getMechanismShared: () => mechanismShared,
   }),
 });

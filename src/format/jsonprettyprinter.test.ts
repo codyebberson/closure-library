@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.format.JsonPrettyPrinterTest');
-goog.setTestOnly();
 
 const JsonPrettyPrinter = goog.require('goog.format.JsonPrettyPrinter');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -58,12 +57,13 @@ testSuite({
   },
 
   testFunction() {
-    assertEquals('{\n  "a": "1",\n  "b": ""\n}', formatter.format({
-      'a': '1',
-      'b': function() {
-        return null;
-      }
-    }));
+    assertEquals(
+      '{\n  "a": "1",\n  "b": ""\n}',
+      formatter.format({
+        a: '1',
+        b: () => null,
+      })
+    );
   },
 
   testObject() {
@@ -72,26 +72,27 @@ testSuite({
 
   testObjectMultipleProperties() {
     assertEquals(
-        '{\n  "a": null,\n  "b": true,\n  "c": 1,\n  "d": "d",\n  "e":' +
-            ' [\n    1,\n    2,\n    3\n  ],\n  "f": {\n    "g": 1,\n    "h": "h"\n' +
-            '  }\n}',
-        formatter.format({
-          'a': null,
-          'b': true,
-          'c': 1,
-          'd': 'd',
-          'e': [1, 2, 3],
-          'f': {'g': 1, 'h': 'h'},
-        }));
+      '{\n  "a": null,\n  "b": true,\n  "c": 1,\n  "d": "d",\n  "e":' +
+        ' [\n    1,\n    2,\n    3\n  ],\n  "f": {\n    "g": 1,\n    "h": "h"\n' +
+        '  }\n}',
+      formatter.format({
+        a: null,
+        b: true,
+        c: 1,
+        d: 'd',
+        e: [1, 2, 3],
+        f: { g: 1, h: 'h' },
+      })
+    );
   },
 
   testSafeHtmlDelimiters() {
-    const htmlFormatter =
-        new JsonPrettyPrinter(new JsonPrettyPrinter.SafeHtmlDelimiters());
+    const htmlFormatter = new JsonPrettyPrinter(new JsonPrettyPrinter.SafeHtmlDelimiters());
     assertEquals(
-        '{\n  <span class="goog-jsonprettyprinter-propertyname">&quot;' +
-            'a&lt;b&quot;</span>: <span class="goog-jsonprettyprinter-propertyvalue' +
-            '-string">&quot;&gt;&quot;</span>\n}',
-        htmlFormatter.formatSafeHtml({'a<b': '>'}).getTypedStringValue());
+      '{\n  <span class="goog-jsonprettyprinter-propertyname">&quot;' +
+        'a&lt;b&quot;</span>: <span class="goog-jsonprettyprinter-propertyvalue' +
+        '-string">&quot;&gt;&quot;</span>\n}',
+      htmlFormatter.formatSafeHtml({ 'a<b': '>' }).getTypedStringValue()
+    );
   },
 });

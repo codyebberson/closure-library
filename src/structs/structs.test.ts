@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.structsTest');
-goog.setTestOnly();
 
 const StructsMap = goog.require('goog.structs.Map');
 const StructsSet = goog.require('goog.structs.Set');
@@ -24,7 +23,7 @@ const testSuite = goog.require('goog.testing.testSuite');
 
 function stringifyObject(obj) {
   const sb = [];
-  for (let key in obj) {
+  for (const key in obj) {
     sb.push(key + obj[key]);
   }
   return sb.join('');
@@ -51,7 +50,7 @@ function removeNode() {
 
 function nodeNames(nl) {
   const sb = [];
-  for (let i = 0, n; n = nl[i]; i++) {
+  for (let i = 0, n; (n = nl[i]); i++) {
     sb.push(n.nodeName);
   }
   return sb.join(',');
@@ -80,7 +79,7 @@ testSuite({
     googArray.remove(arr, 'd');
     assertEquals('count, should be 3', 3, structs.getCount(arr));
 
-    const obj = {a: 0, b: 1, c: 2};
+    const obj = { a: 0, b: 1, c: 2 };
     assertEquals('count, should be 3', 3, structs.getCount(obj));
     obj.d = 3;
     assertEquals('count, should be 4', 4, structs.getCount(obj));
@@ -99,7 +98,7 @@ testSuite({
     removeNode();
     assertEquals('count, should be 10', 10, structs.getCount(all));
 
-    const aMap = new StructsMap({a: 0, b: 1, c: 2});
+    const aMap = new StructsMap({ a: 0, b: 1, c: 2 });
     assertEquals('count, should be 3', 3, structs.getCount(aMap));
     aMap.set('d', 3);
     assertEquals('count, should be 4', 4, structs.getCount(aMap));
@@ -120,7 +119,7 @@ testSuite({
     const arr = ['a', 'b', 'c', 'd'];
     assertEquals('abcd', structs.getValues(arr).join(''));
 
-    const obj = {a: 0, b: 1, c: 2, d: 3};
+    const obj = { a: 0, b: 1, c: 2, d: 3 };
     assertEquals('0123', structs.getValues(obj).join(''));
 
     let s = 'abc';
@@ -135,9 +134,13 @@ testSuite({
     removeNode();
     assertEquals(allTagNames1, nodeNames(structs.getValues(all)));
 
-    const aMap = new StructsMap({a: 1, b: 2, c: 3});
+    const aMap = new StructsMap({ a: 1, b: 2, c: 3 });
     assertEquals('123', structs.getValues(aMap).join(''));
-    const nativeMap = new Map([['a', 1], ['b', 2], ['c', 3]]);
+    const nativeMap = new Map([
+      ['a', 1],
+      ['b', 2],
+      ['c', 3],
+    ]);
     assertEquals('123', structs.getValues(nativeMap).join(''));
 
     const aSet = new StructsSet([1, 2, 3]);
@@ -151,7 +154,7 @@ testSuite({
     const arr = ['a', 'b', 'c', 'd'];
     assertEquals('0123', structs.getKeys(arr).join(''));
 
-    const obj = {a: 0, b: 1, c: 2, d: 3};
+    const obj = { a: 0, b: 1, c: 2, d: 3 };
     assertEquals('abcd', structs.getKeys(obj).join(''));
 
     let s = 'abc';
@@ -166,9 +169,13 @@ testSuite({
     removeNode();
     assertEquals('0123456789', structs.getKeys(all).join(''));
 
-    const aMap = new StructsMap({a: 1, b: 2, c: 3});
+    const aMap = new StructsMap({ a: 1, b: 2, c: 3 });
     assertEquals('abc', structs.getKeys(aMap).join(''));
-    const nativeMap = new Map([['a', 1], ['b', 2], ['c', 3]]);
+    const nativeMap = new Map([
+      ['a', 1],
+      ['b', 2],
+      ['c', 3],
+    ]);
     assertEquals('abc', structs.getKeys(nativeMap).join(''));
 
     const aSet = new StructsSet([1, 2, 3]);
@@ -180,63 +187,56 @@ testSuite({
   /** @suppress {checkTypes} suppression added to enable type checking */
   testContains() {
     const arr = ['a', 'b', 'c', 'd'];
-    assertTrue('contains, Should contain \'a\'', structs.contains(arr, 'a'));
-    assertFalse(
-        'contains, Should not contain \'e\'', structs.contains(arr, 'e'));
+    assertTrue("contains, Should contain 'a'", structs.contains(arr, 'a'));
+    assertFalse("contains, Should not contain 'e'", structs.contains(arr, 'e'));
 
-    const obj = {a: 0, b: 1, c: 2, d: 3};
-    assertTrue('contains, Should contain \'0\'', structs.contains(obj, 0));
-    assertFalse('contains, Should not contain \'4\'', structs.contains(obj, 4));
+    const obj = { a: 0, b: 1, c: 2, d: 3 };
+    assertTrue("contains, Should contain '0'", structs.contains(obj, 0));
+    assertFalse("contains, Should not contain '4'", structs.contains(obj, 4));
 
     const s = 'abc';
-    assertTrue('contains, Should contain \'a\'', structs.contains(s, 'a'));
-    assertFalse('contains, Should not contain \'d\'', structs.contains(s, 'd'));
+    assertTrue("contains, Should contain 'a'", structs.contains(s, 'a'));
+    assertFalse("contains, Should not contain 'd'", structs.contains(s, 'd'));
 
     const all = getAll();
     assertTrue(
-        'contains, Should contain \'h1\'',
-        structs.contains(all, document.getElementById('h1')));
+      "contains, Should contain 'h1'",
+      structs.contains(all, document.getElementById('h1'))
+    );
     assertFalse(
-        'contains, Should not contain \'document.body\'',
-        structs.contains(all, document.body));
+      "contains, Should not contain 'document.body'",
+      structs.contains(all, document.body)
+    );
 
-    const aMap = new StructsMap({a: 1, b: 2, c: 3});
-    assertTrue('contains, Should contain \'1\'', structs.contains(aMap, 1));
-    assertFalse(
-        'contains, Should not contain \'4\'', structs.contains(aMap, 4));
+    const aMap = new StructsMap({ a: 1, b: 2, c: 3 });
+    assertTrue("contains, Should contain '1'", structs.contains(aMap, 1));
+    assertFalse("contains, Should not contain '4'", structs.contains(aMap, 4));
 
     const aSet = new StructsSet([1, 2, 3]);
-    assertTrue('contains, Should contain \'1\'', structs.contains(aSet, 1));
-    assertFalse(
-        'contains, Should not contain \'4\'', structs.contains(aSet, 4));
+    assertTrue("contains, Should contain '1'", structs.contains(aSet, 1));
+    assertFalse("contains, Should not contain '4'", structs.contains(aSet, 4));
   },
 
   testClear() {
     const arr = ['a', 'b', 'c', 'd'];
     structs.clear(arr);
     assertTrue('cleared so it should be empty', structs.isEmpty(arr));
-    assertFalse(
-        'cleared so it should not contain \'a\'', structs.contains(arr, 'a'));
+    assertFalse("cleared so it should not contain 'a'", structs.contains(arr, 'a'));
 
-    const obj = {a: 0, b: 1, c: 2, d: 3};
+    const obj = { a: 0, b: 1, c: 2, d: 3 };
     structs.clear(obj);
     assertTrue('cleared so it should be empty', structs.isEmpty(obj));
-    assertFalse(
-        'cleared so it should not contain \'a\' key', structs.contains(obj, 0));
+    assertFalse("cleared so it should not contain 'a' key", structs.contains(obj, 0));
 
-    const aMap = new StructsMap({a: 1, b: 2, c: 3});
+    const aMap = new StructsMap({ a: 1, b: 2, c: 3 });
     structs.clear(aMap);
     assertTrue('cleared map so it should be empty', structs.isEmpty(aMap));
-    assertFalse(
-        'cleared map so it should not contain \'1\' value',
-        structs.contains(aMap, 1));
+    assertFalse("cleared map so it should not contain '1' value", structs.contains(aMap, 1));
 
     const aSet = new StructsSet([1, 2, 3]);
     structs.clear(aSet);
     assertTrue('cleared set so it should be empty', structs.isEmpty(aSet));
-    assertFalse(
-        'cleared set so it should not contain \'1\'',
-        structs.contains(aSet, 1));
+    assertFalse("cleared set so it should not contain '1'", structs.contains(aSet, 1));
 
     // cannot clear a string or a NodeList
   },
@@ -244,7 +244,7 @@ testSuite({
   testMap() {
     const RV = {};
     const obj = {
-      map: function(g) {
+      map: function (g) {
         assertEquals(f, g);
         assertEquals(this, obj);
         return RV;
@@ -258,7 +258,7 @@ testSuite({
     const THIS_OBJ = {};
     const RV = {};
     const obj = {
-      map: function(g, obj2) {
+      map: function (g, obj2) {
         assertEquals(f, g);
         assertEquals(this, obj);
         assertEquals(THIS_OBJ, obj2);
@@ -317,25 +317,25 @@ testSuite({
   },
 
   testMapMap() {
-    const col = new StructsMap({a: 0, b: 1, c: 2});
+    const col = new StructsMap({ a: 0, b: 1, c: 2 });
     function f(v, key, col2) {
       assertEquals(col, col2);
       assertEquals('string', typeof key);
       return v * v;
     }
-    assertObjectEquals({a: 0, b: 1, c: 4}, structs.map(col, f));
+    assertObjectEquals({ a: 0, b: 1, c: 4 }, structs.map(col, f));
   },
 
   testMapMap2() {
     const THIS_OBJ = {};
-    const col = new StructsMap({a: 0, b: 1, c: 2});
+    const col = new StructsMap({ a: 0, b: 1, c: 2 });
     function f(v, key, col2) {
       assertEquals(col, col2);
       assertEquals('string', typeof key);
       assertEquals(THIS_OBJ, this);
       return v * v;
     }
-    assertObjectEquals({a: 0, b: 1, c: 4}, structs.map(col, f, THIS_OBJ));
+    assertObjectEquals({ a: 0, b: 1, c: 4 }, structs.map(col, f, THIS_OBJ));
   },
 
   testMapSet() {
@@ -388,7 +388,7 @@ testSuite({
   testFilter() {
     const RV = {};
     const obj = {
-      filter: function(g) {
+      filter: function (g) {
         assertEquals(f, g);
         assertEquals(this, obj);
         return RV;
@@ -403,7 +403,7 @@ testSuite({
     const THIS_OBJ = {};
     const RV = {};
     const obj = {
-      filter: function(g, obj2) {
+      filter: function (g, obj2) {
         assertEquals(f, g);
         assertEquals(this, obj);
         assertEquals(THIS_OBJ, obj2);
@@ -461,25 +461,25 @@ testSuite({
   },
 
   testFilterMap() {
-    const col = new StructsMap({a: 0, b: 1, c: 2});
+    const col = new StructsMap({ a: 0, b: 1, c: 2 });
     function f(v, key, col2) {
       assertEquals(col, col2);
       assertEquals('string', typeof key);
       return v > 0;
     }
-    assertObjectEquals({b: 1, c: 2}, structs.filter(col, f));
+    assertObjectEquals({ b: 1, c: 2 }, structs.filter(col, f));
   },
 
   testFilterMap2() {
     const THIS_OBJ = {};
-    const col = new StructsMap({a: 0, b: 1, c: 2});
+    const col = new StructsMap({ a: 0, b: 1, c: 2 });
     function f(v, key, col2) {
       assertEquals(col, col2);
       assertEquals('string', typeof key);
       assertEquals(THIS_OBJ, this);
       return v > 0;
     }
-    assertObjectEquals({b: 1, c: 2}, structs.filter(col, f, THIS_OBJ));
+    assertObjectEquals({ b: 1, c: 2 }, structs.filter(col, f, THIS_OBJ));
   },
 
   testFilterSet() {
@@ -523,15 +523,14 @@ testSuite({
       assertEquals(THIS_OBJ, this);
       return v.tagName == TagName.P;
     }
-    assertEquals(
-        'P,P,P,P,P,P,P,P', nodeNames(structs.filter(col, f, THIS_OBJ)));
+    assertEquals('P,P,P,P,P,P,P,P', nodeNames(structs.filter(col, f, THIS_OBJ)));
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testSome() {
     const RV = {};
     const obj = {
-      some: function(g) {
+      some: function (g) {
         assertEquals(f, g);
         assertEquals(this, obj);
         return RV;
@@ -546,7 +545,7 @@ testSuite({
     const THIS_OBJ = {};
     const RV = {};
     const obj = {
-      some: function(g, obj2) {
+      some: function (g, obj2) {
         assertEquals(f, g);
         assertEquals(this, obj);
         assertEquals(THIS_OBJ, obj2);
@@ -617,7 +616,7 @@ testSuite({
 
   testSomeMap() {
     let limit = 0;
-    const col = new StructsMap({a: 0, b: 1, c: 2});
+    const col = new StructsMap({ a: 0, b: 1, c: 2 });
     function f(v, key, col2) {
       assertEquals(col, col2);
       assertEquals('string', typeof key);
@@ -631,7 +630,7 @@ testSuite({
   testSomeMap2() {
     const THIS_OBJ = {};
     let limit = 0;
-    const col = new StructsMap({a: 0, b: 1, c: 2});
+    const col = new StructsMap({ a: 0, b: 1, c: 2 });
     function f(v, key, col2) {
       assertEquals(col, col2);
       assertEquals('string', typeof key);
@@ -703,7 +702,7 @@ testSuite({
   testEvery() {
     const RV = {};
     const obj = {
-      every: function(g) {
+      every: function (g) {
         assertEquals(f, g);
         assertEquals(this, obj);
         return RV;
@@ -718,7 +717,7 @@ testSuite({
     const THIS_OBJ = {};
     const RV = {};
     const obj = {
-      every: function(g, obj2) {
+      every: function (g, obj2) {
         assertEquals(f, g);
         assertEquals(this, obj);
         assertEquals(THIS_OBJ, obj2);
@@ -789,7 +788,7 @@ testSuite({
 
   testEveryMap() {
     let limit = -1;
-    const col = new StructsMap({a: 0, b: 1, c: 2});
+    const col = new StructsMap({ a: 0, b: 1, c: 2 });
     function f(v, key, col2) {
       assertEquals(col, col2);
       assertEquals('string', typeof key);
@@ -803,7 +802,7 @@ testSuite({
   testEveryMap2() {
     const THIS_OBJ = {};
     let limit = -1;
-    const col = new StructsMap({a: 0, b: 1, c: 2});
+    const col = new StructsMap({ a: 0, b: 1, c: 2 });
     function f(v, key, col2) {
       assertEquals(col, col2);
       assertEquals('string', typeof key);
@@ -844,7 +843,7 @@ testSuite({
   },
 
   testEveryNodeList() {
-    let nodeType = 1;  // ELEMENT
+    let nodeType = 1; // ELEMENT
     const col = getAll();
     function f(v, i, col2) {
       assertEquals(col, col2);
@@ -852,13 +851,13 @@ testSuite({
       return v.nodeType == nodeType;
     }
     assertTrue(structs.every(col, f));
-    nodeType = 3;  // TEXT
+    nodeType = 3; // TEXT
     assertFalse(structs.every(col, f));
   },
 
   testEveryNodeList2() {
     const THIS_OBJ = {};
-    let nodeType = 1;  // ELEMENT
+    let nodeType = 1; // ELEMENT
     const col = getAll();
     function f(v, i, col2) {
       assertEquals(col, col2);
@@ -867,14 +866,14 @@ testSuite({
       return v.nodeType == nodeType;
     }
     assertTrue(structs.every(col, f, THIS_OBJ));
-    nodeType = 3;  // TEXT
+    nodeType = 3; // TEXT
     assertFalse(structs.every(col, f, THIS_OBJ));
   },
 
   testForEach() {
     let called = false;
     const obj = {
-      forEach: function(g) {
+      forEach: function (g) {
         assertEquals(f, g);
         assertEquals(this, obj);
         called = true;
@@ -889,7 +888,7 @@ testSuite({
     let called = false;
     const THIS_OBJ = {};
     const obj = {
-      forEach: function(g, obj2) {
+      forEach: function (g, obj2) {
         assertEquals(f, g);
         assertEquals(this, obj);
         assertEquals(THIS_OBJ, obj2);
@@ -956,7 +955,7 @@ testSuite({
   },
 
   testForEachMap() {
-    const col = new StructsMap({a: 0, b: 1, c: 2});
+    const col = new StructsMap({ a: 0, b: 1, c: 2 });
     const values = [];
     const keys = [];
     function f(v, key, col2) {
@@ -972,7 +971,7 @@ testSuite({
 
   testForEachMap2() {
     const THIS_OBJ = {};
-    const col = new StructsMap({a: 0, b: 1, c: 2});
+    const col = new StructsMap({ a: 0, b: 1, c: 2 });
     const values = [];
     const keys = [];
     function f(v, key, col2) {

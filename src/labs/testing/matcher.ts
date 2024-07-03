@@ -9,17 +9,13 @@
  * matchers through assertThat statements and not directly.
  */
 
-
 goog.provide('goog.labs.testing.Matcher');
-
-
 
 /**
  * A matcher object to be used in assertThat statements.
  * @interface
  */
-goog.labs.testing.Matcher = function() {};
-
+goog.labs.testing.Matcher = () => {};
 
 /**
  * Determines whether a value matches the constraints of the match.
@@ -27,8 +23,7 @@ goog.labs.testing.Matcher = function() {};
  * @param {*} value The object to match.
  * @return {boolean} Whether the input value matches this matcher.
  */
-goog.labs.testing.Matcher.prototype.matches = function(value) {};
-
+goog.labs.testing.Matcher.prototype.matches = (value) => {};
 
 /**
  * Describes why the matcher failed.
@@ -39,9 +34,7 @@ goog.labs.testing.Matcher.prototype.matches = function(value) {};
  *
  * @return {string} Description of why the matcher failed.
  */
-goog.labs.testing.Matcher.prototype.describe = function(
-    value, opt_description) {};
-
+goog.labs.testing.Matcher.prototype.describe = (value, opt_description) => {};
 
 /**
  * Generates a Matcher from the ‘matches’ and ‘describe’ functions passed in.
@@ -50,15 +43,13 @@ goog.labs.testing.Matcher.prototype.describe = function(
  * @param {Function=} opt_describeFunction The ‘describe’ function.
  * @return {!Function} The custom matcher.
  */
-goog.labs.testing.Matcher.makeMatcher = function(
-    matchesFunction, opt_describeFunction) {
-  'use strict';
+goog.labs.testing.Matcher.makeMatcher = (matchesFunction, opt_describeFunction) => {
   /**
    * @constructor
    * @implements {goog.labs.testing.Matcher}
    * @final
    */
-  const matcherConstructor = function() {};
+  const matcherConstructor = () => {};
 
   /** @override */
   matcherConstructor.prototype.matches = matchesFunction;

@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Testing inclusion of externs and handling in compiled code.
  * Sets options for ECMASCript Intl object classes, retrieving them
@@ -31,7 +30,6 @@
  * Namespaces for Closure classes with Intl implementations.
  */
 goog.module('goog.i18n.externsTest');
-goog.setTestOnly();
 
 const browser = goog.require('goog.labs.userAgent.browser');
 
@@ -62,32 +60,36 @@ const testSuite = goog.require('goog.testing.testSuite');
 const newlySupportedKeys = new Map();
 newlySupportedKeys.set(Intl.NumberFormat, [
   // Safari numberFormat
-  {key: 'roundingMode', browser: browser.isSafari(), minVersion: '15.6'},
-  {key: 'roundingIncrement', browser: browser.isSafari(), minVersion: '15.6'},
-  {key: 'trailingZeroDisplay', browser: browser.isSafari(), minVersion: '15.6'},
-  {key: 'roundingPriority', browser: browser.isSafari(), minVersion: '15.6'},
+  { key: 'roundingMode', browser: browser.isSafari(), minVersion: '15.6' },
+  { key: 'roundingIncrement', browser: browser.isSafari(), minVersion: '15.6' },
+  {
+    key: 'trailingZeroDisplay',
+    browser: browser.isSafari(),
+    minVersion: '15.6',
+  },
+  { key: 'roundingPriority', browser: browser.isSafari(), minVersion: '15.6' },
   // Chrome numberFormat
-  {key: 'roundingMode', browser: browser.isChrome(), minVersion: '106.0.0.0'},
+  { key: 'roundingMode', browser: browser.isChrome(), minVersion: '106.0.0.0' },
   {
     key: 'roundingIncrement',
     browser: browser.isChrome(),
-    minVersion: '106.0.0.0'
+    minVersion: '106.0.0.0',
   },
   {
     key: 'trailingZeroDisplay',
     browser: browser.isChrome(),
-    minVersion: '106.0.0.0'
+    minVersion: '106.0.0.0',
   },
   {
     key: 'roundingPriority',
     browser: browser.isChrome(),
-    minVersion: '106.0.0.0'
+    minVersion: '106.0.0.0',
   },
 ]);
 
-newlySupportedKeys.set(
-    Intl.PluralRules,
-    [{key: 'roundingMode', browser: browser.isSafari(), minVersion: '15.6'}]);
+newlySupportedKeys.set(Intl.PluralRules, [
+  { key: 'roundingMode', browser: browser.isSafari(), minVersion: '15.6' },
+]);
 
 /* TODO:(b/243945751): Add compiled BUILD test for possible options keymangling.
  */
@@ -104,10 +106,13 @@ newlySupportedKeys.set(
 function checkNewKeys(intlClass, checkKey) {
   const newKeyInfo = newlySupportedKeys.get(intlClass);
   if (newKeyInfo) {
-    for (let index in newKeyInfo) {
+    for (const index in newKeyInfo) {
       const newKey = newKeyInfo[index];
-      if (newKey.browser && newKey.key === checkKey &&
-          browser.isVersionOrHigher(newKey.minVersion)) {
+      if (
+        newKey.browser &&
+        newKey.key === checkKey &&
+        browser.isVersionOrHigher(newKey.minVersion)
+      ) {
         return true;
       }
     }
@@ -118,9 +123,7 @@ function checkNewKeys(intlClass, checkKey) {
 testSuite({
   setUpPage() {},
 
-  getTestName: function() {
-    return 'Intl Extern Options test';
-  },
+  getTestName: () => 'Intl Extern Options test',
 
   testDateTimeOptions() {
     /* For each set of options in setup:
@@ -176,8 +179,8 @@ testSuite({
     for (let i = 0; i < setup.length; i++) {
       const fmt = new Intl.DateTimeFormat(locale, setup[i]);
       const resolvedOptions = fmt.resolvedOptions();
-      let unexpectedOptions = [];
-      for (let option in resolvedOptions) {
+      const unexpectedOptions = [];
+      for (const option in resolvedOptions) {
         // Check that every option is expected unless it's new.
         if (!checkNewKeys(intlClass, option)) {
           if (!outputOptions.includes(option)) {
@@ -187,9 +190,10 @@ testSuite({
       }
       /* There should be no values in the unexpectedOptions list. */
       assertArrayEquals(
-          'Unexpected options include <' + unexpectedOptions +
-              '>, version=' + browser.getVersion(),
-          [], unexpectedOptions);
+        'Unexpected options include <' + unexpectedOptions + '>, version=' + browser.getVersion(),
+        [],
+        unexpectedOptions
+      );
     }
   },
 
@@ -220,10 +224,20 @@ testSuite({
       ],
     ];
     const outputOptions = [
-      'locale', 'numberingSystem', 'notation', 'compactDisplay', 'signDisplay',
-      'useGrouping', 'currency', 'currencyDisplay', 'minimumIntegerDigits',
-      'minimumFractionDigits', 'maximumFractionDigits',
-      'minimumSignificantDigits', 'maximumSignificantDigits', 'style'
+      'locale',
+      'numberingSystem',
+      'notation',
+      'compactDisplay',
+      'signDisplay',
+      'useGrouping',
+      'currency',
+      'currencyDisplay',
+      'minimumIntegerDigits',
+      'minimumFractionDigits',
+      'maximumFractionDigits',
+      'minimumSignificantDigits',
+      'maximumSignificantDigits',
+      'style',
     ];
     const locale = 'pl';
     for (let i = 0; i < setup.length; i++) {
@@ -231,8 +245,8 @@ testSuite({
       const resolvedOptions = fmt.resolvedOptions();
       const intlClass = Intl.NumberFormat;
 
-      let unexpectedOptions = [];
-      for (let option in resolvedOptions) {
+      const unexpectedOptions = [];
+      for (const option in resolvedOptions) {
         // Check that every option is expected unless it's new.
         if (!checkNewKeys(intlClass, option)) {
           if (!outputOptions.includes(option)) {
@@ -242,9 +256,10 @@ testSuite({
       }
       /* There should be no values in the unexpectedOptions list. */
       assertArrayEquals(
-          'Unexpected options include <' + unexpectedOptions +
-              '>, version=' + browser.getVersion(),
-          [], unexpectedOptions);
+        'Unexpected options include <' + unexpectedOptions + '>, version=' + browser.getVersion(),
+        [],
+        unexpectedOptions
+      );
     }
   },
 
@@ -257,20 +272,32 @@ testSuite({
     if (Intl === undefined || Intl.PluralRules === undefined) return;
     const setup = [
       [
-        ['type', 'cardinal'], ['minimumIntegerDigits', 1],
-        ['minimumFractionDigits', 0], ['maximumFractionDigits', 1]
+        ['type', 'cardinal'],
+        ['minimumIntegerDigits', 1],
+        ['minimumFractionDigits', 0],
+        ['maximumFractionDigits', 1],
       ],
       [
-        ['type', 'ordinal'], ['minimumIntegerDigits', 1],
-        ['minimumFractionDigits', 0], ['maximumFractionDigits', 1]
+        ['type', 'ordinal'],
+        ['minimumIntegerDigits', 1],
+        ['minimumFractionDigits', 0],
+        ['maximumFractionDigits', 1],
       ],
-      [['minimumSignificantDigits', 1], ['maximumSignificantDigits', 1]],
+      [
+        ['minimumSignificantDigits', 1],
+        ['maximumSignificantDigits', 1],
+      ],
     ];
 
     const outputOptions = [
-      'locale', 'pluralCategories', 'type', 'minimumIntegerDigits',
-      'minimumFractionDigits', 'maximumFractionDigits',
-      'minimumSignificantDigits', 'maximumSignificantDigits'
+      'locale',
+      'pluralCategories',
+      'type',
+      'minimumIntegerDigits',
+      'minimumFractionDigits',
+      'maximumFractionDigits',
+      'minimumSignificantDigits',
+      'maximumSignificantDigits',
     ];
 
     const locale = 'fr';
@@ -279,8 +306,8 @@ testSuite({
       const resolvedOptions = fmt.resolvedOptions();
       const intlClass = Intl.PluralRules;
 
-      let unexpectedOptions = [];
-      for (let option in resolvedOptions) {
+      const unexpectedOptions = [];
+      for (const option in resolvedOptions) {
         // Check that every option is expected unless it's new.
         if (!checkNewKeys(intlClass, option)) {
           if (!outputOptions.includes(option)) {
@@ -290,9 +317,10 @@ testSuite({
       }
       /* There should be no values in the unexpectedOptions list. */
       assertArrayEquals(
-          'Unexpected options include <' + unexpectedOptions +
-              '>, version=' + browser.getVersion(),
-          [], unexpectedOptions);
+        'Unexpected options include <' + unexpectedOptions + '>, version=' + browser.getVersion(),
+        [],
+        unexpectedOptions
+      );
     }
   },
 
@@ -305,15 +333,9 @@ testSuite({
     if (Intl === undefined || Intl.RelativeTimeFormat === undefined) return;
 
     const setup = [
-      [
-        [],
-      ],
-      [
-        ['numeric', 'auto'],
-      ],
-      [
-        ['style', 'long'],
-      ],
+      [[]],
+      [['numeric', 'auto']],
+      [['style', 'long']],
       [
         ['numeric', 'auto'],
         ['style', 'long'],
@@ -328,8 +350,8 @@ testSuite({
       const resolvedOptions = fmt.resolvedOptions();
       const intlClass = Intl.RelativeTimeFormat;
 
-      let unexpectedOptions = [];
-      for (let option in resolvedOptions) {
+      const unexpectedOptions = [];
+      for (const option in resolvedOptions) {
         // Check that every option is expected unless it's new.
         if (!checkNewKeys(intlClass, option)) {
           if (!outputOptions.includes(option)) {
@@ -339,9 +361,10 @@ testSuite({
       }
       /* There should be no values in the unexpectedOptions list. */
       assertArrayEquals(
-          'Unexpected options include <' + unexpectedOptions +
-              '>, version=' + browser.getVersion(),
-          [], unexpectedOptions);
+        'Unexpected options include <' + unexpectedOptions + '>, version=' + browser.getVersion(),
+        [],
+        unexpectedOptions
+      );
     }
   },
 
@@ -354,26 +377,16 @@ testSuite({
     if (Intl === undefined || Intl.ListFormat === undefined) return;
 
     const setup = [
-      [
-        [],
-      ],
-      [
-        ['type', 'disjunction'],
-      ],
-      [
-        ['style', 'long'],
-      ],
+      [[]],
+      [['type', 'disjunction']],
+      [['style', 'long']],
       [
         ['type', 'disjunction'],
         ['style', 'long'],
       ],
     ];
 
-    const outputOptions = [
-      'locale',
-      'style',
-      'type',
-    ];
+    const outputOptions = ['locale', 'style', 'type'];
 
     const locale = 'ru';
     for (let i = 0; i < setup.length; i++) {
@@ -381,8 +394,8 @@ testSuite({
       const resolvedOptions = fmt.resolvedOptions();
       const intlClass = Intl.ListFormat;
 
-      let unexpectedOptions = [];
-      for (let option in resolvedOptions) {
+      const unexpectedOptions = [];
+      for (const option in resolvedOptions) {
         // Check that every option is expected unless it's new.
         if (!checkNewKeys(intlClass, option)) {
           if (!outputOptions.includes(option)) {
@@ -392,9 +405,10 @@ testSuite({
       }
       /* There should be no values in the unexpectedOptions list. */
       assertArrayEquals(
-          'Unexpected options include <' + unexpectedOptions +
-              '>, version=' + browser.getVersion(),
-          [], unexpectedOptions);
+        'Unexpected options include <' + unexpectedOptions + '>, version=' + browser.getVersion(),
+        [],
+        unexpectedOptions
+      );
     }
   },
 
@@ -442,10 +456,10 @@ testSuite({
     const resolvedOptions = fmt.resolvedOptions();
 
     let resolvedCount = 0;
-    for (let prop in resolvedOptions) resolvedCount++;
+    for (const prop in resolvedOptions) resolvedCount++;
     let expectedCount = 0;
     const unexpectedResolved = [];
-    for (let option in resolvedOptions) {
+    for (const option in resolvedOptions) {
       // Check that every option is expected.
       if (expectedOptions.includes(option)) {
         expectedCount += 1;
@@ -456,5 +470,5 @@ testSuite({
 
     assertEquals(unexpectedResolved.length, 0);
     assertEquals(resolvedCount, expectedCount);
-  }
+  },
 });

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dom.fullscreen_test');
-goog.setTestOnly();
 
 const DomHelper = goog.require('goog.dom.DomHelper');
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');

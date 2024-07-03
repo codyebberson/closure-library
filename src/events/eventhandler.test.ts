@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.events.EventHandlerTest');
-goog.setTestOnly();
 
 const EventHandler = goog.require('goog.events.EventHandler');
 const GoogEventTarget = goog.require('goog.events.EventTarget');
@@ -117,12 +116,10 @@ testSuite({
     eh.listenOnce(target, 'click', handler);
 
     target.dispatchEvent('click');
-    assertEquals(
-        'One event should have been dispatched', 1, handler.getCallCount());
+    assertEquals('One event should have been dispatched', 1, handler.getCallCount());
 
     target.dispatchEvent('click');
-    assertEquals(
-        'No event should have been dispatched', 1, handler.getCallCount());
+    assertEquals('No event should have been dispatched', 1, handler.getCallCount());
   },
 
   testListenOnceListenerIsCleanedUp() {
@@ -147,16 +144,14 @@ testSuite({
     assertNotNull(events.getListener(target, 'click', handler, false, eh));
 
     target.dispatchEvent('click');
-    assertEquals(
-        'One event should have been dispatched', 1, handler.getCallCount());
+    assertEquals('One event should have been dispatched', 1, handler.getCallCount());
 
     assertNull(events.getListener(target, 'click', handler, false, eh));
 
     eh.removeAll();
 
     target.dispatchEvent('click');
-    assertEquals(
-        'No event should have been dispatched', 1, handler.getCallCount());
+    assertEquals('No event should have been dispatched', 1, handler.getCallCount());
   },
 
   /**
@@ -171,31 +166,26 @@ testSuite({
     eh.listenOnce(target, ['click', 'mousedown', 'mouseup'], handler);
 
     target.dispatchEvent('click');
-    assertEquals(
-        '1 event should have been dispatched', 1, handler.getCallCount());
-    assertEquals(
-        'Should be a click event', 'click',
-        handler.getLastCall().getArgument(0).type);
+    assertEquals('1 event should have been dispatched', 1, handler.getCallCount());
+    assertEquals('Should be a click event', 'click', handler.getLastCall().getArgument(0).type);
 
     target.dispatchEvent('click');
     assertEquals('No event should be dispatched', 1, handler.getCallCount());
 
     target.dispatchEvent('mouseup');
-    assertEquals(
-        '1 event should have been dispatched', 2, handler.getCallCount());
-    assertEquals(
-        'Should be a mouseup event', 'mouseup',
-        handler.getLastCall().getArgument(0).type);
+    assertEquals('1 event should have been dispatched', 2, handler.getCallCount());
+    assertEquals('Should be a mouseup event', 'mouseup', handler.getLastCall().getArgument(0).type);
 
     target.dispatchEvent('mouseup');
     assertEquals('No event should be dispatched', 2, handler.getCallCount());
 
     target.dispatchEvent('mousedown');
+    assertEquals('1 event should have been dispatched', 3, handler.getCallCount());
     assertEquals(
-        '1 event should have been dispatched', 3, handler.getCallCount());
-    assertEquals(
-        'Should be a mousedown event', 'mousedown',
-        handler.getLastCall().getArgument(0).type);
+      'Should be a mousedown event',
+      'mousedown',
+      handler.getLastCall().getArgument(0).type
+    );
 
     target.dispatchEvent('mousedown');
     assertEquals('No event should be dispatched', 3, handler.getCallCount());
@@ -204,41 +194,31 @@ testSuite({
   testListenUnlistenWithObjectHandler() {
     const target = new GoogEventTarget();
     eh = new EventHandler();
-    const handlerObj = {handleEvent: recordFunction()};
+    const handlerObj = { handleEvent: recordFunction() };
     eh.listen(target, 'click', handlerObj);
 
     target.dispatchEvent('click');
-    assertEquals(
-        'One event should have been dispatched', 1,
-        handlerObj.handleEvent.getCallCount());
+    assertEquals('One event should have been dispatched', 1, handlerObj.handleEvent.getCallCount());
 
     target.dispatchEvent('click');
-    assertEquals(
-        'One event should have been dispatched', 2,
-        handlerObj.handleEvent.getCallCount());
+    assertEquals('One event should have been dispatched', 2, handlerObj.handleEvent.getCallCount());
 
     eh.unlisten(target, 'click', handlerObj);
     target.dispatchEvent('click');
-    assertEquals(
-        'No event should have been dispatched', 2,
-        handlerObj.handleEvent.getCallCount());
+    assertEquals('No event should have been dispatched', 2, handlerObj.handleEvent.getCallCount());
   },
 
   testListenOnceWithObjectHandler() {
     const target = new GoogEventTarget();
     eh = new EventHandler();
-    const handlerObj = {handleEvent: recordFunction()};
+    const handlerObj = { handleEvent: recordFunction() };
     eh.listenOnce(target, 'click', handlerObj);
 
     target.dispatchEvent('click');
-    assertEquals(
-        'One event should have been dispatched', 1,
-        handlerObj.handleEvent.getCallCount());
+    assertEquals('One event should have been dispatched', 1, handlerObj.handleEvent.getCallCount());
 
     target.dispatchEvent('click');
-    assertEquals(
-        'No event should have been dispatched', 1,
-        handlerObj.handleEvent.getCallCount());
+    assertEquals('No event should have been dispatched', 1, handlerObj.handleEvent.getCallCount());
   },
 
   testGetListenerCount() {

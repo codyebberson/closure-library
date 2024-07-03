@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.messaging.DeferredChannelTest');
-goog.setTestOnly();
 
 const AsyncMockControl = goog.require('goog.testing.async.MockControl');
 const Deferred = goog.require('goog.async.Deferred');
@@ -49,25 +48,27 @@ testSuite({
   testDeferredResolvedBeforeRegister() {
     deferred.callback(mockChannel);
     deferredChannel.registerService(
-        'test',
-        asyncMockControl.asyncAssertEquals('passes on register', 'val'));
+      'test',
+      asyncMockControl.asyncAssertEquals('passes on register', 'val')
+    );
     mockChannel.receive('test', 'val');
   },
 
   testDeferredResolvedBeforeRegisterObject() {
     deferred.callback(mockChannel);
     deferredChannel.registerService(
-        'test',
-        asyncMockControl.asyncAssertEquals(
-            'passes on register', {'key': 'val'}),
-        true);
-    mockChannel.receive('test', {'key': 'val'});
+      'test',
+      asyncMockControl.asyncAssertEquals('passes on register', { key: 'val' }),
+      true
+    );
+    mockChannel.receive('test', { key: 'val' });
   },
 
   testDeferredResolvedBeforeRegisterDefault() {
     deferred.callback(mockChannel);
-    deferredChannel.registerDefaultService(asyncMockControl.asyncAssertEquals(
-        'passes on register', 'test', 'val'));
+    deferredChannel.registerDefaultService(
+      asyncMockControl.asyncAssertEquals('passes on register', 'test', 'val')
+    );
     mockChannel.receive('test', 'val');
   },
 
@@ -80,25 +81,27 @@ testSuite({
 
   testDeferredResolvedAfterRegister() {
     deferredChannel.registerService(
-        'test',
-        asyncMockControl.asyncAssertEquals('passes on register', 'val'));
+      'test',
+      asyncMockControl.asyncAssertEquals('passes on register', 'val')
+    );
     deferred.callback(mockChannel);
     mockChannel.receive('test', 'val');
   },
 
   testDeferredResolvedAfterRegisterObject() {
     deferredChannel.registerService(
-        'test',
-        asyncMockControl.asyncAssertEquals(
-            'passes on register', {'key': 'val'}),
-        true);
+      'test',
+      asyncMockControl.asyncAssertEquals('passes on register', { key: 'val' }),
+      true
+    );
     deferred.callback(mockChannel);
-    mockChannel.receive('test', {'key': 'val'});
+    mockChannel.receive('test', { key: 'val' });
   },
 
   testDeferredResolvedAfterRegisterDefault() {
-    deferredChannel.registerDefaultService(asyncMockControl.asyncAssertEquals(
-        'passes on register', 'test', 'val'));
+    deferredChannel.registerDefaultService(
+      asyncMockControl.asyncAssertEquals('passes on register', 'test', 'val')
+    );
     deferred.callback(mockChannel);
     mockChannel.receive('test', 'val');
   },

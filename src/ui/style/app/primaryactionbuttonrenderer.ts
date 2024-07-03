@@ -16,8 +16,6 @@ goog.require('goog.ui.Button');
 goog.require('goog.ui.registry');
 goog.require('goog.ui.style.app.ButtonRenderer');
 
-
-
 /**
  * Custom renderer for {@link goog.ui.Button}s. This renderer supports the
  * "primary action" style for buttons.
@@ -26,24 +24,18 @@ goog.require('goog.ui.style.app.ButtonRenderer');
  * @extends {goog.ui.style.app.ButtonRenderer}
  * @final
  */
-goog.ui.style.app.PrimaryActionButtonRenderer = function() {
-  'use strict';
+goog.ui.style.app.PrimaryActionButtonRenderer = function () {
   goog.ui.style.app.ButtonRenderer.call(this);
 };
-goog.inherits(
-    goog.ui.style.app.PrimaryActionButtonRenderer,
-    goog.ui.style.app.ButtonRenderer);
+goog.inherits(goog.ui.style.app.PrimaryActionButtonRenderer, goog.ui.style.app.ButtonRenderer);
 goog.addSingletonGetter(goog.ui.style.app.PrimaryActionButtonRenderer);
-
 
 /**
  * Default CSS class to be applied to the root element of components rendered
  * by this renderer.
  * @type {string}
  */
-goog.ui.style.app.PrimaryActionButtonRenderer.CSS_CLASS =
-    'goog-primaryactionbutton';
-
+goog.ui.style.app.PrimaryActionButtonRenderer.CSS_CLASS = 'goog-primaryactionbutton';
 
 /**
  * Array of arrays of CSS classes that we want composite classes added and
@@ -54,31 +46,20 @@ goog.ui.style.app.PrimaryActionButtonRenderer.CSS_CLASS =
 goog.ui.style.app.PrimaryActionButtonRenderer.IE6_CLASS_COMBINATIONS = [
   ['goog-button-base-disabled', 'goog-primaryactionbutton'],
   ['goog-button-base-focused', 'goog-primaryactionbutton'],
-  ['goog-button-base-hover', 'goog-primaryactionbutton']
+  ['goog-button-base-hover', 'goog-primaryactionbutton'],
 ];
 
+/** @override */
+goog.ui.style.app.PrimaryActionButtonRenderer.prototype.getCssClass = () =>
+  goog.ui.style.app.PrimaryActionButtonRenderer.CSS_CLASS;
 
 /** @override */
-goog.ui.style.app.PrimaryActionButtonRenderer.prototype.getCssClass =
-    function() {
-  'use strict';
-  return goog.ui.style.app.PrimaryActionButtonRenderer.CSS_CLASS;
-};
-
-
-/** @override */
-goog.ui.style.app.PrimaryActionButtonRenderer.prototype
-    .getIe6ClassCombinations = function() {
-  'use strict';
-  return goog.ui.style.app.PrimaryActionButtonRenderer.IE6_CLASS_COMBINATIONS;
-};
-
+goog.ui.style.app.PrimaryActionButtonRenderer.prototype.getIe6ClassCombinations = () =>
+  goog.ui.style.app.PrimaryActionButtonRenderer.IE6_CLASS_COMBINATIONS;
 
 // Register a decorator factory function for
 // goog.ui.style.app.PrimaryActionButtonRenderer.
 goog.ui.registry.setDecoratorByClassName(
-    goog.ui.style.app.PrimaryActionButtonRenderer.CSS_CLASS, function() {
-      'use strict';
-      return new goog.ui.Button(
-          null, goog.ui.style.app.PrimaryActionButtonRenderer.getInstance());
-    });
+  goog.ui.style.app.PrimaryActionButtonRenderer.CSS_CLASS,
+  () => new goog.ui.Button(null, goog.ui.style.app.PrimaryActionButtonRenderer.getInstance())
+);

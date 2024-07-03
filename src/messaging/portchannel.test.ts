@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.messaging.PortChannelTest');
-goog.setTestOnly();
 
 const EventType = goog.require('goog.events.EventType');
 const GoogEventTarget = goog.require('goog.events.EventTarget');
@@ -50,7 +49,7 @@ function registerService(channel, name, objectPayload = undefined) {
 
 /** @suppress {visibility} suppression added to enable type checking */
 function makeMessage(serviceName, payload) {
-  let msg = {'serviceName': serviceName, 'payload': payload};
+  let msg = { serviceName: serviceName, payload: payload };
   msg[PortChannel.FLAG] = true;
   if (PortChannel.REQUIRES_SERIALIZATION_) {
     msg = googJson.serialize(msg);
@@ -59,15 +58,19 @@ function makeMessage(serviceName, payload) {
 }
 
 function expectNoMessage() {
-  portChannel.registerDefaultService(
-      mockControl.createFunctionMock('expectNoMessage'));
+  portChannel.registerDefaultService(mockControl.createFunctionMock('expectNoMessage'));
 }
 
-function receiveMessage(
-    serviceName, payload, origin = undefined, ports = undefined) {
-  mockPort.dispatchEvent(MockMessageEvent.wrap(
-      makeMessage(serviceName, payload), origin || 'http://google.com',
-      undefined, undefined, ports));
+function receiveMessage(serviceName, payload, origin = undefined, ports = undefined) {
+  mockPort.dispatchEvent(
+    MockMessageEvent.wrap(
+      makeMessage(serviceName, payload),
+      origin || 'http://google.com',
+      undefined,
+      undefined,
+      ports
+    )
+  );
 }
 
 /** @suppress {visibility} suppression added to enable type checking */
@@ -89,19 +92,16 @@ function receiveNonChannelMessage(data) {
  */
 function assertPortsEntangled(port1, port2) {
   const port2Promise = new GoogPromise((resolve, reject) => {
-                         port2.onmessage = resolve;
-                       }).then((e) => {
-    assertEquals(
-        'First port 1 should send a message to port 2', 'port1 to port2',
-        e.data);
+    port2.onmessage = resolve;
+  }).then((e) => {
+    assertEquals('First port 1 should send a message to port 2', 'port1 to port2', e.data);
     port2.postMessage('port2 to port1');
   });
 
   const port1Promise = new GoogPromise((resolve, reject) => {
-                         port1.onmessage = resolve;
-                       }).then((e) => {
-    assertEquals(
-        'Then port 2 should respond to port 1', 'port2 to port1', e.data);
+    port1.onmessage = resolve;
+  }).then((e) => {
+    assertEquals('Then port 2 should respond to port 1', 'port2 to port1', e.data);
   });
 
   port1.postMessage('port1 to port2');
@@ -121,10 +121,9 @@ function createIframe(url = undefined) {
   });
 
   return new GoogPromise((resolve, reject) => {
-           events.listenOnce(iframe, EventType.LOAD, resolve);
-           dom.appendChild(frameDiv, iframe);
-         })
-      .then((e) => iframe.contentWindow);
+    events.listenOnce(iframe, EventType.LOAD, resolve);
+    dom.appendChild(frameDiv, iframe);
+  }).then((e) => iframe.contentWindow);
 }
 testSuite({
   setUpPage() {
@@ -202,15 +201,13 @@ testSuite({
     const port1 = channel.port1;
     const port2 = channel.port2;
     mockPort.postMessage(
-        makeMessage('foobar', {
-          'val': [
-            {'_port': {'type': 'real', 'index': 0}},
-            {'_port': {'type': 'real', 'index': 1}},
-          ],
-        }),
-        [port1, port2]);
+      makeMessage('foobar', {
+        val: [{ _port: { type: 'real', index: 0 } }, { _port: { type: 'real', index: 1 } }],
+      }),
+      [port1, port2]
+    );
     mockControl.$replayAll();
-    portChannel.send('foobar', {'val': [port1, port2]});
+    portChannel.send('foobar', { val: [port1, port2] });
   },
 
   testReceiveMessage() {
@@ -231,16 +228,16 @@ testSuite({
     const promise = registerService(portChannel, 'foobar', true);
 
     receiveMessage(
-        'foobar', {
-          'val': [
-            {'_port': {'type': 'real', 'index': 0}},
-            {'_port': {'type': 'real', 'index': 1}},
-          ],
-        },
-        null, [port1, port2]);
+      'foobar',
+      {
+        val: [{ _port: { type: 'real', index: 0 } }, { _port: { type: 'real', index: 1 } }],
+      },
+      null,
+      [port1, port2]
+    );
 
     return promise.then((msg) => {
-      assertObjectEquals(msg, {'val': [port1, port2]});
+      assertObjectEquals(msg, { val: [port1, port2] });
     });
   },
 
@@ -259,14 +256,16 @@ testSuite({
   testReceiveNonChannelMessageWithNoFlag() {
     expectNoMessage();
     mockControl.$replayAll();
-    receiveNonChannelMessage(
-        {serviceName: 'foobar', payload: 'this is a payload'});
+    receiveNonChannelMessage({
+      serviceName: 'foobar',
+      payload: 'this is a payload',
+    });
   },
 
   testReceiveNonChannelMessageWithFalseFlag() {
     expectNoMessage();
     mockControl.$replayAll();
-    const body = {serviceName: 'foobar', payload: 'this is a payload'};
+    const body = { serviceName: 'foobar', payload: 'this is a payload' };
     body[PortChannel.FLAG] = false;
     receiveNonChannelMessage(body);
   },
@@ -276,10 +275,10 @@ testSuite({
       return;
     }
     const promise = registerService(workerChannel, 'pong', true);
-    workerChannel.send('ping', {'val': 'fizzbang'});
+    workerChannel.send('ping', { val: 'fizzbang' });
 
     return promise.then((msg) => {
-      assertObjectEquals({'val': 'fizzbang'}, msg);
+      assertObjectEquals({ val: 'fizzbang' }, msg);
     });
   },
 
@@ -289,10 +288,9 @@ testSuite({
     }
     const messageChannel = new MessageChannel();
     const promise = registerService(workerChannel, 'pong', true);
-    workerChannel.send('ping', {'port': messageChannel.port1});
+    workerChannel.send('ping', { port: messageChannel.port1 });
 
-    return promise.then(
-        (msg) => assertPortsEntangled(msg['port'], messageChannel.port2));
+    return promise.then((msg) => assertPortsEntangled(msg['port'], messageChannel.port2));
   },
 
   testPort() {
@@ -304,10 +302,10 @@ testSuite({
     messageChannel.port2.start();
     const realPortChannel = new PortChannel(messageChannel.port2);
     const promise = registerService(realPortChannel, 'pong', true);
-    realPortChannel.send('ping', {'val': 'fizzbang'});
+    realPortChannel.send('ping', { val: 'fizzbang' });
 
     return promise.then((msg) => {
-      assertObjectEquals({'val': 'fizzbang'}, msg);
+      assertObjectEquals({ val: 'fizzbang' }, msg);
 
       messageChannel.port2.close();
       realPortChannel.dispose();
@@ -322,13 +320,12 @@ testSuite({
     workerChannel.send('addPort', messageChannel.port1);
     messageChannel.port2.start();
     /** @suppress {checkTypes} suppression added to enable type checking */
-    const realPortChannel =
-        new PortChannel(messageChannel.port2, 'http://somewhere-else.com');
+    const realPortChannel = new PortChannel(messageChannel.port2, 'http://somewhere-else.com');
     const promise = registerService(realPortChannel, 'pong', true);
-    realPortChannel.send('ping', {'val': 'fizzbang'});
+    realPortChannel.send('ping', { val: 'fizzbang' });
 
     return promise.then((msg) => {
-      assertObjectEquals({'val': 'fizzbang'}, msg);
+      assertObjectEquals({ val: 'fizzbang' }, msg);
 
       messageChannel.port2.close();
       realPortChannel.dispose();
@@ -343,8 +340,7 @@ testSuite({
     return createIframe().then((iframe) => {
       const peerOrigin = window.location.protocol + '//' + window.location.host;
       /** @suppress {checkTypes} suppression added to enable type checking */
-      const iframeChannel =
-          PortChannel.forEmbeddedWindow(iframe, peerOrigin, timer);
+      const iframeChannel = PortChannel.forEmbeddedWindow(iframe, peerOrigin, timer);
 
       const promise = registerService(iframeChannel, 'pong');
       iframeChannel.send('ping', 'fizzbang');
@@ -365,8 +361,7 @@ testSuite({
     return createIframe().then((iframe) => {
       const peerOrigin = window.location.protocol + '//' + window.location.host;
       /** @suppress {checkTypes} suppression added to enable type checking */
-      const iframeChannel =
-          PortChannel.forEmbeddedWindow(iframe, peerOrigin, timer);
+      const iframeChannel = PortChannel.forEmbeddedWindow(iframe, peerOrigin, timer);
       iframeChannel.cancel();
 
       const promise = registerService(iframeChannel, 'pong').then((msg) => {
@@ -390,7 +385,10 @@ testSuite({
     return createIframe().then((iframe) => {
       /** @suppress {checkTypes} suppression added to enable type checking */
       const iframeChannel = PortChannel.forEmbeddedWindow(
-          iframe, 'http://somewhere-else.com', timer);
+        iframe,
+        'http://somewhere-else.com',
+        timer
+      );
 
       const promise = registerService(iframeChannel, 'pong').then((msg) => {
         fail('Should not receive pong from unexpected origin');
@@ -408,25 +406,21 @@ testSuite({
       return;
     }
 
-    return createIframe('testdata/portchannel_wrong_origin_inner.html')
-        .then((iframe) => {
-          const peerOrigin =
-              window.location.protocol + '//' + window.location.host;
-          /**
-           * @suppress {checkTypes} suppression added to enable type checking
-           */
-          const iframeChannel =
-              PortChannel.forEmbeddedWindow(iframe, peerOrigin, timer);
+    return createIframe('testdata/portchannel_wrong_origin_inner.html').then((iframe) => {
+      const peerOrigin = window.location.protocol + '//' + window.location.host;
+      /**
+       * @suppress {checkTypes} suppression added to enable type checking
+       */
+      const iframeChannel = PortChannel.forEmbeddedWindow(iframe, peerOrigin, timer);
 
-          const promise = registerService(iframeChannel, 'pong').then((msg) => {
-            fail('Should not receive pong from unexpected origin');
-          });
-          iframeChannel.send('ping', 'fizzbang');
+      const promise = registerService(iframeChannel, 'pong').then((msg) => {
+        fail('Should not receive pong from unexpected origin');
+      });
+      iframeChannel.send('ping', 'fizzbang');
 
-          return GoogPromise.race([promise, Timer.promise(500)])
-              .thenAlways(() => {
-                iframeChannel.dispose();
-              });
-        });
+      return GoogPromise.race([promise, Timer.promise(500)]).thenAlways(() => {
+        iframeChannel.dispose();
+      });
+    });
   },
 });

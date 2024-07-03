@@ -8,7 +8,6 @@
  * @fileoverview A wrapper for the HTML5 FileError object.
  */
 
-
 // TODO(user): We're trying to migrate all ES5 subclasses of Closure
 // Library to ES6. In ES6 this cannot be referenced before super is called. This
 // file has at least one this before a super call (in ES5) and cannot be
@@ -27,15 +26,13 @@ goog.require('goog.object');
 goog.require('goog.string');
 
 /** @record */
-goog.fs.DOMErrorLike = function() {};
+goog.fs.DOMErrorLike = () => {};
 
 /** @type {string|undefined} */
 goog.fs.DOMErrorLike.prototype.name;
 
 /** @type {!goog.fs.Error.ErrorCode|undefined} */
 goog.fs.DOMErrorLike.prototype.code;
-
-
 
 /**
  * A filesystem error. Since the filesystem API is asynchronous, stack traces
@@ -48,8 +45,7 @@ goog.fs.DOMErrorLike.prototype.code;
  * @extends {goog.debug.Error}
  * @final
  */
-goog.fs.Error = function(error, action) {
-  'use strict';
+goog.fs.Error = function (error, action) {
   /** @type {string} */
   this.name;
 
@@ -66,17 +62,15 @@ goog.fs.Error = function(error, action) {
     /** @suppress {deprecated} */
     this.code = goog.fs.Error.getCodeFromName_(error.name);
   } else {
-    const code =
-        /** @type {!goog.fs.Error.ErrorCode} */ (goog.asserts.assertNumber(
-            /** @type {!goog.fs.DOMErrorLike} */ (error).code));
+    const code = /** @type {!goog.fs.Error.ErrorCode} */ (
+      goog.asserts.assertNumber(/** @type {!goog.fs.DOMErrorLike} */ (error).code)
+    );
     this.code = code;
     this.name = goog.fs.Error.getNameFromCode_(code);
   }
-  goog.fs.Error.base(
-      this, 'constructor', goog.string.subs('%s %s', this.name, action));
+  goog.fs.Error.base(this, 'constructor', goog.string.subs('%s %s', this.name, action));
 };
 goog.inherits(goog.fs.Error, goog.debug.Error);
-
 
 /**
  * Names of errors that may be thrown by the File API, the File System API, or
@@ -99,9 +93,8 @@ goog.fs.Error.ErrorName = {
   QUOTA_EXCEEDED: 'QuotaExceededError',
   SECURITY: 'SecurityError',
   SYNTAX: 'SyntaxError',
-  TYPE_MISMATCH: 'TypeMismatchError'
+  TYPE_MISMATCH: 'TypeMismatchError',
 };
-
 
 /**
  * Error codes for file errors.
@@ -122,27 +115,21 @@ goog.fs.Error.ErrorCode = {
   INVALID_MODIFICATION: 9,
   QUOTA_EXCEEDED: 10,
   TYPE_MISMATCH: 11,
-  PATH_EXISTS: 12
+  PATH_EXISTS: 12,
 };
-
 
 /**
  * @param {goog.fs.Error.ErrorCode|undefined} code
  * @return {string} name
  * @private
  */
-goog.fs.Error.getNameFromCode_ = function(code) {
-  'use strict';
-  const name = goog.object.findKey(goog.fs.Error.NameToCodeMap_, function(c) {
-    'use strict';
-    return code == c;
-  });
+goog.fs.Error.getNameFromCode_ = (code) => {
+  const name = goog.object.findKey(goog.fs.Error.NameToCodeMap_, (c) => code == c);
   if (name === undefined) {
     throw new Error('Invalid code: ' + code);
   }
   return name;
 };
-
 
 /**
  * Returns the code that corresponds to the given name.
@@ -150,11 +137,7 @@ goog.fs.Error.getNameFromCode_ = function(code) {
  * @return {goog.fs.Error.ErrorCode} code
  * @private
  */
-goog.fs.Error.getCodeFromName_ = function(name) {
-  'use strict';
-  return goog.fs.Error.NameToCodeMap_[name];
-};
-
+goog.fs.Error.getCodeFromName_ = (name) => goog.fs.Error.NameToCodeMap_[name];
 
 /**
  * Mapping from error names to values from the ErrorCode enum.
@@ -164,18 +147,15 @@ goog.fs.Error.getCodeFromName_ = function(name) {
 goog.fs.Error.NameToCodeMap_ = {
   [goog.fs.Error.ErrorName.ABORT]: goog.fs.Error.ErrorCode.ABORT,
   [goog.fs.Error.ErrorName.ENCODING]: goog.fs.Error.ErrorCode.ENCODING,
-  [goog.fs.Error.ErrorName.INVALID_MODIFICATION]:
-      goog.fs.Error.ErrorCode.INVALID_MODIFICATION,
-  [goog.fs.Error.ErrorName.INVALID_STATE]:
-      goog.fs.Error.ErrorCode.INVALID_STATE,
+  [goog.fs.Error.ErrorName.INVALID_MODIFICATION]: goog.fs.Error.ErrorCode.INVALID_MODIFICATION,
+  [goog.fs.Error.ErrorName.INVALID_STATE]: goog.fs.Error.ErrorCode.INVALID_STATE,
   [goog.fs.Error.ErrorName.NOT_FOUND]: goog.fs.Error.ErrorCode.NOT_FOUND,
   [goog.fs.Error.ErrorName.NOT_READABLE]: goog.fs.Error.ErrorCode.NOT_READABLE,
   [goog.fs.Error.ErrorName.NO_MODIFICATION_ALLOWED]:
-      goog.fs.Error.ErrorCode.NO_MODIFICATION_ALLOWED,
+    goog.fs.Error.ErrorCode.NO_MODIFICATION_ALLOWED,
   [goog.fs.Error.ErrorName.PATH_EXISTS]: goog.fs.Error.ErrorCode.PATH_EXISTS,
-  [goog.fs.Error.ErrorName.QUOTA_EXCEEDED]:
-      goog.fs.Error.ErrorCode.QUOTA_EXCEEDED,
+  [goog.fs.Error.ErrorName.QUOTA_EXCEEDED]: goog.fs.Error.ErrorCode.QUOTA_EXCEEDED,
   [goog.fs.Error.ErrorName.SECURITY]: goog.fs.Error.ErrorCode.SECURITY,
   [goog.fs.Error.ErrorName.SYNTAX]: goog.fs.Error.ErrorCode.SYNTAX,
-  [goog.fs.Error.ErrorName.TYPE_MISMATCH]: goog.fs.Error.ErrorCode.TYPE_MISMATCH
+  [goog.fs.Error.ErrorName.TYPE_MISMATCH]: goog.fs.Error.ErrorCode.TYPE_MISMATCH,
 };

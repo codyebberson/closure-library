@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.math.Vec3Test');
-goog.setTestOnly();
 
 const Coordinate3 = goog.require('goog.math.Coordinate3');
 const Vec3 = goog.require('goog.math.Vec3');

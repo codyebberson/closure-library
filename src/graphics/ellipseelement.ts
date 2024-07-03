@@ -4,11 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview A thin wrapper around the DOM element for ellipses.
  */
-
 
 goog.provide('goog.graphics.EllipseElement');
 
@@ -16,8 +14,6 @@ goog.require('goog.graphics.StrokeAndFillElement');
 goog.requireType('goog.graphics.AbstractGraphics');
 goog.requireType('goog.graphics.Fill');
 goog.requireType('goog.graphics.Stroke');
-
-
 
 /**
  * Interface for a graphics ellipse element.
@@ -34,13 +30,10 @@ goog.requireType('goog.graphics.Stroke');
  *     differences before the canvas tag was widely supported.  See
  *     http://en.wikipedia.org/wiki/Canvas_element for details.
  */
-goog.graphics.EllipseElement = function(element, graphics, stroke, fill) {
-  'use strict';
-  goog.graphics.StrokeAndFillElement.call(
-      this, element, graphics, stroke, fill);
+goog.graphics.EllipseElement = function (element, graphics, stroke, fill) {
+  goog.graphics.StrokeAndFillElement.call(this, element, graphics, stroke, fill);
 };
 goog.inherits(goog.graphics.EllipseElement, goog.graphics.StrokeAndFillElement);
-
 
 /**
  * Update the center point of the ellipse.
@@ -48,7 +41,6 @@ goog.inherits(goog.graphics.EllipseElement, goog.graphics.StrokeAndFillElement);
  * @param {number} cy  Center Y coordinate.
  */
 goog.graphics.EllipseElement.prototype.setCenter = goog.abstractMethod;
-
 
 /**
  * Update the radius of the ellipse.

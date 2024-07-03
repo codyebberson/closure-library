@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Thin wrappers around the DOM element returned from
  * the different draw methods of the graphics. This is the SVG implementation.
@@ -17,7 +16,6 @@ goog.provide('goog.graphics.SvgPathElement');
 goog.provide('goog.graphics.SvgRectElement');
 goog.provide('goog.graphics.SvgTextElement');
 
-
 goog.require('goog.dom');
 goog.require('goog.graphics.EllipseElement');
 goog.require('goog.graphics.GroupElement');
@@ -29,8 +27,6 @@ goog.requireType('goog.graphics.Fill');
 goog.requireType('goog.graphics.Path');
 goog.requireType('goog.graphics.Stroke');
 goog.requireType('goog.graphics.SvgGraphics');
-
-
 
 /**
  * Thin wrapper for SVG group elements.
@@ -46,22 +42,18 @@ goog.requireType('goog.graphics.SvgGraphics');
  *     http://en.wikipedia.org/wiki/Canvas_element for details.
  * @final
  */
-goog.graphics.SvgGroupElement = function(element, graphics) {
-  'use strict';
+goog.graphics.SvgGroupElement = function (element, graphics) {
   goog.graphics.GroupElement.call(this, element, graphics);
 };
 goog.inherits(goog.graphics.SvgGroupElement, goog.graphics.GroupElement);
-
 
 /**
  * Remove all drawing elements from the group.
  * @override
  */
-goog.graphics.SvgGroupElement.prototype.clear = function() {
-  'use strict';
+goog.graphics.SvgGroupElement.prototype.clear = function () {
   goog.dom.removeChildren(this.getElement());
 };
-
 
 /**
  * Set the size of the group element.
@@ -70,13 +62,9 @@ goog.graphics.SvgGroupElement.prototype.clear = function() {
  * @override
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.SvgGroupElement.prototype.setSize = function(width, height) {
-  'use strict';
-  this.getGraphics().setElementAttributes(
-      this.getElement(), {'width': width, 'height': height});
+goog.graphics.SvgGroupElement.prototype.setSize = function (width, height) {
+  this.getGraphics().setElementAttributes(this.getElement(), { width: width, height: height });
 };
-
-
 
 /**
  * Thin wrapper for SVG ellipse elements.
@@ -92,12 +80,10 @@ goog.graphics.SvgGroupElement.prototype.setSize = function(width, height) {
  * @extends {goog.graphics.EllipseElement}
  * @final
  */
-goog.graphics.SvgEllipseElement = function(element, graphics, stroke, fill) {
-  'use strict';
+goog.graphics.SvgEllipseElement = function (element, graphics, stroke, fill) {
   goog.graphics.EllipseElement.call(this, element, graphics, stroke, fill);
 };
 goog.inherits(goog.graphics.SvgEllipseElement, goog.graphics.EllipseElement);
-
 
 /**
  * Update the center point of the ellipse.
@@ -106,12 +92,9 @@ goog.inherits(goog.graphics.SvgEllipseElement, goog.graphics.EllipseElement);
  * @override
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.SvgEllipseElement.prototype.setCenter = function(cx, cy) {
-  'use strict';
-  this.getGraphics().setElementAttributes(
-      this.getElement(), {'cx': cx, 'cy': cy});
+goog.graphics.SvgEllipseElement.prototype.setCenter = function (cx, cy) {
+  this.getGraphics().setElementAttributes(this.getElement(), { cx: cx, cy: cy });
 };
-
 
 /**
  * Update the radius of the ellipse.
@@ -120,13 +103,9 @@ goog.graphics.SvgEllipseElement.prototype.setCenter = function(cx, cy) {
  * @override
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.SvgEllipseElement.prototype.setRadius = function(rx, ry) {
-  'use strict';
-  this.getGraphics().setElementAttributes(
-      this.getElement(), {'rx': rx, 'ry': ry});
+goog.graphics.SvgEllipseElement.prototype.setRadius = function (rx, ry) {
+  this.getGraphics().setElementAttributes(this.getElement(), { rx: rx, ry: ry });
 };
-
-
 
 /**
  * Thin wrapper for SVG rectangle elements.
@@ -142,12 +121,10 @@ goog.graphics.SvgEllipseElement.prototype.setRadius = function(rx, ry) {
  * @extends {goog.graphics.RectElement}
  * @final
  */
-goog.graphics.SvgRectElement = function(element, graphics, stroke, fill) {
-  'use strict';
+goog.graphics.SvgRectElement = function (element, graphics, stroke, fill) {
   goog.graphics.RectElement.call(this, element, graphics, stroke, fill);
 };
 goog.inherits(goog.graphics.SvgRectElement, goog.graphics.RectElement);
-
 
 /**
  * Update the position of the rectangle.
@@ -156,11 +133,9 @@ goog.inherits(goog.graphics.SvgRectElement, goog.graphics.RectElement);
  * @override
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.SvgRectElement.prototype.setPosition = function(x, y) {
-  'use strict';
-  this.getGraphics().setElementAttributes(this.getElement(), {'x': x, 'y': y});
+goog.graphics.SvgRectElement.prototype.setPosition = function (x, y) {
+  this.getGraphics().setElementAttributes(this.getElement(), { x: x, y: y });
 };
-
 
 /**
  * Update the size of the rectangle.
@@ -169,13 +144,9 @@ goog.graphics.SvgRectElement.prototype.setPosition = function(x, y) {
  * @override
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.SvgRectElement.prototype.setSize = function(width, height) {
-  'use strict';
-  this.getGraphics().setElementAttributes(
-      this.getElement(), {'width': width, 'height': height});
+goog.graphics.SvgRectElement.prototype.setSize = function (width, height) {
+  this.getGraphics().setElementAttributes(this.getElement(), { width: width, height: height });
 };
-
-
 
 /**
  * Thin wrapper for SVG path elements.
@@ -191,12 +162,10 @@ goog.graphics.SvgRectElement.prototype.setSize = function(width, height) {
  * @extends {goog.graphics.PathElement}
  * @final
  */
-goog.graphics.SvgPathElement = function(element, graphics, stroke, fill) {
-  'use strict';
+goog.graphics.SvgPathElement = function (element, graphics, stroke, fill) {
   goog.graphics.PathElement.call(this, element, graphics, stroke, fill);
 };
 goog.inherits(goog.graphics.SvgPathElement, goog.graphics.PathElement);
-
 
 /**
  * Update the underlying path.
@@ -205,13 +174,11 @@ goog.inherits(goog.graphics.SvgPathElement, goog.graphics.PathElement);
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  * @suppress {missingRequire} goog.graphics.SvgGraphics
  */
-goog.graphics.SvgPathElement.prototype.setPath = function(path) {
-  'use strict';
-  this.getGraphics().setElementAttributes(
-      this.getElement(), {'d': goog.graphics.SvgGraphics.getSvgPath(path)});
+goog.graphics.SvgPathElement.prototype.setPath = function (path) {
+  this.getGraphics().setElementAttributes(this.getElement(), {
+    d: goog.graphics.SvgGraphics.getSvgPath(path),
+  });
 };
-
-
 
 /**
  * Thin wrapper for SVG text elements.
@@ -227,25 +194,20 @@ goog.graphics.SvgPathElement.prototype.setPath = function(path) {
  * @extends {goog.graphics.TextElement}
  * @final
  */
-goog.graphics.SvgTextElement = function(element, graphics, stroke, fill) {
-  'use strict';
+goog.graphics.SvgTextElement = function (element, graphics, stroke, fill) {
   goog.graphics.TextElement.call(this, element, graphics, stroke, fill);
 };
 goog.inherits(goog.graphics.SvgTextElement, goog.graphics.TextElement);
-
 
 /**
  * Update the displayed text of the element.
  * @param {string} text The text to draw.
  * @override
  */
-goog.graphics.SvgTextElement.prototype.setText = function(text) {
-  'use strict';
+goog.graphics.SvgTextElement.prototype.setText = function (text) {
   // This is actually SVGTextElement but we don't have it in externs.
   /** @type {!Text} */ (this.getElement().firstChild).data = text;
 };
-
-
 
 /**
  * Thin wrapper for SVG image elements.
@@ -259,12 +221,10 @@ goog.graphics.SvgTextElement.prototype.setText = function(text) {
  * @extends {goog.graphics.ImageElement}
  * @final
  */
-goog.graphics.SvgImageElement = function(element, graphics) {
-  'use strict';
+goog.graphics.SvgImageElement = function (element, graphics) {
   goog.graphics.ImageElement.call(this, element, graphics);
 };
 goog.inherits(goog.graphics.SvgImageElement, goog.graphics.ImageElement);
-
 
 /**
  * Update the position of the image.
@@ -273,11 +233,9 @@ goog.inherits(goog.graphics.SvgImageElement, goog.graphics.ImageElement);
  * @override
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.SvgImageElement.prototype.setPosition = function(x, y) {
-  'use strict';
-  this.getGraphics().setElementAttributes(this.getElement(), {'x': x, 'y': y});
+goog.graphics.SvgImageElement.prototype.setPosition = function (x, y) {
+  this.getGraphics().setElementAttributes(this.getElement(), { x: x, y: y });
 };
-
 
 /**
  * Update the size of the image.
@@ -286,12 +244,9 @@ goog.graphics.SvgImageElement.prototype.setPosition = function(x, y) {
  * @override
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.SvgImageElement.prototype.setSize = function(width, height) {
-  'use strict';
-  this.getGraphics().setElementAttributes(
-      this.getElement(), {'width': width, 'height': height});
+goog.graphics.SvgImageElement.prototype.setSize = function (width, height) {
+  this.getGraphics().setElementAttributes(this.getElement(), { width: width, height: height });
 };
-
 
 /**
  * Update the source of the image.
@@ -299,8 +254,6 @@ goog.graphics.SvgImageElement.prototype.setSize = function(width, height) {
  * @override
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.SvgImageElement.prototype.setSource = function(src) {
-  'use strict';
-  this.getGraphics().setElementAttributes(
-      this.getElement(), {'xlink:href': src});
+goog.graphics.SvgImageElement.prototype.setSource = function (src) {
+  this.getGraphics().setElementAttributes(this.getElement(), { 'xlink:href': src });
 };

@@ -38,16 +38,13 @@ goog.require('goog.testing.JsUnitException');
 goog.require('goog.testing.MockInterface');
 goog.require('goog.testing.mockmatchers');
 
-
-
 /**
  * This is a class that represents an expectation.
  * @param {string} name The name of the method for this expectation.
  * @constructor
  * @final
  */
-goog.testing.MockExpectation = function(name) {
-  'use strict';
+goog.testing.MockExpectation = function (name) {
   /**
    * The name of the method that is expected to be called.
    * @type {string}
@@ -61,13 +58,11 @@ goog.testing.MockExpectation = function(name) {
   this.errorMessages = [];
 };
 
-
 /**
  * The maximum number of error messages to record.
  * @const {number}
  */
 goog.testing.MockExpectation.MAX_RECORDED_ERRORS = 25;
-
 
 /**
  * The number of errors attempted to be recorded in excess of
@@ -76,20 +71,17 @@ goog.testing.MockExpectation.MAX_RECORDED_ERRORS = 25;
  */
 goog.testing.MockExpectation.prototype.unrecordedErrorCount_ = 0;
 
-
 /**
  * The minimum number of times this method should be called.
  * @type {number}
  */
 goog.testing.MockExpectation.prototype.minCalls = 1;
 
-
 /**
-  * The maximum number of times this method should be called.
-  * @type {number}
-  */
+ * The maximum number of times this method should be called.
+ * @type {number}
+ */
 goog.testing.MockExpectation.prototype.maxCalls = 1;
-
 
 /**
  * The value that this method should return.
@@ -97,13 +89,11 @@ goog.testing.MockExpectation.prototype.maxCalls = 1;
  */
 goog.testing.MockExpectation.prototype.returnValue;
 
-
 /**
  * The value that will be thrown when the method is called
  * @type {*}
  */
 goog.testing.MockExpectation.prototype.exceptionToThrow;
-
 
 /**
  * The arguments that are expected to be passed to this function
@@ -111,20 +101,17 @@ goog.testing.MockExpectation.prototype.exceptionToThrow;
  */
 goog.testing.MockExpectation.prototype.argumentList;
 
-
 /**
  * The number of times this method is called by real code.
  * @type {number}
  */
 goog.testing.MockExpectation.prototype.actualCalls = 0;
 
-
 /**
  * The number of times this method is called during the verification phase.
  * @type {number}
  */
 goog.testing.MockExpectation.prototype.verificationCalls = 0;
-
 
 /**
  * The function which will be executed when this method is called.
@@ -134,48 +121,43 @@ goog.testing.MockExpectation.prototype.verificationCalls = 0;
  */
 goog.testing.MockExpectation.prototype.toDo;
 
-
 /**
  * Allow expectation failures to include messages.
  * @param {string} message The failure message.
  */
-goog.testing.MockExpectation.prototype.addErrorMessage = function(message) {
-  'use strict';
-  if (this.errorMessages.length >=
-      goog.testing.MockExpectation.MAX_RECORDED_ERRORS) {
+goog.testing.MockExpectation.prototype.addErrorMessage = function (message) {
+  if (this.errorMessages.length >= goog.testing.MockExpectation.MAX_RECORDED_ERRORS) {
     this.unrecordedErrorCount_++;
   } else {
     this.errorMessages.push(message);
   }
 };
 
-
 /**
  * Get the error messages seen so far.
  * @return {string} Error messages separated by \n.
  */
-goog.testing.MockExpectation.prototype.getErrorMessage = function() {
-  'use strict';
+goog.testing.MockExpectation.prototype.getErrorMessage = function () {
   const recordedMessages = this.errorMessages.join('\n');
   if (this.unrecordedErrorCount_ > 0) {
-    return recordedMessages + '\nPlus ' + this.unrecordedErrorCount_ +
-        ' more errors discarded to avoid out-of-memory failure.';
+    return (
+      recordedMessages +
+      '\nPlus ' +
+      this.unrecordedErrorCount_ +
+      ' more errors discarded to avoid out-of-memory failure.'
+    );
   } else {
     return recordedMessages;
   }
 };
 
-
 /**
  * Get how many error messages have been seen so far.
  * @return {number} Count of error messages.
  */
-goog.testing.MockExpectation.prototype.getErrorMessageCount = function() {
-  'use strict';
+goog.testing.MockExpectation.prototype.getErrorMessageCount = function () {
   return this.errorMessages.length + this.unrecordedErrorCount_;
 };
-
-
 
 /**
  * The base class for a mock object.
@@ -188,24 +170,19 @@ goog.testing.MockExpectation.prototype.getErrorMessageCount = function() {
  * @constructor
  * @implements {goog.testing.MockInterface}
  */
-goog.testing.Mock = function(
-    objectToMock, opt_mockStaticMethods, opt_createProxy) {
-  'use strict';
+goog.testing.Mock = function (objectToMock, opt_mockStaticMethods, opt_createProxy) {
   if (!goog.isObject(objectToMock) && typeof objectToMock !== 'function') {
     throw new Error('objectToMock must be an object or constructor.');
   }
-  if (opt_createProxy && !opt_mockStaticMethods &&
-      typeof objectToMock === 'function') {
+  if (opt_createProxy && !opt_mockStaticMethods && typeof objectToMock === 'function') {
     /**
- * @constructor
- * @final
- */
-    var tempCtor = function() {};
+     * @constructor
+     * @final
+     */
+    var tempCtor = () => {};
     goog.inherits(tempCtor, objectToMock);
     this.$proxy = new tempCtor();
-  } else if (
-      opt_createProxy && opt_mockStaticMethods &&
-      typeof objectToMock === 'function') {
+  } else if (opt_createProxy && opt_mockStaticMethods && typeof objectToMock === 'function') {
     throw new Error('Cannot create a proxy when opt_mockStaticMethods is true');
   } else if (opt_createProxy && typeof objectToMock !== 'function') {
     throw new Error('Must have a constructor to create a proxy');
@@ -222,7 +199,6 @@ goog.testing.Mock = function(
   this.waitingForExpectations = null;
 };
 
-
 /**
  * Option that may be passed when constructing function, method, and
  * constructor mocks. Indicates that the expected calls should be accepted in
@@ -232,7 +208,6 @@ goog.testing.Mock = function(
  */
 goog.testing.Mock.LOOSE = 1;
 
-
 /**
  * Option that may be passed when constructing function, method, and
  * constructor mocks. Indicates that the expected calls should be accepted in
@@ -241,7 +216,6 @@ goog.testing.Mock.LOOSE = 1;
  * @type {number}
  */
 goog.testing.Mock.STRICT = 0;
-
 
 /**
  * Asserts that a mock object is in record mode.  This avoids type system errors
@@ -259,19 +233,20 @@ goog.testing.Mock.STRICT = 0;
  * @param {?} obj A mock in record mode.
  * @return {?} The same object.
  */
-goog.testing.Mock.record = function(obj) {
-  'use strict';
+goog.testing.Mock.record = (obj) => {
   // If the user passes a method of a mock object, grab the object.
   const mockObj = obj.$$mockObj ? obj.$$mockObj : obj;
   goog.asserts.assert(
-      mockObj.$recording_ !== undefined,
-      '%s is not a mock.  Did you pass a real object to record()?', obj);
+    mockObj.$recording_ !== undefined,
+    '%s is not a mock.  Did you pass a real object to record()?',
+    obj
+  );
   goog.asserts.assert(
-      mockObj.$recording_,
-      'Your mock is in replay mode.  You can only call record(mock) before mock.$replay()');
+    mockObj.$recording_,
+    'Your mock is in replay mode.  You can only call record(mock) before mock.$replay()'
+  );
   return obj;
 };
-
 
 /**
  * This array contains the name of the functions that are part of the base
@@ -282,10 +257,14 @@ goog.testing.Mock.record = function(obj) {
  * @private
  */
 goog.testing.Mock.OBJECT_PROTOTYPE_FIELDS_ = [
-  'constructor', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable',
-  'toLocaleString', 'toString', 'valueOf'
+  'constructor',
+  'hasOwnProperty',
+  'isPrototypeOf',
+  'propertyIsEnumerable',
+  'toLocaleString',
+  'toString',
+  'valueOf',
 ];
-
 
 /**
  * This array contains the name of the functions that are part of the base
@@ -297,7 +276,6 @@ goog.testing.Mock.OBJECT_PROTOTYPE_FIELDS_ = [
  */
 goog.testing.Mock.FUNCTION_PROTOTYPE_FIELDS_ = ['apply', 'bind', 'call'];
 
-
 /**
  * A proxy for the mock.  This can be used for dependency injection in lieu of
  * the mock if the test requires a strict instanceof check.
@@ -305,13 +283,11 @@ goog.testing.Mock.FUNCTION_PROTOTYPE_FIELDS_ = ['apply', 'bind', 'call'];
  */
 goog.testing.Mock.prototype.$proxy = null;
 
-
 /**
  * Map of argument name to optional argument list verifier function.
  * @type {Object}
  */
 goog.testing.Mock.prototype.$argumentListVerifiers_;
-
 
 /**
  * Whether or not we are in recording mode.
@@ -319,7 +295,6 @@ goog.testing.Mock.prototype.$argumentListVerifiers_;
  * @private
  */
 goog.testing.Mock.prototype.$recording_ = true;
-
 
 /**
  * The expectation currently being created. All methods that modify the
@@ -330,7 +305,6 @@ goog.testing.Mock.prototype.$recording_ = true;
  */
 goog.testing.Mock.prototype.$pendingExpectation;
 
-
 /**
  * First exception thrown by this mock; used in $verify.
  * @type {?Object}
@@ -338,22 +312,21 @@ goog.testing.Mock.prototype.$pendingExpectation;
  */
 goog.testing.Mock.prototype.$threwException_ = null;
 
-
 /**
  * Initializes the functions on the mock object.
  * @param {Object} objectToMock The object being mocked.
  * @private
  */
-goog.testing.Mock.prototype.$initializeFunctions_ = function(objectToMock) {
-  'use strict';
+goog.testing.Mock.prototype.$initializeFunctions_ = function (objectToMock) {
   // Gets the object properties.
   var enumerableProperties = goog.object.getAllPropertyNames(
-      objectToMock, false /* opt_includeObjectPrototype */,
-      false /* opt_includeFunctionPrototype */);
+    objectToMock,
+    false /* opt_includeObjectPrototype */,
+    false /* opt_includeFunctionPrototype */
+  );
 
   if (typeof objectToMock === 'function') {
-    for (var i = 0; i < goog.testing.Mock.FUNCTION_PROTOTYPE_FIELDS_.length;
-         i++) {
+    for (var i = 0; i < goog.testing.Mock.FUNCTION_PROTOTYPE_FIELDS_.length; i++) {
       var prop = goog.testing.Mock.FUNCTION_PROTOTYPE_FIELDS_[i];
       // Look at b/6758711 if you're considering adding ALL properties to ALL
       // mocks.
@@ -381,14 +354,13 @@ goog.testing.Mock.prototype.$initializeFunctions_ = function(objectToMock) {
     var prop = enumerableProperties[i];
     if (typeof objectToMock[prop] == 'function') {
       this[prop] = goog.bind(this.$mockMethod, this, prop);
-      this[prop].$$mockObj = this;  // Save a reference for record().
+      this[prop].$$mockObj = this; // Save a reference for record().
       if (this.$proxy) {
         this.$proxy[prop] = goog.bind(this.$mockMethod, this, prop);
       }
     }
   }
 };
-
 
 /**
  * Registers a verifier function to use when verifying method argument lists.
@@ -398,13 +370,10 @@ goog.testing.Mock.prototype.$initializeFunctions_ = function(objectToMock) {
  *     arrays as arguments, and return true if they are considered equivalent.
  * @return {!goog.testing.Mock} This mock object.
  */
-goog.testing.Mock.prototype.$registerArgumentListVerifier = function(
-    methodName, fn) {
-  'use strict';
+goog.testing.Mock.prototype.$registerArgumentListVerifier = function (methodName, fn) {
   this.$argumentListVerifiers_[methodName] = fn;
   return this;
 };
-
 
 /**
  * The function that replaces all methods on the mock object.
@@ -412,8 +381,7 @@ goog.testing.Mock.prototype.$registerArgumentListVerifier = function(
  * @return {*} In record mode, returns the mock object. In replay mode, returns
  *    whatever the creator of the mock set as the return value.
  */
-goog.testing.Mock.prototype.$mockMethod = function(name) {
-  'use strict';
+goog.testing.Mock.prototype.$mockMethod = function (name) {
   try {
     // Shift off the name argument so that args contains the arguments to
     // the mocked method.
@@ -431,14 +399,12 @@ goog.testing.Mock.prototype.$mockMethod = function(name) {
   }
 };
 
-
 /**
  * Records the currently pending expectation, intended to be overridden by a
  * subclass.
  * @protected
  */
-goog.testing.Mock.prototype.$recordExpectation = function() {};
-
+goog.testing.Mock.prototype.$recordExpectation = () => {};
 
 /**
  * Records an actual method call, intended to be overridden by a
@@ -449,23 +415,17 @@ goog.testing.Mock.prototype.$recordExpectation = function() {};
  * @return {*} The return expected by the mock.
  * @protected
  */
-goog.testing.Mock.prototype.$recordCall = function(name, args) {
-  'use strict';
-  return undefined;
-};
-
+goog.testing.Mock.prototype.$recordCall = (name, args) => undefined;
 
 /**
  * If the expectation expects to throw, this method will throw.
  * @param {goog.testing.MockExpectation} expectation The expectation.
  */
-goog.testing.Mock.prototype.$maybeThrow = function(expectation) {
-  'use strict';
+goog.testing.Mock.prototype.$maybeThrow = (expectation) => {
   if (typeof expectation.exceptionToThrow != 'undefined') {
     throw expectation.exceptionToThrow;
   }
 };
-
 
 /**
  * If this expectation defines a function to be called,
@@ -476,8 +436,7 @@ goog.testing.Mock.prototype.$maybeThrow = function(expectation) {
  * @param {Array<?>} args The arguments to the method.
  * @return {*} The return value expected by the mock.
  */
-goog.testing.Mock.prototype.$do = function(expectation, args) {
-  'use strict';
+goog.testing.Mock.prototype.$do = function (expectation, args) {
   if (typeof expectation.toDo == 'undefined') {
     this.$maybeThrow(expectation);
     return expectation.returnValue;
@@ -486,30 +445,25 @@ goog.testing.Mock.prototype.$do = function(expectation, args) {
   }
 };
 
-
 /**
  * Specifies a return value for the currently pending expectation.
  * @param {*} val The return value.
  * @return {!goog.testing.Mock} This mock object.
  */
-goog.testing.Mock.prototype.$returns = function(val) {
-  'use strict';
+goog.testing.Mock.prototype.$returns = function (val) {
   this.$pendingExpectation.returnValue = val;
   return this;
 };
-
 
 /**
  * Specifies a value for the currently pending expectation to throw.
  * @param {*} val The value to throw.
  * @return {!goog.testing.Mock} This mock object.
  */
-goog.testing.Mock.prototype.$throws = function(val) {
-  'use strict';
+goog.testing.Mock.prototype.$throws = function (val) {
   this.$pendingExpectation.exceptionToThrow = val;
   return this;
 };
-
 
 /**
  * Specifies a function to call for currently pending expectation.
@@ -518,103 +472,86 @@ goog.testing.Mock.prototype.$throws = function(val) {
  * @param {Function} func The function to call.
  * @return {!goog.testing.Mock} This mock object.
  */
-goog.testing.Mock.prototype.$does = function(func) {
-  'use strict';
+goog.testing.Mock.prototype.$does = function (func) {
   this.$pendingExpectation.toDo = func;
   return this;
 };
-
 
 /**
  * Allows the expectation to be called 0 or 1 times.
  * @return {!goog.testing.Mock} This mock object.
  */
-goog.testing.Mock.prototype.$atMostOnce = function() {
-  'use strict';
+goog.testing.Mock.prototype.$atMostOnce = function () {
   this.$pendingExpectation.minCalls = 0;
   this.$pendingExpectation.maxCalls = 1;
   return this;
 };
-
 
 /**
  * Allows the expectation to be called any number of times, as long as it's
  * called once.
  * @return {!goog.testing.Mock} This mock object.
  */
-goog.testing.Mock.prototype.$atLeastOnce = function() {
-  'use strict';
-  this.$pendingExpectation.maxCalls = Infinity;
+goog.testing.Mock.prototype.$atLeastOnce = function () {
+  this.$pendingExpectation.maxCalls = Number.POSITIVE_INFINITY;
   return this;
 };
-
 
 /**
  * Allows the expectation to be called exactly once.
  * @return {!goog.testing.Mock} This mock object.
  */
-goog.testing.Mock.prototype.$once = function() {
-  'use strict';
+goog.testing.Mock.prototype.$once = function () {
   this.$pendingExpectation.minCalls = 1;
   this.$pendingExpectation.maxCalls = 1;
   return this;
 };
 
-
 /**
  * Disallows the expectation from being called.
  * @return {!goog.testing.Mock} This mock object.
  */
-goog.testing.Mock.prototype.$never = function() {
-  'use strict';
+goog.testing.Mock.prototype.$never = function () {
   this.$pendingExpectation.minCalls = 0;
   this.$pendingExpectation.maxCalls = 0;
   return this;
 };
 
-
 /**
  * Allows the expectation to be called any number of times.
  * @return {!goog.testing.Mock} This mock object.
  */
-goog.testing.Mock.prototype.$anyTimes = function() {
-  'use strict';
+goog.testing.Mock.prototype.$anyTimes = function () {
   this.$pendingExpectation.minCalls = 0;
-  this.$pendingExpectation.maxCalls = Infinity;
+  this.$pendingExpectation.maxCalls = Number.POSITIVE_INFINITY;
   return this;
 };
-
 
 /**
  * Specifies the number of times the expectation should be called.
  * @param {number} times The number of times this method will be called.
  * @return {!goog.testing.Mock} This mock object.
  */
-goog.testing.Mock.prototype.$times = function(times) {
-  'use strict';
+goog.testing.Mock.prototype.$times = function (times) {
   this.$pendingExpectation.minCalls = times;
   this.$pendingExpectation.maxCalls = times;
   return this;
 };
 
-
 /**
  * Switches from recording to replay mode.
  * @override
  */
-goog.testing.Mock.prototype.$replay = function() {
-  'use strict';
+goog.testing.Mock.prototype.$replay = function () {
   this.$recording_ = false;
 };
-
 
 /**
  * Resets the state of this mock object. This clears all pending expectations
  * without verifying, and puts the mock in recording mode.
  * @override
  */
-goog.testing.Mock.prototype.$reset = function() {
-  'use strict';
+goog.testing.Mock.prototype.$reset = function () {
   this.$recording_ = true;
   this.$threwException_ = null;
   delete this.$pendingExpectation;
@@ -623,7 +560,6 @@ goog.testing.Mock.prototype.$reset = function() {
   }
 };
 
-
 /**
  * Throws an exception and records that an exception was thrown.
  * @param {string} comment A short comment about the exception.
@@ -631,11 +567,9 @@ goog.testing.Mock.prototype.$reset = function() {
  * @throws {Object} JsUnitException object.
  * @protected
  */
-goog.testing.Mock.prototype.$throwException = function(comment, opt_message) {
-  'use strict';
+goog.testing.Mock.prototype.$throwException = function (comment, opt_message) {
   this.$recordAndThrow(new goog.testing.JsUnitException(comment, opt_message));
 };
-
 
 /**
  * Throws an exception and records that an exception was thrown.
@@ -647,15 +581,15 @@ goog.testing.Mock.prototype.$throwException = function(comment, opt_message) {
  * @throws {Object} #ex.
  * @protected
  */
-goog.testing.Mock.prototype.$recordAndThrow = function(ex, rethrow) {
-  'use strict';
+goog.testing.Mock.prototype.$recordAndThrow = function (ex, rethrow) {
   if (this.waitingForExpectations) {
     this.waitingForExpectations.resolve();
   }
   if (this.$recording_) {
     ex = new goog.testing.JsUnitException(
-        'Threw an exception while in record mode, did you $replay?',
-        ex.toString());
+      'Threw an exception while in record mode, did you $replay?',
+      ex.toString()
+    );
   }
   // If it's an assert exception, record it.
   if (ex['isJsUnitException']) {
@@ -667,8 +601,7 @@ goog.testing.Mock.prototype.$recordAndThrow = function(ex, rethrow) {
     // Don't fail if JSUnit isn't loaded.  Instead, the test can catch the error
     // normally. Other test frameworks won't get automatic failures if assertion
     // errors are swallowed.
-    var getTestCase =
-        goog.getObjectByName('goog.testing.TestCase.getActiveTestCase');
+    var getTestCase = goog.getObjectByName('goog.testing.TestCase.getActiveTestCase');
     var testCase = getTestCase && getTestCase();
     if (testCase && !rethrow) {
       testCase.raiseAssertionException(ex);
@@ -677,45 +610,36 @@ goog.testing.Mock.prototype.$recordAndThrow = function(ex, rethrow) {
   throw ex;
 };
 
-
 /** @override */
-goog.testing.Mock.prototype.$waitAndVerify = function() {
-  'use strict';
-  goog.asserts.assert(
-      !this.$recording_,
-      '$waitAndVerify should be called after recording calls.');
+goog.testing.Mock.prototype.$waitAndVerify = function () {
+  goog.asserts.assert(!this.$recording_, '$waitAndVerify should be called after recording calls.');
   this.waitingForExpectations = goog.Promise.withResolver();
   var verify = goog.bind(this.$verify, this);
-  return this.waitingForExpectations.promise.then(function() {
-    'use strict';
-    return new goog.Promise(function(resolve, reject) {
-      'use strict';
-      setTimeout(function() {
-        'use strict';
-        try {
-          verify();
-        } catch (e) {
-          reject(e);
-        }
-        resolve();
-      }, 0);
-    });
-  });
+  return this.waitingForExpectations.promise.then(
+    () =>
+      new goog.Promise((resolve, reject) => {
+        setTimeout(() => {
+          try {
+            verify();
+          } catch (e) {
+            reject(e);
+          }
+          resolve();
+        }, 0);
+      })
+  );
 };
-
 
 /**
  * Verify that all of the expectations were met. Should be overridden by
  * subclasses.
  * @override
  */
-goog.testing.Mock.prototype.$verify = function() {
-  'use strict';
+goog.testing.Mock.prototype.$verify = function () {
   if (this.$threwException_) {
     throw this.$threwException_;
   }
 };
-
 
 /**
  * Verifies that a method call matches an expectation.
@@ -724,19 +648,16 @@ goog.testing.Mock.prototype.$verify = function() {
  * @param {Array<*>?} args The arguments passed to the mock.
  * @return {boolean} Whether the call matches the expectation.
  */
-goog.testing.Mock.prototype.$verifyCall = function(expectation, name, args) {
-  'use strict';
+goog.testing.Mock.prototype.$verifyCall = function (expectation, name, args) {
   if (expectation.name != name) {
     return false;
   }
-  var verifierFn =
-      this.$argumentListVerifiers_.hasOwnProperty(expectation.name) ?
-      this.$argumentListVerifiers_[expectation.name] :
-      goog.testing.mockmatchers.flexibleArrayMatcher;
+  var verifierFn = this.$argumentListVerifiers_.hasOwnProperty(expectation.name)
+    ? this.$argumentListVerifiers_[expectation.name]
+    : goog.testing.mockmatchers.flexibleArrayMatcher;
 
   return verifierFn(expectation.argumentList, args, expectation);
 };
-
 
 /**
  * Render the provided argument array to a string to help
@@ -744,8 +665,7 @@ goog.testing.Mock.prototype.$verifyCall = function(expectation, name, args) {
  * @param {Array<*>?} args The arguments passed to the mock.
  * @return {string} Human-readable string.
  */
-goog.testing.Mock.prototype.$argumentsAsString = function(args) {
-  'use strict';
+goog.testing.Mock.prototype.$argumentsAsString = (args) => {
   var retVal = [];
   for (var i = 0; i < args.length; i++) {
     try {
@@ -757,7 +677,6 @@ goog.testing.Mock.prototype.$argumentsAsString = function(args) {
   return '(' + retVal.join(', ') + ')';
 };
 
-
 /**
  * Throw an exception based on an incorrect method call.
  * @param {string} name Name of method called.
@@ -765,28 +684,40 @@ goog.testing.Mock.prototype.$argumentsAsString = function(args) {
  * @param {goog.testing.MockExpectation=} opt_expectation Expected next call,
  *     if any.
  */
-goog.testing.Mock.prototype.$throwCallException = function(
-    name, args, opt_expectation) {
-  'use strict';
+goog.testing.Mock.prototype.$throwCallException = function (name, args, opt_expectation) {
   var errorStringBuffer = [];
   var actualArgsString = this.$argumentsAsString(args);
-  var expectedArgsString = opt_expectation ?
-      this.$argumentsAsString(opt_expectation.argumentList) :
-      '';
+  var expectedArgsString = opt_expectation
+    ? this.$argumentsAsString(opt_expectation.argumentList)
+    : '';
 
   if (opt_expectation && opt_expectation.name == name) {
     errorStringBuffer.push(
-        'Bad arguments to ', name, '().\n', 'Actual: ', actualArgsString, '\n',
-        'Expected: ', expectedArgsString, '\n',
-        opt_expectation.getErrorMessage());
+      'Bad arguments to ',
+      name,
+      '().\n',
+      'Actual: ',
+      actualArgsString,
+      '\n',
+      'Expected: ',
+      expectedArgsString,
+      '\n',
+      opt_expectation.getErrorMessage()
+    );
   } else {
     errorStringBuffer.push(
-        'Unexpected call to ', name, actualArgsString, '.',
-        '\nDid you forget to $replay?');
+      'Unexpected call to ',
+      name,
+      actualArgsString,
+      '.',
+      '\nDid you forget to $replay?'
+    );
     if (opt_expectation) {
       errorStringBuffer.push(
-          '\nNext expected call was to ', opt_expectation.name,
-          expectedArgsString);
+        '\nNext expected call was to ',
+        opt_expectation.name,
+        expectedArgsString
+      );
     }
   }
   this.$throwException(errorStringBuffer.join(''));

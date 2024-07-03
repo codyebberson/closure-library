@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.rangeTest');
-goog.setTestOnly();
 
 const Point = goog.require('goog.editor.range.Point');
 const Range = goog.require('goog.dom.Range');
@@ -200,8 +199,7 @@ testSuite({
     const li = div.firstChild.childNodes[1];
     const boldNode = li.childNodes[0];
     const italicNode = li.childNodes[1];
-    let range =
-        Range.createFromNodes(boldNode.firstChild, 0, italicNode.firstChild, 6);
+    let range = Range.createFromNodes(boldNode.firstChild, 0, italicNode.firstChild, 6);
 
     range = editorRange.expand(range);
     testingDom.assertRangeEquals(li.parentNode, 1, li.parentNode, 2, range);
@@ -216,15 +214,13 @@ testSuite({
 
   testSimpleDifferentContainersSmallExpand() {
     const div = $('parentNode');
-    div.innerHTML = '<ol><li>1</li><li><b>bold</b><i>italic</i>' +
-        '<u>under</u></li></ol>';
+    div.innerHTML = '<ol><li>1</li><li><b>bold</b><i>italic</i>' + '<u>under</u></li></ol>';
     // Select all of "bold" and "italic", but we can't expand to the
     // entire li since we didn't select "under".
     const li = div.firstChild.childNodes[1];
     const boldNode = li.childNodes[0];
     const italicNode = li.childNodes[1];
-    let range =
-        Range.createFromNodes(boldNode.firstChild, 0, italicNode.firstChild, 6);
+    let range = Range.createFromNodes(boldNode.firstChild, 0, italicNode.firstChild, 6);
 
     range = editorRange.expand(range);
     testingDom.assertRangeEquals(li, 0, li, 2, range);
@@ -244,8 +240,7 @@ testSuite({
     const boldNode = div.firstChild.childNodes[0];
     const italicNode = boldNode.childNodes[0];
     const underNode = div.firstChild.childNodes[1];
-    let range = Range.createFromNodes(
-        italicNode.firstChild, 0, underNode.firstChild, 5);
+    let range = Range.createFromNodes(italicNode.firstChild, 0, underNode.firstChild, 5);
 
     range = editorRange.expand(range);
     testingDom.assertRangeEquals(div, 0, div, 1, range);
@@ -311,9 +306,13 @@ testSuite({
 
     const expose = testingDom.exposeNode;
     assertEquals(
-        'Selection should be to the left of the node ' + expose(node) + ',' +
-            expose(range.getStartNode().nextSibling),
-        node, range.getStartNode().nextSibling);
+      'Selection should be to the left of the node ' +
+        expose(node) +
+        ',' +
+        expose(range.getStartNode().nextSibling),
+      node,
+      range.getStartNode().nextSibling
+    );
     assertEquals('Selection should be collapsed', true, range.isCollapsed());
   },
 
@@ -324,8 +323,10 @@ testSuite({
     const range = editorRange.placeCursorNextTo(node, false);
 
     assertEquals(
-        'Selection should be to the right of the node', node,
-        range.getStartNode().previousSibling);
+      'Selection should be to the right of the node',
+      node,
+      range.getStartNode().previousSibling
+    );
     assertEquals('Selection should be collapsed', true, range.isCollapsed());
   },
 
@@ -365,47 +366,42 @@ testSuite({
 
   testPlaceCursorNextTo_rightOfImg() {
     const div = $('parentNode');
-    div.innerHTML =
-        'aaa<img src="https://www.google.com/images/srpr/logo3w.png">bbb';
+    div.innerHTML = 'aaa<img src="https://www.google.com/images/srpr/logo3w.png">bbb';
     const children = div.childNodes;
     assertEquals(3, children.length);
     const imgNode = children[1];
     const range = editorRange.placeCursorNextTo(imgNode, false);
 
     assertEquals(
-        'range node should be the right sibling of img tag', children[2],
-        range.getStartNode());
+      'range node should be the right sibling of img tag',
+      children[2],
+      range.getStartNode()
+    );
     assertEquals(0, range.getStartOffset());
   },
 
   testPlaceCursorNextTo_rightOfImgAtEnd() {
     const div = $('parentNode');
-    div.innerHTML =
-        'aaa<img src="https://www.google.com/images/srpr/logo3w.png">';
+    div.innerHTML = 'aaa<img src="https://www.google.com/images/srpr/logo3w.png">';
     const children = div.childNodes;
     assertEquals(2, children.length);
     const imgNode = children[1];
     const range = editorRange.placeCursorNextTo(imgNode, false);
 
-    assertEquals(
-        'range node should be the parent of img', div, range.getStartNode());
-    assertEquals(
-        'offset should be right after the img tag', 2, range.getStartOffset());
+    assertEquals('range node should be the parent of img', div, range.getStartNode());
+    assertEquals('offset should be right after the img tag', 2, range.getStartOffset());
   },
 
   testPlaceCursorNextTo_leftOfImg() {
     const div = $('parentNode');
-    div.innerHTML =
-        '<img src="https://www.google.com/images/srpr/logo3w.png">xxx';
+    div.innerHTML = '<img src="https://www.google.com/images/srpr/logo3w.png">xxx';
     const children = div.childNodes;
     assertEquals(2, children.length);
     const imgNode = children[0];
     const range = editorRange.placeCursorNextTo(imgNode, true);
 
-    assertEquals(
-        'range node should be the parent of img', div, range.getStartNode());
-    assertEquals(
-        'offset should point to the img tag', 0, range.getStartOffset());
+    assertEquals('range node should be the parent of img', div, range.getStartNode());
+    assertEquals('offset should point to the img tag', 0, range.getStartOffset());
   },
 
   /**
@@ -415,19 +411,21 @@ testSuite({
   testPlaceCursorNextTo_rightOfFirstOfTwoImgTags() {
     const div = $('parentNode');
     div.innerHTML =
-        'aaa<img src="https://www.google.com/images/srpr/logo3w.png">' +
-        '<img src="https://www.google.com/images/srpr/logo3w.png">';
+      'aaa<img src="https://www.google.com/images/srpr/logo3w.png">' +
+      '<img src="https://www.google.com/images/srpr/logo3w.png">';
     const children = div.childNodes;
     assertEquals(3, children.length);
-    const imgNode = children[1];  // First of two IMG nodes
+    const imgNode = children[1]; // First of two IMG nodes
     const range = editorRange.placeCursorNextTo(imgNode, false);
 
     assertEquals(
-        'range node should be the parent of img instead of ' +
-            'node with innerHTML=' + range.getStartNode().innerHTML,
-        div, range.getStartNode());
-    assertEquals(
-        'offset should be right after the img tag', 2, range.getStartOffset());
+      'range node should be the parent of img instead of ' +
+        'node with innerHTML=' +
+        range.getStartNode().innerHTML,
+      div,
+      range.getStartNode()
+    );
+    assertEquals('offset should be right after the img tag', 2, range.getStartOffset());
   },
 
   testGetDeepEndPoint() {
@@ -436,18 +434,26 @@ testSuite({
     const jkl = $('jkl');
 
     assertPointEquals(
-        div.firstChild, 0,
-        editorRange.getDeepEndPoint(Range.createFromNodeContents(div), true));
+      div.firstChild,
+      0,
+      editorRange.getDeepEndPoint(Range.createFromNodeContents(div), true)
+    );
     assertPointEquals(
-        div.lastChild, div.lastChild.length,
-        editorRange.getDeepEndPoint(Range.createFromNodeContents(div), false));
+      div.lastChild,
+      div.lastChild.length,
+      editorRange.getDeepEndPoint(Range.createFromNodeContents(div), false)
+    );
 
     assertPointEquals(
-        def.firstChild, 0,
-        editorRange.getDeepEndPoint(Range.createCaret(div, 1), true));
+      def.firstChild,
+      0,
+      editorRange.getDeepEndPoint(Range.createCaret(div, 1), true)
+    );
     assertPointEquals(
-        def.nextSibling, 0,
-        editorRange.getDeepEndPoint(Range.createCaret(div, 2), true));
+      def.nextSibling,
+      0,
+      editorRange.getDeepEndPoint(Range.createCaret(div, 2), true)
+    );
   },
 
   testNormalizeOnNormalizedDom() {
@@ -468,8 +474,7 @@ testSuite({
 
     // Make sure that newRange is measured relative to the text nodes,
     // not the DIV elements.
-    testingDom.assertRangeEquals(
-        def.firstChild, 0, jkl.firstChild, 3, newRange);
+    testingDom.assertRangeEquals(def.firstChild, 0, jkl.firstChild, 3, newRange);
   },
 
   testNormalizeOnVeryFragmentedDom() {
@@ -508,12 +513,10 @@ testSuite({
     // (in IE) if it has nothing but empty text nodes.
     const newRange = editorRange.rangePreservingNormalize(emptyDiv, range);
 
-    if (userAgent.GECKO &&
-        googString.compareVersions(userAgent.VERSION, '1.9') == -1) {
+    if (userAgent.GECKO && googString.compareVersions(userAgent.VERSION, '1.9') == -1) {
       // In FF2, node.normalize() leaves an empty textNode in the div, unlike
       // other browsers where the div is left with no children.
-      testingDom.assertRangeEquals(
-          emptyDiv.firstChild, 0, emptyDiv.firstChild, 0, newRange);
+      testingDom.assertRangeEquals(emptyDiv.firstChild, 0, emptyDiv.firstChild, 0, newRange);
     } else {
       testingDom.assertRangeEquals(emptyDiv, 0, emptyDiv, 0, newRange);
     }
@@ -547,7 +550,7 @@ testSuite({
     const range = Range.createFromNodes(ghiText, 1, mnoText, 2);
 
     // Fragment the DOM a bunch.
-    fragmentText($('def').previousSibling);  // fragment abc
+    fragmentText($('def').previousSibling); // fragment abc
     fragmentText(ghiText);
     fragmentText(mnoText);
 
@@ -567,7 +570,7 @@ testSuite({
     let mnoText = $('jkl').nextSibling;
 
     // Fragment the DOM a bunch.
-    fragmentText($('def').previousSibling);  // fragment abc
+    fragmentText($('def').previousSibling); // fragment abc
     fragmentText(ghiText);
     fragmentText(mnoText);
 
@@ -596,10 +599,8 @@ testSuite({
     range.select();
 
     const saved = editorRange.saveUsingNormalizedCarets(range);
-    assertHTMLEquals(
-        'd<span id="' + saved.startCaretId_ + '"></span>ef', def.innerHTML);
-    assertHTMLEquals(
-        'jk<span id="' + saved.endCaretId_ + '"></span>l', jkl.innerHTML);
+    assertHTMLEquals('d<span id="' + saved.startCaretId_ + '"></span>ef', def.innerHTML);
+    assertHTMLEquals('jk<span id="' + saved.endCaretId_ + '"></span>l', jkl.innerHTML);
 
     clearSelectionAndRestoreSaved(saved);
 
@@ -612,8 +613,7 @@ testSuite({
     // Check that everything was normalized ok.
     assertEquals(1, def.childNodes.length);
     assertEquals(1, jkl.childNodes.length);
-    testingDom.assertRangeEquals(
-        def.firstChild, 1, jkl.firstChild, 2, selection);
+    testingDom.assertRangeEquals(def.firstChild, 1, jkl.firstChild, 2, selection);
   },
 
   testRangePreservingNormalize() {
@@ -629,13 +629,21 @@ testSuite({
 
     // Check that everything was normalized ok.
     assertEquals(
-        'def should have 1 child; range is ' + testingDom.exposeRange(range) +
-            ', range was ' + oldRangeDescription,
-        1, def.childNodes.length);
+      'def should have 1 child; range is ' +
+        testingDom.exposeRange(range) +
+        ', range was ' +
+        oldRangeDescription,
+      1,
+      def.childNodes.length
+    );
     assertEquals(
-        'jkl should have 1 child; range is ' + testingDom.exposeRange(range) +
-            ', range was ' + oldRangeDescription,
-        1, jkl.childNodes.length);
+      'jkl should have 1 child; range is ' +
+        testingDom.exposeRange(range) +
+        ', range was ' +
+        oldRangeDescription,
+      1,
+      jkl.childNodes.length
+    );
     testingDom.assertRangeEquals(def.firstChild, 1, jkl.firstChild, 2, range);
   },
 
@@ -678,8 +686,7 @@ testSuite({
     Range.createFromNodes(def, 3, jkl, 4).select();
     assertFalse(Range.createFromWindow(window).isReversed());
 
-    const oldRangeDescription =
-        testingDom.exposeRange(Range.createFromWindow(window));
+    const oldRangeDescription = testingDom.exposeRange(Range.createFromWindow(window));
     editorRange.selectionPreservingNormalize(parent);
 
     // Check that everything was normalized ok.
@@ -687,13 +694,21 @@ testSuite({
     assertFalse(range.isReversed());
 
     assertEquals(
-        'def should have 1 child; range is ' + testingDom.exposeRange(range) +
-            ', range was ' + oldRangeDescription,
-        1, def.childNodes.length);
+      'def should have 1 child; range is ' +
+        testingDom.exposeRange(range) +
+        ', range was ' +
+        oldRangeDescription,
+      1,
+      def.childNodes.length
+    );
     assertEquals(
-        'jkl should have 1 child; range is ' + testingDom.exposeRange(range) +
-            ', range was ' + oldRangeDescription,
-        1, jkl.childNodes.length);
+      'jkl should have 1 child; range is ' +
+        testingDom.exposeRange(range) +
+        ', range was ' +
+        oldRangeDescription,
+      1,
+      jkl.childNodes.length
+    );
     testingDom.assertRangeEquals(def.firstChild, 1, jkl.firstChild, 2, range);
   },
 
@@ -730,8 +745,7 @@ testSuite({
     Range.createFromNodes(jkl, 4, def, 3).select();
     assertTrue(Range.createFromWindow(window).isReversed());
 
-    const oldRangeDescription =
-        testingDom.exposeRange(Range.createFromWindow(window));
+    const oldRangeDescription = testingDom.exposeRange(Range.createFromWindow(window));
     editorRange.selectionPreservingNormalize(parent);
 
     // Check that everything was normalized ok.
@@ -739,13 +753,21 @@ testSuite({
     assertTrue(range.isReversed());
 
     assertEquals(
-        'def should have 1 child; range is ' + testingDom.exposeRange(range) +
-            ', range was ' + oldRangeDescription,
-        1, def.childNodes.length);
+      'def should have 1 child; range is ' +
+        testingDom.exposeRange(range) +
+        ', range was ' +
+        oldRangeDescription,
+      1,
+      def.childNodes.length
+    );
     assertEquals(
-        'jkl should have 1 child; range is ' + testingDom.exposeRange(range) +
-            ', range was ' + oldRangeDescription,
-        1, jkl.childNodes.length);
+      'jkl should have 1 child; range is ' +
+        testingDom.exposeRange(range) +
+        ', range was ' +
+        oldRangeDescription,
+      1,
+      jkl.childNodes.length
+    );
     testingDom.assertRangeEquals(def.firstChild, 1, jkl.firstChild, 2, range);
   },
 
@@ -765,8 +787,7 @@ testSuite({
     editorRange.selectNodeStart(div);
     const range = Range.createFromWindow(window);
 
-    testingDom.assertRangeEquals(
-        div.firstChild.firstChild, 0, div.firstChild.firstChild, 0, range);
+    testingDom.assertRangeEquals(div.firstChild.firstChild, 0, div.firstChild.firstChild, 0, range);
   },
 
   testSelectNodeStartBr() {
@@ -784,41 +805,53 @@ testSuite({
     // Find editable container element's index.
     let containerIndex = 0;
     let currentSibling = containerElement;
-    while (currentSibling = currentSibling.previousSibling) {
+    while ((currentSibling = currentSibling.previousSibling)) {
       containerIndex++;
     }
 
     const editableContainer = Range.createFromNodes(
-        containerElement.parentNode, containerIndex,
-        containerElement.parentNode, containerIndex + 1);
+      containerElement.parentNode,
+      containerIndex,
+      containerElement.parentNode,
+      containerIndex + 1
+    );
     assertFalse(
-        'Range containing container element not considered editable',
-        editorRange.isEditable(editableContainer));
+      'Range containing container element not considered editable',
+      editorRange.isEditable(editableContainer)
+    );
 
     const allEditableChildren = Range.createFromNodes(
-        containerElement, 0, containerElement,
-        containerElement.childNodes.length);
+      containerElement,
+      0,
+      containerElement,
+      containerElement.childNodes.length
+    );
     assertTrue(
-        'Range of all of container element children considered editable',
-        editorRange.isEditable(allEditableChildren));
+      'Range of all of container element children considered editable',
+      editorRange.isEditable(allEditableChildren)
+    );
 
-    const someEditableChildren =
-        Range.createFromNodes(containerElement, 2, containerElement, 6);
+    const someEditableChildren = Range.createFromNodes(containerElement, 2, containerElement, 6);
     assertTrue(
-        'Range of some container element children considered editable',
-        editorRange.isEditable(someEditableChildren));
+      'Range of some container element children considered editable',
+      editorRange.isEditable(someEditableChildren)
+    );
 
     const mixedEditableNonEditable = Range.createFromNodes(
-        containerElement.previousSibling, 0, containerElement, 2);
+      containerElement.previousSibling,
+      0,
+      containerElement,
+      2
+    );
     assertFalse(
-        'Range overlapping some content not considered editable',
-        editorRange.isEditable(mixedEditableNonEditable));
+      'Range overlapping some content not considered editable',
+      editorRange.isEditable(mixedEditableNonEditable)
+    );
   },
 
   testIntersectsTag() {
     const root = $('root');
-    root.innerHTML =
-        '<b>Bold</b><p><span><code>x</code></span></p><p>y</p><i>Italic</i>';
+    root.innerHTML = '<b>Bold</b><p><span><code>x</code></span></p><p>y</p><i>Italic</i>';
 
     // Select the whole thing.
     let range = Range.createFromNodeContents(root);
@@ -837,8 +870,7 @@ testSuite({
     assertFalse(editorRange.intersectsTag(range, TagName.U));
 
     // Select "ld x y".
-    range = Range.createFromNodes(
-        root.firstChild.firstChild, 2, root.childNodes[2], 1);
+    range = Range.createFromNodes(root.firstChild.firstChild, 2, root.childNodes[2], 1);
     assertTrue(editorRange.intersectsTag(range, TagName.DIV));
     assertTrue(editorRange.intersectsTag(range, TagName.B));
     assertFalse(editorRange.intersectsTag(range, TagName.I));
@@ -846,8 +878,7 @@ testSuite({
     assertFalse(editorRange.intersectsTag(range, TagName.U));
 
     // Select ol.
-    range = Range.createFromNodes(
-        root.firstChild.firstChild, 1, root.firstChild.firstChild, 3);
+    range = Range.createFromNodes(root.firstChild.firstChild, 1, root.firstChild.firstChild, 3);
     assertTrue(editorRange.intersectsTag(range, TagName.DIV));
     assertTrue(editorRange.intersectsTag(range, TagName.B));
     assertFalse(editorRange.intersectsTag(range, TagName.I));
@@ -867,13 +898,21 @@ testSuite({
     assertEquals('abc', div.firstChild.nodeValue);
 
     div = dom.createDom(
-        TagName.DIV, null, dom.createDom(TagName.SPAN, null, '1', '2'),
-        dom.createTextNode(''), dom.createDom(TagName.BR), 'b', 'c');
+      TagName.DIV,
+      null,
+      dom.createDom(TagName.SPAN, null, '1', '2'),
+      dom.createTextNode(''),
+      dom.createDom(TagName.BR),
+      'b',
+      'c'
+    );
     assertEquals(5, div.childNodes.length);
     assertEquals(2, div.firstChild.childNodes.length);
     editorRange.normalizeNode(div);
-    if (userAgent.GECKO && !userAgent.isVersionOrHigher(1.9) ||
-        userAgent.WEBKIT && !userAgent.isVersionOrHigher(526)) {
+    if (
+      (userAgent.GECKO && !userAgent.isVersionOrHigher(1.9)) ||
+      (userAgent.WEBKIT && !userAgent.isVersionOrHigher(526))
+    ) {
       // Old Gecko and Webkit versions don't delete the empty node.
       assertEquals(4, div.childNodes.length);
     } else {
@@ -894,16 +933,13 @@ testSuite({
     const deepestPoint = Point.createDeepestPoint;
 
     const defStartLeft = deepestPoint(parent, 1, true);
-    assertPointEquals(
-        def.previousSibling, def.previousSibling.nodeValue.length,
-        defStartLeft);
+    assertPointEquals(def.previousSibling, def.previousSibling.nodeValue.length, defStartLeft);
 
     const defStartRight = deepestPoint(parent, 1, false);
     assertPointEquals(def.firstChild, 0, defStartRight);
 
     const defEndLeft = deepestPoint(parent, 2, true);
-    assertPointEquals(
-        def.firstChild, def.firstChild.nodeValue.length, defEndLeft);
+    assertPointEquals(def.firstChild, def.firstChild.nodeValue.length, defEndLeft);
 
     const defEndRight = deepestPoint(parent, 2, false);
     assertPointEquals(def.nextSibling, 0, defEndRight);

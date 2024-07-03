@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dom.InputTypeTest');
-goog.setTestOnly();
 
 const InputType = goog.require('goog.dom.InputType');
 const googObject = goog.require('goog.object');
@@ -18,10 +17,8 @@ testSuite({
   },
 
   testPropertyNamesEqualValues() {
-    for (let propertyName in InputType) {
-      assertEquals(
-          propertyName.toLowerCase().replace('_', '-'),
-          InputType[propertyName]);
+    for (const propertyName in InputType) {
+      assertEquals(propertyName.toLowerCase().replace('_', '-'), InputType[propertyName]);
     }
   },
 
@@ -36,10 +33,7 @@ testSuite({
       assertEquals(InputType.TIME, document.getElementById('timeinput').type);
     }
     assertEquals(InputType.TEXTAREA, document.getElementById('textarea').type);
-    assertEquals(
-        InputType.SELECT_ONE, document.getElementById('selectone').type);
-    assertEquals(
-        InputType.SELECT_MULTIPLE,
-        document.getElementById('selectmultiple').type);
+    assertEquals(InputType.SELECT_ONE, document.getElementById('selectone').type);
+    assertEquals(InputType.SELECT_MULTIPLE, document.getElementById('selectmultiple').type);
   },
 });

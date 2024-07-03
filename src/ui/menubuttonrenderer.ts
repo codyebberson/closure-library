@@ -21,8 +21,6 @@ goog.requireType('goog.ui.Control');
 goog.requireType('goog.ui.ControlContent');
 goog.requireType('goog.ui.MenuButton');
 
-
-
 /**
  * Renderer for {@link goog.ui.MenuButton}s.  This implementation overrides
  * {@link goog.ui.CustomButtonRenderer#createButton} to create a separate
@@ -30,13 +28,11 @@ goog.requireType('goog.ui.MenuButton');
  * @constructor
  * @extends {goog.ui.CustomButtonRenderer}
  */
-goog.ui.MenuButtonRenderer = function() {
-  'use strict';
+goog.ui.MenuButtonRenderer = function () {
   goog.ui.CustomButtonRenderer.call(this);
 };
 goog.inherits(goog.ui.MenuButtonRenderer, goog.ui.CustomButtonRenderer);
 goog.addSingletonGetter(goog.ui.MenuButtonRenderer);
-
 
 /**
  * Default CSS class to be applied to the root element of components rendered
@@ -44,7 +40,6 @@ goog.addSingletonGetter(goog.ui.MenuButtonRenderer);
  * @type {string}
  */
 goog.ui.MenuButtonRenderer.CSS_CLASS = goog.getCssName('goog-menu-button');
-
 
 /**
  * Takes the button's root element and returns the parent element of the
@@ -55,13 +50,12 @@ goog.ui.MenuButtonRenderer.CSS_CLASS = goog.getCssName('goog-menu-button');
  * @return {Element} The button's content element.
  * @override
  */
-goog.ui.MenuButtonRenderer.prototype.getContentElement = function(element) {
-  'use strict';
+goog.ui.MenuButtonRenderer.prototype.getContentElement = function (element) {
   return goog.ui.MenuButtonRenderer.superClass_.getContentElement.call(
-      this,
-      /** @type {Element} */ (element && element.firstChild));
+    this,
+    /** @type {Element} */ (element && element.firstChild)
+  );
 };
-
 
 /**
  * Takes an element, decorates it with the menu button control, and returns
@@ -73,12 +67,14 @@ goog.ui.MenuButtonRenderer.prototype.getContentElement = function(element) {
  * @return {Element} Decorated element.
  * @override
  */
-goog.ui.MenuButtonRenderer.prototype.decorate = function(control, element) {
-  'use strict';
+goog.ui.MenuButtonRenderer.prototype.decorate = function (control, element) {
   var button = /** @type {goog.ui.MenuButton} */ (control);
   // TODO(attila):  Add more robust support for subclasses of goog.ui.Menu.
   var menuElem = goog.dom.getElementsByTagNameAndClass(
-      '*', goog.ui.MenuRenderer.CSS_CLASS, element)[0];
+    '*',
+    goog.ui.MenuRenderer.CSS_CLASS,
+    element
+  )[0];
   if (menuElem) {
     // Move the menu element directly under the body (but hide it first to
     // prevent flicker; see bug 1089244).
@@ -92,10 +88,8 @@ goog.ui.MenuButtonRenderer.prototype.decorate = function(control, element) {
   }
 
   // Let the superclass do the rest.
-  return goog.ui.MenuButtonRenderer.superClass_.decorate.call(
-      this, button, element);
+  return goog.ui.MenuButtonRenderer.superClass_.decorate.call(this, button, element);
 };
-
 
 /**
  * Takes a text caption or existing DOM structure, and returns the content and
@@ -119,12 +113,13 @@ goog.ui.MenuButtonRenderer.prototype.decorate = function(control, element) {
  * @return {!Element} Pseudo-rounded-corner box containing the content.
  * @override
  */
-goog.ui.MenuButtonRenderer.prototype.createButton = function(content, dom) {
-  'use strict';
+goog.ui.MenuButtonRenderer.prototype.createButton = function (content, dom) {
   return goog.ui.MenuButtonRenderer.superClass_.createButton.call(
-      this, [this.createCaption(content, dom), this.createDropdown(dom)], dom);
+    this,
+    [this.createCaption(content, dom), this.createDropdown(dom)],
+    dom
+  );
 };
-
 
 /**
  * Takes a text caption or existing DOM structure, and returns it wrapped in
@@ -139,12 +134,9 @@ goog.ui.MenuButtonRenderer.prototype.createButton = function(content, dom) {
  * @param {goog.dom.DomHelper} dom DOM helper, used for document interaction.
  * @return {!Element} Caption element.
  */
-goog.ui.MenuButtonRenderer.prototype.createCaption = function(content, dom) {
-  'use strict';
-  return goog.ui.MenuButtonRenderer.wrapCaption(
-      content, this.getCssClass(), dom);
+goog.ui.MenuButtonRenderer.prototype.createCaption = function (content, dom) {
+  return goog.ui.MenuButtonRenderer.wrapCaption(content, this.getCssClass(), dom);
 };
-
 
 /**
  * Takes a text caption or existing DOM structure, and returns it wrapped in
@@ -160,15 +152,12 @@ goog.ui.MenuButtonRenderer.prototype.createCaption = function(content, dom) {
  * @param {goog.dom.DomHelper} dom DOM helper, used for document interaction.
  * @return {!Element} Caption element.
  */
-goog.ui.MenuButtonRenderer.wrapCaption = function(content, cssClass, dom) {
-  'use strict';
-  return dom.createDom(
-      goog.dom.TagName.DIV,
-      goog.ui.INLINE_BLOCK_CLASSNAME + ' ' +
-          goog.getCssName(cssClass, 'caption'),
-      content);
-};
-
+goog.ui.MenuButtonRenderer.wrapCaption = (content, cssClass, dom) =>
+  dom.createDom(
+    goog.dom.TagName.DIV,
+    goog.ui.INLINE_BLOCK_CLASSNAME + ' ' + goog.getCssName(cssClass, 'caption'),
+    content
+  );
 
 /**
  * Returns an appropriately-styled DIV containing a dropdown arrow element.
@@ -181,15 +170,14 @@ goog.ui.MenuButtonRenderer.wrapCaption = function(content, cssClass, dom) {
  * @param {goog.dom.DomHelper} dom DOM helper, used for document interaction.
  * @return {!Element} Dropdown element.
  */
-goog.ui.MenuButtonRenderer.prototype.createDropdown = function(dom) {
-  'use strict';
+goog.ui.MenuButtonRenderer.prototype.createDropdown = function (dom) {
   // 00A0 is &nbsp;
   return dom.createDom(
-      goog.dom.TagName.DIV, goog.ui.INLINE_BLOCK_CLASSNAME + ' ' +
-          goog.getCssName(this.getCssClass(), 'dropdown'),
-      '\u00A0');
+    goog.dom.TagName.DIV,
+    goog.ui.INLINE_BLOCK_CLASSNAME + ' ' + goog.getCssName(this.getCssClass(), 'dropdown'),
+    '\u00A0'
+  );
 };
-
 
 /**
  * Returns the CSS class to be applied to the root element of components
@@ -197,7 +185,4 @@ goog.ui.MenuButtonRenderer.prototype.createDropdown = function(dom) {
  * @return {string} Renderer-specific CSS class.
  * @override
  */
-goog.ui.MenuButtonRenderer.prototype.getCssClass = function() {
-  'use strict';
-  return goog.ui.MenuButtonRenderer.CSS_CLASS;
-};
+goog.ui.MenuButtonRenderer.prototype.getCssClass = () => goog.ui.MenuButtonRenderer.CSS_CLASS;

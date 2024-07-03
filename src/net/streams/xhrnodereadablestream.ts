@@ -15,8 +15,7 @@ goog.module.declareLegacyNamespace();
 const NodeReadableStream = goog.require('goog.net.streams.NodeReadableStream');
 const googArray = goog.require('goog.array');
 const googLog = goog.require('goog.log');
-const {XhrStreamReader, XhrStreamReaderStatus} = goog.require('goog.net.streams.xhrStreamReader');
-
+const { XhrStreamReader, XhrStreamReaderStatus } = goog.require('goog.net.streams.xhrStreamReader');
 
 /**
  * The XhrNodeReadableStream class.
@@ -37,7 +36,6 @@ class XhrNodeReadableStream {
      * @private {?googLog.Logger} the logger.
      */
     this.logger_ = googLog.getLogger('goog.net.streams.XhrNodeReadableStream');
-
 
     /**
      * The xhr reader.
@@ -64,7 +62,6 @@ class XhrNodeReadableStream {
     this.callbackOnceMap_ = {};
   }
 
-
   /**
    * @override
    * @param {string} eventType
@@ -82,7 +79,6 @@ class XhrNodeReadableStream {
     return this;
   }
 
-
   /**
    * @override
    * @param {string} eventType
@@ -94,7 +90,6 @@ class XhrNodeReadableStream {
     return this;
   }
 
-
   /**
    * @override
    * @param {string} eventType
@@ -104,7 +99,7 @@ class XhrNodeReadableStream {
   removeListener(eventType, callback) {
     const callbacks = this.callbackMap_[eventType];
     if (callbacks) {
-      googArray.remove(callbacks, callback);  // keep the empty array
+      googArray.remove(callbacks, callback); // keep the empty array
     }
 
     const onceCallbacks = this.callbackOnceMap_[eventType];
@@ -114,7 +109,6 @@ class XhrNodeReadableStream {
 
     return this;
   }
-
 
   /**
    * @override
@@ -133,7 +127,6 @@ class XhrNodeReadableStream {
     return this;
   }
 
-
   /**
    * Handles any new data from XHR.
    *
@@ -147,14 +140,12 @@ class XhrNodeReadableStream {
       this.doMessages_(messages, callbacks);
     }
 
-    const onceCallbacks =
-        this.callbackOnceMap_[NodeReadableStream.EventType.DATA];
+    const onceCallbacks = this.callbackOnceMap_[NodeReadableStream.EventType.DATA];
     if (onceCallbacks) {
       this.doMessages_(messages, onceCallbacks);
     }
     this.callbackOnceMap_[NodeReadableStream.EventType.DATA] = [];
   }
-
 
   /**
    * Deliver messages to registered callbacks.
@@ -166,20 +157,18 @@ class XhrNodeReadableStream {
    * @private
    */
   doMessages_(messages, callbacks) {
-    const self = this;
     for (let i = 0; i < messages.length; i++) {
       const message = messages[i];
 
-      callbacks.forEach(function(callback) {
+      callbacks.forEach((callback) => {
         try {
           callback(message);
         } catch (ex) {
-          self.handleError_('message-callback exception (ignored) ' + ex);
+          this.handleError_('message-callback exception (ignored) ' + ex);
         }
       });
     }
   }
-
 
   /**
    * Handles any state changes from XHR.
@@ -213,7 +202,6 @@ class XhrNodeReadableStream {
     }
   }
 
-
   /**
    * Run status change callbacks.
    *
@@ -222,27 +210,25 @@ class XhrNodeReadableStream {
    */
   doStatus_(eventType) {
     const callbacks = this.callbackMap_[eventType];
-    const self = this;
     if (callbacks) {
-      callbacks.forEach(function(callback) {
+      callbacks.forEach((callback) => {
         try {
           callback();
         } catch (ex) {
-          self.handleError_('status-callback exception (ignored) ' + ex);
+          this.handleError_('status-callback exception (ignored) ' + ex);
         }
       });
     }
 
     const onceCallbacks = this.callbackOnceMap_[eventType];
     if (onceCallbacks) {
-      onceCallbacks.forEach(function(callback) {
+      onceCallbacks.forEach((callback) => {
         callback();
       });
     }
 
     this.callbackOnceMap_[eventType] = [];
   }
-
 
   /**
    * Log an error
@@ -255,4 +241,4 @@ class XhrNodeReadableStream {
   }
 }
 
-exports = {XhrNodeReadableStream};
+exports = { XhrNodeReadableStream };

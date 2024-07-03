@@ -4,14 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview CanvasGraphics sub class that uses the canvas tag for drawing.
  */
 
-
 goog.provide('goog.graphics.CanvasGraphics');
-
 
 goog.require('goog.dom.TagName');
 goog.require('goog.events.EventType');
@@ -40,8 +37,6 @@ goog.requireType('goog.graphics.Stroke');
 goog.requireType('goog.graphics.StrokeAndFillElement');
 goog.requireType('goog.graphics.TextElement');
 
-
-
 /**
  * A Graphics implementation for drawing using canvas.
  * @param {string|number} width The (non-zero) width in pixels.  Strings
@@ -60,14 +55,23 @@ goog.requireType('goog.graphics.TextElement');
  *     differences before the canvas tag was widely supported.  See
  *     http://en.wikipedia.org/wiki/Canvas_element for details.
  */
-goog.graphics.CanvasGraphics = function(
-    width, height, opt_coordWidth, opt_coordHeight, opt_domHelper) {
-  'use strict';
+goog.graphics.CanvasGraphics = function (
+  width,
+  height,
+  opt_coordWidth,
+  opt_coordHeight,
+  opt_domHelper
+) {
   goog.graphics.AbstractGraphics.call(
-      this, width, height, opt_coordWidth, opt_coordHeight, opt_domHelper);
+    this,
+    width,
+    height,
+    opt_coordWidth,
+    opt_coordHeight,
+    opt_domHelper
+  );
 };
 goog.inherits(goog.graphics.CanvasGraphics, goog.graphics.AbstractGraphics);
-
 
 /**
  * Sets the fill for the given element.
@@ -76,12 +80,9 @@ goog.inherits(goog.graphics.CanvasGraphics, goog.graphics.AbstractGraphics);
  * @param {goog.graphics.Fill} fill The fill object.
  * @override
  */
-goog.graphics.CanvasGraphics.prototype.setElementFill = function(
-    element, fill) {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.setElementFill = function (element, fill) {
   this.redraw();
 };
-
 
 /**
  * Sets the stroke for the given element.
@@ -90,12 +91,9 @@ goog.graphics.CanvasGraphics.prototype.setElementFill = function(
  * @param {goog.graphics.Stroke} stroke The stroke object.
  * @override
  */
-goog.graphics.CanvasGraphics.prototype.setElementStroke = function(
-    element, stroke) {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.setElementStroke = function (element, stroke) {
   this.redraw();
 };
-
 
 /**
  * Set the translation and rotation of an element.
@@ -110,12 +108,16 @@ goog.graphics.CanvasGraphics.prototype.setElementStroke = function(
  * @param {number} centerY The vertical center of the rotation transform.
  * @override
  */
-goog.graphics.CanvasGraphics.prototype.setElementTransform = function(
-    element, x, y, angle, centerX, centerY) {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.setElementTransform = function (
+  element,
+  x,
+  y,
+  angle,
+  centerX,
+  centerY
+) {
   this.redraw();
 };
-
 
 /**
  * Set the transformation of an element.
@@ -127,21 +129,19 @@ goog.graphics.CanvasGraphics.prototype.setElementTransform = function(
  *     transformation applied to this element.
  * @override
  */
-goog.graphics.CanvasGraphics.prototype.setElementAffineTransform = function(
-    element, affineTransform) {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.setElementAffineTransform = function (
+  element,
+  affineTransform
+) {
   this.redraw();
 };
-
 
 /**
  * Push an element transform on to the transform stack.
  * @param {goog.graphics.Element} element The transformed element.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.CanvasGraphics.prototype.pushElementTransform = function(
-    element) {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.pushElementTransform = function (element) {
   var ctx = this.getContext();
   ctx.save();
 
@@ -160,25 +160,22 @@ goog.graphics.CanvasGraphics.prototype.pushElementTransform = function(
   }
 };
 
-
 /**
  * Pop an element transform off of the transform stack.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.CanvasGraphics.prototype.popElementTransform = function() {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.popElementTransform = function () {
   this.getContext().restore();
 };
-
 
 /**
  * Creates the DOM representation of the graphics area.
  * @override
  */
-goog.graphics.CanvasGraphics.prototype.createDom = function() {
-  'use strict';
-  var element = this.dom_.createDom(
-      goog.dom.TagName.DIV, {'style': 'position:relative;overflow:hidden'});
+goog.graphics.CanvasGraphics.prototype.createDom = function () {
+  var element = this.dom_.createDom(goog.dom.TagName.DIV, {
+    style: 'position:relative;overflow:hidden',
+  });
   this.setElementInternal(element);
 
   /** @suppress {strictMissingProperties} Added to tighten compiler checks */
@@ -199,26 +196,22 @@ goog.graphics.CanvasGraphics.prototype.createDom = function() {
   this.updateSize();
 };
 
-
 /**
  * Clears the drawing context object in response to actions that make the old
  * context invalid - namely resize of the canvas element.
  * @private
  */
-goog.graphics.CanvasGraphics.prototype.clearContext_ = function() {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.clearContext_ = function () {
   /** @suppress {strictMissingProperties} Added to tighten compiler checks */
   this.context_ = null;
 };
-
 
 /**
  * Returns the drawing context.
  * @return {Object} The canvas element rendering context.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.CanvasGraphics.prototype.getContext = function() {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.getContext = function () {
   if (!this.getElement()) {
     this.createDom();
   }
@@ -230,20 +223,17 @@ goog.graphics.CanvasGraphics.prototype.getContext = function() {
   return this.context_;
 };
 
-
 /**
  * Changes the coordinate system position.
  * @param {number} left The coordinate system left bound.
  * @param {number} top The coordinate system top bound.
  * @override
  */
-goog.graphics.CanvasGraphics.prototype.setCoordOrigin = function(left, top) {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.setCoordOrigin = function (left, top) {
   this.coordLeft = left;
   this.coordTop = top;
   this.redraw();
 };
-
 
 /**
  * Changes the coordinate size.
@@ -251,13 +241,10 @@ goog.graphics.CanvasGraphics.prototype.setCoordOrigin = function(left, top) {
  * @param {number} coordHeight The coordinate height.
  * @override
  */
-goog.graphics.CanvasGraphics.prototype.setCoordSize = function(
-    coordWidth, coordHeight) {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.setCoordSize = function (coordWidth, coordHeight) {
   goog.graphics.CanvasGraphics.superClass_.setCoordSize.apply(this, arguments);
   this.redraw();
 };
-
 
 /**
  * Change the size of the canvas.
@@ -265,9 +252,7 @@ goog.graphics.CanvasGraphics.prototype.setCoordSize = function(
  * @param {number} pixelHeight The height in pixels.
  * @override
  */
-goog.graphics.CanvasGraphics.prototype.setSize = function(
-    pixelWidth, pixelHeight) {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.setSize = function (pixelWidth, pixelHeight) {
   this.width = pixelWidth;
   this.height = pixelHeight;
 
@@ -275,16 +260,14 @@ goog.graphics.CanvasGraphics.prototype.setSize = function(
   this.redraw();
 };
 
-
 /** @override */
-goog.graphics.CanvasGraphics.prototype.getPixelSize = function() {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.getPixelSize = function () {
   // goog.style.getSize does not work for Canvas elements.  We
   // have to compute the size manually if it is percentage based.
   var width = this.width;
   var height = this.height;
-  var computeWidth = (typeof width === 'string') && width.indexOf('%') != -1;
-  var computeHeight = (typeof height === 'string') && height.indexOf('%') != -1;
+  var computeWidth = typeof width === 'string' && width.indexOf('%') != -1;
+  var computeHeight = typeof height === 'string' && height.indexOf('%') != -1;
 
   if (!this.isInDocument() && (computeWidth || computeHeight)) {
     return null;
@@ -296,36 +279,32 @@ goog.graphics.CanvasGraphics.prototype.getPixelSize = function() {
   if (computeWidth) {
     parent = /** @type {Element} */ (this.getElement().parentNode);
     parentSize = goog.style.getSize(parent);
-    width = parseFloat(/** @type {string} */ (width)) * parentSize.width / 100;
+    width = (Number.parseFloat(/** @type {string} */ (width)) * parentSize.width) / 100;
   }
 
   if (computeHeight) {
     parent = parent || /** @type {Element} */ (this.getElement().parentNode);
     parentSize = parentSize || goog.style.getSize(parent);
-    height =
-        parseFloat(/** @type {string} */ (height)) * parentSize.height / 100;
+    height = (Number.parseFloat(/** @type {string} */ (height)) * parentSize.height) / 100;
   }
 
-  return new goog.math.Size(
-      /** @type {number} */ (width),
-      /** @type {number} */ (height));
+  return new goog.math.Size(/** @type {number} */ (width), /** @type {number} */ (height));
 };
-
 
 /**
  * Update the size of the canvas.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.CanvasGraphics.prototype.updateSize = function() {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.updateSize = function () {
   goog.style.setSize(this.getElement(), this.width, this.height);
 
   var pixels = this.getPixelSize();
   if (pixels) {
     goog.style.setSize(
-        this.canvas_,
-        /** @type {number} */ (pixels.width),
-        /** @type {number} */ (pixels.height));
+      this.canvas_,
+      /** @type {number} */ (pixels.width),
+      /** @type {number} */ (pixels.height)
+    );
     /** @suppress {strictMissingProperties} Added to tighten compiler checks */
     this.canvas_.width = pixels.width;
     /** @suppress {strictMissingProperties} Added to tighten compiler checks */
@@ -334,13 +313,11 @@ goog.graphics.CanvasGraphics.prototype.updateSize = function() {
   }
 };
 
-
 /**
  * Reset the canvas.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.CanvasGraphics.prototype.reset = function() {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.reset = function () {
   var ctx = this.getContext();
   ctx.restore();
   var size = this.getPixelSize();
@@ -350,13 +327,11 @@ goog.graphics.CanvasGraphics.prototype.reset = function() {
   ctx.save();
 };
 
-
 /**
  * Remove all drawing elements from the graphics.
  * @override
  */
-goog.graphics.CanvasGraphics.prototype.clear = function() {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.clear = function () {
   this.reset();
   this.canvasElement.clear();
   var el = this.getElement();
@@ -367,13 +342,11 @@ goog.graphics.CanvasGraphics.prototype.clear = function() {
   }
 };
 
-
 /**
  * Redraw the entire canvas.
  * @suppress {strictCheckTypes} Added to tighten compiler checks
  */
-goog.graphics.CanvasGraphics.prototype.redraw = function() {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.redraw = function () {
   if (this.preventRedraw_) {
     /** @suppress {strictMissingProperties} Added to tighten compiler checks */
     this.needsRedraw_ = true;
@@ -385,8 +358,7 @@ goog.graphics.CanvasGraphics.prototype.redraw = function() {
 
     if (this.coordWidth) {
       var pixels = this.getPixelSize();
-      this.getContext().scale(
-          pixels.width / this.coordWidth, pixels.height / this.coordHeight);
+      this.getContext().scale(pixels.width / this.coordWidth, pixels.height / this.coordHeight);
     }
     if (this.coordLeft || this.coordTop) {
       this.getContext().translate(-this.coordLeft, -this.coordTop);
@@ -397,14 +369,12 @@ goog.graphics.CanvasGraphics.prototype.redraw = function() {
   }
 };
 
-
 /**
  * Draw an element, including any stroke or fill.
  * @param {goog.graphics.Element} element The element to draw.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.CanvasGraphics.prototype.drawElement = function(element) {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.drawElement = function (element) {
   if (element instanceof goog.graphics.CanvasTextElement) {
     // Don't draw text since that is not implemented using canvas.
     return;
@@ -439,12 +409,17 @@ goog.graphics.CanvasGraphics.prototype.drawElement = function(element) {
          */
         ctx.globalAlpha = 1;
       }
-    } else {  // (fill instanceof goog.graphics.LinearGradient)
-              /**
-               * @suppress {strictMissingProperties} Added to tighten compiler checks
-               */
+    } else {
+      // (fill instanceof goog.graphics.LinearGradient)
+      /**
+       * @suppress {strictMissingProperties} Added to tighten compiler checks
+       */
       var linearGradient = ctx.createLinearGradient(
-          fill.getX1(), fill.getY1(), fill.getX2(), fill.getY2());
+        fill.getX1(),
+        fill.getY1(),
+        fill.getX2(),
+        fill.getY2()
+      );
       linearGradient.addColorStop(0.0, fill.getColor1());
       linearGradient.addColorStop(1.0, fill.getColor2());
 
@@ -465,7 +440,7 @@ goog.graphics.CanvasGraphics.prototype.drawElement = function(element) {
 
     var width = stroke.getWidth();
     if (typeof width === 'string' && width.indexOf('px') != -1) {
-      width = parseFloat(width) / this.getPixelScaleX();
+      width = Number.parseFloat(width) / this.getPixelScaleX();
     }
     /** @suppress {strictMissingProperties} Added to tighten compiler checks */
     ctx.lineWidth = width;
@@ -476,7 +451,6 @@ goog.graphics.CanvasGraphics.prototype.drawElement = function(element) {
   this.popElementTransform();
 };
 
-
 /**
  * Append an element.
  *
@@ -486,8 +460,7 @@ goog.graphics.CanvasGraphics.prototype.drawElement = function(element) {
  * @protected
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.CanvasGraphics.prototype.append = function(element, group) {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.append = function (element, group) {
   group = group || this.canvasElement;
   group.appendChild(element);
 
@@ -495,7 +468,6 @@ goog.graphics.CanvasGraphics.prototype.append = function(element, group) {
     this.drawElement(element);
   }
 };
-
 
 /**
  * Draw an ellipse.
@@ -513,15 +485,19 @@ goog.graphics.CanvasGraphics.prototype.append = function(element, group) {
  * @return {!goog.graphics.EllipseElement} The newly created element.
  * @override
  */
-goog.graphics.CanvasGraphics.prototype.drawEllipse = function(
-    cx, cy, rx, ry, stroke, fill, opt_group) {
-  'use strict';
-  var element = new goog.graphics.CanvasEllipseElement(
-      null, this, cx, cy, rx, ry, stroke, fill);
+goog.graphics.CanvasGraphics.prototype.drawEllipse = function (
+  cx,
+  cy,
+  rx,
+  ry,
+  stroke,
+  fill,
+  opt_group
+) {
+  var element = new goog.graphics.CanvasEllipseElement(null, this, cx, cy, rx, ry, stroke, fill);
   this.append(element, opt_group);
   return element;
 };
-
 
 /**
  * Draw a rectangle.
@@ -539,15 +515,19 @@ goog.graphics.CanvasGraphics.prototype.drawEllipse = function(
  * @return {!goog.graphics.RectElement} The newly created element.
  * @override
  */
-goog.graphics.CanvasGraphics.prototype.drawRect = function(
-    x, y, width, height, stroke, fill, opt_group) {
-  'use strict';
-  var element = new goog.graphics.CanvasRectElement(
-      null, this, x, y, width, height, stroke, fill);
+goog.graphics.CanvasGraphics.prototype.drawRect = function (
+  x,
+  y,
+  width,
+  height,
+  stroke,
+  fill,
+  opt_group
+) {
+  var element = new goog.graphics.CanvasRectElement(null, this, x, y, width, height, stroke, fill);
   this.append(element, opt_group);
   return element;
 };
-
 
 /**
  * Draw an image.
@@ -562,15 +542,11 @@ goog.graphics.CanvasGraphics.prototype.drawRect = function(
  *
  * @return {!goog.graphics.ImageElement} The newly created element.
  */
-goog.graphics.CanvasGraphics.prototype.drawImage = function(
-    x, y, width, height, src, opt_group) {
-  'use strict';
-  var element = new goog.graphics.CanvasImageElement(
-      null, this, x, y, width, height, src);
+goog.graphics.CanvasGraphics.prototype.drawImage = function (x, y, width, height, src, opt_group) {
+  var element = new goog.graphics.CanvasImageElement(null, this, x, y, width, height, src);
   this.append(element, opt_group);
   return element;
 };
-
 
 /**
  * Draw a text string vertically centered on a given line.
@@ -590,16 +566,33 @@ goog.graphics.CanvasGraphics.prototype.drawImage = function(
  * @return {!goog.graphics.TextElement} The newly created element.
  * @override
  */
-goog.graphics.CanvasGraphics.prototype.drawTextOnLine = function(
-    text, x1, y1, x2, y2, align, font, stroke, fill, opt_group) {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.drawTextOnLine = function (
+  text,
+  x1,
+  y1,
+  x2,
+  y2,
+  align,
+  font,
+  stroke,
+  fill,
+  opt_group
+) {
   var element = new goog.graphics.CanvasTextElement(
-      this, text, x1, y1, x2, y2, align,
-      /** @type {!goog.graphics.Font} */ (font), stroke, fill);
+    this,
+    text,
+    x1,
+    y1,
+    x2,
+    y2,
+    align,
+    /** @type {!goog.graphics.Font} */ (font),
+    stroke,
+    fill
+  );
   this.append(element, opt_group);
   return element;
 };
-
 
 /**
  * Draw a path.
@@ -612,15 +605,11 @@ goog.graphics.CanvasGraphics.prototype.drawTextOnLine = function(
  * @return {!goog.graphics.PathElement} The newly created element.
  * @override
  */
-goog.graphics.CanvasGraphics.prototype.drawPath = function(
-    path, stroke, fill, opt_group) {
-  'use strict';
-  var element =
-      new goog.graphics.CanvasPathElement(null, this, path, stroke, fill);
+goog.graphics.CanvasGraphics.prototype.drawPath = function (path, stroke, fill, opt_group) {
+  var element = new goog.graphics.CanvasPathElement(null, this, path, stroke, fill);
   this.append(element, opt_group);
   return element;
 };
-
 
 /**
  * @param {goog.graphics.GroupElement} group The group to possibly
@@ -628,12 +617,9 @@ goog.graphics.CanvasGraphics.prototype.drawPath = function(
  * @return {boolean} Whether drawing can occur now.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.CanvasGraphics.prototype.isDrawable = function(group) {
-  'use strict';
-  return this.isInDocument() && !this.redrawTimeout_ &&
-      !this.isRedrawRequired(group);
+goog.graphics.CanvasGraphics.prototype.isDrawable = function (group) {
+  return this.isInDocument() && !this.redrawTimeout_ && !this.isRedrawRequired(group);
 };
-
 
 /**
  * Returns true if drawing to the given group means a redraw is required.
@@ -641,12 +627,10 @@ goog.graphics.CanvasGraphics.prototype.isDrawable = function(group) {
  * @return {boolean} Whether drawing to this group should force a redraw.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.CanvasGraphics.prototype.isRedrawRequired = function(group) {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.isRedrawRequired = function (group) {
   // TODO(robbyw): Moving up to any parent of lastGroup should not force redraw.
   return group != this.canvasElement && group != this.lastGroup_;
 };
-
 
 /**
  * Create an empty group of drawing elements.
@@ -658,8 +642,7 @@ goog.graphics.CanvasGraphics.prototype.isRedrawRequired = function(group) {
  * @override
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.CanvasGraphics.prototype.createGroup = function(opt_group) {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.createGroup = function (opt_group) {
   var group = new goog.graphics.CanvasGroupElement(this);
 
   opt_group = opt_group || this.canvasElement;
@@ -675,7 +658,6 @@ goog.graphics.CanvasGraphics.prototype.createGroup = function(opt_group) {
   return group;
 };
 
-
 /**
  * Measure and return the width (in pixels) of a given text string.
  * Text measurement is needed to make sure a text can fit in the allocated
@@ -689,24 +671,20 @@ goog.graphics.CanvasGraphics.prototype.createGroup = function(opt_group) {
  */
 goog.graphics.CanvasGraphics.prototype.getTextWidth = goog.abstractMethod;
 
-
 /**
  * Disposes of the component by removing event handlers, detacing DOM nodes from
  * the document body, and removing references to them.
  * @override
  * @protected
  */
-goog.graphics.CanvasGraphics.prototype.disposeInternal = function() {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.disposeInternal = function () {
   /** @suppress {strictMissingProperties} Added to tighten compiler checks */
   this.context_ = null;
   goog.graphics.CanvasGraphics.superClass_.disposeInternal.call(this);
 };
 
-
 /** @override */
-goog.graphics.CanvasGraphics.prototype.enterDocument = function() {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.enterDocument = function () {
   var oldPixelSize = this.getPixelSize();
   goog.graphics.CanvasGraphics.superClass_.enterDocument.call(this);
   if (!oldPixelSize) {
@@ -716,19 +694,16 @@ goog.graphics.CanvasGraphics.prototype.enterDocument = function() {
   this.redraw();
 };
 
-
 /**
  * Start preventing redraws - useful for chaining large numbers of changes
  * together.  Not guaranteed to do anything - i.e. only use this for
  * optimization of a single code path.
  * @override
  */
-goog.graphics.CanvasGraphics.prototype.suspend = function() {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.suspend = function () {
   /** @suppress {strictMissingProperties} Added to tighten compiler checks */
   this.preventRedraw_ = true;
 };
-
 
 /**
  * Stop preventing redraws.  If any redraws had been prevented, a redraw will
@@ -736,8 +711,7 @@ goog.graphics.CanvasGraphics.prototype.suspend = function() {
  * @override
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.CanvasGraphics.prototype.resume = function() {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.resume = function () {
   /** @suppress {strictMissingProperties} Added to tighten compiler checks */
   this.preventRedraw_ = false;
 
@@ -748,14 +722,12 @@ goog.graphics.CanvasGraphics.prototype.resume = function() {
   }
 };
 
-
 /**
  * Removes an element from the Canvas.
  * @param {goog.graphics.Element} elem the element to remove.
  * @override
  */
-goog.graphics.CanvasGraphics.prototype.removeElement = function(elem) {
-  'use strict';
+goog.graphics.CanvasGraphics.prototype.removeElement = function (elem) {
   if (!elem) {
     return;
   }

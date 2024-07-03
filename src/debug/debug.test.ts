@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.debugTest');
-goog.setTestOnly();
 
 const debug = goog.require('goog.debug');
 const errorcontext = goog.require('goog.debug.errorcontext');
@@ -17,26 +16,22 @@ const testSuite = goog.require('goog.testing.testSuite');
  * @param {string} text The text string to search within.
  */
 function assertContainsSubstring(substring, text) {
-  assertNotEquals(
-      `Could not find "${substring}" in "${text}"`, -1, text.search(substring));
+  assertNotEquals(`Could not find "${substring}" in "${text}"`, -1, text.search(substring));
 }
 
 testSuite({
   testMakeWhitespaceVisible() {
     assertEquals(
-        'Hello[_][_]World![r][n]\n' +
-            '[r][n]\n' +
-            '[f][f]I[_]am[t][t]here![r][n]\n',
-        debug.makeWhitespaceVisible(
-            'Hello  World!\r\n\r\n\f\fI am\t\there!\r\n'));
+      'Hello[_][_]World![r][n]\n' + '[r][n]\n' + '[f][f]I[_]am[t][t]here![r][n]\n',
+      debug.makeWhitespaceVisible('Hello  World!\r\n\r\n\f\fI am\t\there!\r\n')
+    );
   },
 
   testGetFunctionNameOfMultilineFunction() {
     // DO NOT FORMAT THIS - it is expected that "oddlyFormatted" be on a
     // separate line from the function keyword.
     // clang-format off
-    function
-        oddlyFormatted() {}
+    function oddlyFormatted() {}
     // clang-format on
     assertEquals('oddlyFormatted', debug.getFunctionName(oddlyFormatted));
   },
@@ -54,8 +49,7 @@ testSuite({
 
     const deepExpose = debug.deepExpose(a);
 
-    assertContainsSubstring(
-        `ancestor = ... reference loop detected .id=${aUid}. ...`, deepExpose);
+    assertContainsSubstring(`ancestor = ... reference loop detected .id=${aUid}. ...`, deepExpose);
 
     assertContainsSubstring('otherObjectAgain = {', deepExpose);
 
@@ -67,7 +61,7 @@ testSuite({
 
   testEnhanceErrorWithContext() {
     const err = 'abc';
-    const context = {firstKey: 'first', secondKey: 'another key'};
+    const context = { firstKey: 'first', secondKey: 'another key' };
     const errorWithContext = debug.enhanceErrorWithContext(err, context);
     assertObjectEquals(context, errorcontext.getErrorContext(errorWithContext));
   },
@@ -75,11 +69,12 @@ testSuite({
   testEnhanceErrorWithContext_combinedContext() {
     const err = new Error('abc');
     errorcontext.addErrorContext(err, 'a', '123');
-    const context = {b: '456', c: '789'};
+    const context = { b: '456', c: '789' };
     const errorWithContext = debug.enhanceErrorWithContext(err, context);
     assertObjectEquals(
-        {a: '123', b: '456', c: '789'},
-        errorcontext.getErrorContext(errorWithContext));
+      { a: '123', b: '456', c: '789' },
+      errorcontext.getErrorContext(errorWithContext)
+    );
   },
 
   testFreeze_nonDebug() {
@@ -96,8 +91,7 @@ testSuite({
     assertEquals(a, debug.freeze(a));
     try {
       a.foo = 42;
-    } catch (expectedInStrictMode) {
-    }
+    } catch (expectedInStrictMode) {}
     assertUndefined(a.foo);
   },
 
@@ -144,7 +138,7 @@ testSuite({
   },
 
   testNormalizeErrorObject_nonErrorObject() {
-    const err = debug.normalizeErrorObject({foo: 'abc'});
+    const err = debug.normalizeErrorObject({ foo: 'abc' });
 
     assertEquals('UnknownError', err.name);
     assertEquals('Unknown Error of type "Object"', err.message);
@@ -158,7 +152,7 @@ testSuite({
   },
 
   testNormalizeErrorObject_instanceOfClass() {
-    const TestClass = function(text) {
+    const TestClass = function (text) {
       this.text = text;
     };
     /** @suppress {checkTypes} suppression added to enable type checking */
@@ -179,9 +173,7 @@ testSuite({
 
   testNormalizeErrorObject_objectWithToString() {
     const err = debug.normalizeErrorObject({
-      toString: function() {
-        return 'Error Message';
-      }
+      toString: () => 'Error Message',
     });
 
     assertEquals('UnknownError', err.name);
@@ -192,11 +184,10 @@ testSuite({
     const err = debug.normalizeErrorObject(new Error());
 
     let properties = 0;
-    for (let x in err) {
+    for (const x in err) {
       properties++;
     }
 
     assertEquals(5, properties);
   },
-
 });

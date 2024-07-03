@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.DialogTest');
-goog.setTestOnly();
 
 const Const = goog.require('goog.string.Const');
 const Coordinate = goog.require('goog.math.Coordinate');
@@ -43,8 +42,7 @@ let mockClock;
  * @return {boolean} Whether a Dialog.EventType.SELECT was dispatched.
  */
 function checkSelectDispatchedOnButtonClick(disableButton) {
-  const aButton =
-      dom.getElementsByTagName(TagName.BUTTON, dialog.getButtonElement())[0];
+  const aButton = dom.getElementsByTagName(TagName.BUTTON, dialog.getButtonElement())[0];
   assertNotEquals(aButton, null);
   aButton.disabled = disableButton;
   let wasCalled = false;
@@ -58,8 +56,7 @@ function checkSelectDispatchedOnButtonClick(disableButton) {
 
 function checkEnterKeyDoesNothingOnSpecialFormElement(content, tagName) {
   dialog.setSafeHtmlContent(content);
-  const formElement =
-      dialog.getContentElement().getElementsByTagName(tagName)[0];
+  const formElement = dialog.getContentElement().getElementsByTagName(tagName)[0];
   let wasCalled = false;
   const callRecorder = () => {
     wasCalled = true;
@@ -129,8 +126,7 @@ testSuite({
     dialog.setVisible(false);
 
     const frame = dom.createDom(TagName.IFRAME);
-    safe.setIframeSrc(
-        frame, TrustedResourceUrl.fromConstant(Const.from('about:blank')));
+    safe.setIframeSrc(frame, TrustedResourceUrl.fromConstant(Const.from('about:blank')));
     try {
       document.body.appendChild(frame);
       /**
@@ -138,10 +134,8 @@ testSuite({
        * checking
        */
       const iframeWindow = frame.contentWindow;
-      iframeWindow.document.body.appendChild(
-          iframeWindow.document.createElement('input'));
-      const iframeInput =
-          dom.getElementsByTagName(TagName.INPUT, iframeWindow.document)[0];
+      iframeWindow.document.body.appendChild(iframeWindow.document.createElement('input'));
+      const iframeInput = dom.getElementsByTagName(TagName.INPUT, iframeWindow.document)[0];
       dialog.setButtonSet(Dialog.ButtonSet.OK);
       const dialogElement = dialog.getElement();
       let focusCounter = 0;
@@ -161,8 +155,7 @@ testSuite({
 
   testNoDisabledButtonFocus() {
     dialog.setVisible(false);
-    const buttonEl =
-        dialog.getButtonSet().getButton(Dialog.DefaultButtonKeys.OK);
+    const buttonEl = dialog.getButtonSet().getButton(Dialog.DefaultButtonKeys.OK);
     buttonEl.disabled = true;
     let focused = false;
     buttonEl.focus = () => {
@@ -180,21 +173,20 @@ testSuite({
 
   testButtonClicksDispatchSelectEvents() {
     assertTrue(
-        'Select event should be dispatched' +
-            ' when clicking on an enabled button',
-        checkSelectDispatchedOnButtonClick(false));
+      'Select event should be dispatched' + ' when clicking on an enabled button',
+      checkSelectDispatchedOnButtonClick(false)
+    );
   },
 
   testDisabledButtonClicksDontDispatchSelectEvents() {
     assertFalse(
-        'Select event should not be dispatched' +
-            ' when clicking on a disabled button',
-        checkSelectDispatchedOnButtonClick(true));
+      'Select event should not be dispatched' + ' when clicking on a disabled button',
+      checkSelectDispatchedOnButtonClick(true)
+    );
   },
 
   testEnterKeyDispatchesDefaultSelectEvents() {
-    const okButton =
-        dom.getElementsByTagName(TagName.BUTTON, dialog.getButtonElement())[1];
+    const okButton = dom.getElementsByTagName(TagName.BUTTON, dialog.getButtonElement())[1];
     assertNotEquals(okButton, null);
     let wasCalled = false;
     const callRecorder = () => {
@@ -212,8 +204,7 @@ testSuite({
   },
 
   testEnterKeyOnDisabledDefaultButtonDoesNotDispatchSelectEvents() {
-    const okButton =
-        dom.getElementsByTagName(TagName.BUTTON, dialog.getButtonElement())[1];
+    const okButton = dom.getElementsByTagName(TagName.BUTTON, dialog.getButtonElement())[1];
     okButton.focus();
 
     const callRecorder = recordFunction();
@@ -230,21 +221,28 @@ testSuite({
 
   testEnterKeyDoesNothingOnSpecialFormElements() {
     checkEnterKeyDoesNothingOnSpecialFormElement(
-        SafeHtml.create('textarea', {}, 'Hello dialog'), 'TEXTAREA');
+      SafeHtml.create('textarea', {}, 'Hello dialog'),
+      'TEXTAREA'
+    );
 
     checkEnterKeyDoesNothingOnSpecialFormElement(
-        SafeHtml.create('select', {}, 'Selection'), 'SELECT');
+      SafeHtml.create('select', {}, 'Selection'),
+      'SELECT'
+    );
 
     checkEnterKeyDoesNothingOnSpecialFormElement(
-        SafeHtml.create('a', {'href': 'http://google.com'}, 'Hello dialog'),
-        'A');
+      SafeHtml.create('a', { href: 'http://google.com' }, 'Hello dialog'),
+      'A'
+    );
   },
 
   testEscapeKeyDoesNothingOnSpecialFormElements() {
-    dialog.setSafeHtmlContent(SafeHtml.create('select', {}, [
-      SafeHtml.create('option', {}, 'Hello'),
-      SafeHtml.create('option', {}, 'dialog'),
-    ]));
+    dialog.setSafeHtmlContent(
+      SafeHtml.create('select', {}, [
+        SafeHtml.create('option', {}, 'Hello'),
+        SafeHtml.create('option', {}, 'dialog'),
+      ])
+    );
     const select = dialog.getContentElement().getElementsByTagName('SELECT')[0];
     let wasCalled = false;
     const callRecorder = () => {
@@ -287,8 +285,7 @@ testSuite({
     dialog.setButtonSet(null);
 
     // Create a custom button.
-    dialog.setSafeHtmlContent(
-        SafeHtml.create('button', {'id': 'button', 'name': 'ok'}, 'OK'));
+    dialog.setSafeHtmlContent(SafeHtml.create('button', { id: 'button', name: 'ok' }, 'OK'));
     let wasCalled = false;
     function called() {
       wasCalled = true;
@@ -307,8 +304,9 @@ testSuite({
     buttons.set(Dialog.DefaultButtonKeys.CANCEL, 'Foo!', false);
     // Set a button set without a default selected button
     dialog.setButtonSet(buttons);
-    dialog.setSafeHtmlContent(SafeHtml.create(
-        'span', {'id': 'linkel', 'tabindex': '0'}, 'Link Span'));
+    dialog.setSafeHtmlContent(
+      SafeHtml.create('span', { id: 'linkel', tabindex: '0' }, 'Link Span')
+    );
 
     let call = false;
     function called() {
@@ -364,18 +362,26 @@ testSuite({
 
   testEnterKeyHandledInKeypress() {
     let inKeyPress = false;
-    events.listen(document.body, EventType.KEYPRESS, () => {
-      inKeyPress = true;
-    }, true /* capture */);
-    events.listen(document.body, EventType.KEYPRESS, () => {
-      inKeyPress = false;
-    }, false /* !capture */);
+    events.listen(
+      document.body,
+      EventType.KEYPRESS,
+      () => {
+        inKeyPress = true;
+      },
+      true /* capture */
+    );
+    events.listen(
+      document.body,
+      EventType.KEYPRESS,
+      () => {
+        inKeyPress = false;
+      },
+      false /* !capture */
+    );
     let selectCalled = false;
     events.listen(dialog, Dialog.EventType.SELECT, () => {
       selectCalled = true;
-      assertTrue(
-          'Select must be dispatched during keypress to allow popups',
-          inKeyPress);
+      assertTrue('Select must be dispatched during keypress to allow popups', inKeyPress);
     });
 
     testingEvents.fireKeySequence(dialog.getElement(), KeyCodes.ENTER);
@@ -386,24 +392,21 @@ testSuite({
   testShiftTabAtTopSetsUpWrapAndDoesNotPreventPropagation() {
     /** @suppress {visibility} suppression added to enable type checking */
     dialog.setupBackwardTabWrap = recordFunction();
-    let shiftTabRecorder = recordFunction();
+    const shiftTabRecorder = recordFunction();
 
     events.listen(dialog.getElement(), EventType.KEYDOWN, shiftTabRecorder);
-    const shiftProperties = {shiftKey: true};
-    testingEvents.fireKeySequence(
-        dialog.getElement(), KeyCodes.TAB, shiftProperties);
+    const shiftProperties = { shiftKey: true };
+    testingEvents.fireKeySequence(dialog.getElement(), KeyCodes.TAB, shiftProperties);
 
+    assertNotNull('Should have gotten event on Shift+TAB', shiftTabRecorder.getLastCall());
     assertNotNull(
-        'Should have gotten event on Shift+TAB',
-        shiftTabRecorder.getLastCall());
-    assertNotNull(
-        'Backward tab wrap should have been set up',
-        dialog.setupBackwardTabWrap.getLastCall());
+      'Backward tab wrap should have been set up',
+      dialog.setupBackwardTabWrap.getLastCall()
+    );
   },
 
   testButtonsWithContentsDispatchSelectEvents() {
-    const aButton =
-        dom.getElementsByTagName(TagName.BUTTON, dialog.getButtonElement())[0];
+    const aButton = dom.getElementsByTagName(TagName.BUTTON, dialog.getButtonElement())[0];
     const aSpan = dom.createElement(TagName.SPAN);
     aButton.appendChild(aSpan);
     let wasCalled = false;
@@ -442,16 +445,10 @@ testSuite({
     assertButtons([Dialog.DefaultButtonKeys.OK]);
 
     dialog.setButtonSet(Dialog.ButtonSet.OK_CANCEL);
-    assertButtons([
-      Dialog.DefaultButtonKeys.OK,
-      Dialog.DefaultButtonKeys.CANCEL,
-    ]);
+    assertButtons([Dialog.DefaultButtonKeys.OK, Dialog.DefaultButtonKeys.CANCEL]);
 
     dialog.setButtonSet(Dialog.ButtonSet.YES_NO);
-    assertButtons([
-      Dialog.DefaultButtonKeys.YES,
-      Dialog.DefaultButtonKeys.NO,
-    ]);
+    assertButtons([Dialog.DefaultButtonKeys.YES, Dialog.DefaultButtonKeys.NO]);
 
     dialog.setButtonSet(Dialog.ButtonSet.YES_NO_CANCEL);
     assertButtons([
@@ -473,16 +470,10 @@ testSuite({
     assertButtons([Dialog.DefaultButtonKeys.OK]);
 
     dialog.setButtonSet(Dialog.ButtonSet.createOkCancel());
-    assertButtons([
-      Dialog.DefaultButtonKeys.OK,
-      Dialog.DefaultButtonKeys.CANCEL,
-    ]);
+    assertButtons([Dialog.DefaultButtonKeys.OK, Dialog.DefaultButtonKeys.CANCEL]);
 
     dialog.setButtonSet(Dialog.ButtonSet.createYesNo());
-    assertButtons([
-      Dialog.DefaultButtonKeys.YES,
-      Dialog.DefaultButtonKeys.NO,
-    ]);
+    assertButtons([Dialog.DefaultButtonKeys.YES, Dialog.DefaultButtonKeys.NO]);
 
     dialog.setButtonSet(Dialog.ButtonSet.createYesNoCancel());
     assertButtons([
@@ -520,16 +511,13 @@ testSuite({
   testGetButton() {
     dialog.setButtonSet(Dialog.ButtonSet.OK);
     const buttons = document.getElementsByName(Dialog.DefaultButtonKeys.OK);
-    assertEquals(
-        buttons[0],
-        dialog.getButtonSet().getButton(Dialog.DefaultButtonKeys.OK));
+    assertEquals(buttons[0], dialog.getButtonSet().getButton(Dialog.DefaultButtonKeys.OK));
   },
 
   /** @suppress {missingProperties} suppression added to enable type checking */
   testGetAllButtons() {
     dialog.setButtonSet(Dialog.ButtonSet.YES_NO_CANCEL);
-    const buttons =
-        dom.getElementsByTagName(TagName.BUTTON, dialog.getElement());
+    const buttons = dom.getElementsByTagName(TagName.BUTTON, dialog.getElement());
     for (let i = 0; i < buttons.length; i++) {
       assertEquals(buttons[i], dialog.getButtonSet().getAllButtons()[i]);
     }
@@ -573,8 +561,7 @@ testSuite({
   },
 
   testIframeMask() {
-    const prevNumFrames =
-        dom.getElementsByTagNameAndClass(TagName.IFRAME).length;
+    const prevNumFrames = dom.getElementsByTagNameAndClass(TagName.IFRAME).length;
     // generate a new dialog
     dialog.dispose();
     /** @suppress {checkTypes} suppression added to enable type checking */
@@ -586,14 +573,12 @@ testSuite({
     // in certain cases, the test runner itself can can add an iframe
     // to the document as part of a strategy not to block the UI for too long.
     // See goog.async.nextTick.getSetImmediateEmulator_.
-    const curNumFrames =
-        dom.getElementsByTagNameAndClass(TagName.IFRAME).length;
+    const curNumFrames = dom.getElementsByTagNameAndClass(TagName.IFRAME).length;
     assertEquals('No iframe mask created', prevNumFrames + 1, curNumFrames);
   },
 
   testNonModalDialog() {
-    const prevNumFrames =
-        dom.getElementsByTagNameAndClass(TagName.IFRAME).length;
+    const prevNumFrames = dom.getElementsByTagNameAndClass(TagName.IFRAME).length;
     // generate a new dialog
     dialog.dispose();
     /** @suppress {checkTypes} suppression added to enable type checking */
@@ -608,10 +593,8 @@ testSuite({
     // certain cases, the test runner itself can can add an iframe to the
     // document as part of a strategy not to block the UI for too long. See
     // goog.async.nextTick.getSetImmediateEmulator_.
-    const curNumFrames =
-        dom.getElementsByTagNameAndClass(TagName.IFRAME).length;
-    assertEquals(
-        'Iframe mask created for modal dialog', prevNumFrames, curNumFrames);
+    const curNumFrames = dom.getElementsByTagNameAndClass(TagName.IFRAME).length;
+    assertEquals('Iframe mask created for modal dialog', prevNumFrames, curNumFrames);
   },
 
   testSwapModalForOpenDialog() {
@@ -624,34 +607,41 @@ testSuite({
     dialog.setModal(false);
     assertAriaHidden(false);
     assertFalse(
-        'IFrame bg element should not be in dom',
-        dom.contains(document.body, dialog.getBackgroundIframe()));
+      'IFrame bg element should not be in dom',
+      dom.contains(document.body, dialog.getBackgroundIframe())
+    );
     assertFalse(
-        'bg element should not be in dom',
-        dom.contains(document.body, dialog.getBackgroundElement()));
+      'bg element should not be in dom',
+      dom.contains(document.body, dialog.getBackgroundElement())
+    );
 
     dialog.setModal(true);
     assertAriaHidden(true);
     assertTrue(
-        'IFrame bg element should be in dom',
-        dom.contains(document.body, dialog.getBackgroundIframe()));
+      'IFrame bg element should be in dom',
+      dom.contains(document.body, dialog.getBackgroundIframe())
+    );
     assertTrue(
-        'bg element should be in dom',
-        dom.contains(document.body, dialog.getBackgroundElement()));
+      'bg element should be in dom',
+      dom.contains(document.body, dialog.getBackgroundElement())
+    );
 
     assertEquals(
-        'IFrame bg element is a child of body', document.body,
-        dialog.getBackgroundIframe().parentNode);
+      'IFrame bg element is a child of body',
+      document.body,
+      dialog.getBackgroundIframe().parentNode
+    );
     assertEquals(
-        'bg element is a child of body', document.body,
-        dialog.getBackgroundElement().parentNode);
+      'bg element is a child of body',
+      document.body,
+      dialog.getBackgroundElement().parentNode
+    );
 
     assertTrue(
-        'IFrame bg element should visible',
-        style.isElementShown(dialog.getBackgroundIframe()));
-    assertTrue(
-        'bg element should be visible',
-        style.isElementShown(dialog.getBackgroundElement()));
+      'IFrame bg element should visible',
+      style.isElementShown(dialog.getBackgroundIframe())
+    );
+    assertTrue('bg element should be visible', style.isElementShown(dialog.getBackgroundElement()));
   },
 
   /** @suppress {missingProperties} suppression added to enable type checking */
@@ -718,9 +708,7 @@ testSuite({
     dialog.render();
     assertTrue(!!dialog.getTitleTextElement().id);
     assertNotNull(dialog.getElement());
-    assertEquals(
-        dialog.getTitleTextElement().id,
-        aria.getState(dialog.getElement(), 'labelledby'));
+    assertEquals(dialog.getTitleTextElement().id, aria.getState(dialog.getElement(), 'labelledby'));
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -732,9 +720,7 @@ testSuite({
     dialog.setVisible(true);
     assertTrue(!!dialog.getTitleTextElement().id);
     assertNotNull(dialog.getElement());
-    assertEquals(
-        dialog.getTitleTextElement().id,
-        aria.getState(dialog.getElement(), 'labelledby'));
+    assertEquals(dialog.getTitleTextElement().id, aria.getState(dialog.getElement(), 'labelledby'));
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -744,8 +730,7 @@ testSuite({
     dialog = new Dialog();
     dialog.render();
     assertNotNull(dialog.getElement());
-    assertEquals(
-        dialog.getPreferredAriaRole(), aria.getRole(dialog.getElement()));
+    assertEquals(dialog.getPreferredAriaRole(), aria.getRole(dialog.getElement()));
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -755,8 +740,7 @@ testSuite({
     dialog = new Dialog();
     dialog.decorate(decorateTarget);
     assertNotNull(dialog.getElement());
-    assertEquals(
-        dialog.getPreferredAriaRole(), aria.getRole(dialog.getElement()));
+    assertEquals(dialog.getPreferredAriaRole(), aria.getRole(dialog.getElement()));
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -789,8 +773,7 @@ testSuite({
     dialog.setTextContent('hello world');
     dialog.createDom();
     assertNotNull(dialog.getElement());
-    assertFalse(
-        aria.hasState(dialog.getElementStrict(), aria.State.DESCRIBEDBY));
+    assertFalse(aria.hasState(dialog.getElementStrict(), aria.State.DESCRIBEDBY));
   },
 
   testIsAriaDescribedByContent_trueSetsAriaDescribedByLabelToContentId() {
@@ -801,11 +784,11 @@ testSuite({
     dialog.setTextContent('hello world');
     dialog.createDom();
     assertNotNull(dialog.getElement());
-    assertTrue(
-        aria.hasState(dialog.getElementStrict(), aria.State.DESCRIBEDBY));
+    assertTrue(aria.hasState(dialog.getElementStrict(), aria.State.DESCRIBEDBY));
     assertEquals(
-        dialog.getContentElement().id,
-        aria.getState(dialog.getElementStrict(), aria.State.DESCRIBEDBY));
+      dialog.getContentElement().id,
+      aria.getState(dialog.getElementStrict(), aria.State.DESCRIBEDBY)
+    );
   },
 
   testDefaultOpacityIsAppliedOnRender() {
@@ -827,12 +810,14 @@ testSuite({
   /** @suppress {visibility} suppression added to enable type checking */
   testDraggableStyle() {
     assertTrue(
-        'draggable CSS class is set',
-        classlist.contains(dialog.titleEl_, 'modal-dialog-title-draggable'));
+      'draggable CSS class is set',
+      classlist.contains(dialog.titleEl_, 'modal-dialog-title-draggable')
+    );
     dialog.setDraggable(false);
     assertFalse(
-        'draggable CSS class is removed',
-        classlist.contains(dialog.titleEl_, 'modal-dialog-title-draggable'));
+      'draggable CSS class is removed',
+      classlist.contains(dialog.titleEl_, 'modal-dialog-title-draggable')
+    );
   },
 
   /**
@@ -849,15 +834,14 @@ testSuite({
     assertNull('dragger is not created in createDom', dialog.dragger_);
 
     dialog.setVisible(true);
-    assertNotNull(
-        'dragger is created when the dialog is rendered', dialog.dragger_);
+    assertNotNull('dragger is created when the dialog is rendered', dialog.dragger_);
 
     assertNull(
-        'dragging limits are not set just before dragging',
-        dialog.setDraggerLimits_.getLastCall());
+      'dragging limits are not set just before dragging',
+      dialog.setDraggerLimits_.getLastCall()
+    );
     testingEvents.fireMouseDownEvent(dialog.titleEl_);
-    assertNotNull(
-        'dragging limits are set', dialog.setDraggerLimits_.getLastCall());
+    assertNotNull('dragging limits are set', dialog.setDraggerLimits_.getLastCall());
 
     dialog.exitDocument();
     assertNull('dragger is cleaned up in exitDocument', dialog.dragger_);
@@ -897,15 +881,17 @@ testSuite({
     dialog.setTrackSurroundingSpace(true);
     const initialSurroudingSpace = dialog.getSurroundingSpace();
     testingEvents.fireMouseDownEvent(
-        dialog.titleEl_, /* opt_button= */ undefined, new Coordinate(40, 70));
+      dialog.titleEl_,
+      /* opt_button= */ undefined,
+      new Coordinate(40, 70)
+    );
     testingEvents.fireMouseMoveEvent(dialog.titleEl_, new Coordinate(50, 90));
     const finalSurroudingSpace = dialog.getSurroundingSpace();
 
     assertEquals(initialSurroudingSpace.left + 10, finalSurroudingSpace.left);
     assertEquals(initialSurroudingSpace.right - 10, finalSurroudingSpace.right);
     assertEquals(initialSurroudingSpace.top + 20, finalSurroudingSpace.top);
-    assertEquals(
-        initialSurroudingSpace.bottom - 20, finalSurroudingSpace.bottom);
+    assertEquals(initialSurroudingSpace.bottom - 20, finalSurroudingSpace.bottom);
   },
 
   testDisposingVisibleDialogWithTransitionsDoesNotThrowException() {
@@ -922,10 +908,11 @@ testSuite({
     dialog = new Dialog();
     dialog.render();
     dialog.setTransition(
-        css3.fadeIn(dialog.getElement(), 1),
-        css3.fadeIn(dialog.getBackgroundElement(), 1),
-        css3.fadeOut(dialog.getElement(), 1),
-        css3.fadeOut(dialog.getBackgroundElement(), 1));
+      css3.fadeIn(dialog.getElement(), 1),
+      css3.fadeIn(dialog.getBackgroundElement(), 1),
+      css3.fadeOut(dialog.getElement(), 1),
+      css3.fadeOut(dialog.getBackgroundElement(), 1)
+    );
     dialog.setVisible(true);
     assertTrue(dialog.isVisible());
 
@@ -940,14 +927,14 @@ testSuite({
   },
 
   testHtmlContent() {
-    dialog.setSafeHtmlContent(
-        testing.newSafeHtmlForTest('<span class="theSpan">Hello</span>'));
+    dialog.setSafeHtmlContent(testing.newSafeHtmlForTest('<span class="theSpan">Hello</span>'));
     const spanEl = dom.getElementByClass('theSpan', dialog.getContentElement());
     assertEquals('Hello', dom.getTextContent(spanEl));
     assertEquals('<span class="theSpan">Hello</span>', dialog.getContent());
     assertEquals(
-        '<span class="theSpan">Hello</span>',
-        SafeHtml.unwrap(dialog.getSafeHtmlContent()));
+      '<span class="theSpan">Hello</span>',
+      SafeHtml.unwrap(dialog.getSafeHtmlContent())
+    );
   },
 
   testSetTextContent() {

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.icontentTest');
-goog.setTestOnly();
 
 const BrowserFeature = goog.require('goog.editor.BrowserFeature');
 const FieldFormatInfo = goog.require('goog.editor.icontent.FieldFormatInfo');
@@ -43,10 +42,11 @@ function assertBodyCorrect(body, id, bodyHTML, rtl = undefined) {
   assertContains('editable', body.className.match(/\S+/g));
   assertEquals('true', String(body.getAttribute('g_editable')));
   assertEquals(
-      'true',
-      // IE has bugs with getAttribute('hideFocus'), and
-      // Webkit has bugs with normal .hideFocus access.
-      String(userAgent.IE ? body.hideFocus : body.getAttribute('hideFocus')));
+    'true',
+    // IE has bugs with getAttribute('hideFocus'), and
+    // Webkit has bugs with normal .hideFocus access.
+    String(userAgent.IE ? body.hideFocus : body.getAttribute('hideFocus'))
+  );
   assertEquals(id, body.id);
 }
 
@@ -55,25 +55,24 @@ function createMockDocument() {
   return {
     body: {
       tagName: 'BODY',
-      setAttribute: function(key, val) {
+      setAttribute: function (key, val) {
         /** @suppress {globalThis} suppression added to enable type checking */
         this[key] = val;
       },
-      getAttribute: /**
+      /**
                        @suppress {globalThis} suppression added to enable type
                        checking
                      */
-          function(key) {
-            return this[key];
-          },
-      style: {direction: ''},
+      getAttribute: function (key) {
+        return this[key];
+      },
+      style: { direction: '' },
     },
   };
 }
 testSuite({
   setUp() {
-    wrapperDiv = dom.createDom(
-        TagName.DIV, null, realIframe = dom.createDom(TagName.IFRAME));
+    wrapperDiv = dom.createDom(TagName.DIV, null, (realIframe = dom.createDom(TagName.IFRAME)));
     dom.appendChild(document.body, wrapperDiv);
     realIframeDoc = realIframe.contentWindow.document;
     propertyReplacer = new PropertyReplacer();
@@ -110,32 +109,36 @@ testSuite({
 
   testWriteInitialIframeContentBlendedStandardsGrowing() {
     if (BrowserFeature.HAS_CONTENT_EDITABLE) {
-      return;  // only executes when using an iframe
+      return; // only executes when using an iframe
     }
 
     const info = new FieldFormatInfo('id', true, true, false);
     const styleInfo = new FieldStyleInfo(
-        wrapperDiv, '.MyClass { position: absolute; top: 500px; }');
+      wrapperDiv,
+      '.MyClass { position: absolute; top: 500px; }'
+    );
     const doc = realIframeDoc;
     const html = '<div class="MyClass">Some Html</div>';
     icontent.writeNormalInitialBlendedIframe(info, html, styleInfo, realIframe);
 
     assertBodyCorrect(doc.body, 'id', html);
-    assertEquals('CSS1Compat', doc.compatMode);              // standards
-    assertEquals('auto', doc.documentElement.style.height);  // growing
-    assertEquals('100%', doc.body.style.height);             // standards
-    assertEquals('hidden', doc.body.style.overflowY);        // growing
-    assertEquals('', realIframe.style.position);  // no padding on wrapper
+    assertEquals('CSS1Compat', doc.compatMode); // standards
+    assertEquals('auto', doc.documentElement.style.height); // growing
+    assertEquals('100%', doc.body.style.height); // standards
+    assertEquals('hidden', doc.body.style.overflowY); // growing
+    assertEquals('', realIframe.style.position); // no padding on wrapper
 
     assertEquals(500, doc.body.firstChild.offsetTop);
     assert(
-        dom.getElementsByTagName(TagName.STYLE, doc)[0].innerHTML.indexOf(
-            '-moz-force-broken-image-icon') != -1);  // standards
+      dom
+        .getElementsByTagName(TagName.STYLE, doc)[0]
+        .innerHTML.indexOf('-moz-force-broken-image-icon') != -1
+    ); // standards
   },
 
   testWriteInitialIframeContentBlendedQuirksFixedRtl() {
     if (BrowserFeature.HAS_CONTENT_EDITABLE) {
-      return;  // only executes when using an iframe
+      return; // only executes when using an iframe
     }
 
     const info = new FieldFormatInfo('id', false, true, true);
@@ -146,16 +149,18 @@ testSuite({
     icontent.writeNormalInitialBlendedIframe(info, html, styleInfo, realIframe);
 
     assertBodyCorrect(doc.body, 'id', html, true);
-    assertEquals('BackCompat', doc.compatMode);              // quirks
-    assertEquals('100%', doc.documentElement.style.height);  // fixed height
-    assertEquals('auto', doc.body.style.height);             // quirks
-    assertEquals('auto', doc.body.style.overflow);           // fixed height
+    assertEquals('BackCompat', doc.compatMode); // quirks
+    assertEquals('100%', doc.documentElement.style.height); // fixed height
+    assertEquals('auto', doc.body.style.height); // quirks
+    assertEquals('auto', doc.body.style.overflow); // fixed height
 
     assertEquals('-2px', realIframe.style.marginTop);
     assertEquals('-5px', realIframe.style.marginLeft);
     assert(
-        dom.getElementsByTagName(TagName.STYLE, doc)[0].innerHTML.indexOf(
-            '-moz-force-broken-image-icon') == -1);  // quirks
+      dom
+        .getElementsByTagName(TagName.STYLE, doc)[0]
+        .innerHTML.indexOf('-moz-force-broken-image-icon') == -1
+    ); // quirks
   },
 
   testWhiteboxStandardsFixedRtl() {
@@ -170,8 +175,7 @@ testSuite({
     // are CSS1Compat. It's fixed in the nightlies as of 3/31/08, so remove
     // this guard when the latest version of Safari is on the farm.
     if (!userAgent.WEBKIT) {
-      assertEquals(
-          'BackCompat', doc.compatMode);  // always use quirks in whitebox
+      assertEquals('BackCompat', doc.compatMode); // always use quirks in whitebox
     }
   },
 
@@ -193,12 +197,14 @@ testSuite({
 
   testIframeMinWidthOverride() {
     if (BrowserFeature.HAS_CONTENT_EDITABLE) {
-      return;  // only executes when using an iframe
+      return; // only executes when using an iframe
     }
 
     const info = new FieldFormatInfo('id', true, true, false);
     const styleInfo = new FieldStyleInfo(
-        wrapperDiv, '.MyClass { position: absolute; top: 500px; }');
+      wrapperDiv,
+      '.MyClass { position: absolute; top: 500px; }'
+    );
     const doc = realIframeDoc;
     const html = '<div class="MyClass">Some Html</div>';
     icontent.writeNormalInitialBlendedIframe(info, html, styleInfo, realIframe);

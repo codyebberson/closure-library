@@ -12,15 +12,12 @@
 
 goog.provide('goog.ui.DatePickerRenderer');
 
-
-
 /**
  * The renderer for {@link goog.ui.DatePicker}. Renders the date picker's
  * navigation header and footer.
  * @interface
  */
-goog.ui.DatePickerRenderer = function() {};
-
+goog.ui.DatePickerRenderer = () => {};
 
 /**
  * Render the navigation row.
@@ -36,7 +33,6 @@ goog.ui.DatePickerRenderer = function() {};
  *     {@see goog.i18n.DateTimeSymbols}.
  */
 goog.ui.DatePickerRenderer.prototype.renderNavigationRow = goog.abstractMethod;
-
 
 /**
  * Render the footer row.

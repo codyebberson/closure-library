@@ -14,7 +14,6 @@ goog.require('goog.i18n.GraphemeBreak');
 goog.require('goog.string');
 goog.require('goog.userAgent');
 
-
 /**
  * Formats a number of bytes in human readable form.
  * 54, 450K, 1.3M, 5G etc.
@@ -22,11 +21,8 @@ goog.require('goog.userAgent');
  * @param {number=} opt_decimals The number of decimals to use.  Defaults to 2.
  * @return {string} The human readable form of the byte size.
  */
-goog.format.fileSize = function(bytes, opt_decimals) {
-  'use strict';
-  return goog.format.numBytesToString(bytes, opt_decimals, false);
-};
-
+goog.format.fileSize = (bytes, opt_decimals) =>
+  goog.format.numBytesToString(bytes, opt_decimals, false);
 
 /**
  * Checks whether string value containing scaling units (K, M, G, T, P, m,
@@ -43,11 +39,7 @@ goog.format.fileSize = function(bytes, opt_decimals) {
  * @param {string} val String value to check.
  * @return {boolean} True if string could be converted to a numeric value.
  */
-goog.format.isConvertableScaledNumber = function(val) {
-  'use strict';
-  return goog.format.SCALED_NUMERIC_RE_.test(val);
-};
-
+goog.format.isConvertableScaledNumber = (val) => goog.format.SCALED_NUMERIC_RE_.test(val);
 
 /**
  * Converts a string to numeric value, taking into account the units.
@@ -55,16 +47,12 @@ goog.format.isConvertableScaledNumber = function(val) {
  * @param {string} stringValue String to be converted to numeric value.
  * @return {number} Numeric value for string.
  */
-goog.format.stringToNumericValue = function(stringValue) {
-  'use strict';
+goog.format.stringToNumericValue = (stringValue) => {
   if (goog.string.endsWith(stringValue, 'B')) {
-    return goog.format.stringToNumericValue_(
-        stringValue, goog.format.NUMERIC_SCALES_BINARY_);
+    return goog.format.stringToNumericValue_(stringValue, goog.format.NUMERIC_SCALES_BINARY_);
   }
-  return goog.format.stringToNumericValue_(
-      stringValue, goog.format.NUMERIC_SCALES_SI_);
+  return goog.format.stringToNumericValue_(stringValue, goog.format.NUMERIC_SCALES_SI_);
 };
-
 
 /**
  * Converts a string to number of bytes, taking into account the units.
@@ -72,12 +60,8 @@ goog.format.stringToNumericValue = function(stringValue) {
  * @param {string} stringValue String to be converted to numeric value.
  * @return {number} Numeric value for string.
  */
-goog.format.stringToNumBytes = function(stringValue) {
-  'use strict';
-  return goog.format.stringToNumericValue_(
-      stringValue, goog.format.NUMERIC_SCALES_BINARY_);
-};
-
+goog.format.stringToNumBytes = (stringValue) =>
+  goog.format.stringToNumericValue_(stringValue, goog.format.NUMERIC_SCALES_BINARY_);
 
 /**
  * Converts a numeric value to string representation. SI conversion.
@@ -85,12 +69,8 @@ goog.format.stringToNumBytes = function(stringValue) {
  * @param {number=} opt_decimals The number of decimals to use.  Defaults to 2.
  * @return {string} String representation of number.
  */
-goog.format.numericValueToString = function(val, opt_decimals) {
-  'use strict';
-  return goog.format.numericValueToString_(
-      val, goog.format.NUMERIC_SCALES_SI_, opt_decimals);
-};
-
+goog.format.numericValueToString = (val, opt_decimals) =>
+  goog.format.numericValueToString_(val, goog.format.NUMERIC_SCALES_SI_, opt_decimals);
 
 /**
  * Converts number of bytes to string representation. Binary conversion.
@@ -105,18 +85,19 @@ goog.format.numericValueToString = function(val, opt_decimals) {
  *     separated by a no break space. Default is false.
  * @return {string} String representation of number of bytes.
  */
-goog.format.numBytesToString = function(
-    val, opt_decimals, opt_suffix, opt_useSeparator) {
-  'use strict';
+goog.format.numBytesToString = (val, opt_decimals, opt_suffix, opt_useSeparator) => {
   var suffix = '';
   if (opt_suffix === undefined || opt_suffix) {
     suffix = 'B';
   }
   return goog.format.numericValueToString_(
-      val, goog.format.NUMERIC_SCALES_BINARY_, opt_decimals, suffix,
-      opt_useSeparator);
+    val,
+    goog.format.NUMERIC_SCALES_BINARY_,
+    opt_decimals,
+    suffix,
+    opt_useSeparator
+  );
 };
-
 
 /**
  * Converts a string to numeric value, taking into account the units.
@@ -126,8 +107,7 @@ goog.format.numBytesToString = function(
  *    returns NaN.
  * @private
  */
-goog.format.stringToNumericValue_ = function(stringValue, conversion) {
-  'use strict';
+goog.format.stringToNumericValue_ = (stringValue, conversion) => {
   var match = stringValue.match(goog.format.SCALED_NUMERIC_RE_);
   if (!match) {
     // Parse signed `Infinity`, `NaN`, or scientific notation.
@@ -136,7 +116,6 @@ goog.format.stringToNumericValue_ = function(stringValue, conversion) {
   var val = Number(match[1]) * conversion[match[2]];
   return val;
 };
-
 
 /**
  * Converts a numeric value to string, using specified conversion
@@ -150,9 +129,13 @@ goog.format.stringToNumericValue_ = function(stringValue, conversion) {
  * @return {string} The human readable form of the byte size.
  * @private
  */
-goog.format.numericValueToString_ = function(
-    val, conversion, opt_decimals, opt_suffix, opt_useSeparator) {
-  'use strict';
+goog.format.numericValueToString_ = (
+  val,
+  conversion,
+  opt_decimals,
+  opt_suffix,
+  opt_useSeparator
+) => {
   var prefixes = goog.format.NUMERIC_SCALE_PREFIXES_;
   var origVal = val;
   var symbol = '';
@@ -161,7 +144,8 @@ goog.format.numericValueToString_ = function(
   if (val < 0) {
     val = -val;
   }
-  if (val === Infinity) return (Infinity * Math.sign(origVal)).toString();
+  if (val === Number.POSITIVE_INFINITY)
+    return (Number.POSITIVE_INFINITY * Math.sign(origVal)).toString();
   for (var i = 0; i < prefixes.length; i++) {
     var unit = prefixes[i];
     scale = conversion[unit];
@@ -183,9 +167,8 @@ goog.format.numericValueToString_ = function(
     }
   }
   var ex = Math.pow(10, opt_decimals !== undefined ? opt_decimals : 2);
-  return Math.round(origVal / scale * ex) / ex + separator + symbol;
+  return Math.round((origVal / scale) * ex) / ex + separator + symbol;
 };
-
 
 /**
  * Regular expression for detecting scaling units, such as K, M, G, etc. for
@@ -202,14 +185,11 @@ goog.format.numericValueToString_ = function(
  */
 goog.format.SCALED_NUMERIC_RE_ = /^(-?\d+\.?\d*)([KMGTPEZYkmun]?)B?$/;
 
-
 /**
  * Ordered list of scaling prefixes in decreasing order.
  * @private {Array<string>}
  */
-goog.format.NUMERIC_SCALE_PREFIXES_ =
-    ['Y', 'Z', 'E', 'P', 'T', 'G', 'M', 'K', '', 'm', 'u', 'n'];
-
+goog.format.NUMERIC_SCALE_PREFIXES_ = ['Y', 'Z', 'E', 'P', 'T', 'G', 'M', 'K', '', 'm', 'u', 'n'];
 
 /**
  * Scaling factors for conversion of numeric value to string.  SI conversion.
@@ -218,20 +198,19 @@ goog.format.NUMERIC_SCALE_PREFIXES_ =
  */
 goog.format.NUMERIC_SCALES_SI_ = {
   '': 1,
-  'n': 1e-9,
-  'u': 1e-6,
-  'm': 1e-3,
-  'k': 1e3,
-  'K': 1e3,
-  'M': 1e6,
-  'G': 1e9,
-  'T': 1e12,
-  'P': 1e15,
-  'E': 1e18,
-  'Z': 1e21,
-  'Y': 1e24
+  n: 1e-9,
+  u: 1e-6,
+  m: 1e-3,
+  k: 1e3,
+  K: 1e3,
+  M: 1e6,
+  G: 1e9,
+  T: 1e12,
+  P: 1e15,
+  E: 1e18,
+  Z: 1e21,
+  Y: 1e24,
 };
-
 
 /**
  * Scaling factors for conversion of numeric value to string.  Binary
@@ -241,20 +220,19 @@ goog.format.NUMERIC_SCALES_SI_ = {
  */
 goog.format.NUMERIC_SCALES_BINARY_ = {
   '': 1,
-  'n': Math.pow(1024, -3),
-  'u': Math.pow(1024, -2),
-  'm': 1.0 / 1024,
-  'k': 1024,
-  'K': 1024,
-  'M': Math.pow(1024, 2),
-  'G': Math.pow(1024, 3),
-  'T': Math.pow(1024, 4),
-  'P': Math.pow(1024, 5),
-  'E': Math.pow(1024, 6),
-  'Z': Math.pow(1024, 7),
-  'Y': Math.pow(1024, 8)
+  n: Math.pow(1024, -3),
+  u: Math.pow(1024, -2),
+  m: 1.0 / 1024,
+  k: 1024,
+  K: 1024,
+  M: Math.pow(1024, 2),
+  G: Math.pow(1024, 3),
+  T: Math.pow(1024, 4),
+  P: Math.pow(1024, 5),
+  E: Math.pow(1024, 6),
+  Z: Math.pow(1024, 7),
+  Y: Math.pow(1024, 8),
 };
-
 
 /**
  * First Unicode code point that has the Mark property.
@@ -262,7 +240,6 @@ goog.format.NUMERIC_SCALES_BINARY_ = {
  * @private
  */
 goog.format.FIRST_GRAPHEME_EXTEND_ = 0x300;
-
 
 /**
  * Returns true if and only if given character should be treated as a breaking
@@ -273,16 +250,17 @@ goog.format.FIRST_GRAPHEME_EXTEND_ = 0x300;
  * @return {boolean} True if the character is a breaking space.
  * @private
  */
-goog.format.isTreatedAsBreakingSpace_ = function(charCode) {
-  'use strict';
-  return (charCode <= goog.format.WbrToken_.SPACE) ||
-      (charCode >= 0x1000 &&
-       ((charCode >= 0x2000 && charCode <= 0x2006) ||
-        (charCode >= 0x2008 && charCode <= 0x200B) || charCode == 0x1680 ||
-        charCode == 0x180E || charCode == 0x2028 || charCode == 0x2029 ||
-        charCode == 0x205f || charCode == 0x3000));
-};
-
+goog.format.isTreatedAsBreakingSpace_ = (charCode) =>
+  charCode <= goog.format.WbrToken_.SPACE ||
+  (charCode >= 0x1000 &&
+    ((charCode >= 0x2000 && charCode <= 0x2006) ||
+      (charCode >= 0x2008 && charCode <= 0x200b) ||
+      charCode == 0x1680 ||
+      charCode == 0x180e ||
+      charCode == 0x2028 ||
+      charCode == 0x2029 ||
+      charCode == 0x205f ||
+      charCode == 0x3000));
 
 /**
  * Returns true if and only if given character is an invisible formatting
@@ -291,13 +269,10 @@ goog.format.isTreatedAsBreakingSpace_ = function(charCode) {
  * @return {boolean} True if the character is an invisible formatting character.
  * @private
  */
-goog.format.isInvisibleFormattingCharacter_ = function(charCode) {
-  'use strict';
+goog.format.isInvisibleFormattingCharacter_ = (charCode) => {
   // See: http://unicode.org/charts/PDF/U2000.pdf
-  return (charCode >= 0x200C && charCode <= 0x200F) ||
-      (charCode >= 0x202A && charCode <= 0x202E);
+  return (charCode >= 0x200c && charCode <= 0x200f) || (charCode >= 0x202a && charCode <= 0x202e);
 };
-
 
 /**
  * Inserts word breaks into an HTML string at a given interval.  The counter is
@@ -319,14 +294,12 @@ goog.format.isInvisibleFormattingCharacter_ = function(charCode) {
  * @return {string} The string including word breaks.
  * @private
  */
-goog.format.insertWordBreaksGeneric_ = function(
-    str, hasGraphemeBreak, opt_maxlen) {
-  'use strict';
+goog.format.insertWordBreaksGeneric_ = (str, hasGraphemeBreak, opt_maxlen) => {
   var maxlen = opt_maxlen || 10;
   if (maxlen > str.length) return str;
 
   var rv = [];
-  var n = 0;  // The length of the current token
+  var n = 0; // The length of the current token
 
   // This will contain the ampersand or less-than character if one of the
   // two has been seen; otherwise, the value is zero.
@@ -343,14 +316,17 @@ goog.format.insertWordBreaksGeneric_ = function(
 
     // Don't add a WBR before characters that might be grapheme extending.
     var isPotentiallyGraphemeExtending =
-        charCode >= goog.format.FIRST_GRAPHEME_EXTEND_ &&
-        !hasGraphemeBreak(lastCharCode, charCode, true);
+      charCode >= goog.format.FIRST_GRAPHEME_EXTEND_ &&
+      !hasGraphemeBreak(lastCharCode, charCode, true);
 
     // Don't add a WBR at the end of a word. For the purposes of determining
     // work breaks, all ASCII control characters and some commonly encountered
     // Unicode spacing characters are treated as breaking spaces.
-    if (n >= maxlen && !goog.format.isTreatedAsBreakingSpace_(charCode) &&
-        !isPotentiallyGraphemeExtending) {
+    if (
+      n >= maxlen &&
+      !goog.format.isTreatedAsBreakingSpace_(charCode) &&
+      !isPotentiallyGraphemeExtending
+    ) {
       // Flush everything seen so far, and append a word break.
       rv.push(str.substring(lastDumpPosition, i), goog.format.WORD_BREAK_HTML);
       lastDumpPosition = i;
@@ -360,8 +336,7 @@ goog.format.insertWordBreaksGeneric_ = function(
     if (!nestingCharCode) {
       // Not currently within an HTML tag or entity
 
-      if (charCode == goog.format.WbrToken_.LT ||
-          charCode == goog.format.WbrToken_.AMP) {
+      if (charCode == goog.format.WbrToken_.LT || charCode == goog.format.WbrToken_.AMP) {
         // Entering an HTML Entity '&' or open tag '<'
         nestingCharCode = charCode;
       } else if (goog.format.isTreatedAsBreakingSpace_(charCode)) {
@@ -378,13 +353,15 @@ goog.format.insertWordBreaksGeneric_ = function(
         n++;
       }
     } else if (
-        charCode == goog.format.WbrToken_.GT &&
-        nestingCharCode == goog.format.WbrToken_.LT) {
+      charCode == goog.format.WbrToken_.GT &&
+      nestingCharCode == goog.format.WbrToken_.LT
+    ) {
       // Leaving an HTML tag, treat the tag as zero-length
       nestingCharCode = 0;
     } else if (
-        charCode == goog.format.WbrToken_.SEMI_COLON &&
-        nestingCharCode == goog.format.WbrToken_.AMP) {
+      charCode == goog.format.WbrToken_.SEMI_COLON &&
+      nestingCharCode == goog.format.WbrToken_.AMP
+    ) {
       // Leaving an HTML entity, treat it as length one
       nestingCharCode = 0;
       n++;
@@ -396,7 +373,6 @@ goog.format.insertWordBreaksGeneric_ = function(
 
   return rv.join('');
 };
-
 
 /**
  * Inserts word breaks into an HTML string at a given interval.
@@ -412,12 +388,8 @@ goog.format.insertWordBreaksGeneric_ = function(
  * @return {string} The string including word breaks.
  * @deprecated Prefer wrapping with CSS word-wrap: break-word.
  */
-goog.format.insertWordBreaks = function(str, opt_maxlen) {
-  'use strict';
-  return goog.format.insertWordBreaksGeneric_(
-      str, goog.i18n.GraphemeBreak.hasGraphemeBreak, opt_maxlen);
-};
-
+goog.format.insertWordBreaks = (str, opt_maxlen) =>
+  goog.format.insertWordBreaksGeneric_(str, goog.i18n.GraphemeBreak.hasGraphemeBreak, opt_maxlen);
 
 /**
  * Determines conservatively if a character has a Grapheme break.
@@ -435,9 +407,7 @@ goog.format.insertWordBreaks = function(str, opt_maxlen) {
  *     with a grapheme break.
  * @private
  */
-goog.format.conservativelyHasGraphemeBreak_ = function(
-    lastCharCode, charCode, opt_extended) {
-  'use strict';
+goog.format.conservativelyHasGraphemeBreak_ = (lastCharCode, charCode, opt_extended) => {
   // Return false for everything except the most common Cyrillic characters.
   // Don't worry about Latin characters, because insertWordBreaksGeneric_
   // itself already handles those.
@@ -445,7 +415,6 @@ goog.format.conservativelyHasGraphemeBreak_ = function(
   // simple to do so.
   return charCode >= 0x400 && charCode < 0x523;
 };
-
 
 // TODO(gboyer): Consider using a compile-time flag to switch implementations
 // rather than relying on the developers to toggle implementations.
@@ -465,12 +434,12 @@ goog.format.conservativelyHasGraphemeBreak_ = function(
  * @return {string} The string including word breaks.
  * @deprecated Prefer wrapping with CSS word-wrap: break-word.
  */
-goog.format.insertWordBreaksBasic = function(str, opt_maxlen) {
-  'use strict';
-  return goog.format.insertWordBreaksGeneric_(
-      str, goog.format.conservativelyHasGraphemeBreak_, opt_maxlen);
-};
-
+goog.format.insertWordBreaksBasic = (str, opt_maxlen) =>
+  goog.format.insertWordBreaksGeneric_(
+    str,
+    goog.format.conservativelyHasGraphemeBreak_,
+    opt_maxlen
+  );
 
 /**
  * True iff the current userAgent is IE8 or above.
@@ -479,7 +448,6 @@ goog.format.insertWordBreaksBasic = function(str, opt_maxlen) {
  */
 goog.format.IS_IE8_OR_ABOVE_ = goog.userAgent.IE;
 
-
 /**
  * Constant for the WBR replacement used by insertWordBreaks.  Safari requires
  * &lt;wbr&gt;&lt;/wbr&gt;, Opera needs the &shy; entity, though this will give
@@ -487,10 +455,11 @@ goog.format.IS_IE8_OR_ABOVE_ = goog.userAgent.IE;
  * use &lt;wbr&gt;.
  * @type {string}
  */
-goog.format.WORD_BREAK_HTML = goog.userAgent.WEBKIT ? '<wbr></wbr>' :
-    goog.format.IS_IE8_OR_ABOVE_                    ? '&#8203;' :
-                                                      '<wbr>';
-
+goog.format.WORD_BREAK_HTML = goog.userAgent.WEBKIT
+  ? '<wbr></wbr>'
+  : goog.format.IS_IE8_OR_ABOVE_
+    ? '&#8203;'
+    : '<wbr>';
 
 /**
  * Tokens used within insertWordBreaks.
@@ -498,9 +467,9 @@ goog.format.WORD_BREAK_HTML = goog.userAgent.WEBKIT ? '<wbr></wbr>' :
  * @enum {number}
  */
 goog.format.WbrToken_ = {
-  LT: 60,          // '<'.charCodeAt(0)
-  GT: 62,          // '>'.charCodeAt(0)
-  AMP: 38,         // '&'.charCodeAt(0)
-  SEMI_COLON: 59,  // ';'.charCodeAt(0)
-  SPACE: 32        // ' '.charCodeAt(0)
+  LT: 60, // '<'.charCodeAt(0)
+  GT: 62, // '>'.charCodeAt(0)
+  AMP: 38, // '&'.charCodeAt(0)
+  SEMI_COLON: 59, // ';'.charCodeAt(0)
+  SPACE: 32, // ' '.charCodeAt(0)
 };

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.crypt.BlobHasherTest');
-goog.setTestOnly();
 
 const BlobHasher = goog.require('goog.crypt.BlobHasher');
 const Md5 = goog.require('goog.crypt.Md5');
@@ -106,8 +105,7 @@ const stubs = new PropertyReplacer();
  */
 function readFromBlob(blobHasher, maxReads) {
   let counter = 0;
-  while (blobHasher.fileReader_ && blobHasher.fileReader_.isLoading() &&
-         counter <= maxReads) {
+  while (blobHasher.fileReader_ && blobHasher.fileReader_.isLoading() && counter <= maxReads) {
     blobHasher.fileReader_.mockLoad();
     counter++;
   }
@@ -137,25 +135,19 @@ testSuite({
     let blob = new BlobMock('The quick brown fox jumps over the lazy dog');
     blobHasher.hash(blob);
     readFromBlob(blobHasher, 1);
-    assertEquals(
-        '9e107d9d372bb6826bd81d3542a419d6',
-        crypt.byteArrayToHex(blobHasher.getHash()));
+    assertEquals('9e107d9d372bb6826bd81d3542a419d6', crypt.byteArrayToHex(blobHasher.getHash()));
 
     // Test hashing with multiple chunks.
     blobHasher = new BlobHasher(hashFn, 7);
     blobHasher.hash(blob);
     readFromBlob(blobHasher, Math.ceil(blob.size / 7));
-    assertEquals(
-        '9e107d9d372bb6826bd81d3542a419d6',
-        crypt.byteArrayToHex(blobHasher.getHash()));
+    assertEquals('9e107d9d372bb6826bd81d3542a419d6', crypt.byteArrayToHex(blobHasher.getHash()));
 
     // Test hashing with no chunks.
     blob = new BlobMock('');
     blobHasher.hash(blob);
     readFromBlob(blobHasher, 1);
-    assertEquals(
-        'd41d8cd98f00b204e9800998ecf8427e',
-        crypt.byteArrayToHex(blobHasher.getHash()));
+    assertEquals('d41d8cd98f00b204e9800998ecf8427e', crypt.byteArrayToHex(blobHasher.getHash()));
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -324,14 +316,12 @@ testSuite({
     assertEquals(15, blobHasher.getBytesProcessed());
 
     // The entire blob should be processed.
-    blobHasher.setHashingLimit(Infinity);
+    blobHasher.setHashingLimit(Number.POSITIVE_INFINITY);
     const expectedChunks = Math.ceil(blob.size / 5) - 3;
     assertEquals(expectedChunks, readFromBlob(blobHasher, expectedChunks));
     assertEquals(4, throttledEvents);
     assertEquals(1, completeEvents);
-    assertEquals(
-        '9e107d9d372bb6826bd81d3542a419d6',
-        crypt.byteArrayToHex(blobHasher.getHash()));
+    assertEquals('9e107d9d372bb6826bd81d3542a419d6', crypt.byteArrayToHex(blobHasher.getHash()));
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -357,9 +347,7 @@ testSuite({
     blobHasher.hash(blob);
     assertEquals(0, throttledEvents);
     assertEquals(1, completeEvents);
-    assertEquals(
-        'd41d8cd98f00b204e9800998ecf8427e',
-        crypt.byteArrayToHex(blobHasher.getHash()));
+    assertEquals('d41d8cd98f00b204e9800998ecf8427e', crypt.byteArrayToHex(blobHasher.getHash()));
   },
 
   /**

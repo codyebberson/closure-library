@@ -54,7 +54,6 @@
  * unimportant.
  */
 
-
 goog.provide('goog.html.legacyconversions');
 
 goog.require('goog.html.SafeHtml');
@@ -63,7 +62,6 @@ goog.require('goog.html.SafeStyle');
 goog.require('goog.html.SafeStyleSheet');
 goog.require('goog.html.SafeUrl');
 goog.require('goog.html.TrustedResourceUrl');
-
 
 /**
  * Performs an "unchecked conversion" from string to SafeHtml for legacy API
@@ -75,13 +73,10 @@ goog.require('goog.html.TrustedResourceUrl');
  * @return {!goog.html.SafeHtml} The value of html, wrapped in a SafeHtml
  *     object.
  */
-goog.html.legacyconversions.safeHtmlFromString = function(html) {
-  'use strict';
+goog.html.legacyconversions.safeHtmlFromString = (html) => {
   goog.html.legacyconversions.reportCallback_();
-  return goog.html.SafeHtml.createSafeHtmlSecurityPrivateDoNotAccessOrElse(
-      html);
+  return goog.html.SafeHtml.createSafeHtmlSecurityPrivateDoNotAccessOrElse(html);
 };
-
 
 /**
  * Performs an "unchecked conversion" from string to SafeScript for legacy API
@@ -93,13 +88,10 @@ goog.html.legacyconversions.safeHtmlFromString = function(html) {
  * @return {!goog.html.SafeScript} The value of script, wrapped in a SafeScript
  *     object.
  */
-goog.html.legacyconversions.safeScriptFromString = function(script) {
-  'use strict';
+goog.html.legacyconversions.safeScriptFromString = (script) => {
   goog.html.legacyconversions.reportCallback_();
-  return goog.html.SafeScript.createSafeScriptSecurityPrivateDoNotAccessOrElse(
-      script);
+  return goog.html.SafeScript.createSafeScriptSecurityPrivateDoNotAccessOrElse(script);
 };
-
 
 /**
  * Performs an "unchecked conversion" from string to SafeStyle for legacy API
@@ -111,13 +103,10 @@ goog.html.legacyconversions.safeScriptFromString = function(script) {
  * @return {!goog.html.SafeStyle} The value of style, wrapped in a SafeStyle
  *     object.
  */
-goog.html.legacyconversions.safeStyleFromString = function(style) {
-  'use strict';
+goog.html.legacyconversions.safeStyleFromString = (style) => {
   goog.html.legacyconversions.reportCallback_();
-  return goog.html.SafeStyle.createSafeStyleSecurityPrivateDoNotAccessOrElse(
-      style);
+  return goog.html.SafeStyle.createSafeStyleSecurityPrivateDoNotAccessOrElse(style);
 };
-
 
 /**
  * Performs an "unchecked conversion" from string to SafeStyleSheet for legacy
@@ -129,13 +118,10 @@ goog.html.legacyconversions.safeStyleFromString = function(style) {
  * @return {!goog.html.SafeStyleSheet} The value of style sheet, wrapped in
  *     a SafeStyleSheet object.
  */
-goog.html.legacyconversions.safeStyleSheetFromString = function(styleSheet) {
-  'use strict';
+goog.html.legacyconversions.safeStyleSheetFromString = (styleSheet) => {
   goog.html.legacyconversions.reportCallback_();
-  return goog.html.SafeStyleSheet
-      .createSafeStyleSheetSecurityPrivateDoNotAccessOrElse(styleSheet);
+  return goog.html.SafeStyleSheet.createSafeStyleSheetSecurityPrivateDoNotAccessOrElse(styleSheet);
 };
-
 
 /**
  * Performs an "unchecked conversion" from string to SafeUrl for legacy API
@@ -147,12 +133,10 @@ goog.html.legacyconversions.safeStyleSheetFromString = function(styleSheet) {
  * @return {!goog.html.SafeUrl} The value of url, wrapped in a SafeUrl
  *     object.
  */
-goog.html.legacyconversions.safeUrlFromString = function(url) {
-  'use strict';
+goog.html.legacyconversions.safeUrlFromString = (url) => {
   goog.html.legacyconversions.reportCallback_();
   return goog.html.SafeUrl.createSafeUrlSecurityPrivateDoNotAccessOrElse(url);
 };
-
 
 /**
  * Performs an "unchecked conversion" from string to TrustedResourceUrl for
@@ -164,18 +148,15 @@ goog.html.legacyconversions.safeUrlFromString = function(url) {
  * @return {!goog.html.TrustedResourceUrl} The value of url, wrapped in a
  *     TrustedResourceUrl object.
  */
-goog.html.legacyconversions.trustedResourceUrlFromString = function(url) {
-  'use strict';
+goog.html.legacyconversions.trustedResourceUrlFromString = (url) => {
   goog.html.legacyconversions.reportCallback_();
-  return goog.html.TrustedResourceUrl
-      .createTrustedResourceUrlSecurityPrivateDoNotAccessOrElse(url);
+  return goog.html.TrustedResourceUrl.createTrustedResourceUrlSecurityPrivateDoNotAccessOrElse(url);
 };
 
 /**
  * @private {function(): undefined}
  */
-goog.html.legacyconversions.reportCallback_ = function() {};
-
+goog.html.legacyconversions.reportCallback_ = () => {};
 
 /**
  * Sets a function that will be called every time a legacy conversion is
@@ -184,7 +165,6 @@ goog.html.legacyconversions.reportCallback_ = function() {};
  *
  * @param {function(): undefined} callback Error callback as defined above.
  */
-goog.html.legacyconversions.setReportCallback = function(callback) {
-  'use strict';
+goog.html.legacyconversions.setReportCallback = (callback) => {
   goog.html.legacyconversions.reportCallback_ = callback;
 };

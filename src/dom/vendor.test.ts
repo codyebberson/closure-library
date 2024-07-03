@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dom.vendorTest');
-goog.setTestOnly();
 
 const MockUserAgent = goog.require('goog.testing.MockUserAgent');
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
@@ -20,12 +19,12 @@ let documentMode;
 let mockUserAgent;
 const propertyReplacer = new PropertyReplacer();
 
-let getDocumentMode = () => documentMode;
+const getDocumentMode = () => documentMode;
 
 const UserAgents = {
   GECKO: 'GECKO',
   IE: 'IE',
-  WEBKIT: 'WEBKIT'
+  WEBKIT: 'WEBKIT',
 };
 
 /**
@@ -53,19 +52,18 @@ function getUserAgentDetected(agent) {
  * @param {string=} product Navigator product string.
  * @param {string=} opt_vendor Navigator vendor string.
  */
-function assertUserAgent(
-    expectedAgents, uaString, product = undefined, opt_vendor) {
+function assertUserAgent(expectedAgents, uaString, product = undefined, opt_vendor) {
   const mockNavigator = {
-    'userAgent': uaString,
-    'product': product,
-    'vendor': opt_vendor
+    userAgent: uaString,
+    product: product,
+    vendor: opt_vendor,
   };
 
   mockUserAgent.setNavigator(mockNavigator);
   mockUserAgent.setUserAgentString(uaString);
 
   userAgentTestUtil.reinitializeUserAgent();
-  for (let ua in UserAgents) {
+  for (const ua in UserAgents) {
     const isExpected = googArray.contains(expectedAgents, UserAgents[ua]);
     assertEquals(isExpected, getUserAgentDetected(UserAgents[ua]));
   }
@@ -74,17 +72,23 @@ function assertUserAgent(
 function assertIe(uaString, expectedVersion) {
   assertUserAgent([UserAgents.IE], uaString);
   assertEquals(
-      `User agent ${uaString} should have had version ${expectedVersion}` +
-          ' but had ' + userAgent.VERSION,
-      expectedVersion, userAgent.VERSION);
+    `User agent ${uaString} should have had version ${expectedVersion}` +
+      ' but had ' +
+      userAgent.VERSION,
+    expectedVersion,
+    userAgent.VERSION
+  );
 }
 
 function assertGecko(uaString, expectedVersion) {
   assertUserAgent([UserAgents.GECKO], uaString, 'Gecko');
   assertEquals(
-      `User agent ${uaString} should have had version ${expectedVersion}` +
-          ' but had ' + userAgent.VERSION,
-      expectedVersion, userAgent.VERSION);
+    `User agent ${uaString} should have had version ${expectedVersion}` +
+      ' but had ' +
+      userAgent.VERSION,
+    expectedVersion,
+    userAgent.VERSION
+  );
 }
 testSuite({
   setUp() {
@@ -151,11 +155,10 @@ testSuite({
     const mockDocument = {
       // setting a value of 0 on purpose, to ensure we only look for property
       // names, not their values.
-      'webkitFoobar': 0,
+      webkitFoobar: 0,
     };
     assertUserAgent([UserAgents.WEBKIT], 'WebKit');
-    assertEquals(
-        'webkitFoobar', vendor.getPrefixedPropertyName('foobar', mockDocument));
+    assertEquals('webkitFoobar', vendor.getPrefixedPropertyName('foobar', mockDocument));
   },
 
   /** Tests for the prefixed property name. */
@@ -166,10 +169,9 @@ testSuite({
 
   /** Tests for the prefixed property name in an object. */
   testPrefixedPropertyNameAndObject() {
-    const mockDocument = {'foobar': 0};
+    const mockDocument = { foobar: 0 };
     assertUserAgent([], '');
-    assertEquals(
-        'foobar', vendor.getPrefixedPropertyName('foobar', mockDocument));
+    assertEquals('foobar', vendor.getPrefixedPropertyName('foobar', mockDocument));
   },
 
   /** Tests for the prefixed property name when it doesn't exist. */

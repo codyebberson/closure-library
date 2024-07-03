@@ -13,7 +13,7 @@
 goog.module('goog.debug.asyncStackTag');
 goog.module.declareLegacyNamespace();
 
-const {assertExists} = goog.require('goog.asserts');
+const { assertExists } = goog.require('goog.asserts');
 
 /**
  * Store a local variable with the createTask function. This prevents tests that
@@ -21,9 +21,9 @@ const {assertExists} = goog.require('goog.asserts');
  * @const {(function(string): ?)|undefined}
  */
 const createTask =
-    goog.DEBUG && goog.global.console && goog.global.console.createTask ?
-    goog.global.console.createTask.bind(goog.global.console) :
-    undefined;
+  goog.DEBUG && goog.global.console && goog.global.console.createTask
+    ? goog.global.console.createTask.bind(goog.global.console)
+    : undefined;
 
 /** @const {symbol|undefined} */
 const CONSOLE_TASK_SYMBOL = createTask ? Symbol('consoleTask') : undefined;

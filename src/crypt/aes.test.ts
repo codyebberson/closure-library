@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.crypt.AesTest');
-goog.setTestOnly();
 
 const Aes = goog.require('goog.crypt.Aes');
 const crypt = goog.require('goog.crypt');
@@ -26,12 +25,12 @@ function doTest(key, input, values, dir) {
   const keyArray = crypt.hexToByteArray(key);
   const aes = new Aes(keyArray);
 
-  let testKeySchedule = onTestKeySchedule;
-  let testStartRound = onTestStartRound;
-  let testAfterSubBytes = onTestAfterSubBytes;
-  let testAfterShiftRows = onTestAfterShiftRows;
-  let testAfterMixColumns = onTestAfterMixColumns;
-  let testAfterAddRoundKey = onTestAfterAddRoundKey;
+  const testKeySchedule = onTestKeySchedule;
+  const testStartRound = onTestStartRound;
+  const testAfterSubBytes = onTestAfterSubBytes;
+  const testAfterShiftRows = onTestAfterShiftRows;
+  const testAfterMixColumns = onTestAfterMixColumns;
+  const testAfterAddRoundKey = onTestAfterAddRoundKey;
 
   const inputArr = crypt.hexToByteArray(input);
   const keyArr = crypt.hexToByteArray(key);
@@ -44,50 +43,59 @@ function doTest(key, input, values, dir) {
   }
 
   assertEquals(
-      'Incorrect output for test ' + testData.name,
-      testData[testData.length - 1].output, encodeHex(outputArr));
+    'Incorrect output for test ' + testData.name,
+    testData[testData.length - 1].output,
+    encodeHex(outputArr)
+  );
 }
 
 function onTestKeySchedule(roundNum, keySchedule, keyScheduleIndex) {
   assertNotNull(keySchedule);
   assertEquals(
-      `Incorrect key for round ${roundNum}`, testData[roundNum].k_sch,
-      encodeKey(keySchedule, keyScheduleIndex));
+    `Incorrect key for round ${roundNum}`,
+    testData[roundNum].k_sch,
+    encodeKey(keySchedule, keyScheduleIndex)
+  );
 }
 
 function onTestStartRound(roundNum, state) {
   assertEquals(
-      'Incorrect state for test ' + testData.name + ' at start round ' +
-          roundNum,
-      testData[roundNum].start, encodeState(state));
+    'Incorrect state for test ' + testData.name + ' at start round ' + roundNum,
+    testData[roundNum].start,
+    encodeState(state)
+  );
 }
 
 function onTestAfterSubBytes(roundNum, state) {
   assertEquals(
-      'Incorrect state for test ' + testData.name +
-          ' after sub bytes in round ' + roundNum,
-      testData[roundNum].s_box, encodeState(state));
+    'Incorrect state for test ' + testData.name + ' after sub bytes in round ' + roundNum,
+    testData[roundNum].s_box,
+    encodeState(state)
+  );
 }
 
 function onTestAfterShiftRows(roundNum, state) {
   assertEquals(
-      'Incorrect state for test ' + testData.name +
-          ' after shift rows in round ' + roundNum,
-      testData[roundNum].s_row, encodeState(state));
+    'Incorrect state for test ' + testData.name + ' after shift rows in round ' + roundNum,
+    testData[roundNum].s_row,
+    encodeState(state)
+  );
 }
 
 function onTestAfterMixColumns(roundNum, state) {
   assertEquals(
-      'Incorrect state for test ' + testData.name +
-          ' after mix columns in round ' + roundNum,
-      testData[roundNum].m_col, encodeState(state));
+    'Incorrect state for test ' + testData.name + ' after mix columns in round ' + roundNum,
+    testData[roundNum].m_col,
+    encodeState(state)
+  );
 }
 
 function onTestAfterAddRoundKey(roundNum, state) {
   assertEquals(
-      'Incorrect state for test ' + testData.name +
-          ' after adding round key in round ' + roundNum,
-      testData[roundNum].k_add, encodeState(state));
+    'Incorrect state for test ' + testData.name + ' after adding round key in round ' + roundNum,
+    testData[roundNum].k_add,
+    encodeState(state)
+  );
 }
 
 function encodeHex(arr) {
@@ -115,7 +123,7 @@ function encodeState(state) {
 function encodeKey(key, round) {
   const s = [];
 
-  for (let r = round * 4; r < (round * 4 + 4); r++) {
+  for (let r = round * 4; r < round * 4 + 4; r++) {
     for (let c = 0; c < 4; c++) {
       s.push(encodeByte(key[r][c]));
     }
@@ -568,37 +576,55 @@ const v256d = [];
 testSuite({
   test128() {
     doTest(
-        '000102030405060708090a0b0c0d0e0f', '00112233445566778899aabbccddeeff',
-        v128, true /* encrypt */);
+      '000102030405060708090a0b0c0d0e0f',
+      '00112233445566778899aabbccddeeff',
+      v128,
+      true /* encrypt */
+    );
   },
 
   test192() {
     doTest(
-        '000102030405060708090a0b0c0d0e0f1011121314151617',
-        '00112233445566778899aabbccddeeff', v192, true /* encrypt */);
+      '000102030405060708090a0b0c0d0e0f1011121314151617',
+      '00112233445566778899aabbccddeeff',
+      v192,
+      true /* encrypt */
+    );
   },
 
   test256() {
     doTest(
-        '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
-        '00112233445566778899aabbccddeeff', v256, true /* encrypt */);
+      '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
+      '00112233445566778899aabbccddeeff',
+      v256,
+      true /* encrypt */
+    );
   },
 
   test128d() {
     doTest(
-        '000102030405060708090a0b0c0d0e0f', '69c4e0d86a7b0430d8cdb78070b4c55a',
-        v128d, false /* decrypt */);
+      '000102030405060708090a0b0c0d0e0f',
+      '69c4e0d86a7b0430d8cdb78070b4c55a',
+      v128d,
+      false /* decrypt */
+    );
   },
 
   test192d() {
     doTest(
-        '000102030405060708090a0b0c0d0e0f1011121314151617',
-        'dda97ca4864cdfe06eaf70a0ec0d7191', v192d, false /* decrypt */);
+      '000102030405060708090a0b0c0d0e0f1011121314151617',
+      'dda97ca4864cdfe06eaf70a0ec0d7191',
+      v192d,
+      false /* decrypt */
+    );
   },
 
   test256d() {
     doTest(
-        '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
-        '8ea2b7ca516745bfeafc49904b496089', v256d, false /* decrypt */);
+      '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
+      '8ea2b7ca516745bfeafc49904b496089',
+      v256d,
+      false /* decrypt */
+    );
   },
 });

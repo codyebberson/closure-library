@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.positioning.AnchoredPositionTest');
-goog.setTestOnly();
 
 const AnchoredPosition = goog.require('goog.positioning.AnchoredPosition');
 const Corner = goog.require('goog.positioning.Corner');
@@ -53,15 +52,13 @@ testSuite({
   },
 
   testRepositionWithOverflow() {
-    const avp =
-        new AnchoredPosition(anchor, Corner.BOTTOM_LEFT, Overflow.ADJUST_Y);
+    const avp = new AnchoredPosition(anchor, Corner.BOTTOM_LEFT, Overflow.ADJUST_Y);
     const newTop = viewportSize.height - anchorLength;
     style.setPosition(anchor, 50, newTop);
     const anchorRect = style.getBounds(anchor);
 
     avp.reposition(popup, Corner.TOP_LEFT);
     const popupRect = style.getBounds(popup);
-    assertEquals(
-        anchorRect.top + anchorRect.height, popupRect.top + popupRect.height);
+    assertEquals(anchorRect.top + anchorRect.height, popupRect.top + popupRect.height);
   },
 });

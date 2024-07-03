@@ -55,8 +55,7 @@ class Renderer {
    * @template ARG_TYPES
    */
   renderAsFragment(template, templateData = undefined) {
-    const node = soy.renderAsFragment(
-        template, templateData, this.getInjectedData_(), this.dom_);
+    const node = soy.renderAsFragment(template, templateData, this.getInjectedData_(), this.dom_);
     this.handleRender(node, SanitizedContentKind.HTML);
     return node;
   }
@@ -74,8 +73,7 @@ class Renderer {
    * @template ARG_TYPES
    */
   renderAsElement(template, templateData = undefined) {
-    const element = soy.renderAsElement(
-        template, templateData, this.getInjectedData_(), this.dom_);
+    const element = soy.renderAsElement(template, templateData, this.getInjectedData_(), this.dom_);
     this.handleRender(element, SanitizedContentKind.HTML);
     return element;
   }
@@ -108,12 +106,11 @@ class Renderer {
   render(template, templateData = undefined) {
     const result = template(templateData || {}, this.getInjectedData_());
     asserts.assert(
-        !(result instanceof SanitizedContent) ||
-            result.contentKind === SanitizedContentKind.HTML,
-        'render was called with a strict template of kind other than "html"' +
-            ' (consider using renderText or renderStrict)');
-    const contentKind =
-        result instanceof SanitizedContent ? result.contentKind : null;
+      !(result instanceof SanitizedContent) || result.contentKind === SanitizedContentKind.HTML,
+      'render was called with a strict template of kind other than "html"' +
+        ' (consider using renderText or renderStrict)'
+    );
+    const contentKind = result instanceof SanitizedContent ? result.contentKind : null;
     this.handleRender(null /* node */, contentKind);
     return String(result);
   }
@@ -141,8 +138,7 @@ class Renderer {
    * @template ARG_TYPES
    */
   renderStrict(template, templateData = undefined) {
-    return this.renderStrictOfKind(
-        template, templateData, SanitizedContentKind.HTML);
+    return this.renderStrictOfKind(template, templateData, SanitizedContentKind.HTML);
   }
 
   /**
@@ -154,8 +150,7 @@ class Renderer {
    * @template ARG_TYPES
    */
   renderStrictUri(template, templateData = undefined) {
-    return this.renderStrictOfKind(
-        template, templateData, SanitizedContentKind.URI);
+    return this.renderStrictOfKind(template, templateData, SanitizedContentKind.URI);
   }
 
   /**
@@ -175,11 +170,14 @@ class Renderer {
   renderStrictOfKind(template, templateData = undefined, kind = undefined) {
     const result = template(templateData || {}, this.getInjectedData_());
     asserts.assertInstanceof(
-        result, SanitizedContent,
-        'renderStrict cannot be called on a text soy template');
+      result,
+      SanitizedContent,
+      'renderStrict cannot be called on a text soy template'
+    );
     asserts.assert(
-        result.contentKind === (kind || SanitizedContentKind.HTML),
-        'renderStrict was called with the wrong kind of template');
+      result.contentKind === (kind || SanitizedContentKind.HTML),
+      'renderStrict was called with the wrong kind of template'
+    );
     this.handleRender(null /* node */, result.contentKind);
     return result;
   }
@@ -213,8 +211,7 @@ class Renderer {
    * @template ARG_TYPES
    */
   renderSafeStyleSheet(template, templateData = undefined) {
-    const result = this.renderStrictOfKind(
-        template, templateData, SanitizedContentKind.CSS);
+    const result = this.renderStrictOfKind(template, templateData, SanitizedContentKind.CSS);
     return result.toSafeStyleSheet();
   }
 

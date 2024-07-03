@@ -16,17 +16,16 @@ const testSuite = goog.require('goog.testing.testSuite');
 const userAgent = goog.require('goog.userAgent');
 
 testSuite({
-  testPollingRequiredForEdge: /**
+  testPollingRequiredForEdge /**
                                  @suppress {strictPrimitiveOperators}
                                  suppression added to enable type checking
-                               */
-      function() {
-        if (!userAgent.EDGE) return;
+                               */: () => {
+    if (!userAgent.EDGE) return;
 
-        assertTrue(environment.isPollingRequired());
+    assertTrue(environment.isPollingRequired());
 
-        // 100ms as the lower-bound, enforced in
-        // tests
-        assertTrue(environment.getPollingInterval() > 100);
-      },
+    // 100ms as the lower-bound, enforced in
+    // tests
+    assertTrue(environment.getPollingInterval() > 100);
+  },
 });

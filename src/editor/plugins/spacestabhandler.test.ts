@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.plugins.SpacesTabHandlerTest');
-goog.setTestOnly();
 
 const BrowserEvent = goog.require('goog.events.BrowserEvent');
 const FieldMock = goog.require('goog.testing.editor.FieldMock');
@@ -70,14 +69,13 @@ testSuite({
     editableField.$replay();
     event.$replay();
 
-    assertTrue(
-        'Event marked as handled',
-        tabHandler.handleKeyboardShortcut(event, '', false));
+    assertTrue('Event marked as handled', tabHandler.handleKeyboardShortcut(event, '', false));
     const contents = field.textContent || field.innerText;
     // Chrome doesn't treat \u00a0 as a space.
     assertTrue(
-        `Text should be replaced with 4 spaces but was: "${contents}"`,
-        /^(\s|\u00a0){4}$/.test(contents));
+      `Text should be replaced with 4 spaces but was: "${contents}"`,
+      /^(\s|\u00a0){4}$/.test(contents)
+    );
 
     editableField.$verify();
     event.$verify();
@@ -110,13 +108,12 @@ testSuite({
     editableField.$replay();
     event.$replay();
 
-    assertTrue(
-        'Event marked as handled',
-        tabHandler.handleKeyboardShortcut(event, '', false));
+    assertTrue('Event marked as handled', tabHandler.handleKeyboardShortcut(event, '', false));
     const contents = field.textContent || field.innerText;
     assertTrue(
-        `Expected contents "Te    st" but was: "${contents}"`,
-        /Te[\s|\u00a0]{4}st/.test(contents));
+      `Expected contents "Te    st" but was: "${contents}"`,
+      /Te[\s|\u00a0]{4}st/.test(contents)
+    );
 
     editableField.$verify();
     event.$verify();
@@ -129,7 +126,7 @@ testSuite({
   testShiftTabNoOp() {
     dom.setTextContent(field, 'Test');
 
-    let range = Range.createFromNodeContents(field);
+    const range = Range.createFromNodeContents(field);
     range.collapse();
     range.select();
 
@@ -149,9 +146,7 @@ testSuite({
     editableField.$replay();
     event.$replay();
 
-    assertTrue(
-        'Event marked as handled',
-        tabHandler.handleKeyboardShortcut(event, '', false));
+    assertTrue('Event marked as handled', tabHandler.handleKeyboardShortcut(event, '', false));
     const contents = field.textContent || field.innerText;
     assertEquals('Shift+tab should not change contents', 'Test', contents);
 
@@ -162,7 +157,7 @@ testSuite({
   testInListNoOp() {
     field.innerHTML = '<ul><li>Test</li></ul>';
 
-    const testText = field.firstChild.firstChild.firstChild;  // div ul li Test
+    const testText = field.firstChild.firstChild.firstChild; // div ul li Test
     testHelper.select(testText, 2, testText, 2);
 
     const event = new StrictMock(BrowserEvent);
@@ -181,8 +176,9 @@ testSuite({
     event.$replay();
 
     assertFalse(
-        'Event must not be handled when selection inside list.',
-        tabHandler.handleKeyboardShortcut(event, '', false));
+      'Event must not be handled when selection inside list.',
+      tabHandler.handleKeyboardShortcut(event, '', false)
+    );
     testHelper.assertHtmlMatches('<ul><li>Test</li></ul>');
 
     editableField.$verify();
@@ -192,7 +188,7 @@ testSuite({
   testContainsListNoOp() {
     field.innerHTML = '<ul><li>Test</li></ul>';
 
-    const testText = field.firstChild.firstChild.firstChild;  // div ul li Test
+    const testText = field.firstChild.firstChild.firstChild; // div ul li Test
     testHelper.select(field.firstChild, 0, testText, 2);
 
     const event = new StrictMock(BrowserEvent);
@@ -211,8 +207,9 @@ testSuite({
     event.$replay();
 
     assertFalse(
-        'Event must not be handled when selection inside list.',
-        tabHandler.handleKeyboardShortcut(event, '', false));
+      'Event must not be handled when selection inside list.',
+      tabHandler.handleKeyboardShortcut(event, '', false)
+    );
     testHelper.assertHtmlMatches('<ul><li>Test</li></ul>');
 
     editableField.$verify();

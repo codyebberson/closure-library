@@ -13,7 +13,6 @@
 // limitations under the License.
 
 goog.module('goog.defineClassTest');
-goog.setTestOnly();
 
 const testSuite = goog.require('goog.testing.testSuite');
 
@@ -23,7 +22,7 @@ testSuite({
     function SomeSuper() {}
 
     const SomeClass = goog.defineClass(SomeSuper, {
-      constructor: function() {},
+      constructor: () => {},
     });
 
     assertTrue(new SomeClass() instanceof SomeClass);
@@ -32,7 +31,7 @@ testSuite({
 
   testInstanceProp() {
     const SomeClass = goog.defineClass(null, {
-      constructor: function() {
+      constructor: function () {
         this.falseProp = false;
       },
     });
@@ -42,10 +41,8 @@ testSuite({
 
   testPrototypeProp() {
     const SomeClass = goog.defineClass(null, {
-      constructor: function() {},
-      trueMethod: function() {
-        return true;
-      },
+      constructor: () => {},
+      trueMethod: () => true,
     });
 
     assertEquals(new SomeClass().trueMethod(), true);
@@ -55,8 +52,8 @@ testSuite({
   /** @suppress {missingProperties} */
   testStaticProp() {
     const SomeClass = goog.defineClass(null, {
-      constructor: function() {},
-      statics: {someProp: 100},
+      constructor: () => {},
+      statics: { someProp: 100 },
     });
 
     assertEquals(new SomeClass().statics, undefined);
@@ -67,8 +64,8 @@ testSuite({
   /** @suppress {missingProperties} */
   testStaticPropFn() {
     const SomeClass = goog.defineClass(null, {
-      constructor: function() {},
-      statics: function(cls) {
+      constructor: () => {},
+      statics: (cls) => {
         cls.someProp = 100;
       },
     });
@@ -79,7 +76,7 @@ testSuite({
   },
 
   testUid() {
-    const SomeClass = goog.defineClass(null, {constructor: function() {}});
+    const SomeClass = goog.defineClass(null, { constructor: () => {} });
 
     const obj1 = new SomeClass();
     const obj2 = new SomeClass();

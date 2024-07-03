@@ -11,7 +11,6 @@
 
 goog.provide('goog.ui.ButtonSide');
 
-
 /**
  * Constants for button sides, see {@link goog.ui.Button.prototype.setCollapsed}
  * for details.
@@ -25,5 +24,5 @@ goog.ui.ButtonSide = {
   /** Right for LTR, left for RTL. */
   END: 2,
   /** Both sides. */
-  BOTH: 3
+  BOTH: 3,
 };

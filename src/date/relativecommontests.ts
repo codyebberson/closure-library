@@ -31,7 +31,7 @@ const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
 const relative = goog.require('goog.date.relative');
 const relativeDateTimeSymbols = goog.require('goog.i18n.relativeDateTimeSymbols');
 const testSuite = goog.require('goog.testing.testSuite');
-const {assertI18nEquals} = goog.require('goog.testing.i18n.asserts');
+const { assertI18nEquals } = goog.require('goog.testing.i18n.asserts');
 
 // Testing stubs that autoreset after each test run.
 /** @type {!PropertyReplacer} */
@@ -88,23 +88,30 @@ testSuite({
 
     // Resets state to default English
     relativeDateTimeSymbols.setRelativeDateTimeSymbols(
-        relativeDateTimeSymbols.RelativeDateTimeSymbols_en);
+      relativeDateTimeSymbols.RelativeDateTimeSymbols_en
+    );
   },
 
   testFormatRelativeForPastDates() {
     const fn = relative.format;
 
     assertI18nEquals(
-        'Should round seconds to the minute below', '0 minutes ago',
-        fn(timestamp('23 March 2009 14:30:10')));
+      'Should round seconds to the minute below',
+      '0 minutes ago',
+      fn(timestamp('23 March 2009 14:30:10'))
+    );
 
     assertI18nEquals(
-        'Should round seconds to the minute below', '1 minute ago',
-        fn(timestamp('23 March 2009 14:29:56')));
+      'Should round seconds to the minute below',
+      '1 minute ago',
+      fn(timestamp('23 March 2009 14:29:56'))
+    );
 
     assertI18nEquals(
-        'Should round seconds to the minute below', '2 minutes ago',
-        fn(timestamp('23 March 2009 14:29:00')));
+      'Should round seconds to the minute below',
+      '2 minutes ago',
+      fn(timestamp('23 March 2009 14:29:00'))
+    );
 
     assertI18nEquals('10 minutes ago', fn(timestamp('23 March 2009 14:20:10')));
     assertI18nEquals('59 minutes ago', fn(timestamp('23 March 2009 13:31:42')));
@@ -122,12 +129,16 @@ testSuite({
     const fn = relative.format;
 
     assertI18nEquals(
-        'Should round seconds to the minute below', 'in 1 minute',
-        fn(timestamp('23 March 2009 14:32:05')));
+      'Should round seconds to the minute below',
+      'in 1 minute',
+      fn(timestamp('23 March 2009 14:32:05'))
+    );
 
     assertI18nEquals(
-        'Should round seconds to the minute below', 'in 2 minutes',
-        fn(timestamp('23 March 2009 14:33:00')));
+      'Should round seconds to the minute below',
+      'in 2 minutes',
+      fn(timestamp('23 March 2009 14:33:00'))
+    );
 
     assertI18nEquals('in 1 minute', fn(timestamp('23 March 2009 14:32:00')));
     assertI18nEquals('in 10 minutes', fn(timestamp('23 March 2009 14:40:10')));
@@ -143,7 +154,6 @@ testSuite({
     assertI18nEquals('in 3 days', fn(timestamp('26 March 2009 00:00:00')));
   },
 
-
   testFormatPast() {
     const fn = relative.formatPast;
 
@@ -152,7 +162,6 @@ testSuite({
     assertI18nEquals('0 minutes ago', fn(timestamp('23 March 2009 14:33:00')));
     assertI18nEquals('0 minutes ago', fn(timestamp('25 March 2009 10:30:56')));
   },
-
 
   testFormatDayNotShort() {
     stubs.set(relative, 'monthDateFormatter_', null);
@@ -189,18 +198,14 @@ testSuite({
     assertI18nEquals('Tomorrow', fn(timestamp('24 March 2009 00:12:19')));
     assertI18nEquals('Today', fn(timestamp('23 March 2009 10:31:06'), format));
     assertI18nEquals('Today', fn(timestamp('23 March 2009 00:12:19'), format));
-    assertI18nEquals(
-        'Yesterday', fn(timestamp('22 March 2009 23:48:12'), format));
-    assertI18nEquals(
-        'Yesterday', fn(timestamp('22 March 2009 04:11:23'), format));
+    assertI18nEquals('Yesterday', fn(timestamp('22 March 2009 23:48:12'), format));
+    assertI18nEquals('Yesterday', fn(timestamp('22 March 2009 04:11:23'), format));
 
     relative.setCasingMode(false);
     assertI18nEquals('today', fn(timestamp('23 March 2009 10:31:06'), format));
     assertI18nEquals('today', fn(timestamp('23 March 2009 00:12:19'), format));
-    assertI18nEquals(
-        'yesterday', fn(timestamp('22 March 2009 23:48:12'), format));
-    assertI18nEquals(
-        'yesterday', fn(timestamp('22 March 2009 04:11:23'), format));
+    assertI18nEquals('yesterday', fn(timestamp('22 March 2009 23:48:12'), format));
+    assertI18nEquals('yesterday', fn(timestamp('22 March 2009 04:11:23'), format));
 
     let expected = format(gdatetime(timestamp('21 March 2009 15:54:45')));
     assertI18nEquals(expected, fn(timestamp('21 March 2009 15:54:45'), format));
@@ -208,8 +213,7 @@ testSuite({
     assertI18nEquals(expected, fn(timestamp('19 March 2009 01:22:11'), format));
 
     expected = format(gdatetime(timestamp('1 January 2010 01:22:11')));
-    assertI18nEquals(
-        expected, fn(timestamp('1 January 2010 01:22:11'), format));
+    assertI18nEquals(expected, fn(timestamp('1 January 2010 01:22:11'), format));
   },
 
   testFormatDay_daylightSavingTime() {
@@ -230,48 +234,35 @@ testSuite({
   testGetDateString() {
     const fn = relative.getDateString;
 
+    assertI18nEquals('2:21 PM (10 minutes ago)', fn(new Date(baseTime - 10 * 60 * 1000)));
+    assertI18nEquals('4:31 AM (10 hours ago)', fn(new Date(baseTime - 10 * 60 * 60 * 1000)));
     assertI18nEquals(
-        '2:21 PM (10 minutes ago)', fn(new Date(baseTime - 10 * 60 * 1000)));
-    assertI18nEquals(
-        '4:31 AM (10 hours ago)', fn(new Date(baseTime - 10 * 60 * 60 * 1000)));
-    assertI18nEquals(
-        'Friday, March 13, 2009 (10 days ago)',
-        fn(new Date(baseTime - 10 * 24 * 60 * 60 * 1000)));
-    assertI18nEquals(
-        'Tuesday, March 3, 2009',
-        fn(new Date(baseTime - 20 * 24 * 60 * 60 * 1000)));
+      'Friday, March 13, 2009 (10 days ago)',
+      fn(new Date(baseTime - 10 * 24 * 60 * 60 * 1000))
+    );
+    assertI18nEquals('Tuesday, March 3, 2009', fn(new Date(baseTime - 20 * 24 * 60 * 60 * 1000)));
 
     // Test that DateTime can also be accepted as input.
+    assertI18nEquals('2:21 PM (10 minutes ago)', fn(gdatetime(baseTime - 10 * 60 * 1000)));
+    assertI18nEquals('4:31 AM (10 hours ago)', fn(gdatetime(baseTime - 10 * 60 * 60 * 1000)));
     assertI18nEquals(
-        '2:21 PM (10 minutes ago)', fn(gdatetime(baseTime - 10 * 60 * 1000)));
-    assertI18nEquals(
-        '4:31 AM (10 hours ago)',
-        fn(gdatetime(baseTime - 10 * 60 * 60 * 1000)));
-    assertI18nEquals(
-        'Friday, March 13, 2009 (10 days ago)',
-        fn(gdatetime(baseTime - 10 * 24 * 60 * 60 * 1000)));
-    assertI18nEquals(
-        'Tuesday, March 3, 2009',
-        fn(gdatetime(baseTime - 20 * 24 * 60 * 60 * 1000)));
+      'Friday, March 13, 2009 (10 days ago)',
+      fn(gdatetime(baseTime - 10 * 24 * 60 * 60 * 1000))
+    );
+    assertI18nEquals('Tuesday, March 3, 2009', fn(gdatetime(baseTime - 20 * 24 * 60 * 60 * 1000)));
   },
 
   testGetPastDateString() {
     const fn = relative.getPastDateString;
-    assertI18nEquals(
-        '2:21 PM (10 minutes ago)', fn(new Date(baseTime - 10 * 60 * 1000)));
-    assertI18nEquals(
-        '2:30 PM (1 minute ago)', fn(new Date(baseTime - 1 * 60 * 1000)));
-    assertI18nEquals(
-        '2:41 PM (0 minutes ago)', fn(new Date(baseTime + 10 * 60 * 1000)));
+    assertI18nEquals('2:21 PM (10 minutes ago)', fn(new Date(baseTime - 10 * 60 * 1000)));
+    assertI18nEquals('2:30 PM (1 minute ago)', fn(new Date(baseTime - 1 * 60 * 1000)));
+    assertI18nEquals('2:41 PM (0 minutes ago)', fn(new Date(baseTime + 10 * 60 * 1000)));
 
     // Test that DateTime can also be accepted as input.
-    assertI18nEquals(
-        '2:21 PM (10 minutes ago)', fn(gdatetime(baseTime - 10 * 60 * 1000)));
+    assertI18nEquals('2:21 PM (10 minutes ago)', fn(gdatetime(baseTime - 10 * 60 * 1000)));
     assertI18nEquals('2:31 PM (0 minutes ago)', fn(gdatetime(baseTime)));
-    assertI18nEquals(
-        '2:30 PM (1 minute ago)', fn(gdatetime(baseTime - 1 * 60 * 1000)));
-    assertI18nEquals(
-        '2:41 PM (0 minutes ago)', fn(gdatetime(baseTime + 10 * 60 * 1000)));
+    assertI18nEquals('2:30 PM (1 minute ago)', fn(gdatetime(baseTime - 1 * 60 * 1000)));
+    assertI18nEquals('2:41 PM (0 minutes ago)', fn(gdatetime(baseTime + 10 * 60 * 1000)));
   },
 
   // Test for non-English locales, too.
@@ -286,7 +277,8 @@ testSuite({
     stubs.set(goog.i18n, 'DateTimePatterns', DateTimePatterns_es);
 
     relativeDateTimeSymbols.setRelativeDateTimeSymbols(
-        relativeDateTimeSymbols.RelativeDateTimeSymbols_es);
+      relativeDateTimeSymbols.RelativeDateTimeSymbols_es
+    );
 
     // Checks casing issues.
     relative.setCasingMode(true);
@@ -307,31 +299,43 @@ testSuite({
     assertI18nEquals('mañana', fn(timestamp('24 March 2009 12:10:23')));
 
     // Outside the range. These should be localized.
-    assertI18nEquals('26 mar', fn(timestamp('26 March 2009 12:10:23')));  //
+    assertI18nEquals('26 mar', fn(timestamp('26 March 2009 12:10:23'))); //
     assertI18nEquals('28 feb', fn(timestamp('28 February 2009 12:10:23')));
 
     fn = relative.format;
 
     assertI18nEquals(
-        'Should round seconds to the minute below', 'dentro de 1 minuto',
-        fn(timestamp('23 March 2009 14:32:05')));
+      'Should round seconds to the minute below',
+      'dentro de 1 minuto',
+      fn(timestamp('23 March 2009 14:32:05'))
+    );
     assertI18nEquals(
-        'Should round seconds to the minute below', 'dentro de 9 minutos',
-        fn(timestamp('23 March 2009 14:39:07')));
+      'Should round seconds to the minute below',
+      'dentro de 9 minutos',
+      fn(timestamp('23 March 2009 14:39:07'))
+    );
 
     assertI18nEquals(
-        'Should round days to the day below', 'dentro de 1 día',
-        fn(timestamp('24 March 2009 14:32:05')));
+      'Should round days to the day below',
+      'dentro de 1 día',
+      fn(timestamp('24 March 2009 14:32:05'))
+    );
     assertI18nEquals(
-        'Should round days to the day below', 'dentro de 8 días',
-        fn(timestamp('31 March 2009 14:39:07')));
+      'Should round days to the day below',
+      'dentro de 8 días',
+      fn(timestamp('31 March 2009 14:39:07'))
+    );
 
     assertI18nEquals(
-        'Should round hours to the hour below', 'hace 1 hora',
-        fn(timestamp('23 March 2009 13:31:05')));
+      'Should round hours to the hour below',
+      'hace 1 hora',
+      fn(timestamp('23 March 2009 13:31:05'))
+    );
     assertI18nEquals(
-        'Should round hour to the hour below', 'hace 8 horas',
-        fn(timestamp('23 March 2009 06:31:04')));
+      'Should round hour to the hour below',
+      'hace 8 horas',
+      fn(timestamp('23 March 2009 06:31:04'))
+    );
   },
 
   testFormatFrench() {
@@ -345,7 +349,8 @@ testSuite({
     stubs.set(goog.i18n, 'DateTimePatterns', DateTimePatterns_fr);
 
     relativeDateTimeSymbols.setRelativeDateTimeSymbols(
-        relativeDateTimeSymbols.RelativeDateTimeSymbols_fr);
+      relativeDateTimeSymbols.RelativeDateTimeSymbols_fr
+    );
 
     // Check for casing results.
     relative.setCasingMode(true);
@@ -365,30 +370,42 @@ testSuite({
     assertI18nEquals('demain', fn(timestamp('24 March 2009 12:10:23')));
 
     // Outside the range. These should be localized.
-    assertI18nEquals('26 mars', fn(timestamp('26 March 2009 12:10:23')));  //
+    assertI18nEquals('26 mars', fn(timestamp('26 March 2009 12:10:23'))); //
     assertI18nEquals('28 févr.', fn(timestamp('28 February 2009 12:10:23')));
     fn = relative.format;
 
     assertI18nEquals(
-        'Should round seconds to the minute below', 'dans 1 minute',
-        fn(timestamp('23 March 2009 14:32:05')));
+      'Should round seconds to the minute below',
+      'dans 1 minute',
+      fn(timestamp('23 March 2009 14:32:05'))
+    );
     assertI18nEquals(
-        'Should round seconds to the minute below', 'dans 9 minutes',
-        fn(timestamp('23 March 2009 14:39:07')));
+      'Should round seconds to the minute below',
+      'dans 9 minutes',
+      fn(timestamp('23 March 2009 14:39:07'))
+    );
 
     assertI18nEquals(
-        'Should round days to the day below', 'dans 1 jour',
-        fn(timestamp('24 March 2009 14:32:05')));
+      'Should round days to the day below',
+      'dans 1 jour',
+      fn(timestamp('24 March 2009 14:32:05'))
+    );
     assertI18nEquals(
-        'Should round days to the day below', 'dans 8 jours',
-        fn(timestamp('31 March 2009 14:39:07')));
+      'Should round days to the day below',
+      'dans 8 jours',
+      fn(timestamp('31 March 2009 14:39:07'))
+    );
 
     assertI18nEquals(
-        'Should round hours to the hour below', 'il y a 1 heure',
-        fn(timestamp('23 March 2009 13:31:05')));
+      'Should round hours to the hour below',
+      'il y a 1 heure',
+      fn(timestamp('23 March 2009 13:31:05'))
+    );
     assertI18nEquals(
-        'Should round hour to the hour below', 'il y a 8 heures',
-        fn(timestamp('23 March 2009 06:31:04')));
+      'Should round hour to the hour below',
+      'il y a 8 heures',
+      fn(timestamp('23 March 2009 06:31:04'))
+    );
   },
 
   testFormatArabic() {
@@ -402,7 +419,8 @@ testSuite({
     stubs.set(goog.i18n, 'DateTimePatterns', DateTimePatterns_ar);
 
     relativeDateTimeSymbols.setRelativeDateTimeSymbols(
-        relativeDateTimeSymbols.RelativeDateTimeSymbols_ar);
+      relativeDateTimeSymbols.RelativeDateTimeSymbols_ar
+    );
 
     assertI18nEquals('بعد الغد', fn(timestamp('25 March 2009 20:59:59')));
     assertI18nEquals('أول أمس', fn(timestamp('21 March 2009 19:00:02')));
@@ -412,7 +430,7 @@ testSuite({
     assertI18nEquals('غدًا', fn(timestamp('24 March 2009 12:10:23')));
 
     // Outside the range. These should be localized.
-    assertI18nEquals('26 مارس', fn(timestamp('26 March 2009 12:10:23')));  //
+    assertI18nEquals('26 مارس', fn(timestamp('26 March 2009 12:10:23'))); //
     assertI18nEquals('28 فبراير', fn(timestamp('28 February 2009 12:10:23')));
   },
 
@@ -436,54 +454,68 @@ testSuite({
 
     stubs.replace(goog, 'LOCALE', 'en-u-nu-arabext');
     assertI18nEquals(
-        'Should round seconds to the minute below',
-        localizeNumber(0) + ' minutes ago',  // ۰ minutes ago
-        fn(timestamp('23 March 2009 14:30:10')));
+      'Should round seconds to the minute below',
+      localizeNumber(0) + ' minutes ago', // ۰ minutes ago
+      fn(timestamp('23 March 2009 14:30:10'))
+    );
 
     assertI18nEquals(
-        'Should round seconds to the minute below',
-        localizeNumber(1) + ' minute ago',  // ۱ minute ago
-        fn(timestamp('23 March 2009 14:29:56')));
+      'Should round seconds to the minute below',
+      localizeNumber(1) + ' minute ago', // ۱ minute ago
+      fn(timestamp('23 March 2009 14:29:56'))
+    );
 
     assertI18nEquals(
-        'Should round seconds to the minute below',
-        localizeNumber(2) + ' minutes ago',  // ۲ minutes ago
-        fn(timestamp('23 March 2009 14:29:00')));
+      'Should round seconds to the minute below',
+      localizeNumber(2) + ' minutes ago', // ۲ minutes ago
+      fn(timestamp('23 March 2009 14:29:00'))
+    );
 
     assertI18nEquals(
-        localizeNumber(10) + ' minutes ago',  // ۱۰ minutes ago
-        fn(timestamp('23 March 2009 14:20:10')));
+      localizeNumber(10) + ' minutes ago', // ۱۰ minutes ago
+      fn(timestamp('23 March 2009 14:20:10'))
+    );
     assertI18nEquals(
-        localizeNumber(59) + ' minutes ago',  // ۵۹ minutes ago
-        fn(timestamp('23 March 2009 13:31:42')));
+      localizeNumber(59) + ' minutes ago', // ۵۹ minutes ago
+      fn(timestamp('23 March 2009 13:31:42'))
+    );
     assertI18nEquals(
-        localizeNumber(2) + ' hours ago',  // ۲ hours ago
-        fn(timestamp('23 March 2009 12:20:56')));
+      localizeNumber(2) + ' hours ago', // ۲ hours ago
+      fn(timestamp('23 March 2009 12:20:56'))
+    );
     assertI18nEquals(
-        localizeNumber(23) + ' hours ago',  // ۲۳ hours ago
-        fn(timestamp('22 March 2009 15:30:56')));
+      localizeNumber(23) + ' hours ago', // ۲۳ hours ago
+      fn(timestamp('22 March 2009 15:30:56'))
+    );
     assertI18nEquals(
-        localizeNumber(1) + ' day ago',  // ۱ day ago
-        fn(timestamp('22 March 2009 12:11:04')));
+      localizeNumber(1) + ' day ago', // ۱ day ago
+      fn(timestamp('22 March 2009 12:11:04'))
+    );
     assertI18nEquals(
-        localizeNumber(1) + ' day ago',  // ۱ day ago
-        fn(timestamp('22 March 2009 00:00:00')));
+      localizeNumber(1) + ' day ago', // ۱ day ago
+      fn(timestamp('22 March 2009 00:00:00'))
+    );
     assertI18nEquals(
-        localizeNumber(2) + ' days ago',  // ۲ days ago
-        fn(timestamp('21 March 2009 23:59:59')));
+      localizeNumber(2) + ' days ago', // ۲ days ago
+      fn(timestamp('21 March 2009 23:59:59'))
+    );
     assertI18nEquals(
-        localizeNumber(2) + ' days ago',  // ۲ days ago
-        fn(timestamp('21 March 2009 10:30:56')));
+      localizeNumber(2) + ' days ago', // ۲ days ago
+      fn(timestamp('21 March 2009 10:30:56'))
+    );
     assertI18nEquals(
-        localizeNumber(2) + ' days ago',  // ۲ days ago
-        fn(timestamp('21 March 2009 00:00:00')));
+      localizeNumber(2) + ' days ago', // ۲ days ago
+      fn(timestamp('21 March 2009 00:00:00'))
+    );
     assertI18nEquals(
-        localizeNumber(3) + ' days ago',  // ۳ days ago
-        fn(timestamp('20 March 2009 23:59:59')));
+      localizeNumber(3) + ' days ago', // ۳ days ago
+      fn(timestamp('20 March 2009 23:59:59'))
+    );
 
     stubs.replace(goog, 'LOCALE', 'fa');
     relativeDateTimeSymbols.setRelativeDateTimeSymbols(
-        relativeDateTimeSymbols.RelativeDateTimeSymbols_fa);
+      relativeDateTimeSymbols.RelativeDateTimeSymbols_fa
+    );
 
     const result1 = fn(timestamp('21 March 2009 10:30:56'));
     assertI18nEquals('۲ روز پیش', result1);
@@ -503,52 +535,66 @@ testSuite({
     // For Bengali \u09E6 is the base, so \u09E6 = digit 0, \u09EB = digit 5
     // "Western" digits in square brackets for convenience
     assertI18nEquals(
-        'Should round seconds to the minute below',
-        'in ' + localizeNumber(1) + ' minute',  // in ১ minute
-        fn(timestamp('23 March 2009 14:32:05')));
+      'Should round seconds to the minute below',
+      'in ' + localizeNumber(1) + ' minute', // in ১ minute
+      fn(timestamp('23 March 2009 14:32:05'))
+    );
 
     assertI18nEquals(
-        'Should round seconds to the minute below',
-        'in ' + localizeNumber(2) + ' minutes',  // in ২ minutes
-        fn(timestamp('23 March 2009 14:33:00')));
+      'Should round seconds to the minute below',
+      'in ' + localizeNumber(2) + ' minutes', // in ২ minutes
+      fn(timestamp('23 March 2009 14:33:00'))
+    );
 
     assertI18nEquals(
-        'in ' + localizeNumber(10) + ' minutes',  // in ১০ minutes
-        fn(timestamp('23 March 2009 14:40:10')));
+      'in ' + localizeNumber(10) + ' minutes', // in ১০ minutes
+      fn(timestamp('23 March 2009 14:40:10'))
+    );
     assertI18nEquals(
-        'in ' + localizeNumber(59) + ' minutes',  // in ৫৯ minutes
-        fn(timestamp('23 March 2009 15:29:15')));
+      'in ' + localizeNumber(59) + ' minutes', // in ৫৯ minutes
+      fn(timestamp('23 March 2009 15:29:15'))
+    );
     assertI18nEquals(
-        'in ' + localizeNumber(2) + ' hours',  // in ২ hours
-        fn(timestamp('23 March 2009 17:20:56')));
+      'in ' + localizeNumber(2) + ' hours', // in ২ hours
+      fn(timestamp('23 March 2009 17:20:56'))
+    );
     assertI18nEquals(
-        'in ' + localizeNumber(23) + ' hours',  // in ২৩ hours
-        fn(timestamp('24 March 2009 13:30:56')));
+      'in ' + localizeNumber(23) + ' hours', // in ২৩ hours
+      fn(timestamp('24 March 2009 13:30:56'))
+    );
     assertI18nEquals(
-        'in ' + localizeNumber(1) + ' day',  // in ১ day
-        fn(timestamp('24 March 2009 14:31:07')));
+      'in ' + localizeNumber(1) + ' day', // in ১ day
+      fn(timestamp('24 March 2009 14:31:07'))
+    );
     assertI18nEquals(
-        'in ' + localizeNumber(1) + ' day',  // in ১ day
-        fn(timestamp('24 March 2009 16:11:04')));
+      'in ' + localizeNumber(1) + ' day', // in ১ day
+      fn(timestamp('24 March 2009 16:11:04'))
+    );
     assertI18nEquals(
-        'in ' + localizeNumber(1) + ' day',  // in ১ day
-        fn(timestamp('24 March 2009 23:59:59')));
+      'in ' + localizeNumber(1) + ' day', // in ১ day
+      fn(timestamp('24 March 2009 23:59:59'))
+    );
     assertI18nEquals(
-        'in ' + localizeNumber(2) + ' days',  // in ২ days
-        fn(timestamp('25 March 2009 00:00:00')));
+      'in ' + localizeNumber(2) + ' days', // in ২ days
+      fn(timestamp('25 March 2009 00:00:00'))
+    );
     assertI18nEquals(
-        'in ' + localizeNumber(2) + ' days',  // in ২ days
-        fn(timestamp('25 March 2009 10:30:56')));
+      'in ' + localizeNumber(2) + ' days', // in ২ days
+      fn(timestamp('25 March 2009 10:30:56'))
+    );
     assertI18nEquals(
-        'in ' + localizeNumber(2) + ' days',  // in ২ days
-        fn(timestamp('25 March 2009 23:59:59')));
+      'in ' + localizeNumber(2) + ' days', // in ২ days
+      fn(timestamp('25 March 2009 23:59:59'))
+    );
     assertI18nEquals(
-        'in ' + localizeNumber(3) + ' days',  // in ৩ days
-        fn(timestamp('26 March 2009 00:00:00')));
+      'in ' + localizeNumber(3) + ' days', // in ৩ days
+      fn(timestamp('26 March 2009 00:00:00'))
+    );
 
     // Try Bengali text and numerals, too.
     relativeDateTimeSymbols.setRelativeDateTimeSymbols(
-        relativeDateTimeSymbols.RelativeDateTimeSymbols_bn);
+      relativeDateTimeSymbols.RelativeDateTimeSymbols_bn
+    );
 
     stubs.replace(goog, 'LOCALE', 'bn');
 
@@ -556,12 +602,10 @@ testSuite({
     // "Western" digits in square brackets for convenience
 
     const result1 = fn(timestamp('23 March 2009 14:32:05'));
-    assertI18nEquals(
-        'Should round seconds to the minute below', '১ মিনিটে', result1);
+    assertI18nEquals('Should round seconds to the minute below', '১ মিনিটে', result1);
 
     const result2 = fn(timestamp('26 March 2009 00:00:00'));
-    assertI18nEquals(
-        'Should be Bengali text with Bengali digit.', '৩ দিনের মধ্যে', result2);
+    assertI18nEquals('Should be Bengali text with Bengali digit.', '৩ দিনের মধ্যে', result2);
   },
 
   testFormatRelativeForFutureDatesNorwegian() {
@@ -571,7 +615,8 @@ testSuite({
     stubs.set(goog.i18n, 'NumberFormatSymbols', NumberFormatSymbols_no);
 
     relativeDateTimeSymbols.setRelativeDateTimeSymbols(
-        relativeDateTimeSymbols.RelativeDateTimeSymbols_no);
+      relativeDateTimeSymbols.RelativeDateTimeSymbols_no
+    );
 
     // For a locale not in the ECMASCRIPT locale set.
     stubs.replace(goog, 'LOCALE', 'no');
@@ -610,5 +655,5 @@ testSuite({
 
     // Chakma, SMP, uncased
     assertEquals('Chakma', '𑄃𑄬𑄌𑄴𑄥𑄳𑄠', fn('𑄃𑄬𑄌𑄴𑄥𑄳𑄠'));
-  }
+  },
 });

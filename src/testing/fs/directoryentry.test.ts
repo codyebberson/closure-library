@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.fs.DirectoryEntryTest');
-goog.setTestOnly();
 
 const FsDirectoryEntry = goog.require('goog.fs.DirectoryEntry');
 const FsError = goog.require('goog.fs.Error');
@@ -69,26 +68,27 @@ testSuite({
   },
 
   testGetFile() {
-    return dir.getFile('file')
-        .then((file) => {
-          assertEquals(dir.getFileSync('file'), file);
-          assertEquals('file', file.getName());
-          assertEquals('/foo/file', file.getFullPath());
-          assertTrue(file.isFile());
+    return dir
+      .getFile('file')
+      .then((file) => {
+        assertEquals(dir.getFileSync('file'), file);
+        assertEquals('file', file.getName());
+        assertEquals('/foo/file', file.getFullPath());
+        assertTrue(file.isFile());
 
-          return dir.getLastModified();
-        })
-        .then((date) => {
-          assertEquals(
-              'Reading a file should not update the modification date.', 0,
-              date.getTime());
-          return dir.getMetadata();
-        })
-        .then((metadata) => {
-          assertEquals(
-              'Reading a file should not update the metadata.', 0,
-              metadata.modificationTime.getTime());
-        });
+        return dir.getLastModified();
+      })
+      .then((date) => {
+        assertEquals('Reading a file should not update the modification date.', 0, date.getTime());
+        return dir.getMetadata();
+      })
+      .then((metadata) => {
+        assertEquals(
+          'Reading a file should not update the metadata.',
+          0,
+          metadata.modificationTime.getTime()
+        );
+      });
   },
 
   testGetFileFromSubdir() {
@@ -101,53 +101,55 @@ testSuite({
   },
 
   testGetAbsolutePaths() {
-    return fs.getRoot()
-        .getFile('/foo/subdir/subfile')
-        .then((subfile) => {
-          assertEquals('/foo/subdir/subfile', subfile.getFullPath());
-          return fs.getRoot().getDirectory('//foo////');
-        })
-        .then((foo) => {
-          assertEquals('/foo', foo.getFullPath());
-          return foo.getDirectory('/');
-        })
-        .then((root) => {
-          assertEquals('/', root.getFullPath());
-          return root.getDirectory('/////');
-        })
-        .then((root) => {
-          assertEquals('/', root.getFullPath());
-        });
+    return fs
+      .getRoot()
+      .getFile('/foo/subdir/subfile')
+      .then((subfile) => {
+        assertEquals('/foo/subdir/subfile', subfile.getFullPath());
+        return fs.getRoot().getDirectory('//foo////');
+      })
+      .then((foo) => {
+        assertEquals('/foo', foo.getFullPath());
+        return foo.getDirectory('/');
+      })
+      .then((root) => {
+        assertEquals('/', root.getFullPath());
+        return root.getDirectory('/////');
+      })
+      .then((root) => {
+        assertEquals('/', root.getFullPath());
+      });
   },
 
   testCreateFile() {
     // Advance the clock to an arbitrary, known time.
     mockClock.install();
     mockClock.tick(43);
-    const promise = dir.getLastModified()
-                        .then((date) => {
-                          assertEquals(0, date.getTime());
-                        })
-                        .then(() => dir.getFile('bar', Behavior.CREATE))
-                        .then((file) => {
-                          mockClock.tick();
-                          assertEquals('bar', file.getName());
-                          assertEquals('/foo/bar', file.getFullPath());
-                          assertEquals(dir, file.parent);
-                          assertTrue(file.isFile());
+    const promise = dir
+      .getLastModified()
+      .then((date) => {
+        assertEquals(0, date.getTime());
+      })
+      .then(() => dir.getFile('bar', Behavior.CREATE))
+      .then((file) => {
+        mockClock.tick();
+        assertEquals('bar', file.getName());
+        assertEquals('/foo/bar', file.getFullPath());
+        assertEquals(dir, file.parent);
+        assertTrue(file.isFile());
 
-                          return dir.getLastModified();
-                        })
-                        .then((date) => {
-                          assertEquals(43, date.getTime());
-                          return dir.getMetadata();
-                        })
-                        .then((metadata) => {
-                          assertEquals(43, metadata.modificationTime.getTime());
-                        })
-                        .thenAlways(() => {
-                          mockClock.uninstall();
-                        });
+        return dir.getLastModified();
+      })
+      .then((date) => {
+        assertEquals(43, date.getTime());
+        return dir.getMetadata();
+      })
+      .then((metadata) => {
+        assertEquals(43, metadata.modificationTime.getTime());
+      })
+      .thenAlways(() => {
+        mockClock.uninstall();
+      });
     mockClock.tick();
     return promise;
   },
@@ -156,26 +158,27 @@ testSuite({
     mockClock.install();
     mockClock.tick(47);
     const existingFile = dir.getFileSync('file');
-    const promise = dir.getFile('file', Behavior.CREATE)
-                        .then((file) => {
-                          assertEquals('file', file.getName());
-                          assertEquals('/foo/file', file.getFullPath());
-                          assertEquals(dir, file.parent);
-                          assertEquals(existingFile, file);
-                          assertTrue(file.isFile());
+    const promise = dir
+      .getFile('file', Behavior.CREATE)
+      .then((file) => {
+        assertEquals('file', file.getName());
+        assertEquals('/foo/file', file.getFullPath());
+        assertEquals(dir, file.parent);
+        assertEquals(existingFile, file);
+        assertTrue(file.isFile());
 
-                          return dir.getLastModified();
-                        })
-                        .then((date) => {
-                          assertEquals(47, date.getTime());
-                          return dir.getMetadata();
-                        })
-                        .then((metadata) => {
-                          assertEquals(47, metadata.modificationTime.getTime());
-                        })
-                        .thenAlways(() => {
-                          mockClock.uninstall();
-                        });
+        return dir.getLastModified();
+      })
+      .then((date) => {
+        assertEquals(47, date.getTime());
+        return dir.getMetadata();
+      })
+      .then((metadata) => {
+        assertEquals(47, metadata.modificationTime.getTime());
+      })
+      .thenAlways(() => {
+        mockClock.uninstall();
+      });
     mockClock.tick();
     return promise;
   },
@@ -255,25 +258,30 @@ testSuite({
     root.getFileSync('file1', Behavior.CREATE);
     root.getFileSync('file2', Behavior.CREATE);
 
-    return fs.getRoot().listDirectory().then((entryList) => {
-      assertSameElements(
+    return fs
+      .getRoot()
+      .listDirectory()
+      .then((entryList) => {
+        assertSameElements(
           ['dir1', 'dir2', 'file1', 'file2', 'foo'],
-          googArray.map(entryList, (entry) => entry.getName()));
-    });
+          googArray.map(entryList, (entry) => entry.getName())
+        );
+      });
   },
 
   testCreatePath() {
-    return dir.createPath('baz/bat')
-        .then((batDir) => {
-          assertEquals('/foo/baz/bat', batDir.getFullPath());
-          return batDir.createPath('../zazzle');
-        })
-        .then((zazzleDir) => {
-          assertEquals('/foo/baz/zazzle', zazzleDir.getFullPath());
-          return zazzleDir.createPath('/elements/actinides/neptunium/');
-        })
-        .then((elDir) => {
-          assertEquals('/elements/actinides/neptunium', elDir.getFullPath());
-        });
+    return dir
+      .createPath('baz/bat')
+      .then((batDir) => {
+        assertEquals('/foo/baz/bat', batDir.getFullPath());
+        return batDir.createPath('../zazzle');
+      })
+      .then((zazzleDir) => {
+        assertEquals('/foo/baz/zazzle', zazzleDir.getFullPath());
+        return zazzleDir.createPath('/elements/actinides/neptunium/');
+      })
+      .then((elDir) => {
+        assertEquals('/elements/actinides/neptunium', elDir.getFullPath());
+      });
   },
 });

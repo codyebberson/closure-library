@@ -5,19 +5,17 @@
  */
 
 goog.module('goog.streams.fullNativeImplTest');
-goog.setTestOnly();
 
 const testSuite = goog.require('goog.testing.testSuite');
-const {TestCases} = goog.require('goog.streams.fullTestCases');
-const {newReadableStream} = goog.require('goog.streams.fullNativeImpl');
+const { TestCases } = goog.require('goog.streams.fullTestCases');
+const { newReadableStream } = goog.require('goog.streams.fullNativeImpl');
 
 let nativeImplementation = false;
 
 try {
   new ReadableStream();
   nativeImplementation = true;
-} catch (e) {
-}
+} catch (e) {}
 
 if (nativeImplementation) {
   testSuite(new TestCases(newReadableStream));

@@ -29,8 +29,6 @@ goog.provide('goog.testing.ShardingTestCase');
 goog.require('goog.asserts');
 goog.require('goog.testing.TestCase');
 
-
-
 /**
  * A test case that runs tests in per-file shards.
  * @param {number} shardIndex Shard index for this page,
@@ -41,8 +39,7 @@ goog.require('goog.testing.TestCase');
  * @constructor
  * @final
  */
-goog.testing.ShardingTestCase = function(shardIndex, numShards, opt_name) {
-  'use strict';
+goog.testing.ShardingTestCase = function (shardIndex, numShards, opt_name) {
   goog.testing.ShardingTestCase.base(this, 'constructor', opt_name);
 
   goog.asserts.assert(shardIndex > 0, 'Shard index should be positive');
@@ -63,7 +60,6 @@ goog.testing.ShardingTestCase = function(shardIndex, numShards, opt_name) {
 };
 goog.inherits(goog.testing.ShardingTestCase, goog.testing.TestCase);
 
-
 /**
  * Whether we've actually partitioned the tests yet. We may execute twice
  * ('Run again without reloading') without failing.
@@ -72,25 +68,22 @@ goog.inherits(goog.testing.ShardingTestCase, goog.testing.TestCase);
  */
 goog.testing.ShardingTestCase.prototype.sharded_ = false;
 
-
 /**
  * Installs a runTests global function that goog.testing.JsUnit will use to
  * run tests, which will run a single shard of the tests present on the page.
  * @override
  */
-goog.testing.ShardingTestCase.prototype.runTests = function() {
-  'use strict';
+goog.testing.ShardingTestCase.prototype.runTests = function () {
   if (!this.sharded_) {
     var numTests = this.getCount();
-    goog.asserts.assert(
-        numTests >= this.numShards_,
-        'Must have at least as many tests as shards!');
+    goog.asserts.assert(numTests >= this.numShards_, 'Must have at least as many tests as shards!');
     var shardSize = Math.ceil(numTests / this.numShards_);
     var startIndex = (this.shardIndex_ - 1) * shardSize;
     var endIndex = startIndex + shardSize;
     goog.asserts.assert(
-        this.order == goog.testing.TestCase.Order.SORTED,
-        'Only SORTED order is allowed for sharded tests');
+      this.order == goog.testing.TestCase.Order.SORTED,
+      'Only SORTED order is allowed for sharded tests'
+    );
     this.setTests(this.getTests().slice(startIndex, endIndex));
     this.sharded_ = true;
   }
@@ -99,22 +92,18 @@ goog.testing.ShardingTestCase.prototype.runTests = function() {
   goog.testing.ShardingTestCase.base(this, 'runTests');
 };
 
-
 /**
  * Shards tests based on the test filename. Assumes that the filename is
  * formatted like 'foo_1of5_test.html'.
  * @param {string=} opt_name A descriptive name for the test case.
  */
-goog.testing.ShardingTestCase.shardByFileName = function(opt_name) {
-  'use strict';
+goog.testing.ShardingTestCase.shardByFileName = (opt_name) => {
   var path = window.location.pathname;
   var shardMatch = path.match(/_(\d+)of(\d+)_test\.(js|html)/);
-  goog.asserts.assert(
-      shardMatch, 'Filename must be of the form "foo_1of5_test.{js,html}"');
-  var shardIndex = parseInt(shardMatch[1], 10);
-  var numShards = parseInt(shardMatch[2], 10);
+  goog.asserts.assert(shardMatch, 'Filename must be of the form "foo_1of5_test.{js,html}"');
+  var shardIndex = Number.parseInt(shardMatch[1], 10);
+  var numShards = Number.parseInt(shardMatch[2], 10);
 
-  var testCase =
-      new goog.testing.ShardingTestCase(shardIndex, numShards, opt_name);
+  var testCase = new goog.testing.ShardingTestCase(shardIndex, numShards, opt_name);
   goog.testing.TestCase.initializeTestRunner(testCase);
 };

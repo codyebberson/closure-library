@@ -7,7 +7,6 @@
 /** @fileoverview Unit tests for goog.string. */
 
 goog.module('goog.string.newlinesTest');
-goog.setTestOnly();
 
 const newlines = goog.require('goog.string.newlines');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -35,13 +34,9 @@ testSuite({
     assertSplitLines(['abc', 'def', 'ghi', ''], 'abc\ndef\r\nghi\n\r');
     assertSplitLines(['', 'abc', 'def', 'ghi', ''], '\nabc\ndef\r\nghi\n\r');
     assertSplitLines(['', 'abc', 'def', 'ghi', ''], '\nabc\ndef\r\nghi\n\r');
-    assertSplitLines(
-        ['\n', 'abc\n', 'def\r\n', 'ghi\n', '\r'], '\nabc\ndef\r\nghi\n\r',
-        true);
+    assertSplitLines(['\n', 'abc\n', 'def\r\n', 'ghi\n', '\r'], '\nabc\ndef\r\nghi\n\r', true);
     assertSplitLines(['', 'abc', 'def', 'ghi', ''], '\nabc\ndef\r\nghi\n\r');
-    assertSplitLines(
-        ['\n', 'abc\n', 'def\r\n', 'ghi\n', '\r'], '\nabc\ndef\r\nghi\n\r',
-        true);
+    assertSplitLines(['\n', 'abc\n', 'def\r\n', 'ghi\n', '\r'], '\nabc\ndef\r\nghi\n\r', true);
   },
 
   testGetLines() {

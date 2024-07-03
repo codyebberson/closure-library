@@ -7,7 +7,6 @@
 /** @fileoverview Unit tests for goog.html.trustedtypes package. */
 
 goog.module('goog.html.trustedtypesTest');
-goog.setTestOnly();
 
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
 const recordFunction = goog.require('goog.testing.recordFunction');
@@ -17,10 +16,9 @@ const trustedtypes = goog.require('goog.html.trustedtypes');
 const stubs = new PropertyReplacer();
 
 testSuite({
-
   setUp() {
     /** @suppress {visibility} suppression added to enable type checking */
-    trustedtypes.cachedPolicy_ = undefined;  // reset the cache.
+    trustedtypes.cachedPolicy_ = undefined; // reset the cache.
   },
 
   tearDown() {
@@ -52,8 +50,9 @@ testSuite({
     const policy = trustedtypes.getPolicyPrivateDoNotAccessOrElse();
     recorder.assertCallCount(1);
     assertEquals(
-        `${goog.TRUSTED_TYPES_POLICY_NAME}#html`,
-        recorder.getLastCall().getArguments()[0]);
+      `${goog.TRUSTED_TYPES_POLICY_NAME}#html`,
+      recorder.getLastCall().getArguments()[0]
+    );
     assertEquals(recorder.getLastCall().getReturnValue(), policy);
   },
 
@@ -65,5 +64,4 @@ testSuite({
     trustedtypes.getPolicyPrivateDoNotAccessOrElse();
     recorder.assertCallCount(1);
   },
-
 });

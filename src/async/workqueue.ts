@@ -8,11 +8,10 @@ goog.module('goog.async.WorkQueue');
 goog.module.declareLegacyNamespace();
 
 const FreeList = goog.require('goog.async.FreeList');
-const {assert} = goog.require('goog.asserts');
+const { assert } = goog.require('goog.asserts');
 
 // TODO(johnlenz): generalize the WorkQueue if this is used by more
 // than goog.async.run.
-
 
 /**
  * A low GC workqueue. The key elements of this design:
@@ -80,12 +79,14 @@ class WorkQueue {
 }
 
 /** @define {number} The maximum number of entries to keep for recycling. */
-WorkQueue.DEFAULT_MAX_UNUSED =
-    goog.define('goog.async.WorkQueue.DEFAULT_MAX_UNUSED', 100);
+WorkQueue.DEFAULT_MAX_UNUSED = goog.define('goog.async.WorkQueue.DEFAULT_MAX_UNUSED', 100);
 
 /** @const @private {!FreeList<!WorkItem>} */
 WorkQueue.freelist_ = new FreeList(
-    () => new WorkItem(), item => item.reset(), WorkQueue.DEFAULT_MAX_UNUSED);
+  () => new WorkItem(),
+  (item) => item.reset(),
+  WorkQueue.DEFAULT_MAX_UNUSED
+);
 
 /**
  * @final

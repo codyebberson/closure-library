@@ -7,7 +7,6 @@
 /** @fileoverview Unit tests for TrustedResourceUrl and its builders. */
 
 goog.module('goog.html.trustedResourceUrlTest');
-goog.setTestOnly();
 
 const Const = goog.require('goog.string.Const');
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
@@ -48,9 +47,9 @@ testSuite({
   },
 
   testConstructor_throwsOnBadToken() {
-    assertThrows(() => new (/** @type {?} */ (TrustedResourceUrl))('', {}));
+    assertThrows(() => new /** @type {?} */ TrustedResourceUrl('', {}));
     const url = TrustedResourceUrl.fromConstant(Const.from(''));
-    assertThrows(() => new (/** @type {?} */ (url)).constructor('', {}));
+    assertThrows(() => new /** @type {?} */ url.constructor('', {}));
   },
 
   testTrustedResourceUrl() {
@@ -96,33 +95,32 @@ testSuite({
     assertValidFormat(Const.from('path/#a'));
 
     // TODO(jakubvrana): Disallow, allows crafting '//' prefix.
-    const url =
-        TrustedResourceUrl.format(Const.from('/%{path}/'), {'path': ''});
+    const url = TrustedResourceUrl.format(Const.from('/%{path}/'), {
+      path: '',
+    });
     assertEquals('//', TrustedResourceUrl.unwrap(url));
   },
 
   testFormat_args() {
-    const url = TrustedResourceUrl.format(
-        Const.from('/path/%{dir1}/%{dir2}?n1=v1%{opt_param}'), {
-          'dir1': 'd%/?#=',
-          'dir2': 2,
-          'opt_param': Const.from('n2=v2%/?#='),
-        });
-    assertEquals(
-        '/path/d%25%2F%3F%23%3D/2?n1=v1n2=v2%/?#=',
-        TrustedResourceUrl.unwrap(url));
+    const url = TrustedResourceUrl.format(Const.from('/path/%{dir1}/%{dir2}?n1=v1%{opt_param}'), {
+      dir1: 'd%/?#=',
+      dir2: 2,
+      opt_param: Const.from('n2=v2%/?#='),
+    });
+    assertEquals('/path/d%25%2F%3F%23%3D/2?n1=v1n2=v2%/?#=', TrustedResourceUrl.unwrap(url));
 
     // Only \w is permitted inside %{...}.
-    const url2 = TrustedResourceUrl.format(
-        Const.from('/path/%{!%{label}}%{foo'), {'label': 'value'});
+    const url2 = TrustedResourceUrl.format(Const.from('/path/%{!%{label}}%{foo'), {
+      label: 'value',
+    });
     assertEquals('/path/%{!value}%{foo', TrustedResourceUrl.unwrap(url2));
   },
 
   testFormat_missingArgs() {
     const exception = assertThrows(() => {
-      TrustedResourceUrl.format(
-          Const.from('https://www.google.com/path/%{arg1}'),
-          {'arg2': 'irrelevant'});
+      TrustedResourceUrl.format(Const.from('https://www.google.com/path/%{arg1}'), {
+        arg2: 'irrelevant',
+      });
     });
     assertContains('no valid label mapping found', exception.message);
   },
@@ -147,31 +145,32 @@ testSuite({
     // Two slashes. IE allowed (allows?) '\' instead of '/'.
     assertInvalidFormat(Const.from('/\\'));
     // Path.
-    assertInvalidFormat(Const.from(''));      // Allows appending anything.
-    assertInvalidFormat(Const.from('/'));     // Allows appending '/'.
-    assertInvalidFormat(Const.from('path'));  // Allows appending ':'.
-    assertInvalidFormat(Const.from('%{path}'), {'path': ''});
-    assertInvalidFormat(Const.from('%{path}/'), {'path': ''});
-    assertInvalidFormat(Const.from('//%{domain}'), {'domain': ''});
+    assertInvalidFormat(Const.from('')); // Allows appending anything.
+    assertInvalidFormat(Const.from('/')); // Allows appending '/'.
+    assertInvalidFormat(Const.from('path')); // Allows appending ':'.
+    assertInvalidFormat(Const.from('%{path}'), { path: '' });
+    assertInvalidFormat(Const.from('%{path}/'), { path: '' });
+    assertInvalidFormat(Const.from('//%{domain}'), { domain: '' });
   },
 
   testFromConstants() {
+    assertEquals('', TrustedResourceUrl.unwrap(TrustedResourceUrl.fromConstants([])));
     assertEquals(
-        '', TrustedResourceUrl.unwrap(TrustedResourceUrl.fromConstants([])));
+      'foo',
+      TrustedResourceUrl.unwrap(TrustedResourceUrl.fromConstants([Const.from('foo')]))
+    );
     assertEquals(
-        'foo', TrustedResourceUrl.unwrap(TrustedResourceUrl.fromConstants([
-          Const.from('foo'),
-        ])));
-    assertEquals(
-        'foobar', TrustedResourceUrl.unwrap(TrustedResourceUrl.fromConstants([
-          Const.from('foo'),
-          Const.from('bar'),
-        ])));
+      'foobar',
+      TrustedResourceUrl.unwrap(
+        TrustedResourceUrl.fromConstants([Const.from('foo'), Const.from('bar')])
+      )
+    );
   },
 
   async testFromConstantJavaScript() {
-    const url = TrustedResourceUrl.unwrap(TrustedResourceUrl.fromSafeScript(
-        SafeScript.fromConstant(Const.from('(()=>{})()'))));
+    const url = TrustedResourceUrl.unwrap(
+      TrustedResourceUrl.fromSafeScript(SafeScript.fromConstant(Const.from('(()=>{})()')))
+    );
     assertEquals('blob:', url.slice(0, 5));
     // Verify the content of the URL is the blob we created.
     // Skip this check on user agents that don't have the fetch API.
@@ -186,183 +185,220 @@ testSuite({
     stubs.set(globalThis, 'BlobBuilder', undefined);
     stubs.set(globalThis, 'Blob', undefined);
     assertThrows(() => {
-      TrustedResourceUrl.fromSafeScript(
-          SafeScript.fromConstant(Const.from('(()=>{})()')));
+      TrustedResourceUrl.fromSafeScript(SafeScript.fromConstant(Const.from('(()=>{})()')));
     });
   },
 
   testCloneWithParams() {
-    const url =
-        TrustedResourceUrl.fromConstant(Const.from('https://example.com/'));
+    const url = TrustedResourceUrl.fromConstant(Const.from('https://example.com/'));
+
+    assertEquals('https://example.com/', url.cloneWithParams(undefined).getTypedStringValue());
+
+    assertEquals('https://example.com/', url.cloneWithParams(null).getTypedStringValue());
 
     assertEquals(
-        'https://example.com/',
-        url.cloneWithParams(undefined).getTypedStringValue());
+      'https://example.com/?search%25',
+      url.cloneWithParams('search%').getTypedStringValue()
+    );
 
     assertEquals(
-        'https://example.com/',
-        url.cloneWithParams(null).getTypedStringValue());
+      'https://example.com/?a=%3F%23%26&b=1&e=x&e=y',
+      url
+        .cloneWithParams({
+          a: '?#&',
+          b: 1,
+          c: null,
+          d: undefined,
+          e: ['x', 'y'],
+        })
+        .getTypedStringValue()
+    );
 
     assertEquals(
-        'https://example.com/?search%25',
-        url.cloneWithParams('search%').getTypedStringValue());
+      'https://example.com/',
+      url.cloneWithParams(undefined, null).getTypedStringValue()
+    );
 
     assertEquals(
-        'https://example.com/?a=%3F%23%26&b=1&e=x&e=y',
-        url.cloneWithParams(
-               {'a': '?#&', 'b': 1, 'c': null, 'd': undefined, 'e': ['x', 'y']})
-            .getTypedStringValue());
+      'https://example.com/#hash%25',
+      url.cloneWithParams(undefined, 'hash%').getTypedStringValue()
+    );
 
     assertEquals(
-        'https://example.com/',
-        url.cloneWithParams(undefined, null).getTypedStringValue());
-
-    assertEquals(
-        'https://example.com/#hash%25',
-        url.cloneWithParams(undefined, 'hash%').getTypedStringValue());
-
-    assertEquals(
-        'https://example.com/#a=%3F%23%26&b=1&e=x&e=y',
-        url.cloneWithParams(
-               undefined,
-               {'a': '?#&', 'b': 1, 'c': null, 'd': undefined, 'e': ['x', 'y']})
-            .getTypedStringValue());
+      'https://example.com/#a=%3F%23%26&b=1&e=x&e=y',
+      url
+        .cloneWithParams(undefined, {
+          a: '?#&',
+          b: 1,
+          c: null,
+          d: undefined,
+          e: ['x', 'y'],
+        })
+        .getTypedStringValue()
+    );
 
     const hashAndSearchUrl = TrustedResourceUrl.fromConstant(
-        Const.from('https://example.com/?a=x#top'));
+      Const.from('https://example.com/?a=x#top')
+    );
 
     assertEquals(
-        'https://example.com/?a=x#top',
-        hashAndSearchUrl.cloneWithParams(undefined).getTypedStringValue());
+      'https://example.com/?a=x#top',
+      hashAndSearchUrl.cloneWithParams(undefined).getTypedStringValue()
+    );
 
     assertEquals(
-        'https://example.com/?a=x#top',
-        hashAndSearchUrl.cloneWithParams(null).getTypedStringValue());
+      'https://example.com/?a=x#top',
+      hashAndSearchUrl.cloneWithParams(null).getTypedStringValue()
+    );
 
     assertEquals(
-        'https://example.com/?search%25#top',
-        hashAndSearchUrl.cloneWithParams('search%').getTypedStringValue());
+      'https://example.com/?search%25#top',
+      hashAndSearchUrl.cloneWithParams('search%').getTypedStringValue()
+    );
 
     assertEquals(
-        'https://example.com/?a=x&a=%3F%23%26&b=1&e=x&e=y#top',
-        hashAndSearchUrl
-            .cloneWithParams({
-              'a': '?#&',
-              'b': 1,
-              'c': null,
-              'd': undefined,
-              'e': ['x', 'y']
-            })
-            .getTypedStringValue());
+      'https://example.com/?a=x&a=%3F%23%26&b=1&e=x&e=y#top',
+      hashAndSearchUrl
+        .cloneWithParams({
+          a: '?#&',
+          b: 1,
+          c: null,
+          d: undefined,
+          e: ['x', 'y'],
+        })
+        .getTypedStringValue()
+    );
 
     assertEquals(
-        'https://example.com/?a=x#top',
-        hashAndSearchUrl.cloneWithParams(undefined, null)
-            .getTypedStringValue());
+      'https://example.com/?a=x#top',
+      hashAndSearchUrl.cloneWithParams(undefined, null).getTypedStringValue()
+    );
 
     assertEquals(
-        'https://example.com/?a=x#hash%25',
-        hashAndSearchUrl.cloneWithParams(undefined, 'hash%')
-            .getTypedStringValue());
+      'https://example.com/?a=x#hash%25',
+      hashAndSearchUrl.cloneWithParams(undefined, 'hash%').getTypedStringValue()
+    );
 
     assertEquals(
-        'https://example.com/?a=x#top&a=%3F%23%26&b=2&e=z&e=z',
-        hashAndSearchUrl
-            .cloneWithParams(undefined, {
-              'a': '?#&',
-              'b': 2,
-              'c': null,
-              'd': undefined,
-              'e': ['z', 'z']
-            })
-            .getTypedStringValue());
+      'https://example.com/?a=x#top&a=%3F%23%26&b=2&e=z&e=z',
+      hashAndSearchUrl
+        .cloneWithParams(undefined, {
+          a: '?#&',
+          b: 2,
+          c: null,
+          d: undefined,
+          e: ['z', 'z'],
+        })
+        .getTypedStringValue()
+    );
 
     assertEquals(
-        'https://example.com/' +
-            '?a=x&a=%3F%23%26&b=1&e=x&e=y#top&a=%3F%23%26&b=2&e=z&e=z',
-        hashAndSearchUrl
-            .cloneWithParams(
-                {
-                  'a': '?#&',
-                  'b': 1,
-                  'c': null,
-                  'd': undefined,
-                  'e': ['x', 'y']
-                },
-                {
-                  'a': '?#&',
-                  'b': 2,
-                  'c': null,
-                  'd': undefined,
-                  'e': ['z', 'z']
-                })
-            .getTypedStringValue());
+      'https://example.com/' + '?a=x&a=%3F%23%26&b=1&e=x&e=y#top&a=%3F%23%26&b=2&e=z&e=z',
+      hashAndSearchUrl
+        .cloneWithParams(
+          {
+            a: '?#&',
+            b: 1,
+            c: null,
+            d: undefined,
+            e: ['x', 'y'],
+          },
+          {
+            a: '?#&',
+            b: 2,
+            c: null,
+            d: undefined,
+            e: ['z', 'z'],
+          }
+        )
+        .getTypedStringValue()
+    );
 
     assertEquals(
-        'https://example.com/#top',
-        hashAndSearchUrl.cloneWithParams('').getTypedStringValue());
+      'https://example.com/#top',
+      hashAndSearchUrl.cloneWithParams('').getTypedStringValue()
+    );
 
     assertEquals(
-        'https://example.com/?a=x',
-        hashAndSearchUrl.cloneWithParams(undefined, '').getTypedStringValue());
+      'https://example.com/?a=x',
+      hashAndSearchUrl.cloneWithParams(undefined, '').getTypedStringValue()
+    );
 
     assertEquals(
-        'https://example.com/?a=y',
-        TrustedResourceUrl.fromConstant(Const.from('https://example.com/?'))
-            .cloneWithParams({'a': 'y'})
-            .getTypedStringValue());
+      'https://example.com/?a=y',
+      TrustedResourceUrl.fromConstant(Const.from('https://example.com/?'))
+        .cloneWithParams({ a: 'y' })
+        .getTypedStringValue()
+    );
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testCloneWithParams_withMonkeypatchedObjectPrototype() {
     stubs.set(Object.prototype, 'foo', 'bar');
-    const url =
-        TrustedResourceUrl.fromConstant(Const.from('https://example.com/'));
+    const url = TrustedResourceUrl.fromConstant(Const.from('https://example.com/'));
     assertEquals(
-        'https://example.com/?a=%3F%23%26&b=1&e=x&e=y',
-        url.cloneWithParams(
-               {'a': '?#&', 'b': 1, 'c': null, 'd': undefined, 'e': ['x', 'y']})
-            .getTypedStringValue());
+      'https://example.com/?a=%3F%23%26&b=1&e=x&e=y',
+      url
+        .cloneWithParams({
+          a: '?#&',
+          b: 1,
+          c: null,
+          d: undefined,
+          e: ['x', 'y'],
+        })
+        .getTypedStringValue()
+    );
   },
 
   testFormatWithParams() {
     let url = TrustedResourceUrl.formatWithParams(
-        Const.from('https://example.com/'), {}, {'a': '&'});
+      Const.from('https://example.com/'),
+      {},
+      { a: '&' }
+    );
     assertEquals('https://example.com/?a=%26', url.getTypedStringValue());
 
     url = TrustedResourceUrl.formatWithParams(
-        Const.from('https://example.com/%{file}'), {'file': 'abc'},
-        {'b': 1, 'c': null, 'd': undefined});
+      Const.from('https://example.com/%{file}'),
+      { file: 'abc' },
+      { b: 1, c: null, d: undefined }
+    );
     assertEquals('https://example.com/abc?b=1', url.getTypedStringValue());
 
     url = TrustedResourceUrl.formatWithParams(
-        Const.from('https://example.com/'), {}, {'a': ['x', 'y']});
+      Const.from('https://example.com/'),
+      {},
+      { a: ['x', 'y'] }
+    );
     assertEquals('https://example.com/?a=x&a=y', url.getTypedStringValue());
 
     url = TrustedResourceUrl.formatWithParams(
-        Const.from('https://example.com/%{prestoId}'), {'prestoId': 1},
-        {'origin': 'https://example.com/'});
+      Const.from('https://example.com/%{prestoId}'),
+      { prestoId: 1 },
+      { origin: 'https://example.com/' }
+    );
     assertEquals(
-        'https://example.com/1?origin=https%3A%2F%2Fexample.com%2F',
-        url.getTypedStringValue());
+      'https://example.com/1?origin=https%3A%2F%2Fexample.com%2F',
+      url.getTypedStringValue()
+    );
 
     url = TrustedResourceUrl.formatWithParams(
-        Const.from('https://example.com/%{file}?a=x#top'), {'file': 'abc'},
-        {'a': '?#&', 'b': 1, 'c': null, 'd': undefined, 'e': ['x', 'y']},
-        {'a': '?#&', 'b': 2, 'c': null, 'd': undefined, 'e': ['z', 'z']});
+      Const.from('https://example.com/%{file}?a=x#top'),
+      { file: 'abc' },
+      { a: '?#&', b: 1, c: null, d: undefined, e: ['x', 'y'] },
+      { a: '?#&', b: 2, c: null, d: undefined, e: ['z', 'z'] }
+    );
 
     assertEquals(
-        'https://example.com/abc' +
-            '?a=x&a=%3F%23%26&b=1&e=x&e=y#top&a=%3F%23%26&b=2&e=z&e=z',
-        url.getTypedStringValue());
+      'https://example.com/abc' + '?a=x&a=%3F%23%26&b=1&e=x&e=y#top&a=%3F%23%26&b=2&e=z&e=z',
+      url.getTypedStringValue()
+    );
   },
 
   /** @suppress {checkTypes} */
   testUnwrap() {
-    const privateFieldName =
-        'privateDoNotAccessOrElseTrustedResourceUrlWrappedValue_';
-    const propNames =
-        googObject.getKeys(TrustedResourceUrl.fromConstant(Const.from('')));
+    const privateFieldName = 'privateDoNotAccessOrElseTrustedResourceUrlWrappedValue_';
+    const propNames = googObject.getKeys(TrustedResourceUrl.fromConstant(Const.from('')));
     assertContains(privateFieldName, propNames);
     const evil = {};
     evil[privateFieldName] = 'http://example.com/evil.js';
@@ -370,32 +406,27 @@ testSuite({
     const exception = assertThrows(() => {
       TrustedResourceUrl.unwrap(evil);
     });
-    assertContains(
-        'expected object of type TrustedResourceUrl', exception.message);
+    assertContains('expected object of type TrustedResourceUrl', exception.message);
     assertContains('of type object', exception.message);
   },
 
   testUnwrapTrustedScriptURL_policyIsNull() {
-    stubs.set(trustedtypes, 'getPolicyPrivateDoNotAccessOrElse', function() {
-      return null;
-    });
-    const safeValue =
-        TrustedResourceUrl.fromConstant(Const.from('https://example.com/'));
+    stubs.set(trustedtypes, 'getPolicyPrivateDoNotAccessOrElse', () => null);
+    const safeValue = TrustedResourceUrl.fromConstant(Const.from('https://example.com/'));
     const trustedValue = TrustedResourceUrl.unwrapTrustedScriptURL(safeValue);
     assertEquals('string', typeof trustedValue);
     assertEquals(safeValue.getTypedStringValue(), trustedValue);
   },
 
   testUnwrapTrustedScriptURL_policyIsSet() {
-    stubs.set(trustedtypes, 'getPolicyPrivateDoNotAccessOrElse', function() {
-      return policy;
-    });
-    const safeValue =
-        TrustedResourceUrl.fromConstant(Const.from('https://example.com/'));
+    stubs.set(trustedtypes, 'getPolicyPrivateDoNotAccessOrElse', () => policy);
+    const safeValue = TrustedResourceUrl.fromConstant(Const.from('https://example.com/'));
     const trustedValue = TrustedResourceUrl.unwrapTrustedScriptURL(safeValue);
     assertEquals(safeValue.getTypedStringValue(), trustedValue.toString());
     assertTrue(
-        globalThis.TrustedScriptURL ? trustedValue instanceof TrustedScriptURL :
-                                      typeof trustedValue === 'string');
+      globalThis.TrustedScriptURL
+        ? trustedValue instanceof TrustedScriptURL
+        : typeof trustedValue === 'string'
+    );
   },
 });

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.date.relativeTest');
-goog.setTestOnly();
 
 /** @suppress {extraRequire} */
 const relativeCommonTests = goog.require('goog.date.relativeCommonTests');

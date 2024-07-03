@@ -7,7 +7,6 @@
 /** @fileoverview Unit tests for SafeStyleSheet and its builders. */
 
 goog.module('goog.html.safeStyleSheetTest');
-goog.setTestOnly();
 
 const Const = goog.require('goog.string.Const');
 const SafeStyle = goog.require('goog.html.SafeStyle');
@@ -27,9 +26,8 @@ function assertCreateRuleEquals(expected, selector, style) {
 
 testSuite({
   testConstructor_throwsOnBadToken() {
-    assertThrows(() => new (/** @type {?} */ (SafeStyleSheet))(''));
-    assertThrows(
-        () => new (/** @type {?} */ (SafeStyleSheet.EMPTY)).constructor(''));
+    assertThrows(() => new /** @type {?} */ SafeStyleSheet(''));
+    assertThrows(() => new /** @type {?} */ SafeStyleSheet.EMPTY.constructor(''));
   },
 
   testSafeStyleSheet() {
@@ -46,10 +44,8 @@ testSuite({
 
   /** @suppress {checkTypes} */
   testUnwrap() {
-    const privateFieldName =
-        'privateDoNotAccessOrElseSafeStyleSheetWrappedValue_';
-    const propNames =
-        googObject.getKeys(SafeStyleSheet.fromConstant(Const.from('')));
+    const privateFieldName = 'privateDoNotAccessOrElseSafeStyleSheetWrappedValue_';
+    const propNames = googObject.getKeys(SafeStyleSheet.fromConstant(Const.from('')));
     assertContains(privateFieldName, propNames);
     const evil = {};
     evil[privateFieldName] = 'P.special { color:expression(evil) ; }';
@@ -61,24 +57,28 @@ testSuite({
   },
 
   testCreateRule() {
+    assertCreateRuleEquals('#id{top:0;left:0;}', '#id', {
+      top: '0',
+      left: '0',
+    });
+    assertCreateRuleEquals('#id\\.with\\.punctuation{top:0;left:0;}', '#id\\.with\\.punctuation', {
+      top: '0',
+      left: '0',
+    });
     assertCreateRuleEquals(
-        '#id{top:0;left:0;}', '#id', {'top': '0', 'left': '0'});
-    assertCreateRuleEquals(
-        '#id\\.with\\.punctuation{top:0;left:0;}', '#id\\.with\\.punctuation',
-        {'top': '0', 'left': '0'});
-    assertCreateRuleEquals(
-        '.class{margin-left:5px;}', '.class',
-        SafeStyle.create({'margin-left': '5px'}));
-    assertCreateRuleEquals(
-        'tag #id, .class{color:black !important;}', 'tag #id, .class',
-        {'color': 'black !important'});
-    assertCreateRuleEquals(
-        '[title=\'son\\\'s\']{}', '[title=\'son\\\'s\']', {});
+      '.class{margin-left:5px;}',
+      '.class',
+      SafeStyle.create({ 'margin-left': '5px' })
+    );
+    assertCreateRuleEquals('tag #id, .class{color:black !important;}', 'tag #id, .class', {
+      color: 'black !important',
+    });
+    assertCreateRuleEquals("[title='son\\'s']{}", "[title='son\\'s']", {});
     assertCreateRuleEquals('[title="{"]{}', '[title="{"]', {});
     assertCreateRuleEquals(':nth-child(1){}', ':nth-child(1)', {});
-    assertCreateRuleEquals(
-        'a::before{content:"\\3C ";}', 'a::before',
-        {'content': Const.from('"<"')});
+    assertCreateRuleEquals('a::before{content:"\\3C ";}', 'a::before', {
+      content: Const.from('"<"'),
+    });
 
     assertThrows(() => {
       SafeStyleSheet.createRule('tag{color:black;}', {});
@@ -102,7 +102,7 @@ testSuite({
       SafeStyleSheet.createRule('[type="a]', {});
     });
     assertThrows(() => {
-      SafeStyleSheet.createRule('[type=\'a]', {});
+      SafeStyleSheet.createRule("[type='a]", {});
     });
     assertThrows(() => {
       SafeStyleSheet.createRule('<', {});
@@ -113,8 +113,7 @@ testSuite({
   },
 
   testFromConstant_allowsEmptyString() {
-    assertEquals(
-        SafeStyleSheet.EMPTY, SafeStyleSheet.fromConstant(Const.from('')));
+    assertEquals(SafeStyleSheet.EMPTY, SafeStyleSheet.fromConstant(Const.from('')));
   },
 
   testFromConstant_throwsOnLessThanCharacter() {
@@ -124,15 +123,17 @@ testSuite({
   },
 
   testConcat() {
-    const styleSheet1 =
-        SafeStyleSheet.fromConstant(Const.from('P.special { color:red ; }'));
-    const styleSheet2 =
-        SafeStyleSheet.fromConstant(Const.from('P.regular { color:blue ; }'));
-    const expected = 'P.special { color:red ; }P.special { color:red ; }' +
-        'P.regular { color:blue ; }P.regular { color:blue ; }';
+    const styleSheet1 = SafeStyleSheet.fromConstant(Const.from('P.special { color:red ; }'));
+    const styleSheet2 = SafeStyleSheet.fromConstant(Const.from('P.regular { color:blue ; }'));
+    const expected =
+      'P.special { color:red ; }P.special { color:red ; }' +
+      'P.regular { color:blue ; }P.regular { color:blue ; }';
 
     let concatStyleSheet = SafeStyleSheet.concat(
-        styleSheet1, [styleSheet1, styleSheet2], styleSheet2);
+      styleSheet1,
+      [styleSheet1, styleSheet2],
+      styleSheet2
+    );
     assertEquals(expected, SafeStyleSheet.unwrap(concatStyleSheet));
 
     // Empty.

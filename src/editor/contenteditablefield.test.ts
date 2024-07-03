@@ -5,13 +5,11 @@
  */
 
 goog.module('goog.editor.ContentEditableFieldTest');
-goog.setTestOnly();
 
 const ContentEditableField = goog.require('goog.editor.ContentEditableField');
 const SafeHtml = goog.require('goog.html.SafeHtml');
 const googDom = goog.require('goog.dom');
 const testSuite = goog.require('goog.testing.testSuite');
-
 
 const HTML = '<div id="testField">I am text.</div>';
 
@@ -21,8 +19,9 @@ testSuite({
   setUp() {
     googDom.getElement('parent').innerHTML = HTML;
     assertTrue(
-        'FieldConstructor should be set by the test HTML file',
-        typeof FieldConstructor === 'function');
+      'FieldConstructor should be set by the test HTML file',
+      typeof FieldConstructor === 'function'
+    );
   },
 
   testNoIframeAndSameElement() {
@@ -30,14 +29,16 @@ testSuite({
     field.makeEditable();
     assertFalse(field.usesIframe());
     assertEquals(
-        'Original element should equal field element',
-        field.getOriginalElement(), field.getElement());
+      'Original element should equal field element',
+      field.getOriginalElement(),
+      field.getElement()
+    );
+    assertEquals('Sanity check on original element', 'testField', field.getOriginalElement().id);
     assertEquals(
-        'Sanity check on original element', 'testField',
-        field.getOriginalElement().id);
-    assertEquals(
-        'Editable document should be same as main document', document,
-        field.getEditableDomHelper().getDocument());
+      'Editable document should be same as main document',
+      document,
+      field.getEditableDomHelper().getDocument()
+    );
     field.dispose();
   },
 
@@ -49,8 +50,7 @@ testSuite({
     field.makeEditable();
     assertEquals('true', String(elem.contentEditable));
     assertEquals('Hello world', googDom.getTextContent(elem));
-    field.setSafeHtml(
-        false /* addParas */, SafeHtml.htmlEscape('Goodbye world'));
+    field.setSafeHtml(false /* addParas */, SafeHtml.htmlEscape('Goodbye world'));
     assertEquals('Goodbye world', googDom.getTextContent(elem));
 
     field.makeUneditable();

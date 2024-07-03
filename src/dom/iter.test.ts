@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dom.iterTest');
-goog.setTestOnly();
 
 const AncestorIterator = goog.require('goog.dom.iter.AncestorIterator');
 const ChildIterator = goog.require('goog.dom.iter.ChildIterator');
@@ -26,26 +25,22 @@ testSuite({
 
   testNextSibling() {
     const expectedContent = ['#br', 'def'];
-    testingDom.assertNodesMatch(
-        new SiblingIterator(test.firstChild), expectedContent);
+    testingDom.assertNodesMatch(new SiblingIterator(test.firstChild), expectedContent);
   },
 
   testNextSiblingInclusive() {
     const expectedContent = ['abc', '#br', 'def'];
-    testingDom.assertNodesMatch(
-        new SiblingIterator(test.firstChild, true), expectedContent);
+    testingDom.assertNodesMatch(new SiblingIterator(test.firstChild, true), expectedContent);
   },
 
   testPreviousSibling() {
     const expectedContent = ['#br', 'abc'];
-    testingDom.assertNodesMatch(
-        new SiblingIterator(test.lastChild, false, true), expectedContent);
+    testingDom.assertNodesMatch(new SiblingIterator(test.lastChild, false, true), expectedContent);
   },
 
   testPreviousSiblingInclusive() {
     const expectedContent = ['def', '#br', 'abc'];
-    testingDom.assertNodesMatch(
-        new SiblingIterator(test.lastChild, true, true), expectedContent);
+    testingDom.assertNodesMatch(new SiblingIterator(test.lastChild, true, true), expectedContent);
   },
 
   testChildIterator() {
@@ -55,8 +50,7 @@ testSuite({
 
   testChildIteratorIndex() {
     const expectedContent = ['#br', 'def'];
-    testingDom.assertNodesMatch(
-        new ChildIterator(test, false, 1), expectedContent);
+    testingDom.assertNodesMatch(new ChildIterator(test, false, 1), expectedContent);
   },
 
   testChildIteratorReverse() {
@@ -71,8 +65,7 @@ testSuite({
 
   testChildIteratorIndexReverse() {
     const expectedContent = ['#br', 'abc'];
-    testingDom.assertNodesMatch(
-        new ChildIterator(test, true, 1), expectedContent);
+    testingDom.assertNodesMatch(new ChildIterator(test, true, 1), expectedContent);
   },
 
   testAncestorIterator() {
@@ -81,9 +74,7 @@ testSuite({
   },
 
   testAncestorIteratorInclusive() {
-    const expectedContent =
-        ['#br', '#test', '#body', '#html', NodeType.DOCUMENT];
-    testingDom.assertNodesMatch(
-        new AncestorIterator(br, true), expectedContent);
+    const expectedContent = ['#br', '#test', '#body', '#html', NodeType.DOCUMENT];
+    testingDom.assertNodesMatch(new AncestorIterator(br, true), expectedContent);
   },
 });

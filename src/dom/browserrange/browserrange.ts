@@ -11,7 +11,6 @@
  * DO NOT USE THIS FILE DIRECTLY.  Use goog.dom.Range instead.
  */
 
-
 goog.provide('goog.dom.browserrange');
 goog.provide('goog.dom.browserrange.Error');
 
@@ -23,49 +22,40 @@ goog.require('goog.dom.browserrange.WebKitRange');
 goog.require('goog.userAgent');
 goog.requireType('goog.dom.browserrange.AbstractRange');
 
-
 /**
  * Common error constants.
  * @enum {string}
  */
 goog.dom.browserrange.Error = {
-  NOT_IMPLEMENTED: 'Not Implemented'
+  NOT_IMPLEMENTED: 'Not Implemented',
 };
-
 
 // NOTE(robbyw): While it would be nice to eliminate the duplicate switches
 //               below, doing so uncovers bugs in the JsCompiler in which
 //               necessary code is stripped out.
-
 
 /**
  * Static method that returns the proper type of browser range.
  * @param {Range|TextRange} range A browser range object.
  * @return {!goog.dom.browserrange.AbstractRange} A wrapper object.
  */
-goog.dom.browserrange.createRange = function(range) {
-  'use strict';
+goog.dom.browserrange.createRange = (range) => {
   if (goog.userAgent.WEBKIT) {
-    return new goog.dom.browserrange.WebKitRange(
-        /** @type {Range} */ (range));
+    return new goog.dom.browserrange.WebKitRange(/** @type {Range} */ (range));
   } else if (goog.userAgent.GECKO) {
-    return new goog.dom.browserrange.GeckoRange(
-        /** @type {Range} */ (range));
+    return new goog.dom.browserrange.GeckoRange(/** @type {Range} */ (range));
   } else {
     // Default other browsers, including Opera, to W3c ranges.
-    return new goog.dom.browserrange.W3cRange(
-        /** @type {Range} */ (range));
+    return new goog.dom.browserrange.W3cRange(/** @type {Range} */ (range));
   }
 };
-
 
 /**
  * Static method that returns the proper type of browser range.
  * @param {Node} node The node to select.
  * @return {!goog.dom.browserrange.AbstractRange} A wrapper object.
  */
-goog.dom.browserrange.createRangeFromNodeContents = function(node) {
-  'use strict';
+goog.dom.browserrange.createRangeFromNodeContents = (node) => {
   if (goog.userAgent.WEBKIT) {
     return goog.dom.browserrange.WebKitRange.createFromNodeContents(node);
   } else if (goog.userAgent.GECKO) {
@@ -75,7 +65,6 @@ goog.dom.browserrange.createRangeFromNodeContents = function(node) {
     return goog.dom.browserrange.W3cRange.createFromNodeContents(node);
   }
 };
-
 
 /**
  * Static method that returns the proper type of browser range.
@@ -89,34 +78,41 @@ goog.dom.browserrange.createRangeFromNodeContents = function(node) {
  *     the index into the character array for text endNodes.
  * @return {!goog.dom.browserrange.AbstractRange} A wrapper object.
  */
-goog.dom.browserrange.createRangeFromNodes = function(
-    startNode, startOffset, endNode, endOffset) {
-  'use strict';
+goog.dom.browserrange.createRangeFromNodes = (startNode, startOffset, endNode, endOffset) => {
   if (goog.userAgent.WEBKIT) {
     return goog.dom.browserrange.WebKitRange.createFromNodes(
-        startNode, startOffset, endNode, endOffset);
+      startNode,
+      startOffset,
+      endNode,
+      endOffset
+    );
   } else if (goog.userAgent.GECKO) {
     return goog.dom.browserrange.GeckoRange.createFromNodes(
-        startNode, startOffset, endNode, endOffset);
+      startNode,
+      startOffset,
+      endNode,
+      endOffset
+    );
   } else {
     // Default other browsers to W3c ranges.
     return goog.dom.browserrange.W3cRange.createFromNodes(
-        startNode, startOffset, endNode, endOffset);
+      startNode,
+      startOffset,
+      endNode,
+      endOffset
+    );
   }
 };
-
 
 /**
  * Tests whether the given node can contain a range end point.
  * @param {Node} node The node to check.
  * @return {boolean} Whether the given node can contain a range end point.
  */
-goog.dom.browserrange.canContainRangeEndpoint = function(node) {
-  'use strict';
+goog.dom.browserrange.canContainRangeEndpoint = (node) => {
   // NOTE(user): This is not complete, as divs with style -
   // 'display:inline-block' or 'position:absolute' can also not contain range
   // endpoints. A more complete check is to see if that element can be partially
   // selected (can be container) or not.
-  return goog.dom.canHaveChildren(node) ||
-      node.nodeType == goog.dom.NodeType.TEXT;
+  return goog.dom.canHaveChildren(node) || node.nodeType == goog.dom.NodeType.TEXT;
 };

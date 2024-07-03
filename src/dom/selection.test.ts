@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.dom.selectionTest');
-goog.setTestOnly();
 
 const InputType = goog.require('goog.dom.InputType');
 const TagName = goog.require('goog.dom.TagName');
@@ -102,11 +101,15 @@ function select(field) {
 }
 testSuite({
   setUp() {
-    input = dom.createDom(TagName.INPUT, {type: InputType.TEXT});
+    input = dom.createDom(TagName.INPUT, { type: InputType.TEXT });
     textarea = dom.createDom(TagName.TEXTAREA);
-    hiddenInput = dom.createDom(
-        TagName.INPUT, {type: InputType.TEXT, style: 'display: none'});
-    hiddenTextarea = dom.createDom(TagName.TEXTAREA, {style: 'display: none'});
+    hiddenInput = dom.createDom(TagName.INPUT, {
+      type: InputType.TEXT,
+      style: 'display: none',
+    });
+    hiddenTextarea = dom.createDom(TagName.TEXTAREA, {
+      style: 'display: none',
+    });
 
     document.body.appendChild(input);
     document.body.appendChild(textarea);
@@ -133,8 +136,9 @@ testSuite({
    */
   testGetStartOther() {
     const button = dom.createDom(TagName.BUTTON);
-    const hiddenButton =
-        dom.createDom(TagName.BUTTON, {style: 'display: none'});
+    const hiddenButton = dom.createDom(TagName.BUTTON, {
+      style: 'display: none',
+    });
     document.body.appendChild(button);
     document.body.appendChild(hiddenButton);
     getStartHelper(button, hiddenButton);
@@ -270,7 +274,7 @@ testSuite({
 
     // Position cursor at the end of the first \r\n in IE or \n in
     // GECKO within a textarea.
-    let endOfOneNewline = 1;
+    const endOfOneNewline = 1;
     checkSetAndGetTextarea(endOfOneNewline, endOfOneNewline);
   },
 
@@ -284,12 +288,16 @@ testSuite({
     selection.setCursorPosition(input, 5);
 
     assertEquals(
-        'getStart on input should return where we put the cursor', 5,
-        selection.getStart(input));
+      'getStart on input should return where we put the cursor',
+      5,
+      selection.getStart(input)
+    );
 
     assertEquals(
-        'getStart on unfocused textarea should succeed without error', 0,
-        selection.getStart(textarea));
+      'getStart on unfocused textarea should succeed without error',
+      0,
+      selection.getStart(textarea)
+    );
   },
 
   /**
@@ -309,11 +317,15 @@ testSuite({
     const expectedLeftString = 'Hello\nW';
 
     assertEquals(
-        'getStart on input should return after the newline',
-        expectedLeftString.length, selection.getStart(textarea));
+      'getStart on input should return after the newline',
+      expectedLeftString.length,
+      selection.getStart(textarea)
+    );
     assertEquals(
-        'getEnd on input should return after the newline',
-        expectedLeftString.length, selection.getEnd(textarea));
+      'getEnd on input should return after the newline',
+      expectedLeftString.length,
+      selection.getEnd(textarea)
+    );
 
     selection.setEnd(textarea, textarea.value.length);
     assertEquals('orld', selection.getText(textarea));

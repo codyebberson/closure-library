@@ -7,11 +7,9 @@
 /** @fileoverview Unit tests for the CSS specificity calculator. */
 
 goog.module('goog.html.CssSpecificityTest');
-goog.setTestOnly();
 
 const CssSpecificity = goog.require('goog.html.CssSpecificity');
 const testSuite = goog.require('goog.testing.testSuite');
-
 
 /**
  * @param {!Array<number>} expected
@@ -23,7 +21,7 @@ function assertSpecificityEquals(expected, selector) {
 }
 
 testSuite({
-  testGetSpecificity: function() {
+  testGetSpecificity: () => {
     // @see http://css-tricks.com/specifics-on-css-specificity/
     assertSpecificityEquals([0, 1, 1, 3], 'ul#nav li.active a');
     assertSpecificityEquals([0, 0, 2, 3], 'body.ie7 .col_3 h2 ~ h2');
@@ -50,5 +48,5 @@ testSuite({
     assertSpecificityEquals([0, 0, 1, 2], 'li:nth-child(2n-1)+p');
     assertSpecificityEquals([0, 0, 1, 2], 'li:nth-child(2n-1) p');
     assertSpecificityEquals([0, 0, 1, 0], ':lang(nl-be)');
-  }
+  },
 });

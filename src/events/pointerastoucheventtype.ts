@@ -8,7 +8,6 @@ goog.provide('goog.events.PointerAsTouchEventType');
 
 goog.require('goog.events.PointerTouchFallbackEventType');
 
-
 /**
  * An alias for `goog.events.EventType.TOUCH*` event types that is overridden by
  * corresponding `POINTER*` event types.
@@ -18,5 +17,5 @@ goog.events.PointerAsTouchEventType = {
   TOUCHCANCEL: goog.events.PointerTouchFallbackEventType.POINTERCANCEL,
   TOUCHEND: goog.events.PointerTouchFallbackEventType.POINTERUP,
   TOUCHMOVE: goog.events.PointerTouchFallbackEventType.POINTERMOVE,
-  TOUCHSTART: goog.events.PointerTouchFallbackEventType.POINTERDOWN
+  TOUCHSTART: goog.events.PointerTouchFallbackEventType.POINTERDOWN,
 };

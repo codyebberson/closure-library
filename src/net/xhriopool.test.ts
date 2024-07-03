@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.net.XhrIoPoolTest');
-goog.setTestOnly();
 
 const StructsMap = goog.require('goog.structs.Map');
 const XhrIoPool = goog.require('goog.net.XhrIoPool');
@@ -21,11 +20,8 @@ testSuite({
     const xhrIo = xhrIoPool.getObject();
 
     assertEquals('Request should contain 1 header', 1, xhrIo.headers.size);
-    assertTrue(
-        'Request should contain right header key', xhrIo.headers.has('X-Foo'));
-    assertEquals(
-        'Request should contain right header value', xhrIo.headers.get('X-Foo'),
-        'Bar');
+    assertTrue('Request should contain right header key', xhrIo.headers.has('X-Foo'));
+    assertEquals('Request should contain right header value', xhrIo.headers.get('X-Foo'), 'Bar');
 
     xhrIoPool.releaseObject(xhrIo);
     dispose(xhrIoPool);
@@ -36,11 +32,8 @@ testSuite({
     const xhrIo = xhrIoPool.getObject();
 
     assertEquals('Request should contain 1 header', 1, xhrIo.headers.size);
-    assertTrue(
-        'Request should contain right header key', xhrIo.headers.has('X-Foo'));
-    assertEquals(
-        'Request should contain right header value', 'Bar',
-        xhrIo.headers.get('X-Foo'));
+    assertTrue('Request should contain right header key', xhrIo.headers.has('X-Foo'));
+    assertEquals('Request should contain right header value', 'Bar', xhrIo.headers.get('X-Foo'));
 
     xhrIoPool.releaseObject(xhrIo);
     dispose(xhrIoPool);
@@ -48,13 +41,14 @@ testSuite({
 
   testSetCredentials() {
     const xhrIoPool = new XhrIoPool(
-        undefined /* opt_headers */, undefined /* opt_minCount */,
-        undefined /* opt_maxCount */, true /* opt_withCredentials */);
+      undefined /* opt_headers */,
+      undefined /* opt_minCount */,
+      undefined /* opt_maxCount */,
+      true /* opt_withCredentials */
+    );
     const xhrIo = xhrIoPool.getObject();
 
-    assertTrue(
-        'withCredentials should be set on a request object',
-        xhrIo.getWithCredentials());
+    assertTrue('withCredentials should be set on a request object', xhrIo.getWithCredentials());
 
     xhrIoPool.releaseObject(xhrIo);
     dispose(xhrIoPool);

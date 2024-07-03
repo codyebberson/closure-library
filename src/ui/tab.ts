@@ -19,8 +19,6 @@ goog.require('goog.ui.registry');
 goog.requireType('goog.dom.DomHelper');
 goog.requireType('goog.ui.ControlContent');
 
-
-
 /**
  * Tab control, designed to be hosted in a {@link goog.ui.TabBar}.  The tab's
  * DOM may be different based on the configuration of the containing tab bar,
@@ -34,11 +32,13 @@ goog.requireType('goog.ui.ControlContent');
  * @constructor
  * @extends {goog.ui.Control}
  */
-goog.ui.Tab = function(content, opt_renderer, opt_domHelper) {
-  'use strict';
+goog.ui.Tab = function (content, opt_renderer, opt_domHelper) {
   goog.ui.Control.call(
-      this, content, opt_renderer || goog.ui.TabRenderer.getInstance(),
-      opt_domHelper);
+    this,
+    content,
+    opt_renderer || goog.ui.TabRenderer.getInstance(),
+    opt_domHelper
+  );
 
   // Tabs support the SELECTED state.
   this.setSupportedState(goog.ui.Component.State.SELECTED, true);
@@ -46,11 +46,11 @@ goog.ui.Tab = function(content, opt_renderer, opt_domHelper) {
   // Tabs must dispatch state transition events for the DISABLED and SELECTED
   // states in order for the tab bar to function properly.
   this.setDispatchTransitionEvents(
-      goog.ui.Component.State.DISABLED | goog.ui.Component.State.SELECTED,
-      true);
+    goog.ui.Component.State.DISABLED | goog.ui.Component.State.SELECTED,
+    true
+  );
 };
 goog.inherits(goog.ui.Tab, goog.ui.Control);
-
 
 /**
  * Tooltip text for the tab, displayed on hover (if any).
@@ -59,15 +59,12 @@ goog.inherits(goog.ui.Tab, goog.ui.Control);
  */
 goog.ui.Tab.prototype.tooltip_;
 
-
 /**
  * @return {string|undefined} Tab tooltip text (if any).
  */
-goog.ui.Tab.prototype.getTooltip = function() {
-  'use strict';
+goog.ui.Tab.prototype.getTooltip = function () {
   return this.tooltip_;
 };
-
 
 /**
  * Sets the tab tooltip text.  If the tab has already been rendered, updates
@@ -75,12 +72,10 @@ goog.ui.Tab.prototype.getTooltip = function() {
  * @param {string} tooltip New tooltip text.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.ui.Tab.prototype.setTooltip = function(tooltip) {
-  'use strict';
+goog.ui.Tab.prototype.setTooltip = function (tooltip) {
   this.getRenderer().setTooltip(this.getElement(), tooltip);
   this.setTooltipInternal(tooltip);
 };
-
 
 /**
  * Sets the tab tooltip text.  Considered protected; to be called only by the
@@ -88,15 +83,12 @@ goog.ui.Tab.prototype.setTooltip = function(tooltip) {
  * @param {string} tooltip New tooltip text.
  * @protected
  */
-goog.ui.Tab.prototype.setTooltipInternal = function(tooltip) {
-  'use strict';
+goog.ui.Tab.prototype.setTooltipInternal = function (tooltip) {
   this.tooltip_ = tooltip;
 };
 
-
 // Register a decorator factory function for goog.ui.Tabs.
 goog.ui.registry.setDecoratorByClassName(
-    goog.ui.TabRenderer.CSS_CLASS, function() {
-      'use strict';
-      return new goog.ui.Tab(null);
-    });
+  goog.ui.TabRenderer.CSS_CLASS,
+  () => new goog.ui.Tab(null)
+);

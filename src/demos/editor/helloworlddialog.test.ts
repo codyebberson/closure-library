@@ -39,9 +39,7 @@ testSuite({
     mockOkHandler.$replay();
     createAndShow();
 
-    assertEquals(
-        'Input field has incorrect sample text', 'Hello, world!',
-        dialog.input_.value);
+    assertEquals('Input field has incorrect sample text', 'Hello, world!', dialog.input_.value);
     mockOkHandler.$verify();
   },
 
@@ -58,7 +56,7 @@ testSuite({
     dialog.input_.value = CUSTOM_MESSAGE;
     googTestingEvents.fireClickSequence(dialog.getOkButtonElement());
 
-    mockOkHandler.$verify();  // Verifies OK is dispatched with correct message.
+    mockOkHandler.$verify(); // Verifies OK is dispatched with correct message.
   },
 });
 
@@ -80,7 +78,7 @@ function createAndShow() {
  * @suppress {missingProperties} suppression added to enable type checking
  */
 function expectOk(message) {
-  mockOkHandler.handleEvent(new ArgumentMatcher(function(arg) {
-    return arg.type == EventType.OK && arg.message == message;
-  }));
+  mockOkHandler.handleEvent(
+    new ArgumentMatcher((arg) => arg.type == EventType.OK && arg.message == message)
+  );
 }

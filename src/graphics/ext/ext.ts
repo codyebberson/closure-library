@@ -4,13 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Extended graphics namespace.
  * @suppress {extraRequire} All the requires in this file are "extra"
  * because this file is not actually using them.
  */
-
 
 goog.provide('goog.graphics.ext');
 

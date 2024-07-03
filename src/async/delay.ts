@@ -12,13 +12,10 @@
  * @see ../demos/timers.html
  */
 
-
 goog.provide('goog.async.Delay');
 
 goog.require('goog.Disposable');
 goog.require('goog.Timer');
-
-
 
 /**
  * A Delay object invokes the associated function after a specified delay. The
@@ -37,8 +34,7 @@ goog.require('goog.Timer');
  * @extends {goog.Disposable}
  * @final
  */
-goog.async.Delay = function(listener, opt_interval, opt_handler) {
-  'use strict';
+goog.async.Delay = function (listener, opt_interval, opt_handler) {
   goog.async.Delay.base(this, 'constructor');
 
   /**
@@ -61,7 +57,6 @@ goog.async.Delay = function(listener, opt_interval, opt_handler) {
    */
   this.handler_ = opt_handler;
 
-
   /**
    * Cached callback function invoked when the delay finishes.
    * @type {Function}
@@ -71,7 +66,6 @@ goog.async.Delay = function(listener, opt_interval, opt_handler) {
 };
 goog.inherits(goog.async.Delay, goog.Disposable);
 
-
 /**
  * Identifier of the active delay timeout, or 0 when inactive.
  * @type {number}
@@ -79,21 +73,18 @@ goog.inherits(goog.async.Delay, goog.Disposable);
  */
 goog.async.Delay.prototype.id_ = 0;
 
-
 /**
  * Disposes of the object, cancelling the timeout if it is still outstanding and
  * removing all object references.
  * @override
  * @protected
  */
-goog.async.Delay.prototype.disposeInternal = function() {
-  'use strict';
+goog.async.Delay.prototype.disposeInternal = function () {
   goog.async.Delay.base(this, 'disposeInternal');
   this.stop();
   delete this.listener_;
   delete this.handler_;
 };
-
 
 /**
  * Starts the delay timer. The provided listener function will be called after
@@ -102,14 +93,13 @@ goog.async.Delay.prototype.disposeInternal = function() {
  * @param {number=} opt_interval If specified, overrides the object's default
  *     interval with this one (in milliseconds).
  */
-goog.async.Delay.prototype.start = function(opt_interval) {
-  'use strict';
+goog.async.Delay.prototype.start = function (opt_interval) {
   this.stop();
   this.id_ = goog.Timer.callOnce(
-      this.callback_,
-      opt_interval !== undefined ? opt_interval : this.interval_);
+    this.callback_,
+    opt_interval !== undefined ? opt_interval : this.interval_
+  );
 };
-
 
 /**
  * Starts the delay timer if it's not already active.
@@ -117,65 +107,54 @@ goog.async.Delay.prototype.start = function(opt_interval) {
  *     active, overrides the object's default interval with this one (in
  *     milliseconds).
  */
-goog.async.Delay.prototype.startIfNotActive = function(opt_interval) {
-  'use strict';
+goog.async.Delay.prototype.startIfNotActive = function (opt_interval) {
   if (!this.isActive()) {
     this.start(opt_interval);
   }
 };
 
-
 /**
  * Stops the delay timer if it is active. No action is taken if the timer is not
  * in use.
  */
-goog.async.Delay.prototype.stop = function() {
-  'use strict';
+goog.async.Delay.prototype.stop = function () {
   if (this.isActive()) {
     goog.Timer.clear(this.id_);
   }
   this.id_ = 0;
 };
 
-
 /**
  * Fires delay's action even if timer has already gone off or has not been
  * started yet; guarantees action firing. Stops the delay timer.
  */
-goog.async.Delay.prototype.fire = function() {
-  'use strict';
+goog.async.Delay.prototype.fire = function () {
   this.stop();
   this.doAction_();
 };
-
 
 /**
  * Fires delay's action only if timer is currently active. Stops the delay
  * timer.
  */
-goog.async.Delay.prototype.fireIfActive = function() {
-  'use strict';
+goog.async.Delay.prototype.fireIfActive = function () {
   if (this.isActive()) {
     this.fire();
   }
 };
 
-
 /**
  * @return {boolean} True if the delay is currently active, false otherwise.
  */
-goog.async.Delay.prototype.isActive = function() {
-  'use strict';
+goog.async.Delay.prototype.isActive = function () {
   return this.id_ != 0;
 };
-
 
 /**
  * Invokes the callback function after the delay successfully completes.
  * @private
  */
-goog.async.Delay.prototype.doAction_ = function() {
-  'use strict';
+goog.async.Delay.prototype.doAction_ = function () {
   this.id_ = 0;
   if (this.listener_) {
     this.listener_.call(this.handler_);

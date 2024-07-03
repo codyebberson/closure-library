@@ -12,8 +12,6 @@ goog.provide('goog.labs.structs.Multimap');
 
 goog.require('goog.array');
 
-
-
 /**
  * Creates a new multimap.
  * @final
@@ -66,8 +64,7 @@ goog.labs.structs.Multimap = class {
    * @param {!Array<V>} values The values to add.
    */
   addAllValues(key, values) {
-    values.forEach(function(v) {
-      'use strict';
+    values.forEach(function (v) {
       this.add(key, v);
     }, this);
   }
@@ -78,8 +75,7 @@ goog.labs.structs.Multimap = class {
    *     map to add.
    */
   addAllFromMultimap(map) {
-    map.getEntries().forEach(function(entry) {
-      'use strict';
+    map.getEntries().forEach(function (entry) {
       this.add(entry[0], entry[1]);
     }, this);
   }
@@ -119,10 +115,7 @@ goog.labs.structs.Multimap = class {
       return false;
     }
 
-    const removed = goog.array.removeIf(values, function(v) {
-      'use strict';
-      return Object.is(value, v);
-    });
+    const removed = goog.array.removeIf(values, (v) => Object.is(value, v));
 
     if (removed) {
       this.count_--;
@@ -176,10 +169,7 @@ goog.labs.structs.Multimap = class {
       return false;
     }
 
-    const index = values.findIndex(function(v) {
-      'use strict';
-      return Object.is(v, value);
-    });
+    const index = values.findIndex((v) => Object.is(v, value));
     return index >= 0;
   }
 
@@ -233,13 +223,11 @@ goog.labs.structs.Multimap = class {
   }
 };
 
-
 /**
  * The backing map.
  * @private {!Map<K, !Array<V>>}
  */
 goog.labs.structs.Multimap.prototype.map_;
-
 
 /**
  * @private {number}

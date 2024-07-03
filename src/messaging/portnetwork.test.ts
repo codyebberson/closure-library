@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.messaging.PortNetworkTest');
-goog.setTestOnly();
 
 const GoogPromise = goog.require('goog.Promise');
 const PortChannel = goog.require('goog.messaging.PortChannel');
@@ -46,17 +45,13 @@ testSuite({
     }
 
     const master = new PortOperator('main');
-    master.addPort(
-        'worker1',
-        new PortChannel(new Worker('testdata/portnetwork_worker1.js')));
-    master.addPort(
-        'worker2',
-        new PortChannel(new Worker('testdata/portnetwork_worker2.js')));
+    master.addPort('worker1', new PortChannel(new Worker('testdata/portnetwork_worker1.js')));
+    master.addPort('worker2', new PortChannel(new Worker('testdata/portnetwork_worker2.js')));
     const peerOrigin = window.location.protocol + '//' + window.location.host;
     master.addPort(
-        'frame',
-        PortChannel.forEmbeddedWindow(
-            window.frames['inner'], peerOrigin, timer));
+      'frame',
+      PortChannel.forEmbeddedWindow(window.frames['inner'], peerOrigin, timer)
+    );
 
     const promise = new GoogPromise((resolve, reject) => {
       master.dial('worker1').registerService('result', resolve, true);
@@ -64,11 +59,11 @@ testSuite({
     master.dial('worker2').send('sendToFrame', ['main']);
 
     return promise
-        .then((msg) => {
-          assertArrayEquals(['main', 'worker2', 'frame', 'worker1'], msg);
-        })
-        .thenAlways(() => {
-          master.dispose();
-        });
+      .then((msg) => {
+        assertArrayEquals(['main', 'worker2', 'frame', 'worker1'], msg);
+      })
+      .thenAlways(() => {
+        master.dispose();
+      });
   },
 });

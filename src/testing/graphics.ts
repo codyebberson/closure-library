@@ -14,14 +14,12 @@ goog.provide('goog.testing.graphics');
 goog.require('goog.graphics.Path');
 goog.require('goog.testing.asserts');
 
-
 /**
  * Array mapping numeric segment constant to a descriptive character.
  * @type {Array<string>}
  * @private
  */
-goog.testing.graphics.SEGMENT_NAMES_ = function() {
-  'use strict';
+goog.testing.graphics.SEGMENT_NAMES_ = (() => {
   var arr = [];
   arr[goog.graphics.Path.Segment.MOVETO] = 'M';
   arr[goog.graphics.Path.Segment.LINETO] = 'L';
@@ -29,8 +27,7 @@ goog.testing.graphics.SEGMENT_NAMES_ = function() {
   arr[goog.graphics.Path.Segment.ARCTO] = 'A';
   arr[goog.graphics.Path.Segment.CLOSE] = 'X';
   return arr;
-}();
-
+})();
 
 /**
  * Test if the given path matches the expected array of commands and parameters.
@@ -38,11 +35,9 @@ goog.testing.graphics.SEGMENT_NAMES_ = function() {
  *     parameters.
  * @param {goog.graphics.Path} path The path to test against.
  */
-goog.testing.graphics.assertPathEquals = function(expected, path) {
-  'use strict';
+goog.testing.graphics.assertPathEquals = (expected, path) => {
   var actual = [];
-  path.forEachSegment(function(seg, args) {
-    'use strict';
+  path.forEachSegment((seg, args) => {
     actual.push(goog.testing.graphics.SEGMENT_NAMES_[seg]);
     Array.prototype.push.apply(actual, args);
   });

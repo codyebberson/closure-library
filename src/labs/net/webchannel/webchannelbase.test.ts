@@ -10,10 +10,11 @@
  */
 
 goog.module('goog.labs.net.webChannel.webChannelBaseTest');
-goog.setTestOnly();
 
 const ChannelRequest = goog.require('goog.labs.net.webChannel.ChannelRequest');
-const ForwardChannelRequestPool = goog.require('goog.labs.net.webChannel.ForwardChannelRequestPool');
+const ForwardChannelRequestPool = goog.require(
+  'goog.labs.net.webChannel.ForwardChannelRequestPool'
+);
 const MockClock = goog.require('goog.testing.MockClock');
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
 const Stat = goog.require('goog.labs.net.webChannel.requestStats.Stat');
@@ -88,8 +89,7 @@ function stubNetUtils() {
  * @param {boolean} spdyEnabled Whether SPDY is enabled for the test.
  */
 function stubSpdyCheck(spdyEnabled) {
-  stubs.set(
-      ForwardChannelRequestPool, 'isSpdyOrHttp2Enabled_', () => spdyEnabled);
+  stubs.set(ForwardChannelRequestPool, 'isSpdyOrHttp2Enabled_', () => spdyEnabled);
 }
 
 /**
@@ -98,8 +98,12 @@ function stubSpdyCheck(spdyEnabled) {
  */
 class MockChannelRequest {
   constructor(
-      channel, channelDebug, sessionId = undefined, requestId = undefined,
-      retryId = undefined) {
+    channel,
+    channelDebug,
+    sessionId = undefined,
+    requestId = undefined,
+    retryId = undefined
+  ) {
     this.channel_ = channel;
     this.channelDebug_ = channelDebug;
     this.sessionId_ = sessionId;
@@ -152,8 +156,7 @@ class MockChannelRequest {
    *     won't cause it to be added to the URL.
    */
   xmlHttpGet(uri, decodeChunks, hostPrefix) {
-    this.channelDebug_.debug(
-        `<--- GET: ${uri}, ${decodeChunks}, ${hostPrefix}`);
+    this.channelDebug_.debug(`<--- GET: ${uri}, ${decodeChunks}, ${hostPrefix}`);
     this.requestStartTime_ = Date.now();
   }
 
@@ -255,18 +258,16 @@ function formatArrayOfMaps(arrayOfMaps) {
   for (let i = 0; i < arrayOfMaps.length; i++) {
     const map = arrayOfMaps[i];
 
-    if (Object.getPrototypeOf(map.map) === Object.prototype) {  // Object map
+    if (Object.getPrototypeOf(map.map) === Object.prototype) {
+      // Object map
       for (const key in map.map) {
-        const tmp =
-            key + ':' + map.map[key] + (map.context ? ':' + map.context : '');
+        const tmp = key + ':' + map.map[key] + (map.context ? ':' + map.context : '');
         result.push(tmp);
       }
-    } else if (
-        typeof map.map.keys === 'function' &&
-        typeof map.map.get === 'function') {  // MapLike
+    } else if (typeof map.map.keys === 'function' && typeof map.map.get === 'function') {
+      // MapLike
       for (const key of map.map.keys()) {
-        const tmp = key + ':' + map.map.get(key) +
-            (map.context ? ':' + map.context : '');
+        const tmp = key + ':' + map.map.get(key) + (map.context ? ':' + map.context : '');
         result.push(tmp);
       }
     } else {
@@ -283,8 +284,11 @@ function formatArrayOfMaps(arrayOfMaps) {
  * @param {boolean=} spdyEnabled
  */
 function connectForwardChannel(
-    serverVersion = undefined, hostPrefix = undefined, opt_uriPrefix,
-    spdyEnabled = undefined) {
+  serverVersion = undefined,
+  hostPrefix = undefined,
+  opt_uriPrefix,
+  spdyEnabled = undefined
+) {
   stubSpdyCheck(!!spdyEnabled);
   const uriPrefix = opt_uriPrefix || '';
   channel.connect(`${uriPrefix}/bind`, null);
@@ -299,8 +303,11 @@ function connectForwardChannel(
  * @param {boolean=} spdyEnabled
  */
 function connect(
-    serverVersion = undefined, hostPrefix = undefined, uriPrefix = undefined,
-    spdyEnabled = undefined) {
+  serverVersion = undefined,
+  hostPrefix = undefined,
+  uriPrefix = undefined,
+  spdyEnabled = undefined
+) {
   connectForwardChannel(serverVersion, hostPrefix, uriPrefix, spdyEnabled);
   completeBackChannel();
 }
@@ -314,11 +321,12 @@ function disconnect() {
  * @param {number=} serverVersion
  * @param {string=} hostPrefix
  */
-function completeForwardChannel(
-    serverVersion = undefined, hostPrefix = undefined) {
-  const responseData = '[[0,["c","1234567890ABCDEF",' +
-      (hostPrefix ? `"${hostPrefix}"` : 'null') +
-      (serverVersion ? `,${serverVersion}` : '') + ']]]';
+function completeForwardChannel(serverVersion = undefined, hostPrefix = undefined) {
+  const responseData =
+    '[[0,["c","1234567890ABCDEF",' +
+    (hostPrefix ? `"${hostPrefix}"` : 'null') +
+    (serverVersion ? `,${serverVersion}` : '') +
+    ']]]';
   channel.onRequestData(getSingleForwardRequest(), responseData);
   channel.onRequestComplete(getSingleForwardRequest());
   mockClock.tick(0);
@@ -332,7 +340,7 @@ function completeBackChannel() {
 }
 
 function responseDone() {
-  channel.onRequestData(getSingleForwardRequest(), '[1,0,0]');  // mock data
+  channel.onRequestData(getSingleForwardRequest(), '[1,0,0]'); // mock data
   channel.onRequestComplete(getSingleForwardRequest());
   mockClock.tick(0);
 }
@@ -342,17 +350,17 @@ function responseDone() {
  * @param {number=} outstandingDataSize
  */
 function responseNoBackchannel(
-    lastArrayIdSentFromServer = undefined, outstandingDataSize = undefined) {
-  const responseData =
-      googJson.serialize([0, lastArrayIdSentFromServer, outstandingDataSize]);
+  lastArrayIdSentFromServer = undefined,
+  outstandingDataSize = undefined
+) {
+  const responseData = googJson.serialize([0, lastArrayIdSentFromServer, outstandingDataSize]);
   channel.onRequestData(getSingleForwardRequest(), responseData);
   channel.onRequestComplete(getSingleForwardRequest());
   mockClock.tick(0);
 }
 
 function response(lastArrayIdSentFromServer, outstandingDataSize) {
-  const responseData =
-      googJson.serialize([1, lastArrayIdSentFromServer, outstandingDataSize]);
+  const responseData = googJson.serialize([1, lastArrayIdSentFromServer, outstandingDataSize]);
   channel.onRequestData(getSingleForwardRequest(), responseData);
   channel.onRequestComplete(getSingleForwardRequest());
   mockClock.tick(0);
@@ -382,8 +390,7 @@ function responseRequestFailed() {
 }
 
 function responseUnknownSessionId() {
-  getSingleForwardRequest().lastError_ =
-      ChannelRequest.Error.UNKNOWN_SESSION_ID;
+  getSingleForwardRequest().lastError_ = ChannelRequest.Error.UNKNOWN_SESSION_ID;
   getSingleForwardRequest().successful_ = false;
   channel.onRequestComplete(getSingleForwardRequest());
   mockClock.tick(0);
@@ -405,8 +412,7 @@ const MapTypes = {
  * @param {string=} context
  * @param {!MapTypes=} mapType
  */
-function sendMap(
-    key, value, context = undefined, mapType = MapTypes.OBJECT_MAP) {
+function sendMap(key, value, context = undefined, mapType = MapTypes.OBJECT_MAP) {
   let map;
   if (mapType == MapTypes.OBJECT_MAP) {
     map = {};
@@ -574,14 +580,18 @@ function requestFailedClosesChannel() {
   responseRequestFailed();
 
   assertEquals(
-      'Should be closed immediately after request failed.',
-      WebChannelBase.State.CLOSED, channel.getState());
+    'Should be closed immediately after request failed.',
+    WebChannelBase.State.CLOSED,
+    channel.getState()
+  );
 
   mockClock.tick(netUtils.NETWORK_TIMEOUT);
 
   assertEquals(
-      'Should remain closed after the ping timeout.',
-      WebChannelBase.State.CLOSED, channel.getState());
+    'Should remain closed after the ping timeout.',
+    WebChannelBase.State.CLOSED,
+    channel.getState()
+  );
   assertEquals(1, numTimingEvents);
   assertEquals(DEFAULT_ERROR_HTTP_STATUS_CODE, channel.getLastStatusCode());
 }
@@ -616,12 +626,21 @@ testSuite({
    */
   setUpPage() {
     // Use our MockChannelRequests instead of the real ones.
-    ChannelRequest.createChannelRequest =
-        (channel, channelDebug, opt_sessionId, opt_requestId, opt_retryId) => {
-          return /** @type {!ChannelRequest} */ (new MockChannelRequest(
-              channel, channelDebug, opt_sessionId, opt_requestId,
-              opt_retryId));
-        };
+    ChannelRequest.createChannelRequest = (
+      channel,
+      channelDebug,
+      opt_sessionId,
+      opt_requestId,
+      opt_retryId
+    ) => {
+      return /** @type {!ChannelRequest} */ new MockChannelRequest(
+        channel,
+        channelDebug,
+        opt_sessionId,
+        opt_requestId,
+        opt_retryId
+      );
+    };
 
     // Mock out the stat notification code.
     requestStats.notifyStatEvent = (stat) => {
@@ -720,8 +739,7 @@ testSuite({
     b.push(new Wire.QueuedMap(0, map1));
     b.push(new Wire.QueuedMap(0, map2));
     b.push(new Wire.QueuedMap(0, map3));
-    assertEquals(
-        'k1:v1, k2:v2, k3:v3, k4:v4, k5:v5, k6:v6', formatArrayOfMaps(b));
+    assertEquals('k1:v1, k2:v2, k3:v3, k4:v4, k5:v5, k6:v6', formatArrayOfMaps(b));
 
     // One map with a context.
     const c = [];
@@ -1012,9 +1030,7 @@ testSuite({
     lastStatEvent = null;
     responseRequestFailed();
 
-    assertEquals(
-        'No stat event should be reported before we know the reason.', 0,
-        numStatEvents);
+    assertEquals('No stat event should be reported before we know the reason.', 0, numStatEvents);
 
     // Let the ping time out.
     mockClock.tick(netUtils.NETWORK_TIMEOUT);
@@ -1034,9 +1050,7 @@ testSuite({
     lastStatEvent = null;
     responseRequestFailed();
 
-    assertEquals(
-        'No stat event should be reported before we know the reason.', 0,
-        numStatEvents);
+    assertEquals('No stat event should be reported before we know the reason.', 0, numStatEvents);
 
     // Wait half the ping timeout period, and then fake the network being up.
     mockClock.tick(netUtils.NETWORK_TIMEOUT / 2);
@@ -1102,14 +1116,12 @@ testSuite({
     sendMap('foo2', 'bar2');
     sendMap('foo3', 'bar3');
 
-    assertEquals(
-        1, channel.forwardChannelRequestPool_.getPendingMessages().length);
+    assertEquals(1, channel.forwardChannelRequestPool_.getPendingMessages().length);
     assertEquals(2, channel.outgoingMaps_.length);
 
     disconnect();
 
-    assertEquals(
-        0, channel.forwardChannelRequestPool_.getPendingMessages().length);
+    assertEquals(0, channel.forwardChannelRequestPool_.getPendingMessages().length);
     assertEquals(0, channel.outgoingMaps_.length);
   },
 
@@ -1135,9 +1147,7 @@ testSuite({
     // #3 that was sent but which we don't know if the server received, and
     // #4 and #5 which remain in the outgoing maps and have not yet been sent.
     assertEquals('foo3:bar3:context3', handler.pendingMapsString);
-    assertEquals(
-        'foo4:bar4:context4, foo5:bar5:context5',
-        handler.undeliveredMapsString);
+    assertEquals('foo4:bar4:context4, foo5:bar5:context5', handler.undeliveredMapsString);
   },
 
   /** @suppress {missingProperties} suppression added to enable type checking */
@@ -1194,13 +1204,13 @@ testSuite({
 
     // Verifies that we're indeed covering the case where 1 message is pending
     // server ack and 2 message has not been sent to the network.
-    assertEquals(
-        1, channel.forwardChannelRequestPool_.getPendingMessages().length);
+    assertEquals(1, channel.forwardChannelRequestPool_.getPendingMessages().length);
     assertEquals(2, channel.outgoingMaps_.length);
 
     assertObjectEquals(
-        [{foo2: 'bar2'}, {foo3: 'bar3'}, {foo4: 'bar4'}],
-        channel.getNonAckedMaps().map(queuedMap => queuedMap.map));
+      [{ foo2: 'bar2' }, { foo3: 'bar3' }, { foo4: 'bar4' }],
+      channel.getNonAckedMaps().map((queuedMap) => queuedMap.map)
+    );
   },
 
   /** @suppress {visibility} Accessing private properties. */
@@ -1218,15 +1228,15 @@ testSuite({
 
     // Verifies that we're indeed covering the case where 1 message is pending
     // server ack and 2 message has not been sent to the network.
-    assertEquals(
-        1, channel.forwardChannelRequestPool_.getPendingMessages().length);
+    assertEquals(1, channel.forwardChannelRequestPool_.getPendingMessages().length);
     assertEquals(2, channel.outgoingMaps_.length);
 
     disconnect();
 
     assertObjectEquals(
-        [{foo2: 'bar2'}, {foo3: 'bar3'}, {foo4: 'bar4'}],
-        channel.getNonAckedMaps().map(queuedMap => queuedMap.map));
+      [{ foo2: 'bar2' }, { foo3: 'bar3' }, { foo4: 'bar4' }],
+      channel.getNonAckedMaps().map((queuedMap) => queuedMap.map)
+    );
   },
 
   /** @suppress {visibility} Accessing private properties. */
@@ -1236,8 +1246,9 @@ testSuite({
 
     mockClock.tick(10);
     assertFalse(
-        channel.backChannelRequest_.getRequestStartTime() <
-        getSingleForwardRequest().getRequestStartTime());
+      channel.backChannelRequest_.getRequestStartTime() <
+        getSingleForwardRequest().getRequestStartTime()
+    );
     responseNoBackchannel();
     assertNotEquals(Stat.BACKCHANNEL_MISSING, lastStatEvent);
   },
@@ -1250,9 +1261,9 @@ testSuite({
     mockClock.tick(WebChannelBase.RTT_ESTIMATE + 1);
     sendMap('foo2', 'bar2');
     assertTrue(
-        channel.backChannelRequest_.getRequestStartTime() +
-            WebChannelBase.RTT_ESTIMATE <
-        getSingleForwardRequest().getRequestStartTime());
+      channel.backChannelRequest_.getRequestStartTime() + WebChannelBase.RTT_ESTIMATE <
+        getSingleForwardRequest().getRequestStartTime()
+    );
     responseNoBackchannel();
     assertEquals(Stat.BACKCHANNEL_MISSING, lastStatEvent);
   },
@@ -1421,9 +1432,9 @@ testSuite({
     connect(8);
     sendMap('foo1', 'bar1');
     channel.onRequestData(
-        getSingleForwardRequest(),
-        'foo=<script>evil()<\/script>&' +
-            'bar=<script>moreEvil()<\/script>');
+      getSingleForwardRequest(),
+      'foo=<script>evil()</script>&' + 'bar=<script>moreEvil()</script>'
+    );
     assertEquals(WebChannelBase.State.CLOSED, channel.getState());
   },
 
@@ -1431,16 +1442,14 @@ testSuite({
   testPathAbsolute() {
     connect(8, undefined, '/talkgadget');
     assertEquals(channel.backChannelUri_.getDomain(), window.location.hostname);
-    assertEquals(
-        channel.forwardChannelUri_.getDomain(), window.location.hostname);
+    assertEquals(channel.forwardChannelUri_.getDomain(), window.location.hostname);
   },
 
   /** @suppress {visibility} Accessing private properties. */
   testPathRelative() {
     connect(8, undefined, 'talkgadget');
     assertEquals(channel.backChannelUri_.getDomain(), window.location.hostname);
-    assertEquals(
-        channel.forwardChannelUri_.getDomain(), window.location.hostname);
+    assertEquals(channel.forwardChannelUri_.getDomain(), window.location.hostname);
   },
 
   /** @suppress {visibility} Accessing private properties. */
@@ -1457,8 +1466,9 @@ testSuite({
     assertFalse(xhr.getWithCredentials());
 
     assertThrows(
-        'Error connection to different host without CORS',
-        goog.bind(channel.createXhrIo, channel, 'some_host'));
+      'Error connection to different host without CORS',
+      goog.bind(channel.createXhrIo, channel, 'some_host')
+    );
 
     channel.setSupportsCrossDomainXhrs(true);
 
@@ -1473,27 +1483,19 @@ testSuite({
     const webChannelTransport = new WebChannelBaseTransport();
     stubSpdyCheck(true);
     const webChannelDefault = webChannelTransport.createWebChannel('/foo');
-    assertEquals(
-        10,
-        webChannelDefault.getRuntimeProperties().getConcurrentRequestLimit());
+    assertEquals(10, webChannelDefault.getRuntimeProperties().getConcurrentRequestLimit());
     assertTrue(webChannelDefault.getRuntimeProperties().isSpdyEnabled());
 
-    const options = {'concurrentRequestLimit': 100};
+    const options = { concurrentRequestLimit: 100 };
 
     stubSpdyCheck(false);
-    const webChannelDisabled =
-        webChannelTransport.createWebChannel('/foo', options);
-    assertEquals(
-        1,
-        webChannelDisabled.getRuntimeProperties().getConcurrentRequestLimit());
+    const webChannelDisabled = webChannelTransport.createWebChannel('/foo', options);
+    assertEquals(1, webChannelDisabled.getRuntimeProperties().getConcurrentRequestLimit());
     assertFalse(webChannelDisabled.getRuntimeProperties().isSpdyEnabled());
 
     stubSpdyCheck(true);
-    const webChannelEnabled =
-        webChannelTransport.createWebChannel('/foo', options);
-    assertEquals(
-        100,
-        webChannelEnabled.getRuntimeProperties().getConcurrentRequestLimit());
+    const webChannelEnabled = webChannelTransport.createWebChannel('/foo', options);
+    assertEquals(100, webChannelEnabled.getRuntimeProperties().getConcurrentRequestLimit());
     assertTrue(webChannelEnabled.getRuntimeProperties().isSpdyEnabled());
   },
 });

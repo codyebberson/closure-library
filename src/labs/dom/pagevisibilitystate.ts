@@ -19,5 +19,5 @@ exports = {
   HIDDEN: 'hidden',
   VISIBLE: 'visible',
   PRERENDER: 'prerender',
-  UNLOADED: 'unloaded'
+  UNLOADED: 'unloaded',
 };

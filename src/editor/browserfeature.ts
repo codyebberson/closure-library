@@ -15,14 +15,12 @@ goog.require('goog.editor.defines');
 goog.require('goog.userAgent');
 goog.require('goog.userAgent.product');
 
-
 /**
  * Maps browser quirks to boolean values, detailing what the current
  * browser supports.
  * @const
  */
 goog.editor.BrowserFeature = {
-
   // Has the contentEditable attribute, which makes nodes editable.
   //
   // NOTE(nicksantos): FF3 has contentEditable, but there are 3 major reasons
@@ -37,10 +35,11 @@ goog.editor.BrowserFeature = {
   //    and these are dispatched on the document only.
   // If we ever hope to support FF3/contentEditable, all 3 of these issues
   // will need answers. Most just involve refactoring at our end.
-  HAS_CONTENT_EDITABLE: goog.userAgent.IE || goog.userAgent.WEBKIT ||
-      goog.userAgent.EDGE ||
-      (goog.editor.defines.USE_CONTENTEDITABLE_IN_FIREFOX_3 &&
-       goog.userAgent.GECKO),
+  HAS_CONTENT_EDITABLE:
+    goog.userAgent.IE ||
+    goog.userAgent.WEBKIT ||
+    goog.userAgent.EDGE ||
+    (goog.editor.defines.USE_CONTENTEDITABLE_IN_FIREFOX_3 && goog.userAgent.GECKO),
 
   // Whether nodes can be copied from one document to another
   HAS_DOCUMENT_INDEPENDENT_NODES: goog.userAgent.GECKO,
@@ -52,15 +51,13 @@ goog.editor.BrowserFeature = {
 
   // Whether the selection of one frame is cleared when another frame
   // is focused.
-  CLEARS_SELECTION_WHEN_FOCUS_LEAVES:
-      goog.userAgent.IE || goog.userAgent.WEBKIT,
+  CLEARS_SELECTION_WHEN_FOCUS_LEAVES: goog.userAgent.IE || goog.userAgent.WEBKIT,
 
   // Whether "unselectable" is supported as an element style.
   HAS_UNSELECTABLE_STYLE: goog.userAgent.GECKO || goog.userAgent.WEBKIT,
 
   // Whether this browser's "FormatBlock" command does not suck.
-  FORMAT_BLOCK_WORKS_FOR_BLOCKQUOTES:
-      goog.userAgent.GECKO || goog.userAgent.WEBKIT,
+  FORMAT_BLOCK_WORKS_FOR_BLOCKQUOTES: goog.userAgent.GECKO || goog.userAgent.WEBKIT,
 
   // Whether the readystatechange event is more reliable than load.
   PREFERS_READY_STATE_CHANGE_EVENT: goog.userAgent.IE,
@@ -81,8 +78,8 @@ goog.editor.BrowserFeature = {
   // which means that it will fire key events. This does not apply if
   // application is using ContentEditableField or otherwise overriding Field
   // not to use an iframe.
-  USE_DOCUMENT_FOR_KEY_EVENTS: goog.userAgent.GECKO &&
-      !goog.editor.defines.USE_CONTENTEDITABLE_IN_FIREFOX_3,
+  USE_DOCUMENT_FOR_KEY_EVENTS:
+    goog.userAgent.GECKO && !goog.editor.defines.USE_CONTENTEDITABLE_IN_FIREFOX_3,
 
   // Whether this browser shows non-standard attributes in innerHTML.
   SHOWS_CUSTOM_ATTRS_IN_INNER_HTML: goog.userAgent.IE,
@@ -109,8 +106,7 @@ goog.editor.BrowserFeature = {
   FOLLOWS_EDITABLE_LINKS: goog.userAgent.WEBKIT || goog.userAgent.IE,
 
   // Whether this browser has document.activeElement available.
-  HAS_ACTIVE_ELEMENT:
-      goog.userAgent.IE || goog.userAgent.EDGE || goog.userAgent.GECKO,
+  HAS_ACTIVE_ELEMENT: goog.userAgent.IE || goog.userAgent.EDGE || goog.userAgent.GECKO,
 
   // Whether this browser supports the setCapture method on DOM elements.
   HAS_SET_CAPTURE: goog.userAgent.IE,
@@ -147,8 +143,7 @@ goog.editor.BrowserFeature = {
   // Browsers where executing subscript then superscript (or vv) will cause both
   // to be applied in a nested fashion instead of the first being overwritten by
   // the second.
-  NESTS_SUBSCRIPT_SUPERSCRIPT:
-      goog.userAgent.IE || goog.userAgent.EDGE || goog.userAgent.GECKO,
+  NESTS_SUBSCRIPT_SUPERSCRIPT: goog.userAgent.IE || goog.userAgent.EDGE || goog.userAgent.GECKO,
 
   // Whether this browser can place a cursor in an empty element natively.
   CAN_SELECT_EMPTY_ELEMENT: !goog.userAgent.IE && !goog.userAgent.WEBKIT,
@@ -164,8 +159,7 @@ goog.editor.BrowserFeature = {
   // size, the browser creates a font tag, but the font size in the style attr
   // overrides the font tag. Only webkit removes that font size from the style
   // attr.
-  DOESNT_OVERRIDE_FONT_SIZE_IN_STYLE_ATTR:
-      !goog.userAgent.WEBKIT && !goog.userAgent.EDGE,
+  DOESNT_OVERRIDE_FONT_SIZE_IN_STYLE_ATTR: !goog.userAgent.WEBKIT && !goog.userAgent.EDGE,
 
   SUPPORTS_FILE_PASTING: goog.userAgent.product.CHROME,
 };

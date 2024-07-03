@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.debugEnhanceErrorTest');
-goog.setTestOnly();
 
 const googDebug = goog.require('goog.debug');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -81,7 +80,7 @@ function throwEnhancedString() {
 
 /** @throws {*} */
 function throwObject() {
-  throw {property: 'value'};
+  throw { property: 'value' };
 }
 testSuite({
   /** @suppress {missingProperties} suppression added to enable type checking */
@@ -113,23 +112,24 @@ testSuite({
         assertTrue('stack should contain "baz"', e.stack.indexOf('baz') != -1);
 
         if (testInStack) {
-          assertTrue(
-              `stack should contain "${testInStack}"`,
-              e.stack.indexOf(testInStack) != -1);
+          assertTrue(`stack should contain "${testInStack}"`, e.stack.indexOf(testInStack) != -1);
         }
         if (testExtraMessage) {
           // 2 messages
           assertTrue(
-              `message0 should contain "${testExtraMessage}"`,
-              e.message0.indexOf(testExtraMessage) != -1);
+            `message0 should contain "${testExtraMessage}"`,
+            e.message0.indexOf(testExtraMessage) != -1
+          );
           assertTrue(
-              'message1 should contain "message from baz"',
-              e.message1.indexOf('message from baz') != -1);
+            'message1 should contain "message from baz"',
+            e.message1.indexOf('message from baz') != -1
+          );
         } else {
           // 1 message
           assertTrue(
-              'message0 should contain "message from baz"',
-              e.message0.indexOf('message from baz') != -1);
+            'message0 should contain "message from baz"',
+            e.message0.indexOf('message from baz') != -1
+          );
         }
         continue;
       }

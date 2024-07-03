@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.ContainerTest');
-goog.setTestOnly();
 
 const BrowserEvent = goog.require('goog.events.BrowserEvent');
 const Component = goog.require('goog.ui.Component');
@@ -47,7 +46,7 @@ class ListContainer extends Container {
   createDom() {
     super.createDom();
     const ul = this.getDomHelper().createDom(TagName.UL);
-    this.forEachChild(function(child) {
+    this.forEachChild(function (child) {
       child.createDom();
       const childEl = child.getElement();
       ul.appendChild(this.getDomHelper().createDom(TagName.LI, {}, childEl));
@@ -82,12 +81,14 @@ function assertHighlightedIndex(explanation, index) {
   for (let i = 0; i < container.getChildCount(); i++) {
     if (i == index) {
       assertTrue(
-          'Child at highlighted index should be highlighted',
-          container.getChildAt(i).isHighlighted());
+        'Child at highlighted index should be highlighted',
+        container.getChildAt(i).isHighlighted()
+      );
     } else {
       assertFalse(
-          'Only child at highlighted index should be highlighted',
-          container.getChildAt(i).isHighlighted());
+        'Only child at highlighted index should be highlighted',
+        container.getChildAt(i).isHighlighted()
+      );
     }
   }
 }
@@ -102,10 +103,11 @@ testSuite({
     keyContainer = null;
     listContainer = null;
 
-    sandbox.innerHTML = '<div id="containerElement" class="goog-container">\n' +
-        '  <div class="goog-control" id="hello">Hello</div>\n' +
-        '  <div class="goog-control" id="world">World</div>\n' +
-        '</div>';
+    sandbox.innerHTML =
+      '<div id="containerElement" class="goog-container">\n' +
+      '  <div class="goog-control" id="hello">Hello</div>\n' +
+      '  <div class="goog-control" id="world">World</div>\n' +
+      '</div>';
     containerElement = dom.getElement('containerElement');
   },
 
@@ -124,9 +126,12 @@ testSuite({
     assertFalse('Container must be hidden', container.isVisible());
     container.forEachChild((control) => {
       assertTrue(
-          'Child control ' + control.getId() + ' must report being ' +
-              'visible, even if in a hidden container',
-          control.isVisible());
+        'Child control ' +
+          control.getId() +
+          ' must report being ' +
+          'visible, even if in a hidden container',
+        control.isVisible()
+      );
     });
   },
 
@@ -138,9 +143,12 @@ testSuite({
     assertFalse('Container must be disabled', container.isEnabled());
     container.forEachChild((control) => {
       assertFalse(
-          'Child control ' + control.getId() + ' must be disabled, ' +
-              'because the host container is disabled',
-          control.isEnabled());
+        'Child control ' +
+          control.getId() +
+          ' must be disabled, ' +
+          'because the host container is disabled',
+        control.isEnabled()
+      );
     });
   },
 
@@ -149,9 +157,9 @@ testSuite({
     assertTrue('Container must be focusable', container.isFocusable());
     container.forEachChild((control) => {
       assertFalse(
-          'Child control ' + control.getId() + ' must not be ' +
-              'focusable',
-          control.isSupportedState(Component.State.FOCUSED));
+        'Child control ' + control.getId() + ' must not be ' + 'focusable',
+        control.isSupportedState(Component.State.FOCUSED)
+      );
     });
   },
 
@@ -162,9 +170,9 @@ testSuite({
     assertFalse('Container must not be focusable', container.isFocusable());
     container.forEachChild((control) => {
       assertTrue(
-          'Child control ' + control.getId() + ' must be ' +
-              'focusable',
-          control.isSupportedState(Component.State.FOCUSED));
+        'Child control ' + control.getId() + ' must be ' + 'focusable',
+        control.isSupportedState(Component.State.FOCUSED)
+      );
     });
   },
 
@@ -177,33 +185,35 @@ testSuite({
 
     container.decorate(containerElement);
     assertFalse(
-        'Child 0 should initially not be highlighted',
-        container.getChildAt(0).isHighlighted());
+      'Child 0 should initially not be highlighted',
+      container.getChildAt(0).isHighlighted()
+    );
 
-    testingEvents.fireMouseOverEvent(
-        container.getChildAt(0).getElement(), sandbox);
+    testingEvents.fireMouseOverEvent(container.getChildAt(0).getElement(), sandbox);
     assertTrue(
-        'Child 0 should become highlighted after a mouse over',
-        container.getChildAt(0).isHighlighted());
+      'Child 0 should become highlighted after a mouse over',
+      container.getChildAt(0).isHighlighted()
+    );
     assertEquals(
-        'Child 0 should be the active descendant',
-        container.getChildAt(0).getElement(),
-        aria.getActiveDescendant(container.getElement()));
+      'Child 0 should be the active descendant',
+      container.getChildAt(0).getElement(),
+      aria.getActiveDescendant(container.getElement())
+    );
 
     testingEvents.fireMouseOverEvent(
-        container.getChildAt(1).getElement(),
-        container.getChildAt(0).getElement());
+      container.getChildAt(1).getElement(),
+      container.getChildAt(0).getElement()
+    );
     assertFalse(
-        'Child 0 should lose highlight when child 1 is moused ' +
-            'over, even if no mouseout occurs.',
-        container.getChildAt(0).isHighlighted());
-    assertTrue(
-        'Child 1 should now be highlighted.',
-        container.getChildAt(1).isHighlighted());
+      'Child 0 should lose highlight when child 1 is moused ' + 'over, even if no mouseout occurs.',
+      container.getChildAt(0).isHighlighted()
+    );
+    assertTrue('Child 1 should now be highlighted.', container.getChildAt(1).isHighlighted());
     assertEquals(
-        'Child 1 should be the active descendant',
-        container.getChildAt(1).getElement(),
-        aria.getActiveDescendant(container.getElement()));
+      'Child 1 should be the active descendant',
+      container.getChildAt(1).getElement(),
+      aria.getActiveDescendant(container.getElement())
+    );
   },
 
   testHighlightOnEnterPreventable() {
@@ -211,22 +221,22 @@ testSuite({
     googEvents.listen(container, Component.EventType.ENTER, (event) => {
       event.preventDefault();
     });
-    testingEvents.fireMouseOverEvent(
-        container.getChildAt(0).getElement(), sandbox);
+    testingEvents.fireMouseOverEvent(container.getChildAt(0).getElement(), sandbox);
     assertFalse(
-        'Child 0 should not be highlighted if preventDefault called',
-        container.getChildAt(0).isHighlighted());
+      'Child 0 should not be highlighted if preventDefault called',
+      container.getChildAt(0).isHighlighted()
+    );
   },
 
   testHighlightDisabled() {
     // Another interaction test.  Already tested in control_test.
     container.decorate(containerElement);
     container.getChildAt(0).setEnabled(false);
-    testingEvents.fireMouseOverEvent(
-        container.getChildAt(0).getElement(), sandbox);
+    testingEvents.fireMouseOverEvent(container.getChildAt(0).getElement(), sandbox);
     assertFalse(
-        'Disabled children should not be highlighted',
-        container.getChildAt(0).isHighlighted());
+      'Disabled children should not be highlighted',
+      container.getChildAt(0).isHighlighted()
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -234,16 +244,16 @@ testSuite({
     container.decorate(containerElement);
 
     assertEquals(
-        'Must return appropriate control given an element in the ' +
-            'control.',
-        container.getChildAt(1),
-        container.getOwnerControl(container.getChildAt(1).getElement()));
+      'Must return appropriate control given an element in the ' + 'control.',
+      container.getChildAt(1),
+      container.getOwnerControl(container.getChildAt(1).getElement())
+    );
 
     assertNull(
-        'Must return null for element not associated with control.',
-        container.getOwnerControl(document.body));
-    assertNull(
-        'Must return null if given null node', container.getOwnerControl(null));
+      'Must return null for element not associated with control.',
+      container.getOwnerControl(document.body)
+    );
+    assertNull('Must return null if given null node', container.getOwnerControl(null));
   },
 
   testShowEvent() {
@@ -252,9 +262,9 @@ testSuite({
     let eventFired = false;
     googEvents.listen(container, Component.EventType.SHOW, () => {
       assertFalse(
-          'Container must not be visible when SHOW event is ' +
-              'fired',
-          container.isVisible());
+        'Container must not be visible when SHOW event is ' + 'fired',
+        container.isVisible()
+      );
       eventFired = true;
     });
     container.setVisible(true);
@@ -267,9 +277,9 @@ testSuite({
     let eventFired = false;
     googEvents.listen(container, Container.EventType.AFTER_SHOW, () => {
       assertTrue(
-          'Container must be visible when AFTER_SHOW event is ' +
-              'fired',
-          container.isVisible());
+        'Container must be visible when AFTER_SHOW event is ' + 'fired',
+        container.isVisible()
+      );
       eventFired = true;
     });
     container.setVisible(true);
@@ -282,25 +292,22 @@ testSuite({
     container.setVisible(true);
     const eventFired = false;
     googEvents.listen(container, Component.EventType.HIDE, (e) => {
-      assertTrue(
-          'Container must be visible when HIDE event is fired',
-          container.isVisible());
+      assertTrue('Container must be visible when HIDE event is fired', container.isVisible());
       events.push(e.type);
     });
     googEvents.listen(container, Container.EventType.AFTER_HIDE, (e) => {
       assertFalse(
-          'Container must not be visible when AFTER_HIDE event is fired',
-          container.isVisible());
+        'Container must not be visible when AFTER_HIDE event is fired',
+        container.isVisible()
+      );
       events.push(e.type);
     });
     container.setVisible(false);
     assertArrayEquals(
-        'HIDE event followed by AFTER_HIDE expected',
-        [
-          Component.EventType.HIDE,
-          Container.EventType.AFTER_HIDE,
-        ],
-        events);
+      'HIDE event followed by AFTER_HIDE expected',
+      [Component.EventType.HIDE, Container.EventType.AFTER_HIDE],
+      events
+    );
   },
 
   testGetOwnerControlWithNoRenderingInAddChild() {
@@ -311,9 +318,7 @@ testSuite({
     /** @suppress {visibility} suppression added to enable type checking */
     const ownerControl = listContainer.getOwnerControl(control.getElement());
 
-    assertEquals(
-        'Control was added with addChild(control, false)', control,
-        ownerControl);
+    assertEquals('Control was added with addChild(control, false)', control, ownerControl);
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -323,13 +328,11 @@ testSuite({
 
     keyContainer.setVisible(false);
     keyContainer.handleKeyEvent(new GoogEvent());
-    assertEquals(
-        'No key events should be handled', 0, keyContainer.keyEventsHandled);
+    assertEquals('No key events should be handled', 0, keyContainer.keyEventsHandled);
 
     keyContainer.setVisible(true);
     keyContainer.handleKeyEvent(new GoogEvent());
-    assertEquals(
-        'One key event should be handled', 1, keyContainer.keyEventsHandled);
+    assertEquals('One key event should be handled', 1, keyContainer.keyEventsHandled);
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -340,13 +343,11 @@ testSuite({
 
     keyContainer.setEnabled(false);
     keyContainer.handleKeyEvent(new GoogEvent());
-    assertEquals(
-        'No key events should be handled', 0, keyContainer.keyEventsHandled);
+    assertEquals('No key events should be handled', 0, keyContainer.keyEventsHandled);
 
     keyContainer.setEnabled(true);
     keyContainer.handleKeyEvent(new GoogEvent());
-    assertEquals(
-        'One key event should be handled', 1, keyContainer.keyEventsHandled);
+    assertEquals('One key event should be handled', 1, keyContainer.keyEventsHandled);
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -356,13 +357,11 @@ testSuite({
     keyContainer.setVisible(true);
 
     keyContainer.handleKeyEvent(new GoogEvent());
-    assertEquals(
-        'No key events should be handled', 0, keyContainer.keyEventsHandled);
+    assertEquals('No key events should be handled', 0, keyContainer.keyEventsHandled);
 
     keyContainer.addChild(new Control());
     keyContainer.handleKeyEvent(new GoogEvent());
-    assertEquals(
-        'One key event should be handled', 1, keyContainer.keyEventsHandled);
+    assertEquals('One key event should be handled', 1, keyContainer.keyEventsHandled);
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -373,8 +372,7 @@ testSuite({
     keyContainer.setVisible(true);
 
     keyContainer.handleKeyEvent(new GoogEvent());
-    assertEquals(
-        'One key events should be handled', 1, keyContainer.keyEventsHandled);
+    assertEquals('One key events should be handled', 1, keyContainer.keyEventsHandled);
   },
 
   testHandleKeyEventInternal_onlyHandlesUnmodified() {
@@ -385,14 +383,16 @@ testSuite({
 
     // Verify that the event is not handled whenever a modifier key is true.
     let propertyName;
-    for (let i = 0; propertyName = propertyNames[i]; i++) {
+    for (let i = 0; (propertyName = propertyNames[i]); i++) {
       assertTrue(
-          'Event should be handled when modifer key is not pressed.',
-          container.handleKeyEventInternal(event));
+        'Event should be handled when modifer key is not pressed.',
+        container.handleKeyEventInternal(event)
+      );
       event[propertyName] = true;
       assertFalse(
-          'Event should not be handled when modifer key is pressed.',
-          container.handleKeyEventInternal(event));
+        'Event should not be handled when modifer key is pressed.',
+        container.handleKeyEventInternal(event)
+      );
       event[propertyName] = false;
     }
   },
@@ -400,9 +400,7 @@ testSuite({
   testOpenFollowsHighlight() {
     container.decorate(containerElement);
     container.setOpenFollowsHighlight(true);
-    assertTrue(
-        'isOpenFollowsHighlight should return true',
-        container.isOpenFollowsHighlight());
+    assertTrue('isOpenFollowsHighlight should return true', container.isOpenFollowsHighlight());
 
     // Make the children openable.
     container.forEachChild((child) => {
@@ -412,30 +410,23 @@ testSuite({
     container.getChildAt(1).setOpen(true);
 
     assertFalse(
-        'Child 0 should initially not be highlighted',
-        container.getChildAt(0).isHighlighted());
-    testingEvents.fireMouseOverEvent(
-        container.getChildAt(0).getElement(), sandbox);
+      'Child 0 should initially not be highlighted',
+      container.getChildAt(0).isHighlighted()
+    );
+    testingEvents.fireMouseOverEvent(container.getChildAt(0).getElement(), sandbox);
     assertTrue(
-        'Child 0 should become highlighted after a mouse over',
-        container.getChildAt(0).isHighlighted());
-    assertTrue(
-        'Child 0 should become open after higlighted',
-        container.getChildAt(0).isOpen());
-    assertFalse(
-        'Child 1 should become closed once 0 is open',
-        container.getChildAt(1).isOpen());
-    assertEquals(
-        'OpenItem should be child 0', container.getChildAt(0),
-        container.getOpenItem());
+      'Child 0 should become highlighted after a mouse over',
+      container.getChildAt(0).isHighlighted()
+    );
+    assertTrue('Child 0 should become open after higlighted', container.getChildAt(0).isOpen());
+    assertFalse('Child 1 should become closed once 0 is open', container.getChildAt(1).isOpen());
+    assertEquals('OpenItem should be child 0', container.getChildAt(0), container.getOpenItem());
   },
 
   testOpenNotFollowsHighlight() {
     container.decorate(containerElement);
     container.setOpenFollowsHighlight(false);
-    assertFalse(
-        'isOpenFollowsHighlight should return false',
-        container.isOpenFollowsHighlight());
+    assertFalse('isOpenFollowsHighlight should return false', container.isOpenFollowsHighlight());
 
     // Make the children openable.
     container.forEachChild((child) => {
@@ -445,20 +436,17 @@ testSuite({
     container.getChildAt(1).setOpen(true);
 
     assertFalse(
-        'Child 0 should initially not be highlighted',
-        container.getChildAt(0).isHighlighted());
-    testingEvents.fireMouseOverEvent(
-        container.getChildAt(0).getElement(), sandbox);
+      'Child 0 should initially not be highlighted',
+      container.getChildAt(0).isHighlighted()
+    );
+    testingEvents.fireMouseOverEvent(container.getChildAt(0).getElement(), sandbox);
     assertTrue(
-        'Child 0 should become highlighted after a mouse over',
-        container.getChildAt(0).isHighlighted());
-    assertFalse(
-        'Child 0 should remain closed after higlighted',
-        container.getChildAt(0).isOpen());
+      'Child 0 should become highlighted after a mouse over',
+      container.getChildAt(0).isHighlighted()
+    );
+    assertFalse('Child 0 should remain closed after higlighted', container.getChildAt(0).isOpen());
     assertTrue('Child 1 should remain open', container.getChildAt(1).isOpen());
-    assertEquals(
-        'OpenItem should be child 1', container.getChildAt(1),
-        container.getOpenItem());
+    assertEquals('OpenItem should be child 1', container.getChildAt(1), container.getOpenItem());
   },
 
   testRemoveChild() {
@@ -479,35 +467,19 @@ testSuite({
 
     container.setHighlightedIndex(2);
 
-    assertEquals(
-        'Parent must remove and return child by ID', b,
-        container.removeChild('b'));
-    assertNull(
-        'Parent must no longer contain this child', container.getChild('b'));
-    assertEquals(
-        'Highlighted index must be decreased', 1,
-        container.getHighlightedIndex());
-    assertTrue(
-        'The removed control must handle its own mouse events',
-        b.isHandleMouseEvents());
+    assertEquals('Parent must remove and return child by ID', b, container.removeChild('b'));
+    assertNull('Parent must no longer contain this child', container.getChild('b'));
+    assertEquals('Highlighted index must be decreased', 1, container.getHighlightedIndex());
+    assertTrue('The removed control must handle its own mouse events', b.isHandleMouseEvents());
 
-    assertEquals(
-        'Parent must remove and return child', c, container.removeChild(c));
-    assertNull(
-        'Parent must no longer contain this child', container.getChild('c'));
+    assertEquals('Parent must remove and return child', c, container.removeChild(c));
+    assertNull('Parent must no longer contain this child', container.getChild('c'));
     assertFalse('This child must no longer be highlighted', c.isHighlighted());
-    assertTrue(
-        'The removed control must handle its own mouse events',
-        c.isHandleMouseEvents());
+    assertTrue('The removed control must handle its own mouse events', c.isHandleMouseEvents());
 
-    assertEquals(
-        'Parent must remove and return child by index', a,
-        container.removeChildAt(0));
-    assertNull(
-        'Parent must no longer contain this child', container.getChild('a'));
-    assertTrue(
-        'The removed control must handle its own mouse events',
-        a.isHandleMouseEvents());
+    assertEquals('Parent must remove and return child by index', a, container.removeChildAt(0));
+    assertNull('Parent must no longer contain this child', container.getChild('a'));
+    assertTrue('The removed control must handle its own mouse events', a.isHandleMouseEvents());
   },
 
   testRemoveHighlightedDisposedChild() {
@@ -631,8 +603,7 @@ testSuite({
     container.setHighlightedIndex(0);
     container.addChildAt(a, 2);
 
-    assertEquals(
-        'Child should be moved to index 1', a, container.getChildAt(1));
+    assertEquals('Child should be moved to index 1', a, container.getChildAt(1));
     assertEquals('Child count should not change', 2, container.getChildCount());
     assertHighlightedIndex('Highlighted index must point to new index', 1);
 
@@ -645,25 +616,22 @@ testSuite({
 
     const child = container.getChildAt(0);
 
-    assertFalse(
-        'Child should not be active before pointerdown event.',
-        child.isActive());
+    assertFalse('Child should not be active before pointerdown event.', child.isActive());
 
     const pointerdown = new GoogTestingEvent(
-        PointerFallbackEventType.POINTERDOWN, child.getElement());
+      PointerFallbackEventType.POINTERDOWN,
+      child.getElement()
+    );
     pointerdown.button = BrowserEvent.MouseButton.LEFT;
     testingEvents.fireBrowserEvent(pointerdown);
 
-    assertTrue(
-        'Child should be active after pointerdown event.', child.isActive());
+    assertTrue('Child should be active after pointerdown event.', child.isActive());
 
-    const pointerup = new GoogTestingEvent(
-        PointerFallbackEventType.POINTERUP, child.getElement());
+    const pointerup = new GoogTestingEvent(PointerFallbackEventType.POINTERUP, child.getElement());
     pointerup.button = BrowserEvent.MouseButton.LEFT;
     testingEvents.fireBrowserEvent(pointerup);
 
-    assertFalse(
-        'Child should not be active after pointerup event.', child.isActive());
+    assertFalse('Child should not be active after pointerup event.', child.isActive());
 
     container.dispose();
   },

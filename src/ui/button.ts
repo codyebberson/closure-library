@@ -27,8 +27,6 @@ goog.requireType('goog.dom.DomHelper');
 goog.requireType('goog.events.KeyEvent');
 goog.requireType('goog.ui.ControlContent');
 
-
-
 /**
  * A button control, rendered as a native browser button by default.
  *
@@ -41,15 +39,15 @@ goog.requireType('goog.ui.ControlContent');
  * @constructor
  * @extends {goog.ui.Control}
  */
-goog.ui.Button = function(opt_content, opt_renderer, opt_domHelper) {
-  'use strict';
+goog.ui.Button = function (opt_content, opt_renderer, opt_domHelper) {
   goog.ui.Control.call(
-      this, opt_content,
-      opt_renderer || goog.ui.NativeButtonRenderer.getInstance(),
-      opt_domHelper);
+    this,
+    opt_content,
+    opt_renderer || goog.ui.NativeButtonRenderer.getInstance(),
+    opt_domHelper
+  );
 };
 goog.inherits(goog.ui.Button, goog.ui.Control);
-
 
 /**
  * Constants for button sides, see {@link goog.ui.Button.prototype.setCollapsed}
@@ -60,14 +58,12 @@ goog.inherits(goog.ui.Button, goog.ui.Control);
  */
 goog.ui.Button.Side = goog.ui.ButtonSide;
 
-
 /**
  * Value associated with the button.
  * @type {*}
  * @private
  */
 goog.ui.Button.prototype.value_;
-
 
 /**
  * Tooltip text for the button, displayed on hover.
@@ -76,31 +72,25 @@ goog.ui.Button.prototype.value_;
  */
 goog.ui.Button.prototype.tooltip_;
 
-
 // goog.ui.Button API implementation.
-
 
 /**
  * Returns the value associated with the button.
  * @return {*} Button value (undefined if none).
  */
-goog.ui.Button.prototype.getValue = function() {
-  'use strict';
+goog.ui.Button.prototype.getValue = function () {
   return this.value_;
 };
-
 
 /**
  * Sets the value associated with the button, and updates its DOM.
  * @param {*} value New button value.
  */
-goog.ui.Button.prototype.setValue = function(value) {
-  'use strict';
+goog.ui.Button.prototype.setValue = function (value) {
   this.value_ = value;
   var renderer = /** @type {!goog.ui.ButtonRenderer} */ (this.getRenderer());
   renderer.setValue(this.getElement(), /** @type {string} */ (value));
 };
-
 
 /**
  * Sets the value associated with the button.  Unlike {@link #setValue},
@@ -109,33 +99,27 @@ goog.ui.Button.prototype.setValue = function(value) {
  * @param {*} value New button value.
  * @protected
  */
-goog.ui.Button.prototype.setValueInternal = function(value) {
-  'use strict';
+goog.ui.Button.prototype.setValueInternal = function (value) {
   this.value_ = value;
 };
-
 
 /**
  * Returns the tooltip for the button.
  * @return {string|undefined} Tooltip text (undefined if none).
  */
-goog.ui.Button.prototype.getTooltip = function() {
-  'use strict';
+goog.ui.Button.prototype.getTooltip = function () {
   return this.tooltip_;
 };
-
 
 /**
  * Sets the tooltip for the button, and updates its DOM.
  * @param {string} tooltip New tooltip text.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.ui.Button.prototype.setTooltip = function(tooltip) {
-  'use strict';
+goog.ui.Button.prototype.setTooltip = function (tooltip) {
   this.tooltip_ = tooltip;
   this.getRenderer().setTooltip(this.getElement(), tooltip);
 };
-
 
 /**
  * Sets the tooltip for the button.  Unlike {@link #setTooltip}, doesn't update
@@ -144,11 +128,9 @@ goog.ui.Button.prototype.setTooltip = function(tooltip) {
  * @param {string} tooltip New tooltip text.
  * @protected
  */
-goog.ui.Button.prototype.setTooltipInternal = function(tooltip) {
-  'use strict';
+goog.ui.Button.prototype.setTooltipInternal = function (tooltip) {
   this.tooltip_ = tooltip;
 };
-
 
 /**
  * Collapses the border on one or both sides of the button, allowing it to be
@@ -158,37 +140,29 @@ goog.ui.Button.prototype.setTooltipInternal = function(tooltip) {
  *     which borders should be collapsed.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.ui.Button.prototype.setCollapsed = function(sides) {
-  'use strict';
+goog.ui.Button.prototype.setCollapsed = function (sides) {
   this.getRenderer().setCollapsed(this, sides);
 };
 
-
 // goog.ui.Control & goog.ui.Component API implementation.
 
-
 /** @override */
-goog.ui.Button.prototype.disposeInternal = function() {
-  'use strict';
+goog.ui.Button.prototype.disposeInternal = function () {
   goog.ui.Button.superClass_.disposeInternal.call(this);
   delete this.value_;
   delete this.tooltip_;
 };
 
-
 /** @override */
-goog.ui.Button.prototype.enterDocument = function() {
-  'use strict';
+goog.ui.Button.prototype.enterDocument = function () {
   goog.ui.Button.superClass_.enterDocument.call(this);
   if (this.isSupportedState(goog.ui.Component.State.FOCUSED)) {
     var keyTarget = this.getKeyEventTarget();
     if (keyTarget) {
-      this.getHandler().listen(
-          keyTarget, goog.events.EventType.KEYUP, this.handleKeyEventInternal);
+      this.getHandler().listen(keyTarget, goog.events.EventType.KEYUP, this.handleKeyEventInternal);
     }
   }
 };
-
 
 /**
  * Attempts to handle a keyboard event; returns true if the event was handled,
@@ -200,12 +174,11 @@ goog.ui.Button.prototype.enterDocument = function() {
  * @protected
  * @override
  */
-goog.ui.Button.prototype.handleKeyEventInternal = function(e) {
-  'use strict';
-  if (e.keyCode == goog.events.KeyCodes.ENTER &&
-          e.type == goog.events.KeyHandler.EventType.KEY ||
-      e.keyCode == goog.events.KeyCodes.SPACE &&
-          e.type == goog.events.EventType.KEYUP) {
+goog.ui.Button.prototype.handleKeyEventInternal = function (e) {
+  if (
+    (e.keyCode == goog.events.KeyCodes.ENTER && e.type == goog.events.KeyHandler.EventType.KEY) ||
+    (e.keyCode == goog.events.KeyCodes.SPACE && e.type == goog.events.EventType.KEYUP)
+  ) {
     return this.performActionInternal(e);
   }
   // Return true for space keypress (even though the event is handled on keyup)
@@ -214,10 +187,8 @@ goog.ui.Button.prototype.handleKeyEventInternal = function(e) {
   return e.keyCode == goog.events.KeyCodes.SPACE;
 };
 
-
 // Register a decorator factory function for goog.ui.Buttons.
 goog.ui.registry.setDecoratorByClassName(
-    goog.ui.ButtonRenderer.CSS_CLASS, function() {
-      'use strict';
-      return new goog.ui.Button(null);
-    });
+  goog.ui.ButtonRenderer.CSS_CLASS,
+  () => new goog.ui.Button(null)
+);

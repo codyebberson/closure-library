@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.StrictMockTest');
-goog.setTestOnly();
 
 const StrictMock = goog.require('goog.testing.StrictMock');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -50,13 +49,15 @@ testSuite({
 
     mock.$reset();
 
-    assertThrows(/**
+    assertThrows(
+      /**
                     @suppress {missingProperties} suppression added to enable
                     type checking
                   */
-                 () => {
-                   mock.x();
-                 });
+      () => {
+        mock.x();
+      }
+    );
   },
 
   /**
@@ -169,13 +170,15 @@ testSuite({
     mock.b('bar');
     mock.$replay();
     mock.a('foo');
-    assertThrowsJsUnitException(/**
+    assertThrowsJsUnitException(
+      /**
                                    @suppress {missingProperties} suppression
                                    added to enable type checking
                                  */
-                                () => {
-                                  mock.b('foo');
-                                });
+      () => {
+        mock.b('foo');
+      }
+    );
 
     mock.$reset();
     mock.a('foo');
@@ -189,13 +192,15 @@ testSuite({
     mock.a('foo');
     mock.a('bar');
     mock.$replay();
-    assertThrowsJsUnitException(/**
+    assertThrowsJsUnitException(
+      /**
                                    @suppress {strictMissingProperties}
                                    suppression added to enable type checking
                                  */
-                                () => {
-                                  mock.a('bar');
-                                });
+      () => {
+        mock.a('bar');
+      }
+    );
   },
 
   /**
@@ -223,8 +228,10 @@ testSuite({
     mock.$replay();
 
     assertArrayEquals(
-        'Mock should return the right value sequence', [3, 2, 1],
-        [mock.a(), mock.a(), mock.a()]);
+      'Mock should return the right value sequence',
+      [3, 2, 1],
+      [mock.a(), mock.a(), mock.a()]
+    );
 
     mock.$verify();
   },
@@ -320,13 +327,15 @@ testSuite({
     mock.$replay();
     mock.a('asdf');
     mock.a('asdf');
-    assertThrowsJsUnitException(/**
+    assertThrowsJsUnitException(
+      /**
                                    @suppress {strictMissingProperties}
                                    suppression added to enable type checking
                                  */
-                                () => {
-                                  mock.a('zxcv');
-                                });
+      () => {
+        mock.a('zxcv');
+      }
+    );
     assertThrowsJsUnitException(goog.bind(mock.$verify, mock));
   },
 
@@ -386,13 +395,15 @@ testSuite({
 
     mock.a().$times(0);
     mock.$replay();
-    assertThrowsJsUnitException(/**
+    assertThrowsJsUnitException(
+      /**
                                    @suppress {strictMissingProperties}
                                    suppression added to enable type checking
                                  */
-                                () => {
-                                  mock.a();
-                                });
+      () => {
+        mock.a();
+      }
+    );
   },
 
   /**
@@ -408,13 +419,15 @@ testSuite({
 
     mock.a('foo').$times(0);
     mock.$replay();
-    assertThrowsJsUnitException(/**
+    assertThrowsJsUnitException(
+      /**
                                    @suppress {strictMissingProperties}
                                    suppression added to enable type checking
                                  */
-                                () => {
-                                  mock.a('foo');
-                                });
+      () => {
+        mock.a('foo');
+      }
+    );
   },
 
   /**
@@ -426,13 +439,15 @@ testSuite({
     mock.$replay();
     mock.a();
     mock.a();
-    assertThrowsJsUnitException(/**
+    assertThrowsJsUnitException(
+      /**
                                    @suppress {strictMissingProperties}
                                    suppression added to enable type checking
                                  */
-                                () => {
-                                  mock.a();
-                                });
+      () => {
+        mock.a();
+      }
+    );
   },
 
   /**
@@ -444,13 +459,15 @@ testSuite({
     mock.$replay();
     mock.a('foo');
     mock.a('foo');
-    assertThrowsJsUnitException(/**
+    assertThrowsJsUnitException(
+      /**
                                    @suppress {strictMissingProperties}
                                    suppression added to enable type checking
                                  */
-                                () => {
-                                  mock.a('foo');
-                                });
+      () => {
+        mock.a('foo');
+      }
+    );
   },
 
   /**
@@ -528,14 +545,15 @@ testSuite({
 
     mock.$replay();
 
-    const e =
-        assertThrowsJsUnitException(/**
+    const e = assertThrowsJsUnitException(
+      /**
                                        @suppress {strictMissingProperties}
                                        suppression added to enable type checking
                                      */
-                                    () => {
-                                      mock.a('a');
-                                    });
+      () => {
+        mock.a('a');
+      }
+    );
 
     assertContains('Bad arguments to a()', e.message);
   },
@@ -548,14 +566,16 @@ testSuite({
     mock.a();
     mock.$replay();
 
-    setTimeout(/**
+    setTimeout(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 mock.a();
-               },
-               0);
+      () => {
+        mock.a();
+      },
+      0
+    );
     await mock.$waitAndVerify();
   },
 
@@ -567,22 +587,26 @@ testSuite({
     mock.a().$times(2);
     mock.$replay();
 
-    setTimeout(/**
+    setTimeout(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 mock.a();
-               },
-               0);
-    setTimeout(/**
+      () => {
+        mock.a();
+      },
+      0
+    );
+    setTimeout(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 mock.a();
-               },
-               50);
+      () => {
+        mock.a();
+      },
+      50
+    );
     await mock.$waitAndVerify();
   },
 
@@ -618,13 +642,15 @@ testSuite({
     mock.$replay();
 
     setTimeout(() => {
-      assertThrowsJsUnitException(/**
+      assertThrowsJsUnitException(
+        /**
                                      @suppress {strictMissingProperties}
                                      suppression added to enable type checking
                                    */
-                                  () => {
-                                    mock.a(false);
-                                  });
+        () => {
+          mock.a(false);
+        }
+      );
     }, 0);
     await assertRejects(mock.$waitAndVerify());
   },
@@ -637,27 +663,31 @@ testSuite({
     mock.a();
     mock.$replay();
 
-    setTimeout(/**
+    setTimeout(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 mock.a();
-               },
-               0);
+      () => {
+        mock.a();
+      },
+      0
+    );
     await mock.$waitAndVerify();
     mock.$reset();
     mock.a();
     mock.$replay();
 
-    setTimeout(/**
+    setTimeout(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 mock.a();
-               },
-               0);
+      () => {
+        mock.a();
+      },
+      0
+    );
     await mock.$waitAndVerify();
   },
 });

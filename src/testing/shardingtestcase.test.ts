@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.ShardingTestCaseTest');
-goog.setTestOnly();
 
 const ShardingTestCase = goog.require('goog.testing.ShardingTestCase');
 const TestCase = goog.require('goog.testing.TestCase');

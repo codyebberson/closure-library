@@ -7,7 +7,6 @@
 /** @fileoverview Shared code for classlist_test.html. */
 
 goog.module('goog.dom.classlist_test');
-goog.setTestOnly();
 
 const ExpectedFailures = goog.require('goog.testing.ExpectedFailures');
 const TagName = goog.require('goog.dom.TagName');
@@ -55,18 +54,14 @@ testSuite({
   testContainsWithNewlines() {
     const el = dom.getElement('p1');
     assertTrue('Should have SOMECLASS', classlist.contains(el, 'SOMECLASS'));
-    assertTrue(
-        'Should also have OTHERCLASS', classlist.contains(el, 'OTHERCLASS'));
-    assertFalse(
-        'Should not have WEIRDCLASS', classlist.contains(el, 'WEIRDCLASS'));
+    assertTrue('Should also have OTHERCLASS', classlist.contains(el, 'OTHERCLASS'));
+    assertFalse('Should not have WEIRDCLASS', classlist.contains(el, 'WEIRDCLASS'));
   },
 
   testContainsCaseSensitive() {
     const el = dom.getElement('p2');
-    assertFalse(
-        'Should not have camelcase', classlist.contains(el, 'camelcase'));
-    assertFalse(
-        'Should not have CAMELCASE', classlist.contains(el, 'CAMELCASE'));
+    assertFalse('Should not have camelcase', classlist.contains(el, 'camelcase'));
+    assertFalse('Should not have CAMELCASE', classlist.contains(el, 'CAMELCASE'));
     assertTrue('Should have camelCase', classlist.contains(el, 'camelCase'));
   },
 
@@ -219,20 +214,17 @@ testSuite({
     classlist.set(el, 'SOMECLASS FIRST');
 
     assertTrue('Should have FIRST class', classlist.contains(el, 'FIRST'));
-    assertTrue(
-        'Should have SOMECLASS class', classlist.contains(el, 'SOMECLASS'));
+    assertTrue('Should have SOMECLASS class', classlist.contains(el, 'SOMECLASS'));
 
     classlist.enable(el, 'FIRST', false);
 
     assertFalse('Should not have FIRST class', classlist.contains(el, 'FIRST'));
-    assertTrue(
-        'Should have SOMECLASS class', classlist.contains(el, 'SOMECLASS'));
+    assertTrue('Should have SOMECLASS class', classlist.contains(el, 'SOMECLASS'));
 
     classlist.enable(el, 'FIRST', true);
 
     assertTrue('Should have FIRST class', classlist.contains(el, 'FIRST'));
-    assertTrue(
-        'Should have SOMECLASS class', classlist.contains(el, 'SOMECLASS'));
+    assertTrue('Should have SOMECLASS class', classlist.contains(el, 'SOMECLASS'));
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -276,8 +268,7 @@ testSuite({
 
     assertTrue('Should have FIRST class', classlist.contains(el, 'FIRST'));
     assertTrue('Should have FIRST class', classlist.contains(el, 'SOMECLASS'));
-    assertFalse(
-        'Should not have second class', classlist.contains(el, 'second'));
+    assertFalse('Should not have second class', classlist.contains(el, 'second'));
 
     classlist.swap(el, 'FIRST', 'second');
 
@@ -289,8 +280,7 @@ testSuite({
 
     assertTrue('Should have FIRST class', classlist.contains(el, 'FIRST'));
     assertTrue('Should have FIRST class', classlist.contains(el, 'SOMECLASS'));
-    assertFalse(
-        'Should not have second class', classlist.contains(el, 'second'));
+    assertFalse('Should not have second class', classlist.contains(el, 'second'));
   },
 
   testToggle() {
@@ -298,21 +288,18 @@ testSuite({
     classlist.set(el, 'SOMECLASS FIRST');
 
     assertTrue('Should have FIRST class', classlist.contains(el, 'FIRST'));
-    assertTrue(
-        'Should have SOMECLASS class', classlist.contains(el, 'SOMECLASS'));
+    assertTrue('Should have SOMECLASS class', classlist.contains(el, 'SOMECLASS'));
 
     let ret = classlist.toggle(el, 'FIRST');
 
     assertFalse('Should not have FIRST class', classlist.contains(el, 'FIRST'));
-    assertTrue(
-        'Should have SOMECLASS class', classlist.contains(el, 'SOMECLASS'));
+    assertTrue('Should have SOMECLASS class', classlist.contains(el, 'SOMECLASS'));
     assertFalse('Return value should have been false', ret);
 
     ret = classlist.toggle(el, 'FIRST');
 
     assertTrue('Should have FIRST class', classlist.contains(el, 'FIRST'));
-    assertTrue(
-        'Should have SOMECLASS class', classlist.contains(el, 'SOMECLASS'));
+    assertTrue('Should have SOMECLASS class', classlist.contains(el, 'SOMECLASS'));
     assertTrue('Return value should have been true', ret);
   },
 

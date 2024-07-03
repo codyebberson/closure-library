@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.PopupDatePickerTest');
-goog.setTestOnly();
 
 const DateDate = goog.require('goog.date.Date');
 const DatePicker = goog.require('goog.ui.DatePicker');
@@ -165,11 +164,12 @@ testSuite({
     const datePickerRect = style.getBounds(datePickerElement);
     const referenceRect = style.getBounds(referenceElement);
     assertTrue(
-        'Date picker should render above reference element',
-        datePickerRect.top + datePickerRect.height <= referenceRect.top);
+      'Date picker should render above reference element',
+      datePickerRect.top + datePickerRect.height <= referenceRect.top
+    );
 
     // Clean up.
     dom.removeNode(referenceElement);
     document.body.style.height = '';
-  }
+  },
 });

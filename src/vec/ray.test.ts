@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.vec.RayTest');
-goog.setTestOnly();
 
 const Ray = goog.require('goog.vec.Ray');
 const testSuite = goog.require('goog.testing.testSuite');

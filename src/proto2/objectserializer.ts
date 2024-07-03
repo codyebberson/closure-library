@@ -17,8 +17,6 @@ goog.require('goog.proto2.Serializer');
 goog.require('goog.string');
 goog.requireType('goog.proto2.Message');
 
-
-
 /**
  * ObjectSerializer, a serializer which turns Messages into simplified
  * ECMAScript objects.
@@ -33,9 +31,11 @@ goog.requireType('goog.proto2.Message');
  * @constructor
  * @extends {goog.proto2.Serializer}
  */
-goog.proto2.ObjectSerializer = function(
-    opt_keyOption, opt_serializeBooleanAsNumber, opt_ignoreUnknownFields) {
-  'use strict';
+goog.proto2.ObjectSerializer = function (
+  opt_keyOption,
+  opt_serializeBooleanAsNumber,
+  opt_ignoreUnknownFields
+) {
   /** @const */
   this.keyOption_ = opt_keyOption;
   /** @const */
@@ -44,7 +44,6 @@ goog.proto2.ObjectSerializer = function(
   this.ignoreUnknownFields_ = opt_ignoreUnknownFields;
 };
 goog.inherits(goog.proto2.ObjectSerializer, goog.proto2.Serializer);
-
 
 /**
  * An enumeration of the options for how to emit the keys in
@@ -77,9 +76,8 @@ goog.proto2.ObjectSerializer.KeyOption = {
    * Use the camel cased name of the field as the key.
    * Unknown fields will still use their tags as keys.
    */
-  CAMEL_CASE_NAME: 2
+  CAMEL_CASE_NAME: 2,
 };
-
 
 /**
  * Serializes a message to an object.
@@ -88,8 +86,7 @@ goog.proto2.ObjectSerializer.KeyOption = {
  * @return {!Object} The serialized form of the message.
  * @override
  */
-goog.proto2.ObjectSerializer.prototype.serialize = function(message) {
-  'use strict';
+goog.proto2.ObjectSerializer.prototype.serialize = function (message) {
   var descriptor = message.getDescriptor();
   var fields = descriptor.getFields();
 
@@ -109,24 +106,24 @@ goog.proto2.ObjectSerializer.prototype.serialize = function(message) {
         break;
       case goog.proto2.ObjectSerializer.KeyOption.CAMEL_CASE_NAME:
         key = goog.string.toCamelCase(
-            field
-                .getName()
-                // goog.string.toCamelCase expects a hyphen delimited string but
-                // proto fields are usually underscore delimited
-                // (go/proto-style-guide); the following regex converts from
-                // underscore delimited form to hyphen delimited form.
-                .replace(/_/g, '-'));
+          field
+            .getName()
+            // goog.string.toCamelCase expects a hyphen delimited string but
+            // proto fields are usually underscore delimited
+            // (go/proto-style-guide); the following regex converts from
+            // underscore delimited form to hyphen delimited form.
+            .replace(/_/g, '-')
+        );
         break;
       default:
         // Default should never be reached unless keyOption is outside the valid
         // domain.
         goog.asserts.assert(
-            this.keyOption_ !== goog.proto2.ObjectSerializer.KeyOption.TAG &&
-                this.keyOption_ !==
-                    goog.proto2.ObjectSerializer.KeyOption.NAME &&
-                this.keyOption_ !==
-                    goog.proto2.ObjectSerializer.KeyOption.CAMEL_CASE_NAME,
-            'keyOption should be one of TAG, NAME, or CAMEL_CASE_NAME');
+          this.keyOption_ !== goog.proto2.ObjectSerializer.KeyOption.TAG &&
+            this.keyOption_ !== goog.proto2.ObjectSerializer.KeyOption.NAME &&
+            this.keyOption_ !== goog.proto2.ObjectSerializer.KeyOption.CAMEL_CASE_NAME,
+          'keyOption should be one of TAG, NAME, or CAMEL_CASE_NAME'
+        );
     }
 
     if (message.has(field)) {
@@ -137,7 +134,6 @@ goog.proto2.ObjectSerializer.prototype.serialize = function(message) {
         for (var j = 0; j < message.countOf(field); j++) {
           array.push(this.getSerializedValue(field, message.get(field, j)));
         }
-
       } else {
         objectValue[key] = this.getSerializedValue(field, message.get(field));
       }
@@ -145,8 +141,7 @@ goog.proto2.ObjectSerializer.prototype.serialize = function(message) {
   }
 
   // Add the unknown fields, if any.
-  message.forEachUnknown(function(tag, value) {
-    'use strict';
+  message.forEachUnknown((tag, value) => {
     // Do not set null values. This is possible when using pbliteserializer to
     // convert jsbp to closure object and then passed to this method.
     if (value !== null) {
@@ -157,39 +152,34 @@ goog.proto2.ObjectSerializer.prototype.serialize = function(message) {
   return objectValue;
 };
 
-
 /** @override */
-goog.proto2.ObjectSerializer.prototype.getSerializedValue = function(
-    field, value) {
-  'use strict';
+goog.proto2.ObjectSerializer.prototype.getSerializedValue = function (field, value) {
   // Handle the case where a boolean should be serialized as 0/1.
   // Some deserialization libraries, such as GWT, can use this notation.
-  if (this.serializeBooleanAsNumber_ &&
-      field.getFieldType() == goog.proto2.FieldDescriptor.FieldType.BOOL &&
-      typeof value === 'boolean') {
+  if (
+    this.serializeBooleanAsNumber_ &&
+    field.getFieldType() == goog.proto2.FieldDescriptor.FieldType.BOOL &&
+    typeof value === 'boolean'
+  ) {
     return value ? 1 : 0;
   }
 
-  return goog.proto2.ObjectSerializer.base(
-      this, 'getSerializedValue', field, value);
+  return goog.proto2.ObjectSerializer.base(this, 'getSerializedValue', field, value);
 };
 
-
 /** @override */
-goog.proto2.ObjectSerializer.prototype.getDeserializedValue = function(
-    field, value) {
-  'use strict';
+goog.proto2.ObjectSerializer.prototype.getDeserializedValue = function (field, value) {
   // Gracefully handle the case where a boolean is represented by 0/1.
   // Some serialization libraries, such as GWT, can use this notation.
-  if (field.getFieldType() == goog.proto2.FieldDescriptor.FieldType.BOOL &&
-      typeof value === 'number') {
+  if (
+    field.getFieldType() == goog.proto2.FieldDescriptor.FieldType.BOOL &&
+    typeof value === 'number'
+  ) {
     return Boolean(value);
   }
 
-  return goog.proto2.ObjectSerializer.base(
-      this, 'getDeserializedValue', field, value);
+  return goog.proto2.ObjectSerializer.base(this, 'getDeserializedValue', field, value);
 };
-
 
 /**
  * Deserializes a message from an object and places the
@@ -200,8 +190,7 @@ goog.proto2.ObjectSerializer.prototype.getDeserializedValue = function(
  * @param {*} data The data of the message.
  * @override
  */
-goog.proto2.ObjectSerializer.prototype.deserializeTo = function(message, data) {
-  'use strict';
+goog.proto2.ObjectSerializer.prototype.deserializeTo = function (message, data) {
   var descriptor = message.getDescriptor();
 
   for (var key in data) {
@@ -215,22 +204,26 @@ goog.proto2.ObjectSerializer.prototype.deserializeTo = function(message, data) {
     } else {
       // We must not be in Key == TAG mode to lookup by name.
       goog.asserts.assert(
-          this.keyOption_ == goog.proto2.ObjectSerializer.KeyOption.NAME ||
-              this.keyOption_ ==
-                  goog.proto2.ObjectSerializer.KeyOption.CAMEL_CASE_NAME,
-          'Key mode ' + this.keyOption_ + 'for key ' + key + ' is not ' +
-              goog.proto2.ObjectSerializer.KeyOption.NAME + ' nor ' +
-              goog.proto2.ObjectSerializer.KeyOption.CAMEL_CASE_NAME);
+        this.keyOption_ == goog.proto2.ObjectSerializer.KeyOption.NAME ||
+          this.keyOption_ == goog.proto2.ObjectSerializer.KeyOption.CAMEL_CASE_NAME,
+        'Key mode ' +
+          this.keyOption_ +
+          'for key ' +
+          key +
+          ' is not ' +
+          goog.proto2.ObjectSerializer.KeyOption.NAME +
+          ' nor ' +
+          goog.proto2.ObjectSerializer.KeyOption.CAMEL_CASE_NAME
+      );
 
-      if (this.keyOption_ ==
-          goog.proto2.ObjectSerializer.KeyOption.CAMEL_CASE_NAME) {
+      if (this.keyOption_ == goog.proto2.ObjectSerializer.KeyOption.CAMEL_CASE_NAME) {
         key = goog.string
-                  .toSelectorCase(key)
-                  // goog.string.toSelectorCase returns a hyphen delimited form
-                  // of the name but protos usually use an underscore delimited
-                  // form (go/proto-style-guide); the following regex converts
-                  // from hyphens to underscores.
-                  .replace(/\-/g, '_');
+          .toSelectorCase(key)
+          // goog.string.toSelectorCase returns a hyphen delimited form
+          // of the name but protos usually use an underscore delimited
+          // form (go/proto-style-guide); the following regex converts
+          // from hyphens to underscores.
+          .replace(/\-/g, '_');
       }
       field = descriptor.findFieldByName(key);
     }
@@ -238,16 +231,18 @@ goog.proto2.ObjectSerializer.prototype.deserializeTo = function(message, data) {
     if (field) {
       if (field.isRepeated()) {
         goog.asserts.assert(
-            Array.isArray(value),
-            'Value for repeated field ' + field + ' must be an array.');
+          Array.isArray(value),
+          'Value for repeated field ' + field + ' must be an array.'
+        );
 
         for (var j = 0; j < value.length; j++) {
           message.add(field, this.getDeserializedValue(field, value[j]));
         }
       } else {
         goog.asserts.assert(
-            !Array.isArray(value),
-            'Value for non-repeated field ' + field + ' must not be an array.');
+          !Array.isArray(value),
+          'Value for non-repeated field ' + field + ' must not be an array.'
+        );
         message.set(field, this.getDeserializedValue(field, value));
       }
     } else {

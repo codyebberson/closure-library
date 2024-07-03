@@ -23,8 +23,6 @@ goog.provide('goog.ui.media.MediaModel.Thumbnail');
 goog.require('goog.html.TrustedResourceUrl');
 goog.requireType('goog.math.Size');
 
-
-
 /**
  * An base data value class for all media data models.
  *
@@ -47,10 +45,16 @@ goog.requireType('goog.math.Size');
  * @param {number=} opt_height The height of the media in pixels.
  * @constructor
  */
-goog.ui.media.MediaModel = function(
-    opt_url, opt_caption, opt_description, opt_type, opt_medium, opt_duration,
-    opt_width, opt_height) {
-  'use strict';
+goog.ui.media.MediaModel = function (
+  opt_url,
+  opt_caption,
+  opt_description,
+  opt_type,
+  opt_medium,
+  opt_duration,
+  opt_width,
+  opt_height
+) {
   /**
    * The URL of the media.
    * @type {string|undefined}
@@ -137,7 +141,6 @@ goog.ui.media.MediaModel = function(
   this.subTitles_ = [];
 };
 
-
 /**
  * The supported media mime types, a subset of the media types found here:
  * {@link http://www.iana.org/assignments/media-types/} and here
@@ -150,9 +153,8 @@ goog.ui.media.MediaModel.MimeType = {
   FLASH: 'application/x-shockwave-flash',
   JPEG: 'image/jpeg',
   GIF: 'image/gif',
-  PNG: 'image/png'
+  PNG: 'image/png',
 };
-
 
 /**
  * Supported mediums, found here:
@@ -164,9 +166,8 @@ goog.ui.media.MediaModel.Medium = {
   AUDIO: 'audio',
   VIDEO: 'video',
   DOCUMENT: 'document',
-  EXECUTABLE: 'executable'
+  EXECUTABLE: 'executable',
 };
-
 
 /**
  * The media player.
@@ -175,126 +176,103 @@ goog.ui.media.MediaModel.Medium = {
  */
 goog.ui.media.MediaModel.prototype.player_;
 
-
 /**
  * Gets the URL of this media.
  * @return {string|undefined} The URL of the media.
  */
-goog.ui.media.MediaModel.prototype.getUrl = function() {
-  'use strict';
+goog.ui.media.MediaModel.prototype.getUrl = function () {
   return this.url_;
 };
-
 
 /**
  * Sets the URL of this media.
  * @param {string} url The URL of the media.
  * @return {!goog.ui.media.MediaModel} The object itself, used for chaining.
  */
-goog.ui.media.MediaModel.prototype.setUrl = function(url) {
-  'use strict';
+goog.ui.media.MediaModel.prototype.setUrl = function (url) {
   this.url_ = url;
   return this;
 };
-
 
 /**
  * Gets the caption of this media.
  * @return {string|undefined} The caption of the media.
  */
-goog.ui.media.MediaModel.prototype.getCaption = function() {
-  'use strict';
+goog.ui.media.MediaModel.prototype.getCaption = function () {
   return this.caption_;
 };
-
 
 /**
  * Sets the caption of this media.
  * @param {string} caption The caption of the media.
  * @return {!goog.ui.media.MediaModel} The object itself, used for chaining.
  */
-goog.ui.media.MediaModel.prototype.setCaption = function(caption) {
-  'use strict';
+goog.ui.media.MediaModel.prototype.setCaption = function (caption) {
   this.caption_ = caption;
   return this;
 };
-
 
 /**
  * Gets the media mime type.
  * @return {goog.ui.media.MediaModel.MimeType|undefined} The media mime type.
  */
-goog.ui.media.MediaModel.prototype.getType = function() {
-  'use strict';
+goog.ui.media.MediaModel.prototype.getType = function () {
   return this.type_;
 };
-
 
 /**
  * Sets the media mime type.
  * @param {goog.ui.media.MediaModel.MimeType} type The media mime type.
  * @return {!goog.ui.media.MediaModel} The object itself, used for chaining.
  */
-goog.ui.media.MediaModel.prototype.setType = function(type) {
-  'use strict';
+goog.ui.media.MediaModel.prototype.setType = function (type) {
   this.type_ = type;
   return this;
 };
-
 
 /**
  * Gets the media medium.
  * @return {goog.ui.media.MediaModel.Medium|undefined} The media medium.
  */
-goog.ui.media.MediaModel.prototype.getMedium = function() {
-  'use strict';
+goog.ui.media.MediaModel.prototype.getMedium = function () {
   return this.medium_;
 };
-
 
 /**
  * Sets the media medium.
  * @param {goog.ui.media.MediaModel.Medium} medium The media medium.
  * @return {!goog.ui.media.MediaModel} The object itself, used for chaining.
  */
-goog.ui.media.MediaModel.prototype.setMedium = function(medium) {
-  'use strict';
+goog.ui.media.MediaModel.prototype.setMedium = function (medium) {
   this.medium_ = medium;
   return this;
 };
-
 
 /**
  * Gets the description of this media.
  * @return {string|undefined} The description of the media.
  */
-goog.ui.media.MediaModel.prototype.getDescription = function() {
-  'use strict';
+goog.ui.media.MediaModel.prototype.getDescription = function () {
   return this.description_;
 };
-
 
 /**
  * Sets the description of this media.
  * @param {string} description The description of the media.
  * @return {!goog.ui.media.MediaModel} The object itself, used for chaining.
  */
-goog.ui.media.MediaModel.prototype.setDescription = function(description) {
-  'use strict';
+goog.ui.media.MediaModel.prototype.setDescription = function (description) {
   this.description_ = description;
   return this;
 };
-
 
 /**
  * Gets the thumbnail urls.
  * @return {Array<goog.ui.media.MediaModel.Thumbnail>} The list of thumbnails.
  */
-goog.ui.media.MediaModel.prototype.getThumbnails = function() {
-  'use strict';
+goog.ui.media.MediaModel.prototype.getThumbnails = function () {
   return this.thumbnails_;
 };
-
 
 /**
  * Sets the thumbnail list.
@@ -302,111 +280,91 @@ goog.ui.media.MediaModel.prototype.getThumbnails = function() {
  *     thumbnail.
  * @return {!goog.ui.media.MediaModel} The object itself, used for chaining.
  */
-goog.ui.media.MediaModel.prototype.setThumbnails = function(thumbnails) {
-  'use strict';
+goog.ui.media.MediaModel.prototype.setThumbnails = function (thumbnails) {
   this.thumbnails_ = thumbnails;
   return this;
 };
-
 
 /**
  * Gets the duration of the media.
  * @return {number|undefined} The duration in seconds.
  */
-goog.ui.media.MediaModel.prototype.getDuration = function() {
-  'use strict';
+goog.ui.media.MediaModel.prototype.getDuration = function () {
   return this.duration_;
 };
-
 
 /**
  * Sets duration of the media.
  * @param {number} duration The duration of the media, in seconds.
  * @return {!goog.ui.media.MediaModel} The object itself, used for chaining.
  */
-goog.ui.media.MediaModel.prototype.setDuration = function(duration) {
-  'use strict';
+goog.ui.media.MediaModel.prototype.setDuration = function (duration) {
   this.duration_ = duration;
   return this;
 };
-
 
 /**
  * Gets the width of the media in pixels.
  * @return {number|undefined} The width in pixels.
  */
-goog.ui.media.MediaModel.prototype.getWidth = function() {
-  'use strict';
+goog.ui.media.MediaModel.prototype.getWidth = function () {
   return this.width_;
 };
-
 
 /**
  * Sets the width of the media.
  * @param {number} width The width of the media, in pixels.
  * @return {!goog.ui.media.MediaModel} The object itself, used for chaining.
  */
-goog.ui.media.MediaModel.prototype.setWidth = function(width) {
-  'use strict';
+goog.ui.media.MediaModel.prototype.setWidth = function (width) {
   this.width_ = width;
   return this;
 };
-
 
 /**
  * Gets the height of the media in pixels.
  * @return {number|undefined} The height in pixels.
  */
-goog.ui.media.MediaModel.prototype.getHeight = function() {
-  'use strict';
+goog.ui.media.MediaModel.prototype.getHeight = function () {
   return this.height_;
 };
-
 
 /**
  * Sets the height of the media.
  * @param {number} height The height of the media, in pixels.
  * @return {!goog.ui.media.MediaModel} The object itself, used for chaining.
  */
-goog.ui.media.MediaModel.prototype.setHeight = function(height) {
-  'use strict';
+goog.ui.media.MediaModel.prototype.setHeight = function (height) {
   this.height_ = height;
   return this;
 };
-
 
 /**
  * Gets the player data.
  * @return {goog.ui.media.MediaModel.Player|undefined} The media player data.
  */
-goog.ui.media.MediaModel.prototype.getPlayer = function() {
-  'use strict';
+goog.ui.media.MediaModel.prototype.getPlayer = function () {
   return this.player_;
 };
-
 
 /**
  * Sets the player data.
  * @param {goog.ui.media.MediaModel.Player} player The media player data.
  * @return {!goog.ui.media.MediaModel} The object itself, used for chaining.
  */
-goog.ui.media.MediaModel.prototype.setPlayer = function(player) {
-  'use strict';
+goog.ui.media.MediaModel.prototype.setPlayer = function (player) {
   this.player_ = player;
   return this;
 };
-
 
 /**
  * Gets the categories of the media.
  * @return {Array<goog.ui.media.MediaModel.Category>} The categories of the
  *     media.
  */
-goog.ui.media.MediaModel.prototype.getCategories = function() {
-  'use strict';
+goog.ui.media.MediaModel.prototype.getCategories = function () {
   return this.categories_;
 };
-
 
 /**
  * Sets the categories of the media
@@ -414,12 +372,10 @@ goog.ui.media.MediaModel.prototype.getCategories = function() {
  *     of the media.
  * @return {!goog.ui.media.MediaModel} The object itself, used for chaining.
  */
-goog.ui.media.MediaModel.prototype.setCategories = function(categories) {
-  'use strict';
+goog.ui.media.MediaModel.prototype.setCategories = function (categories) {
   this.categories_ = categories;
   return this;
 };
-
 
 /**
  * Finds the first category with the given scheme.
@@ -427,29 +383,23 @@ goog.ui.media.MediaModel.prototype.setCategories = function(categories) {
  * @return {?goog.ui.media.MediaModel.Category} The category that has the
  *     given scheme. May be null.
  */
-goog.ui.media.MediaModel.prototype.findCategoryWithScheme = function(scheme) {
-  'use strict';
+goog.ui.media.MediaModel.prototype.findCategoryWithScheme = function (scheme) {
   if (!this.categories_) {
     return null;
   }
-  const category = this.categories_.find(function(category) {
-    'use strict';
-    return category ? scheme == category.getScheme() : false;
-  }) ||
-      null;
+  const category =
+    this.categories_.find((category) => (category ? scheme == category.getScheme() : false)) ||
+    null;
   return /** @type {?goog.ui.media.MediaModel.Category} */ (category);
 };
-
 
 /**
  * Gets the credits of the media.
  * @return {!Array<goog.ui.media.MediaModel.Credit>} The credits of the media.
  */
-goog.ui.media.MediaModel.prototype.getCredits = function() {
-  'use strict';
+goog.ui.media.MediaModel.prototype.getCredits = function () {
   return this.credits_;
 };
-
 
 /**
  * Sets the credits of the media
@@ -457,12 +407,10 @@ goog.ui.media.MediaModel.prototype.getCredits = function() {
  *     media.
  * @return {!goog.ui.media.MediaModel} The object itself, used for chaining.
  */
-goog.ui.media.MediaModel.prototype.setCredits = function(credits) {
-  'use strict';
+goog.ui.media.MediaModel.prototype.setCredits = function (credits) {
   this.credits_ = credits;
   return this;
 };
-
 
 /**
  * Finds all credits with the given role.
@@ -470,38 +418,28 @@ goog.ui.media.MediaModel.prototype.setCredits = function(credits) {
  * @return {!Array<!goog.ui.media.MediaModel.Credit>} An array of credits
  *     with the given role. May be empty.
  */
-goog.ui.media.MediaModel.prototype.findCreditsWithRole = function(role) {
-  'use strict';
-  const credits = this.credits_.filter(function(credit) {
-    'use strict';
-    return role == credit.getRole();
-  });
+goog.ui.media.MediaModel.prototype.findCreditsWithRole = function (role) {
+  const credits = this.credits_.filter((credit) => role == credit.getRole());
   return /** @type {!Array<!goog.ui.media.MediaModel.Credit>} */ (credits);
 };
-
 
 /**
  * Gets the subtitles for the media.
  * @return {Array<goog.ui.media.MediaModel.SubTitle>} The subtitles.
  */
-goog.ui.media.MediaModel.prototype.getSubTitles = function() {
-  'use strict';
+goog.ui.media.MediaModel.prototype.getSubTitles = function () {
   return this.subTitles_;
 };
-
 
 /**
  * Sets the subtitles for the media
  * @param {Array<goog.ui.media.MediaModel.SubTitle>} subtitles The subtitles.
  * @return {!goog.ui.media.MediaModel} The object itself.
  */
-goog.ui.media.MediaModel.prototype.setSubTitles = function(subtitles) {
-  'use strict';
+goog.ui.media.MediaModel.prototype.setSubTitles = function (subtitles) {
   this.subTitles_ = subtitles;
   return this;
 };
-
-
 
 /**
  * Constructs a thumbnail containing details of the thumbnail's image URL and
@@ -511,8 +449,7 @@ goog.ui.media.MediaModel.prototype.setSubTitles = function(subtitles) {
  * @constructor
  * @final
  */
-goog.ui.media.MediaModel.Thumbnail = function(url, opt_size) {
-  'use strict';
+goog.ui.media.MediaModel.Thumbnail = function (url, opt_size) {
   /**
    * The thumbnail's image URL.
    * @type {string}
@@ -528,16 +465,13 @@ goog.ui.media.MediaModel.Thumbnail = function(url, opt_size) {
   this.size_ = opt_size || null;
 };
 
-
 /**
  * Gets the thumbnail URL.
  * @return {string} The thumbnail's image URL.
  */
-goog.ui.media.MediaModel.Thumbnail.prototype.getUrl = function() {
-  'use strict';
+goog.ui.media.MediaModel.Thumbnail.prototype.getUrl = function () {
   return this.url_;
 };
-
 
 /**
  * Sets the thumbnail URL.
@@ -545,22 +479,18 @@ goog.ui.media.MediaModel.Thumbnail.prototype.getUrl = function() {
  * @return {!goog.ui.media.MediaModel.Thumbnail} The object itself, used for
  *     chaining.
  */
-goog.ui.media.MediaModel.Thumbnail.prototype.setUrl = function(url) {
-  'use strict';
+goog.ui.media.MediaModel.Thumbnail.prototype.setUrl = function (url) {
   this.url_ = url;
   return this;
 };
-
 
 /**
  * Gets the thumbnail size.
  * @return {goog.math.Size} The size of the thumbnail's image if known.
  */
-goog.ui.media.MediaModel.Thumbnail.prototype.getSize = function() {
-  'use strict';
+goog.ui.media.MediaModel.Thumbnail.prototype.getSize = function () {
   return this.size_;
 };
-
 
 /**
  * Sets the thumbnail size.
@@ -568,13 +498,10 @@ goog.ui.media.MediaModel.Thumbnail.prototype.getSize = function() {
  * @return {!goog.ui.media.MediaModel.Thumbnail} The object itself, used for
  *     chaining.
  */
-goog.ui.media.MediaModel.Thumbnail.prototype.setSize = function(size) {
-  'use strict';
+goog.ui.media.MediaModel.Thumbnail.prototype.setSize = function (size) {
   this.size_ = size;
   return this;
 };
-
-
 
 /**
  * Constructs a player containing details of the player's URL and
@@ -585,8 +512,7 @@ goog.ui.media.MediaModel.Thumbnail.prototype.setSize = function(size) {
  * @constructor
  * @final
  */
-goog.ui.media.MediaModel.Player = function(url, opt_vars, opt_size) {
-  'use strict';
+goog.ui.media.MediaModel.Player = function (url, opt_vars, opt_size) {
   /**
    * The player's URL.
    * @type {!goog.html.TrustedResourceUrl}
@@ -609,26 +535,21 @@ goog.ui.media.MediaModel.Player = function(url, opt_vars, opt_size) {
   this.size_ = opt_size || null;
 };
 
-
 /**
  * Gets the player URL.
  * @return {!goog.html.TrustedResourceUrl} The player's URL.
  */
-goog.ui.media.MediaModel.Player.prototype.getTrustedResourceUrl = function() {
-  'use strict';
+goog.ui.media.MediaModel.Player.prototype.getTrustedResourceUrl = function () {
   return this.trustedResourceUrl_;
 };
-
 
 /**
  * Gets the player URL.
  * @return {string} The player's URL.
  */
-goog.ui.media.MediaModel.Player.prototype.getUrl = function() {
-  'use strict';
+goog.ui.media.MediaModel.Player.prototype.getUrl = function () {
   return this.trustedResourceUrl_.getTypedStringValue();
 };
-
 
 /**
  * Sets the player URL.
@@ -636,22 +557,18 @@ goog.ui.media.MediaModel.Player.prototype.getUrl = function() {
  * @return {!goog.ui.media.MediaModel.Player} The object itself, used for
  *     chaining.
  */
-goog.ui.media.MediaModel.Player.prototype.setUrl = function(url) {
-  'use strict';
+goog.ui.media.MediaModel.Player.prototype.setUrl = function (url) {
   this.trustedResourceUrl_ = url;
   return this;
 };
-
 
 /**
  * Gets the player arguments.
  * @return {Object} The media player arguments.
  */
-goog.ui.media.MediaModel.Player.prototype.getVars = function() {
-  'use strict';
+goog.ui.media.MediaModel.Player.prototype.getVars = function () {
   return this.vars_;
 };
-
 
 /**
  * Sets the player arguments.
@@ -659,22 +576,18 @@ goog.ui.media.MediaModel.Player.prototype.getVars = function() {
  * @return {!goog.ui.media.MediaModel.Player} The object itself, used for
  *     chaining.
  */
-goog.ui.media.MediaModel.Player.prototype.setVars = function(vars) {
-  'use strict';
+goog.ui.media.MediaModel.Player.prototype.setVars = function (vars) {
   this.vars_ = vars;
   return this;
 };
-
 
 /**
  * Gets the size of the player.
  * @return {goog.math.Size} The size of the player if known.
  */
-goog.ui.media.MediaModel.Player.prototype.getSize = function() {
-  'use strict';
+goog.ui.media.MediaModel.Player.prototype.getSize = function () {
   return this.size_;
 };
-
 
 /**
  * Sets the size of the player.
@@ -682,13 +595,10 @@ goog.ui.media.MediaModel.Player.prototype.getSize = function() {
  * @return {!goog.ui.media.MediaModel.Player} The object itself, used for
  *     chaining.
  */
-goog.ui.media.MediaModel.Player.prototype.setSize = function(size) {
-  'use strict';
+goog.ui.media.MediaModel.Player.prototype.setSize = function (size) {
   this.size_ = size;
   return this;
 };
-
-
 
 /**
  * A taxonomy to be set that gives an indication of the type of media content,
@@ -700,8 +610,7 @@ goog.ui.media.MediaModel.Player.prototype.setSize = function(size) {
  * @constructor
  * @final
  */
-goog.ui.media.MediaModel.Category = function(scheme, value, opt_label) {
-  'use strict';
+goog.ui.media.MediaModel.Category = function (scheme, value, opt_label) {
   /**
    * The URI that identifies the categorization scheme.
    * @type {string}
@@ -724,16 +633,13 @@ goog.ui.media.MediaModel.Category = function(scheme, value, opt_label) {
   this.label_ = opt_label || '';
 };
 
-
 /**
  * Gets the category scheme.
  * @return {string} The category scheme URI.
  */
-goog.ui.media.MediaModel.Category.prototype.getScheme = function() {
-  'use strict';
+goog.ui.media.MediaModel.Category.prototype.getScheme = function () {
   return this.scheme_;
 };
-
 
 /**
  * Sets the category scheme.
@@ -741,22 +647,18 @@ goog.ui.media.MediaModel.Category.prototype.getScheme = function() {
  * @return {!goog.ui.media.MediaModel.Category} The object itself, used for
  *     chaining.
  */
-goog.ui.media.MediaModel.Category.prototype.setScheme = function(scheme) {
-  'use strict';
+goog.ui.media.MediaModel.Category.prototype.setScheme = function (scheme) {
   this.scheme_ = scheme;
   return this;
 };
-
 
 /**
  * Gets the categor's value.
  * @return {string} The category's value.
  */
-goog.ui.media.MediaModel.Category.prototype.getValue = function() {
-  'use strict';
+goog.ui.media.MediaModel.Category.prototype.getValue = function () {
   return this.value_;
 };
-
 
 /**
  * Sets the category value.
@@ -764,22 +666,18 @@ goog.ui.media.MediaModel.Category.prototype.getValue = function() {
  * @return {!goog.ui.media.MediaModel.Category} The object itself, used for
  *     chaining.
  */
-goog.ui.media.MediaModel.Category.prototype.setValue = function(value) {
-  'use strict';
+goog.ui.media.MediaModel.Category.prototype.setValue = function (value) {
   this.value_ = value;
   return this;
 };
-
 
 /**
  * Gets the label of the category.
  * @return {string} The label of the category.
  */
-goog.ui.media.MediaModel.Category.prototype.getLabel = function() {
-  'use strict';
+goog.ui.media.MediaModel.Category.prototype.getLabel = function () {
   return this.label_;
 };
-
 
 /**
  * Sets the label of the category.
@@ -787,13 +685,10 @@ goog.ui.media.MediaModel.Category.prototype.getLabel = function() {
  * @return {!goog.ui.media.MediaModel.Category} The object itself, used for
  *     chaining.
  */
-goog.ui.media.MediaModel.Category.prototype.setLabel = function(label) {
-  'use strict';
+goog.ui.media.MediaModel.Category.prototype.setLabel = function (label) {
   this.label_ = label;
   return this;
 };
-
-
 
 /**
  * Indicates an entity that has contributed to a media object. Based on
@@ -806,8 +701,7 @@ goog.ui.media.MediaModel.Category.prototype.setLabel = function(label) {
  * @constructor
  * @final
  */
-goog.ui.media.MediaModel.Credit = function(value, opt_role, opt_scheme) {
-  'use strict';
+goog.ui.media.MediaModel.Credit = function (value, opt_role, opt_scheme) {
   /**
    * The name of entity being credited.
    * @type {string}
@@ -830,16 +724,14 @@ goog.ui.media.MediaModel.Credit = function(value, opt_role, opt_scheme) {
   this.scheme_ = opt_scheme;
 };
 
-
 /**
  * The types of known roles.
  * @enum {string}
  */
 goog.ui.media.MediaModel.Credit.Role = {
   UPLOADER: 'uploader',
-  OWNER: 'owner'
+  OWNER: 'owner',
 };
-
 
 /**
  * The types of known schemes.
@@ -848,78 +740,64 @@ goog.ui.media.MediaModel.Credit.Role = {
 goog.ui.media.MediaModel.Credit.Scheme = {
   EUROPEAN_BROADCASTING: 'urn:ebu',
   YAHOO: 'urn:yvs',
-  YOUTUBE: 'urn:youtube'
+  YOUTUBE: 'urn:youtube',
 };
-
 
 /**
  * Gets the name of the entity being credited.
  * @return {string} The name of the entity.
  */
-goog.ui.media.MediaModel.Credit.prototype.getValue = function() {
-  'use strict';
+goog.ui.media.MediaModel.Credit.prototype.getValue = function () {
   return this.value_;
 };
-
 
 /**
  * Sets the value of the credit object.
  * @param {string} value The value.
  * @return {!goog.ui.media.MediaModel.Credit} The object itself.
  */
-goog.ui.media.MediaModel.Credit.prototype.setValue = function(value) {
-  'use strict';
+goog.ui.media.MediaModel.Credit.prototype.setValue = function (value) {
   this.value_ = value;
   return this;
 };
-
 
 /**
  * Gets the role of the entity being credited.
  * @return {goog.ui.media.MediaModel.Credit.Role|undefined} The role of the
  *     entity.
  */
-goog.ui.media.MediaModel.Credit.prototype.getRole = function() {
-  'use strict';
+goog.ui.media.MediaModel.Credit.prototype.getRole = function () {
   return this.role_;
 };
-
 
 /**
  * Sets the role of the credit object.
  * @param {goog.ui.media.MediaModel.Credit.Role} role The role.
  * @return {!goog.ui.media.MediaModel.Credit} The object itself.
  */
-goog.ui.media.MediaModel.Credit.prototype.setRole = function(role) {
-  'use strict';
+goog.ui.media.MediaModel.Credit.prototype.setRole = function (role) {
   this.role_ = role;
   return this;
 };
-
 
 /**
  * Gets the scheme of the credit object.
  * @return {goog.ui.media.MediaModel.Credit.Scheme|undefined} The URI that
  *     identifies the role scheme.
  */
-goog.ui.media.MediaModel.Credit.prototype.getScheme = function() {
-  'use strict';
+goog.ui.media.MediaModel.Credit.prototype.getScheme = function () {
   return this.scheme_;
 };
-
 
 /**
  * Sets the scheme of the credit object.
  * @param {goog.ui.media.MediaModel.Credit.Scheme} scheme The scheme.
  * @return {!goog.ui.media.MediaModel.Credit} The object itself.
  */
-goog.ui.media.MediaModel.Credit.prototype.setScheme = function(scheme) {
-  'use strict';
+goog.ui.media.MediaModel.Credit.prototype.setScheme = function (scheme) {
   this.scheme_ = scheme;
   return this;
 };
-
-
 
 /**
  * A reference to the subtitle URI for a media object.
@@ -932,8 +810,7 @@ goog.ui.media.MediaModel.Credit.prototype.setScheme = function(scheme) {
  * @constructor
  * @final
  */
-goog.ui.media.MediaModel.SubTitle = function(href, lang, type) {
-  'use strict';
+goog.ui.media.MediaModel.SubTitle = function (href, lang, type) {
   /**
    * The subtitle href.
    * @type {string}
@@ -956,68 +833,56 @@ goog.ui.media.MediaModel.SubTitle = function(href, lang, type) {
   this.type_ = type;
 };
 
-
 /**
  * Sets the href for the subtitle object.
  * @param {string} href The subtitle's URI.
  * @return {!goog.ui.media.MediaModel.SubTitle} The object itself.
  */
-goog.ui.media.MediaModel.SubTitle.prototype.setHref = function(href) {
-  'use strict';
+goog.ui.media.MediaModel.SubTitle.prototype.setHref = function (href) {
   this.href_ = href;
   return this;
 };
-
 
 /**
  * Get the href for the subtitle object.
  * @return {string} href The subtitle's URI.
  */
-goog.ui.media.MediaModel.SubTitle.prototype.getHref = function() {
-  'use strict';
+goog.ui.media.MediaModel.SubTitle.prototype.getHref = function () {
   return this.href_;
 };
-
 
 /**
  * Sets the language for the subtitle object.
  * @param {string} lang The RFC 3066 language.
  * @return {!goog.ui.media.MediaModel.SubTitle} The object itself.
  */
-goog.ui.media.MediaModel.SubTitle.prototype.setLang = function(lang) {
-  'use strict';
+goog.ui.media.MediaModel.SubTitle.prototype.setLang = function (lang) {
   this.lang_ = lang;
   return this;
 };
-
 
 /**
  * Get the lang for the subtitle object.
  * @return {string} lang The RFC 3066 language.
  */
-goog.ui.media.MediaModel.SubTitle.prototype.getLang = function() {
-  'use strict';
+goog.ui.media.MediaModel.SubTitle.prototype.getLang = function () {
   return this.lang_;
 };
-
 
 /**
  * Sets the type for the subtitle object.
  * @param {string} type The MIME type.
  * @return {!goog.ui.media.MediaModel.SubTitle} The object itself.
  */
-goog.ui.media.MediaModel.SubTitle.prototype.setType = function(type) {
-  'use strict';
+goog.ui.media.MediaModel.SubTitle.prototype.setType = function (type) {
   this.type_ = type;
   return this;
 };
-
 
 /**
  * Get the type for the subtitle object.
  * @return {string} type The MIME type.
  */
-goog.ui.media.MediaModel.SubTitle.prototype.getType = function() {
-  'use strict';
+goog.ui.media.MediaModel.SubTitle.prototype.getType = function () {
   return this.type_;
 };

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.structs.PriorityPoolTest');
-goog.setTestOnly();
 
 const MockClock = goog.require('goog.testing.MockClock');
 const PriorityPool = goog.require('goog.structs.PriorityPool');
@@ -103,7 +102,7 @@ testSuite({
   },
 
   testExceedMax4() {
-    const p = new PriorityPool();  // default: 10
+    const p = new PriorityPool(); // default: 10
     const objs = [];
 
     let getCount1 = 0;
@@ -448,13 +447,13 @@ testSuite({
       o6 = obj;
     };
 
-    p.getObject(callback1);  // Initially seeded requests.
+    p.getObject(callback1); // Initially seeded requests.
     p.getObject(callback2);
 
-    p.getObject(callback3, 101);  // Lowest priority.
-    p.getObject(callback4);       // Second lowest priority (default is 100).
-    p.getObject(callback5, 99);   // Second highest priority.
-    p.getObject(callback6, 0);    // Highest priority.
+    p.getObject(callback3, 101); // Lowest priority.
+    p.getObject(callback4); // Second lowest priority (default is 100).
+    p.getObject(callback5, 99); // Second highest priority.
+    p.getObject(callback6, 0); // Highest priority.
 
     assertNotNull(o1);
     assertNotNull(o2);
@@ -463,14 +462,14 @@ testSuite({
     assertNull(o5);
     assertNull(o6);
 
-    p.releaseObject(o1);  // Release the first initially seeded request (o1).
-    assertNotNull(o6);  // Make sure the highest priority request (o6) started.
+    p.releaseObject(o1); // Release the first initially seeded request (o1).
+    assertNotNull(o6); // Make sure the highest priority request (o6) started.
     assertNull(o3);
     assertNull(o4);
     assertNull(o5);
 
-    p.releaseObject(o2);  // Release the second, initially seeded request (o2).
-    assertNotNull(o5);    // The second highest priority request starts (o5).
+    p.releaseObject(o2); // Release the second, initially seeded request (o2).
+    assertNotNull(o5); // The second highest priority request starts (o5).
     assertNull(o3);
     assertNull(o4);
 

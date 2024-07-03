@@ -12,8 +12,7 @@ goog.provide('goog.debug.devCssRunner');
 
 goog.require('goog.debug.DevCss');
 
-(function() {
-'use strict';
-const devCssInstance = new goog.debug.DevCss();
-devCssInstance.activateBrowserSpecificCssRules();
+(() => {
+  const devCssInstance = new goog.debug.DevCss();
+  devCssInstance.activateBrowserSpecificCssRules();
 })();

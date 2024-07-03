@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.messaging.LoggerServerTest');
-goog.setTestOnly();
 
 const Level = goog.require('goog.log.Level');
 const Logger = goog.require('goog.log.Logger');
@@ -28,8 +27,7 @@ testSuite({
   setUp() {
     mockControl = new MockControl();
     channel = new MockMessageChannel(mockControl);
-    stubs.set(
-        log, 'getLogger', mockControl.createFunctionMock('goog.log.getLogger'));
+    stubs.set(log, 'getLogger', mockControl.createFunctionMock('goog.log.getLogger'));
     stubs.set(log, 'log', mockControl.createFunctionMock('goog.log.log'));
   },
 
@@ -78,10 +76,12 @@ testSuite({
   testCommandWithException() {
     const mockLogger = mockControl.createStrictMock(Logger);
     log.getLogger('test.object.Name').$returns(mockLogger);
-    log.log(
-           mockLogger, Level.SEVERE, '[some channel] foo bar',
-           {message: 'Bad things', stack: ['foo', 'bar']})
-        .$once();
+    log
+      .log(mockLogger, Level.SEVERE, '[some channel] foo bar', {
+        message: 'Bad things',
+        stack: ['foo', 'bar'],
+      })
+      .$once();
     mockControl.$replayAll();
 
     const server = new LoggerServer(channel, 'log', 'some channel');
@@ -89,7 +89,7 @@ testSuite({
       name: 'test.object.Name',
       level: Level.SEVERE.value,
       message: 'foo bar',
-      exception: {message: 'Bad things', stack: ['foo', 'bar']},
+      exception: { message: 'Bad things', stack: ['foo', 'bar'] },
     });
     mockControl.$verifyAll();
     server.dispose();

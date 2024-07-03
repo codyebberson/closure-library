@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.string.StringBufferTest');
-goog.setTestOnly();
 
 const StringBuffer = goog.require('goog.string.StringBuffer');
 const testSuite = goog.require('goog.testing.testSuite');

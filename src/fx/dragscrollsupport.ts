@@ -20,8 +20,6 @@ goog.require('goog.style');
 goog.requireType('goog.events.Event');
 goog.requireType('goog.math.Rect');
 
-
-
 /**
  * A scroll support class. Currently this class will automatically scroll
  * a scrollable container node and scroll it by a fixed amount at a timed
@@ -40,9 +38,7 @@ goog.requireType('goog.math.Rect');
  * @extends {goog.Disposable}
  * @see ../demos/dragscrollsupport.html
  */
-goog.fx.DragScrollSupport = function(
-    containerNode, opt_margin, opt_externalMouseMoveTracking) {
-  'use strict';
+goog.fx.DragScrollSupport = function (containerNode, opt_margin, opt_externalMouseMoveTracking) {
   goog.fx.DragScrollSupport.base(this, 'constructor');
 
   /**
@@ -98,7 +94,7 @@ goog.fx.DragScrollSupport = function(
    * @const
    */
   this.containerIsActuallyContent_ =
-      containerNode.tagName === 'BODY' || containerNode.tagName === 'HTML';
+    containerNode.tagName === 'BODY' || containerNode.tagName === 'HTML';
 
   /**
    * The container bounds.
@@ -124,14 +120,13 @@ goog.fx.DragScrollSupport = function(
    * @type {goog.math.Rect}
    * @private
    */
-  this.scrollBounds_ = opt_margin ?
-      this.constrainBounds_(this.containerBounds_.clone()) :
-      this.containerBounds_;
+  this.scrollBounds_ = opt_margin
+    ? this.constrainBounds_(this.containerBounds_.clone())
+    : this.containerBounds_;
 
   this.setupListeners_(!!opt_externalMouseMoveTracking);
 };
 goog.inherits(goog.fx.DragScrollSupport, goog.Disposable);
-
 
 /**
  * The scroll timer step in ms.
@@ -139,7 +134,6 @@ goog.inherits(goog.fx.DragScrollSupport, goog.Disposable);
  * @private
  */
 goog.fx.DragScrollSupport.TIMER_STEP_ = 50;
-
 
 /**
  * The scroll step in pixels.
@@ -161,7 +155,6 @@ goog.fx.DragScrollSupport.ORIGIN_COORDINATE_ = new goog.math.Coordinate(0, 0);
  */
 goog.fx.DragScrollSupport.MARGIN = 32;
 
-
 /**
  * Sets whether scrolling should be constrained to happen only when the cursor
  * is inside the container node.
@@ -170,22 +163,17 @@ goog.fx.DragScrollSupport.MARGIN = 32;
  * @param {boolean} constrain Whether scrolling should be constrained to happen
  *     only when the cursor is inside the container node.
  */
-goog.fx.DragScrollSupport.prototype.setConstrainScroll = function(constrain) {
-  'use strict';
+goog.fx.DragScrollSupport.prototype.setConstrainScroll = function (constrain) {
   this.constrainScroll_ = !!this.margin_ && constrain;
 };
-
 
 /**
  * Sets whether horizontal scrolling is allowed.
  * @param {boolean} scrolling Whether horizontal scrolling is allowed.
  */
-goog.fx.DragScrollSupport.prototype.setHorizontalScrolling = function(
-    scrolling) {
-  'use strict';
+goog.fx.DragScrollSupport.prototype.setHorizontalScrolling = function (scrolling) {
   this.horizontalScrolling_ = scrolling;
 };
-
 
 /**
  * Constrains the container bounds with respect to the margin.
@@ -195,8 +183,7 @@ goog.fx.DragScrollSupport.prototype.setHorizontalScrolling = function(
  *     direction.
  * @private
  */
-goog.fx.DragScrollSupport.prototype.constrainBounds_ = function(bounds) {
-  'use strict';
+goog.fx.DragScrollSupport.prototype.constrainBounds_ = function (bounds) {
   var margin = this.margin_;
   if (margin) {
     var quarterHeight = bounds.height * 0.25;
@@ -212,27 +199,25 @@ goog.fx.DragScrollSupport.prototype.constrainBounds_ = function(bounds) {
   return bounds;
 };
 
-
 /**
  * Attaches listeners and activates automatic scrolling.
  * @param {boolean} externalMouseMoveTracking Whether to enable internal
  *     mouse move event handling.
  * @private
  */
-goog.fx.DragScrollSupport.prototype.setupListeners_ = function(
-    externalMouseMoveTracking) {
-  'use strict';
+goog.fx.DragScrollSupport.prototype.setupListeners_ = function (externalMouseMoveTracking) {
   if (!externalMouseMoveTracking) {
     // Track mouse pointer position to determine scroll direction.
     this.eventHandler_.listen(
-        goog.dom.getOwnerDocument(this.containerNode_),
-        goog.events.EventType.MOUSEMOVE, this.onMouseMove);
+      goog.dom.getOwnerDocument(this.containerNode_),
+      goog.events.EventType.MOUSEMOVE,
+      this.onMouseMove
+    );
   }
 
   // Scroll with a constant speed.
   this.eventHandler_.listen(this.scrollTimer_, goog.Timer.TICK, this.onTick_);
 };
-
 
 /**
  * Handler for timer tick event, scrolls the container by one scroll step if
@@ -240,49 +225,50 @@ goog.fx.DragScrollSupport.prototype.setupListeners_ = function(
  * @param {goog.events.Event} event Timer tick event.
  * @private
  */
-goog.fx.DragScrollSupport.prototype.onTick_ = function(event) {
-  'use strict';
+goog.fx.DragScrollSupport.prototype.onTick_ = function (event) {
   this.containerNode_.scrollTop += this.scrollDelta_.y;
   this.containerNode_.scrollLeft += this.scrollDelta_.x;
 };
-
 
 /**
  * Handler for mouse moves events.
  * @param {goog.events.Event} event Mouse move event.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.fx.DragScrollSupport.prototype.onMouseMove = function(event) {
-  'use strict';
-  let eventOffset = this.containerIsActuallyContent_ ?
-      goog.fx.DragScrollSupport.ORIGIN_COORDINATE_ :
-      goog.dom.getDomHelper(this.containerNode_).getDocumentScroll();
+goog.fx.DragScrollSupport.prototype.onMouseMove = function (event) {
+  const eventOffset = this.containerIsActuallyContent_
+    ? goog.fx.DragScrollSupport.ORIGIN_COORDINATE_
+    : goog.dom.getDomHelper(this.containerNode_).getDocumentScroll();
 
   /** @suppress {strictMissingProperties} Added to tighten compiler checks */
-  var deltaX = this.horizontalScrolling_ ?
-      this.calculateScrollDelta(
-          event.clientX + eventOffset.x, this.scrollBounds_.left,
-          this.scrollBounds_.width) :
-      0;
+  var deltaX = this.horizontalScrolling_
+    ? this.calculateScrollDelta(
+        event.clientX + eventOffset.x,
+        this.scrollBounds_.left,
+        this.scrollBounds_.width
+      )
+    : 0;
   /** @suppress {strictMissingProperties} Added to tighten compiler checks */
   var deltaY = this.calculateScrollDelta(
-      event.clientY + eventOffset.y, this.scrollBounds_.top,
-      this.scrollBounds_.height);
+    event.clientY + eventOffset.y,
+    this.scrollBounds_.top,
+    this.scrollBounds_.height
+  );
   this.scrollDelta_.x = deltaX;
   this.scrollDelta_.y = deltaY;
 
   // If the scroll data is 0 or the event fired outside of the
   // bounds of the container node.
-  if ((!deltaX && !deltaY) ||
-      (this.constrainScroll_ &&
-       !this.isInContainerBounds_(
-           event.clientX + eventOffset.x, event.clientY + eventOffset.y))) {
+  if (
+    (!deltaX && !deltaY) ||
+    (this.constrainScroll_ &&
+      !this.isInContainerBounds_(event.clientX + eventOffset.x, event.clientY + eventOffset.y))
+  ) {
     this.scrollTimer_.stop();
   } else if (!this.scrollTimer_.enabled) {
     this.scrollTimer_.start();
   }
 };
-
 
 /**
  * Gets whether the input coordinate is in the container bounds.
@@ -291,15 +277,15 @@ goog.fx.DragScrollSupport.prototype.onMouseMove = function(event) {
  * @return {boolean} Whether the input coordinate is in the container bounds.
  * @private
  */
-goog.fx.DragScrollSupport.prototype.isInContainerBounds_ = function(x, y) {
-  'use strict';
+goog.fx.DragScrollSupport.prototype.isInContainerBounds_ = function (x, y) {
   var containerBounds = this.containerBounds_;
-  return containerBounds.left <= x &&
-      containerBounds.left + containerBounds.width >= x &&
-      containerBounds.top <= y &&
-      containerBounds.top + containerBounds.height >= y;
+  return (
+    containerBounds.left <= x &&
+    containerBounds.left + containerBounds.width >= x &&
+    containerBounds.top <= y &&
+    containerBounds.top + containerBounds.height >= y
+  );
 };
-
 
 /**
  * Calculates scroll delta.
@@ -312,9 +298,7 @@ goog.fx.DragScrollSupport.prototype.isInContainerBounds_ = function(x, y) {
  * @return {number} The calculated scroll delta.
  * @protected
  */
-goog.fx.DragScrollSupport.prototype.calculateScrollDelta = function(
-    coordinate, min, rangeLength) {
-  'use strict';
+goog.fx.DragScrollSupport.prototype.calculateScrollDelta = (coordinate, min, rangeLength) => {
   var delta = 0;
   if (coordinate < min) {
     delta = -goog.fx.DragScrollSupport.SCROLL_STEP_;
@@ -324,10 +308,8 @@ goog.fx.DragScrollSupport.prototype.calculateScrollDelta = function(
   return delta;
 };
 
-
 /** @override */
-goog.fx.DragScrollSupport.prototype.disposeInternal = function() {
-  'use strict';
+goog.fx.DragScrollSupport.prototype.disposeInternal = function () {
   goog.fx.DragScrollSupport.superClass_.disposeInternal.call(this);
   this.eventHandler_.dispose();
   this.scrollTimer_.dispose();

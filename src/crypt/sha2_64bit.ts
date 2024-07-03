@@ -21,8 +21,6 @@ goog.require('goog.asserts');
 goog.require('goog.crypt.Hash');
 goog.require('goog.math.Long');
 
-
-
 /**
  * Constructs a SHA-2 64-bit cryptographic hash.
  * This class should not be used. Rather, one should use one of its
@@ -34,8 +32,7 @@ goog.require('goog.math.Long');
  * @extends {goog.crypt.Hash}
  * @struct
  */
-goog.crypt.Sha2_64bit = function(numHashBlocks, initHashBlocks) {
-  'use strict';
+goog.crypt.Sha2_64bit = function (numHashBlocks, initHashBlocks) {
   goog.crypt.Sha2_64bit.base(this, 'constructor');
 
   /**
@@ -49,8 +46,9 @@ goog.crypt.Sha2_64bit = function(numHashBlocks, initHashBlocks) {
    * `this.blocksize` bytes, we feed it into [@code computeChunk_}.
    * @private {!Uint8Array|!Array<number>}
    */
-  this.chunk_ = goog.global['Uint8Array'] ? new Uint8Array(this.blockSize) :
-                                            new Array(this.blockSize);
+  this.chunk_ = goog.global['Uint8Array']
+    ? new Uint8Array(this.blockSize)
+    : new Array(this.blockSize);
 
   /**
    * Current number of bytes in `this.chunk_`.
@@ -107,39 +105,35 @@ goog.crypt.Sha2_64bit = function(numHashBlocks, initHashBlocks) {
 };
 goog.inherits(goog.crypt.Sha2_64bit, goog.crypt.Hash);
 
-
 /**
  * The number of bytes that are digested in each pass of this hasher.
  * @private @const {number}
  */
 goog.crypt.Sha2_64bit.BLOCK_SIZE_ = 1024 / 8;
 
-
 /**
  * Contains data needed to pad messages less than `blocksize` bytes.
  * @private {!Array<number>}
  */
 goog.crypt.Sha2_64bit.PADDING_ = [].concat(
-    [0x80], goog.array.repeat(0, goog.crypt.Sha2_64bit.BLOCK_SIZE_ - 1));
-
+  [0x80],
+  goog.array.repeat(0, goog.crypt.Sha2_64bit.BLOCK_SIZE_ - 1)
+);
 
 /**
  * Resets this hash function.
  * @override
  */
-goog.crypt.Sha2_64bit.prototype.reset = function() {
-  'use strict';
+goog.crypt.Sha2_64bit.prototype.reset = function () {
   this.chunkBytes_ = 0;
   this.total_ = 0;
   this.hash_ = goog.array.clone(this.initHashBlocks_);
   this.needsReset_ = false;
 };
 
-
 /** @override */
-goog.crypt.Sha2_64bit.prototype.update = function(message, opt_length) {
-  'use strict';
-  var length = (opt_length !== undefined) ? opt_length : message.length;
+goog.crypt.Sha2_64bit.prototype.update = function (message, opt_length) {
+  var length = opt_length !== undefined ? opt_length : message.length;
 
   // Make sure this hasher is usable.
   if (this.needsReset_) {
@@ -191,10 +185,8 @@ goog.crypt.Sha2_64bit.prototype.update = function(message, opt_length) {
   this.total_ += length;
 };
 
-
 /** @override */
-goog.crypt.Sha2_64bit.prototype.digest = function() {
-  'use strict';
+goog.crypt.Sha2_64bit.prototype.digest = function () {
   if (this.needsReset_) {
     throw new Error('this hasher needs to be reset');
   }
@@ -205,15 +197,13 @@ goog.crypt.Sha2_64bit.prototype.digest = function() {
     this.update(goog.crypt.Sha2_64bit.PADDING_, 112 - this.chunkBytes_);
   } else {
     // the rest of this block, plus 112 bytes of next block
-    this.update(
-        goog.crypt.Sha2_64bit.PADDING_,
-        this.blockSize - this.chunkBytes_ + 112);
+    this.update(goog.crypt.Sha2_64bit.PADDING_, this.blockSize - this.chunkBytes_ + 112);
   }
 
   // Append # bits in the 64-bit big-endian format.
   for (var i = 127; i >= 112; i--) {
     this.chunk_[i] = totalBits & 255;
-    totalBits /= 256;  // Don't use bit-shifting here!
+    totalBits /= 256; // Don't use bit-shifting here!
   }
   this.computeChunk_();
 
@@ -225,10 +215,10 @@ goog.crypt.Sha2_64bit.prototype.digest = function() {
     var high = block.getHighBits();
     var low = block.getLowBits();
     for (var j = 24; j >= 0; j -= 8) {
-      digest[n++] = ((high >> j) & 255);
+      digest[n++] = (high >> j) & 255;
     }
     for (var j = 24; j >= 0; j -= 8) {
-      digest[n++] = ((low >> j) & 255);
+      digest[n++] = (low >> j) & 255;
     }
   }
 
@@ -237,13 +227,11 @@ goog.crypt.Sha2_64bit.prototype.digest = function() {
   return digest;
 };
 
-
 /**
  * Updates this hash by processing the 1024-bit message chunk in this.chunk_.
  * @private
  */
-goog.crypt.Sha2_64bit.prototype.computeChunk_ = function() {
-  'use strict';
+goog.crypt.Sha2_64bit.prototype.computeChunk_ = function () {
   var chunk = this.chunk_;
   var K_ = goog.crypt.Sha2_64bit.K_;
 
@@ -252,10 +240,15 @@ goog.crypt.Sha2_64bit.prototype.computeChunk_ = function() {
   for (var i = 0; i < 16; i++) {
     var offset = i * 8;
     w[i] = new goog.math.Long(
-        (chunk[offset + 4] << 24) | (chunk[offset + 5] << 16) |
-            (chunk[offset + 6] << 8) | (chunk[offset + 7]),
-        (chunk[offset] << 24) | (chunk[offset + 1] << 16) |
-            (chunk[offset + 2] << 8) | (chunk[offset + 3]));
+      (chunk[offset + 4] << 24) |
+        (chunk[offset + 5] << 16) |
+        (chunk[offset + 6] << 8) |
+        chunk[offset + 7],
+      (chunk[offset] << 24) |
+        (chunk[offset + 1] << 16) |
+        (chunk[offset + 2] << 8) |
+        chunk[offset + 3]
+    );
   }
 
   // Extend the w[] array to be the number of rounds.
@@ -300,7 +293,6 @@ goog.crypt.Sha2_64bit.prototype.computeChunk_ = function() {
   this.hash_[7] = this.hash_[7].add(h);
 };
 
-
 /**
  * Calculates the SHA2 64-bit sigma0 function.
  * rotateRight(value, 1) ^ rotateRight(value, 8) ^ (value >>> 7)
@@ -309,20 +301,23 @@ goog.crypt.Sha2_64bit.prototype.computeChunk_ = function() {
  * @param {!goog.math.Long} value
  * @return {!goog.math.Long}
  */
-goog.crypt.Sha2_64bit.prototype.sigma0_ = function(value) {
-  'use strict';
+goog.crypt.Sha2_64bit.prototype.sigma0_ = (value) => {
   var valueLow = value.getLowBits();
   var valueHigh = value.getHighBits();
   // Implementation note: We purposely do not use the shift operations defined
   // in goog.math.Long.  Inlining the code for specific values of shifting and
   // not generating the intermediate results doubles the speed of this code.
-  var low = (valueLow >>> 1) ^ (valueHigh << 31) ^ (valueLow >>> 8) ^
-      (valueHigh << 24) ^ (valueLow >>> 7) ^ (valueHigh << 25);
-  var high = (valueHigh >>> 1) ^ (valueLow << 31) ^ (valueHigh >>> 8) ^
-      (valueLow << 24) ^ (valueHigh >>> 7);
+  var low =
+    (valueLow >>> 1) ^
+    (valueHigh << 31) ^
+    (valueLow >>> 8) ^
+    (valueHigh << 24) ^
+    (valueLow >>> 7) ^
+    (valueHigh << 25);
+  var high =
+    (valueHigh >>> 1) ^ (valueLow << 31) ^ (valueHigh >>> 8) ^ (valueLow << 24) ^ (valueHigh >>> 7);
   return new goog.math.Long(low, high);
 };
-
 
 /**
  * Calculates the SHA2 64-bit sigma1 function.
@@ -332,18 +327,25 @@ goog.crypt.Sha2_64bit.prototype.sigma0_ = function(value) {
  * @param {!goog.math.Long} value
  * @return {!goog.math.Long}
  */
-goog.crypt.Sha2_64bit.prototype.sigma1_ = function(value) {
-  'use strict';
+goog.crypt.Sha2_64bit.prototype.sigma1_ = (value) => {
   var valueLow = value.getLowBits();
   var valueHigh = value.getHighBits();
   // Implementation note:  See _sigma0() above
-  var low = (valueLow >>> 19) ^ (valueHigh << 13) ^ (valueHigh >>> 29) ^
-      (valueLow << 3) ^ (valueLow >>> 6) ^ (valueHigh << 26);
-  var high = (valueHigh >>> 19) ^ (valueLow << 13) ^ (valueLow >>> 29) ^
-      (valueHigh << 3) ^ (valueHigh >>> 6);
+  var low =
+    (valueLow >>> 19) ^
+    (valueHigh << 13) ^
+    (valueHigh >>> 29) ^
+    (valueLow << 3) ^
+    (valueLow >>> 6) ^
+    (valueHigh << 26);
+  var high =
+    (valueHigh >>> 19) ^
+    (valueLow << 13) ^
+    (valueLow >>> 29) ^
+    (valueHigh << 3) ^
+    (valueHigh >>> 6);
   return new goog.math.Long(low, high);
 };
-
 
 /**
  * Calculates the SHA2 64-bit Sigma0 function.
@@ -353,18 +355,26 @@ goog.crypt.Sha2_64bit.prototype.sigma1_ = function(value) {
  * @param {!goog.math.Long} value
  * @return {!goog.math.Long}
  */
-goog.crypt.Sha2_64bit.prototype.Sigma0_ = function(value) {
-  'use strict';
+goog.crypt.Sha2_64bit.prototype.Sigma0_ = (value) => {
   var valueLow = value.getLowBits();
   var valueHigh = value.getHighBits();
   // Implementation note:  See _sigma0() above
-  var low = (valueLow >>> 28) ^ (valueHigh << 4) ^ (valueHigh >>> 2) ^
-      (valueLow << 30) ^ (valueHigh >>> 7) ^ (valueLow << 25);
-  var high = (valueHigh >>> 28) ^ (valueLow << 4) ^ (valueLow >>> 2) ^
-      (valueHigh << 30) ^ (valueLow >>> 7) ^ (valueHigh << 25);
+  var low =
+    (valueLow >>> 28) ^
+    (valueHigh << 4) ^
+    (valueHigh >>> 2) ^
+    (valueLow << 30) ^
+    (valueHigh >>> 7) ^
+    (valueLow << 25);
+  var high =
+    (valueHigh >>> 28) ^
+    (valueLow << 4) ^
+    (valueLow >>> 2) ^
+    (valueHigh << 30) ^
+    (valueLow >>> 7) ^
+    (valueHigh << 25);
   return new goog.math.Long(low, high);
 };
-
 
 /**
  * Calculates the SHA2 64-bit Sigma1 function.
@@ -374,18 +384,26 @@ goog.crypt.Sha2_64bit.prototype.Sigma0_ = function(value) {
  * @param {!goog.math.Long} value
  * @return {!goog.math.Long}
  */
-goog.crypt.Sha2_64bit.prototype.Sigma1_ = function(value) {
-  'use strict';
+goog.crypt.Sha2_64bit.prototype.Sigma1_ = (value) => {
   var valueLow = value.getLowBits();
   var valueHigh = value.getHighBits();
   // Implementation note:  See _sigma0() above
-  var low = (valueLow >>> 14) ^ (valueHigh << 18) ^ (valueLow >>> 18) ^
-      (valueHigh << 14) ^ (valueHigh >>> 9) ^ (valueLow << 23);
-  var high = (valueHigh >>> 14) ^ (valueLow << 18) ^ (valueHigh >>> 18) ^
-      (valueLow << 14) ^ (valueLow >>> 9) ^ (valueHigh << 23);
+  var low =
+    (valueLow >>> 14) ^
+    (valueHigh << 18) ^
+    (valueLow >>> 18) ^
+    (valueHigh << 14) ^
+    (valueHigh >>> 9) ^
+    (valueLow << 23);
+  var high =
+    (valueHigh >>> 14) ^
+    (valueLow << 18) ^
+    (valueHigh >>> 18) ^
+    (valueLow << 14) ^
+    (valueLow >>> 9) ^
+    (valueHigh << 23);
   return new goog.math.Long(low, high);
 };
-
 
 /**
  * Calculates the SHA-2 64-bit choose function.
@@ -399,15 +417,14 @@ goog.crypt.Sha2_64bit.prototype.Sigma1_ = function(value) {
  * @param {!goog.math.Long} two
  * @return {!goog.math.Long}
  */
-goog.crypt.Sha2_64bit.prototype.choose_ = function(value, one, two) {
-  'use strict';
+goog.crypt.Sha2_64bit.prototype.choose_ = (value, one, two) => {
   var valueLow = value.getLowBits();
   var valueHigh = value.getHighBits();
   return new goog.math.Long(
-      (valueLow & one.getLowBits()) | (~valueLow & two.getLowBits()),
-      (valueHigh & one.getHighBits()) | (~valueHigh & two.getHighBits()));
+    (valueLow & one.getLowBits()) | (~valueLow & two.getLowBits()),
+    (valueHigh & one.getHighBits()) | (~valueHigh & two.getHighBits())
+  );
 };
-
 
 /**
  * Calculates the SHA-2 64-bit majority function.
@@ -420,17 +437,15 @@ goog.crypt.Sha2_64bit.prototype.choose_ = function(value, one, two) {
  * @param {!goog.math.Long} three
  * @return {!goog.math.Long}
  */
-goog.crypt.Sha2_64bit.prototype.majority_ = function(one, two, three) {
-  'use strict';
-  return new goog.math.Long(
-      (one.getLowBits() & two.getLowBits()) |
-          (two.getLowBits() & three.getLowBits()) |
-          (one.getLowBits() & three.getLowBits()),
-      (one.getHighBits() & two.getHighBits()) |
-          (two.getHighBits() & three.getHighBits()) |
-          (one.getHighBits() & three.getHighBits()));
-};
-
+goog.crypt.Sha2_64bit.prototype.majority_ = (one, two, three) =>
+  new goog.math.Long(
+    (one.getLowBits() & two.getLowBits()) |
+      (two.getLowBits() & three.getLowBits()) |
+      (one.getLowBits() & three.getLowBits()),
+    (one.getHighBits() & two.getHighBits()) |
+      (two.getHighBits() & three.getHighBits()) |
+      (one.getHighBits() & three.getHighBits())
+  );
 
 /**
  * Adds two or more goog.math.Long values.
@@ -441,8 +456,7 @@ goog.crypt.Sha2_64bit.prototype.majority_ = function(one, two, three) {
  * @param {...goog.math.Long} var_args more arguments to sum
  * @return {!goog.math.Long} The resulting sum.
  */
-goog.crypt.Sha2_64bit.prototype.sum_ = function(one, two, var_args) {
-  'use strict';
+goog.crypt.Sha2_64bit.prototype.sum_ = (one, two, var_args) => {
   // The low bits may be signed, but they represent a 32-bit unsigned quantity.
   // We must be careful to normalize them.
   // This doesn't matter for the high bits.
@@ -470,7 +484,6 @@ goog.crypt.Sha2_64bit.prototype.sum_ = function(one, two, var_args) {
   return new goog.math.Long(low, high);
 };
 
-
 /**
  * Converts an array of 32-bit integers into an array of goog.math.Long
  * elements.
@@ -481,8 +494,7 @@ goog.crypt.Sha2_64bit.prototype.sum_ = function(one, two, var_args) {
  *     in big-endian order
  * @return {!Array<!goog.math.Long>}
  */
-goog.crypt.Sha2_64bit.toLongArray_ = function(values) {
-  'use strict';
+goog.crypt.Sha2_64bit.toLongArray_ = (values) => {
   goog.asserts.assert(values.length % 2 == 0);
   var result = [];
   for (var i = 0; i < values.length; i += 2) {
@@ -490,7 +502,6 @@ goog.crypt.Sha2_64bit.toLongArray_ = function(values) {
   }
   return result;
 };
-
 
 /**
  * Fixed constants used in SHA-512 variants.
@@ -501,31 +512,24 @@ goog.crypt.Sha2_64bit.toLongArray_ = function(values) {
  * @private {!Array<!goog.math.Long>}
  */
 goog.crypt.Sha2_64bit.K_ = goog.crypt.Sha2_64bit.toLongArray_([
-  0x428a2f98, 0xd728ae22, 0x71374491, 0x23ef65cd, 0xb5c0fbcf, 0xec4d3b2f,
-  0xe9b5dba5, 0x8189dbbc, 0x3956c25b, 0xf348b538, 0x59f111f1, 0xb605d019,
-  0x923f82a4, 0xaf194f9b, 0xab1c5ed5, 0xda6d8118, 0xd807aa98, 0xa3030242,
-  0x12835b01, 0x45706fbe, 0x243185be, 0x4ee4b28c, 0x550c7dc3, 0xd5ffb4e2,
-  0x72be5d74, 0xf27b896f, 0x80deb1fe, 0x3b1696b1, 0x9bdc06a7, 0x25c71235,
-  0xc19bf174, 0xcf692694, 0xe49b69c1, 0x9ef14ad2, 0xefbe4786, 0x384f25e3,
-  0x0fc19dc6, 0x8b8cd5b5, 0x240ca1cc, 0x77ac9c65, 0x2de92c6f, 0x592b0275,
-  0x4a7484aa, 0x6ea6e483, 0x5cb0a9dc, 0xbd41fbd4, 0x76f988da, 0x831153b5,
-  0x983e5152, 0xee66dfab, 0xa831c66d, 0x2db43210, 0xb00327c8, 0x98fb213f,
-  0xbf597fc7, 0xbeef0ee4, 0xc6e00bf3, 0x3da88fc2, 0xd5a79147, 0x930aa725,
-  0x06ca6351, 0xe003826f, 0x14292967, 0x0a0e6e70, 0x27b70a85, 0x46d22ffc,
-  0x2e1b2138, 0x5c26c926, 0x4d2c6dfc, 0x5ac42aed, 0x53380d13, 0x9d95b3df,
-  0x650a7354, 0x8baf63de, 0x766a0abb, 0x3c77b2a8, 0x81c2c92e, 0x47edaee6,
-  0x92722c85, 0x1482353b, 0xa2bfe8a1, 0x4cf10364, 0xa81a664b, 0xbc423001,
-  0xc24b8b70, 0xd0f89791, 0xc76c51a3, 0x0654be30, 0xd192e819, 0xd6ef5218,
-  0xd6990624, 0x5565a910, 0xf40e3585, 0x5771202a, 0x106aa070, 0x32bbd1b8,
-  0x19a4c116, 0xb8d2d0c8, 0x1e376c08, 0x5141ab53, 0x2748774c, 0xdf8eeb99,
-  0x34b0bcb5, 0xe19b48a8, 0x391c0cb3, 0xc5c95a63, 0x4ed8aa4a, 0xe3418acb,
-  0x5b9cca4f, 0x7763e373, 0x682e6ff3, 0xd6b2b8a3, 0x748f82ee, 0x5defb2fc,
-  0x78a5636f, 0x43172f60, 0x84c87814, 0xa1f0ab72, 0x8cc70208, 0x1a6439ec,
-  0x90befffa, 0x23631e28, 0xa4506ceb, 0xde82bde9, 0xbef9a3f7, 0xb2c67915,
-  0xc67178f2, 0xe372532b, 0xca273ece, 0xea26619c, 0xd186b8c7, 0x21c0c207,
-  0xeada7dd6, 0xcde0eb1e, 0xf57d4f7f, 0xee6ed178, 0x06f067aa, 0x72176fba,
-  0x0a637dc5, 0xa2c898a6, 0x113f9804, 0xbef90dae, 0x1b710b35, 0x131c471b,
-  0x28db77f5, 0x23047d84, 0x32caab7b, 0x40c72493, 0x3c9ebe0a, 0x15c9bebc,
-  0x431d67c4, 0x9c100d4c, 0x4cc5d4be, 0xcb3e42b6, 0x597f299c, 0xfc657e2a,
-  0x5fcb6fab, 0x3ad6faec, 0x6c44198c, 0x4a475817
+  0x428a2f98, 0xd728ae22, 0x71374491, 0x23ef65cd, 0xb5c0fbcf, 0xec4d3b2f, 0xe9b5dba5, 0x8189dbbc,
+  0x3956c25b, 0xf348b538, 0x59f111f1, 0xb605d019, 0x923f82a4, 0xaf194f9b, 0xab1c5ed5, 0xda6d8118,
+  0xd807aa98, 0xa3030242, 0x12835b01, 0x45706fbe, 0x243185be, 0x4ee4b28c, 0x550c7dc3, 0xd5ffb4e2,
+  0x72be5d74, 0xf27b896f, 0x80deb1fe, 0x3b1696b1, 0x9bdc06a7, 0x25c71235, 0xc19bf174, 0xcf692694,
+  0xe49b69c1, 0x9ef14ad2, 0xefbe4786, 0x384f25e3, 0x0fc19dc6, 0x8b8cd5b5, 0x240ca1cc, 0x77ac9c65,
+  0x2de92c6f, 0x592b0275, 0x4a7484aa, 0x6ea6e483, 0x5cb0a9dc, 0xbd41fbd4, 0x76f988da, 0x831153b5,
+  0x983e5152, 0xee66dfab, 0xa831c66d, 0x2db43210, 0xb00327c8, 0x98fb213f, 0xbf597fc7, 0xbeef0ee4,
+  0xc6e00bf3, 0x3da88fc2, 0xd5a79147, 0x930aa725, 0x06ca6351, 0xe003826f, 0x14292967, 0x0a0e6e70,
+  0x27b70a85, 0x46d22ffc, 0x2e1b2138, 0x5c26c926, 0x4d2c6dfc, 0x5ac42aed, 0x53380d13, 0x9d95b3df,
+  0x650a7354, 0x8baf63de, 0x766a0abb, 0x3c77b2a8, 0x81c2c92e, 0x47edaee6, 0x92722c85, 0x1482353b,
+  0xa2bfe8a1, 0x4cf10364, 0xa81a664b, 0xbc423001, 0xc24b8b70, 0xd0f89791, 0xc76c51a3, 0x0654be30,
+  0xd192e819, 0xd6ef5218, 0xd6990624, 0x5565a910, 0xf40e3585, 0x5771202a, 0x106aa070, 0x32bbd1b8,
+  0x19a4c116, 0xb8d2d0c8, 0x1e376c08, 0x5141ab53, 0x2748774c, 0xdf8eeb99, 0x34b0bcb5, 0xe19b48a8,
+  0x391c0cb3, 0xc5c95a63, 0x4ed8aa4a, 0xe3418acb, 0x5b9cca4f, 0x7763e373, 0x682e6ff3, 0xd6b2b8a3,
+  0x748f82ee, 0x5defb2fc, 0x78a5636f, 0x43172f60, 0x84c87814, 0xa1f0ab72, 0x8cc70208, 0x1a6439ec,
+  0x90befffa, 0x23631e28, 0xa4506ceb, 0xde82bde9, 0xbef9a3f7, 0xb2c67915, 0xc67178f2, 0xe372532b,
+  0xca273ece, 0xea26619c, 0xd186b8c7, 0x21c0c207, 0xeada7dd6, 0xcde0eb1e, 0xf57d4f7f, 0xee6ed178,
+  0x06f067aa, 0x72176fba, 0x0a637dc5, 0xa2c898a6, 0x113f9804, 0xbef90dae, 0x1b710b35, 0x131c471b,
+  0x28db77f5, 0x23047d84, 0x32caab7b, 0x40c72493, 0x3c9ebe0a, 0x15c9bebc, 0x431d67c4, 0x9c100d4c,
+  0x4cc5d4be, 0xcb3e42b6, 0x597f299c, 0xfc657e2a, 0x5fcb6fab, 0x3ad6faec, 0x6c44198c, 0x4a475817,
 ]);

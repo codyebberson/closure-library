@@ -5,13 +5,12 @@
  */
 
 goog.module('goog.net.streams.XhrNodeReadableStreamTest');
-goog.setTestOnly();
 
 const NodeReadableStream = goog.require('goog.net.streams.NodeReadableStream');
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
 const testSuite = goog.require('goog.testing.testSuite');
-const {XhrNodeReadableStream} = goog.require('goog.net.streams.xhrNodeReadableStream');
-const {XhrStreamReaderStatus} = goog.require('goog.net.streams.xhrStreamReader');
+const { XhrNodeReadableStream } = goog.require('goog.net.streams.xhrNodeReadableStream');
+const { XhrStreamReaderStatus } = goog.require('goog.net.streams.xhrStreamReader');
 
 let xhrReader;
 let xhrStream;
@@ -28,7 +27,7 @@ class MockXhrStreamReader {
   constructor() {
     // mocked API
 
-    this.setStatusHandler = function(handler) {
+    this.setStatusHandler = function (handler) {
       /**
        * @suppress {checkTypes,missingProperties} suppression added to enable
        * type checking
@@ -36,7 +35,7 @@ class MockXhrStreamReader {
       this.statusHandler_ = handler;
     };
 
-    this.setDataHandler = function(handler) {
+    this.setDataHandler = function (handler) {
       /**
        * @suppress {checkTypes,missingProperties} suppression added to enable
        * type checking
@@ -47,7 +46,7 @@ class MockXhrStreamReader {
     /**
      * @suppress {missingProperties} suppression added to enable type checking
      */
-    this.getStatus = function() {
+    this.getStatus = function () {
       return this.status_;
     };
 
@@ -56,14 +55,14 @@ class MockXhrStreamReader {
     /**
      * @suppress {missingProperties} suppression added to enable type checking
      */
-    this.onData = function(messages) {
+    this.onData = function (messages) {
       this.dataHandler_(messages);
     };
 
     /**
      * @suppress {missingProperties} suppression added to enable type checking
      */
-    this.onStatus = function(status) {
+    this.onStatus = function (status) {
       /**
        * @suppress {checkTypes,missingProperties} suppression added to enable
        * type checking
@@ -103,7 +102,7 @@ testSuite({
 
     xhrStream.on(EventType.DATA, callback);
 
-    xhrReader.onData([{a: 'a'}]);
+    xhrReader.onData([{ a: 'a' }]);
     assertTrue(delivered);
   },
 
@@ -118,7 +117,7 @@ testSuite({
     xhrStream.on(EventType.DATA, callback);
     xhrStream.on(EventType.DATA, callback);
 
-    xhrReader.onData([{a: 'a'}]);
+    xhrReader.onData([{ a: 'a' }]);
     assertEquals(2, delivered);
   },
 
@@ -138,7 +137,7 @@ testSuite({
     xhrStream.on(EventType.DATA, callback1);
     xhrStream.on(EventType.DATA, callback2);
 
-    xhrReader.onData([{a: 'a'}]);
+    xhrReader.onData([{ a: 'a' }]);
     assertEquals(2, delivered);
   },
 
@@ -172,7 +171,7 @@ testSuite({
     xhrStream.on(EventType.DATA, callback1);
     xhrStream.on(EventType.DATA, callback2);
 
-    xhrReader.onData([{a: 'a'}, {b: 'b'}]);
+    xhrReader.onData([{ a: 'a' }, { b: 'b' }]);
     assertEquals(4, delivered);
   },
 
@@ -209,10 +208,10 @@ testSuite({
     xhrStream.on(EventType.DATA, callback1);
     xhrStream.once(EventType.DATA, callback2);
 
-    xhrReader.onData([{a: 'a'}, {b: 'b'}]);
+    xhrReader.onData([{ a: 'a' }, { b: 'b' }]);
     assertEquals(4, delivered);
 
-    xhrReader.onData([{c: 'c'}]);
+    xhrReader.onData([{ c: 'c' }]);
     assertEquals(5, delivered);
   },
 
@@ -246,24 +245,24 @@ testSuite({
     xhrStream.on(EventType.DATA, callback1);
     xhrStream.once(EventType.DATA, callback2);
 
-    xhrReader.onData([{a: 'a'}]);
+    xhrReader.onData([{ a: 'a' }]);
     assertEquals(2, delivered);
 
     xhrStream.removeListener(EventType.DATA, callback1);
     xhrStream.once(EventType.DATA, callback2);
 
-    xhrReader.onData([{b: 'b'}]);
+    xhrReader.onData([{ b: 'b' }]);
     assertEquals(3, delivered);
 
     xhrStream.on(EventType.DATA, callback1);
     xhrStream.once(EventType.DATA, callback2);
     xhrStream.removeListener(EventType.DATA, callback2);
 
-    xhrReader.onData([{c: 'c'}]);
+    xhrReader.onData([{ c: 'c' }]);
     assertEquals(4, delivered);
 
     xhrStream.removeListener(EventType.DATA, callback1);
-    xhrReader.onData([{d: 'd'}]);
+    xhrReader.onData([{ d: 'd' }]);
     assertEquals(4, delivered);
   },
 
@@ -271,8 +270,7 @@ testSuite({
     checkStatusMapping(XhrStreamReaderStatus.ACTIVE, EventType.READABLE);
 
     checkStatusMapping(XhrStreamReaderStatus.BAD_DATA, EventType.ERROR);
-    checkStatusMapping(
-        XhrStreamReaderStatus.HANDLER_EXCEPTION, EventType.ERROR);
+    checkStatusMapping(XhrStreamReaderStatus.HANDLER_EXCEPTION, EventType.ERROR);
     checkStatusMapping(XhrStreamReaderStatus.NO_DATA, EventType.ERROR);
     checkStatusMapping(XhrStreamReaderStatus.TIMEOUT, EventType.ERROR);
     checkStatusMapping(XhrStreamReaderStatus.XHR_ERROR, EventType.ERROR);

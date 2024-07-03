@@ -7,7 +7,6 @@
 /** @fileoverview Unit tests for SafeScript and its builders. */
 
 goog.module('goog.html.safeScriptTest');
-goog.setTestOnly();
 
 const Const = goog.require('goog.string.Const');
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
@@ -25,13 +24,12 @@ testSuite({
   },
 
   testConstructor_throwsOnBadToken() {
-    assertThrows(() => new (/** @type {?} */ (SafeScript))(''));
-    assertThrows(
-        () => new (/** @type {?} */ (SafeScript.EMPTY)).constructor(''));
+    assertThrows(() => new /** @type {?} */ SafeScript(''));
+    assertThrows(() => new /** @type {?} */ SafeScript.EMPTY.constructor(''));
   },
 
   testSafeScript() {
-    const script = 'var string = \'hello\';';
+    const script = "var string = 'hello';";
     const safeScript = SafeScript.fromConstant(Const.from(script));
     const extracted = SafeScript.unwrap(safeScript);
     assertEquals(script, extracted);
@@ -45,11 +43,10 @@ testSuite({
   /** @suppress {checkTypes} */
   testUnwrap() {
     const privateFieldName = 'privateDoNotAccessOrElseSafeScriptWrappedValue_';
-    const propNames =
-        googObject.getKeys(SafeScript.fromConstant(Const.from('')));
+    const propNames = googObject.getKeys(SafeScript.fromConstant(Const.from('')));
     assertContains(privateFieldName, propNames);
     const evil = {};
-    evil[privateFieldName] = 'var string = \'evil\';';
+    evil[privateFieldName] = "var string = 'evil';";
 
     const exception = assertThrows(() => {
       SafeScript.unwrap(evil);
@@ -58,9 +55,7 @@ testSuite({
   },
 
   testUnwrapTrustedScript_policyIsNull() {
-    stubs.set(trustedtypes, 'getPolicyPrivateDoNotAccessOrElse', function() {
-      return null;
-    });
+    stubs.set(trustedtypes, 'getPolicyPrivateDoNotAccessOrElse', () => null);
     const safeValue = SafeScript.fromConstant(Const.from('script'));
     const trustedValue = SafeScript.unwrapTrustedScript(safeValue);
     assertEquals('string', typeof trustedValue);
@@ -68,15 +63,15 @@ testSuite({
   },
 
   testUnwrapTrustedScript_policyIsSet() {
-    stubs.set(trustedtypes, 'getPolicyPrivateDoNotAccessOrElse', function() {
-      return policy;
-    });
+    stubs.set(trustedtypes, 'getPolicyPrivateDoNotAccessOrElse', () => policy);
     const safeValue = SafeScript.fromConstant(Const.from('script'));
     const trustedValue = SafeScript.unwrapTrustedScript(safeValue);
     assertEquals(safeValue.getTypedStringValue(), trustedValue.toString());
     assertTrue(
-        globalThis.TrustedScript ? trustedValue instanceof TrustedScript :
-                                   typeof trustedValue === 'string');
+      globalThis.TrustedScript
+        ? trustedValue instanceof TrustedScript
+        : typeof trustedValue === 'string'
+    );
   },
 
   testFromConstant_allowsEmptyString() {
@@ -88,7 +83,7 @@ testSuite({
   },
 
   testFromJson() {
-    const json = SafeScript.fromJson({'a': 1, 'b': this.testFromJson});
+    const json = SafeScript.fromJson({ a: 1, b: this.testFromJson });
     assertEquals('{"a":1}', SafeScript.unwrap(json));
   },
 });

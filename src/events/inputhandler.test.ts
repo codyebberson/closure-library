@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.events.InputHandlerTest');
-goog.setTestOnly();
 
 const EventHandler = goog.require('goog.events.EventHandler');
 const EventType = goog.require('goog.events.EventType');

@@ -8,7 +8,6 @@
  * @fileoverview Error classes for the IndexedDB wrapper.
  */
 
-
 // TODO(user): We're trying to migrate all ES5 subclasses of Closure
 // Library to ES6. In ES6 this cannot be referenced before super is called. This
 // file has at least one this before a super call (in ES5) and cannot be
@@ -35,13 +34,12 @@ goog.require('goog.debug.Error');
  * @extends {goog.debug.Error}
  * @final
  */
-goog.db.Error = function(error, context, opt_message) {
-  'use strict';
+goog.db.Error = function (error, context, opt_message) {
   var errorCode = null;
   var internalError = null;
   if (typeof error === 'number') {
     errorCode = error;
-    internalError = {name: goog.db.Error.getName(errorCode)};
+    internalError = { name: goog.db.Error.getName(errorCode) };
   } else {
     internalError = error;
     errorCode = goog.db.Error.getCode(error.name);
@@ -70,16 +68,12 @@ goog.db.Error = function(error, context, opt_message) {
 };
 goog.inherits(goog.db.Error, goog.debug.Error);
 
-
 /**
  * @return {string} The name of the error.
  */
-goog.db.Error.prototype.getName = function() {
-  'use strict';
+goog.db.Error.prototype.getName = function () {
   return this.error_.name || '';
 };
-
-
 
 /**
  * A specific kind of database error. If a Version Change is unable to proceed
@@ -90,13 +84,10 @@ goog.db.Error.prototype.getName = function() {
  * @extends {goog.debug.Error}
  * @final
  */
-goog.db.Error.VersionChangeBlockedError = function() {
-  'use strict';
-  goog.db.Error.VersionChangeBlockedError.base(
-      this, 'constructor', 'Version change blocked');
+goog.db.Error.VersionChangeBlockedError = function () {
+  goog.db.Error.VersionChangeBlockedError.base(this, 'constructor', 'Version change blocked');
 };
 goog.inherits(goog.db.Error.VersionChangeBlockedError, goog.debug.Error);
-
 
 /**
  * Synthetic error codes for database errors, for use when IndexedDB
@@ -122,9 +113,8 @@ goog.db.Error.DatabaseErrorCode_ = {
   TIMEOUT_ERR: 11,
   QUOTA_ERR: 12,
   INVALID_ACCESS_ERR: 13,
-  INVALID_STATE_ERR: 14
+  INVALID_STATE_ERR: 14,
 };
-
 
 /**
  * Error codes for database errors.
@@ -134,58 +124,66 @@ goog.db.Error.DatabaseErrorCode_ = {
  * @suppress {missingProperties} Obsolete IndexDb exception objects
  */
 goog.db.Error.ErrorCode = {
-  UNKNOWN_ERR: (goog.global.IDBDatabaseException ||
-                goog.global.webkitIDBDatabaseException ||
-                goog.db.Error.DatabaseErrorCode_)
-                   .UNKNOWN_ERR,
-  NON_TRANSIENT_ERR: (goog.global.IDBDatabaseException ||
-                      goog.global.webkitIDBDatabaseException ||
-                      goog.db.Error.DatabaseErrorCode_)
-                         .NON_TRANSIENT_ERR,
-  NOT_FOUND_ERR: (goog.global.IDBDatabaseException ||
-                  goog.global.webkitIDBDatabaseException ||
-                  goog.db.Error.DatabaseErrorCode_)
-                     .NOT_FOUND_ERR,
-  CONSTRAINT_ERR: (goog.global.IDBDatabaseException ||
-                   goog.global.webkitIDBDatabaseException ||
-                   goog.db.Error.DatabaseErrorCode_)
-                      .CONSTRAINT_ERR,
-  DATA_ERR: (goog.global.IDBDatabaseException ||
-             goog.global.webkitIDBDatabaseException ||
-             goog.db.Error.DatabaseErrorCode_)
-                .DATA_ERR,
-  NOT_ALLOWED_ERR: (goog.global.IDBDatabaseException ||
-                    goog.global.webkitIDBDatabaseException ||
-                    goog.db.Error.DatabaseErrorCode_)
-                       .NOT_ALLOWED_ERR,
-  TRANSACTION_INACTIVE_ERR: (goog.global.IDBDatabaseException ||
-                             goog.global.webkitIDBDatabaseException ||
-                             goog.db.Error.DatabaseErrorCode_)
-                                .TRANSACTION_INACTIVE_ERR,
-  ABORT_ERR: (goog.global.IDBDatabaseException ||
-              goog.global.webkitIDBDatabaseException ||
-              goog.db.Error.DatabaseErrorCode_)
-                 .ABORT_ERR,
-  READ_ONLY_ERR: (goog.global.IDBDatabaseException ||
-                  goog.global.webkitIDBDatabaseException ||
-                  goog.db.Error.DatabaseErrorCode_)
-                     .READ_ONLY_ERR,
-  TIMEOUT_ERR: (goog.global.IDBDatabaseException ||
-                goog.global.webkitIDBDatabaseException ||
-                goog.db.Error.DatabaseErrorCode_)
-                   .TIMEOUT_ERR,
-  QUOTA_ERR: (goog.global.IDBDatabaseException ||
-              goog.global.webkitIDBDatabaseException ||
-              goog.db.Error.DatabaseErrorCode_)
-                 .QUOTA_ERR,
-  INVALID_ACCESS_ERR:
-      (goog.global.DOMException || goog.db.Error.DatabaseErrorCode_)
-          .INVALID_ACCESS_ERR,
-  INVALID_STATE_ERR:
-      (goog.global.DOMException || goog.db.Error.DatabaseErrorCode_)
-          .INVALID_STATE_ERR
+  UNKNOWN_ERR: (
+    goog.global.IDBDatabaseException ||
+    goog.global.webkitIDBDatabaseException ||
+    goog.db.Error.DatabaseErrorCode_
+  ).UNKNOWN_ERR,
+  NON_TRANSIENT_ERR: (
+    goog.global.IDBDatabaseException ||
+    goog.global.webkitIDBDatabaseException ||
+    goog.db.Error.DatabaseErrorCode_
+  ).NON_TRANSIENT_ERR,
+  NOT_FOUND_ERR: (
+    goog.global.IDBDatabaseException ||
+    goog.global.webkitIDBDatabaseException ||
+    goog.db.Error.DatabaseErrorCode_
+  ).NOT_FOUND_ERR,
+  CONSTRAINT_ERR: (
+    goog.global.IDBDatabaseException ||
+    goog.global.webkitIDBDatabaseException ||
+    goog.db.Error.DatabaseErrorCode_
+  ).CONSTRAINT_ERR,
+  DATA_ERR: (
+    goog.global.IDBDatabaseException ||
+    goog.global.webkitIDBDatabaseException ||
+    goog.db.Error.DatabaseErrorCode_
+  ).DATA_ERR,
+  NOT_ALLOWED_ERR: (
+    goog.global.IDBDatabaseException ||
+    goog.global.webkitIDBDatabaseException ||
+    goog.db.Error.DatabaseErrorCode_
+  ).NOT_ALLOWED_ERR,
+  TRANSACTION_INACTIVE_ERR: (
+    goog.global.IDBDatabaseException ||
+    goog.global.webkitIDBDatabaseException ||
+    goog.db.Error.DatabaseErrorCode_
+  ).TRANSACTION_INACTIVE_ERR,
+  ABORT_ERR: (
+    goog.global.IDBDatabaseException ||
+    goog.global.webkitIDBDatabaseException ||
+    goog.db.Error.DatabaseErrorCode_
+  ).ABORT_ERR,
+  READ_ONLY_ERR: (
+    goog.global.IDBDatabaseException ||
+    goog.global.webkitIDBDatabaseException ||
+    goog.db.Error.DatabaseErrorCode_
+  ).READ_ONLY_ERR,
+  TIMEOUT_ERR: (
+    goog.global.IDBDatabaseException ||
+    goog.global.webkitIDBDatabaseException ||
+    goog.db.Error.DatabaseErrorCode_
+  ).TIMEOUT_ERR,
+  QUOTA_ERR: (
+    goog.global.IDBDatabaseException ||
+    goog.global.webkitIDBDatabaseException ||
+    goog.db.Error.DatabaseErrorCode_
+  ).QUOTA_ERR,
+  INVALID_ACCESS_ERR: (goog.global.DOMException || goog.db.Error.DatabaseErrorCode_)
+    .INVALID_ACCESS_ERR,
+  INVALID_STATE_ERR: (goog.global.DOMException || goog.db.Error.DatabaseErrorCode_)
+    .INVALID_STATE_ERR,
 };
-
 
 /**
  * Translates an error code into a more useful message.
@@ -193,8 +191,7 @@ goog.db.Error.ErrorCode = {
  * @param {number} code Error code.
  * @return {string} A debug message.
  */
-goog.db.Error.getMessage = function(code) {
-  'use strict';
+goog.db.Error.getMessage = (code) => {
   switch (code) {
     case goog.db.Error.ErrorCode.UNKNOWN_ERR:
       return 'Unknown error';
@@ -227,13 +224,11 @@ goog.db.Error.getMessage = function(code) {
   }
 };
 
-
 /** @record */
-goog.db.Error.DOMErrorLike = function() {};
+goog.db.Error.DOMErrorLike = () => {};
 
 /** @type {string|undefined} */
 goog.db.Error.DOMErrorLike.prototype.name;
-
 
 /**
  * Names of all possible errors as returned from the browser.
@@ -254,9 +249,8 @@ goog.db.Error.ErrorName = {
   TIMEOUT_ERR: 'TimeoutError',
   TRANSACTION_INACTIVE_ERR: 'TransactionInactiveError',
   UNKNOWN_ERR: 'UnknownError',
-  VERSION_ERR: 'VersionError'
+  VERSION_ERR: 'VersionError',
 };
-
 
 /**
  * Translates an error name to an error code. This is purely kept for backwards
@@ -265,8 +259,7 @@ goog.db.Error.ErrorName = {
  * @param {string|undefined} name The name of the erorr.
  * @return {number} The error code corresponding to the error.
  */
-goog.db.Error.getCode = function(name) {
-  'use strict';
+goog.db.Error.getCode = (name) => {
   switch (name) {
     case goog.db.Error.ErrorName.UNKNOWN_ERR:
       return goog.db.Error.ErrorCode.UNKNOWN_ERR;
@@ -295,7 +288,6 @@ goog.db.Error.getCode = function(name) {
   }
 };
 
-
 /**
  * Converts an error code used by the old spec, to an error name used by the
  * latest spec.
@@ -304,8 +296,7 @@ goog.db.Error.getCode = function(name) {
  * @param {!goog.db.Error.ErrorCode|number} code The error code to convert.
  * @return {!goog.db.Error.ErrorName} The corresponding name of the error.
  */
-goog.db.Error.getName = function(code) {
-  'use strict';
+goog.db.Error.getName = (code) => {
   switch (code) {
     case goog.db.Error.ErrorCode.UNKNOWN_ERR:
       return goog.db.Error.ErrorName.UNKNOWN_ERR;
@@ -334,7 +325,6 @@ goog.db.Error.getName = function(code) {
   }
 };
 
-
 /**
  * Constructs an goog.db.Error instance from an IDBRequest. This abstraction is
  * necessary to provide backwards compatibility with Chrome21.
@@ -343,17 +333,14 @@ goog.db.Error.getName = function(code) {
  * @param {string} message The error message to add to err if it's wrapped.
  * @return {!goog.db.Error} The error that caused the failure.
  */
-goog.db.Error.fromRequest = function(request, message) {
-  'use strict';
+goog.db.Error.fromRequest = (request, message) => {
   if ('error' in request) {
     // Chrome 22+
     return new goog.db.Error(goog.asserts.assert(request.error), message);
   } else {
-    return new goog.db.Error(
-        {name: goog.db.Error.ErrorName.UNKNOWN_ERR}, message);
+    return new goog.db.Error({ name: goog.db.Error.ErrorName.UNKNOWN_ERR }, message);
   }
 };
-
 
 /**
  * Constructs an goog.db.Error instance from an DOMException. This abstraction
@@ -363,14 +350,12 @@ goog.db.Error.fromRequest = function(request, message) {
  * @param {string} message The error message to add to err if it's wrapped.
  * @return {!goog.db.Error} The error that caused the failure.
  */
-goog.db.Error.fromException = function(ex, message) {
-  'use strict';
+goog.db.Error.fromException = (ex, message) => {
   if ('name' in ex) {
-    let errorMessage = message + ': ' + ex.message;
+    const errorMessage = message + ': ' + ex.message;
     return new goog.db.Error(ex, errorMessage);
   } else {
     // TODO(sdh): Is this branch unreachable?
-    return new goog.db.Error(
-        {name: goog.db.Error.ErrorName.UNKNOWN_ERR}, message);
+    return new goog.db.Error({ name: goog.db.Error.ErrorName.UNKNOWN_ERR }, message);
   }
 };

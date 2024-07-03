@@ -12,23 +12,19 @@ goog.provide('goog.fs.FileSystem');
 
 goog.requireType('goog.fs.DirectoryEntry');
 
-
-
 /**
  * A local filesystem.
  *
  * @interface
  */
-goog.fs.FileSystem = function() {};
-
+goog.fs.FileSystem = () => {};
 
 /**
  * @return {string} The name of the filesystem.
  */
-goog.fs.FileSystem.prototype.getName = function() {};
-
+goog.fs.FileSystem.prototype.getName = () => {};
 
 /**
  * @return {!goog.fs.DirectoryEntry} The root directory of the filesystem.
  */
-goog.fs.FileSystem.prototype.getRoot = function() {};
+goog.fs.FileSystem.prototype.getRoot = () => {};

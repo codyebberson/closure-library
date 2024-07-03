@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.net.WebSocketTest');
-goog.setTestOnly();
 
 const EntryPointMonitor = goog.require('goog.debug.EntryPointMonitor');
 const ErrorHandler = goog.require('goog.debug.ErrorHandler');
@@ -53,7 +52,7 @@ function simulateOpenEvent(ws) {
 function simulateCloseEvent(ws) {
   /** @suppress {visibility} suppression added to enable type checking */
   ws.readyState = NetWebSocket.ReadyState_.CLOSED;
-  ws.onclose({data: 'mock close event'});
+  ws.onclose({ data: 'mock close event' });
 }
 
 /**
@@ -62,7 +61,7 @@ function simulateCloseEvent(ws) {
  * @return {number} The amount of time to the next reconnect, in milliseconds.
  */
 function linearBackOff(attempt) {
-  return (attempt * 1000) + 1000;
+  return attempt * 1000 + 1000;
 }
 
 /**
@@ -72,7 +71,7 @@ function linearBackOff(attempt) {
  * @return {number} The amount of time to the next reconnect, in milliseconds.
  */
 function fibonacciBackOff(attempt) {
-  return (fibonacci(attempt) * 1000) + 5000;
+  return fibonacci(attempt) * 1000 + 5000;
 }
 
 /**
@@ -168,10 +167,9 @@ testSuite({
   testSendWithoutOpeningThrowsException() {
     webSocket = new NetWebSocket();
 
-    assertThrows(
-        'Send should fail if the web socket was not first opened.', () => {
-          webSocket.send('test message');
-        });
+    assertThrows('Send should fail if the web socket was not first opened.', () => {
+      webSocket.send('test message');
+    });
   },
 
   /**
@@ -228,7 +226,7 @@ testSuite({
    */
   testReconnectionDisabled() {
     // Construct the web socket and disable reconnection.
-    webSocket = new NetWebSocket({autoReconnect: false});
+    webSocket = new NetWebSocket({ autoReconnect: false });
 
     // Record how many times open is called.
     pr.set(webSocket, 'open', recordFunction(webSocket.open));
@@ -259,8 +257,10 @@ testSuite({
    */
   testReconnectionWithFailureOnFirstOpen() {
     // Construct the web socket with a linear back-off.
-    webSocket = new NetWebSocket(
-        {autoReconnect: true, getNextReconnext: linearBackOff});
+    webSocket = new NetWebSocket({
+      autoReconnect: true,
+      getNextReconnext: linearBackOff,
+    });
 
     // Record how many times open is called.
     pr.set(webSocket, 'open', recordFunction(webSocket.open));
@@ -317,8 +317,10 @@ testSuite({
    */
   testReconnectionWithFailureAfterOpen() {
     // Construct the web socket with a linear back-off.
-    webSocket = new NetWebSocket(
-        {autoReconnect: true, getNextReconnect: fibonacciBackOff});
+    webSocket = new NetWebSocket({
+      autoReconnect: true,
+      getNextReconnect: fibonacciBackOff,
+    });
 
     // Record how many times open is called.
     pr.set(webSocket, 'open', recordFunction(webSocket.open));
@@ -400,17 +402,20 @@ testSuite({
     webSocket.open(testUrl);
     /** @suppress {visibility} suppression added to enable type checking */
     const ws = webSocket.webSocket_;
-    assertThrows(/**
+    assertThrows(
+      /**
                     @suppress {checkTypes} suppression added to enable type
                     checking
                   */
-                 () => {
-                   simulateOpenEvent(ws);
-                 });
+      () => {
+        simulateOpenEvent(ws);
+      }
+    );
 
     assertTrue(
-        'Error handler callback should be called when registered as ' +
-            'protecting the entry points.',
-        errorHandlerCalled);
+      'Error handler callback should be called when registered as ' +
+        'protecting the entry points.',
+      errorHandlerCalled
+    );
   },
 });

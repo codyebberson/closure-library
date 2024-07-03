@@ -9,7 +9,6 @@
  * byteArrayToString.
  */
 
-
 goog.provide('goog.crypt.byteArrayToStringPerf');
 
 goog.require('goog.array');
@@ -18,9 +17,7 @@ goog.require('goog.testing.PerformanceTable');
 
 goog.setTestOnly('goog.crypt.byteArrayToStringPerf');
 
-
 var table = new goog.testing.PerformanceTable(goog.dom.getElement('perfTable'));
-
 
 var BYTES_LENGTH = Math.pow(2, 20);
 var CHUNK_SIZE = 8192;
@@ -55,7 +52,6 @@ function sliceByteArrayConcat(bytes) {
   return str;
 }
 
-
 function sliceByteArrayJoin(bytes) {
   var strings = [];
   for (var i = 0; i < bytes.length; i += CHUNK_SIZE) {
@@ -86,28 +82,23 @@ function forLoopByteArrayJoin(bytes) {
   return strs.join('');
 }
 
-
 function run() {
   var bytes = getBytes();
-  table.run(
-      goog.partial(copyAndSpliceByteArray, getBytes()),
-      'Copy array and splice out chunks.');
+  table.run(goog.partial(copyAndSpliceByteArray, getBytes()), 'Copy array and splice out chunks.');
 
   table.run(
-      goog.partial(sliceByteArrayConcat, getBytes()),
-      'Slice out copies of the byte array, concatenating results');
+    goog.partial(sliceByteArrayConcat, getBytes()),
+    'Slice out copies of the byte array, concatenating results'
+  );
 
   table.run(
-      goog.partial(sliceByteArrayJoin, getBytes()),
-      'Slice out copies of the byte array, joining results');
+    goog.partial(sliceByteArrayJoin, getBytes()),
+    'Slice out copies of the byte array, joining results'
+  );
 
-  table.run(
-      goog.partial(forLoopByteArrayConcat, getBytes()),
-      'Use for loop with concat.');
+  table.run(goog.partial(forLoopByteArrayConcat, getBytes()), 'Use for loop with concat.');
 
-  table.run(
-      goog.partial(forLoopByteArrayJoin, getBytes()),
-      'Use for loop with join.');
+  table.run(goog.partial(forLoopByteArrayJoin, getBytes()), 'Use for loop with join.');
 
   // Purposefully commented out. This ends up being tremendously expensive.
   // table.run(goog.partial(mapByteArray, getBytes()),

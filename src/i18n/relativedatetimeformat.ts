@@ -45,8 +45,7 @@ const relativeDateTimeSymbols = goog.require('goog.i18n.relativeDateTimeSymbols'
  *     relativedatetimesymbols.
  * @final
  */
-let RelativeDateTimeFormat = function(
-    opt_numeric, opt_style, opt_relativeDateTimeSymbols) {
+const RelativeDateTimeFormat = function (opt_numeric, opt_style, opt_relativeDateTimeSymbols) {
   /**
    * Records if the implementation is ECMAScript
    * @private @type {boolean}
@@ -55,17 +54,16 @@ let RelativeDateTimeFormat = function(
 
   if (!LocaleFeature.USE_ECMASCRIPT_I18N_RDTF) {
     asserts.assert(
-        opt_relativeDateTimeSymbols ||
-            relativeDateTimeSymbols.getRelativeDateTimeSymbols(),
-        'goog.i18n.RelativeDateTimeSymbols requires symbols ECMAScript mode');
+      opt_relativeDateTimeSymbols || relativeDateTimeSymbols.getRelativeDateTimeSymbols(),
+      'goog.i18n.RelativeDateTimeSymbols requires symbols ECMAScript mode'
+    );
     /**
      * RelativeDateTimeSymbols object for locale data required by the formatter.
      * @private @const {?relativeDateTimeSymbols.RelativeDateTimeSymbols}
      */
-    this.rdtfSymbols_ = !LocaleFeature.USE_ECMASCRIPT_I18N_RDTF ?
-        (opt_relativeDateTimeSymbols ||
-         relativeDateTimeSymbols.getRelativeDateTimeSymbols()) :
-        null;
+    this.rdtfSymbols_ = !LocaleFeature.USE_ECMASCRIPT_I18N_RDTF
+      ? opt_relativeDateTimeSymbols || relativeDateTimeSymbols.getRelativeDateTimeSymbols()
+      : null;
   }
   if (!this.rdtfSymbols_) {
     this.nativeMode_ = true;
@@ -78,9 +76,10 @@ let RelativeDateTimeFormat = function(
   this.alwaysNumeric_ = true;
   if (opt_numeric) {
     asserts.assert(
-        opt_numeric == RelativeDateTimeFormat.NumericOption.ALWAYS ||
-            opt_numeric == RelativeDateTimeFormat.NumericOption.AUTO,
-        'Invalid opt_numeric value');
+      opt_numeric == RelativeDateTimeFormat.NumericOption.ALWAYS ||
+        opt_numeric == RelativeDateTimeFormat.NumericOption.AUTO,
+      'Invalid opt_numeric value'
+    );
     if (opt_numeric == RelativeDateTimeFormat.NumericOption.ALWAYS) {
       this.alwaysNumeric_ = true;
     } else if (opt_numeric == RelativeDateTimeFormat.NumericOption.AUTO) {
@@ -92,9 +91,10 @@ let RelativeDateTimeFormat = function(
   this.style_ = RelativeDateTimeFormat.Style.LONG;
   if (opt_style) {
     asserts.assert(
-        opt_style >= RelativeDateTimeFormat.Style.LONG &&
-            opt_style <= RelativeDateTimeFormat.Style.NARROW,
-        'Style must be LONG, SHORT, or NARROW');
+      opt_style >= RelativeDateTimeFormat.Style.LONG &&
+        opt_style <= RelativeDateTimeFormat.Style.NARROW,
+      'Style must be LONG, SHORT, or NARROW'
+    );
     this.style_ = opt_style;
   }
 };
@@ -115,7 +115,7 @@ RelativeDateTimeFormat.NumericOption = {
 RelativeDateTimeFormat.Style = {
   LONG: 0,
   SHORT: 1,
-  NARROW: 2
+  NARROW: 2,
 };
 
 /**
@@ -130,7 +130,7 @@ RelativeDateTimeFormat.Unit = {
   DAY: 4,
   HOUR: 5,
   MINUTE: 6,
-  SECOND: 7
+  SECOND: 7,
 };
 
 /**
@@ -145,12 +145,13 @@ RelativeDateTimeFormat.Unit = {
  * @return {string} The formatted result. May be empty string for an
  *   unsupported locale.
  */
-RelativeDateTimeFormat.prototype.format = function(quantity, relativeUnit) {
+RelativeDateTimeFormat.prototype.format = function (quantity, relativeUnit) {
   asserts.assertNumber(quantity, 'Quantity must be a number');
   asserts.assert(
-      relativeUnit >= RelativeDateTimeFormat.Unit.YEAR &&
-          relativeUnit <= RelativeDateTimeFormat.Unit.SECOND,
-      'Unit must be one of the supported values');
+    relativeUnit >= RelativeDateTimeFormat.Unit.YEAR &&
+      relativeUnit <= RelativeDateTimeFormat.Unit.SECOND,
+    'Unit must be one of the supported values'
+  );
 
   /**
    * Special cases to force numeric units, in order
@@ -176,16 +177,14 @@ RelativeDateTimeFormat.prototype.format = function(quantity, relativeUnit) {
  *   unsupported locale.
  * @private
  */
-RelativeDateTimeFormat.prototype.formatPolyfill_ = function(
-    quantity, relativeUnit, useNumeric) {
+RelativeDateTimeFormat.prototype.formatPolyfill_ = function (quantity, relativeUnit, useNumeric) {
   /**
    * Find the right data based on Unit, quantity, and plural.
    */
   const rdtfUnitPattern = this.getUnitStylePattern_(relativeUnit);
   // Formats using Closure Javascript. Check for forcing numeric and having
   // relative value with the given quantity.
-  if (!useNumeric && rdtfUnitPattern && rdtfUnitPattern.R &&
-      rdtfUnitPattern.R['' + quantity]) {
+  if (!useNumeric && rdtfUnitPattern && rdtfUnitPattern.R && rdtfUnitPattern.R['' + quantity]) {
     return rdtfUnitPattern.R['' + quantity];
   } else {
     // Direction data doesn't exist. Fallback to format numeric.
@@ -203,11 +202,10 @@ RelativeDateTimeFormat.prototype.formatPolyfill_ = function(
  *   unsupported locale.
  * @private
  */
-RelativeDateTimeFormat.prototype.formatNative_ = function(
-    quantity, relativeUnit, useNumeric) {
+RelativeDateTimeFormat.prototype.formatNative_ = function (quantity, relativeUnit, useNumeric) {
   // Use built-in ECMAScript Intl object.
-  let options = {
-    'numeric': useNumeric ? 'always' : 'auto',
+  const options = {
+    numeric: useNumeric ? 'always' : 'auto',
   };
   switch (this.style_) {
     case RelativeDateTimeFormat.Style.NARROW:
@@ -227,8 +225,7 @@ RelativeDateTimeFormat.prototype.formatNative_ = function(
   let intlFormatter;
   try {
     // Fix "_" to "-" to correspond to BCP-47.
-    intlFormatter =
-        new intl.RelativeTimeFormat(goog.LOCALE.replace(/_/g, '-'), options);
+    intlFormatter = new intl.RelativeTimeFormat(goog.LOCALE.replace(/_/g, '-'), options);
   } catch (err) {
     // An empty string is returned for an unsupported LOCALE.
     return '';
@@ -273,8 +270,7 @@ RelativeDateTimeFormat.prototype.formatNative_ = function(
  * @return {string}  The formatted result.
  * @private
  */
-RelativeDateTimeFormat.prototype.formatNumericInternal_ = function(
-    quantity, unitStylePattern) {
+RelativeDateTimeFormat.prototype.formatNumericInternal_ = (quantity, unitStylePattern) => {
   if (!unitStylePattern) return '';
 
   /**
@@ -286,7 +282,7 @@ RelativeDateTimeFormat.prototype.formatNumericInternal_ = function(
 
   // Apply MessageFormat to the unit with FUTURE or PAST quantity, with test for
   // signed zero value.
-  if (quantity > 0 || (quantity == 0 && (1 / quantity) == Infinity)) {
+  if (quantity > 0 || (quantity == 0 && 1 / quantity == Number.POSITIVE_INFINITY)) {
     relTimeString = unitStylePattern.F;
   } else {
     // Negative zero is interpreted as the past.
@@ -299,9 +295,8 @@ RelativeDateTimeFormat.prototype.formatNumericInternal_ = function(
    */
   // Take basic message and wrap with plural message type.
   const msgFormatter = new MessageFormat('{N,plural,' + relTimeString + '}');
-  return msgFormatter.format({'N': absQuantity});
+  return msgFormatter.format({ N: absQuantity });
 };
-
 
 /**
  * From the data, return the information for the given unit and style.
@@ -309,12 +304,11 @@ RelativeDateTimeFormat.prototype.formatNumericInternal_ = function(
  * @return {!relativeDateTimeSymbols.StyleElement|undefined}  RelativeUnitStyle
  * @private
  */
-RelativeDateTimeFormat.prototype.getUnitStylePattern_ = function(relativeUnit) {
+RelativeDateTimeFormat.prototype.getUnitStylePattern_ = function (relativeUnit) {
   const unitInfo = this.getUnitPattern_(relativeUnit);
   asserts.assertObject(unitInfo);
   return this.getStylePattern_(unitInfo);
 };
-
 
 /**
  * Use public unit symbol to retrieve data for that unit, given the style.
@@ -322,7 +316,7 @@ RelativeDateTimeFormat.prototype.getUnitStylePattern_ = function(relativeUnit) {
  * @return {!relativeDateTimeSymbols.StyleElement|undefined}
  * @private
  */
-RelativeDateTimeFormat.prototype.getStylePattern_ = function(unit) {
+RelativeDateTimeFormat.prototype.getStylePattern_ = function (unit) {
   // Fall back from NARROW to SHORT to LONG as needed.
   switch (this.style_) {
     case RelativeDateTimeFormat.Style.NARROW:
@@ -343,7 +337,7 @@ RelativeDateTimeFormat.prototype.getStylePattern_ = function(unit) {
  * Returns the style set for this formatter.
  * @return {number}  One of LONG, SHORT, NARROW,
  */
-RelativeDateTimeFormat.prototype.getFormatStyle = function() {
+RelativeDateTimeFormat.prototype.getFormatStyle = function () {
   return this.style_;
 };
 
@@ -351,7 +345,7 @@ RelativeDateTimeFormat.prototype.getFormatStyle = function() {
  * Returns the status of the alwaysNumeric field.
  * @return {!RelativeDateTimeFormat.NumericOption}
  */
-RelativeDateTimeFormat.prototype.getNumericMode = function() {
+RelativeDateTimeFormat.prototype.getNumericMode = function () {
   if (this.alwaysNumeric_) {
     return RelativeDateTimeFormat.NumericOption.ALWAYS;
   } else {
@@ -365,7 +359,7 @@ RelativeDateTimeFormat.prototype.getNumericMode = function() {
  * @return {!relativeDateTimeSymbols.RelativeDateTimeFormatStyles}
  * @private
  */
-RelativeDateTimeFormat.prototype.getUnitPattern_ = function(unit) {
+RelativeDateTimeFormat.prototype.getUnitPattern_ = function (unit) {
   switch (unit) {
     default:
     case RelativeDateTimeFormat.Unit.YEAR:
@@ -398,15 +392,14 @@ RelativeDateTimeFormat.prototype.getUnitPattern_ = function(unit) {
  * @return{string|undefined}
  * @deprecated
  */
-RelativeDateTimeFormat.prototype.isOffsetDefinedForUnit = function(
-    unit, offset) {
+RelativeDateTimeFormat.prototype.isOffsetDefinedForUnit = function (unit, offset) {
   if (this.rdtfSymbols_ == undefined) {
     return undefined;
   }
 
   const rdtfUnitPattern = this.getUnitStylePattern_(unit);
   // Check for force numeric and requested unit and offset.
-  if (typeof (offset) == 'string') {
+  if (typeof offset == 'string') {
     offset = Number(offset);
   }
   if (rdtfUnitPattern && rdtfUnitPattern.R && rdtfUnitPattern.R['' + offset]) {
@@ -421,7 +414,7 @@ RelativeDateTimeFormat.prototype.isOffsetDefinedForUnit = function(
  * @return {boolean}  True iff native mode. False if polyfill.
  * @package
  */
-RelativeDateTimeFormat.prototype.isNativeMode = function() {
+RelativeDateTimeFormat.prototype.isNativeMode = function () {
   return this.nativeMode_;
 };
 
@@ -430,9 +423,9 @@ RelativeDateTimeFormat.prototype.isNativeMode = function() {
  * @return {boolean} Whether the ECMAScript implementation available.
  * @package
  */
-RelativeDateTimeFormat.prototype.hasNativeRdtf = function() {
+RelativeDateTimeFormat.prototype.hasNativeRdtf = () => {
   const intl = goog.global.Intl;
-  return (Boolean(intl && intl.RelativeTimeFormat));
+  return Boolean(intl && intl.RelativeTimeFormat);
 };
 
 exports = RelativeDateTimeFormat;

@@ -15,14 +15,11 @@
  * https://bugzilla.mozilla.org/show_bug.cgi?id=669026.
  */
 
-
 goog.provide('goog.editor.ContentEditableField');
 
 goog.require('goog.asserts');
 goog.require('goog.editor.Field');
 goog.require('goog.log');
-
-
 
 /**
  * This class encapsulates an editable field that is just a contentEditable
@@ -37,48 +34,39 @@ goog.require('goog.log');
  * @constructor
  * @extends {goog.editor.Field}
  */
-goog.editor.ContentEditableField = function(id, opt_doc) {
-  'use strict';
+goog.editor.ContentEditableField = function (id, opt_doc) {
   goog.editor.Field.call(this, id, opt_doc);
 };
 goog.inherits(goog.editor.ContentEditableField, goog.editor.Field);
 
-
 /**
  * @override
  */
-goog.editor.ContentEditableField.prototype.logger =
-    goog.log.getLogger('goog.editor.ContentEditableField');
-
+goog.editor.ContentEditableField.prototype.logger = goog.log.getLogger(
+  'goog.editor.ContentEditableField'
+);
 
 /** @override */
-goog.editor.ContentEditableField.prototype.usesIframe = function() {
-  'use strict';
+goog.editor.ContentEditableField.prototype.usesIframe = () => {
   // Never uses an iframe in any browser.
   return false;
 };
 
-
 // Overridden to improve dead code elimination only.
 /** @override */
-goog.editor.ContentEditableField.prototype.turnOnDesignModeGecko =
-    function() {};
-
+goog.editor.ContentEditableField.prototype.turnOnDesignModeGecko = () => {};
 
 /** @override */
-goog.editor.ContentEditableField.prototype.installStyles = function() {
-  'use strict';
+goog.editor.ContentEditableField.prototype.installStyles = function () {
   goog.asserts.assert(
-      !this.cssStyles.getTypedStringValue(),
-      'ContentEditableField does not support CSS styles; instead just write ' +
-          'plain old CSS on the main page.');
+    !this.cssStyles.getTypedStringValue(),
+    'ContentEditableField does not support CSS styles; instead just write ' +
+      'plain old CSS on the main page.'
+  );
 };
 
-
 /** @override */
-goog.editor.ContentEditableField.prototype.makeEditableInternal = function(
-    opt_iframeSrc) {
-  'use strict';
+goog.editor.ContentEditableField.prototype.makeEditableInternal = function (opt_iframeSrc) {
   var field = this.getOriginalElement();
   if (field) {
     this.setupFieldObject(field);
@@ -92,11 +80,10 @@ goog.editor.ContentEditableField.prototype.makeEditableInternal = function(
   }
 };
 
-
 /**
  * @override
  *
  * ContentEditableField does not make any changes to the DOM when it is made
  * editable other than setting contentEditable to true.
  */
-goog.editor.ContentEditableField.prototype.restoreDom = function() {};
+goog.editor.ContentEditableField.prototype.restoreDom = () => {};

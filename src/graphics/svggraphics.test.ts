@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.graphics.SvgGraphicsTest');
-goog.setTestOnly();
 
 const AffineTransform = goog.require('goog.graphics.AffineTransform');
 const SolidFill = goog.require('goog.graphics.SolidFill');
@@ -83,8 +82,7 @@ testSuite({
     const sintheta = Math.sin(rad);
     const dx = 10;
     const dy = -20;
-    const affine = new AffineTransform(
-        costheta, -sintheta + 1, sintheta, costheta, dx, dy);
+    const affine = new AffineTransform(costheta, -sintheta + 1, sintheta, costheta, dx, dy);
     const rect = graphics.drawRect(10, 20, 30, 40, stroke, fill);
     rect.setTransform(affine);
     graphics.render();
@@ -96,8 +94,7 @@ testSuite({
     function getTransformToElement(element, target) {
       return target.getScreenCTM().inverse().multiply(element.getScreenCTM());
     }
-    const svgMatrix =
-        getTransformToElement(rect.getElement(), graphics.getElement());
+    const svgMatrix = getTransformToElement(rect.getElement(), graphics.getElement());
     assertRoughlyEquals(svgMatrix.a, costheta, 0.001);
     assertRoughlyEquals(svgMatrix.b, -sintheta + 1, 0.001);
     assertRoughlyEquals(svgMatrix.c, sintheta, 0.001);

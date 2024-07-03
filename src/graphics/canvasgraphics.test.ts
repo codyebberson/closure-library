@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.graphics.CanvasGraphicsTest');
-goog.setTestOnly();
 
 const CanvasGraphics = goog.require('goog.graphics.CanvasGraphics');
 const SolidFill = goog.require('goog.graphics.SolidFill');

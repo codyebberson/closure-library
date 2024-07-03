@@ -24,8 +24,6 @@ goog.require('goog.events.EventTarget');
 goog.require('goog.events.EventType');
 goog.requireType('goog.events.BrowserEvent');
 
-
-
 /**
  * Once initialized with a document, the activity monitor can be queried for
  * the current idle time.
@@ -42,8 +40,7 @@ goog.requireType('goog.events.BrowserEvent');
  * @constructor
  * @extends {goog.events.EventTarget}
  */
-goog.ui.ActivityMonitor = function(opt_domHelper, opt_useBubble) {
-  'use strict';
+goog.ui.ActivityMonitor = function (opt_domHelper, opt_useBubble) {
   goog.events.EventTarget.call(this);
 
   /**
@@ -94,14 +91,12 @@ goog.ui.ActivityMonitor = function(opt_domHelper, opt_useBubble) {
 };
 goog.inherits(goog.ui.ActivityMonitor, goog.events.EventTarget);
 
-
 /**
  * The last event type that was detected.
  * @type {string}
  * @private
  */
 goog.ui.ActivityMonitor.prototype.lastEventType_ = '';
-
 
 /**
  * The mouse x-position after the last user event.
@@ -110,14 +105,12 @@ goog.ui.ActivityMonitor.prototype.lastEventType_ = '';
  */
 goog.ui.ActivityMonitor.prototype.lastMouseX_;
 
-
 /**
  * The mouse y-position after the last user event.
  * @type {number}
  * @private
  */
 goog.ui.ActivityMonitor.prototype.lastMouseY_;
-
 
 /**
  * The earliest time that another throttled ACTIVITY event will be dispatched
@@ -126,13 +119,11 @@ goog.ui.ActivityMonitor.prototype.lastMouseY_;
  */
 goog.ui.ActivityMonitor.prototype.minEventTime_ = 0;
 
-
 /**
  * Minimum amount of time in ms between throttled ACTIVITY events
  * @type {number}
  */
 goog.ui.ActivityMonitor.MIN_EVENT_SPACING = 3 * 1000;
-
 
 /**
  * If a user executes one of these events, s/he is considered not idle.
@@ -140,11 +131,12 @@ goog.ui.ActivityMonitor.MIN_EVENT_SPACING = 3 * 1000;
  * @private
  */
 goog.ui.ActivityMonitor.userEventTypesBody_ = [
-  goog.events.EventType.CLICK, goog.events.EventType.DBLCLICK,
-  goog.events.EventType.MOUSEDOWN, goog.events.EventType.MOUSEMOVE,
-  goog.events.EventType.MOUSEUP
+  goog.events.EventType.CLICK,
+  goog.events.EventType.DBLCLICK,
+  goog.events.EventType.MOUSEDOWN,
+  goog.events.EventType.MOUSEMOVE,
+  goog.events.EventType.MOUSEUP,
 ];
-
 
 /**
  * If a user executes one of these events, s/he is considered not idle.
@@ -153,19 +145,20 @@ goog.ui.ActivityMonitor.userEventTypesBody_ = [
  * @private
  */
 goog.ui.ActivityMonitor.userTouchEventTypesBody_ = [
-  goog.events.EventType.TOUCHEND, goog.events.EventType.TOUCHMOVE,
-  goog.events.EventType.TOUCHSTART
+  goog.events.EventType.TOUCHEND,
+  goog.events.EventType.TOUCHMOVE,
+  goog.events.EventType.TOUCHSTART,
 ];
-
 
 /**
  * If a user executes one of these events, s/he is considered not idle.
  * @type {Array<goog.events.EventType>}
  * @private
  */
-goog.ui.ActivityMonitor.userEventTypesDocuments_ =
-    [goog.events.EventType.KEYDOWN, goog.events.EventType.KEYUP];
-
+goog.ui.ActivityMonitor.userEventTypesDocuments_ = [
+  goog.events.EventType.KEYDOWN,
+  goog.events.EventType.KEYUP,
+];
 
 /**
  * Event constants for the activity monitor.
@@ -173,27 +166,23 @@ goog.ui.ActivityMonitor.userEventTypesDocuments_ =
  */
 goog.ui.ActivityMonitor.Event = {
   /** Event fired when the user does something interactive */
-  ACTIVITY: 'activity'
+  ACTIVITY: 'activity',
 };
 
-
 /** @override */
-goog.ui.ActivityMonitor.prototype.disposeInternal = function() {
-  'use strict';
+goog.ui.ActivityMonitor.prototype.disposeInternal = function () {
   goog.ui.ActivityMonitor.superClass_.disposeInternal.call(this);
   this.eventHandler_.dispose();
   this.eventHandler_ = null;
   delete this.documents_;
 };
 
-
 /**
  * Adds a document to those being monitored by this class.
  *
  * @param {Document} doc Document to monitor.
  */
-goog.ui.ActivityMonitor.prototype.addDocument = function(doc) {
-  'use strict';
+goog.ui.ActivityMonitor.prototype.addDocument = function (doc) {
   if (goog.array.contains(this.documents_, doc)) {
     return;
   }
@@ -201,8 +190,9 @@ goog.ui.ActivityMonitor.prototype.addDocument = function(doc) {
   var useCapture = !this.useBubble_;
 
   var eventsToListenTo = [].concat(
-      goog.ui.ActivityMonitor.userEventTypesDocuments_,
-      goog.ui.ActivityMonitor.userEventTypesBody_);
+    goog.ui.ActivityMonitor.userEventTypesDocuments_,
+    goog.ui.ActivityMonitor.userEventTypesBody_
+  );
 
   if (!this.isIframe_) {
     // Monitoring touch events in iframe causes problems interacting with text
@@ -210,22 +200,18 @@ goog.ui.ActivityMonitor.prototype.addDocument = function(doc) {
     // so just ignore these events. This shouldn't matter much given that a
     // touchstart event followed by touchend event produces a click event,
     // which is being monitored correctly.
-    goog.array.extend(
-        eventsToListenTo, goog.ui.ActivityMonitor.userTouchEventTypesBody_);
+    goog.array.extend(eventsToListenTo, goog.ui.ActivityMonitor.userTouchEventTypesBody_);
   }
 
-  this.eventHandler_.listen(
-      doc, eventsToListenTo, this.handleEvent_, useCapture);
+  this.eventHandler_.listen(doc, eventsToListenTo, this.handleEvent_, useCapture);
 };
-
 
 /**
  * Removes a document from those being monitored by this class.
  *
  * @param {Document} doc Document to monitor.
  */
-goog.ui.ActivityMonitor.prototype.removeDocument = function(doc) {
-  'use strict';
+goog.ui.ActivityMonitor.prototype.removeDocument = function (doc) {
   if (this.isDisposed()) {
     return;
   }
@@ -233,36 +219,33 @@ goog.ui.ActivityMonitor.prototype.removeDocument = function(doc) {
   var useCapture = !this.useBubble_;
 
   var eventsToUnlistenTo = [].concat(
-      goog.ui.ActivityMonitor.userEventTypesDocuments_,
-      goog.ui.ActivityMonitor.userEventTypesBody_);
+    goog.ui.ActivityMonitor.userEventTypesDocuments_,
+    goog.ui.ActivityMonitor.userEventTypesBody_
+  );
 
   if (!this.isIframe_) {
     // See note above about monitoring touch events in iframe.
-    goog.array.extend(
-        eventsToUnlistenTo, goog.ui.ActivityMonitor.userTouchEventTypesBody_);
+    goog.array.extend(eventsToUnlistenTo, goog.ui.ActivityMonitor.userTouchEventTypesBody_);
   }
 
-  this.eventHandler_.unlisten(
-      doc, eventsToUnlistenTo, this.handleEvent_, useCapture);
+  this.eventHandler_.unlisten(doc, eventsToUnlistenTo, this.handleEvent_, useCapture);
 };
-
 
 /**
  * Updates the last event time when a user action occurs.
  * @param {goog.events.BrowserEvent} e Event object.
  * @private
  */
-goog.ui.ActivityMonitor.prototype.handleEvent_ = function(e) {
-  'use strict';
+goog.ui.ActivityMonitor.prototype.handleEvent_ = function (e) {
   var update = false;
   switch (e.type) {
     case goog.events.EventType.MOUSEMOVE:
       // In FF 1.5, we get spurious mouseover and mouseout events when the UI
       // redraws. We only want to update the idle time if the mouse has moved.
-      if (typeof this.lastMouseX_ == 'number' &&
-              this.lastMouseX_ != e.clientX ||
-          typeof this.lastMouseY_ == 'number' &&
-              this.lastMouseY_ != e.clientY) {
+      if (
+        (typeof this.lastMouseX_ == 'number' && this.lastMouseX_ != e.clientX) ||
+        (typeof this.lastMouseY_ == 'number' && this.lastMouseY_ != e.clientY)
+      ) {
         update = true;
       }
       this.lastMouseX_ = e.clientX;
@@ -278,16 +261,13 @@ goog.ui.ActivityMonitor.prototype.handleEvent_ = function(e) {
   }
 };
 
-
 /**
  * Updates the last event time to be the present time, useful for non-DOM
  * events that should update idle time.
  */
-goog.ui.ActivityMonitor.prototype.resetTimer = function() {
-  'use strict';
+goog.ui.ActivityMonitor.prototype.resetTimer = function () {
   this.updateIdleTime(Date.now(), 'manual');
 };
-
 
 /**
  * Updates the idle time and fires an event if time has elapsed since
@@ -297,9 +277,7 @@ goog.ui.ActivityMonitor.prototype.resetTimer = function() {
  * @param {string} eventType Type of the event, used only for debugging.
  * @protected
  */
-goog.ui.ActivityMonitor.prototype.updateIdleTime = function(
-    eventTime, eventType) {
-  'use strict';
+goog.ui.ActivityMonitor.prototype.updateIdleTime = function (eventTime, eventType) {
   // update internal state noting whether the user was idle
   this.lastEventTime_ = eventTime;
   this.lastEventType_ = eventType;
@@ -311,35 +289,29 @@ goog.ui.ActivityMonitor.prototype.updateIdleTime = function(
   }
 };
 
-
 /**
  * Returns the amount of time the user has been idle.
  * @param {number=} opt_now The current time can optionally be passed in for the
  *     computation to avoid an extra Date allocation.
  * @return {number} The amount of time in ms that the user has been idle.
  */
-goog.ui.ActivityMonitor.prototype.getIdleTime = function(opt_now) {
-  'use strict';
+goog.ui.ActivityMonitor.prototype.getIdleTime = function (opt_now) {
   var now = opt_now || Date.now();
   return now - this.lastEventTime_;
 };
-
 
 /**
  * Returns the type of the last user event.
  * @return {string} event type.
  */
-goog.ui.ActivityMonitor.prototype.getLastEventType = function() {
-  'use strict';
+goog.ui.ActivityMonitor.prototype.getLastEventType = function () {
   return this.lastEventType_;
 };
-
 
 /**
  * Returns the time of the last event
  * @return {number} last event time.
  */
-goog.ui.ActivityMonitor.prototype.getLastEventTime = function() {
-  'use strict';
+goog.ui.ActivityMonitor.prototype.getLastEventTime = function () {
   return this.lastEventTime_;
 };

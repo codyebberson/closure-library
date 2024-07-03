@@ -16,7 +16,6 @@ goog.module.declareLegacyNamespace();
 
 var userAgent = goog.require('goog.userAgent');
 
-
 /**
  * The default polling interval in millis for Edge.
  *
@@ -27,7 +26,6 @@ var userAgent = goog.require('goog.userAgent');
  * @private @const {number}
  */
 var EDGE_POLLING_INTERVAL_ = 125;
-
 
 /**
  * History:
@@ -46,10 +44,7 @@ var EDGE_POLLING_INTERVAL_ = 125;
  *
  * @return {boolean} True if polling is required with XHR.
  */
-exports.isPollingRequired = function() {
-  return userAgent.EDGE_OR_IE;
-};
-
+exports.isPollingRequired = () => userAgent.EDGE_OR_IE;
 
 /**
  * How often to poll (in MS) for changes to responseText in browsers that don't
@@ -58,7 +53,7 @@ exports.isPollingRequired = function() {
  * @return {number|undefined} The polling interval (MS) for the current U-A;
  * or undefined if polling is not supposed to be enabled.
  */
-exports.getPollingInterval = function() {
+exports.getPollingInterval = () => {
   if (userAgent.EDGE_OR_IE) {
     return EDGE_POLLING_INTERVAL_;
   }
@@ -83,8 +78,7 @@ exports.getPollingInterval = function() {
  *
  */
 const OT_TOKEN_GOOGLE_COM =
-    'A0eNbltY1nd4MP7XTHXnTxWogDL6mWTdgIIKfKOTJoUHNbFFMZQBoiHHjJ9UK9lgYndWFaxOWR7ld8uUjcWmcwIAAAB/eyJvcmlnaW4iOiJodHRwczovL2dvb2dsZS5jb206NDQzIiwiZmVhdHVyZSI6IkZldGNoVXBsb2FkU3RyZWFtaW5nIiwiZXhwaXJ5IjoxNjM2NTAyMzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ==';
-
+  'A0eNbltY1nd4MP7XTHXnTxWogDL6mWTdgIIKfKOTJoUHNbFFMZQBoiHHjJ9UK9lgYndWFaxOWR7ld8uUjcWmcwIAAAB/eyJvcmlnaW4iOiJodHRwczovL2dvb2dsZS5jb206NDQzIiwiZmVhdHVyZSI6IkZldGNoVXBsb2FkU3RyZWFtaW5nIiwiZXhwaXJ5IjoxNjM2NTAyMzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ==';
 
 /**
  * Creates ReadableStream to upload
@@ -93,12 +87,12 @@ const OT_TOKEN_GOOGLE_COM =
 function createStream() {
   const encoder = new goog.global.TextEncoder();
   return new goog.global.ReadableStream({
-    start: controller => {
+    start: (controller) => {
       for (const obj of ['test\r\n', 'test\r\n']) {
         controller.enqueue(encoder.encode(obj));
       }
       controller.close();
-    }
+    },
   });
 }
 
@@ -109,7 +103,7 @@ function createStream() {
  * @return {boolean} Whether the above is true.
  */
 function isChromeM90OrHigher() {
-  const userAgentStr = function() {
+  const userAgentStr = (() => {
     const navigator = goog.global.navigator;
     if (navigator) {
       const userAgent = navigator.userAgent;
@@ -118,18 +112,16 @@ function isChromeM90OrHigher() {
       }
     }
     return '';
-  }();
+  })();
 
-  const matchUserAgent = function(str) {
-    return userAgentStr.indexOf(str) != -1;
-  };
+  const matchUserAgent = (str) => userAgentStr.indexOf(str) != -1;
 
   if (!matchUserAgent('Chrome') || matchUserAgent('Edg')) {
     return false;
   }
 
   const match = /Chrome\/(\d+)/.exec(userAgentStr);
-  const chromeVersion = parseInt(match[1], 10);
+  const chromeVersion = Number.parseInt(match[1], 10);
   return chromeVersion >= 90;
 }
 
@@ -168,7 +160,7 @@ let isStartOriginTrialsCalled = false;
  * @param {function(*)} logError A function to execute when exceptions are
  *     caught.
  */
-exports.startOriginTrials = function(path, logError) {
+exports.startOriginTrials = (path, logError) => {
   if (isStartOriginTrialsCalled) {
     return;
   }
@@ -191,8 +183,7 @@ exports.startOriginTrials = function(path, logError) {
   }
 
   // Enable origin trial by injecting OT <meta> tag
-  const tokenElement =
-      /** @type {! HTMLMetaElement} */ (document.createElement('meta'));
+  const tokenElement = /** @type {! HTMLMetaElement} */ (document.createElement('meta'));
   tokenElement.httpEquiv = 'origin-trial';
   tokenElement.content = OT_TOKEN_GOOGLE_COM;
   // appendChild() synchronously enables OT.
@@ -205,9 +196,9 @@ exports.startOriginTrials = function(path, logError) {
   // string "[object ReadableStream]" for fallback then it has "Content-Type:
   // text/plain;charset=UTF-8".
   const supportsRequestStreams = !new Request('', {
-                                    body: new ReadableStream(),
-                                    method: 'POST',
-                                  }).headers.has('Content-Type');
+    body: new ReadableStream(),
+    method: 'POST',
+  }).headers.has('Content-Type');
 
   if (supportsRequestStreams) {
     logError('OriginTrial unexpected.');

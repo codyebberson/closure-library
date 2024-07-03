@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.debug.ErrorHandlerTest');
-goog.setTestOnly();
 
 const ErrorHandler = goog.require('goog.debug.ErrorHandler');
 const MockControl = goog.require('goog.testing.MockControl');
@@ -16,14 +15,13 @@ const product = goog.require('goog.userAgent.product');
 const recordFunction = goog.require('goog.testing.recordFunction');
 const testSuite = goog.require('goog.testing.testSuite');
 
-const PROTECTED_FUNCTION_ERROR_PREFIX =
-    ErrorHandler.ProtectedFunctionError.MESSAGE_PREFIX;
+const PROTECTED_FUNCTION_ERROR_PREFIX = ErrorHandler.ProtectedFunctionError.MESSAGE_PREFIX;
 const ERROR_HANDLER_TEST_ERROR = 'ERROR_HANDLER_TEST_ERROR';
 
 let errorHandler;
 let mockControl;
 
-let /** ? */ state = {};
+const /** ? */ state = {};
 
 const JSUnitOnError = window.onerror;
 // Here we set up an `onerror` handler to be able to catch the re-thrown errors
@@ -50,7 +48,7 @@ window.onerror = (error) => {
  * @returns {Function!} the error thrower.
  */
 function errorThrowerFactory(resolve) {
-  return function() {
+  return () => {
     resolve && resolve();
     throw ERROR_HANDLER_TEST_ERROR;
   };
@@ -63,24 +61,27 @@ function errorThrowerFactory(resolve) {
 function assertMethodCalledHelper(method) {
   assertTrue('An error was not re-thrown', Boolean(state.lastUncaughtError));
   assertTrue(
-      'The re-thrown error does not include the "Protected Function" prefix',
-      state.lastUncaughtError.includes(PROTECTED_FUNCTION_ERROR_PREFIX));
+    'The re-thrown error does not include the "Protected Function" prefix',
+    state.lastUncaughtError.includes(PROTECTED_FUNCTION_ERROR_PREFIX)
+  );
   const errorSansPrefix = state.lastUncaughtError.replace(
-      new RegExp(`.*${PROTECTED_FUNCTION_ERROR_PREFIX}`), '');
-  assertEquals(
-      'The Error Handler did not catch the error', errorSansPrefix,
-      errorHandler.ex);
+    new RegExp(`.*${PROTECTED_FUNCTION_ERROR_PREFIX}`),
+    ''
+  );
+  assertEquals('The Error Handler did not catch the error', errorSansPrefix, errorHandler.ex);
   assertTrue(
-      `The protected function "${method}" was not called`,
-      state.fake[method].getCallCount() >= 1);
+    `The protected function "${method}" was not called`,
+    state.fake[method].getCallCount() >= 1
+  );
   assertTrue(
-      `"this" not passed to original ${method}`,
-      state.fake[method].getLastCall().getThis() === window);
+    `"this" not passed to original ${method}`,
+    state.fake[method].getLastCall().getThis() === window
+  );
 }
 
 testSuite({
   setUpPage() {
-    state.real = {setTimeout, setInterval, requestAnimationFrame};
+    state.real = { setTimeout, setInterval, requestAnimationFrame };
   },
   setUp() {
     state.fake = {
@@ -103,7 +104,7 @@ testSuite({
     };
 
     // just record the exception in the error handler when it happens
-    errorHandler = new ErrorHandler(function(ex) {
+    errorHandler = new ErrorHandler(function (ex) {
       this.ex = ex;
     });
   },
@@ -142,10 +143,15 @@ testSuite({
   testWrapSetTimeoutWithoutException() {
     errorHandler.protectWindowSetTimeout();
 
-    window.setTimeout((x, y) => {
-      assertEquals('test', x);
-      assertEquals(7, y);
-    }, 3, 'test', 7);
+    window.setTimeout(
+      (x, y) => {
+        assertEquals('test', x);
+        assertEquals(7, y);
+      },
+      3,
+      'test',
+      7
+    );
   },
 
   async testWrapSetTimeoutWithString() {
@@ -156,9 +162,9 @@ testSuite({
 
     const resolver = new NativeResolver();
     const errorThrower = errorThrowerFactory(resolver.resolve);
-    /** @suppress {strictMissingProperties} */  // We want the `errorThrower` to
-                                                // be readable by the `eval`ed
-                                                // string below.
+    /** @suppress {strictMissingProperties} */ // We want the `errorThrower` to
+    // be readable by the `eval`ed
+    // string below.
     window.errorThrower = errorThrower;
     window.setTimeout('window.errorThrower()', 3);
     await resolver.promise;
@@ -199,10 +205,15 @@ testSuite({
   testWrapSetIntervalWithoutException() {
     errorHandler.protectWindowSetInterval();
 
-    window.setInterval((x, y) => {
-      assertEquals('test', x);
-      assertEquals(7, y);
-    }, 3, 'test', 7);
+    window.setInterval(
+      (x, y) => {
+        assertEquals('test', x);
+        assertEquals(7, y);
+      },
+      3,
+      'test',
+      7
+    );
   },
 
   async testWrapSetIntervalWithString() {
@@ -213,9 +224,9 @@ testSuite({
 
     const resolver = new NativeResolver();
     const errorThrower = errorThrowerFactory(resolver.resolve);
-    /** @suppress {strictMissingProperties} */  // We want the `errorThrower` to
-                                                // be readable by the `eval`ed
-                                                // string below.
+    /** @suppress {strictMissingProperties} */ // We want the `errorThrower` to
+    // be readable by the `eval`ed
+    // string below.
     window.errorThrower = errorThrower;
     window.setInterval('window.errorThrower()', 3);
     await resolver.promise;
@@ -343,8 +354,7 @@ testSuite({
     let protectedFn = errorHandler.getProtectedFunction(fn);
     let e = assertThrows(protectedFn);
     assertTrue(e instanceof Error);
-    assertEquals(
-        ErrorHandler.ProtectedFunctionError.MESSAGE_PREFIX + 'Foo', e.message);
+    assertEquals(ErrorHandler.ProtectedFunctionError.MESSAGE_PREFIX + 'Foo', e.message);
 
     const stringError = () => {
       throw 'String';
@@ -353,8 +363,7 @@ testSuite({
     protectedFn = errorHandler.getProtectedFunction(stringError);
     e = assertThrows(protectedFn);
     assertEquals('string', typeof e);
-    assertEquals(
-        ErrorHandler.ProtectedFunctionError.MESSAGE_PREFIX + 'String', e);
+    assertEquals(ErrorHandler.ProtectedFunctionError.MESSAGE_PREFIX + 'String', e);
   },
 
   async testProtectedFunction_infiniteLoop() {
@@ -370,7 +379,6 @@ testSuite({
     }, 3);
     await resolver.promise;
 
-    assertEquals(
-        'Error handler should only have been executed once.', 1, numErrors);
+    assertEquals('Error handler should only have been executed once.', 1, numErrors);
   },
 });

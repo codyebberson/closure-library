@@ -17,15 +17,15 @@ const TEST_DELAY = 50;
 const stubs = new PropertyReplacer();
 
 testSuite({
-  tearDown: function() {
+  tearDown: () => {
     stubs.reset();
   },
 
-  testStart: function() {
+  testStart: () => {
     let resolver = Promise.withResolver();
     const start = Date.now();
-    const delay = new AnimationDelay(function(end) {
-      assertNotNull(resolver);  // fail if called multiple times
+    const delay = new AnimationDelay((end) => {
+      assertNotNull(resolver); // fail if called multiple times
       resolver.resolve();
       resolver = null;
     });
@@ -35,28 +35,28 @@ testSuite({
     return resolver.promise;
   },
 
-  testStop: function() {
+  testStop: () => {
     const resolver = Promise.withResolver();
     const start = Date.now();
-    const delay = new AnimationDelay(function(end) {
+    const delay = new AnimationDelay((end) => {
       resolver.reject();
     });
 
     delay.start();
     delay.stop();
 
-    return Timer.promise(TEST_DELAY).then(function() {
+    return Timer.promise(TEST_DELAY).then(() => {
       resolver.resolve();
       return resolver.promise;
     });
   },
 
-  testAlwaysUseGoogNowForHandlerTimestamp: function() {
+  testAlwaysUseGoogNowForHandlerTimestamp: () => {
     const resolver = Promise.withResolver();
     const expectedValue = 12345.1;
-    stubs.set(Date, 'now', function() { return expectedValue; });
+    stubs.set(Date, 'now', () => expectedValue);
 
-    const delay = new AnimationDelay(function(timestamp) {
+    const delay = new AnimationDelay((timestamp) => {
       assertEquals(expectedValue, timestamp);
       resolver.resolve();
     });
@@ -66,12 +66,12 @@ testSuite({
     return resolver.promise;
   },
 
-  testStartIfActive: function() {
+  testStartIfActive: () => {
     const delay = new AnimationDelay(() => {});
     delay.start();
 
     let startWasCalled = false;
-    stubs.set(AnimationDelay.prototype, 'start', function() {
+    stubs.set(AnimationDelay.prototype, 'start', () => {
       startWasCalled = true;
     });
 
@@ -80,5 +80,5 @@ testSuite({
     delay.stop();
     delay.startIfNotActive();
     assertEquals(startWasCalled, true);
-  }
+  },
 });

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.labs.testing.stringMatcherTest');
-goog.setTestOnly();
 
 const MatcherError = goog.require('goog.labs.testing.MatcherError');
 const assertThat = goog.require('goog.labs.testing.assertThat');
@@ -47,25 +46,29 @@ testSuite({
     // how much or what kind.  Test the three properties of relations.
     // Test Symmetry.
     assertThat(
-        '    h\n   EL L\tO', equalToIgnoringWhitespace('h el l o'),
-        '"   h   EL L\tO   " is equal to "h el l o"');
+      '    h\n   EL L\tO',
+      equalToIgnoringWhitespace('h el l o'),
+      '"   h   EL L\tO   " is equal to "h el l o"'
+    );
     assertThat(
-        'h el l o', equalToIgnoringWhitespace('    h\n   EL L\tO'),
-        '"   h   EL L\tO   " is equal with arguments in the other order to "h el l o"');
+      'h el l o',
+      equalToIgnoringWhitespace('    h\n   EL L\tO'),
+      '"   h   EL L\tO   " is equal with arguments in the other order to "h el l o"'
+    );
     // Test Reflexivity
     const x = '\n       Some text and then \nnewlines       \n';
     assertThat(
-        x, equalToIgnoringWhitespace(x),
-        'Strings including whitespace should compare equal to themselves');
+      x,
+      equalToIgnoringWhitespace(x),
+      'Strings including whitespace should compare equal to themselves'
+    );
     // Test Transitivity.
     const a = 'S  p  a  c  e';
     const b = ' s\np\na\nc\ne';
     const c = 's P   a    c    e';
     assertThat(a, equalToIgnoringWhitespace(b));
     assertThat(b, equalToIgnoringWhitespace(c));
-    assertThat(
-        a, equalToIgnoringWhitespace(c),
-        'EqualToIgnoringWhitespace should be transitive');
+    assertThat(a, equalToIgnoringWhitespace(c), 'EqualToIgnoringWhitespace should be transitive');
 
     assertMatcherError(() => {
       assertThat('hybrid', equalToIgnoringWhitespace('theory'));
@@ -90,8 +93,10 @@ testSuite({
 
   testStringContainsInOrder() {
     assertThat(
-        'hello', stringContainsInOrder(['h', 'el', 'el', 'l', 'o']),
-        'hello contains in order: [h, el, l, o]');
+      'hello',
+      stringContainsInOrder(['h', 'el', 'el', 'l', 'o']),
+      'hello contains in order: [h, el, l, o]'
+    );
 
     assertMatcherError(() => {
       assertThat('hybrid', stringContainsInOrder(['hy', 'brid', 'theory']));

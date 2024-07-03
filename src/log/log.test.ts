@@ -9,7 +9,6 @@
  */
 
 goog.module('goog.logTest');
-goog.setTestOnly();
 
 const Level = goog.require('goog.log.Level');
 const log = goog.require('goog.log');
@@ -165,8 +164,7 @@ testSuite({
     const exception = new Error();
     try {
       log.addHandler(logger, handler.onPublish);
-      const logRecord =
-          log.getLogRecord(logger, Level.WARNING, 'foo', exception);
+      const logRecord = log.getLogRecord(logger, Level.WARNING, 'foo', exception);
       assertEquals(logRecord.getLoggerName(), 'goog.logTest.bar.baaz');
       assertEquals(logRecord.getLevel(), Level.WARNING);
       assertEquals(logRecord.getMessage(), 'foo');
@@ -180,5 +178,5 @@ testSuite({
     } finally {
       log.removeHandler(logger, handler.onPublish);
     }
-  }
+  },
 });

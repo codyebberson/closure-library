@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.math.interpolator.Pchip1Test');
-goog.setTestOnly();
 
 const Pchip1 = goog.require('goog.math.interpolator.Pchip1');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -22,8 +21,7 @@ testSuite({
     interp.setData(x, y);
 
     const xi = [0, 0.5, 1, 2, 3, 4, 5, 6, 7];
-    const expected =
-        [0, 0.5756, 0.8415, 0.5428, 0.1411, -0.0595, -0.2162, -0.2794, 0.657];
+    const expected = [0, 0.5756, 0.8415, 0.5428, 0.1411, -0.0595, -0.2162, -0.2794, 0.657];
     const result = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     for (let i = 0; i < xi.length; ++i) {
       result[i] = interp.interpolate(xi[i]);

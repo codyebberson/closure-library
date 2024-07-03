@@ -18,15 +18,12 @@ goog.require('goog.structs.Trie');
 goog.requireType('goog.events.BrowserEvent');
 goog.requireType('goog.ui.tree.BaseNode');
 
-
-
 /**
  * Constructs a TypeAhead object.
  * @constructor
  * @final
  */
-goog.ui.tree.TypeAhead = function() {
-  'use strict';
+goog.ui.tree.TypeAhead = function () {
   /**
    * Map of tree nodes to allow for quick access by characters in the label
    * text.
@@ -67,7 +64,6 @@ goog.ui.tree.TypeAhead = function() {
   this.matchingNodeIndex_ = 0;
 };
 
-
 /**
  * Enum for offset values that are used for ctrl-key navigation among the
  * multiple matches of a given typeahead buffer.
@@ -76,17 +72,15 @@ goog.ui.tree.TypeAhead = function() {
  */
 goog.ui.tree.TypeAhead.Offset = {
   DOWN: 1,
-  UP: -1
+  UP: -1,
 };
-
 
 /**
  * Handles navigation keys.
  * @param {goog.events.BrowserEvent} e The browser event.
  * @return {boolean} The handled value.
  */
-goog.ui.tree.TypeAhead.prototype.handleNavigation = function(e) {
-  'use strict';
+goog.ui.tree.TypeAhead.prototype.handleNavigation = function (e) {
   let handled = false;
 
   switch (e.keyCode) {
@@ -95,9 +89,10 @@ goog.ui.tree.TypeAhead.prototype.handleNavigation = function(e) {
     case goog.events.KeyCodes.UP:
       if (e.ctrlKey) {
         this.jumpTo_(
-            e.keyCode == goog.events.KeyCodes.DOWN ?
-                goog.ui.tree.TypeAhead.Offset.DOWN :
-                goog.ui.tree.TypeAhead.Offset.UP);
+          e.keyCode == goog.events.KeyCodes.DOWN
+            ? goog.ui.tree.TypeAhead.Offset.DOWN
+            : goog.ui.tree.TypeAhead.Offset.UP
+        );
         handled = true;
       }
       break;
@@ -127,15 +122,13 @@ goog.ui.tree.TypeAhead.prototype.handleNavigation = function(e) {
   return handled;
 };
 
-
 /**
  * Handles the character presses.
  * @param {goog.events.BrowserEvent} e The browser event.
  *    Expected event type is goog.events.KeyHandler.EventType.KEY.
  * @return {boolean} The handled value.
  */
-goog.ui.tree.TypeAhead.prototype.handleTypeAheadChar = function(e) {
-  'use strict';
+goog.ui.tree.TypeAhead.prototype.handleTypeAheadChar = function (e) {
   let handled = false;
 
   if (!e.ctrlKey && !e.altKey) {
@@ -157,7 +150,6 @@ goog.ui.tree.TypeAhead.prototype.handleTypeAheadChar = function(e) {
   return handled;
 };
 
-
 /**
  * Adds or updates the given node in the nodemap. The label text is used as a
  * key and the node id is used as a value. In the case that the key already
@@ -165,11 +157,9 @@ goog.ui.tree.TypeAhead.prototype.handleTypeAheadChar = function(e) {
  * function creates an array to hold the multiple nodes.
  * @param {goog.ui.tree.BaseNode} node Node to be added or updated.
  */
-goog.ui.tree.TypeAhead.prototype.setNodeInMap = function(node) {
-  'use strict';
+goog.ui.tree.TypeAhead.prototype.setNodeInMap = function (node) {
   let labelText = node.getText();
-  if (labelText &&
-      !goog.string.isEmptyOrWhitespace(goog.string.makeSafe(labelText))) {
+  if (labelText && !goog.string.isEmptyOrWhitespace(goog.string.makeSafe(labelText))) {
     // Typeahead is case insensitive, convert to lowercase.
     labelText = labelText.toLowerCase();
 
@@ -185,16 +175,13 @@ goog.ui.tree.TypeAhead.prototype.setNodeInMap = function(node) {
   }
 };
 
-
 /**
  * Removes the given node from the nodemap.
  * @param {goog.ui.tree.BaseNode} node Node to be removed.
  */
-goog.ui.tree.TypeAhead.prototype.removeNodeFromMap = function(node) {
-  'use strict';
+goog.ui.tree.TypeAhead.prototype.removeNodeFromMap = function (node) {
   let labelText = node.getText();
-  if (labelText &&
-      !goog.string.isEmptyOrWhitespace(goog.string.makeSafe(labelText))) {
+  if (labelText && !goog.string.isEmptyOrWhitespace(goog.string.makeSafe(labelText))) {
     labelText = labelText.toLowerCase();
 
     const nodeList = this.nodeMap_.get(labelText);
@@ -213,15 +200,13 @@ goog.ui.tree.TypeAhead.prototype.removeNodeFromMap = function(node) {
   }
 };
 
-
 /**
  * Select the first matching node for the given typeahead.
  * @param {string} typeAhead Typeahead characters to match.
  * @return {boolean} True iff a node is found.
  * @private
  */
-goog.ui.tree.TypeAhead.prototype.jumpToLabel_ = function(typeAhead) {
-  'use strict';
+goog.ui.tree.TypeAhead.prototype.jumpToLabel_ = function (typeAhead) {
   let handled = false;
   const labels = this.nodeMap_.getKeys(typeAhead);
 
@@ -240,15 +225,13 @@ goog.ui.tree.TypeAhead.prototype.jumpToLabel_ = function(typeAhead) {
   return handled;
 };
 
-
 /**
  * Select the next or previous node based on the offset.
  * @param {goog.ui.tree.TypeAhead.Offset} offset DOWN or UP.
  * @return {boolean} Whether a node is found.
  * @private
  */
-goog.ui.tree.TypeAhead.prototype.jumpTo_ = function(offset) {
-  'use strict';
+goog.ui.tree.TypeAhead.prototype.jumpTo_ = function (offset) {
   let handled = false;
   const labels = this.matchingLabels_;
 
@@ -282,8 +265,7 @@ goog.ui.tree.TypeAhead.prototype.jumpTo_ = function(offset) {
       // while going UP select the last item of multiple nodes with same label
       // and while going DOWN select the first item of next set of nodes
       if (nodes && nodes.length && nodeIndexOutOfRange) {
-        this.matchingNodeIndex_ =
-            (offset == goog.ui.tree.TypeAhead.Offset.UP) ? nodes.length - 1 : 0;
+        this.matchingNodeIndex_ = offset == goog.ui.tree.TypeAhead.Offset.UP ? nodes.length - 1 : 0;
       }
     }
 
@@ -296,7 +278,6 @@ goog.ui.tree.TypeAhead.prototype.jumpTo_ = function(offset) {
   return handled;
 };
 
-
 /**
  * Given a nodes array reveals and selects the node while using node index.
  * @param {Array<goog.ui.tree.BaseNode>|undefined} nodes Nodes array to select
@@ -304,8 +285,7 @@ goog.ui.tree.TypeAhead.prototype.jumpTo_ = function(offset) {
  * @return {boolean} Whether a matching node was found.
  * @private
  */
-goog.ui.tree.TypeAhead.prototype.selectMatchingNode_ = function(nodes) {
-  'use strict';
+goog.ui.tree.TypeAhead.prototype.selectMatchingNode_ = function (nodes) {
   let node;
 
   if (nodes) {
@@ -324,11 +304,9 @@ goog.ui.tree.TypeAhead.prototype.selectMatchingNode_ = function(nodes) {
   return !!node;
 };
 
-
 /**
  * Clears the typeahead buffer.
  */
-goog.ui.tree.TypeAhead.prototype.clear = function() {
-  'use strict';
+goog.ui.tree.TypeAhead.prototype.clear = function () {
   this.buffer_ = '';
 };

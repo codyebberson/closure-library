@@ -4,11 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Graphics utility functions and factory methods.
  */
-
 
 goog.provide('goog.graphics.AbstractGraphics');
 
@@ -30,8 +28,6 @@ goog.require('goog.math.Size');
 goog.require('goog.style');
 goog.require('goog.ui.Component');
 
-
-
 /**
  * Base class for the different graphics. You should never construct objects
  * of this class. Instead us goog.graphics.createGraphics
@@ -46,9 +42,13 @@ goog.require('goog.ui.Component');
  * @constructor
  * @extends {goog.ui.Component}
  */
-goog.graphics.AbstractGraphics = function(
-    width, height, opt_coordWidth, opt_coordHeight, opt_domHelper) {
-  'use strict';
+goog.graphics.AbstractGraphics = function (
+  width,
+  height,
+  opt_coordWidth,
+  opt_coordHeight,
+  opt_domHelper
+) {
   goog.ui.Component.call(this, opt_domHelper);
 
   /**
@@ -81,14 +81,12 @@ goog.graphics.AbstractGraphics = function(
 };
 goog.inherits(goog.graphics.AbstractGraphics, goog.ui.Component);
 
-
 /**
  * The root level group element.
  * @type {goog.graphics.GroupElement?}
  * @protected
  */
 goog.graphics.AbstractGraphics.prototype.canvasElement = null;
-
 
 /**
  * Left coordinate of the view box
@@ -97,7 +95,6 @@ goog.graphics.AbstractGraphics.prototype.canvasElement = null;
  */
 goog.graphics.AbstractGraphics.prototype.coordLeft = 0;
 
-
 /**
  * Top coordinate of the view box
  * @type {number}
@@ -105,43 +102,33 @@ goog.graphics.AbstractGraphics.prototype.coordLeft = 0;
  */
 goog.graphics.AbstractGraphics.prototype.coordTop = 0;
 
-
 /**
  * @return {goog.graphics.GroupElement} The root level canvas element.
  */
-goog.graphics.AbstractGraphics.prototype.getCanvasElement = function() {
-  'use strict';
+goog.graphics.AbstractGraphics.prototype.getCanvasElement = function () {
   return this.canvasElement;
 };
-
 
 /**
  * Changes the coordinate size.
  * @param {number} coordWidth  The coordinate width.
  * @param {number} coordHeight  The coordinate height.
  */
-goog.graphics.AbstractGraphics.prototype.setCoordSize = function(
-    coordWidth, coordHeight) {
-  'use strict';
+goog.graphics.AbstractGraphics.prototype.setCoordSize = function (coordWidth, coordHeight) {
   this.coordWidth = coordWidth;
   this.coordHeight = coordHeight;
 };
 
-
 /**
  * @return {goog.math.Size} The coordinate size.
  */
-goog.graphics.AbstractGraphics.prototype.getCoordSize = function() {
-  'use strict';
+goog.graphics.AbstractGraphics.prototype.getCoordSize = function () {
   if (this.coordWidth) {
-    return new goog.math.Size(
-        this.coordWidth,
-        /** @type {number} */ (this.coordHeight));
+    return new goog.math.Size(this.coordWidth, /** @type {number} */ (this.coordHeight));
   } else {
     return this.getPixelSize();
   }
 };
-
 
 /**
  * Changes the coordinate system position.
@@ -150,15 +137,12 @@ goog.graphics.AbstractGraphics.prototype.getCoordSize = function() {
  */
 goog.graphics.AbstractGraphics.prototype.setCoordOrigin = goog.abstractMethod;
 
-
 /**
  * @return {!goog.math.Coordinate} The coordinate system position.
  */
-goog.graphics.AbstractGraphics.prototype.getCoordOrigin = function() {
-  'use strict';
+goog.graphics.AbstractGraphics.prototype.getCoordOrigin = function () {
   return new goog.math.Coordinate(this.coordLeft, this.coordTop);
 };
-
 
 /**
  * Change the size of the canvas.
@@ -167,16 +151,13 @@ goog.graphics.AbstractGraphics.prototype.getCoordOrigin = function() {
  */
 goog.graphics.AbstractGraphics.prototype.setSize = goog.abstractMethod;
 
-
 /**
  * @return {goog.math.Size} The size of canvas.
  * @deprecated Use getPixelSize.
  */
-goog.graphics.AbstractGraphics.prototype.getSize = function() {
-  'use strict';
+goog.graphics.AbstractGraphics.prototype.getSize = function () {
   return this.getPixelSize();
 };
-
 
 /**
  * @return {goog.math.Size?} Returns the number of pixels spanned by the
@@ -184,8 +165,7 @@ goog.graphics.AbstractGraphics.prototype.getSize = function() {
  *     specified in percentage points and the component not being in the
  *     document.
  */
-goog.graphics.AbstractGraphics.prototype.getPixelSize = function() {
-  'use strict';
+goog.graphics.AbstractGraphics.prototype.getPixelSize = function () {
   if (this.isInDocument()) {
     return goog.style.getSize(this.getElement());
   }
@@ -195,43 +175,35 @@ goog.graphics.AbstractGraphics.prototype.getPixelSize = function() {
   return null;
 };
 
-
 /**
  * @return {number} Returns the number of pixels per unit in the x direction.
  */
-goog.graphics.AbstractGraphics.prototype.getPixelScaleX = function() {
-  'use strict';
+goog.graphics.AbstractGraphics.prototype.getPixelScaleX = function () {
   var pixelSize = this.getPixelSize();
   return pixelSize ? pixelSize.width / this.getCoordSize().width : 0;
 };
 
-
 /**
  * @return {number} Returns the number of pixels per unit in the y direction.
  */
-goog.graphics.AbstractGraphics.prototype.getPixelScaleY = function() {
-  'use strict';
+goog.graphics.AbstractGraphics.prototype.getPixelScaleY = function () {
   var pixelSize = this.getPixelSize();
   return pixelSize ? pixelSize.height / this.getCoordSize().height : 0;
 };
-
 
 /**
  * Remove all drawing elements from the graphics.
  */
 goog.graphics.AbstractGraphics.prototype.clear = goog.abstractMethod;
 
-
 /**
  * Remove a single drawing element from the surface.  The default implementation
  * assumes a DOM based drawing surface.
  * @param {goog.graphics.Element} element The element to remove.
  */
-goog.graphics.AbstractGraphics.prototype.removeElement = function(element) {
-  'use strict';
+goog.graphics.AbstractGraphics.prototype.removeElement = (element) => {
   goog.dom.removeNode(element.getElement());
 };
-
 
 /**
  * Sets the fill for the given element.
@@ -240,14 +212,12 @@ goog.graphics.AbstractGraphics.prototype.removeElement = function(element) {
  */
 goog.graphics.AbstractGraphics.prototype.setElementFill = goog.abstractMethod;
 
-
 /**
  * Sets the stroke for the given element.
  * @param {goog.graphics.StrokeAndFillElement} element The element wrapper.
  * @param {goog.graphics.Stroke?} stroke The stroke object.
  */
 goog.graphics.AbstractGraphics.prototype.setElementStroke = goog.abstractMethod;
-
 
 /**
  * Set the transformation of an element.
@@ -261,9 +231,7 @@ goog.graphics.AbstractGraphics.prototype.setElementStroke = goog.abstractMethod;
  * @param {number} centerX The horizontal center of the rotation transform.
  * @param {number} centerY The vertical center of the rotation transform.
  */
-goog.graphics.AbstractGraphics.prototype.setElementTransform =
-    goog.abstractMethod;
-
+goog.graphics.AbstractGraphics.prototype.setElementTransform = goog.abstractMethod;
 
 /**
  * Set the affine transform of an element.
@@ -271,9 +239,7 @@ goog.graphics.AbstractGraphics.prototype.setElementTransform =
  * @param {!goog.graphics.AffineTransform} affineTransform The
  *     transformation applied to this element.
  */
-goog.graphics.AbstractGraphics.prototype.setElementAffineTransform =
-    goog.abstractMethod;
-
+goog.graphics.AbstractGraphics.prototype.setElementAffineTransform = goog.abstractMethod;
 
 /**
  * Draw a circle
@@ -289,12 +255,16 @@ goog.graphics.AbstractGraphics.prototype.setElementAffineTransform =
  *
  * @return {goog.graphics.EllipseElement} The newly created element.
  */
-goog.graphics.AbstractGraphics.prototype.drawCircle = function(
-    cx, cy, r, stroke, fill, opt_group) {
-  'use strict';
+goog.graphics.AbstractGraphics.prototype.drawCircle = function (
+  cx,
+  cy,
+  r,
+  stroke,
+  fill,
+  opt_group
+) {
   return this.drawEllipse(cx, cy, r, r, stroke, fill, opt_group);
 };
-
 
 /**
  * Draw an ellipse
@@ -313,7 +283,6 @@ goog.graphics.AbstractGraphics.prototype.drawCircle = function(
  */
 goog.graphics.AbstractGraphics.prototype.drawEllipse = goog.abstractMethod;
 
-
 /**
  * Draw a rectangle
  *
@@ -330,7 +299,6 @@ goog.graphics.AbstractGraphics.prototype.drawEllipse = goog.abstractMethod;
  * @return {goog.graphics.RectElement} The newly created element.
  */
 goog.graphics.AbstractGraphics.prototype.drawRect = goog.abstractMethod;
-
 
 /**
  * Draw a text string within a rectangle (drawing is horizontal)
@@ -351,10 +319,20 @@ goog.graphics.AbstractGraphics.prototype.drawRect = goog.abstractMethod;
  *
  * @return {goog.graphics.TextElement} The newly created element.
  */
-goog.graphics.AbstractGraphics.prototype.drawText = function(
-    text, x, y, width, height, align, vAlign, font, stroke, fill, opt_group) {
-  'use strict';
-  var baseline = font.size / 2;  // Baseline is middle of line
+goog.graphics.AbstractGraphics.prototype.drawText = function (
+  text,
+  x,
+  y,
+  width,
+  height,
+  align,
+  vAlign,
+  font,
+  stroke,
+  fill,
+  opt_group
+) {
+  var baseline = font.size / 2; // Baseline is middle of line
   var textY;
   if (vAlign == 'bottom') {
     textY = y + height - baseline;
@@ -365,9 +343,18 @@ goog.graphics.AbstractGraphics.prototype.drawText = function(
   }
 
   return this.drawTextOnLine(
-      text, x, textY, x + width, textY, align, font, stroke, fill, opt_group);
+    text,
+    x,
+    textY,
+    x + width,
+    textY,
+    align,
+    font,
+    stroke,
+    fill,
+    opt_group
+  );
 };
-
 
 /**
  * Draw a text string vertically centered on a given line.
@@ -389,7 +376,6 @@ goog.graphics.AbstractGraphics.prototype.drawText = function(
  */
 goog.graphics.AbstractGraphics.prototype.drawTextOnLine = goog.abstractMethod;
 
-
 /**
  * Draw a path.
  *
@@ -404,7 +390,6 @@ goog.graphics.AbstractGraphics.prototype.drawTextOnLine = goog.abstractMethod;
  */
 goog.graphics.AbstractGraphics.prototype.drawPath = goog.abstractMethod;
 
-
 /**
  * Create an empty group of drawing elements.
  *
@@ -415,18 +400,13 @@ goog.graphics.AbstractGraphics.prototype.drawPath = goog.abstractMethod;
  */
 goog.graphics.AbstractGraphics.prototype.createGroup = goog.abstractMethod;
 
-
 /**
  * Create an empty path.
  *
  * @return {!goog.graphics.Path} The path.
  * @deprecated Use {@code new goog.graphics.Path()}.
  */
-goog.graphics.AbstractGraphics.prototype.createPath = function() {
-  'use strict';
-  return new goog.graphics.Path();
-};
-
+goog.graphics.AbstractGraphics.prototype.createPath = () => new goog.graphics.Path();
 
 /**
  * Measure and return the width (in pixels) of a given text string.
@@ -442,27 +422,21 @@ goog.graphics.AbstractGraphics.prototype.createPath = function() {
  */
 goog.graphics.AbstractGraphics.prototype.getTextWidth = goog.abstractMethod;
 
-
 /**
  * @return {boolean} Whether the underlying element can be cloned resulting in
  *     an accurate reproduction of the graphics contents.
  */
-goog.graphics.AbstractGraphics.prototype.isDomClonable = function() {
-  'use strict';
-  return false;
-};
-
+goog.graphics.AbstractGraphics.prototype.isDomClonable = () => false;
 
 /**
  * Start preventing redraws - useful for chaining large numbers of changes
  * together.  Not guaranteed to do anything - i.e. only use this for
  * optimization of a single code path.
  */
-goog.graphics.AbstractGraphics.prototype.suspend = function() {};
-
+goog.graphics.AbstractGraphics.prototype.suspend = () => {};
 
 /**
  * Stop preventing redraws.  If any redraws had been prevented, a redraw will
  * be done now.
  */
-goog.graphics.AbstractGraphics.prototype.resume = function() {};
+goog.graphics.AbstractGraphics.prototype.resume = () => {};

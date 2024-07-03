@@ -11,13 +11,10 @@
  * Based heavily on code originally by:
  */
 
-
 goog.provide('goog.math.Vec3');
 
 goog.require('goog.math');
 goog.require('goog.math.Coordinate3');
-
-
 
 /**
  * Class for a three-dimensional vector object and assorted functions useful for
@@ -33,8 +30,7 @@ goog.require('goog.math.Coordinate3');
  * @constructor
  * @extends {goog.math.Coordinate3}
  */
-goog.math.Vec3 = function(x, y, z) {
-  'use strict';
+goog.math.Vec3 = function (x, y, z) {
   /**
    * X-value
    * @type {number}
@@ -55,7 +51,6 @@ goog.math.Vec3 = function(x, y, z) {
 };
 goog.inherits(goog.math.Vec3, goog.math.Coordinate3);
 
-
 /**
  * Generates a random unit vector.
  *
@@ -63,8 +58,7 @@ goog.inherits(goog.math.Vec3, goog.math.Coordinate3);
  * Using (6), (7), and (8) to generate coordinates.
  * @return {!goog.math.Vec3} A random unit-length vector.
  */
-goog.math.Vec3.randomUnit = function() {
-  'use strict';
+goog.math.Vec3.randomUnit = () => {
   var theta = Math.random() * Math.PI * 2;
   var phi = Math.random() * Math.PI * 2;
 
@@ -75,17 +69,12 @@ goog.math.Vec3.randomUnit = function() {
   return new goog.math.Vec3(x, y, z);
 };
 
-
 /**
  * Generates a random vector inside the unit sphere.
  *
  * @return {!goog.math.Vec3} A random vector.
  */
-goog.math.Vec3.random = function() {
-  'use strict';
-  return goog.math.Vec3.randomUnit().scale(Math.random());
-};
-
+goog.math.Vec3.random = () => goog.math.Vec3.randomUnit().scale(Math.random());
 
 /**
  * Returns a new Vec3 object from a given coordinate.
@@ -93,11 +82,7 @@ goog.math.Vec3.random = function() {
  * @param {goog.math.Coordinate3} a The coordinate.
  * @return {!goog.math.Vec3} A new vector object.
  */
-goog.math.Vec3.fromCoordinate3 = function(a) {
-  'use strict';
-  return new goog.math.Vec3(a.x, a.y, a.z);
-};
-
+goog.math.Vec3.fromCoordinate3 = (a) => new goog.math.Vec3(a.x, a.y, a.z);
 
 /**
  * Creates a new copy of this Vec3.
@@ -105,22 +90,18 @@ goog.math.Vec3.fromCoordinate3 = function(a) {
  * @return {!goog.math.Vec3} A new vector with the same coordinates as this one.
  * @override
  */
-goog.math.Vec3.prototype.clone = function() {
-  'use strict';
+goog.math.Vec3.prototype.clone = function () {
   return new goog.math.Vec3(this.x, this.y, this.z);
 };
-
 
 /**
  * Returns the magnitude of the vector measured from the origin.
  *
  * @return {number} The length of the vector.
  */
-goog.math.Vec3.prototype.magnitude = function() {
-  'use strict';
+goog.math.Vec3.prototype.magnitude = function () {
   return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
 };
-
 
 /**
  * Returns the squared magnitude of the vector measured from the origin.
@@ -129,11 +110,9 @@ goog.math.Vec3.prototype.magnitude = function() {
  *
  * @return {number} The length of the vector, squared.
  */
-goog.math.Vec3.prototype.squaredMagnitude = function() {
-  'use strict';
+goog.math.Vec3.prototype.squaredMagnitude = function () {
   return this.x * this.x + this.y * this.y + this.z * this.z;
 };
-
 
 /**
  * Scales the current vector by a constant.
@@ -141,39 +120,33 @@ goog.math.Vec3.prototype.squaredMagnitude = function() {
  * @param {number} s The scale factor.
  * @return {!goog.math.Vec3} This vector, scaled.
  */
-goog.math.Vec3.prototype.scale = function(s) {
-  'use strict';
+goog.math.Vec3.prototype.scale = function (s) {
   this.x *= s;
   this.y *= s;
   this.z *= s;
   return this;
 };
 
-
 /**
  * Reverses the sign of the vector. Equivalent to scaling the vector by -1.
  *
  * @return {!goog.math.Vec3} This vector, inverted.
  */
-goog.math.Vec3.prototype.invert = function() {
-  'use strict';
+goog.math.Vec3.prototype.invert = function () {
   this.x = -this.x;
   this.y = -this.y;
   this.z = -this.z;
   return this;
 };
 
-
 /**
  * Normalizes the current vector to have a magnitude of 1.
  *
  * @return {!goog.math.Vec3} This vector, normalized.
  */
-goog.math.Vec3.prototype.normalize = function() {
-  'use strict';
+goog.math.Vec3.prototype.normalize = function () {
   return this.scale(1 / this.magnitude());
 };
-
 
 /**
  * Adds another vector to this vector in-place.
@@ -181,14 +154,12 @@ goog.math.Vec3.prototype.normalize = function() {
  * @param {goog.math.Vec3} b The vector to add.
  * @return {!goog.math.Vec3} This vector with `b` added.
  */
-goog.math.Vec3.prototype.add = function(b) {
-  'use strict';
+goog.math.Vec3.prototype.add = function (b) {
   this.x += b.x;
   this.y += b.y;
   this.z += b.z;
   return this;
 };
-
 
 /**
  * Subtracts another vector from this vector in-place.
@@ -196,14 +167,12 @@ goog.math.Vec3.prototype.add = function(b) {
  * @param {goog.math.Vec3} b The vector to subtract.
  * @return {!goog.math.Vec3} This vector with `b` subtracted.
  */
-goog.math.Vec3.prototype.subtract = function(b) {
-  'use strict';
+goog.math.Vec3.prototype.subtract = function (b) {
   this.x -= b.x;
   this.y -= b.y;
   this.z -= b.z;
   return this;
 };
-
 
 /**
  * Compares this vector with another for equality.
@@ -212,11 +181,9 @@ goog.math.Vec3.prototype.subtract = function(b) {
  * @return {boolean} True if this vector's x, y and z equal the given vector's
  *     x, y, and z, respectively.
  */
-goog.math.Vec3.prototype.equals = function(b) {
-  'use strict';
-  return this == b || !!b && this.x == b.x && this.y == b.y && this.z == b.z;
+goog.math.Vec3.prototype.equals = function (b) {
+  return this == b || (!!b && this.x == b.x && this.y == b.y && this.z == b.z);
 };
-
 
 /**
  * Returns the distance between two vectors.
@@ -227,7 +194,6 @@ goog.math.Vec3.prototype.equals = function(b) {
  */
 goog.math.Vec3.distance = goog.math.Coordinate3.distance;
 
-
 /**
  * Returns the squared distance between two vectors.
  *
@@ -236,7 +202,6 @@ goog.math.Vec3.distance = goog.math.Coordinate3.distance;
  * @return {number} The squared distance.
  */
 goog.math.Vec3.squaredDistance = goog.math.Coordinate3.squaredDistance;
-
 
 /**
  * Compares vectors for equality.
@@ -247,7 +212,6 @@ goog.math.Vec3.squaredDistance = goog.math.Coordinate3.squaredDistance;
  */
 goog.math.Vec3.equals = goog.math.Coordinate3.equals;
 
-
 /**
  * Returns the sum of two vectors as a new Vec3.
  *
@@ -255,11 +219,7 @@ goog.math.Vec3.equals = goog.math.Coordinate3.equals;
  * @param {goog.math.Vec3} b The second vector.
  * @return {!goog.math.Vec3} The sum vector.
  */
-goog.math.Vec3.sum = function(a, b) {
-  'use strict';
-  return new goog.math.Vec3(a.x + b.x, a.y + b.y, a.z + b.z);
-};
-
+goog.math.Vec3.sum = (a, b) => new goog.math.Vec3(a.x + b.x, a.y + b.y, a.z + b.z);
 
 /**
  * Returns the difference of two vectors as a new Vec3.
@@ -268,11 +228,7 @@ goog.math.Vec3.sum = function(a, b) {
  * @param {goog.math.Vec3} b The second vector.
  * @return {!goog.math.Vec3} The difference vector.
  */
-goog.math.Vec3.difference = function(a, b) {
-  'use strict';
-  return new goog.math.Vec3(a.x - b.x, a.y - b.y, a.z - b.z);
-};
-
+goog.math.Vec3.difference = (a, b) => new goog.math.Vec3(a.x - b.x, a.y - b.y, a.z - b.z);
 
 /**
  * Returns the dot-product of two vectors.
@@ -281,11 +237,7 @@ goog.math.Vec3.difference = function(a, b) {
  * @param {goog.math.Vec3} b The second vector.
  * @return {number} The dot-product of the two vectors.
  */
-goog.math.Vec3.dot = function(a, b) {
-  'use strict';
-  return a.x * b.x + a.y * b.y + a.z * b.z;
-};
-
+goog.math.Vec3.dot = (a, b) => a.x * b.x + a.y * b.y + a.z * b.z;
 
 /**
  * Returns the cross-product of two vectors.
@@ -294,12 +246,8 @@ goog.math.Vec3.dot = function(a, b) {
  * @param {goog.math.Vec3} b The second vector.
  * @return {!goog.math.Vec3} The cross-product of the two vectors.
  */
-goog.math.Vec3.cross = function(a, b) {
-  'use strict';
-  return new goog.math.Vec3(
-      a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
-};
-
+goog.math.Vec3.cross = (a, b) =>
+  new goog.math.Vec3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
 
 /**
  * Returns a new Vec3 that is the linear interpolant between vectors a and b at
@@ -310,13 +258,12 @@ goog.math.Vec3.cross = function(a, b) {
  * @param {number} x The proportion between a and b.
  * @return {!goog.math.Vec3} The interpolated vector.
  */
-goog.math.Vec3.lerp = function(a, b, x) {
-  'use strict';
-  return new goog.math.Vec3(
-      goog.math.lerp(a.x, b.x, x), goog.math.lerp(a.y, b.y, x),
-      goog.math.lerp(a.z, b.z, x));
-};
-
+goog.math.Vec3.lerp = (a, b, x) =>
+  new goog.math.Vec3(
+    goog.math.lerp(a.x, b.x, x),
+    goog.math.lerp(a.y, b.y, x),
+    goog.math.lerp(a.z, b.z, x)
+  );
 
 /**
  * Returns a new Vec3 that is a copy of the vector a, but rescaled by a factor s
@@ -325,7 +272,4 @@ goog.math.Vec3.lerp = function(a, b, x) {
  * @param {number} s Scale factor.
  * @return {!goog.math.Vec3} A new rescaled vector.
  */
-goog.math.Vec3.rescaled = function(a, s) {
-  'use strict';
-  return new goog.math.Vec3(a.x * s, a.y * s, a.z * s);
-};
+goog.math.Vec3.rescaled = (a, s) => new goog.math.Vec3(a.x * s, a.y * s, a.z * s);

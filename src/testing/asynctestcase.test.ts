@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.AsyncTestCaseTest');
-goog.setTestOnly();
 
 const AsyncTestCase = goog.require('goog.testing.AsyncTestCase');
 const DebugError = goog.require('goog.debug.Error');

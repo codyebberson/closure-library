@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.style.layoutassertsTest');
-goog.setTestOnly();
 
 const TagName = goog.require('goog.dom.TagName');
 const dom = goog.require('goog.dom');
@@ -24,20 +23,30 @@ testSuite({
     div1 = dom.createDom(TagName.DIV, {
       id: 'test',
       className: 'test',
-      style: 'position:absolute;top:0;left:0;' +
-          'width:' + DEFAULT_WIDTH + 'px;' +
-          'height:' + DEFAULT_HEIGHT + 'px;' +
-          'background-color:#EEE',
+      style:
+        'position:absolute;top:0;left:0;' +
+        'width:' +
+        DEFAULT_WIDTH +
+        'px;' +
+        'height:' +
+        DEFAULT_HEIGHT +
+        'px;' +
+        'background-color:#EEE',
       innerHTML: 'abc',
     });
     div2 = dom.createDom(TagName.DIV, {
       id: 'test2',
       className: 'test2',
-      style: 'position:absolute;' +
-          'top:0;left:0;' +
-          'width:' + DEFAULT_WIDTH + 'px;' +
-          'height:' + DEFAULT_HEIGHT + 'px;' +
-          'background-color:#F00',
+      style:
+        'position:absolute;' +
+        'top:0;left:0;' +
+        'width:' +
+        DEFAULT_WIDTH +
+        'px;' +
+        'height:' +
+        DEFAULT_HEIGHT +
+        'px;' +
+        'background-color:#F00',
       innerHTML: 'abc',
     });
   },
@@ -126,8 +135,7 @@ testSuite({
 
     // Test exceeding tolerance value
     // Exception should be thrown when element\'s width exceeds tolerance
-    assertThrowsJsUnitException(
-        goog.bind(assertWidthWithinTolerance, null, div1, 100, 0.1));
+    assertThrowsJsUnitException(goog.bind(assertWidthWithinTolerance, null, div1, 100, 0.1));
   },
 
   /**
@@ -140,10 +148,10 @@ testSuite({
     // Test correct height
     assertHeight(div1, DEFAULT_HEIGHT);
 
-
     // Test wrong height
     assertThrowsJsUnitException(
-        goog.bind(assertHeightWithinTolerance, null, div1, 300, undefined, undefined));
+      goog.bind(assertHeightWithinTolerance, null, div1, 300, undefined, undefined)
+    );
 
     // Test a valid tolerance value
     assertHeightWithinTolerance(div1, 90, 10);
@@ -161,24 +169,21 @@ testSuite({
     // Exception should be thrown when elements intersect.,
     assertThrowsJsUnitException(goog.bind(assertIsLeftOf, null, div1, div2));
     // Exception should be thrown when elements intersect.
-    assertThrowsJsUnitException(
-        goog.bind(assertIsStrictlyLeftOf, null, div1, div2));
+    assertThrowsJsUnitException(goog.bind(assertIsStrictlyLeftOf, null, div1, div2));
 
     // Test elements that are not left to right
     style.setPosition(div1, 100, 0);
     style.setPosition(div2, 0, 0);
     assertThrowsJsUnitException(goog.bind(assertIsLeftOf, null, div1, div2));
     // Exception should be thrown when elements are not left to right.
-    assertThrowsJsUnitException(
-        goog.bind(assertIsStrictlyLeftOf, null, div1, div2));
+    assertThrowsJsUnitException(goog.bind(assertIsStrictlyLeftOf, null, div1, div2));
 
     // Test elements that intersect, but is left to right
     style.setPosition(div1, 0, 0);
     style.setPosition(div2, 100, 0);
     assertIsLeftOf(div1, div2);
     // Exception should be thrown when elements are not left to right.
-    assertThrowsJsUnitException(
-        goog.bind(assertIsStrictlyLeftOf, null, div1, div2));
+    assertThrowsJsUnitException(goog.bind(assertIsStrictlyLeftOf, null, div1, div2));
 
     // Test elements that are strictly left to right
     style.setPosition(div1, 0, 0);
@@ -196,8 +201,7 @@ testSuite({
     // Exception should be thrown when elements are not left to right.
     assertThrowsJsUnitException(goog.bind(assertIsAbove, null, div1, div2));
     // Exception should be thrown when elements are not left to right.
-    assertThrowsJsUnitException(
-        goog.bind(assertIsStrictlyAbove, null, div1, div2));
+    assertThrowsJsUnitException(goog.bind(assertIsStrictlyAbove, null, div1, div2));
 
     // Test elements that are not top to bottom
     style.setPosition(div1, 0, 999);
@@ -205,16 +209,14 @@ testSuite({
     // Exception should be thrown when elements are not top to bottom.
     assertThrowsJsUnitException(goog.bind(assertIsAbove, null, div1, div2));
     // Exception should be thrown when elements are not top to bottom.
-    assertThrowsJsUnitException(
-        goog.bind(assertIsStrictlyAbove, null, div1, div2));
+    assertThrowsJsUnitException(goog.bind(assertIsStrictlyAbove, null, div1, div2));
 
     // Test elements that intersect, but is top to bottom
     style.setPosition(div1, 0, 0);
     style.setPosition(div2, 0, 50);
     assertIsAbove(div1, div2);
     // Exception should be thrown when elements intersect.
-    assertThrowsJsUnitException(
-        goog.bind(assertIsStrictlyAbove, null, div1, div2));
+    assertThrowsJsUnitException(goog.bind(assertIsStrictlyAbove, null, div1, div2));
 
     // Test elements that are top to bottom
     style.setPosition(div1, 0, 0);

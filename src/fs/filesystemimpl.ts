@@ -13,8 +13,6 @@ goog.provide('goog.fs.FileSystemImpl');
 goog.require('goog.fs.DirectoryEntryImpl');
 goog.require('goog.fs.FileSystem');
 
-
-
 /**
  * A local filesystem.
  *
@@ -26,8 +24,7 @@ goog.require('goog.fs.FileSystem');
  * @implements {goog.fs.FileSystem}
  * @final
  */
-goog.fs.FileSystemImpl = function(fs) {
-  'use strict';
+goog.fs.FileSystemImpl = function (fs) {
   /**
    * The underlying FileSystem object.
    *
@@ -37,25 +34,19 @@ goog.fs.FileSystemImpl = function(fs) {
   this.fs_ = fs;
 };
 
-
 /** @override */
-goog.fs.FileSystemImpl.prototype.getName = function() {
-  'use strict';
+goog.fs.FileSystemImpl.prototype.getName = function () {
   return this.fs_.name;
 };
 
-
 /** @override */
-goog.fs.FileSystemImpl.prototype.getRoot = function() {
-  'use strict';
+goog.fs.FileSystemImpl.prototype.getRoot = function () {
   return new goog.fs.DirectoryEntryImpl(this, this.fs_.root);
 };
-
 
 /**
  * @return {!FileSystem} The underlying FileSystem object.
  */
-goog.fs.FileSystemImpl.prototype.getBrowserFileSystem = function() {
-  'use strict';
+goog.fs.FileSystemImpl.prototype.getBrowserFileSystem = function () {
   return this.fs_;
 };

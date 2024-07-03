@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.style.transformTest');
-goog.setTestOnly();
 
 const TagName = goog.require('goog.dom.TagName');
 const dom = goog.require('goog.dom');
@@ -18,7 +17,7 @@ const userAgent = goog.require('goog.userAgent');
  * Floating point equality tolerance.
  * @const {number}
  */
-const EPSILON = .0001;
+const EPSILON = 0.0001;
 
 /**
  * Element being transformed.
@@ -32,8 +31,7 @@ let element;
  * @param {number} y The vertical translation
  */
 const setAndAssertTranslation = (x, y) => {
-  if (userAgent.GECKO ||
-      userAgent.IE && !userAgent.isDocumentModeOrHigher(10)) {
+  if (userAgent.GECKO || (userAgent.IE && !userAgent.isDocumentModeOrHigher(10))) {
     // Mozilla and <IE10 do not support CSSMatrix.
     return;
   }
@@ -51,8 +49,7 @@ const setAndAssertTranslation = (x, y) => {
  * @param {number} z The depth scale
  */
 const setAndAssertScale = (x, y, z) => {
-  if (userAgent.GECKO ||
-      userAgent.IE && !userAgent.isDocumentModeOrHigher(10)) {
+  if (userAgent.GECKO || (userAgent.IE && !userAgent.isDocumentModeOrHigher(10))) {
     // Mozilla and <IE10 do not support CSSMatrix.
     return;
   }
@@ -73,8 +70,7 @@ const setAndAssertScale = (x, y, z) => {
  * @suppress {visibility} suppression added to enable type checking
  */
 const setAndAssertRotation = (expectedDegrees, opt_transform) => {
-  if (userAgent.GECKO ||
-      userAgent.IE && !userAgent.isDocumentModeOrHigher(10)) {
+  if (userAgent.GECKO || (userAgent.IE && !userAgent.isDocumentModeOrHigher(10))) {
     // Mozilla and <IE10 do not support CSSMatrix.
     return;
   }

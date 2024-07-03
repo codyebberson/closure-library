@@ -8,7 +8,6 @@
  * @fileoverview Utilities for window manipulation.
  */
 
-
 goog.provide('goog.window');
 
 goog.require('goog.dom');
@@ -22,13 +21,11 @@ goog.require('goog.string.Const');
 goog.require('goog.userAgent');
 goog.requireType('goog.string.TypedString');
 
-
 /**
  * Default height for popup windows
  * @type {number}
  */
 goog.window.DEFAULT_POPUP_HEIGHT = 500;
-
 
 /**
  * Default width for popup windows
@@ -36,23 +33,18 @@ goog.window.DEFAULT_POPUP_HEIGHT = 500;
  */
 goog.window.DEFAULT_POPUP_WIDTH = 690;
 
-
 /**
  * Default target for popup windows
  * @type {string}
  */
 goog.window.DEFAULT_POPUP_TARGET = 'google_popup';
 
-
 /**
  * @return {!Window}
  * @suppress {checkTypes}
  * @private
  */
-goog.window.createFakeWindow_ = function() {
-  'use strict';
-  return /** @type {!Window} */ ({});
-};
+goog.window.createFakeWindow_ = () => ({});
 
 /**
  * Opens a new window.
@@ -93,8 +85,7 @@ goog.window.createFakeWindow_ = function() {
  *                  object is a emulated Window object that functions as if
  *                  a cross-origin window has been opened.
  */
-goog.window.open = function(linkRef, opt_options, opt_parentWin) {
-  'use strict';
+goog.window.open = (linkRef, opt_options, opt_parentWin) => {
   if (!opt_options) {
     opt_options = {};
   }
@@ -114,8 +105,7 @@ goog.window.open = function(linkRef, opt_options, opt_parentWin) {
      * @type {string|!goog.string.TypedString}
      * @suppress {missingProperties}
      */
-    var url =
-        typeof linkRef.href != 'undefined' ? linkRef.href : String(linkRef);
+    var url = typeof linkRef.href != 'undefined' ? linkRef.href : String(linkRef);
     safeLinkRef = goog.html.SafeUrl.sanitize(url);
   }
 
@@ -142,7 +132,8 @@ goog.window.open = function(linkRef, opt_options, opt_parentWin) {
       // this case so that callers can make a decision as to what they want to
       // do here.
       throw new Error(
-          'Cannot use the noreferrer option on a page that sets a referrer-policy of `unsafe-url` in modern browsers!');
+        'Cannot use the noreferrer option on a page that sets a referrer-policy of `unsafe-url` in modern browsers!'
+      );
     }
     // Any browser that supports COOP defaults to a referrer policy that hides
     // the full URL. So we don't need to explicitly hide the referrer ourselves
@@ -175,8 +166,13 @@ goog.window.open = function(linkRef, opt_options, opt_parentWin) {
   var optionString = sb.join(',');
 
   var newWin;
-  if (goog.labs.userAgent.platform.isIos() && parentWin.navigator &&
-      parentWin.navigator['standalone'] && target && target != '_self') {
+  if (
+    goog.labs.userAgent.platform.isIos() &&
+    parentWin.navigator &&
+    parentWin.navigator['standalone'] &&
+    target &&
+    target != '_self'
+  ) {
     // iOS in standalone mode disregards "target" in window.open and always
     // opens new URL in the same window. The workaround is to create an "A"
     // element and send a click event to it.
@@ -192,11 +188,12 @@ goog.window.open = function(linkRef, opt_options, opt_parentWin) {
 
     var click = /** @type {!MouseEvent} */ (document.createEvent('MouseEvent'));
     click.initMouseEvent(
-        'click',
-        true,  // canBubble
-        true,  // cancelable
-        parentWin,
-        1);  // detail = mousebutton
+      'click',
+      true, // canBubble
+      true, // cancelable
+      parentWin,
+      1
+    ); // detail = mousebutton
     a.dispatchEvent(click);
     // New window is not available in this case. Instead, a fake Window object
     // is returned. In particular, it will have window.document undefined. In
@@ -240,8 +237,7 @@ goog.window.open = function(linkRef, opt_options, opt_parentWin) {
         // do the wrong thing in only rare cases.
         // ugh.
         if (goog.string.contains(sanitizedLinkRef, ';')) {
-          sanitizedLinkRef =
-              '\'' + sanitizedLinkRef.replace(/'/g, '%27') + '\'';
+          sanitizedLinkRef = "'" + sanitizedLinkRef.replace(/'/g, '%27') + "'";
         }
       }
       newWin.opener = null;
@@ -256,7 +252,7 @@ goog.window.open = function(linkRef, opt_options, opt_parentWin) {
       //   later try and assign to the window's location, as about:blank is now
       //   cross-origin from this window).
       if (sanitizedLinkRef === '') {
-        sanitizedLinkRef = 'javascript:\'\'';
+        sanitizedLinkRef = "javascript:''";
       }
       // TODO(rjamet): Building proper SafeHtml with SafeHtml.createMetaRefresh
       // pulls in a lot of compiled code, which is composed of various unneeded
@@ -264,14 +260,13 @@ goog.window.open = function(linkRef, opt_options, opt_parentWin) {
       // keep the unchecked conversion until we figure out how to make the
       // dependencies of createSafeHtmlTagSecurityPrivateDoNotAccessOrElse less
       // heavy.
-      var safeHtml =
-          goog.html.uncheckedconversions
-              .safeHtmlFromStringKnownToSatisfyTypeContract(
-                  goog.string.Const.from(
-                      'b/12014412, meta tag with sanitized URL'),
-                  '<meta name="referrer" content="no-referrer">' +
-                      '<meta http-equiv="refresh" content="0; url=' +
-                      goog.string.htmlEscape(sanitizedLinkRef) + '">');
+      var safeHtml = goog.html.uncheckedconversions.safeHtmlFromStringKnownToSatisfyTypeContract(
+        goog.string.Const.from('b/12014412, meta tag with sanitized URL'),
+        '<meta name="referrer" content="no-referrer">' +
+          '<meta http-equiv="refresh" content="0; url=' +
+          goog.string.htmlEscape(sanitizedLinkRef) +
+          '">'
+      );
 
       // During window loading `newWin.document` may be unset in some browsers.
       // Storing and checking a reference to the document prevents NPEs.
@@ -282,8 +277,7 @@ goog.window.open = function(linkRef, opt_options, opt_parentWin) {
       }
     }
   } else {
-    newWin = goog.dom.safe.openInWindow(
-        safeLinkRef, parentWin, target, optionString);
+    newWin = goog.dom.safe.openInWindow(safeLinkRef, parentWin, target, optionString);
     // Passing in 'noopener' into the 'windowFeatures' param of window.open(...)
     // will yield a feature-deprived browser. This is an known issue, tracked
     // here: https://github.com/whatwg/html/issues/1902
@@ -301,7 +295,6 @@ goog.window.open = function(linkRef, opt_options, opt_parentWin) {
   // newWin is null if a popup blocker prevented the window open.
   return newWin;
 };
-
 
 /**
  * Opens a new window without any real content in it.
@@ -328,10 +321,8 @@ goog.window.open = function(linkRef, opt_options, opt_parentWin) {
  *                  null if a popup blocker prevented the window from being
  *                  opened.
  */
-goog.window.openBlank = function(opt_message, opt_options, opt_parentWin) {
-  'use strict';
-  const win =
-      /** @type {?Window} */ (goog.window.open('', opt_options, opt_parentWin));
+goog.window.openBlank = (opt_message, opt_options, opt_parentWin) => {
+  const win = /** @type {?Window} */ (goog.window.open('', opt_options, opt_parentWin));
   if (win && opt_message) {
     const body = win.document.body;
     if (body) {
@@ -342,7 +333,6 @@ goog.window.openBlank = function(opt_message, opt_options, opt_parentWin) {
   }
   return win;
 };
-
 
 /**
  * Raise a help popup window, defaulting to "Google standard" size and name.
@@ -365,19 +355,16 @@ goog.window.openBlank = function(opt_message, opt_options, opt_parentWin) {
  *
  * @return {boolean} true if the window was not popped up, false if it was.
  */
-goog.window.popup = function(linkRef, opt_options) {
-  'use strict';
+goog.window.popup = (linkRef, opt_options) => {
   if (!opt_options) {
     opt_options = {};
   }
 
   // set default properties
-  opt_options['target'] = opt_options['target'] || linkRef['target'] ||
-      goog.window.DEFAULT_POPUP_TARGET;
-  opt_options['width'] =
-      opt_options['width'] || goog.window.DEFAULT_POPUP_WIDTH;
-  opt_options['height'] =
-      opt_options['height'] || goog.window.DEFAULT_POPUP_HEIGHT;
+  opt_options['target'] =
+    opt_options['target'] || linkRef['target'] || goog.window.DEFAULT_POPUP_TARGET;
+  opt_options['width'] = opt_options['width'] || goog.window.DEFAULT_POPUP_WIDTH;
+  opt_options['height'] = opt_options['height'] || goog.window.DEFAULT_POPUP_HEIGHT;
 
   var newWin = goog.window.open(linkRef, opt_options);
   if (!newWin) {

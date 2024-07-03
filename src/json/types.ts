@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Description of this file.
  */
@@ -19,7 +18,6 @@ goog.module('goog.json.types');
  * @typedef {function(this:Object, string, *): *}
  */
 exports.Replacer;
-
 
 /**
  * JSON reviver, as defined in Section 15.12.2 of the ES5 spec.

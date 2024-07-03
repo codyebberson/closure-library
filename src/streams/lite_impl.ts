@@ -12,7 +12,7 @@ goog.module('goog.streams.liteImpl');
 
 const NativeResolver = goog.require('goog.promise.NativeResolver');
 const liteTypes = goog.require('goog.streams.liteTypes');
-const {assert, assertFunction} = goog.require('goog.asserts');
+const { assert, assertFunction } = goog.require('goog.asserts');
 
 /**
  * The lite implementation of ReadableStream.
@@ -61,7 +61,7 @@ class ReadableStream {
    * @override
    */
   getReader() {
-    return this.reader = new ReadableStreamDefaultReader(this);
+    return (this.reader = new ReadableStreamDefaultReader(this));
   }
 
   /**
@@ -81,7 +81,7 @@ class ReadableStream {
       return;
     }
     for (const readRequest of this.reader.readRequests) {
-      readRequest.resolve({value: undefined, done: true});
+      readRequest.resolve({ value: undefined, done: true });
     }
     this.reader.readRequests = [];
     this.reader.closedResolver.resolve();
@@ -112,7 +112,7 @@ class ReadableStream {
    */
   fulfillReadRequest(chunk, done) {
     const readRequest = assert(this.reader).readRequests.shift();
-    readRequest.resolve({value: chunk, done});
+    readRequest.resolve({ value: chunk, done });
   }
 
   /**
@@ -151,27 +151,27 @@ ReadableStream.State = {
  */
 function newReadableStream(underlyingSource) {
   assertFunction(
-      underlyingSource.start,
-      `'start' property must be a function on an underlying source for a ` +
-          'lite ReadableStream');
-  const verifyObject =
-      /** @type {!Object} */ (underlyingSource);
+    underlyingSource.start,
+    `'start' property must be a function on an underlying source for a ` + 'lite ReadableStream'
+  );
+  const verifyObject = /** @type {!Object} */ (underlyingSource);
   assert(
-      !(verifyObject.pull),
-      `'pull' property not allowed on an underlying source for a ` +
-          'lite ReadableStream');
+    !verifyObject.pull,
+    `'pull' property not allowed on an underlying source for a ` + 'lite ReadableStream'
+  );
   assert(
-      !(verifyObject.cancel),
-      `'cancel' property not allowed on an underlying source for a ` +
-          'lite ReadableStream');
+    !verifyObject.cancel,
+    `'cancel' property not allowed on an underlying source for a ` + 'lite ReadableStream'
+  );
   assert(
-      !(verifyObject.type),
-      `'type' property not allowed on an underlying source for a ` +
-          'lite ReadableStream');
+    !verifyObject.type,
+    `'type' property not allowed on an underlying source for a ` + 'lite ReadableStream'
+  );
   assert(
-      !(verifyObject.autoAllocateChunkSize),
-      `'autoAllocateChunkSize' property not allowed on an underlying ` +
-          'source for a lite ReadableStream');
+    !verifyObject.autoAllocateChunkSize,
+    `'autoAllocateChunkSize' property not allowed on an underlying ` +
+      'source for a lite ReadableStream'
+  );
   const startAlgorithm = (controller) => underlyingSource.start(controller);
   const stream = new ReadableStream();
   const controller = new ReadableStreamDefaultController(stream);
@@ -196,8 +196,9 @@ class ReadableStreamDefaultReader {
   constructor(stream) {
     if (stream.reader) {
       throw new TypeError(
-          'ReadableStreamReader constructor can only accept readable streams ' +
-          'that are not yet locked to a reader');
+        'ReadableStreamReader constructor can only accept readable streams ' +
+          'that are not yet locked to a reader'
+      );
     }
     /** @package {!ReadableStream|undefined} */
     this.ownerReadableStream = stream;
@@ -238,8 +239,9 @@ class ReadableStreamDefaultReader {
   read() {
     if (!this.ownerReadableStream) {
       throw new TypeError(
-          'This readable stream reader has been released and cannot be used ' +
-          'to read from its previous owner stream');
+        'This readable stream reader has been released and cannot be used ' +
+          'to read from its previous owner stream'
+      );
     }
     return this.readInternal();
   }
@@ -257,8 +259,9 @@ class ReadableStreamDefaultReader {
     }
     if (this.readRequests.length) {
       throw new TypeError(
-          'Cannot release a readable stream reader when it still has ' +
-          'outstanding read() calls that have not yet settled');
+        'Cannot release a readable stream reader when it still has ' +
+          'outstanding read() calls that have not yet settled'
+      );
     }
     this.release();
   }
@@ -267,8 +270,9 @@ class ReadableStreamDefaultReader {
   release() {
     const stream = assert(this.ownerReadableStream);
     const e = new TypeError(
-        'This readable stream reader has been released and cannot be used ' +
-        `to monitor the stream's state`);
+      'This readable stream reader has been released and cannot be used ' +
+        `to monitor the stream's state`
+    );
     if (stream.state === ReadableStream.State.READABLE) {
       this.closedResolver.promise.catch(() => {});
       this.closedResolver.reject(e);
@@ -288,7 +292,7 @@ class ReadableStreamDefaultReader {
   readInternal() {
     const stream = assert(this.ownerReadableStream);
     if (stream.state === ReadableStream.State.CLOSED) {
-      return Promise.resolve({value: undefined, done: true});
+      return Promise.resolve({ value: undefined, done: true });
     }
     if (stream.state === ReadableStream.State.ERRORED) {
       return Promise.reject(stream.storedError);
@@ -330,8 +334,8 @@ class ReadableStreamDefaultController {
   close() {
     if (!this.canCloseOrEnqueue()) {
       throw new TypeError(
-          'Cannot close a readable stream that has already been requested to ' +
-          'be closed');
+        'Cannot close a readable stream that has already been requested to ' + 'be closed'
+      );
     }
     this.closeInternal();
   }
@@ -345,8 +349,8 @@ class ReadableStreamDefaultController {
   enqueue(chunk) {
     if (!this.canCloseOrEnqueue()) {
       throw new TypeError(
-          'Cannot enqueue a readable stream that has already been requested ' +
-          'to be closed');
+        'Cannot enqueue a readable stream that has already been requested ' + 'to be closed'
+      );
     }
     this.enqueueInternal(chunk);
   }
@@ -368,14 +372,14 @@ class ReadableStreamDefaultController {
    * @package
    */
   start(startAlgorithm) {
-    Promise.resolve(startAlgorithm(this))
-        .then(
-            () => {
-              this.started();
-            },
-            (e) => {
-              this.errorInternal(e);
-            });
+    Promise.resolve(startAlgorithm(this)).then(
+      () => {
+        this.started();
+      },
+      (e) => {
+        this.errorInternal(e);
+      }
+    );
   }
 
   /**
@@ -391,7 +395,7 @@ class ReadableStreamDefaultController {
       } else {
         this.callPullIfNeeded();
       }
-      return Promise.resolve({value: chunk, done: false});
+      return Promise.resolve({ value: chunk, done: false });
     }
     const promise = this.controlledReadableStream.addReadRequest();
     this.callPullIfNeeded();
@@ -423,10 +427,11 @@ class ReadableStreamDefaultController {
    * @package
    */
   enqueueInternal(chunk) {
-    if (this.controlledReadableStream.locked &&
-        this.controlledReadableStream.getNumReadRequests() > 0) {
-      this.controlledReadableStream.fulfillReadRequest(
-          chunk, /* done= */ false);
+    if (
+      this.controlledReadableStream.locked &&
+      this.controlledReadableStream.getNumReadRequests() > 0
+    ) {
+      this.controlledReadableStream.fulfillReadRequest(chunk, /* done= */ false);
       return;
     }
     this.enqueueIntoQueue(chunk);
@@ -450,8 +455,9 @@ class ReadableStreamDefaultController {
    * @package
    */
   canCloseOrEnqueue() {
-    return !this.closeRequested &&
-        this.controlledReadableStream.state === ReadableStream.State.READABLE;
+    return (
+      !this.closeRequested && this.controlledReadableStream.state === ReadableStream.State.READABLE
+    );
   }
 
   /**

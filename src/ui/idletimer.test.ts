@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.IdleTimerTest');
-goog.setTestOnly();
 
 const IdleTimer = goog.require('goog.ui.IdleTimer');
 const MockActivityMonitor = goog.require('goog.ui.MockActivityMonitor');

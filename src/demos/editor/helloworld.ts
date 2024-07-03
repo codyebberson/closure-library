@@ -18,8 +18,6 @@ goog.require('goog.dom');
 goog.require('goog.dom.TagName');
 goog.require('goog.editor.Plugin');
 
-
-
 /**
  * Plugin to insert 'Hello World!' into an editable field.
  * @final
@@ -52,18 +50,15 @@ goog.demos.editor.HelloWorld = class extends goog.editor.Plugin {
     const domHelper = this.getFieldObject().getEditableDomHelper();
     const range = this.getFieldObject().getRange();
     range.removeContents();
-    const newNode =
-        domHelper.createDom(goog.dom.TagName.SPAN, null, 'Hello World!');
+    const newNode = domHelper.createDom(goog.dom.TagName.SPAN, null, 'Hello World!');
     range.insertNode(newNode, false);
   }
 };
-
-
 
 /**
  * Commands implemented by this plugin.
  * @enum {string}
  */
 goog.demos.editor.HelloWorld.COMMAND = {
-  HELLO_WORLD: '+helloWorld'
+  HELLO_WORLD: '+helloWorld',
 };

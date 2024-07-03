@@ -35,8 +35,6 @@ goog.require('goog.events.EventType');
 goog.require('goog.ui.Component');
 goog.requireType('goog.events.BrowserEvent');
 
-
-
 /**
  * A UI Control used for rating things, i.e. videos on Google Video.
  * @param {Array<string>=} opt_ratings Ratings. Default: [1,2,3,4,5].
@@ -44,8 +42,7 @@ goog.requireType('goog.events.BrowserEvent');
  * @constructor
  * @extends {goog.ui.Component}
  */
-goog.ui.Ratings = function(opt_ratings, opt_domHelper) {
-  'use strict';
+goog.ui.Ratings = function (opt_ratings, opt_domHelper) {
   goog.ui.Component.call(this, opt_domHelper);
 
   /**
@@ -62,7 +59,6 @@ goog.ui.Ratings = function(opt_ratings, opt_domHelper) {
    */
   this.stars_ = [];
 
-
   // Awkward name because the obvious name is taken by subclasses already.
   /**
    * Whether the control is enabled.
@@ -71,7 +67,6 @@ goog.ui.Ratings = function(opt_ratings, opt_domHelper) {
    */
   this.isEnabled_ = true;
 
-
   /**
    * The last index to be highlighted
    * @type {number}
@@ -79,14 +74,12 @@ goog.ui.Ratings = function(opt_ratings, opt_domHelper) {
    */
   this.highlightedIndex_ = -1;
 
-
   /**
    * The currently selected index
    * @type {number}
    * @private
    */
   this.selectedIndex_ = -1;
-
 
   /**
    * An attached form field to set the value to
@@ -97,14 +90,12 @@ goog.ui.Ratings = function(opt_ratings, opt_domHelper) {
 };
 goog.inherits(goog.ui.Ratings, goog.ui.Component);
 
-
 /**
  * Default CSS class to be applied to the root element of components rendered
  * by this renderer.
  * @type {string}
  */
 goog.ui.Ratings.CSS_CLASS = goog.getCssName('goog-ratings');
-
 
 /**
  * Enums for Ratings event type.
@@ -114,9 +105,8 @@ goog.ui.Ratings.EventType = {
   CHANGE: 'change',
   HIGHLIGHT_CHANGE: 'highlightchange',
   HIGHLIGHT: 'highlight',
-  UNHIGHLIGHT: 'unhighlight'
+  UNHIGHLIGHT: 'unhighlight',
 };
-
 
 /**
  * Decorate a HTML structure already in the document.  Expects the structure:
@@ -135,14 +125,10 @@ goog.ui.Ratings.EventType = {
  * @param {Element} el Div element to decorate.
  * @override
  */
-goog.ui.Ratings.prototype.decorateInternal = function(el) {
-  'use strict';
-  var select = goog.dom.getElementsByTagName(
-      goog.dom.TagName.SELECT, goog.asserts.assert(el))[0];
+goog.ui.Ratings.prototype.decorateInternal = function (el) {
+  var select = goog.dom.getElementsByTagName(goog.dom.TagName.SELECT, goog.asserts.assert(el))[0];
   if (!select) {
-    throw new Error(
-        'Can not decorate ' + el + ', with Ratings. Must ' +
-        'contain select box');
+    throw new Error('Can not decorate ' + el + ', with Ratings. Must ' + 'contain select box');
   }
   this.ratings_.length = 0;
   for (var i = 0, n = select.options.length; i < n; i++) {
@@ -156,15 +142,13 @@ goog.ui.Ratings.prototype.decorateInternal = function(el) {
   el.insertBefore(/** @type {!Node} */ (this.getElement()), select);
 };
 
-
 /**
  * Render the rating widget inside the provided element. This will override the
  * current content of the element.
  * @override
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.ui.Ratings.prototype.enterDocument = function() {
-  'use strict';
+goog.ui.Ratings.prototype.enterDocument = function () {
   var el = this.getElement();
   goog.asserts.assert(el, 'The DOM element for ratings cannot be null.');
   goog.ui.Ratings.base(this, 'enterDocument');
@@ -180,9 +164,9 @@ goog.ui.Ratings.prototype.enterDocument = function() {
   // Create the elements for the stars
   for (var i = 0; i < this.ratings_.length; i++) {
     var star = this.getDomHelper().createDom(goog.dom.TagName.SPAN, {
-      'title': this.ratings_[i],
-      'class': this.getClassName_(i, false),
-      'index': i
+      title: this.ratings_[i],
+      class: this.getClassName_(i, false),
+      index: i,
     });
     this.stars_.push(star);
     el.appendChild(star);
@@ -195,15 +179,13 @@ goog.ui.Ratings.prototype.enterDocument = function() {
   this.highlightIndex_(this.selectedIndex_);
 };
 
-
 /**
  * Should be called when the widget is removed from the document but may be
  * reused.  This removes all the listeners the widget has attached and destroys
  * the DOM nodes it uses.
  * @override
  */
-goog.ui.Ratings.prototype.exitDocument = function() {
-  'use strict';
+goog.ui.Ratings.prototype.exitDocument = function () {
   goog.ui.Ratings.superClass_.exitDocument.call(this);
   for (var i = 0; i < this.stars_.length; i++) {
     this.getDomHelper().removeNode(this.stars_[i]);
@@ -211,145 +193,114 @@ goog.ui.Ratings.prototype.exitDocument = function() {
   this.stars_.length = 0;
 };
 
-
 /** @override */
-goog.ui.Ratings.prototype.disposeInternal = function() {
-  'use strict';
+goog.ui.Ratings.prototype.disposeInternal = function () {
   goog.ui.Ratings.superClass_.disposeInternal.call(this);
   this.ratings_.length = 0;
 };
-
 
 /**
  * Returns the base CSS class used by subcomponents of this component.
  * @return {string} Component-specific CSS class.
  */
-goog.ui.Ratings.prototype.getCssClass = function() {
-  'use strict';
-  return goog.ui.Ratings.CSS_CLASS;
-};
-
+goog.ui.Ratings.prototype.getCssClass = () => goog.ui.Ratings.CSS_CLASS;
 
 /**
  * Sets the selected index. If the provided index is greater than the number of
  * ratings then the max is set.  0 is the first item, -1 is no selection.
  * @param {number} index The index of the rating to select.
  */
-goog.ui.Ratings.prototype.setSelectedIndex = function(index) {
-  'use strict';
+goog.ui.Ratings.prototype.setSelectedIndex = function (index) {
   index = Math.max(-1, Math.min(index, this.ratings_.length - 1));
   if (index != this.selectedIndex_) {
     this.selectedIndex_ = index;
     this.highlightIndex_(this.selectedIndex_);
     if (this.attachedFormField_) {
       if (this.attachedFormField_.tagName == goog.dom.TagName.SELECT) {
-        /** @type {!HTMLSelectElement} */ (this.attachedFormField_)
-            .selectedIndex = index;
+        /** @type {!HTMLSelectElement} */ (this.attachedFormField_).selectedIndex = index;
       } else {
-        this.attachedFormField_.value =
-            /** @type {string} */ (this.getValue());
+        this.attachedFormField_.value = /** @type {string} */ (this.getValue());
       }
       var ratingsElement = this.getElement();
-      goog.asserts.assert(
-          ratingsElement, 'The DOM ratings element cannot be null.');
-      goog.a11y.aria.setState(
-          ratingsElement, goog.a11y.aria.State.VALUENOW, this.ratings_[index]);
+      goog.asserts.assert(ratingsElement, 'The DOM ratings element cannot be null.');
+      goog.a11y.aria.setState(ratingsElement, goog.a11y.aria.State.VALUENOW, this.ratings_[index]);
     }
     this.dispatchEvent(goog.ui.Ratings.EventType.CHANGE);
   }
 };
 
-
 /**
  * @return {number} The index of the currently selected rating.
  */
-goog.ui.Ratings.prototype.getSelectedIndex = function() {
-  'use strict';
+goog.ui.Ratings.prototype.getSelectedIndex = function () {
   return this.selectedIndex_;
 };
-
 
 /**
  * Returns the rating value of the currently selected rating
  * @return {?string} The value of the currently selected rating (or null).
  */
-goog.ui.Ratings.prototype.getValue = function() {
-  'use strict';
+goog.ui.Ratings.prototype.getValue = function () {
   return this.selectedIndex_ == -1 ? null : this.ratings_[this.selectedIndex_];
 };
-
 
 /**
  * Returns the index of the currently highlighted rating, -1 if the mouse isn't
  * currently over the widget
  * @return {number} The index of the currently highlighted rating.
  */
-goog.ui.Ratings.prototype.getHighlightedIndex = function() {
-  'use strict';
+goog.ui.Ratings.prototype.getHighlightedIndex = function () {
   return this.highlightedIndex_;
 };
-
 
 /**
  * Returns the value of the currently highlighted rating, null if the mouse
  * isn't currently over the widget
  * @return {?string} The value of the currently highlighted rating, or null.
  */
-goog.ui.Ratings.prototype.getHighlightedValue = function() {
-  'use strict';
-  return this.highlightedIndex_ == -1 ? null :
-                                        this.ratings_[this.highlightedIndex_];
+goog.ui.Ratings.prototype.getHighlightedValue = function () {
+  return this.highlightedIndex_ == -1 ? null : this.ratings_[this.highlightedIndex_];
 };
-
 
 /**
  * Sets the array of ratings that the comonent
  * @param {Array<string>} ratings Array of value to use as ratings.
  */
-goog.ui.Ratings.prototype.setRatings = function(ratings) {
-  'use strict';
+goog.ui.Ratings.prototype.setRatings = function (ratings) {
   this.ratings_ = ratings;
   // TODO(user): If rendered update stars
 };
-
 
 /**
  * Gets the array of ratings that the component
  * @return {Array<string>} Array of ratings.
  */
-goog.ui.Ratings.prototype.getRatings = function() {
-  'use strict';
+goog.ui.Ratings.prototype.getRatings = function () {
   return this.ratings_;
 };
-
 
 /**
  * Attaches an input or select element to the ratings widget. The value or
  * index of the field will be updated along with the ratings widget.
  * @param {HTMLSelectElement|HTMLInputElement} field The field to attach to.
  */
-goog.ui.Ratings.prototype.setAttachedFormField = function(field) {
-  'use strict';
+goog.ui.Ratings.prototype.setAttachedFormField = function (field) {
   this.attachedFormField_ = field;
 };
-
 
 /**
  * Returns the attached input or select element to the ratings widget.
  * @return {HTMLSelectElement|HTMLInputElement|null} The attached form field.
  */
-goog.ui.Ratings.prototype.getAttachedFormField = function() {
-  'use strict';
+goog.ui.Ratings.prototype.getAttachedFormField = function () {
   return this.attachedFormField_;
 };
-
 
 /**
  * Enables or disables the ratings control.
  * @param {boolean} enable Whether to enable or disable the control.
  */
-goog.ui.Ratings.prototype.setEnabled = function(enable) {
-  'use strict';
+goog.ui.Ratings.prototype.setEnabled = function (enable) {
   this.isEnabled_ = enable;
   if (!enable) {
     // Undo any highlighting done during mouseover when disabling the control
@@ -358,15 +309,12 @@ goog.ui.Ratings.prototype.setEnabled = function(enable) {
   }
 };
 
-
 /**
  * @return {boolean} Whether the ratings control is enabled.
  */
-goog.ui.Ratings.prototype.isEnabled = function() {
-  'use strict';
+goog.ui.Ratings.prototype.isEnabled = function () {
   return this.isEnabled_;
 };
-
 
 /**
  * Handle the mouse moving over a star.
@@ -374,8 +322,7 @@ goog.ui.Ratings.prototype.isEnabled = function() {
  * @private
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.ui.Ratings.prototype.onMouseOver_ = function(e) {
-  'use strict';
+goog.ui.Ratings.prototype.onMouseOver_ = function (e) {
   if (!this.isEnabled()) {
     return;
   }
@@ -390,30 +337,26 @@ goog.ui.Ratings.prototype.onMouseOver_ = function(e) {
   }
 };
 
-
 /**
  * Handle the mouse moving over a star.
  * @param {goog.events.BrowserEvent} e The browser event.
  * @private
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.ui.Ratings.prototype.onMouseOut_ = function(e) {
-  'use strict';
+goog.ui.Ratings.prototype.onMouseOut_ = function (e) {
   // Only remove the highlight if the mouse is not moving to another star
   if (e.relatedTarget && e.relatedTarget.index === undefined) {
     this.resetHighlights_();
   }
 };
 
-
 /**
  * Handle the mouse moving over a star.
  * @param {goog.events.BrowserEvent} e The browser event.
  * @private
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.ui.Ratings.prototype.onClick_ = function(e) {
-  'use strict';
+goog.ui.Ratings.prototype.onClick_ = function (e) {
   if (!this.isEnabled()) {
     return;
   }
@@ -423,70 +366,63 @@ goog.ui.Ratings.prototype.onClick_ = function(e) {
   }
 };
 
-
 /**
  * Handle the key down event. 0 = unselected in this case, 1 = the first rating
  * @param {goog.events.BrowserEvent} e The browser event.
  * @private
  */
-goog.ui.Ratings.prototype.onKeyDown_ = function(e) {
-  'use strict';
+goog.ui.Ratings.prototype.onKeyDown_ = function (e) {
   if (!this.isEnabled()) {
     return;
   }
   switch (e.keyCode) {
-    case 27:  // esc
+    case 27: // esc
       this.setSelectedIndex(-1);
       break;
-    case 36:  // home
+    case 36: // home
       this.setSelectedIndex(0);
       break;
-    case 35:  // end
+    case 35: // end
       this.setSelectedIndex(this.ratings_.length);
       break;
-    case 37:  // left arrow
+    case 37: // left arrow
       this.setSelectedIndex(this.getSelectedIndex() - 1);
       break;
-    case 39:  // right arrow
+    case 39: // right arrow
       this.setSelectedIndex(this.getSelectedIndex() + 1);
       break;
     default:
       // Detected a numeric key stroke, such as 0 - 9.  0 clears, 1 is first
       // star, 9 is 9th star or last if there are less than 9 stars.
-      var num = parseInt(String.fromCharCode(e.keyCode), 10);
+      var num = Number.parseInt(String.fromCharCode(e.keyCode), 10);
       if (!isNaN(num)) {
         this.setSelectedIndex(num - 1);
       }
   }
 };
 
-
 /**
  * Resets the highlights to the selected rating to undo highlights due to hover
  * effects.
  * @private
  */
-goog.ui.Ratings.prototype.resetHighlights_ = function() {
-  'use strict';
+goog.ui.Ratings.prototype.resetHighlights_ = function () {
   this.highlightIndex_(this.selectedIndex_);
   this.highlightedIndex_ = -1;
   this.dispatchEvent(goog.ui.Ratings.EventType.HIGHLIGHT_CHANGE);
   this.dispatchEvent(goog.ui.Ratings.EventType.UNHIGHLIGHT);
 };
 
-
 /**
  * Highlights the ratings up to a specific index
  * @param {number} n Index to highlight.
  * @private
  */
-goog.ui.Ratings.prototype.highlightIndex_ = function(n) {
-  'use strict';
-  for (var i = 0, star; star = this.stars_[i]; i++) {
+goog.ui.Ratings.prototype.highlightIndex_ = function (n) {
+  for (var i = 0, star; (star = this.stars_[i]); i++) {
     goog.dom.classlist.set(star, this.getClassName_(i, i <= n));
   }
 };
-
 
 /**
  * Get the class name for a given rating.  All stars have the class:
@@ -503,8 +439,7 @@ goog.ui.Ratings.prototype.highlightIndex_ = function(n) {
  * @return {string} The class name.
  * @private
  */
-goog.ui.Ratings.prototype.getClassName_ = function(i, on) {
-  'use strict';
+goog.ui.Ratings.prototype.getClassName_ = function (i, on) {
   var className;
   var enabledClassName;
   var baseClass = this.getCssClass();
@@ -529,6 +464,5 @@ goog.ui.Ratings.prototype.getClassName_ = function(i, on) {
     enabledClassName = goog.getCssName(baseClass, 'disabled');
   }
 
-  return goog.getCssName(baseClass, 'star') + ' ' + className + ' ' +
-      enabledClassName;
+  return goog.getCssName(baseClass, 'star') + ' ' + className + ' ' + enabledClassName;
 };

@@ -19,7 +19,6 @@ const Wire = goog.require('goog.labs.net.webChannel.Wire');
 const array = goog.require('goog.array');
 const googString = goog.require('goog.string');
 
-
 /**
  * This class represents the state of all forward channel requests.
  *
@@ -27,14 +26,13 @@ const googString = goog.require('goog.string');
  *
  * @struct @constructor @final
  */
-const ForwardChannelRequestPool = function(opt_maxPoolSize) {
+const ForwardChannelRequestPool = function (opt_maxPoolSize) {
   /**
    * The max pool size as configured.
    *
    * @private {number}
    */
-  this.maxPoolSizeConfigured_ =
-      opt_maxPoolSize || ForwardChannelRequestPool.MAX_POOL_SIZE_;
+  this.maxPoolSizeConfigured_ = opt_maxPoolSize || ForwardChannelRequestPool.MAX_POOL_SIZE_;
 
   /**
    * The current size limit of the request pool. This limit is meant to be
@@ -45,9 +43,9 @@ const ForwardChannelRequestPool = function(opt_maxPoolSize) {
    *
    * @private {number}
    */
-  this.maxSize_ = ForwardChannelRequestPool.isSpdyOrHttp2Enabled_() ?
-      this.maxPoolSizeConfigured_ :
-      1;
+  this.maxSize_ = ForwardChannelRequestPool.isSpdyOrHttp2Enabled_()
+    ? this.maxPoolSizeConfigured_
+    : 1;
 
   /**
    * The container for all the pending request objects.
@@ -75,7 +73,6 @@ const ForwardChannelRequestPool = function(opt_maxPoolSize) {
   this.pendingMessages_ = [];
 };
 
-
 /**
  * The default size limit of the request pool.
  *
@@ -83,27 +80,28 @@ const ForwardChannelRequestPool = function(opt_maxPoolSize) {
  */
 ForwardChannelRequestPool.MAX_POOL_SIZE_ = 10;
 
-
 /**
  * @return {boolean} True if SPDY or HTTP2 is enabled. Uses chrome-specific APIs
  *     as a fallback and will always return false for other browsers where
  *     PerformanceNavigationTiming is not available.
  * @private
  */
-ForwardChannelRequestPool.isSpdyOrHttp2Enabled_ = function() {
+ForwardChannelRequestPool.isSpdyOrHttp2Enabled_ = () => {
   if (goog.global.PerformanceNavigationTiming) {
     const entrys = /** @type {!Array<!PerformanceNavigationTiming>} */ (
-        goog.global.performance.getEntriesByType('navigation'));
-    return entrys.length > 0 &&
-        (entrys[0].nextHopProtocol == 'hq' ||
-         entrys[0].nextHopProtocol == 'h2');
+      goog.global.performance.getEntriesByType('navigation')
+    );
+    return (
+      entrys.length > 0 && (entrys[0].nextHopProtocol == 'hq' || entrys[0].nextHopProtocol == 'h2')
+    );
   }
   return !!(
-      goog.global.chrome && goog.global.chrome.loadTimes &&
-      goog.global.chrome.loadTimes() &&
-      goog.global.chrome.loadTimes().wasFetchedViaSpdy);
+    goog.global.chrome &&
+    goog.global.chrome.loadTimes &&
+    goog.global.chrome.loadTimes() &&
+    goog.global.chrome.loadTimes().wasFetchedViaSpdy
+  );
 };
-
 
 /**
  * Once we know the client protocol (from the handshake), check if we need
@@ -112,15 +110,16 @@ ForwardChannelRequestPool.isSpdyOrHttp2Enabled_ = function() {
  *
  * @param {string} clientProtocol The client protocol
  */
-ForwardChannelRequestPool.prototype.applyClientProtocol = function(
-    clientProtocol) {
+ForwardChannelRequestPool.prototype.applyClientProtocol = function (clientProtocol) {
   if (this.requestPool_) {
     return;
   }
 
-  if (googString.contains(clientProtocol, 'spdy') ||
-      googString.contains(clientProtocol, 'quic') ||
-      googString.contains(clientProtocol, 'h2')) {
+  if (
+    googString.contains(clientProtocol, 'spdy') ||
+    googString.contains(clientProtocol, 'quic') ||
+    googString.contains(clientProtocol, 'h2')
+  ) {
     this.maxSize_ = this.maxPoolSizeConfigured_;
     this.requestPool_ = new Set();
     if (this.request_) {
@@ -130,11 +129,10 @@ ForwardChannelRequestPool.prototype.applyClientProtocol = function(
   }
 };
 
-
 /**
  * @return {boolean} True if the pool is full.
  */
-ForwardChannelRequestPool.prototype.isFull = function() {
+ForwardChannelRequestPool.prototype.isFull = function () {
   if (this.request_) {
     return true;
   }
@@ -146,19 +144,17 @@ ForwardChannelRequestPool.prototype.isFull = function() {
   return false;
 };
 
-
 /**
  * @return {number} The current size limit.
  */
-ForwardChannelRequestPool.prototype.getMaxSize = function() {
+ForwardChannelRequestPool.prototype.getMaxSize = function () {
   return this.maxSize_;
 };
-
 
 /**
  * @return {number} The number of pending requests in the pool.
  */
-ForwardChannelRequestPool.prototype.getRequestCount = function() {
+ForwardChannelRequestPool.prototype.getRequestCount = function () {
   if (this.request_) {
     return 1;
   }
@@ -170,12 +166,11 @@ ForwardChannelRequestPool.prototype.getRequestCount = function() {
   return 0;
 };
 
-
 /**
  * @param {ChannelRequest} req The channel request.
  * @return {boolean} True if the request is a included inside the pool.
  */
-ForwardChannelRequestPool.prototype.hasRequest = function(req) {
+ForwardChannelRequestPool.prototype.hasRequest = function (req) {
   if (this.request_) {
     return this.request_ == req;
   }
@@ -187,13 +182,12 @@ ForwardChannelRequestPool.prototype.hasRequest = function(req) {
   return false;
 };
 
-
 /**
  * Adds a new request to the pool.
  *
  * @param {!ChannelRequest} req The new channel request.
  */
-ForwardChannelRequestPool.prototype.addRequest = function(req) {
+ForwardChannelRequestPool.prototype.addRequest = function (req) {
   if (this.requestPool_) {
     this.requestPool_.add(req);
   } else {
@@ -201,14 +195,13 @@ ForwardChannelRequestPool.prototype.addRequest = function(req) {
   }
 };
 
-
 /**
  * Removes the given request from the pool.
  *
  * @param {ChannelRequest} req The channel request.
  * @return {boolean} Whether the request has been removed from the pool.
  */
-ForwardChannelRequestPool.prototype.removeRequest = function(req) {
+ForwardChannelRequestPool.prototype.removeRequest = function (req) {
   if (this.request_ && this.request_ == req) {
     this.request_ = null;
     return true;
@@ -222,11 +215,10 @@ ForwardChannelRequestPool.prototype.removeRequest = function(req) {
   return false;
 };
 
-
 /**
  * Clears the pool and cancel all the pending requests.
  */
-ForwardChannelRequestPool.prototype.cancel = function() {
+ForwardChannelRequestPool.prototype.cancel = function () {
   // save any pending messages
   this.pendingMessages_ = this.getPendingMessages();
 
@@ -244,21 +236,18 @@ ForwardChannelRequestPool.prototype.cancel = function() {
   }
 };
 
-
 /**
  * @return {boolean} Whether there are any pending requests.
  */
-ForwardChannelRequestPool.prototype.hasPendingRequest = function() {
-  return (this.request_ != null) ||
-      (this.requestPool_ != null && this.requestPool_.size !== 0);
+ForwardChannelRequestPool.prototype.hasPendingRequest = function () {
+  return this.request_ != null || (this.requestPool_ != null && this.requestPool_.size !== 0);
 };
-
 
 /**
  * @return {!Array<Wire.QueuedMap>} All the pending messages from the pool,
  *     as a new array.
  */
-ForwardChannelRequestPool.prototype.getPendingMessages = function() {
+ForwardChannelRequestPool.prototype.getPendingMessages = function () {
   if (this.request_ != null) {
     return this.pendingMessages_.concat(this.request_.getPendingMessages());
   }
@@ -274,24 +263,21 @@ ForwardChannelRequestPool.prototype.getPendingMessages = function() {
   return array.clone(this.pendingMessages_);
 };
 
-
 /**
  * Records pending messages, e.g. when a request receives a failed response.
  *
  * @param {!Array<Wire.QueuedMap>} messages Pending messages.
  */
-ForwardChannelRequestPool.prototype.addPendingMessages = function(messages) {
+ForwardChannelRequestPool.prototype.addPendingMessages = function (messages) {
   this.pendingMessages_ = this.pendingMessages_.concat(messages);
 };
-
 
 /**
  * Clears any recorded pending messages.
  */
-ForwardChannelRequestPool.prototype.clearPendingMessages = function() {
+ForwardChannelRequestPool.prototype.clearPendingMessages = function () {
   this.pendingMessages_.length = 0;
 };
-
 
 /**
  * Cancels all pending requests and force the completion of channel requests.
@@ -302,7 +288,7 @@ ForwardChannelRequestPool.prototype.clearPendingMessages = function() {
  * @param {function(!ChannelRequest)} onComplete The completion callback.
  * @return {boolean} true if any request has been forced to complete.
  */
-ForwardChannelRequestPool.prototype.forceComplete = function(onComplete) {
+ForwardChannelRequestPool.prototype.forceComplete = function (onComplete) {
   if (this.request_ != null) {
     this.request_.cancel();
     onComplete(this.request_);

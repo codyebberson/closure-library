@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.vec.Vec4Test');
-goog.setTestOnly();
 
 const Vec4 = goog.require('goog.vec.Vec4');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -25,22 +24,18 @@ testSuite({
   testConstructor() {
     assertElementsEquals([0, 0, 0, 0], Vec4.createFloat32());
 
-    assertElementsEquals(
-        [1, 2, 3, 4], Vec4.createFloat32FromValues(1, 2, 3, 4));
+    assertElementsEquals([1, 2, 3, 4], Vec4.createFloat32FromValues(1, 2, 3, 4));
 
-    assertElementsEquals(
-        [1, 2, 3, 4], Vec4.createFloat32FromArray([1, 2, 3, 4]));
+    assertElementsEquals([1, 2, 3, 4], Vec4.createFloat32FromArray([1, 2, 3, 4]));
 
     const v = Vec4.createFloat32FromValues(1, 2, 3, 4);
     assertElementsEquals([1, 2, 3, 4], Vec4.cloneFloat32(v));
 
     assertElementsEquals([0, 0, 0, 0], Vec4.createFloat64());
 
-    assertElementsEquals(
-        [1, 2, 3, 4], Vec4.createFloat64FromValues(1, 2, 3, 4));
+    assertElementsEquals([1, 2, 3, 4], Vec4.createFloat64FromValues(1, 2, 3, 4));
 
-    assertElementsEquals(
-        [1, 2, 3, 4], Vec4.createFloat64FromArray([1, 2, 3, 4]));
+    assertElementsEquals([1, 2, 3, 4], Vec4.createFloat64FromArray([1, 2, 3, 4]));
 
     const w = Vec4.createFloat64FromValues(1, 2, 3, 4);
     assertElementsEquals([1, 2, 3, 4], Vec4.cloneFloat64(w));
@@ -165,7 +160,7 @@ testSuite({
     assertElementsEquals([1, 2, 3, 4], v2);
     Vec4.lerp(v2, v1, 1, v2);
     assertElementsEquals([10, 20, 30, 40], v2);
-    Vec4.lerp(v0, v1, .5, v2);
+    Vec4.lerp(v0, v1, 0.5, v2);
     assertElementsEquals([5.5, 11, 16.5, 22], v2);
   },
 

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.debug.ErrorTest');
-goog.setTestOnly();
 
 const DebugError = goog.require('goog.debug.Error');
 const ExpectedFailures = goog.require('goog.testing.ExpectedFailures');
@@ -63,7 +62,7 @@ testSuite({
     // by IE when the error was caught, it will not. Safari also will not have
     // an extra frame.
     if (!Error.captureStackTrace && !userAgent.IE && !product.SAFARI) {
-      stack.splice(1, 1);  // Remove stack[1].
+      stack.splice(1, 1); // Remove stack[1].
     }
 
     assertContains('1st line of stack should have "Error"', 'Error', stack[0]);

@@ -10,7 +10,6 @@
 
 /** @suppress {extraProvide} */
 goog.module('goog.HistoryTest');
-goog.setTestOnly();
 
 const Const = goog.require('goog.string.Const');
 const GoogHistory = goog.require('goog.History');
@@ -42,9 +41,11 @@ testSuite({
       // test to fail.
       /** @suppress {checkTypes} suppression added to enable type checking */
       const history = new GoogHistory(
-          true,
-          TrustedResourceUrl.fromConstant(Const.from('blank_test_helper.html')),
-          input, iframe);
+        true,
+        TrustedResourceUrl.fromConstant(Const.from('blank_test_helper.html')),
+        input,
+        iframe
+      );
     } finally {
       dispose(history);
     }
@@ -52,8 +53,9 @@ testSuite({
 
   testIsHashChangeSupported() {
     // This is the policy currently implemented.
-    const supportsOnHashChange =
-        (userAgent.IE ? document.documentMode >= 8 : 'onhashchange' in window);
+    const supportsOnHashChange = userAgent.IE
+      ? document.documentMode >= 8
+      : 'onhashchange' in window;
 
     assertEquals(supportsOnHashChange, GoogHistory.isOnHashChangeSupported());
   },

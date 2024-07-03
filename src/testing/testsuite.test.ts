@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.testSuiteTest');
-goog.setTestOnly();
 
 const TestCase = goog.require('goog.testing.TestCase');
 const asserts = goog.require('goog.testing.asserts');
@@ -23,14 +22,14 @@ testSuite({
   },
 
   testTestSuiteInitializesRunner() {
-    testSuite({testOne: function() {}});
+    testSuite({ testOne: () => {} });
     assert(calls == 1);
   },
 
   testTestSuiteInitializesRunnerThrowsOnSecondCall() {
-    testSuite({testOne: function() {}});
+    testSuite({ testOne: () => {} });
     assertThrows(() => {
-      testSuite({testTwo: function() {}});
+      testSuite({ testTwo: () => {} });
     });
   },
 });

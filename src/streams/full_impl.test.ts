@@ -5,10 +5,9 @@
  */
 
 goog.module('goog.streams.fullImplTest');
-goog.setTestOnly();
 
 const testSuite = goog.require('goog.testing.testSuite');
-const {TestCasesWithIterator} = goog.require('goog.streams.fullTestCases');
-const {newReadableStream} = goog.require('goog.streams.fullImpl');
+const { TestCasesWithIterator } = goog.require('goog.streams.fullTestCases');
+const { newReadableStream } = goog.require('goog.streams.fullImpl');
 
 testSuite(new TestCasesWithIterator(newReadableStream));

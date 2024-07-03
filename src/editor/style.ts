@@ -33,7 +33,6 @@ goog.require('goog.style');
 goog.require('goog.userAgent');
 goog.requireType('goog.events.Event');
 
-
 /**
  * Gets the computed or cascaded style.
  *
@@ -47,32 +46,23 @@ goog.requireType('goog.events.Event');
  * @return {?string} Style value, or null if this is not an element node.
  * @private
  */
-goog.editor.style.getComputedOrCascadedStyle_ = function(
-    node, stylePropertyName) {
-  'use strict';
+goog.editor.style.getComputedOrCascadedStyle_ = (node, stylePropertyName) => {
   if (node.nodeType != goog.dom.NodeType.ELEMENT) {
     // Only element nodes have style.
     return null;
   }
-  return goog.userAgent.IE ?
-      goog.style.getCascadedStyle(
-          /** @type {!Element} */ (node), stylePropertyName) :
-      goog.style.getComputedStyle(
-          /** @type {!Element} */ (node), stylePropertyName);
+  return goog.userAgent.IE
+    ? goog.style.getCascadedStyle(/** @type {!Element} */ (node), stylePropertyName)
+    : goog.style.getComputedStyle(/** @type {!Element} */ (node), stylePropertyName);
 };
-
 
 /**
  * Checks whether the given element inherits display: block.
  * @param {!Node} node The Node to check.
  * @return {boolean} Whether the element inherits CSS display: block.
  */
-goog.editor.style.isDisplayBlock = function(node) {
-  'use strict';
-  return goog.editor.style.getComputedOrCascadedStyle_(node, 'display') ==
-      'block';
-};
-
+goog.editor.style.isDisplayBlock = (node) =>
+  goog.editor.style.getComputedOrCascadedStyle_(node, 'display') == 'block';
 
 /**
  * Returns true if the element is a container of other non-inline HTML
@@ -83,16 +73,16 @@ goog.editor.style.isDisplayBlock = function(node) {
  * @param {Node} element The element to check.
  * @return {boolean} Whether the element is a container.
  */
-goog.editor.style.isContainer = function(element) {
-  'use strict';
+goog.editor.style.isContainer = (element) => {
   var nodeName = element && element.nodeName;
   return !!(
-      element &&
-      (goog.editor.style.isDisplayBlock(element) ||
-       nodeName == goog.dom.TagName.TD || nodeName == goog.dom.TagName.TABLE ||
-       nodeName == goog.dom.TagName.LI));
+    element &&
+    (goog.editor.style.isDisplayBlock(element) ||
+      nodeName == goog.dom.TagName.TD ||
+      nodeName == goog.dom.TagName.TABLE ||
+      nodeName == goog.dom.TagName.LI)
+  );
 };
-
 
 /**
  * Return the first ancestor of this node that is a container, inclusive.
@@ -100,13 +90,10 @@ goog.editor.style.isContainer = function(element) {
  * @param {Node} node Node to find the container of.
  * @return {Element} The element which contains node.
  */
-goog.editor.style.getContainer = function(node) {
-  'use strict';
+goog.editor.style.getContainer = (node) => {
   // We assume that every node must have a container.
-  return /** @type {Element} */ (
-      goog.dom.getAncestor(node, goog.editor.style.isContainer, true));
+  return /** @type {Element} */ (goog.dom.getAncestor(node, goog.editor.style.isContainer, true));
 };
-
 
 /**
  * Set of input types that should be kept selectable even when their ancestors
@@ -114,9 +101,7 @@ goog.editor.style.getContainer = function(node) {
  * @type {Object}
  * @private
  */
-goog.editor.style.SELECTABLE_INPUT_TYPES_ =
-    goog.object.createSet('text', 'file', 'url');
-
+goog.editor.style.SELECTABLE_INPUT_TYPES_ = goog.object.createSet('text', 'file', 'url');
 
 /**
  * Prevent the default action on mousedown events.
@@ -124,15 +109,12 @@ goog.editor.style.SELECTABLE_INPUT_TYPES_ =
  * @private
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.editor.style.cancelMouseDownHelper_ = function(e) {
-  'use strict';
+goog.editor.style.cancelMouseDownHelper_ = (e) => {
   var targetTagName = e.target.tagName;
-  if (targetTagName != goog.dom.TagName.TEXTAREA &&
-      targetTagName != goog.dom.TagName.INPUT) {
+  if (targetTagName != goog.dom.TagName.TEXTAREA && targetTagName != goog.dom.TagName.INPUT) {
     e.preventDefault();
   }
 };
-
 
 /**
  * Makes the given element unselectable, as well as all of its children, except
@@ -142,22 +124,23 @@ goog.editor.style.cancelMouseDownHelper_ = function(e) {
  *     the event with. Assumes when the node is destroyed, the eventHandler's
  *     listeners are destroyed as well.
  */
-goog.editor.style.makeUnselectable = function(element, eventHandler) {
-  'use strict';
+goog.editor.style.makeUnselectable = (element, eventHandler) => {
   if (goog.editor.BrowserFeature.HAS_UNSELECTABLE_STYLE) {
     // The mousing down on a node should not blur the focused node.
     // This is consistent with how IE works.
     // TODO: Consider using just the mousedown handler and not the css property.
     eventHandler.listen(
-        element, goog.events.EventType.MOUSEDOWN,
-        goog.editor.style.cancelMouseDownHelper_, true);
+      element,
+      goog.events.EventType.MOUSEDOWN,
+      goog.editor.style.cancelMouseDownHelper_,
+      true
+    );
   }
 
   goog.style.setUnselectable(element, true);
 
   // Make inputs and text areas selectable.
-  var inputs = goog.dom.getElementsByTagName(
-      goog.dom.TagName.INPUT, goog.asserts.assert(element));
+  var inputs = goog.dom.getElementsByTagName(goog.dom.TagName.INPUT, goog.asserts.assert(element));
   for (var i = 0, len = inputs.length; i < len; i++) {
     var input = inputs[i];
     if (input.type in goog.editor.style.SELECTABLE_INPUT_TYPES_) {
@@ -165,11 +148,10 @@ goog.editor.style.makeUnselectable = function(element, eventHandler) {
     }
   }
   Array.prototype.forEach.call(
-      goog.dom.getElementsByTagName(
-          goog.dom.TagName.TEXTAREA, goog.asserts.assert(element)),
-      goog.editor.style.makeSelectable);
+    goog.dom.getElementsByTagName(goog.dom.TagName.TEXTAREA, goog.asserts.assert(element)),
+    goog.editor.style.makeSelectable
+  );
 };
-
 
 /**
  * Make the given element selectable.
@@ -201,8 +183,7 @@ goog.editor.style.makeUnselectable = function(element, eventHandler) {
  *
  * @param {!Element} element The element to make selectable.
  */
-goog.editor.style.makeSelectable = function(element) {
-  'use strict';
+goog.editor.style.makeSelectable = (element) => {
   goog.style.setUnselectable(element, false);
   if (goog.editor.BrowserFeature.HAS_UNSELECTABLE_STYLE) {
     // Go up ancestor chain, searching for nodes that are unselectable.
@@ -217,8 +198,7 @@ goog.editor.style.makeSelectable = function(element) {
         for (var i = 0, len = current.childNodes.length; i < len; i++) {
           var node = current.childNodes[i];
           if (node != child && node.nodeType == goog.dom.NodeType.ELEMENT) {
-            goog.style.setUnselectable(
-                /** @type {!Element} */ (current.childNodes[i]), true);
+            goog.style.setUnselectable(/** @type {!Element} */ (current.childNodes[i]), true);
           }
         }
       }

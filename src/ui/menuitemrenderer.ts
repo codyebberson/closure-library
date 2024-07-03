@@ -21,8 +21,6 @@ goog.requireType('goog.ui.Control');
 goog.requireType('goog.ui.ControlContent');
 goog.requireType('goog.ui.MenuItem');
 
-
-
 /**
  * Default renderer for {@link goog.ui.MenuItem}s.  Each item has the following
  * structure:
@@ -36,8 +34,7 @@ goog.requireType('goog.ui.MenuItem');
  * @constructor
  * @extends {goog.ui.ControlRenderer}
  */
-goog.ui.MenuItemRenderer = function() {
-  'use strict';
+goog.ui.MenuItemRenderer = function () {
   goog.ui.ControlRenderer.call(this);
 
   /**
@@ -51,13 +48,11 @@ goog.ui.MenuItemRenderer = function() {
 goog.inherits(goog.ui.MenuItemRenderer, goog.ui.ControlRenderer);
 goog.addSingletonGetter(goog.ui.MenuItemRenderer);
 
-
 /**
  * CSS class name the renderer applies to menu item elements.
  * @type {string}
  */
 goog.ui.MenuItemRenderer.CSS_CLASS = goog.getCssName('goog-menuitem');
-
 
 /**
  * Constants for referencing composite CSS classes.
@@ -67,9 +62,8 @@ goog.ui.MenuItemRenderer.CSS_CLASS = goog.getCssName('goog-menuitem');
 goog.ui.MenuItemRenderer.CompositeCssClassIndex_ = {
   HOVER: 0,
   CHECKBOX: 1,
-  CONTENT: 2
+  CONTENT: 2,
 };
-
 
 /**
  * Returns the composite CSS class by using the cached value or by constructing
@@ -79,8 +73,7 @@ goog.ui.MenuItemRenderer.CompositeCssClassIndex_ = {
  * @return {string} The composite CSS class.
  * @private
  */
-goog.ui.MenuItemRenderer.prototype.getCompositeCssClass_ = function(index) {
-  'use strict';
+goog.ui.MenuItemRenderer.prototype.getCompositeCssClass_ = function (index) {
   var result = this.classNameCache_[index];
   if (!result) {
     switch (index) {
@@ -100,13 +93,8 @@ goog.ui.MenuItemRenderer.prototype.getCompositeCssClass_ = function(index) {
   return result;
 };
 
-
 /** @override */
-goog.ui.MenuItemRenderer.prototype.getAriaRole = function() {
-  'use strict';
-  return goog.a11y.aria.Role.MENU_ITEM;
-};
-
+goog.ui.MenuItemRenderer.prototype.getAriaRole = () => goog.a11y.aria.Role.MENU_ITEM;
 
 /**
  * Overrides {@link goog.ui.ControlRenderer#createDom} by adding extra markup
@@ -115,24 +103,25 @@ goog.ui.MenuItemRenderer.prototype.getAriaRole = function() {
  * @return {!Element} Root element for the item.
  * @override
  */
-goog.ui.MenuItemRenderer.prototype.createDom = function(item) {
-  'use strict';
-  var element = item.getDomHelper().createDom(
-      goog.dom.TagName.DIV, this.getClassNames(item).join(' '),
-      this.createContent(item.getContent(), item.getDomHelper()));
+goog.ui.MenuItemRenderer.prototype.createDom = function (item) {
+  var element = item
+    .getDomHelper()
+    .createDom(
+      goog.dom.TagName.DIV,
+      this.getClassNames(item).join(' '),
+      this.createContent(item.getContent(), item.getDomHelper())
+    );
   this.setEnableCheckBoxStructure(
-      item, element, item.isSupportedState(goog.ui.Component.State.SELECTED) ||
-          item.isSupportedState(goog.ui.Component.State.CHECKED));
+    item,
+    element,
+    item.isSupportedState(goog.ui.Component.State.SELECTED) ||
+      item.isSupportedState(goog.ui.Component.State.CHECKED)
+  );
   return element;
 };
 
-
 /** @override */
-goog.ui.MenuItemRenderer.prototype.getContentElement = function(element) {
-  'use strict';
-  return /** @type {Element} */ (element && element.firstChild);
-};
-
+goog.ui.MenuItemRenderer.prototype.getContentElement = (element) => element && element.firstChild;
 
 /**
  * Overrides {@link goog.ui.ControlRenderer#decorate} by initializing the
@@ -143,22 +132,19 @@ goog.ui.MenuItemRenderer.prototype.getContentElement = function(element) {
  * @return {Element} Decorated element.
  * @override
  */
-goog.ui.MenuItemRenderer.prototype.decorate = function(item, element) {
-  'use strict';
+goog.ui.MenuItemRenderer.prototype.decorate = function (item, element) {
   goog.asserts.assert(element);
   if (!this.hasContentStructure(element)) {
     element.appendChild(
-        /** @type {!Node} */ (
-            this.createContent(element.childNodes, item.getDomHelper())));
+      /** @type {!Node} */ (this.createContent(element.childNodes, item.getDomHelper()))
+    );
   }
   if (goog.dom.classlist.contains(element, goog.getCssName('goog-option'))) {
-    (/** @type {goog.ui.MenuItem} */ (item)).setCheckable(true);
+    /** @type {goog.ui.MenuItem} */ (item).setCheckable(true);
     this.setCheckable(item, element, true);
   }
-  return goog.ui.MenuItemRenderer.superClass_.decorate.call(
-      this, item, element);
+  return goog.ui.MenuItemRenderer.superClass_.decorate.call(this, item, element);
 };
-
 
 /**
  * Takes a menu item's root element, and sets its content to the given text
@@ -170,20 +156,16 @@ goog.ui.MenuItemRenderer.prototype.decorate = function(item, element) {
  *     set as the item's content.
  * @override
  */
-goog.ui.MenuItemRenderer.prototype.setContent = function(element, content) {
-  'use strict';
+goog.ui.MenuItemRenderer.prototype.setContent = function (element, content) {
   // Save the checkbox element, if present.
   var contentElement = this.getContentElement(element);
-  var checkBoxElement =
-      this.hasCheckBoxStructure(element) ? contentElement.firstChild : null;
+  var checkBoxElement = this.hasCheckBoxStructure(element) ? contentElement.firstChild : null;
   goog.ui.MenuItemRenderer.superClass_.setContent.call(this, element, content);
   if (checkBoxElement && !this.hasCheckBoxStructure(element)) {
     // The call to setContent() blew away the checkbox element; reattach it.
-    contentElement.insertBefore(
-        checkBoxElement, contentElement.firstChild || null);
+    contentElement.insertBefore(checkBoxElement, contentElement.firstChild || null);
   }
 };
-
 
 /**
  * Returns true if the element appears to have a proper menu item structure by
@@ -192,14 +174,13 @@ goog.ui.MenuItemRenderer.prototype.setContent = function(element, content) {
  * @return {boolean} Whether the element appears to have a proper menu item DOM.
  * @protected
  */
-goog.ui.MenuItemRenderer.prototype.hasContentStructure = function(element) {
-  'use strict';
+goog.ui.MenuItemRenderer.prototype.hasContentStructure = function (element) {
   var child = goog.dom.getFirstElementChild(element);
   var contentClassName = this.getCompositeCssClass_(
-      goog.ui.MenuItemRenderer.CompositeCssClassIndex_.CONTENT);
+    goog.ui.MenuItemRenderer.CompositeCssClassIndex_.CONTENT
+  );
   return !!child && goog.dom.classlist.contains(child, contentClassName);
 };
-
 
 /**
  * Wraps the given text caption or existing DOM node(s) in a structural element
@@ -209,13 +190,12 @@ goog.ui.MenuItemRenderer.prototype.hasContentStructure = function(element) {
  * @return {!Element} Menu item content element.
  * @protected
  */
-goog.ui.MenuItemRenderer.prototype.createContent = function(content, dom) {
-  'use strict';
+goog.ui.MenuItemRenderer.prototype.createContent = function (content, dom) {
   var contentClassName = this.getCompositeCssClass_(
-      goog.ui.MenuItemRenderer.CompositeCssClassIndex_.CONTENT);
+    goog.ui.MenuItemRenderer.CompositeCssClassIndex_.CONTENT
+  );
   return dom.createDom(goog.dom.TagName.DIV, contentClassName, content);
 };
-
 
 /**
  * Enables/disables radio button semantics on the menu item.
@@ -224,14 +204,11 @@ goog.ui.MenuItemRenderer.prototype.createContent = function(content, dom) {
  *     item hasn't been rendered yet).
  * @param {boolean} selectable Whether the item should be selectable.
  */
-goog.ui.MenuItemRenderer.prototype.setSelectable = function(
-    item, element, selectable) {
-  'use strict';
+goog.ui.MenuItemRenderer.prototype.setSelectable = function (item, element, selectable) {
   if (item && element) {
     this.setEnableCheckBoxStructure(item, element, selectable);
   }
 };
-
 
 /**
  * Enables/disables checkbox semantics on the menu item.
@@ -240,14 +217,11 @@ goog.ui.MenuItemRenderer.prototype.setSelectable = function(
  *     item hasn't been rendered yet).
  * @param {boolean} checkable Whether the item should be checkable.
  */
-goog.ui.MenuItemRenderer.prototype.setCheckable = function(
-    item, element, checkable) {
-  'use strict';
+goog.ui.MenuItemRenderer.prototype.setCheckable = function (item, element, checkable) {
   if (item && element) {
     this.setEnableCheckBoxStructure(item, element, checkable);
   }
 };
-
 
 /**
  * Determines whether the item contains a checkbox element.
@@ -255,20 +229,21 @@ goog.ui.MenuItemRenderer.prototype.setCheckable = function(
  * @return {boolean} Whether the element contains a checkbox element.
  * @protected
  */
-goog.ui.MenuItemRenderer.prototype.hasCheckBoxStructure = function(element) {
-  'use strict';
+goog.ui.MenuItemRenderer.prototype.hasCheckBoxStructure = function (element) {
   var contentElement = this.getContentElement(element);
   if (contentElement) {
     var child = contentElement.firstChild;
     var checkboxClassName = this.getCompositeCssClass_(
-        goog.ui.MenuItemRenderer.CompositeCssClassIndex_.CHECKBOX);
-    return !!child && goog.dom.isElement(child) &&
-        goog.dom.classlist.contains(
-            /** @type {!Element} */ (child), checkboxClassName);
+      goog.ui.MenuItemRenderer.CompositeCssClassIndex_.CHECKBOX
+    );
+    return (
+      !!child &&
+      goog.dom.isElement(child) &&
+      goog.dom.classlist.contains(/** @type {!Element} */ (child), checkboxClassName)
+    );
   }
   return false;
 };
-
 
 /**
  * Adds or removes extra markup and CSS styling to the menu item to make it
@@ -279,9 +254,7 @@ goog.ui.MenuItemRenderer.prototype.hasCheckBoxStructure = function(element) {
  * @param {boolean} enable Whether to add or remove the checkbox structure.
  * @protected
  */
-goog.ui.MenuItemRenderer.prototype.setEnableCheckBoxStructure = function(
-    item, element, enable) {
-  'use strict';
+goog.ui.MenuItemRenderer.prototype.setEnableCheckBoxStructure = function (item, element, enable) {
   this.setAriaRole(element, item.getPreferredAriaRole());
   this.setAriaStates(item, element);
   if (enable != this.hasCheckBoxStructure(element)) {
@@ -290,19 +263,18 @@ goog.ui.MenuItemRenderer.prototype.setEnableCheckBoxStructure = function(
     if (enable) {
       // Insert checkbox structure.
       var checkboxClassName = this.getCompositeCssClass_(
-          goog.ui.MenuItemRenderer.CompositeCssClassIndex_.CHECKBOX);
+        goog.ui.MenuItemRenderer.CompositeCssClassIndex_.CHECKBOX
+      );
       contentElement.insertBefore(
-          item.getDomHelper().createDom(
-              goog.dom.TagName.DIV, checkboxClassName),
-          contentElement.firstChild || null);
+        item.getDomHelper().createDom(goog.dom.TagName.DIV, checkboxClassName),
+        contentElement.firstChild || null
+      );
     } else {
       // Remove checkbox structure.
-      contentElement.removeChild(
-          /** @type {!Node} */ (contentElement.firstChild));
+      contentElement.removeChild(/** @type {!Node} */ (contentElement.firstChild));
     }
   }
 };
-
 
 /**
  * Takes a single {@link goog.ui.Component.State}, and returns the
@@ -314,24 +286,20 @@ goog.ui.MenuItemRenderer.prototype.setEnableCheckBoxStructure = function(
  *     (undefined if none).
  * @override
  */
-goog.ui.MenuItemRenderer.prototype.getClassForState = function(state) {
-  'use strict';
+goog.ui.MenuItemRenderer.prototype.getClassForState = function (state) {
   switch (state) {
     case goog.ui.Component.State.HOVER:
       // We use 'highlight' as the suffix, for backwards compatibility.
-      return this.getCompositeCssClass_(
-          goog.ui.MenuItemRenderer.CompositeCssClassIndex_.HOVER);
+      return this.getCompositeCssClass_(goog.ui.MenuItemRenderer.CompositeCssClassIndex_.HOVER);
     case goog.ui.Component.State.CHECKED:
     case goog.ui.Component.State.SELECTED:
       // We use 'goog-option-selected' as the class, for backwards
       // compatibility.
       return goog.getCssName('goog-option-selected');
     default:
-      return goog.ui.MenuItemRenderer.superClass_.getClassForState.call(
-          this, state);
+      return goog.ui.MenuItemRenderer.superClass_.getClassForState.call(this, state);
   }
 };
-
 
 /**
  * Takes a single CSS class name which may represent a component state, and
@@ -344,24 +312,19 @@ goog.ui.MenuItemRenderer.prototype.getClassForState = function(state) {
  *     to the given CSS class (0x00 if none).
  * @override
  */
-goog.ui.MenuItemRenderer.prototype.getStateFromClass = function(className) {
-  'use strict';
+goog.ui.MenuItemRenderer.prototype.getStateFromClass = function (className) {
   var hoverClassName = this.getCompositeCssClass_(
-      goog.ui.MenuItemRenderer.CompositeCssClassIndex_.HOVER);
+    goog.ui.MenuItemRenderer.CompositeCssClassIndex_.HOVER
+  );
   switch (className) {
     case goog.getCssName('goog-option-selected'):
       return goog.ui.Component.State.CHECKED;
     case hoverClassName:
       return goog.ui.Component.State.HOVER;
     default:
-      return goog.ui.MenuItemRenderer.superClass_.getStateFromClass.call(
-          this, className);
+      return goog.ui.MenuItemRenderer.superClass_.getStateFromClass.call(this, className);
   }
 };
 
-
 /** @override */
-goog.ui.MenuItemRenderer.prototype.getCssClass = function() {
-  'use strict';
-  return goog.ui.MenuItemRenderer.CSS_CLASS;
-};
+goog.ui.MenuItemRenderer.prototype.getCssClass = () => goog.ui.MenuItemRenderer.CSS_CLASS;

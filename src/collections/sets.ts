@@ -39,19 +39,19 @@ class SetLike {
   /**
    * @param {T} val The value to add to the Set.
    */
-  add(val) {};
+  add(val) {}
 
   /**
    * @param {T} val The value to remove from the Set.
    * @return {boolean} Whether the value was removed from the set.
    */
-  delete(val) {};
+  delete(val) {}
 
   /**
    * @param {T} val The value to check.
    * @return {boolean} True iff this value is present in the set.
    */
-  has(val) {};
+  has(val) {}
 }
 exports.SetLike = SetLike;
 
@@ -64,9 +64,7 @@ exports.SetLike = SetLike;
  * @returns {!Set<T>}
  * @template T
  */
-exports.intersection = function(a, b) {
-  return new Set(iters.filter(b, elem => a.has(elem)));
-};
+exports.intersection = (a, b) => new Set(iters.filter(b, (elem) => a.has(elem)));
 
 /**
  * Creates a new ES6 Set containing the elements that appear in both given
@@ -77,12 +75,11 @@ exports.intersection = function(a, b) {
  * @return {!Set<T>}
  * @template T
  */
-exports.union = function(a, b) {
+exports.union = (a, b) => {
   const set = new Set(a);
-  iters.forEach(b[Symbol.iterator](), elem => set.add(elem));
+  iters.forEach(b[Symbol.iterator](), (elem) => set.add(elem));
   return set;
 };
-
 
 /**
  * Creates a new ES6 Set containing the elements that appear in the first
@@ -93,9 +90,9 @@ exports.union = function(a, b) {
  * @return {!Set<T>}
  * @template T
  */
-exports.difference = function(a, b) {
+exports.difference = (a, b) => {
   const set = new Set(a);
-  iters.forEach(b[Symbol.iterator](), elem => set.delete(elem));
+  iters.forEach(b[Symbol.iterator](), (elem) => set.delete(elem));
   return set;
 };
 
@@ -110,7 +107,7 @@ exports.difference = function(a, b) {
  */
 // TODO(nnaze): Consider widening the type of b per discussion in
 // https://github.com/tc39/proposal-set-methods/issues/56
-exports.symmetricDifference = function(a, b) {
+exports.symmetricDifference = (a, b) => {
   const newSet = new Set(a);
   for (const elem of b) {
     if (a.has(elem)) {
@@ -128,7 +125,7 @@ exports.symmetricDifference = function(a, b) {
  * @param {!Iterable<T>} col A collection containing items to add.
  * @template T
  */
-exports.addAll = function(set, col) {
+exports.addAll = (set, col) => {
   for (const elem of col) {
     set.add(elem);
   }
@@ -140,7 +137,7 @@ exports.addAll = function(set, col) {
  * @param {!Iterable<T>} col A collection containing the elements to remove.
  * @template T
  */
-exports.removeAll = function(set, col) {
+exports.removeAll = (set, col) => {
   for (const elem of col) {
     set.delete(elem);
   }
@@ -154,7 +151,7 @@ exports.removeAll = function(set, col) {
  *     given collection, false otherwise.
  * @template T
  */
-exports.hasAll = function(set, col) {
+exports.hasAll = (set, col) => {
   for (const elem of col) {
     if (!set.has(elem)) return false;
   }
@@ -171,7 +168,7 @@ exports.hasAll = function(set, col) {
  *     all the elements in the given collection, false otherwise.
  * @template T
  */
-exports.equals = function(set, col) {
+exports.equals = (set, col) => {
   const colSize = Array.isArray(col) ? col.length : col.size;
   if (set.size !== colSize) {
     return false;
@@ -189,7 +186,7 @@ exports.equals = function(set, col) {
  *     otherwise.
  * @template T
  */
-exports.isSubsetOf = function(set, col) {
+exports.isSubsetOf = (set, col) => {
   if (Array.isArray(col) && set.size > col.length) return false;
   const colSet = Array.isArray(col) ? new Set(col) : col;
   if (set.size > colSet.size) {

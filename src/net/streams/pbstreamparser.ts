@@ -59,8 +59,7 @@ goog.require('goog.net.streams.StreamParser');
  * @implements {goog.net.streams.StreamParser}
  * @final
  */
-goog.net.streams.PbStreamParser = function() {
-  'use strict';
+goog.net.streams.PbStreamParser = function () {
   /**
    * The current error message, if any.
    * @private {?string}
@@ -117,18 +116,16 @@ goog.net.streams.PbStreamParser = function() {
   this.countMessageBytes_ = 0;
 };
 
-
 /**
  * The parser state.
  * @private @enum {number}
  */
 goog.net.streams.PbStreamParser.State_ = {
-  INIT: 0,     // expecting the tag:wire-type byte
-  LENGTH: 1,   // expecting more varint bytes of length
-  MESSAGE: 2,  // expecting more message bytes
+  INIT: 0, // expecting the tag:wire-type byte
+  LENGTH: 1, // expecting more varint bytes of length
+  MESSAGE: 2, // expecting more message bytes
   INVALID: 3,
 };
-
 
 /**
  * Tag of padding messages.
@@ -136,24 +133,19 @@ goog.net.streams.PbStreamParser.State_ = {
  */
 goog.net.streams.PbStreamParser.PADDING_TAG_ = 15;
 
-
 /**
  * @override
  */
-goog.net.streams.PbStreamParser.prototype.isInputValid = function() {
-  'use strict';
+goog.net.streams.PbStreamParser.prototype.isInputValid = function () {
   return this.state_ != goog.net.streams.PbStreamParser.State_.INVALID;
 };
 
-
 /**
  * @override
  */
-goog.net.streams.PbStreamParser.prototype.getErrorMessage = function() {
-  'use strict';
+goog.net.streams.PbStreamParser.prototype.getErrorMessage = function () {
   return this.errorMessage_;
 };
-
 
 /**
  * @param {!Uint8Array|!Array<number>} inputBytes The current input buffer
@@ -162,14 +154,19 @@ goog.net.streams.PbStreamParser.prototype.getErrorMessage = function() {
  * @throws {!Error} Throws an error indicating where the stream is broken
  * @private
  */
-goog.net.streams.PbStreamParser.prototype.error_ = function(
-    inputBytes, pos, errorMsg) {
-  'use strict';
+goog.net.streams.PbStreamParser.prototype.error_ = function (inputBytes, pos, errorMsg) {
   this.state_ = goog.net.streams.PbStreamParser.State_.INVALID;
-  this.errorMessage_ = 'The stream is broken @' + this.streamPos_ + '/' + pos +
-      '. ' +
-      'Error: ' + errorMsg + '. ' +
-      'With input:\n' + inputBytes;
+  this.errorMessage_ =
+    'The stream is broken @' +
+    this.streamPos_ +
+    '/' +
+    pos +
+    '. ' +
+    'Error: ' +
+    errorMsg +
+    '. ' +
+    'With input:\n' +
+    inputBytes;
   throw new Error(this.errorMessage_);
 };
 
@@ -177,20 +174,17 @@ goog.net.streams.PbStreamParser.prototype.error_ = function(
  * @override
  * @return {boolean}
  */
-goog.net.streams.PbStreamParser.prototype.acceptsBinaryInput = function() {
-  return true;
-};
+goog.net.streams.PbStreamParser.prototype.acceptsBinaryInput = () => true;
 
 /**
  * @throws {!Error} Throws an error message if the input is invalid.
  * @override
  */
-goog.net.streams.PbStreamParser.prototype.parse = function(input) {
-  'use strict';
+goog.net.streams.PbStreamParser.prototype.parse = function (input) {
   goog.asserts.assert(input instanceof Array || input instanceof ArrayBuffer);
 
   const parser = this;
-  const inputBytes = (input instanceof Array) ? input : new Uint8Array(input);
+  const inputBytes = input instanceof Array ? input : new Uint8Array(input);
   let pos = 0;
 
   while (pos < inputBytes.length) {
@@ -253,13 +247,15 @@ goog.net.streams.PbStreamParser.prototype.parse = function(input) {
   function processLengthByte(b) {
     parser.countLengthBytes_++;
     if (parser.countLengthBytes_ == 5) {
-      if (b & 0xF0) {  // length will not fit in a 32-bit uint
+      if (b & 0xf0) {
+        // length will not fit in a 32-bit uint
         parser.error_(inputBytes, pos, 'message length too long');
       }
     }
-    parser.length_ |= (b & 0x7F) << ((parser.countLengthBytes_ - 1) * 7);
+    parser.length_ |= (b & 0x7f) << ((parser.countLengthBytes_ - 1) * 7);
 
-    if (!(b & 0x80)) {  // no more length byte
+    if (!(b & 0x80)) {
+      // no more length byte
       parser.state_ = goog.net.streams.PbStreamParser.State_.MESSAGE;
       parser.countMessageBytes_ = 0;
       if (typeof Uint8Array !== 'undefined') {
@@ -268,7 +264,8 @@ goog.net.streams.PbStreamParser.prototype.parse = function(input) {
         parser.messageBuffer_ = new Array(parser.length_);
       }
 
-      if (parser.length_ == 0) {  // empty message
+      if (parser.length_ == 0) {
+        // empty message
         finishMessage();
       }
     }

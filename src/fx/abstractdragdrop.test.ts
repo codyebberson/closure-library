@@ -21,38 +21,43 @@ const style = goog.require('goog.style');
 const testSuite = goog.require('goog.testing.testSuite');
 const testingEvents = goog.require('goog.testing.events');
 
-const {ActiveDropTarget} = AbstractDragDrop.TEST_ONLY;
+const { ActiveDropTarget } = AbstractDragDrop.TEST_ONLY;
 
 const targets = [
-  {box_: new Box(0, 3, 1, 1)}, {box_: new Box(0, 7, 2, 6)},
-  {box_: new Box(2, 2, 3, 1)}, {box_: new Box(4, 1, 6, 1)},
-  {box_: new Box(4, 9, 7, 6)}, {box_: new Box(9, 9, 10, 1)}
+  { box_: new Box(0, 3, 1, 1) },
+  { box_: new Box(0, 7, 2, 6) },
+  { box_: new Box(2, 2, 3, 1) },
+  { box_: new Box(4, 1, 6, 1) },
+  { box_: new Box(4, 9, 7, 6) },
+  { box_: new Box(9, 9, 10, 1) },
 ];
 
 const targets2 = [
-  {box_: new Box(10, 50, 20, 10)}, {box_: new Box(20, 50, 30, 10)},
-  {box_: new Box(60, 50, 70, 10)}, {box_: new Box(70, 50, 80, 10)}
+  { box_: new Box(10, 50, 20, 10) },
+  { box_: new Box(20, 50, 30, 10) },
+  { box_: new Box(60, 50, 70, 10) },
+  { box_: new Box(70, 50, 80, 10) },
 ];
 
 const targets3 = [
-  {box_: new Box(0, 4, 1, 1)}, {box_: new Box(1, 6, 4, 5)},
-  {box_: new Box(5, 5, 6, 2)}, {box_: new Box(2, 1, 5, 0)}
+  { box_: new Box(0, 4, 1, 1) },
+  { box_: new Box(1, 6, 4, 5) },
+  { box_: new Box(5, 5, 6, 2) },
+  { box_: new Box(2, 1, 5, 0) },
 ];
-
 
 /**
  * An enum describing how two ranges overlap (non-symmetrical relation).
  * @enum {number}
  */
 const RangeOverlap = {
-  LEFT: 1,      // First range is placed to the left of the second.
-  LEFT_IN: 2,   // First range overlaps on the left side of the second.
-  IN: 3,        // First range is completely contained in the second.
-  RIGHT_IN: 4,  // First range overlaps on the right side of the second.
-  RIGHT: 5,     // First range is placed to the right side of the second.
-  CONTAINS: 6   // First range contains the second.
+  LEFT: 1, // First range is placed to the left of the second.
+  LEFT_IN: 2, // First range overlaps on the left side of the second.
+  IN: 3, // First range is completely contained in the second.
+  RIGHT_IN: 4, // First range overlaps on the right side of the second.
+  RIGHT: 5, // First range is placed to the right side of the second.
+  CONTAINS: 6, // First range contains the second.
 };
-
 
 /**
  * Computes how two one dimensional ranges overlap.
@@ -74,7 +79,6 @@ function rangeOverlap(left1, right1, left2, right2) {
   return RangeOverlap.CONTAINS;
 }
 
-
 /**
  * Tells whether two boxes overlap.
  *
@@ -83,17 +87,15 @@ function rangeOverlap(left1, right1, left2, right2) {
  * @return {boolean} Whether boxes overlap in any way.
  */
 function boxOverlaps(box1, box2) {
-  const horizontalOverlap =
-      rangeOverlap(box1.left, box1.right, box2.left, box2.right);
-  const verticalOverlap =
-      rangeOverlap(box1.top, box1.bottom, box2.top, box2.bottom);
-  return horizontalOverlap != RangeOverlap.LEFT &&
-      horizontalOverlap != RangeOverlap.RIGHT &&
-      verticalOverlap != RangeOverlap.LEFT &&
-      verticalOverlap != RangeOverlap.RIGHT;
+  const horizontalOverlap = rangeOverlap(box1.left, box1.right, box2.left, box2.right);
+  const verticalOverlap = rangeOverlap(box1.top, box1.bottom, box2.top, box2.bottom);
+  return (
+    horizontalOverlap != RangeOverlap.LEFT &&
+    horizontalOverlap != RangeOverlap.RIGHT &&
+    verticalOverlap != RangeOverlap.LEFT &&
+    verticalOverlap != RangeOverlap.RIGHT
+  );
 }
-
-
 
 /**
  * Checks whether a given box overlaps any of given DnD target boxes.
@@ -105,16 +107,13 @@ function boxOverlaps(box1, box2) {
  */
 function boxOverlapsTargets(box, targets) {
   return array.some(
-      targets, /**
+    targets /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
-                */
-      function(target) {
-        return boxOverlaps(box, target.box_);
-      });
+                */,
+    (target) => boxOverlaps(box, target.box_)
+  );
 }
-
-
 
 /**
  * Helper function for manual debugging.
@@ -132,15 +131,14 @@ function drawTargets(targets, multiplier) {
      */
     const box = targets[i].box_;
     const el = dom.createElement(TagName.DIV);
-    el.style.top = (box.top * multiplier) + 'px';
-    el.style.left = (box.left * multiplier) + 'px';
-    el.style.width = ((box.right - box.left) * multiplier) + 'px';
-    el.style.height = ((box.bottom - box.top) * multiplier) + 'px';
+    el.style.top = box.top * multiplier + 'px';
+    el.style.left = box.left * multiplier + 'px';
+    el.style.width = (box.right - box.left) * multiplier + 'px';
+    el.style.height = (box.bottom - box.top) * multiplier + 'px';
     el.style.backgroundColor = colors[i];
     cont.appendChild(el);
   }
 }
-
 
 testSuite({
   /**
@@ -159,7 +157,6 @@ testSuite({
     assertEquals(RangeOverlap.RIGHT, rangeOverlap(3, 4, 1, 2));
     assertEquals(RangeOverlap.CONTAINS, rangeOverlap(1, 4, 2, 3));
   },
-
 
   /**
    * Tests if the utility function to compute box overlapping functions
@@ -224,7 +221,6 @@ testSuite({
     assertFalse('W no overlap', boxOverlaps(new Box(2, 1, 7, 0), box2));
   },
 
-
   /**
      @suppress {visibility,checkTypes} suppression added to enable type
      checking
@@ -251,7 +247,7 @@ testSuite({
     assertFalse(boxOverlapsTargets(target.box_, testGroup.targetList_));
     assertTrue(testGroup.isInside(2, 7, target.box_));
 
-    testGroup.targetList_.push({box_: new Box(5, 6, 6, 0)});
+    testGroup.targetList_.push({ box_: new Box(5, 6, 6, 0) });
 
     /** @suppress {visibility} suppression added to enable type checking */
     target = testGroup.maybeCreateDummyTargetForPosition_(3, 3);
@@ -276,7 +272,6 @@ testSuite({
     assertNull(target);
   },
 
-
   /**
      @suppress {visibility,checkTypes} suppression added to enable type
      checking
@@ -298,7 +293,7 @@ testSuite({
     assertFalse(boxOverlapsTargets(target.box_, testGroup.targetList_));
     assertTrue(testGroup.isInside(45, 40, target.box_));
 
-    testGroup.targetList_.push({box_: new Box(40, 50, 50, 40)});
+    testGroup.targetList_.push({ box_: new Box(40, 50, 50, 40) });
 
     /** @suppress {visibility} suppression added to enable type checking */
     target = testGroup.maybeCreateDummyTargetForPosition_(30, 40);
@@ -307,7 +302,6 @@ testSuite({
     target = testGroup.maybeCreateDummyTargetForPosition_(45, 35);
     assertFalse(boxOverlapsTargets(target.box_, testGroup.targetList_));
   },
-
 
   /**
      @suppress {visibility,checkTypes} suppression added to enable type
@@ -327,7 +321,6 @@ testSuite({
     assertEquals('(1t, 5r, 5b, 1l)', target.box_.toString());
   },
 
-
   /**
      @suppress {visibility,checkTypes} suppression added to enable type
      checking
@@ -339,14 +332,20 @@ testSuite({
     /** @suppress {visibility} suppression added to enable type checking */
     testGroup.targetBox_ = new Box(0, 9, 10, 1);
 
-    for (/** @suppress {visibility} suppression added to enable type checking */
-         let x = testGroup.targetBox_.left; x < testGroup.targetBox_.right;
-         x++) {
-      for (/**
+    for (
+      /** @suppress {visibility} suppression added to enable type checking */
+      let x = testGroup.targetBox_.left;
+      x < testGroup.targetBox_.right;
+      x++
+    ) {
+      for (
+        /**
               @suppress {visibility} suppression added to enable type checking
             */
-           let y = testGroup.targetBox_.top; y < testGroup.targetBox_.bottom;
-           y++) {
+        let y = testGroup.targetBox_.top;
+        y < testGroup.targetBox_.bottom;
+        y++
+      ) {
         let inRealTarget = false;
         for (let i = 0; i < testGroup.targetList_.length; i++) {
           if (testGroup.isInside(x, y, testGroup.targetList_[i].box_)) {
@@ -361,9 +360,14 @@ testSuite({
           const target = testGroup.maybeCreateDummyTargetForPosition_(x, y);
           if (target) {
             assertFalse(
-                'Fake target for point(' + x + ',' + y + ') should ' +
-                    'not overlap any real targets.',
-                boxOverlapsTargets(target.box_, testGroup.targetList_));
+              'Fake target for point(' +
+                x +
+                ',' +
+                y +
+                ') should ' +
+                'not overlap any real targets.',
+              boxOverlapsTargets(target.box_, testGroup.targetList_)
+            );
             assertTrue(testGroup.isInside(x, y, target.box_));
           }
         }
@@ -376,8 +380,7 @@ testSuite({
      checking
    */
   testMaybeCreateDummyTargetForPosition_NegativePositions() {
-    const negTargets =
-        [{box_: new Box(-20, 10, -5, 1)}, {box_: new Box(20, 10, 30, 1)}];
+    const negTargets = [{ box_: new Box(-20, 10, -5, 1) }, { box_: new Box(20, 10, 30, 1) }];
 
     const testGroup = new AbstractDragDrop();
     /** @suppress {visibility} suppression added to enable type checking */
@@ -396,8 +399,7 @@ testSuite({
      checking
    */
   testMaybeCreateDummyTargetOutsideScrollableContainer() {
-    const targets =
-        [{box_: new Box(0, 3, 10, 1)}, {box_: new Box(20, 3, 30, 1)}];
+    const targets = [{ box_: new Box(0, 3, 10, 1) }, { box_: new Box(20, 3, 30, 1) }];
     const target = targets[0];
 
     const testGroup = new AbstractDragDrop();
@@ -411,7 +413,7 @@ testSuite({
     const container = testGroup.scrollableContainers_[0];
     container.containedTargets_.push(target);
     /** @suppress {visibility} suppression added to enable type checking */
-    container.box_ = new Box(0, 3, 5, 1);  // shorter than target
+    container.box_ = new Box(0, 3, 5, 1); // shorter than target
     target.scrollableContainer_ = container;
 
     // mouse cursor is below scrollable target but not the actual target
@@ -428,8 +430,7 @@ testSuite({
      checking
    */
   testMaybeCreateDummyTargetInsideScrollableContainer() {
-    const targets =
-        [{box_: new Box(0, 3, 10, 1)}, {box_: new Box(20, 3, 30, 1)}];
+    const targets = [{ box_: new Box(0, 3, 10, 1) }, { box_: new Box(20, 3, 30, 1) }];
     const target = targets[0];
 
     const testGroup = new AbstractDragDrop();
@@ -443,7 +444,7 @@ testSuite({
     const container = testGroup.scrollableContainers_[0];
     container.containedTargets_.push(target);
     /** @suppress {visibility} suppression added to enable type checking */
-    container.box_ = new Box(0, 3, 20, 1);  // longer than target
+    container.box_ = new Box(0, 3, 20, 1); // longer than target
     target.scrollableContainer_ = container;
 
     // mouse cursor is below both the scrollable and the actual target
@@ -461,45 +462,47 @@ testSuite({
     /** @suppress {visibility} suppression added to enable type checking */
     testGroup.targetList_ = [];
     array.forEach(
-        targets, /**
+      targets /**
                     @suppress {visibility} suppression added to enable type
                     checking
-                  */
-        function(target) {
-          testGroup.targetList_.push(target);
-          testGroup.calculateTargetBox_(target.box_);
-        });
+                  */,
+      (target) => {
+        testGroup.targetList_.push(target);
+        testGroup.calculateTargetBox_(target.box_);
+      }
+    );
     assertTrue(Box.equals(testGroup.targetBox_, new Box(0, 9, 10, 1)));
 
     testGroup = new AbstractDragDrop();
     /** @suppress {visibility} suppression added to enable type checking */
     testGroup.targetList_ = [];
     array.forEach(
-        targets2, /**
+      targets2 /**
                      @suppress {visibility} suppression added to enable type
                      checking
-                   */
-        function(target) {
-          testGroup.targetList_.push(target);
-          testGroup.calculateTargetBox_(target.box_);
-        });
+                   */,
+      (target) => {
+        testGroup.targetList_.push(target);
+        testGroup.calculateTargetBox_(target.box_);
+      }
+    );
     assertTrue(Box.equals(testGroup.targetBox_, new Box(10, 50, 80, 10)));
 
     testGroup = new AbstractDragDrop();
     /** @suppress {visibility} suppression added to enable type checking */
     testGroup.targetList_ = [];
     array.forEach(
-        targets3, /**
+      targets3 /**
                      @suppress {visibility} suppression added to enable type
                      checking
-                   */
-        function(target) {
-          testGroup.targetList_.push(target);
-          testGroup.calculateTargetBox_(target.box_);
-        });
+                   */,
+      (target) => {
+        testGroup.targetList_.push(target);
+        testGroup.calculateTargetBox_(target.box_);
+      }
+    );
     assertTrue(Box.equals(testGroup.targetBox_, new Box(0, 6, 6, 0)));
   },
-
 
   /** @suppress {visibility} suppression added to enable type checking */
   testIsInside() {
@@ -511,44 +514,37 @@ testSuite({
     const box = new Box(20, 20, 30, 10);
 
     assertTrue(
-        'A point somewhere in the middle of the box should be inside.',
-        add.isInside(15, 25, box));
+      'A point somewhere in the middle of the box should be inside.',
+      add.isInside(15, 25, box)
+    );
 
-    assertTrue(
-        'A point in top-left corner should be inside the box.',
-        add.isInside(10, 20, box));
+    assertTrue('A point in top-left corner should be inside the box.', add.isInside(10, 20, box));
 
-    assertTrue(
-        'A point on top border should be inside the box.',
-        add.isInside(15, 20, box));
+    assertTrue('A point on top border should be inside the box.', add.isInside(15, 20, box));
 
     assertFalse(
-        'A point in top-right corner should be outside the box.',
-        add.isInside(20, 20, box));
+      'A point in top-right corner should be outside the box.',
+      add.isInside(20, 20, box)
+    );
+
+    assertFalse('A point on right border should be outside the box.', add.isInside(20, 25, box));
 
     assertFalse(
-        'A point on right border should be outside the box.',
-        add.isInside(20, 25, box));
+      'A point in bottom-right corner should be outside the box.',
+      add.isInside(20, 30, box)
+    );
+
+    assertFalse('A point on bottom border should be outside the box.', add.isInside(15, 30, box));
 
     assertFalse(
-        'A point in bottom-right corner should be outside the box.',
-        add.isInside(20, 30, box));
+      'A point in bottom-left corner should be outside the box.',
+      add.isInside(10, 30, box)
+    );
 
-    assertFalse(
-        'A point on bottom border should be outside the box.',
-        add.isInside(15, 30, box));
-
-    assertFalse(
-        'A point in bottom-left corner should be outside the box.',
-        add.isInside(10, 30, box));
-
-    assertTrue(
-        'A point on left border should be inside the box.',
-        add.isInside(10, 25, box));
+    assertTrue('A point on left border should be inside the box.', add.isInside(10, 25, box));
 
     add.dispose();
   },
-
 
   /** @suppress {visibility} suppression added to enable type checking */
   testAddingRemovingScrollableContainers() {
@@ -567,7 +563,6 @@ testSuite({
     group.removeAllScrollableContainers();
     assertEquals(0, group.scrollableContainers_.length);
   },
-
 
   /** @suppress {visibility} suppression added to enable type checking */
   testScrollableContainersCalculation() {
@@ -599,7 +594,6 @@ testSuite({
     assertEquals(container, group.targetList_[1].scrollableContainer_);
   },
 
-
   /** @suppress {visibility} suppression added to enable type checking */
   testMouseDownEventDefaultAction() {
     const group = new AbstractDragDrop();
@@ -610,14 +604,13 @@ testSuite({
     item1.setParent(group);
     group.init();
 
-    const mousedownDefaultPrevented =
-        !testingEvents.fireMouseDownEvent(item1.element);
+    const mousedownDefaultPrevented = !testingEvents.fireMouseDownEvent(item1.element);
 
     assertFalse(
-        'Default action of mousedown event should not be cancelled.',
-        mousedownDefaultPrevented);
+      'Default action of mousedown event should not be cancelled.',
+      mousedownDefaultPrevented
+    );
   },
-
 
   // See http://b/7494613.
   /**
@@ -645,7 +638,6 @@ testSuite({
     target.dispose();
   },
 
-
   /**
      @suppress {visibility,checkTypes} suppression added to enable type
      checking
@@ -669,20 +661,18 @@ testSuite({
 
     // Simulare starting a drag.
     const moveEvent = {
-      'clientX': 8,
-      'clientY': 10,
-      'type': EventType.MOUSEMOVE,
-      'relatedTarget': childEl,
-      'preventDefault': function() {}
+      clientX: 8,
+      clientY: 10,
+      type: EventType.MOUSEMOVE,
+      relatedTarget: childEl,
+      preventDefault: () => {},
     };
     group.startDrag(moveEvent, item);
 
     // Simulate scrolling before the first move drag event.
-    const scrollEvent = {'target': container};
-    assertNotThrows(
-        goog.bind(group.containerScrollHandler_, group, scrollEvent));
+    const scrollEvent = { target: container };
+    assertNotThrows(goog.bind(group.containerScrollHandler_, group, scrollEvent));
   },
-
 
   /**
      @suppress {visibility,checkTypes} suppression added to enable type
@@ -706,7 +696,7 @@ testSuite({
 
     // Test
     let draggedItem = null;
-    add.startDrag = function(event, item) {
+    add.startDrag = (event, item) => {
       draggedItem = item;
     };
 
@@ -715,20 +705,15 @@ testSuite({
     event.clientX = 8;
     event.clientY = 10;
     item.mouseMove_(event);
-    assertEquals(
-        'DragStart should not be fired for mouseout on child element.', null,
-        draggedItem);
+    assertEquals('DragStart should not be fired for mouseout on child element.', null, draggedItem);
 
     event = new testingEvents.Event(EventType.MOUSEOUT, itemEl);
     // Drag distance is only 2.
     event.clientX = 8;
     event.clientY = 10;
     item.mouseMove_(event);
-    assertEquals(
-        'DragStart should be fired for mouseout on main element.', item,
-        draggedItem);
+    assertEquals('DragStart should be fired for mouseout on main element.', item, draggedItem);
   },
-
 
   testGetDragElementPosition() {
     const testGroup = new AbstractDragDrop();
@@ -738,12 +723,8 @@ testSuite({
     let pageOffset = style.getPageOffset(sourceEl);
     /** @suppress {checkTypes} suppression added to enable type checking */
     let pos = testGroup.getDragElementPosition(sourceEl);
-    assertEquals(
-        'Drag element position should be source element page offset',
-        pageOffset.x, pos.x);
-    assertEquals(
-        'Drag element position should be source element page offset',
-        pageOffset.y, pos.y);
+    assertEquals('Drag element position should be source element page offset', pageOffset.x, pos.x);
+    assertEquals('Drag element position should be source element page offset', pageOffset.y, pos.y);
 
     sourceEl.style.marginLeft = '5px';
     sourceEl.style.marginTop = '7px';
@@ -751,15 +732,16 @@ testSuite({
     /** @suppress {checkTypes} suppression added to enable type checking */
     pos = testGroup.getDragElementPosition(sourceEl);
     assertEquals(
-        'Drag element position should be adjusted for source element ' +
-            'margins',
-        pageOffset.x - 10, pos.x);
+      'Drag element position should be adjusted for source element ' + 'margins',
+      pageOffset.x - 10,
+      pos.x
+    );
     assertEquals(
-        'Drag element position should be adjusted for source element ' +
-            'margins',
-        pageOffset.y - 14, pos.y);
+      'Drag element position should be adjusted for source element ' + 'margins',
+      pageOffset.y - 14,
+      pos.y
+    );
   },
-
 
   testDragEndEvent() {
     /**
@@ -779,11 +761,11 @@ testSuite({
 
       // Simulate starting a drag
       const startEvent = {
-        'clientX': 0,
-        'clientY': 0,
-        'type': EventType.MOUSEMOVE,
-        'relatedTarget': childEl,
-        'preventDefault': function() {}
+        clientX: 0,
+        clientY: 0,
+        type: EventType.MOUSEMOVE,
+        relatedTarget: childEl,
+        preventDefault: () => {},
       };
       testGroup.startDrag(startEvent, item);
 
@@ -791,36 +773,39 @@ testSuite({
        * @suppress {visibility,checkTypes} suppression added to enable type
        * checking
        */
-      testGroup.activeTarget_ =
-          new ActiveDropTarget(new Box(0, 0, 0, 0), testGroup, item, childEl);
+      testGroup.activeTarget_ = new ActiveDropTarget(new Box(0, 0, 0, 0), testGroup, item, childEl);
 
-      events.listen(
-          testGroup, AbstractDragDrop.EventType.DRAGEND, function(event) {
-            if (shouldContainItemData) {
-              assertEquals(
-                  'The drag end event should contain a drop target', testGroup,
-                  event.dropTarget);
-              assertEquals(
-                  'The drag end event should contain a drop target item', item,
-                  event.dropTargetItem);
-              assertEquals(
-                  'The drag end event should contain a drop target element',
-                  childEl, event.dropTargetElement);
-            } else {
-              assertUndefined(
-                  'The drag end event shouldn\'t contain a drop target',
-                  event.dropTarget);
-              assertUndefined(
-                  'The drag end event shouldn\'t contain a drop target item',
-                  event.dropTargetItem);
-              assertUndefined(
-                  'The drag end event shouldn\'t contain a drop target element',
-                  event.dropTargetElement);
-            }
-          });
+      events.listen(testGroup, AbstractDragDrop.EventType.DRAGEND, (event) => {
+        if (shouldContainItemData) {
+          assertEquals(
+            'The drag end event should contain a drop target',
+            testGroup,
+            event.dropTarget
+          );
+          assertEquals(
+            'The drag end event should contain a drop target item',
+            item,
+            event.dropTargetItem
+          );
+          assertEquals(
+            'The drag end event should contain a drop target element',
+            childEl,
+            event.dropTargetElement
+          );
+        } else {
+          assertUndefined("The drag end event shouldn't contain a drop target", event.dropTarget);
+          assertUndefined(
+            "The drag end event shouldn't contain a drop target item",
+            event.dropTargetItem
+          );
+          assertUndefined(
+            "The drag end event shouldn't contain a drop target element",
+            event.dropTargetElement
+          );
+        }
+      });
 
-      testGroup.endDrag(
-          {'clientX': 0, 'clientY': 0, 'dragCanceled': !shouldContainItemData});
+      testGroup.endDrag({ clientX: 0, clientY: 0, dragCanceled: !shouldContainItemData });
 
       testGroup.dispose();
       item.dispose();
@@ -829,7 +814,6 @@ testSuite({
     testDragEndEventInternal(false);
     testDragEndEventInternal(true);
   },
-
 
   /**
      @suppress {visibility,checkTypes} suppression added to enable type
@@ -848,11 +832,11 @@ testSuite({
 
     // Simulate starting a drag
     const startBrowserEvent = {
-      'clientX': 0,
-      'clientY': 0,
-      'type': EventType.MOUSEMOVE,
-      'relatedTarget': childEl,
-      'preventDefault': function() {},
+      clientX: 0,
+      clientY: 0,
+      type: EventType.MOUSEMOVE,
+      relatedTarget: childEl,
+      preventDefault: () => {},
     };
     testGroup.startDrag(startBrowserEvent, item);
 
@@ -860,33 +844,33 @@ testSuite({
      * @suppress {visibility,checkTypes} suppression added to enable type
      * checking
      */
-    testGroup.activeTarget_ =
-        new ActiveDropTarget(new Box(0, 0, 0, 0), testGroup, item, childEl);
+    testGroup.activeTarget_ = new ActiveDropTarget(new Box(0, 0, 0, 0), testGroup, item, childEl);
 
     const endBrowserEvent = {
-      'clientX': 0,
-      'clientY': 0,
-      'type': EventType.MOUSEUP,
-      'ctrlKey': false,
-      'altKey': true
+      clientX: 0,
+      clientY: 0,
+      type: EventType.MOUSEUP,
+      ctrlKey: false,
+      altKey: true,
     };
 
-    events.listen(testGroup, AbstractDragDrop.EventType.DROP, function(event) {
+    events.listen(testGroup, AbstractDragDrop.EventType.DROP, (event) => {
       const browserEvent = event.browserEvent;
       assertEquals(
-          'The drop event should contain the browser event', endBrowserEvent,
-          browserEvent);
+        'The drop event should contain the browser event',
+        endBrowserEvent,
+        browserEvent
+      );
     });
 
     testGroup.endDrag({
-      'clientX': 0,
-      'clientY': 0,
-      'dragCanceled': false,
-      'browserEvent': endBrowserEvent
+      clientX: 0,
+      clientY: 0,
+      dragCanceled: false,
+      browserEvent: endBrowserEvent,
     });
 
     testGroup.dispose();
     item.dispose();
   },
-
 });

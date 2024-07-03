@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.plugins.EnterHandlerTest');
-goog.setTestOnly();
 
 const Blockquote = goog.require('goog.editor.plugins.Blockquote');
 const BrowserFeature = goog.require('goog.editor.BrowserFeature');
@@ -107,8 +106,7 @@ function getNbsp() {
  * @suppress {visibility} suppression added to enable type checking
  */
 function assertPreparedContents(expected, original) {
-  assertEquals(
-      expected, field1.reduceOp_(Plugin.Op.PREPARE_CONTENTS_HTML, original));
+  assertEquals(expected, field1.reduceOp_(Plugin.Op.PREPARE_CONTENTS_HTML, original));
 }
 
 // UTILITY FUNCTION TESTS.
@@ -145,19 +143,20 @@ testSuite({
     const dom = field1.getEditableDomHelper();
     try {
       assertEquals(
-          'Blockquote should not be split', 1,
-          dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem)
-              .length);
+        'Blockquote should not be split',
+        1,
+        dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem).length
+      );
     } catch (e) {
       EXPECTEDFAILURES.handleException(e);
     }
-    assert(
-        'Selection should be deleted',
-        -1 == elem.innerHTML.indexOf('selection'));
+    assert('Selection should be deleted', -1 == elem.innerHTML.indexOf('selection'));
 
     assertEquals(
-        'The event should have been prevented only on webkit', prevented,
-        userAgent.WEBKIT);
+      'The event should have been prevented only on webkit',
+      prevented,
+      userAgent.WEBKIT
+    );
   },
 
   testEnterInSetupBlockquote() {
@@ -171,16 +170,13 @@ testSuite({
     const elem = field2.getElement();
     const dom = field2.getEditableDomHelper();
     assertEquals(
-        'Blockquote should be split', 2,
-        dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem)
-            .length);
-    assert(
-        'Selection should be deleted',
-        -1 == elem.innerHTML.indexOf('selection'));
+      'Blockquote should be split',
+      2,
+      dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem).length
+    );
+    assert('Selection should be deleted', -1 == elem.innerHTML.indexOf('selection'));
 
-    assert(
-        'should have div with &nbsp;',
-        -1 != elem.innerHTML.indexOf('>' + getNbsp() + '<'));
+    assert('should have div with &nbsp;', -1 != elem.innerHTML.indexOf('>' + getNbsp() + '<'));
     assert('event should have been prevented', prevented);
   },
 
@@ -196,16 +192,13 @@ testSuite({
     const elem = field1.getElement();
     const dom = field1.getEditableDomHelper();
     assertEquals(
-        'Blockquote should be split', 2,
-        dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem)
-            .length);
-    assert(
-        'Selection should be deleted',
-        -1 == elem.innerHTML.indexOf('selection'));
+      'Blockquote should be split',
+      2,
+      dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem).length
+    );
+    assert('Selection should be deleted', -1 == elem.innerHTML.indexOf('selection'));
 
-    assert(
-        'should have div with &nbsp;',
-        -1 != elem.innerHTML.indexOf('>' + getNbsp() + '<'));
+    assert('should have div with &nbsp;', -1 != elem.innerHTML.indexOf('>' + getNbsp() + '<'));
     assert('event should have been prevented', prevented);
   },
 
@@ -215,14 +208,14 @@ testSuite({
     const elem = field2.getElement();
     const dom = field2.getEditableDomHelper();
 
-    const firstBlockquote =
-        dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem)[0];
+    const firstBlockquote = dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem)[0];
     const div = dom.getNextElementSibling(firstBlockquote);
+    assertEquals('Element after blockquote should be a div', 'DIV', div.tagName);
     assertEquals(
-        'Element after blockquote should be a div', 'DIV', div.tagName);
-    assertEquals(
-        'Element after div should be second blockquote', 'BLOCKQUOTE',
-        dom.getNextElementSibling(div).tagName);
+      'Element after div should be second blockquote',
+      'BLOCKQUOTE',
+      dom.getNextElementSibling(div).tagName
+    );
   },
 
   /**
@@ -248,28 +241,25 @@ testSuite({
     // <div>&nbsp;</div>
     // <blockquote>two<br></blockquote>
     field1.setSafeHtml(
-        false,
-        testing.newSafeHtmlForTest(
-            '<blockquote id="quote" class="tr_bq">one<br>' +
-            'two<br></blockquote>'));
+      false,
+      testing.newSafeHtmlForTest(
+        '<blockquote id="quote" class="tr_bq">one<br>' + 'two<br></blockquote>'
+      )
+    );
     const dom = field1.getEditableDomHelper();
     Range.createCaret(dom.getElement('quote'), 2).select();
     testingEvents.fireKeySequence(field1.getElement(), KeyCodes.ENTER);
     const elem = field1.getElement();
-    const secondBlockquote =
-        dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem)[1];
+    const secondBlockquote = dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem)[1];
     assertHTMLEquals('two<br>', secondBlockquote.innerHTML);
 
     // Verifies that a blockquote split doesn't happen if it doesn't need to.
     field1.setSafeHtml(
-        false,
-        testing.newSafeHtmlForTest(
-            '<blockquote class="tr_bq">one<br id="brcursor"></blockquote>'));
+      false,
+      testing.newSafeHtmlForTest('<blockquote class="tr_bq">one<br id="brcursor"></blockquote>')
+    );
     selectNodeAndHitEnter(field1, 'brcursor');
-    assertEquals(
-        1,
-        dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem)
-            .length);
+    assertEquals(1, dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem).length);
   },
 
   /**
@@ -288,30 +278,29 @@ testSuite({
     // <div>&nbsp;</div>
     // <blockquote>two<br></blockquote>
     field1.setSafeHtml(
-        false,
-        testing.newSafeHtmlForTest(
-            '<blockquote id="quote" class="tr_bq">one<br>' +
-            'two<br></blockquote>'));
+      false,
+      testing.newSafeHtmlForTest(
+        '<blockquote id="quote" class="tr_bq">one<br>' + 'two<br></blockquote>'
+      )
+    );
     const dom = field1.getEditableDomHelper();
     let cursor = dom.getElement('quote').firstChild;
     Range.createCaret(cursor, 3).select();
     testingEvents.fireKeySequence(field1.getElement(), KeyCodes.ENTER);
     const elem = field1.getElement();
-    let secondBlockquote =
-        dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem)[1];
+    let secondBlockquote = dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem)[1];
     assertHTMLEquals('two<br>', secondBlockquote.innerHTML);
 
     // Ensures that standard text node split works as expected with the new
     // change.
     field1.setSafeHtml(
-        false,
-        testing.newSafeHtmlForTest(
-            '<blockquote id="quote" class="tr_bq">one<b>two</b><br>'));
+      false,
+      testing.newSafeHtmlForTest('<blockquote id="quote" class="tr_bq">one<b>two</b><br>')
+    );
     cursor = dom.getElement('quote').firstChild;
     Range.createCaret(cursor, 3).select();
     testingEvents.fireKeySequence(field1.getElement(), KeyCodes.ENTER);
-    secondBlockquote =
-        dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem)[1];
+    secondBlockquote = dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem)[1];
     assertHTMLEquals('<b>two</b><br>', secondBlockquote.innerHTML);
   },
 
@@ -355,48 +344,47 @@ testSuite({
     // </blockquote>
     //
     field1.setSafeHtml(
-        false,
-        testing.newSafeHtmlForTest(
-            '<blockquote class="tr_bq">' +
-            '<div><div>a</div><ol><li id="cursor">one</li></div>' +
-            '<div>b</div>' +
-            '</blockquote>'));
+      false,
+      testing.newSafeHtmlForTest(
+        '<blockquote class="tr_bq">' +
+          '<div><div>a</div><ol><li id="cursor">one</li></div>' +
+          '<div>b</div>' +
+          '</blockquote>'
+      )
+    );
     const dom = field1.getEditableDomHelper();
     Range.createCaret(dom.getElement('cursor').firstChild, 3).select();
     testingEvents.fireKeySequence(field1.getElement(), KeyCodes.ENTER);
     const elem = field1.getElement();
-    let secondBlockquote =
-        dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem)[1];
+    let secondBlockquote = dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem)[1];
     assertHTMLEquals('<div>b</div>', secondBlockquote.innerHTML);
 
     // Ensure that we remove only unnecessary subtrees.
     field1.setSafeHtml(
-        false,
-        testing.newSafeHtmlForTest(
-            '<blockquote class="tr_bq">' +
-            '<div><span>a</span><div id="cursor">one</div><div>two</div></div>' +
-            '<div><span>c</span></div>' +
-            '</blockquote>'));
+      false,
+      testing.newSafeHtmlForTest(
+        '<blockquote class="tr_bq">' +
+          '<div><span>a</span><div id="cursor">one</div><div>two</div></div>' +
+          '<div><span>c</span></div>' +
+          '</blockquote>'
+      )
+    );
     Range.createCaret(dom.getElement('cursor').firstChild, 3).select();
     testingEvents.fireKeySequence(field1.getElement(), KeyCodes.ENTER);
-    secondBlockquote =
-        dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem)[1];
-    const expectedHTML = '<div><div>two</div></div>' +
-        '<div><span>c</span></div>';
+    secondBlockquote = dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem)[1];
+    const expectedHTML = '<div><div>two</div></div>' + '<div><span>c</span></div>';
     assertHTMLEquals(expectedHTML, secondBlockquote.innerHTML);
 
     // Place the cursor in the middle of a line.
     field1.setSafeHtml(
-        false,
-        testing.newSafeHtmlForTest(
-            '<blockquote id="quote" class="tr_bq">' +
-            '<div>one</div><div>two</div>' +
-            '</blockquote>'));
-    Range.createCaret(dom.getElement('quote').firstChild.firstChild, 1)
-        .select();
+      false,
+      testing.newSafeHtmlForTest(
+        '<blockquote id="quote" class="tr_bq">' + '<div>one</div><div>two</div>' + '</blockquote>'
+      )
+    );
+    Range.createCaret(dom.getElement('quote').firstChild.firstChild, 1).select();
     testingEvents.fireKeySequence(field1.getElement(), KeyCodes.ENTER);
-    const blockquotes =
-        dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem);
+    const blockquotes = dom.getElementsByTagNameAndClass(TagName.BLOCKQUOTE, null, elem);
     assertEquals(2, blockquotes.length);
     assertHTMLEquals('<div>o</div>', blockquotes[0].innerHTML);
     assertHTMLEquals('<div>ne</div><div>two</div>', blockquotes[1].innerHTML);
@@ -408,9 +396,9 @@ testSuite({
     // <enter> in a list should *never* be handled by custom code. Lists are
     // just way too complicated to get right.
     field1.setSafeHtml(
-        false,
-        testing.newSafeHtmlForTest(
-            '<ol><li>hi!<span id="field1cursor"></span></li></ol>'));
+      false,
+      testing.newSafeHtmlForTest('<ol><li>hi!<span id="field1cursor"></span></li></ol>')
+    );
     const prevented = !selectNodeAndHitEnter(field1, 'field1cursor');
     assertFalse('<enter> in a list should not be prevented', prevented);
   },
@@ -420,16 +408,15 @@ testSuite({
 
     if (userAgent.WEBKIT) {
       field1.setSafeHtml(
-          false,
-          testing.newSafeHtmlForTest(
-              '<blockquote>hi!<span id="field1cursor"></span></blockquote>'));
+        false,
+        testing.newSafeHtmlForTest('<blockquote>hi!<span id="field1cursor"></span></blockquote>')
+      );
 
       const cursor = field1.getEditableDomHelper().getElement('field1cursor');
       editorRange.placeCursorNextTo(cursor, false);
       googDom.removeNode(cursor);
 
-      const prevented =
-          !testingEvents.fireKeySequence(field1.getElement(), KeyCodes.ENTER);
+      const prevented = !testingEvents.fireKeySequence(field1.getElement(), KeyCodes.ENTER);
       waitForChangeEvents();
       assertChangeFlags();
       assert('event should have been prevented', prevented);
@@ -437,8 +424,10 @@ testSuite({
       // Make sure that the block now has two brs.
       const elem = field1.getElement();
       assertEquals(
-          'should have inserted two br tags: ' + elem.innerHTML, 2,
-          googDom.getElementsByTagNameAndClass(TagName.BR, null, elem).length);
+        'should have inserted two br tags: ' + elem.innerHTML,
+        2,
+        googDom.getElementsByTagNameAndClass(TagName.BR, null, elem).length
+      );
     }
   },
 
@@ -455,113 +444,134 @@ testSuite({
     // through and let the browser do the delete, which can only be tested with
     // a robot test (see javascript/apps/editor/tests/delete_br_robot.html).
     if (userAgent.GECKO) {
-      field1.setSafeHtml(
-          false, testing.newSafeHtmlForTest('one<br><br><div>two</div>'));
+      field1.setSafeHtml(false, testing.newSafeHtmlForTest('one<br><br><div>two</div>'));
       const helper = new TestHelper(field1.getElement());
-      helper.select(field1.getElement(), 2);  // Between the two BR's.
+      helper.select(field1.getElement(), 2); // Between the two BR's.
       testingEvents.fireKeySequence(field1.getElement(), KeyCodes.DELETE);
       assertEquals(
-          'Should have deleted exactly one <br>', 'one<br><div>two</div>',
-          field1.getElement().innerHTML);
+        'Should have deleted exactly one <br>',
+        'one<br><div>two</div>',
+        field1.getElement().innerHTML
+      );
 
       // We test the case where the BR has a previous sibling which is not
       // a block level element.
-      field1.setSafeHtml(
-          false, testing.newSafeHtmlForTest('one<br><ul><li>two</li></ul>'));
-      helper.select(field1.getElement(), 1);  // Between one and BR.
+      field1.setSafeHtml(false, testing.newSafeHtmlForTest('one<br><ul><li>two</li></ul>'));
+      helper.select(field1.getElement(), 1); // Between one and BR.
       testingEvents.fireKeySequence(field1.getElement(), KeyCodes.DELETE);
       assertEquals(
-          'Should have deleted the <br>', 'one<ul><li>two</li></ul>',
-          field1.getElement().innerHTML);
+        'Should have deleted the <br>',
+        'one<ul><li>two</li></ul>',
+        field1.getElement().innerHTML
+      );
       // Verify that the cursor is placed at the end of the text node "one".
       let range = field1.getRange();
       let focusNode = range.getFocusNode();
       assertTrue('The selected range should be collapsed', range.isCollapsed());
       assertTrue(
-          'The focus node should be the text node "one"',
-          focusNode.nodeType == NodeType.TEXT && focusNode.data == 'one');
+        'The focus node should be the text node "one"',
+        focusNode.nodeType == NodeType.TEXT && focusNode.data == 'one'
+      );
       assertEquals(
-          'The focus offset should be at the end of the text node "one"',
-          focusNode.length, range.getFocusOffset());
+        'The focus offset should be at the end of the text node "one"',
+        focusNode.length,
+        range.getFocusOffset()
+      );
       assertTrue(
-          'The next sibling of the focus node should be the UL',
-          focusNode.nextSibling && focusNode.nextSibling.tagName == TagName.UL);
+        'The next sibling of the focus node should be the UL',
+        focusNode.nextSibling && focusNode.nextSibling.tagName == TagName.UL
+      );
 
       // We test the case where the previous sibling of the BR is a block
       // level element.
       field1.setSafeHtml(
-          false,
-          testing.newSafeHtmlForTest(
-              '<div>foo</div><br><div><span>bar</span></div>'));
-      helper.select(field1.getElement(), 1);  // Before the BR.
+        false,
+        testing.newSafeHtmlForTest('<div>foo</div><br><div><span>bar</span></div>')
+      );
+      helper.select(field1.getElement(), 1); // Before the BR.
       testingEvents.fireKeySequence(field1.getElement(), KeyCodes.DELETE);
       assertEquals(
-          'Should have deleted the <br>',
-          '<div>foo</div><div><span>bar</span></div>',
-          field1.getElement().innerHTML);
+        'Should have deleted the <br>',
+        '<div>foo</div><div><span>bar</span></div>',
+        field1.getElement().innerHTML
+      );
       range = field1.getRange();
       assertEquals(
-          'The selected range should be contained within the <span>',
-          String(TagName.SPAN), range.getContainerElement().tagName);
+        'The selected range should be contained within the <span>',
+        String(TagName.SPAN),
+        range.getContainerElement().tagName
+      );
       assertTrue('The selected range should be collapsed', range.isCollapsed());
       // Verify that the cursor is placed inside the span at the beginning of
       // bar.
       focusNode = range.getFocusNode();
       assertTrue(
-          'The focus node should be the text node "bar"',
-          focusNode.nodeType == NodeType.TEXT && focusNode.data == 'bar');
+        'The focus node should be the text node "bar"',
+        focusNode.nodeType == NodeType.TEXT && focusNode.data == 'bar'
+      );
       assertEquals(
-          'The focus offset should be at the beginning ' +
-              'of the text node "bar"',
-          0, range.getFocusOffset());
+        'The focus offset should be at the beginning ' + 'of the text node "bar"',
+        0,
+        range.getFocusOffset()
+      );
 
       // We test the case where the BR does not have a previous sibling.
-      field1.setSafeHtml(
-          false, testing.newSafeHtmlForTest('<br><ul><li>one</li></ul>'));
-      helper.select(field1.getElement(), 0);  // Before the BR.
+      field1.setSafeHtml(false, testing.newSafeHtmlForTest('<br><ul><li>one</li></ul>'));
+      helper.select(field1.getElement(), 0); // Before the BR.
       testingEvents.fireKeySequence(field1.getElement(), KeyCodes.DELETE);
       assertEquals(
-          'Should have deleted the <br>', '<ul><li>one</li></ul>',
-          field1.getElement().innerHTML);
+        'Should have deleted the <br>',
+        '<ul><li>one</li></ul>',
+        field1.getElement().innerHTML
+      );
       range = field1.getRange();
       // Verify that the cursor is placed inside the LI at the text node "one".
       assertEquals(
-          'The selected range should be contained within the <li>',
-          String(TagName.LI), range.getContainerElement().tagName);
+        'The selected range should be contained within the <li>',
+        String(TagName.LI),
+        range.getContainerElement().tagName
+      );
       assertTrue('The selected range should be collapsed', range.isCollapsed());
       focusNode = range.getFocusNode();
       assertTrue(
-          'The focus node should be the text node "one"',
-          (focusNode.nodeType == NodeType.TEXT && focusNode.data == 'one'));
+        'The focus node should be the text node "one"',
+        focusNode.nodeType == NodeType.TEXT && focusNode.data == 'one'
+      );
       assertEquals(
-          'The focus offset should be at the beginning of ' +
-              'the text node "one"',
-          0, range.getFocusOffset());
+        'The focus offset should be at the beginning of ' + 'the text node "one"',
+        0,
+        range.getFocusOffset()
+      );
 
       // Testing deleting a BR followed by a block level element and preceded
       // by a BR.
-      field1.setSafeHtml(
-          false, testing.newSafeHtmlForTest('<br><br><ul><li>one</li></ul>'));
-      helper.select(field1.getElement(), 1);  // Between the BR's.
+      field1.setSafeHtml(false, testing.newSafeHtmlForTest('<br><br><ul><li>one</li></ul>'));
+      helper.select(field1.getElement(), 1); // Between the BR's.
       testingEvents.fireKeySequence(field1.getElement(), KeyCodes.DELETE);
       assertEquals(
-          'Should have deleted the <br>', '<br><ul><li>one</li></ul>',
-          field1.getElement().innerHTML);
+        'Should have deleted the <br>',
+        '<br><ul><li>one</li></ul>',
+        field1.getElement().innerHTML
+      );
       // Verify that the cursor is placed inside the LI at the text node "one".
       range = field1.getRange();
       assertEquals(
-          'The selected range should be contained within the <li>',
-          String(TagName.LI), range.getContainerElement().tagName);
+        'The selected range should be contained within the <li>',
+        String(TagName.LI),
+        range.getContainerElement().tagName
+      );
       assertTrue('The selected range should be collapsed', range.isCollapsed());
       focusNode = range.getFocusNode();
       assertTrue(
-          'The focus node should be the text node "one"',
-          (focusNode.nodeType == NodeType.TEXT && focusNode.data == 'one'));
+        'The focus node should be the text node "one"',
+        focusNode.nodeType == NodeType.TEXT && focusNode.data == 'one'
+      );
       assertEquals(
-          'The focus offset should be at the beginning of ' +
-              'the text node "one"',
-          0, range.getFocusOffset());
-    }  // End if GECKO
+        'The focus offset should be at the beginning of ' + 'the text node "one"',
+        0,
+        range.getFocusOffset()
+      );
+    } // End if GECKO
   },
 
   /**
@@ -573,34 +583,37 @@ testSuite({
 
     if (userAgent.GECKO) {
       field1.setSafeHtml(
-          false,
-          testing.newSafeHtmlForTest(
-              '<br><br><div><br><blockquote>foo</blockquote></div>'));
+        false,
+        testing.newSafeHtmlForTest('<br><br><div><br><blockquote>foo</blockquote></div>')
+      );
       const helper = new TestHelper(field1.getElement());
-      helper.select(field1.getElement(), 0);  // Before the first BR.
+      helper.select(field1.getElement(), 0); // Before the first BR.
       // Fire three deletes in quick succession.
       testingEvents.fireKeySequence(field1.getElement(), KeyCodes.DELETE);
       testingEvents.fireKeySequence(field1.getElement(), KeyCodes.DELETE);
       testingEvents.fireKeySequence(field1.getElement(), KeyCodes.DELETE);
       assertEquals(
-          'Should have deleted all the <br>\'s and the blockquote ' +
-              'isn\'t affected',
-          '<div><blockquote>foo</blockquote></div>',
-          field1.getElement().innerHTML);
+        "Should have deleted all the <br>'s and the blockquote " + "isn't affected",
+        '<div><blockquote>foo</blockquote></div>',
+        field1.getElement().innerHTML
+      );
       const range = field1.getRange();
       assertEquals(
-          'The selected range should be contained within the ' +
-              '<blockquote>',
-          String(TagName.BLOCKQUOTE), range.getContainerElement().tagName);
+        'The selected range should be contained within the ' + '<blockquote>',
+        String(TagName.BLOCKQUOTE),
+        range.getContainerElement().tagName
+      );
       assertTrue('The selected range should be collapsed', range.isCollapsed());
       const focusNode = range.getFocusNode();
       assertTrue(
-          'The focus node should be the text node "foo"',
-          (focusNode.nodeType == NodeType.TEXT && focusNode.data == 'foo'));
+        'The focus node should be the text node "foo"',
+        focusNode.nodeType == NodeType.TEXT && focusNode.data == 'foo'
+      );
       assertEquals(
-          'The focus offset should be at the ' +
-              'beginning of the text node "foo"',
-          0, range.getFocusOffset());
+        'The focus offset should be at the ' + 'beginning of the text node "foo"',
+        0,
+        range.getFocusOffset()
+      );
     }
   },
 
@@ -617,18 +630,17 @@ testSuite({
     // through and let the browser do the delete, which can only be tested with
     // a robot test (see javascript/apps/editor/tests/delete_br_robot.html).
     if (userAgent.GECKO) {
-      field1.setSafeHtml(
-          false, testing.newSafeHtmlForTest('one<br><br><br>two'));
+      field1.setSafeHtml(false, testing.newSafeHtmlForTest('one<br><br><br>two'));
       const helper = new TestHelper(field1.getElement());
-      helper.select(
-          field1.getElement(), 2);  // Between the first and second BR's.
+      helper.select(field1.getElement(), 2); // Between the first and second BR's.
       field1.getElement().focus();
       testingEvents.fireKeySequence(field1.getElement(), KeyCodes.DELETE);
       assertEquals(
-          'Should have deleted exactly one <br>', 'one<br><br>two',
-          field1.getElement().innerHTML);
-
-    }  // End if GECKO
+        'Should have deleted exactly one <br>',
+        'one<br><br>two',
+        field1.getElement().innerHTML
+      );
+    } // End if GECKO
   },
 
   /**
@@ -643,8 +655,7 @@ testSuite({
   testPrepareContent() {
     setUpFields(true);
     assertPreparedContents('hi', 'hi');
-    assertPreparedContents(
-        BrowserFeature.COLLAPSES_EMPTY_NODES ? '<br>' : '', '   ');
+    assertPreparedContents(BrowserFeature.COLLAPSES_EMPTY_NODES ? '<br>' : '', '   ');
   },
 
   /**
@@ -654,7 +665,11 @@ testSuite({
   testDeleteW3CSimple() {
     container.innerHTML = '<div>abcd</div>';
     const range = Range.createFromNodes(
-        container.firstChild.firstChild, 1, container.firstChild.firstChild, 3);
+      container.firstChild.firstChild,
+      1,
+      container.firstChild.firstChild,
+      3
+    );
     range.select();
     EnterHandler.deleteW3cRange_(range);
 
@@ -668,7 +683,11 @@ testSuite({
   testDeleteW3CAll() {
     container.innerHTML = '<div>abcd</div>';
     const range = Range.createFromNodes(
-        container.firstChild.firstChild, 0, container.firstChild.firstChild, 4);
+      container.firstChild.firstChild,
+      0,
+      container.firstChild.firstChild,
+      4
+    );
     range.select();
     EnterHandler.deleteW3cRange_(range);
 
@@ -682,7 +701,11 @@ testSuite({
   testDeleteW3CPartialEnd() {
     container.innerHTML = '<div>ab</div><div>cd</div>';
     const range = Range.createFromNodes(
-        container.firstChild.firstChild, 1, container.lastChild.firstChild, 1);
+      container.firstChild.firstChild,
+      1,
+      container.lastChild.firstChild,
+      1
+    );
     range.select();
     EnterHandler.deleteW3cRange_(range);
 
@@ -696,7 +719,11 @@ testSuite({
   testDeleteW3CNonPartialEnd() {
     container.innerHTML = '<div>ab</div><div>cd</div>';
     const range = Range.createFromNodes(
-        container.firstChild.firstChild, 1, container.lastChild.firstChild, 2);
+      container.firstChild.firstChild,
+      1,
+      container.lastChild.firstChild,
+      2
+    );
     range.select();
     EnterHandler.deleteW3cRange_(range);
 
@@ -710,16 +737,20 @@ testSuite({
     const range = Range.createFromNodes(div, 0, div, 1);
     range.select();
     assertTrue(
-        'Selection must be recognized as being in one container',
-        EnterHandler.isInOneContainerW3c_(range));
+      'Selection must be recognized as being in one container',
+      EnterHandler.isInOneContainerW3c_(range)
+    );
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testDeletingEndNodesWithNoNewLine() {
-    container.innerHTML =
-        'a<div>b</div><div><br></div><div>c</div><div>d</div>';
+    container.innerHTML = 'a<div>b</div><div><br></div><div>c</div><div>d</div>';
     const range = Range.createFromNodes(
-        container.childNodes[2], 0, container.childNodes[4].childNodes[0], 1);
+      container.childNodes[2],
+      0,
+      container.childNodes[4].childNodes[0],
+      1
+    );
     range.select();
     /** @suppress {visibility} suppression added to enable type checking */
     const newRange = EnterHandler.deleteW3cRange_(range);
@@ -738,15 +769,18 @@ testSuite({
     // anchor: |, focus: ||
     // <div>a</div><div>|b</div><div>||cc</div><div>d</div>
     const range = Range.createFromNodes(
-        container.children[1].firstChild, 0, container.children[2], 0);
+      container.children[1].firstChild,
+      0,
+      container.children[2],
+      0
+    );
     range.select();
     EnterHandler.deleteW3cRange_(range);
 
     // Browsers will add a newline between the a and cc lines, but this doesn't
     // happen in unit tests as we can't trigger the browser's behavior when
     // editing content-editable divs.
-    testingDom.assertHtmlContentsMatch(
-        '<div>a</div><div>cc</div><div>d</div>', container);
+    testingDom.assertHtmlContentsMatch('<div>a</div><div>cc</div><div>d</div>', container);
   },
 
   /**
@@ -758,15 +792,17 @@ testSuite({
     // anchor: |, focus: ||
     // <div>|a</div><div>||b</div><div>cc</div><div>d</div>
     const range = Range.createFromNodes(
-        container.children[0].firstChild, 0, container.children[1], 0);
+      container.children[0].firstChild,
+      0,
+      container.children[1],
+      0
+    );
     range.select();
     EnterHandler.deleteW3cRange_(range);
 
     // Browsers will add a newline between the a and cc lines, but this doesn't
     // happen in unit tests as we can't trigger the browser's behavior when
     // editing content-editable divs.
-    testingDom.assertHtmlContentsMatch(
-        '<div>b</div><div>cc</div><div>d</div>', container);
+    testingDom.assertHtmlContentsMatch('<div>b</div><div>cc</div><div>d</div>', container);
   },
-
 });

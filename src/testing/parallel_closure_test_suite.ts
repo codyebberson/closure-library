@@ -24,7 +24,6 @@ const testSuite = goog.require('goog.testing.testSuite');
 /** @type {?MultiTestRunner} */
 let testRunner = null;
 
-
 /**
  * @typedef {{
  *   totalTests: number,
@@ -34,7 +33,6 @@ let testRunner = null;
  * }}
  */
 let ParallelTestResults;
-
 
 /**
  * Processes the test results returned from MultiTestRunner and creates a
@@ -68,28 +66,26 @@ function processAllTestResults(testResults) {
     totalTests: totalTests,
     totalFailures: totalFailed,
     failureReports: failureReports,
-    allResults: allResults
+    allResults: allResults,
   };
 }
 
 const testObj = {
-  setUpPage: function() {
+  setUpPage: () => {
     // G_parallelTestRunner is exported in gen_parallel_test_html.py.
     const timeout = goog.global['G_parallelTestRunner']['testTimeout'];
     const allTests = goog.global['G_parallelTestRunner']['allTests'];
-    const parallelFrames =
-        goog.global['G_parallelTestRunner']['parallelFrames'];
-    const parallelTimeout =
-        goog.global['G_parallelTestRunner']['parallelTimeout'];
+    const parallelFrames = goog.global['G_parallelTestRunner']['parallelFrames'];
+    const parallelTimeout = goog.global['G_parallelTestRunner']['parallelTimeout'];
 
     // Create a test runner and render it.
     testRunner = new MultiTestRunner()
-                     .setName(document.title)
-                     .setBasePath('/google3/')
-                     .setPoolSize(parallelFrames)
-                     .setStatsBucketSizes(5, 500)
-                     .setTimeout(timeout * 1000)
-                     .addTests(allTests);
+      .setName(document.title)
+      .setBasePath('/google3/')
+      .setPoolSize(parallelFrames)
+      .setStatsBucketSizes(5, 500)
+      .setTimeout(timeout * 1000)
+      .addTests(allTests);
 
     testRunner.render(document.getElementById('runner'));
 
@@ -101,10 +97,10 @@ const testObj = {
     return testRunner;
   },
 
-  testRunAllTests: function() {
+  testRunAllTests: () => {
     asserts.assert(testRunner, 'Was "setUpPage" called?');
 
-    const failurePromise = new Promise(function(resolve, reject) {
+    const failurePromise = new Promise((resolve, reject) => {
       events.listen(testRunner, 'testsFinished', resolve);
     });
 
@@ -114,24 +110,24 @@ const testObj = {
     // TestPoller.java invokes this to get test results for sponge. We override
     // it and return the results of each individual test instead of the
     // containing "testRunAllTests".
-    window['G_testRunner']['getTestResults'] = function() {
-      return allResults;
-    };
+    window['G_testRunner']['getTestResults'] = () => allResults;
 
-    window['G_testRunner']['getTestResultsAsJson'] = function() {
-      return json.serialize(allResults);
-    };
+    window['G_testRunner']['getTestResultsAsJson'] = () => json.serialize(allResults);
 
-    return failurePromise.then(function(failures) {
+    return failurePromise.then((failures) => {
       const testResults = processAllTestResults(failures['allTestResults']);
       allResults = testResults.allResults;
       if (testResults.totalFailures) {
         fail(
-            testResults.totalFailures + ' of ' + testResults.totalTests +
-            ' test(s) failed!\n\n' + testResults.failureReports);
+          testResults.totalFailures +
+            ' of ' +
+            testResults.totalTests +
+            ' test(s) failed!\n\n' +
+            testResults.failureReports
+        );
       }
     });
-  }
+  },
 };
 
 // G_parallelTestRunner should only be present when being run from a parallel

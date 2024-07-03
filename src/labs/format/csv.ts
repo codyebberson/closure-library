@@ -31,15 +31,12 @@ goog.require('goog.object');
 goog.require('goog.string');
 goog.require('goog.string.newlines');
 
-
 /**
  * @define {boolean} Enable verbose debugging. This is a flag so it can be
  * enabled in production if necessary post-compilation.  Otherwise, debug
  * information will be stripped to minimize final code size.
  */
 goog.labs.format.csv.ENABLE_VERBOSE_DEBUGGING = goog.DEBUG;
-
-
 
 /**
  * Error thrown when parsing fails.
@@ -52,8 +49,7 @@ goog.labs.format.csv.ENABLE_VERBOSE_DEBUGGING = goog.DEBUG;
  * @extends {goog.debug.Error}
  * @final
  */
-goog.labs.format.csv.ParseError = function(text, index, opt_message) {
-  'use strict';
+goog.labs.format.csv.ParseError = function (text, index, opt_message) {
   let message;
 
   /**
@@ -70,13 +66,12 @@ goog.labs.format.csv.ParseError = function(text, index, opt_message) {
       const lineNumber = info.lineIndex + 1;
       const columnNumber = index - info.line.startLineIndex + 1;
 
-      this.position = {line: lineNumber, column: columnNumber};
+      this.position = { line: lineNumber, column: columnNumber };
 
+      message += goog.string.subs(' at line %s column %s', lineNumber, columnNumber);
       message +=
-          goog.string.subs(' at line %s column %s', lineNumber, columnNumber);
-      message += '\n' +
-          goog.labs.format.csv.ParseError.getLineDebugString_(
-              info.line.getContent(), columnNumber);
+        '\n' +
+        goog.labs.format.csv.ParseError.getLineDebugString_(info.line.getContent(), columnNumber);
     }
   }
 
@@ -84,10 +79,8 @@ goog.labs.format.csv.ParseError = function(text, index, opt_message) {
 };
 goog.inherits(goog.labs.format.csv.ParseError, goog.debug.Error);
 
-
 /** @inheritDoc */
 goog.labs.format.csv.ParseError.prototype.name = 'ParseError';
-
 
 /**
  * Calculate the line and column for an index in a string.
@@ -98,22 +91,19 @@ goog.labs.format.csv.ParseError.prototype.name = 'ParseError';
  *     and index of the line.
  * @private
  */
-goog.labs.format.csv.ParseError.findLineInfo_ = function(str, index) {
-  'use strict';
+goog.labs.format.csv.ParseError.findLineInfo_ = (str, index) => {
   const lines = goog.string.newlines.getLines(str);
-  const lineIndex = lines.findIndex(function(line) {
-    'use strict';
-    return line.startLineIndex <= index && line.endLineIndex > index;
-  });
+  const lineIndex = lines.findIndex(
+    (line) => line.startLineIndex <= index && line.endLineIndex > index
+  );
 
-  if (typeof (lineIndex) === 'number') {
+  if (typeof lineIndex === 'number') {
     const line = lines[lineIndex];
-    return {line: line, lineIndex: lineIndex};
+    return { line: line, lineIndex: lineIndex };
   }
 
   return null;
 };
-
 
 /**
  * Get a debug string of a line and a pointing caret beneath it.
@@ -122,20 +112,17 @@ goog.labs.format.csv.ParseError.findLineInfo_ = function(str, index) {
  * @return {string} The debug line.
  * @private
  */
-goog.labs.format.csv.ParseError.getLineDebugString_ = function(str, column) {
-  'use strict';
+goog.labs.format.csv.ParseError.getLineDebugString_ = (str, column) => {
   let returnString = str + '\n';
   returnString += goog.string.repeat(' ', column - 1) + '^';
   return returnString;
 };
-
 
 /**
  * A token -- a single-character string or a sentinel.
  * @typedef {string|!goog.labs.format.csv.Sentinels_}
  */
 goog.labs.format.csv.Token;
-
 
 /**
  * Parses a CSV string to create a two-dimensional array.
@@ -149,24 +136,23 @@ goog.labs.format.csv.Token;
  * @param {string=} opt_delimiter The delimiter to use. Defaults to ','
  * @return {!Array<!Array<string>>} The parsed CSV.
  */
-goog.labs.format.csv.parse = function(text, opt_ignoreErrors, opt_delimiter) {
-  'use strict';
-  let index = 0;  // current char offset being considered
+goog.labs.format.csv.parse = (text, opt_ignoreErrors, opt_delimiter) => {
+  let index = 0; // current char offset being considered
 
   const delimiter = opt_delimiter || ',';
+  goog.asserts.assert(delimiter.length == 1, 'Delimiter must be a single character.');
   goog.asserts.assert(
-      delimiter.length == 1, 'Delimiter must be a single character.');
-  goog.asserts.assert(
-      delimiter != '\r' && opt_delimiter != '\n',
-      'Cannot use newline or carriage return as delimiter.');
+    delimiter != '\r' && opt_delimiter != '\n',
+    'Cannot use newline or carriage return as delimiter.'
+  );
 
   const EOF = goog.labs.format.csv.Sentinels_.EOF;
   const EOR = goog.labs.format.csv.Sentinels_.EOR;
-  const NEWLINE = goog.labs.format.csv.Sentinels_.NEWLINE;  // \r?\n
+  const NEWLINE = goog.labs.format.csv.Sentinels_.NEWLINE; // \r?\n
   const EMPTY = goog.labs.format.csv.Sentinels_.EMPTY;
 
-  let pushBackToken = null;  // A single-token pushback.
-  let sawComma = false;      // Special case for terminal comma.
+  let pushBackToken = null; // A single-token pushback.
+  let sawComma = false; // Special case for terminal comma.
 
   /**
    * Push a single token into the push-back variable.
@@ -254,8 +240,10 @@ goog.labs.format.csv.parse = function(text, opt_ignoreErrors, opt_delimiter) {
           // Ignoring errors here means keep going in current field after
           // closing quote. E.g. "ab"c,d splits into abc,d
           throw new goog.labs.format.csv.ParseError(
-              text, index - 1,
-              'Unexpected character "' + token + '" after quote mark');
+            text,
+            index - 1,
+            'Unexpected character "' + token + '" after quote mark'
+          );
         } else {
           // Fall back to reading the rest of this field as unquoted.
           // Note: the rest is guaranteed not start with ", as that case is
@@ -275,7 +263,10 @@ goog.labs.format.csv.parse = function(text, opt_ignoreErrors, opt_delimiter) {
     if (end === null) {
       if (!opt_ignoreErrors) {
         throw new goog.labs.format.csv.ParseError(
-            text, text.length - 1, 'Unexpected end of text after open quote');
+          text,
+          text.length - 1,
+          'Unexpected end of text after open quote'
+        );
       } else {
         end = text.length;
       }
@@ -325,19 +316,19 @@ goog.labs.format.csv.parse = function(text, opt_ignoreErrors, opt_delimiter) {
       }
 
       if (token == '"' && !opt_ignoreErrors) {
-        throw new goog.labs.format.csv.ParseError(
-            text, index - 1, 'Unexpected quote mark');
+        throw new goog.labs.format.csv.ParseError(text, index - 1, 'Unexpected quote mark');
       }
 
       token = nextToken();
     }
 
+    const returnString =
+      token == EOF
+        ? text.substring(start)
+        : // Return to end of file.
+          text.substring(start, index - 1);
 
-    const returnString = (token == EOF) ?
-        text.substring(start) :  // Return to end of file.
-        text.substring(start, index - 1);
-
-    return returnString.replace(/[\r\n]+/g, '');  // Squash any CRLFs.
+    return returnString.replace(/[\r\n]+/g, ''); // Squash any CRLFs.
   }
 
   /**
@@ -364,7 +355,6 @@ goog.labs.format.csv.parse = function(text, opt_ignoreErrors, opt_delimiter) {
   return records;
 };
 
-
 /**
  * Sentinel tracking objects.
  * @enum {!Object}
@@ -381,20 +371,15 @@ goog.labs.format.csv.Sentinels_ = {
   EOR: {},
 
   /** Newline. \r?\n */
-  NEWLINE: {}
+  NEWLINE: {},
 };
-
 
 /**
  * @param {string} str A string.
  * @return {boolean} Whether the string is a single character.
  * @private
  */
-goog.labs.format.csv.isCharacterString_ = function(str) {
-  'use strict';
-  return typeof str === 'string' && str.length == 1;
-};
-
+goog.labs.format.csv.isCharacterString_ = (str) => typeof str === 'string' && str.length == 1;
 
 /**
  * Assert the parameter is a token.
@@ -402,16 +387,17 @@ goog.labs.format.csv.isCharacterString_ = function(str) {
  * @throws {goog.asserts.AssertionError} If {@ code} is not a token.
  * @private
  */
-goog.labs.format.csv.assertToken_ = function(o) {
-  'use strict';
+goog.labs.format.csv.assertToken_ = (o) => {
   if (typeof o === 'string') {
     goog.asserts.assertString(o);
     goog.asserts.assert(
-        goog.labs.format.csv.isCharacterString_(o),
-        'Should be a string of length 1 or a sentinel.');
+      goog.labs.format.csv.isCharacterString_(o),
+      'Should be a string of length 1 or a sentinel.'
+    );
   } else {
     goog.asserts.assert(
-        goog.object.containsValue(goog.labs.format.csv.Sentinels_, o),
-        'Should be a string of length 1 or a sentinel.');
+      goog.object.containsValue(goog.labs.format.csv.Sentinels_, o),
+      'Should be a string of length 1 or a sentinel.'
+    );
   }
 };

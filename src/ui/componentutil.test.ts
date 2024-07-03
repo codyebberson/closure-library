@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.ComponentUtilTest');
-goog.setTestOnly();
 
 const Component = goog.require('goog.ui.Component');
 const ComponentUtil = goog.require('goog.ui.ComponentUtil');
@@ -27,12 +26,16 @@ testSuite({
   testGetMouseEventType() {
     component.setPointerEventsEnabled(false);
     assertEquals(
-        'Component must use mouse events when specified.',
-        ComponentUtil.getMouseEventType(component), MouseAsMouseEventType);
+      'Component must use mouse events when specified.',
+      ComponentUtil.getMouseEventType(component),
+      MouseAsMouseEventType
+    );
 
     component.setPointerEventsEnabled(true);
     assertEquals(
-        'Component must use pointer events when specified.',
-        ComponentUtil.getMouseEventType(component), PointerAsMouseEventType);
+      'Component must use pointer events when specified.',
+      ComponentUtil.getMouseEventType(component),
+      PointerAsMouseEventType
+    );
   },
 });

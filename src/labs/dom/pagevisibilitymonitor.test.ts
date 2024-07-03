@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.labs.dom.PageVisibilityMonitorTest');
-goog.setTestOnly();
 
 const GoogTestingEvent = goog.require('goog.testing.events.Event');
 const PageVisibilityMonitor = goog.require('goog.labs.dom.PageVisibilityMonitor');
@@ -33,9 +32,7 @@ testSuite({
 
   /** @suppress {const} See go/const-js-library-faq */
   testNoVisibilitySupport() {
-    stubs.set(
-        PageVisibilityMonitor.prototype, 'getBrowserEventType_',
-        functions.NULL);
+    stubs.set(PageVisibilityMonitor.prototype, 'getBrowserEventType_', functions.NULL);
 
     const listener = recordFunction();
     vh = new PageVisibilityMonitor();
@@ -50,8 +47,10 @@ testSuite({
 
   testListener() {
     stubs.set(
-        PageVisibilityMonitor.prototype, 'getBrowserEventType_',
-        functions.constant('visibilitychange'));
+      PageVisibilityMonitor.prototype,
+      'getBrowserEventType_',
+      functions.constant('visibilitychange')
+    );
 
     const listener = recordFunction();
     vh = new PageVisibilityMonitor();
@@ -70,8 +69,10 @@ testSuite({
 
   testListenerForWebKit() {
     stubs.set(
-        PageVisibilityMonitor.prototype, 'getBrowserEventType_',
-        functions.constant('webkitvisibilitychange'));
+      PageVisibilityMonitor.prototype,
+      'getBrowserEventType_',
+      functions.constant('webkitvisibilitychange')
+    );
 
     const listener = recordFunction();
     vh = new PageVisibilityMonitor();

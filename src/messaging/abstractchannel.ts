@@ -11,15 +11,12 @@
  * generally delegate service registering anyway.
  */
 
-
 goog.provide('goog.messaging.AbstractChannel');
 
 goog.require('goog.Disposable');
 goog.require('goog.json');
 goog.require('goog.log');
-goog.require('goog.messaging.MessageChannel');  // interface
-
-
+goog.require('goog.messaging.MessageChannel'); // interface
 
 /**
  * Creates an abstract message channel.
@@ -28,8 +25,7 @@ goog.require('goog.messaging.MessageChannel');  // interface
  * @extends {goog.Disposable}
  * @implements {goog.messaging.MessageChannel}
  */
-goog.messaging.AbstractChannel = function() {
-  'use strict';
+goog.messaging.AbstractChannel = function () {
   goog.messaging.AbstractChannel.base(this, 'constructor');
 
   /**
@@ -42,7 +38,6 @@ goog.messaging.AbstractChannel = function() {
 };
 goog.inherits(goog.messaging.AbstractChannel, goog.Disposable);
 
-
 /**
  * The default service to be run when no other services match.
  *
@@ -51,15 +46,14 @@ goog.inherits(goog.messaging.AbstractChannel, goog.Disposable);
  */
 goog.messaging.AbstractChannel.prototype.defaultService_;
 
-
 /**
  * Logger for this class.
  * @type {goog.log.Logger}
  * @protected
  */
-goog.messaging.AbstractChannel.prototype.logger =
-    goog.log.getLogger('goog.messaging.AbstractChannel');
-
+goog.messaging.AbstractChannel.prototype.logger = goog.log.getLogger(
+  'goog.messaging.AbstractChannel'
+);
 
 /**
  * Immediately calls opt_connectCb if given, and is otherwise a no-op. If
@@ -67,13 +61,11 @@ goog.messaging.AbstractChannel.prototype.logger =
  * connected, they should override this and {@link #isConnected}.
  * @override
  */
-goog.messaging.AbstractChannel.prototype.connect = function(opt_connectCb) {
-  'use strict';
+goog.messaging.AbstractChannel.prototype.connect = (opt_connectCb) => {
   if (opt_connectCb) {
     opt_connectCb();
   }
 };
-
 
 /**
  * Always returns true. If subclasses have configuration that needs to happen
@@ -81,34 +73,27 @@ goog.messaging.AbstractChannel.prototype.connect = function(opt_connectCb) {
  * {@link #connect}.
  * @override
  */
-goog.messaging.AbstractChannel.prototype.isConnected = function() {
-  'use strict';
-  return true;
-};
-
+goog.messaging.AbstractChannel.prototype.isConnected = () => true;
 
 /** @override */
-goog.messaging.AbstractChannel.prototype.registerService = function(
-    serviceName, callback, opt_objectPayload) {
-  'use strict';
+goog.messaging.AbstractChannel.prototype.registerService = function (
+  serviceName,
+  callback,
+  opt_objectPayload
+) {
   this.services_[serviceName] = {
     callback: callback,
-    objectPayload: !!opt_objectPayload
+    objectPayload: !!opt_objectPayload,
   };
 };
 
-
 /** @override */
-goog.messaging.AbstractChannel.prototype.registerDefaultService = function(
-    callback) {
-  'use strict';
+goog.messaging.AbstractChannel.prototype.registerDefaultService = function (callback) {
   this.defaultService_ = callback;
 };
 
-
 /** @override */
 goog.messaging.AbstractChannel.prototype.send = goog.abstractMethod;
-
 
 /**
  * Delivers a message to the appropriate service. This is meant to be called by
@@ -124,21 +109,17 @@ goog.messaging.AbstractChannel.prototype.send = goog.abstractMethod;
  * @param {string|!Object} payload The contents of the message.
  * @protected
  */
-goog.messaging.AbstractChannel.prototype.deliver = function(
-    serviceName, payload) {
-  'use strict';
+goog.messaging.AbstractChannel.prototype.deliver = function (serviceName, payload) {
   const service = this.getService(serviceName, payload);
   if (!service) {
     return;
   }
 
-  const decodedPayload =
-      this.decodePayload(serviceName, payload, service.objectPayload);
+  const decodedPayload = this.decodePayload(serviceName, payload, service.objectPayload);
   if (decodedPayload != null) {
     service.callback(decodedPayload);
   }
 };
-
 
 /**
  * Find the service object for a given service name. If there's no service
@@ -151,22 +132,19 @@ goog.messaging.AbstractChannel.prototype.deliver = function(
  *     service object for the given service, or null if none was found.
  * @protected
  */
-goog.messaging.AbstractChannel.prototype.getService = function(
-    serviceName, payload) {
-  'use strict';
+goog.messaging.AbstractChannel.prototype.getService = function (serviceName, payload) {
   const service = this.services_[serviceName];
   if (service) {
     return service;
   } else if (this.defaultService_) {
     const callback = goog.partial(this.defaultService_, serviceName);
     const objectPayload = goog.isObject(payload);
-    return {callback: callback, objectPayload: objectPayload};
+    return { callback: callback, objectPayload: objectPayload };
   }
 
   goog.log.warning(this.logger, 'Unknown service name "' + serviceName + '"');
   return null;
 };
-
 
 /**
  * Converts the message payload into the format expected by the registered
@@ -180,16 +158,19 @@ goog.messaging.AbstractChannel.prototype.getService = function(
  *     null if something went wrong.
  * @protected
  */
-goog.messaging.AbstractChannel.prototype.decodePayload = function(
-    serviceName, payload, objectPayload) {
-  'use strict';
+goog.messaging.AbstractChannel.prototype.decodePayload = function (
+  serviceName,
+  payload,
+  objectPayload
+) {
   if (objectPayload && typeof payload === 'string') {
     try {
       return /** @type {!Object} */ (JSON.parse(payload));
     } catch (err) {
       goog.log.warning(
-          this.logger, 'Expected JSON payload for ' + serviceName + ', was "' +
-              payload + '"');
+        this.logger,
+        'Expected JSON payload for ' + serviceName + ', was "' + payload + '"'
+      );
       return null;
     }
   } else if (!objectPayload && typeof payload !== 'string') {
@@ -198,10 +179,8 @@ goog.messaging.AbstractChannel.prototype.decodePayload = function(
   return payload;
 };
 
-
 /** @override */
-goog.messaging.AbstractChannel.prototype.disposeInternal = function() {
-  'use strict';
+goog.messaging.AbstractChannel.prototype.disposeInternal = function () {
   goog.messaging.AbstractChannel.base(this, 'disposeInternal');
   delete this.services_;
   delete this.defaultService_;

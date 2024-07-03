@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.DeferredTestCaseTest');
-goog.setTestOnly();
 
 const Deferred = goog.require('goog.async.Deferred');
 const DeferredTestCase = goog.require('goog.testing.DeferredTestCase');
@@ -19,15 +18,21 @@ let testTestCase;
 let runner;
 
 // Optionally, set a longer-than-usual step timeout.
-deferredTestCase.stepTimeout = 15 * 1000;  // 15 seconds
+deferredTestCase.stepTimeout = 15 * 1000; // 15 seconds
 
 // This is the sample code in deferredtestcase.js
 
 function createDeferredTestCase(d) {
   testTestCase = new DeferredTestCase('Foobar TestCase');
-  testTestCase.add(new TestCase.Test('Foobar Test', function() {
-    this.waitForDeferred(d);
-  }, testTestCase));
+  testTestCase.add(
+    new TestCase.Test(
+      'Foobar Test',
+      function () {
+        this.waitForDeferred(d);
+      },
+      testTestCase
+    )
+  );
 
   const testCompleteCallback = new Deferred();
   testTestCase.addCompletedCallback(() => {
@@ -49,17 +54,17 @@ testSuite({
     const callbacks = new Deferred();
     deferredTestCase.addWaitForAsync('Waiting for 1st callback', callbacks);
     callbacks.addCallback(() => {
-      assertTrue('We\'re going back in time!', Date.now() >= callbackTime);
+      assertTrue("We're going back in time!", Date.now() >= callbackTime);
       callbackTime = Date.now();
     });
     deferredTestCase.addWaitForAsync('Waiting for 2nd callback', callbacks);
     callbacks.addCallback(() => {
-      assertTrue('We\'re going back in time!', Date.now() >= callbackTime);
+      assertTrue("We're going back in time!", Date.now() >= callbackTime);
       callbackTime = Date.now();
     });
     deferredTestCase.addWaitForAsync('Waiting for last callback', callbacks);
     callbacks.addCallback(() => {
-      assertTrue('We\'re going back in time!', Date.now() >= callbackTime);
+      assertTrue("We're going back in time!", Date.now() >= callbackTime);
       callbackTime = Date.now();
     });
 

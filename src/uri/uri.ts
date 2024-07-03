@@ -39,8 +39,6 @@ goog.require('goog.uri.utils');
 goog.require('goog.uri.utils.ComponentIndex');
 goog.require('goog.uri.utils.StandardQueryParam');
 
-
-
 /**
  * This class contains setters and getters for the parts of the URI.
  * The <code>getXyz</code>/<code>setXyz</code> methods return the decoded part
@@ -71,8 +69,7 @@ goog.require('goog.uri.utils.StandardQueryParam');
  * @constructor
  * @struct
  */
-goog.Uri = function(opt_uri, opt_ignoreCase) {
-  'use strict';
+goog.Uri = function (opt_uri, opt_ignoreCase) {
   /**
    * Scheme such as "http".
    * @private {string}
@@ -130,8 +127,7 @@ goog.Uri = function(opt_uri, opt_ignoreCase) {
   // Parse in the uri string
   var m;
   if (opt_uri instanceof goog.Uri) {
-    this.ignoreCase_ = (opt_ignoreCase !== undefined) ? opt_ignoreCase :
-                                                        opt_uri.getIgnoreCase();
+    this.ignoreCase_ = opt_ignoreCase !== undefined ? opt_ignoreCase : opt_uri.getIgnoreCase();
     this.setScheme(opt_uri.getScheme());
     this.setUserInfo(opt_uri.getUserInfo());
     this.setDomain(opt_uri.getDomain());
@@ -152,13 +148,11 @@ goog.Uri = function(opt_uri, opt_ignoreCase) {
     this.setPath(m[goog.uri.utils.ComponentIndex.PATH] || '', true);
     this.setQueryData(m[goog.uri.utils.ComponentIndex.QUERY_DATA] || '', true);
     this.setFragment(m[goog.uri.utils.ComponentIndex.FRAGMENT] || '', true);
-
   } else {
     this.ignoreCase_ = !!opt_ignoreCase;
     this.queryData_ = new goog.Uri.QueryData(null, this.ignoreCase_);
   }
 };
-
 
 /**
  * Parameter name added to stop caching.
@@ -166,21 +160,19 @@ goog.Uri = function(opt_uri, opt_ignoreCase) {
  */
 goog.Uri.RANDOM_PARAM = goog.uri.utils.StandardQueryParam.RANDOM;
 
-
 /**
  * @return {string} The string form of the url.
  * @override
  */
-goog.Uri.prototype.toString = function() {
-  'use strict';
+goog.Uri.prototype.toString = function () {
   var out = [];
 
   var scheme = this.getScheme();
   if (scheme) {
     out.push(
-        goog.Uri.encodeSpecialChars_(
-            scheme, goog.Uri.reDisallowedInSchemeOrUserInfo_, true),
-        ':');
+      goog.Uri.encodeSpecialChars_(scheme, goog.Uri.reDisallowedInSchemeOrUserInfo_, true),
+      ':'
+    );
   }
 
   var domain = this.getDomain();
@@ -190,9 +182,9 @@ goog.Uri.prototype.toString = function() {
     var userInfo = this.getUserInfo();
     if (userInfo) {
       out.push(
-          goog.Uri.encodeSpecialChars_(
-              userInfo, goog.Uri.reDisallowedInSchemeOrUserInfo_, true),
-          '@');
+        goog.Uri.encodeSpecialChars_(userInfo, goog.Uri.reDisallowedInSchemeOrUserInfo_, true),
+        '@'
+      );
     }
 
     out.push(goog.Uri.removeDoubleEncoding_(goog.string.urlEncode(domain)));
@@ -208,11 +200,15 @@ goog.Uri.prototype.toString = function() {
     if (this.hasDomain() && path.charAt(0) != '/') {
       out.push('/');
     }
-    out.push(goog.Uri.encodeSpecialChars_(
+    out.push(
+      goog.Uri.encodeSpecialChars_(
         path,
-        path.charAt(0) == '/' ? goog.Uri.reDisallowedInAbsolutePath_ :
-                                goog.Uri.reDisallowedInRelativePath_,
-        true));
+        path.charAt(0) == '/'
+          ? goog.Uri.reDisallowedInAbsolutePath_
+          : goog.Uri.reDisallowedInRelativePath_,
+        true
+      )
+    );
   }
 
   var query = this.getEncodedQuery();
@@ -222,14 +218,10 @@ goog.Uri.prototype.toString = function() {
 
   var fragment = this.getFragment();
   if (fragment) {
-    out.push(
-        '#',
-        goog.Uri.encodeSpecialChars_(
-            fragment, goog.Uri.reDisallowedInFragment_));
+    out.push('#', goog.Uri.encodeSpecialChars_(fragment, goog.Uri.reDisallowedInFragment_));
   }
   return out.join('');
 };
-
 
 /**
  * Resolves the given relative URI (a goog.Uri object), using the URI
@@ -248,8 +240,7 @@ goog.Uri.prototype.toString = function() {
  * @param {!goog.Uri} relativeUri The relative URI to resolve.
  * @return {!goog.Uri} The resolved URI.
  */
-goog.Uri.prototype.resolve = function(relativeUri) {
-  'use strict';
+goog.Uri.prototype.resolve = function (relativeUri) {
   var absoluteUri = this.clone();
 
   // we satisfy these conditions by looking for the first part of relativeUri
@@ -318,25 +309,20 @@ goog.Uri.prototype.resolve = function(relativeUri) {
   return absoluteUri;
 };
 
-
 /**
  * Clones the URI instance.
  * @return {!goog.Uri} New instance of the URI object.
  */
-goog.Uri.prototype.clone = function() {
-  'use strict';
+goog.Uri.prototype.clone = function () {
   return new goog.Uri(this);
 };
-
 
 /**
  * @return {string} The encoded scheme/protocol for the URI.
  */
-goog.Uri.prototype.getScheme = function() {
-  'use strict';
+goog.Uri.prototype.getScheme = function () {
   return this.scheme_;
 };
-
 
 /**
  * Sets the scheme/protocol.
@@ -346,11 +332,9 @@ goog.Uri.prototype.getScheme = function() {
  * @param {boolean=} opt_decode Optional param for whether to decode new value.
  * @return {!goog.Uri} Reference to this URI object.
  */
-goog.Uri.prototype.setScheme = function(newScheme, opt_decode) {
-  'use strict';
+goog.Uri.prototype.setScheme = function (newScheme, opt_decode) {
   this.enforceReadOnly();
-  this.scheme_ =
-      opt_decode ? goog.Uri.decodeOrEmpty_(newScheme, true) : newScheme;
+  this.scheme_ = opt_decode ? goog.Uri.decodeOrEmpty_(newScheme, true) : newScheme;
 
   // remove an : at the end of the scheme so somebody can pass in
   // window.location.protocol
@@ -360,24 +344,19 @@ goog.Uri.prototype.setScheme = function(newScheme, opt_decode) {
   return this;
 };
 
-
 /**
  * @return {boolean} Whether the scheme has been set.
  */
-goog.Uri.prototype.hasScheme = function() {
-  'use strict';
+goog.Uri.prototype.hasScheme = function () {
   return !!this.scheme_;
 };
-
 
 /**
  * @return {string} The decoded user info.
  */
-goog.Uri.prototype.getUserInfo = function() {
-  'use strict';
+goog.Uri.prototype.getUserInfo = function () {
   return this.userInfo_;
 };
-
 
 /**
  * Sets the userInfo.
@@ -387,32 +366,25 @@ goog.Uri.prototype.getUserInfo = function() {
  * @param {boolean=} opt_decode Optional param for whether to decode new value.
  * @return {!goog.Uri} Reference to this URI object.
  */
-goog.Uri.prototype.setUserInfo = function(newUserInfo, opt_decode) {
-  'use strict';
+goog.Uri.prototype.setUserInfo = function (newUserInfo, opt_decode) {
   this.enforceReadOnly();
-  this.userInfo_ =
-      opt_decode ? goog.Uri.decodeOrEmpty_(newUserInfo) : newUserInfo;
+  this.userInfo_ = opt_decode ? goog.Uri.decodeOrEmpty_(newUserInfo) : newUserInfo;
   return this;
 };
-
 
 /**
  * @return {boolean} Whether the user info has been set.
  */
-goog.Uri.prototype.hasUserInfo = function() {
-  'use strict';
+goog.Uri.prototype.hasUserInfo = function () {
   return !!this.userInfo_;
 };
-
 
 /**
  * @return {string} The decoded domain.
  */
-goog.Uri.prototype.getDomain = function() {
-  'use strict';
+goog.Uri.prototype.getDomain = function () {
   return this.domain_;
 };
-
 
 /**
  * Sets the domain.
@@ -422,40 +394,32 @@ goog.Uri.prototype.getDomain = function() {
  * @param {boolean=} opt_decode Optional param for whether to decode new value.
  * @return {!goog.Uri} Reference to this URI object.
  */
-goog.Uri.prototype.setDomain = function(newDomain, opt_decode) {
-  'use strict';
+goog.Uri.prototype.setDomain = function (newDomain, opt_decode) {
   this.enforceReadOnly();
-  this.domain_ =
-      opt_decode ? goog.Uri.decodeOrEmpty_(newDomain, true) : newDomain;
+  this.domain_ = opt_decode ? goog.Uri.decodeOrEmpty_(newDomain, true) : newDomain;
   return this;
 };
-
 
 /**
  * @return {boolean} Whether the domain has been set.
  */
-goog.Uri.prototype.hasDomain = function() {
-  'use strict';
+goog.Uri.prototype.hasDomain = function () {
   return !!this.domain_;
 };
-
 
 /**
  * @return {?number} The port number.
  */
-goog.Uri.prototype.getPort = function() {
-  'use strict';
+goog.Uri.prototype.getPort = function () {
   return this.port_;
 };
-
 
 /**
  * Sets the port number.
  * @param {*} newPort Port number. Will be explicitly casted to a number.
  * @return {!goog.Uri} Reference to this URI object.
  */
-goog.Uri.prototype.setPort = function(newPort) {
-  'use strict';
+goog.Uri.prototype.setPort = function (newPort) {
   this.enforceReadOnly();
 
   if (newPort) {
@@ -471,24 +435,19 @@ goog.Uri.prototype.setPort = function(newPort) {
   return this;
 };
 
-
 /**
  * @return {boolean} Whether the port has been set.
  */
-goog.Uri.prototype.hasPort = function() {
-  'use strict';
+goog.Uri.prototype.hasPort = function () {
   return this.port_ != null;
 };
-
 
 /**
  * @return {string} The decoded path.
  */
-goog.Uri.prototype.getPath = function() {
-  'use strict';
+goog.Uri.prototype.getPath = function () {
   return this.path_;
 };
-
 
 /**
  * Sets the path.
@@ -498,31 +457,25 @@ goog.Uri.prototype.getPath = function() {
  * @param {boolean=} opt_decode Optional param for whether to decode new value.
  * @return {!goog.Uri} Reference to this URI object.
  */
-goog.Uri.prototype.setPath = function(newPath, opt_decode) {
-  'use strict';
+goog.Uri.prototype.setPath = function (newPath, opt_decode) {
   this.enforceReadOnly();
   this.path_ = opt_decode ? goog.Uri.decodeOrEmpty_(newPath, true) : newPath;
   return this;
 };
 
-
 /**
  * @return {boolean} Whether the path has been set.
  */
-goog.Uri.prototype.hasPath = function() {
-  'use strict';
+goog.Uri.prototype.hasPath = function () {
   return !!this.path_;
 };
-
 
 /**
  * @return {boolean} Whether the query string has been set.
  */
-goog.Uri.prototype.hasQuery = function() {
-  'use strict';
+goog.Uri.prototype.hasQuery = function () {
   return this.queryData_.toString() !== '';
 };
-
 
 /**
  * Sets the query data.
@@ -531,8 +484,7 @@ goog.Uri.prototype.hasQuery = function() {
  *     Applies only if queryData is a string.
  * @return {!goog.Uri} Reference to this URI object.
  */
-goog.Uri.prototype.setQueryData = function(queryData, opt_decode) {
-  'use strict';
+goog.Uri.prototype.setQueryData = function (queryData, opt_decode) {
   this.enforceReadOnly();
 
   if (queryData instanceof goog.Uri.QueryData) {
@@ -542,8 +494,7 @@ goog.Uri.prototype.setQueryData = function(queryData, opt_decode) {
     if (!opt_decode) {
       // QueryData accepts encoded query string, so encode it if
       // opt_decode flag is not true.
-      queryData = goog.Uri.encodeSpecialChars_(
-          queryData, goog.Uri.reDisallowedInQuery_);
+      queryData = goog.Uri.encodeSpecialChars_(queryData, goog.Uri.reDisallowedInQuery_);
     }
     this.queryData_ = new goog.Uri.QueryData(queryData, this.ignoreCase_);
   }
@@ -551,46 +502,37 @@ goog.Uri.prototype.setQueryData = function(queryData, opt_decode) {
   return this;
 };
 
-
 /**
  * Sets the URI query.
  * @param {string} newQuery New query value.
  * @param {boolean=} opt_decode Optional param for whether to decode new value.
  * @return {!goog.Uri} Reference to this URI object.
  */
-goog.Uri.prototype.setQuery = function(newQuery, opt_decode) {
-  'use strict';
+goog.Uri.prototype.setQuery = function (newQuery, opt_decode) {
   return this.setQueryData(newQuery, opt_decode);
 };
-
 
 /**
  * @return {string} The encoded URI query, not including the ?.
  */
-goog.Uri.prototype.getEncodedQuery = function() {
-  'use strict';
+goog.Uri.prototype.getEncodedQuery = function () {
   return this.queryData_.toString();
 };
-
 
 /**
  * @return {string} The decoded URI query, not including the ?.
  */
-goog.Uri.prototype.getDecodedQuery = function() {
-  'use strict';
+goog.Uri.prototype.getDecodedQuery = function () {
   return this.queryData_.toDecodedString();
 };
-
 
 /**
  * Returns the query data.
  * @return {!goog.Uri.QueryData} QueryData object.
  */
-goog.Uri.prototype.getQueryData = function() {
-  'use strict';
+goog.Uri.prototype.getQueryData = function () {
   return this.queryData_;
 };
-
 
 /**
  * @return {string} The encoded URI query, not including the ?.
@@ -598,11 +540,9 @@ goog.Uri.prototype.getQueryData = function() {
  * Warning: This method, unlike other getter methods, returns encoded
  * value, instead of decoded one.
  */
-goog.Uri.prototype.getQuery = function() {
-  'use strict';
+goog.Uri.prototype.getQuery = function () {
   return this.getEncodedQuery();
 };
-
 
 /**
  * Sets the value of the named query parameters, clearing previous values for
@@ -612,13 +552,11 @@ goog.Uri.prototype.getQuery = function() {
  * @param {*} value The new value. Value does not need to be encoded.
  * @return {!goog.Uri} Reference to this URI object.
  */
-goog.Uri.prototype.setParameterValue = function(key, value) {
-  'use strict';
+goog.Uri.prototype.setParameterValue = function (key, value) {
   this.enforceReadOnly();
   this.queryData_.set(key, value);
   return this;
 };
-
 
 /**
  * Sets the values of the named query parameters, clearing previous values for
@@ -634,8 +572,7 @@ goog.Uri.prototype.setParameterValue = function(key, value) {
  *     be encoded.
  * @return {!goog.Uri} Reference to this URI object.
  */
-goog.Uri.prototype.setParameterValues = function(key, values) {
-  'use strict';
+goog.Uri.prototype.setParameterValues = function (key, values) {
   this.enforceReadOnly();
 
   if (!Array.isArray(values)) {
@@ -647,7 +584,6 @@ goog.Uri.prototype.setParameterValues = function(key, values) {
   return this;
 };
 
-
 /**
  * Returns the value<b>s</b> for a given cgi parameter as a list of decoded
  * query parameter values.
@@ -655,11 +591,9 @@ goog.Uri.prototype.setParameterValues = function(key, values) {
  * @return {!Array<?>} The values for a given cgi parameter as a list of
  *     decoded query parameter values.
  */
-goog.Uri.prototype.getParameterValues = function(name) {
-  'use strict';
+goog.Uri.prototype.getParameterValues = function (name) {
   return this.queryData_.getValues(name);
 };
-
 
 /**
  * Returns the first value for a given cgi parameter or undefined if the given
@@ -669,20 +603,16 @@ goog.Uri.prototype.getParameterValues = function(name) {
  *     undefined if the given parameter name does not appear in the query
  *     string.
  */
-goog.Uri.prototype.getParameterValue = function(paramName) {
-  'use strict';
+goog.Uri.prototype.getParameterValue = function (paramName) {
   return /** @type {string|undefined} */ (this.queryData_.get(paramName));
 };
-
 
 /**
  * @return {string} The URI fragment, not including the #.
  */
-goog.Uri.prototype.getFragment = function() {
-  'use strict';
+goog.Uri.prototype.getFragment = function () {
   return this.fragment_;
 };
-
 
 /**
  * Sets the URI fragment.
@@ -692,50 +622,41 @@ goog.Uri.prototype.getFragment = function() {
  * @param {boolean=} opt_decode Optional param for whether to decode new value.
  * @return {!goog.Uri} Reference to this URI object.
  */
-goog.Uri.prototype.setFragment = function(newFragment, opt_decode) {
-  'use strict';
+goog.Uri.prototype.setFragment = function (newFragment, opt_decode) {
   this.enforceReadOnly();
-  this.fragment_ =
-      opt_decode ? goog.Uri.decodeOrEmpty_(newFragment) : newFragment;
+  this.fragment_ = opt_decode ? goog.Uri.decodeOrEmpty_(newFragment) : newFragment;
   return this;
 };
-
 
 /**
  * @return {boolean} Whether the URI has a fragment set.
  */
-goog.Uri.prototype.hasFragment = function() {
-  'use strict';
+goog.Uri.prototype.hasFragment = function () {
   return !!this.fragment_;
 };
-
 
 /**
  * Returns true if this has the same domain as that of uri2.
  * @param {!goog.Uri} uri2 The URI object to compare to.
  * @return {boolean} true if same domain; false otherwise.
  */
-goog.Uri.prototype.hasSameDomainAs = function(uri2) {
-  'use strict';
-  return ((!this.hasDomain() && !uri2.hasDomain()) ||
-          this.getDomain() == uri2.getDomain()) &&
-      ((!this.hasPort() && !uri2.hasPort()) ||
-       this.getPort() == uri2.getPort());
+goog.Uri.prototype.hasSameDomainAs = function (uri2) {
+  return (
+    ((!this.hasDomain() && !uri2.hasDomain()) || this.getDomain() == uri2.getDomain()) &&
+    ((!this.hasPort() && !uri2.hasPort()) || this.getPort() == uri2.getPort())
+  );
 };
-
 
 /**
  * Adds a random parameter to the Uri.
  * @return {!goog.Uri} Reference to this Uri object.
  */
-goog.Uri.prototype.makeUnique = function() {
-  'use strict';
+goog.Uri.prototype.makeUnique = function () {
   this.enforceReadOnly();
   this.setParameterValue(goog.Uri.RANDOM_PARAM, goog.string.getRandomString());
 
   return this;
 };
-
 
 /**
  * Removes the named query parameter.
@@ -743,13 +664,11 @@ goog.Uri.prototype.makeUnique = function() {
  * @param {string} key The parameter to remove.
  * @return {!goog.Uri} Reference to this URI object.
  */
-goog.Uri.prototype.removeParameter = function(key) {
-  'use strict';
+goog.Uri.prototype.removeParameter = function (key) {
   this.enforceReadOnly();
   this.queryData_.remove(key);
   return this;
 };
-
 
 /**
  * Sets whether Uri is read only. If this goog.Uri is read-only,
@@ -758,33 +677,27 @@ goog.Uri.prototype.removeParameter = function(key) {
  * @param {boolean} isReadOnly whether this goog.Uri should be read only.
  * @return {!goog.Uri} Reference to this Uri object.
  */
-goog.Uri.prototype.setReadOnly = function(isReadOnly) {
-  'use strict';
+goog.Uri.prototype.setReadOnly = function (isReadOnly) {
   this.isReadOnly_ = isReadOnly;
   return this;
 };
 
-
 /**
  * @return {boolean} Whether the URI is read only.
  */
-goog.Uri.prototype.isReadOnly = function() {
-  'use strict';
+goog.Uri.prototype.isReadOnly = function () {
   return this.isReadOnly_;
 };
-
 
 /**
  * Checks if this Uri has been marked as read only, and if so, throws an error.
  * This should be called whenever any modifying function is called.
  */
-goog.Uri.prototype.enforceReadOnly = function() {
-  'use strict';
+goog.Uri.prototype.enforceReadOnly = function () {
   if (this.isReadOnly_) {
     throw new Error('Tried to modify a read-only Uri');
   }
 };
-
 
 /**
  * Sets whether to ignore case.
@@ -793,8 +706,7 @@ goog.Uri.prototype.enforceReadOnly = function() {
  * @param {boolean} ignoreCase whether this goog.Uri should ignore case.
  * @return {!goog.Uri} Reference to this Uri object.
  */
-goog.Uri.prototype.setIgnoreCase = function(ignoreCase) {
-  'use strict';
+goog.Uri.prototype.setIgnoreCase = function (ignoreCase) {
   this.ignoreCase_ = ignoreCase;
   if (this.queryData_) {
     this.queryData_.setIgnoreCase(ignoreCase);
@@ -802,20 +714,16 @@ goog.Uri.prototype.setIgnoreCase = function(ignoreCase) {
   return this;
 };
 
-
 /**
  * @return {boolean} Whether to ignore case.
  */
-goog.Uri.prototype.getIgnoreCase = function() {
-  'use strict';
+goog.Uri.prototype.getIgnoreCase = function () {
   return this.ignoreCase_;
 };
-
 
 //==============================================================================
 // Static members
 //==============================================================================
-
 
 /**
  * Creates a uri from the string form.  Basically an alias of new goog.Uri().
@@ -829,12 +737,8 @@ goog.Uri.prototype.getIgnoreCase = function() {
  * names in #getParameterValue.
  * @return {!goog.Uri} The new URI object.
  */
-goog.Uri.parse = function(uri, opt_ignoreCase) {
-  'use strict';
-  return uri instanceof goog.Uri ? uri.clone() :
-                                   new goog.Uri(uri, opt_ignoreCase);
-};
-
+goog.Uri.parse = (uri, opt_ignoreCase) =>
+  uri instanceof goog.Uri ? uri.clone() : new goog.Uri(uri, opt_ignoreCase);
 
 /**
  * Creates a new goog.Uri object from unencoded parts.
@@ -851,10 +755,16 @@ goog.Uri.parse = function(uri, opt_ignoreCase) {
  *
  * @return {!goog.Uri} The new URI object.
  */
-goog.Uri.create = function(
-    opt_scheme, opt_userInfo, opt_domain, opt_port, opt_path, opt_query,
-    opt_fragment, opt_ignoreCase) {
-  'use strict';
+goog.Uri.create = (
+  opt_scheme,
+  opt_userInfo,
+  opt_domain,
+  opt_port,
+  opt_path,
+  opt_query,
+  opt_fragment,
+  opt_ignoreCase
+) => {
   var uri = new goog.Uri(null, opt_ignoreCase);
 
   // Only set the parts if they are defined and not empty strings.
@@ -869,7 +779,6 @@ goog.Uri.create = function(
   return uri;
 };
 
-
 /**
  * Resolves a relative Uri against a base Uri, accepting both strings and
  * Uri objects.
@@ -878,8 +787,7 @@ goog.Uri.create = function(
  * @param {*} rel Relative Uri.
  * @return {!goog.Uri} Resolved uri.
  */
-goog.Uri.resolve = function(base, rel) {
-  'use strict';
+goog.Uri.resolve = (base, rel) => {
   if (!(base instanceof goog.Uri)) {
     base = goog.Uri.parse(base);
   }
@@ -891,7 +799,6 @@ goog.Uri.resolve = function(base, rel) {
   return base.resolve(rel);
 };
 
-
 /**
  * Removes dot segments in given path component, as described in
  * RFC 3986, section 5.2.4.
@@ -899,23 +806,19 @@ goog.Uri.resolve = function(base, rel) {
  * @param {string} path A non-empty path component.
  * @return {string} Path component with removed dot segments.
  */
-goog.Uri.removeDotSegments = function(path) {
-  'use strict';
+goog.Uri.removeDotSegments = (path) => {
   if (path == '..' || path == '.') {
     return '';
-
-  } else if (
-      !goog.string.contains(path, './') && !goog.string.contains(path, '/.')) {
+  } else if (!goog.string.contains(path, './') && !goog.string.contains(path, '/.')) {
     // This optimization detects uris which do not contain dot-segments,
     // and as a consequence do not require any processing.
     return path;
-
   } else {
     var leadingSlash = goog.string.startsWith(path, '/');
     var segments = path.split('/');
     var out = [];
 
-    for (var pos = 0; pos < segments.length;) {
+    for (var pos = 0; pos < segments.length; ) {
       var segment = segments[pos++];
 
       if (segment == '.') {
@@ -923,7 +826,7 @@ goog.Uri.removeDotSegments = function(path) {
           out.push('');
         }
       } else if (segment == '..') {
-        if (out.length > 1 || out.length == 1 && out[0] != '') {
+        if (out.length > 1 || (out.length == 1 && out[0] != '')) {
           out.pop();
         }
         if (leadingSlash && pos == segments.length) {
@@ -939,7 +842,6 @@ goog.Uri.removeDotSegments = function(path) {
   }
 };
 
-
 /**
  * Decodes a value or returns the empty string if it isn't defined or empty.
  * @throws URIError If decodeURIComponent fails to decode val.
@@ -949,8 +851,7 @@ goog.Uri.removeDotSegments = function(path) {
  * @return {string} Decoded value.
  * @private
  */
-goog.Uri.decodeOrEmpty_ = function(val, opt_preserveReserved) {
-  'use strict';
+goog.Uri.decodeOrEmpty_ = (val, opt_preserveReserved) => {
   // Don't use UrlDecode() here because val is not a query parameter.
   if (!val) {
     return '';
@@ -959,10 +860,8 @@ goog.Uri.decodeOrEmpty_ = function(val, opt_preserveReserved) {
   // decodeURI has the same output for '%2f' and '%252f'. We double encode %25
   // so that we can distinguish between the 2 inputs. This is later undone by
   // removeDoubleEncoding_.
-  return opt_preserveReserved ? decodeURI(val.replace(/%25/g, '%2525')) :
-                                decodeURIComponent(val);
+  return opt_preserveReserved ? decodeURI(val.replace(/%25/g, '%2525')) : decodeURIComponent(val);
 };
-
 
 /**
  * If unescapedPart is non null, then escapes any characters in it that aren't
@@ -976,9 +875,7 @@ goog.Uri.decodeOrEmpty_ = function(val, opt_preserveReserved) {
  * @return {?string} null iff unescapedPart == null.
  * @private
  */
-goog.Uri.encodeSpecialChars_ = function(
-    unescapedPart, extra, opt_removeDoubleEncoding) {
-  'use strict';
+goog.Uri.encodeSpecialChars_ = (unescapedPart, extra, opt_removeDoubleEncoding) => {
   if (typeof unescapedPart === 'string') {
     var encoded = encodeURI(unescapedPart).replace(extra, goog.Uri.encodeChar_);
     if (opt_removeDoubleEncoding) {
@@ -991,19 +888,16 @@ goog.Uri.encodeSpecialChars_ = function(
   return null;
 };
 
-
 /**
  * Converts a character in [\01-\177] to its unicode character equivalent.
  * @param {string} ch One character string.
  * @return {string} Encoded string.
  * @private
  */
-goog.Uri.encodeChar_ = function(ch) {
-  'use strict';
+goog.Uri.encodeChar_ = (ch) => {
   var n = ch.charCodeAt(0);
   return '%' + ((n >> 4) & 0xf).toString(16) + (n & 0xf).toString(16);
 };
-
 
 /**
  * Removes double percent-encoding from a string.
@@ -1011,11 +905,8 @@ goog.Uri.encodeChar_ = function(ch) {
  * @return {string} String with double encoding removed.
  * @private
  */
-goog.Uri.removeDoubleEncoding_ = function(doubleEncodedString) {
-  'use strict';
-  return doubleEncodedString.replace(/%25([0-9a-fA-F]{2})/g, '%$1');
-};
-
+goog.Uri.removeDoubleEncoding_ = (doubleEncodedString) =>
+  doubleEncodedString.replace(/%25([0-9a-fA-F]{2})/g, '%$1');
 
 /**
  * Regular expression for characters that are disallowed in the scheme or
@@ -1025,7 +916,6 @@ goog.Uri.removeDoubleEncoding_ = function(doubleEncodedString) {
  */
 goog.Uri.reDisallowedInSchemeOrUserInfo_ = /[#\/\?@]/g;
 
-
 /**
  * Regular expression for characters that are disallowed in a relative path.
  * Colon is included due to RFC 3986 3.3.
@@ -1034,14 +924,12 @@ goog.Uri.reDisallowedInSchemeOrUserInfo_ = /[#\/\?@]/g;
  */
 goog.Uri.reDisallowedInRelativePath_ = /[\#\?:]/g;
 
-
 /**
  * Regular expression for characters that are disallowed in an absolute path.
  * @type {RegExp}
  * @private
  */
 goog.Uri.reDisallowedInAbsolutePath_ = /[\#\?]/g;
-
 
 /**
  * Regular expression for characters that are disallowed in the query.
@@ -1050,7 +938,6 @@ goog.Uri.reDisallowedInAbsolutePath_ = /[\#\?]/g;
  */
 goog.Uri.reDisallowedInQuery_ = /[\#\?@]/g;
 
-
 /**
  * Regular expression for characters that are disallowed in the fragment.
  * @type {RegExp}
@@ -1058,26 +945,23 @@ goog.Uri.reDisallowedInQuery_ = /[\#\?@]/g;
  */
 goog.Uri.reDisallowedInFragment_ = /#/g;
 
-
 /**
  * Checks whether two URIs have the same domain.
  * @param {string} uri1String First URI string.
  * @param {string} uri2String Second URI string.
  * @return {boolean} true if the two URIs have the same domain; false otherwise.
  */
-goog.Uri.haveSameDomain = function(uri1String, uri2String) {
-  'use strict';
+goog.Uri.haveSameDomain = (uri1String, uri2String) => {
   // Differs from goog.uri.utils.haveSameDomain, since this ignores scheme.
   // TODO(gboyer): Have this just call goog.uri.util.haveSameDomain.
   var pieces1 = goog.uri.utils.split(uri1String);
   var pieces2 = goog.uri.utils.split(uri2String);
-  return pieces1[goog.uri.utils.ComponentIndex.DOMAIN] ==
+  return (
+    pieces1[goog.uri.utils.ComponentIndex.DOMAIN] ==
       pieces2[goog.uri.utils.ComponentIndex.DOMAIN] &&
-      pieces1[goog.uri.utils.ComponentIndex.PORT] ==
-      pieces2[goog.uri.utils.ComponentIndex.PORT];
+    pieces1[goog.uri.utils.ComponentIndex.PORT] == pieces2[goog.uri.utils.ComponentIndex.PORT]
+  );
 };
-
-
 
 /**
  * Class used to represent URI query parameters.  It is essentially a hash of
@@ -1093,8 +977,7 @@ goog.Uri.haveSameDomain = function(uri1String, uri2String) {
  * @struct
  * @final
  */
-goog.Uri.QueryData = function(opt_query, opt_ignoreCase) {
-  'use strict';
+goog.Uri.QueryData = function (opt_query, opt_ignoreCase) {
   /**
    * The map containing name/value or name/array-of-values pairs.
    * May be null if it requires parsing from the query string.
@@ -1125,27 +1008,22 @@ goog.Uri.QueryData = function(opt_query, opt_ignoreCase) {
   this.ignoreCase_ = !!opt_ignoreCase;
 };
 
-
 /**
  * If the underlying key map is not yet initialized, it parses the
  * query string and fills the map with parsed data.
  * @private
  */
-goog.Uri.QueryData.prototype.ensureKeyMapInitialized_ = function() {
-  'use strict';
+goog.Uri.QueryData.prototype.ensureKeyMapInitialized_ = function () {
   if (!this.keyMap_) {
     this.keyMap_ = /** @type {!Map<string, !Array<*>>} */ (new Map());
     this.count_ = 0;
     if (this.encodedQuery_) {
-      var self = this;
-      goog.uri.utils.parseQueryData(this.encodedQuery_, function(name, value) {
-        'use strict';
-        self.add(goog.string.urlDecode(name), value);
+      goog.uri.utils.parseQueryData(this.encodedQuery_, (name, value) => {
+        this.add(goog.string.urlDecode(name), value);
       });
     }
   }
 };
-
 
 /**
  * Creates a new query data instance from a map of names and values.
@@ -1158,8 +1036,7 @@ goog.Uri.QueryData.prototype.ensureKeyMapInitialized_ = function() {
  *     name in #get.
  * @return {!goog.Uri.QueryData} The populated query data instance.
  */
-goog.Uri.QueryData.createFromMap = function(map, opt_ignoreCase) {
-  'use strict';
+goog.Uri.QueryData.createFromMap = (map, opt_ignoreCase) => {
   var keys = goog.structs.getKeys(map);
   if (typeof keys == 'undefined') {
     throw new Error('Keys are undefined');
@@ -1179,7 +1056,6 @@ goog.Uri.QueryData.createFromMap = function(map, opt_ignoreCase) {
   return queryData;
 };
 
-
 /**
  * Creates a new query data instance from parallel arrays of parameter names
  * and values. Allows for duplicate parameter names. Throws an error if the
@@ -1191,9 +1067,7 @@ goog.Uri.QueryData.createFromMap = function(map, opt_ignoreCase) {
  *     name in #get.
  * @return {!goog.Uri.QueryData} The populated query data instance.
  */
-goog.Uri.QueryData.createFromKeysValues = function(
-    keys, values, opt_ignoreCase) {
-  'use strict';
+goog.Uri.QueryData.createFromKeysValues = (keys, values, opt_ignoreCase) => {
   if (keys.length != values.length) {
     throw new Error('Mismatched lengths for keys/values');
   }
@@ -1204,16 +1078,13 @@ goog.Uri.QueryData.createFromKeysValues = function(
   return queryData;
 };
 
-
 /**
  * @return {?number} The number of parameters.
  */
-goog.Uri.QueryData.prototype.getCount = function() {
-  'use strict';
+goog.Uri.QueryData.prototype.getCount = function () {
   this.ensureKeyMapInitialized_();
   return this.count_;
 };
-
 
 /**
  * Adds a key value pair.
@@ -1221,8 +1092,7 @@ goog.Uri.QueryData.prototype.getCount = function() {
  * @param {*} value Value.
  * @return {!goog.Uri.QueryData} Instance of this object.
  */
-goog.Uri.QueryData.prototype.add = function(key, value) {
-  'use strict';
+goog.Uri.QueryData.prototype.add = function (key, value) {
   this.ensureKeyMapInitialized_();
   this.invalidateCache_();
 
@@ -1236,14 +1106,12 @@ goog.Uri.QueryData.prototype.add = function(key, value) {
   return this;
 };
 
-
 /**
  * Removes all the params with the given key.
  * @param {string} key Name.
  * @return {boolean} Whether any parameter was removed.
  */
-goog.Uri.QueryData.prototype.remove = function(key) {
-  'use strict';
+goog.Uri.QueryData.prototype.remove = function (key) {
   this.ensureKeyMapInitialized_();
 
   key = this.getKeyName_(key);
@@ -1251,62 +1119,52 @@ goog.Uri.QueryData.prototype.remove = function(key) {
     this.invalidateCache_();
 
     // Decrement parameter count.
-    this.count_ =
-        goog.asserts.assertNumber(this.count_) - this.keyMap_.get(key).length;
+    this.count_ = goog.asserts.assertNumber(this.count_) - this.keyMap_.get(key).length;
     return this.keyMap_.delete(key);
   }
   return false;
 };
 
-
 /**
  * Clears the parameters.
  */
-goog.Uri.QueryData.prototype.clear = function() {
-  'use strict';
+goog.Uri.QueryData.prototype.clear = function () {
   this.invalidateCache_();
   this.keyMap_ = null;
   this.count_ = 0;
 };
 
-
 /**
  * @return {boolean} Whether we have any parameters.
  */
-goog.Uri.QueryData.prototype.isEmpty = function() {
-  'use strict';
+goog.Uri.QueryData.prototype.isEmpty = function () {
   this.ensureKeyMapInitialized_();
   return this.count_ == 0;
 };
-
 
 /**
  * Whether there is a parameter with the given name
  * @param {string} key The parameter name to check for.
  * @return {boolean} Whether there is a parameter with the given name.
  */
-goog.Uri.QueryData.prototype.containsKey = function(key) {
-  'use strict';
+goog.Uri.QueryData.prototype.containsKey = function (key) {
   this.ensureKeyMapInitialized_();
   key = this.getKeyName_(key);
   return this.keyMap_.has(key);
 };
-
 
 /**
  * Whether there is a parameter with the given value.
  * @param {*} value The value to check for.
  * @return {boolean} Whether there is a parameter with the given value.
  */
-goog.Uri.QueryData.prototype.containsValue = function(value) {
-  'use strict';
+goog.Uri.QueryData.prototype.containsValue = function (value) {
   // NOTE(arv): This solution goes through all the params even if it was the
   // first param. We can get around this by not reusing code or by switching to
   // iterators.
   var vals = this.getValues();
   return goog.array.contains(vals, value);
 };
-
 
 /**
  * Runs a callback on every key-value pair in the map, including duplicate keys.
@@ -1316,26 +1174,21 @@ goog.Uri.QueryData.prototype.containsValue = function(value) {
  * @param {SCOPE=} opt_scope The value of "this" inside f.
  * @template SCOPE
  */
-goog.Uri.QueryData.prototype.forEach = function(f, opt_scope) {
-  'use strict';
+goog.Uri.QueryData.prototype.forEach = function (f, opt_scope) {
   this.ensureKeyMapInitialized_();
-  this.keyMap_.forEach(function(values, key) {
-    'use strict';
-    values.forEach(function(value) {
-      'use strict';
+  this.keyMap_.forEach(function (values, key) {
+    values.forEach(function (value) {
       f.call(opt_scope, value, key, this);
     }, this);
   }, this);
 };
-
 
 /**
  * Returns all the keys of the parameters. If a key is used multiple times
  * it will be included multiple times in the returned array
  * @return {!Array<string>} All the keys of the parameters.
  */
-goog.Uri.QueryData.prototype.getKeys = function() {
-  'use strict';
+goog.Uri.QueryData.prototype.getKeys = function () {
   this.ensureKeyMapInitialized_();
   // We need to get the values to know how many keys to add.
   const vals = Array.from(this.keyMap_.values());
@@ -1350,7 +1203,6 @@ goog.Uri.QueryData.prototype.getKeys = function() {
   return rv;
 };
 
-
 /**
  * Returns all the values of the parameters with the given name. If the query
  * data has no such key this will return an empty array. If no key is given
@@ -1358,8 +1210,7 @@ goog.Uri.QueryData.prototype.getKeys = function() {
  * @param {string=} opt_key The name of the parameter to get the values for.
  * @return {!Array<?>} All the values of the parameters with the given name.
  */
-goog.Uri.QueryData.prototype.getValues = function(opt_key) {
-  'use strict';
+goog.Uri.QueryData.prototype.getValues = function (opt_key) {
   this.ensureKeyMapInitialized_();
   let rv = [];
   if (typeof opt_key === 'string') {
@@ -1376,7 +1227,6 @@ goog.Uri.QueryData.prototype.getValues = function(opt_key) {
   return rv;
 };
 
-
 /**
  * Sets a key value pair and removes all other keys with the same value.
  *
@@ -1384,8 +1234,7 @@ goog.Uri.QueryData.prototype.getValues = function(opt_key) {
  * @param {*} value Value.
  * @return {!goog.Uri.QueryData} Instance of this object.
  */
-goog.Uri.QueryData.prototype.set = function(key, value) {
-  'use strict';
+goog.Uri.QueryData.prototype.set = function (key, value) {
   this.ensureKeyMapInitialized_();
   this.invalidateCache_();
 
@@ -1396,14 +1245,12 @@ goog.Uri.QueryData.prototype.set = function(key, value) {
   // ordering.
   key = this.getKeyName_(key);
   if (this.containsKey(key)) {
-    this.count_ =
-        goog.asserts.assertNumber(this.count_) - this.keyMap_.get(key).length;
+    this.count_ = goog.asserts.assertNumber(this.count_) - this.keyMap_.get(key).length;
   }
   this.keyMap_.set(key, [value]);
   this.count_ = goog.asserts.assertNumber(this.count_) + 1;
   return this;
 };
-
 
 /**
  * Returns the first value associated with the key. If the query data has no
@@ -1414,8 +1261,7 @@ goog.Uri.QueryData.prototype.set = function(key, value) {
  * @return {*} The first string value associated with the key, or opt_default
  *     if there's no value.
  */
-goog.Uri.QueryData.prototype.get = function(key, opt_default) {
-  'use strict';
+goog.Uri.QueryData.prototype.get = function (key, opt_default) {
   if (!key) {
     return opt_default;
   }
@@ -1423,15 +1269,13 @@ goog.Uri.QueryData.prototype.get = function(key, opt_default) {
   return values.length > 0 ? String(values[0]) : opt_default;
 };
 
-
 /**
  * Sets the values for a key. If the key already exists, this will
  * override all of the existing values that correspond to the key.
  * @param {string} key The key to set values for.
  * @param {!Array<?>} values The values to set.
  */
-goog.Uri.QueryData.prototype.setValues = function(key, values) {
-  'use strict';
+goog.Uri.QueryData.prototype.setValues = function (key, values) {
   this.remove(key);
 
   if (values.length > 0) {
@@ -1441,13 +1285,11 @@ goog.Uri.QueryData.prototype.setValues = function(key, values) {
   }
 };
 
-
 /**
  * @return {string} Encoded query string.
  * @override
  */
-goog.Uri.QueryData.prototype.toString = function() {
-  'use strict';
+goog.Uri.QueryData.prototype.toString = function () {
   if (this.encodedQuery_) {
     return this.encodedQuery_;
   }
@@ -1477,41 +1319,34 @@ goog.Uri.QueryData.prototype.toString = function() {
     }
   }
 
-  return this.encodedQuery_ = sb.join('&');
+  return (this.encodedQuery_ = sb.join('&'));
 };
-
 
 /**
  * @throws URIError If URI is malformed (that is, if decodeURIComponent fails on
  *     any of the URI components).
  * @return {string} Decoded query string.
  */
-goog.Uri.QueryData.prototype.toDecodedString = function() {
-  'use strict';
+goog.Uri.QueryData.prototype.toDecodedString = function () {
   return goog.Uri.decodeOrEmpty_(this.toString());
 };
-
 
 /**
  * Invalidate the cache.
  * @private
  */
-goog.Uri.QueryData.prototype.invalidateCache_ = function() {
-  'use strict';
+goog.Uri.QueryData.prototype.invalidateCache_ = function () {
   this.encodedQuery_ = null;
 };
-
 
 /**
  * Removes all keys that are not in the provided list. (Modifies this object.)
  * @param {Array<string>} keys The desired keys.
  * @return {!goog.Uri.QueryData} a reference to this object.
  */
-goog.Uri.QueryData.prototype.filterKeys = function(keys) {
-  'use strict';
+goog.Uri.QueryData.prototype.filterKeys = function (keys) {
   this.ensureKeyMapInitialized_();
-  this.keyMap_.forEach(function(value, key) {
-    'use strict';
+  this.keyMap_.forEach(function (value, key) {
     if (!goog.array.contains(keys, key)) {
       this.remove(key);
     }
@@ -1519,13 +1354,11 @@ goog.Uri.QueryData.prototype.filterKeys = function(keys) {
   return this;
 };
 
-
 /**
  * Clone the query data instance.
  * @return {!goog.Uri.QueryData} New instance of the QueryData object.
  */
-goog.Uri.QueryData.prototype.clone = function() {
-  'use strict';
+goog.Uri.QueryData.prototype.clone = function () {
   var rv = new goog.Uri.QueryData();
   rv.encodedQuery_ = this.encodedQuery_;
   if (this.keyMap_) {
@@ -1535,7 +1368,6 @@ goog.Uri.QueryData.prototype.clone = function() {
   return rv;
 };
 
-
 /**
  * Helper function to get the key name from a JavaScript object. Converts
  * the object to a string, and to lower case if necessary.
@@ -1543,8 +1375,7 @@ goog.Uri.QueryData.prototype.clone = function() {
  * @param {*} arg The object to get a key name from.
  * @return {string} valid key name which can be looked up in #keyMap_.
  */
-goog.Uri.QueryData.prototype.getKeyName_ = function(arg) {
-  'use strict';
+goog.Uri.QueryData.prototype.getKeyName_ = function (arg) {
   var keyName = String(arg);
   if (this.ignoreCase_) {
     keyName = keyName.toLowerCase();
@@ -1552,21 +1383,18 @@ goog.Uri.QueryData.prototype.getKeyName_ = function(arg) {
   return keyName;
 };
 
-
 /**
  * Ignore case in parameter names.
  * NOTE: If there are already key/value pairs in the QueryData, and
  * ignoreCase_ is set to false, the keys will all be lower-cased.
  * @param {boolean} ignoreCase whether this goog.Uri should ignore case.
  */
-goog.Uri.QueryData.prototype.setIgnoreCase = function(ignoreCase) {
-  'use strict';
+goog.Uri.QueryData.prototype.setIgnoreCase = function (ignoreCase) {
   var resetKeys = ignoreCase && !this.ignoreCase_;
   if (resetKeys) {
     this.ensureKeyMapInitialized_();
     this.invalidateCache_();
-    this.keyMap_.forEach(function(value, key) {
-      'use strict';
+    this.keyMap_.forEach(function (value, key) {
       var lowerCase = key.toLowerCase();
       if (key != lowerCase) {
         this.remove(key);
@@ -1576,7 +1404,6 @@ goog.Uri.QueryData.prototype.setIgnoreCase = function(ignoreCase) {
   }
   this.ignoreCase_ = ignoreCase;
 };
-
 
 /**
  * Extends a query data object with another query data or map like object. This
@@ -1588,13 +1415,15 @@ goog.Uri.QueryData.prototype.setIgnoreCase = function(ignoreCase) {
  * @suppress {deprecated} Use deprecated goog.structs.forEach to allow different
  * types of parameters.
  */
-goog.Uri.QueryData.prototype.extend = function(var_args) {
-  'use strict';
+goog.Uri.QueryData.prototype.extend = function (var_args) {
   for (var i = 0; i < arguments.length; i++) {
     var data = arguments[i];
-    goog.structs.forEach(data, function(value, key) {
-      'use strict';
-      this.add(key, value);
-    }, this);
+    goog.structs.forEach(
+      data,
+      function (value, key) {
+        this.add(key, value);
+      },
+      this
+    );
   }
 };

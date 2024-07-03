@@ -10,7 +10,6 @@
  */
 
 goog.module('goog.ui.ac.RichRemoteArrayMatcherTest');
-goog.setTestOnly();
 
 const ArgumentMatcher = goog.require('goog.testing.mockmatchers.ArgumentMatcher');
 const MockControl = goog.require('goog.testing.MockControl');
@@ -24,8 +23,7 @@ const url = 'http://www.google.com';
 const token = 'goog';
 const maxMatches = 5;
 
-const responseJsonText =
-    '[["type1", {"name":"eric"}, {"name":"larry"}, {"name":"sergey"}]]';
+const responseJsonText = '[["type1", {"name":"eric"}, {"name":"larry"}, {"name":"sergey"}]]';
 // This matcher is used to match the value used in the `matchHandler` callback
 // in tests.
 // The `RichRemoteArrayMatcher` takes in the parsed `responseJsonTest`
@@ -41,8 +39,7 @@ const ignoresRenderAndSelectMatcher = new ArgumentMatcher((arg) => {
   if (!Array.isArray(arg)) {
     return false;
   }
-  return arg[0].name === 'eric' && arg[1].name === 'larry' &&
-      arg[2].name === 'sergey';
+  return arg[0].name === 'eric' && arg[1].name === 'larry' && arg[2].name === 'sergey';
 }, 'matchesType1');
 
 let mockControl;
@@ -59,7 +56,7 @@ function type1(response) {
 
 testSuite({
   setUp() {
-    goog.net.XhrIo = /** @type {?} */ (NetXhrIo);
+    goog.net.XhrIo = /** @type {?} */ NetXhrIo;
     mockControl = new MockControl();
     mockMatchHandler = mockControl.createFunctionMock();
   },
@@ -84,14 +81,16 @@ testSuite({
    */
   testSetRowBuilder() {
     const matcher = new RichRemoteArrayMatcher(url);
-    matcher.setRowBuilder(/**
+    matcher.setRowBuilder(
+      /**
                              @suppress {checkTypes} suppression added to enable
                              type checking
                            */
-                          (type, response) => {
-                            assertEquals('type1', type);
-                            return response;
-                          });
+      (type, response) => {
+        assertEquals('type1', type);
+        return response;
+      }
+    );
     mockMatchHandler(token, ignoresRenderAndSelectMatcher);
     mockControl.$replayAll();
     matcher.requestMatchingRows(token, maxMatches, mockMatchHandler);

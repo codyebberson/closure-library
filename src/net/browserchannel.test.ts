@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.net.BrowserChannelTest');
-goog.setTestOnly();
 
 const BrowserChannel = goog.require('goog.net.BrowserChannel');
 const ChannelDebug = goog.require('goog.net.ChannelDebug');
@@ -71,8 +70,12 @@ function stubTmpnetwork() {
 /** Mock ChannelRequest. */
 class MockChannelRequest {
   constructor(
-      channel, channelDebug, sessionId = undefined, requestId = undefined,
-      retryId = undefined) {
+    channel,
+    channelDebug,
+    sessionId = undefined,
+    requestId = undefined,
+    retryId = undefined
+  ) {
     this.channel_ = channel;
     this.channelDebug_ = channelDebug;
     this.sessionId_ = sessionId;
@@ -160,16 +163,14 @@ function formatArrayOfMaps(arrayOfMaps) {
     const map = arrayOfMaps[i];
     const keys = map.map.getKeys();
     for (let j = 0; j < keys.length; j++) {
-      const tmp = keys[j] + ':' + map.map.get(keys[j]) +
-          (map.context ? ':' + map.context : '');
+      const tmp = keys[j] + ':' + map.map.get(keys[j]) + (map.context ? ':' + map.context : '');
       result.push(tmp);
     }
   }
   return result.join(', ');
 }
 
-function connectForwardChannel(
-    serverVersion = undefined, hostPrefix = undefined, opt_uriPrefix) {
+function connectForwardChannel(serverVersion = undefined, hostPrefix = undefined, opt_uriPrefix) {
   const uriPrefix = opt_uriPrefix || '';
   browserChannel.connect(`${uriPrefix}/test`, `${uriPrefix}/bind`, null);
   mockClock.tick(0);
@@ -177,8 +178,7 @@ function connectForwardChannel(
   completeForwardChannel(serverVersion, hostPrefix);
 }
 
-function connect(
-    serverVersion = undefined, hostPrefix = undefined, uriPrefix = undefined) {
+function connect(serverVersion = undefined, hostPrefix = undefined, uriPrefix = undefined) {
   connectForwardChannel(serverVersion, hostPrefix, uriPrefix);
   completeBackChannel();
 }
@@ -196,36 +196,32 @@ function completeTestConnection() {
 
 /** @suppress {visibility} suppression added to enable type checking */
 function completeForwardTestConnection() {
-  browserChannel.connectionTest_.onRequestData(
-      browserChannel.connectionTest_, '["b"]');
-  browserChannel.connectionTest_.onRequestComplete(
-      browserChannel.connectionTest_);
+  browserChannel.connectionTest_.onRequestData(browserChannel.connectionTest_, '["b"]');
+  browserChannel.connectionTest_.onRequestComplete(browserChannel.connectionTest_);
   mockClock.tick(0);
 }
 
 /** @suppress {visibility} suppression added to enable type checking */
 function completeBackTestConnection() {
-  browserChannel.connectionTest_.onRequestData(
-      browserChannel.connectionTest_, '11111');
+  browserChannel.connectionTest_.onRequestData(browserChannel.connectionTest_, '11111');
   mockClock.tick(0);
 }
 
 /** @suppress {visibility} suppression added to enable type checking */
-function completeForwardChannel(
-    serverVersion = undefined, hostPrefix = undefined) {
-  const responseData = '[[0,["c","1234567890ABCDEF",' +
-      (hostPrefix ? `"${hostPrefix}"` : 'null') +
-      (serverVersion ? `,${serverVersion}` : '') + ']]]';
-  browserChannel.onRequestData(
-      browserChannel.forwardChannelRequest_, responseData);
+function completeForwardChannel(serverVersion = undefined, hostPrefix = undefined) {
+  const responseData =
+    '[[0,["c","1234567890ABCDEF",' +
+    (hostPrefix ? `"${hostPrefix}"` : 'null') +
+    (serverVersion ? `,${serverVersion}` : '') +
+    ']]]';
+  browserChannel.onRequestData(browserChannel.forwardChannelRequest_, responseData);
   browserChannel.onRequestComplete(browserChannel.forwardChannelRequest_);
   mockClock.tick(0);
 }
 
 /** @suppress {visibility} suppression added to enable type checking */
 function completeBackChannel() {
-  browserChannel.onRequestData(
-      browserChannel.backChannelRequest_, '[[1,["foo"]]]');
+  browserChannel.onRequestData(browserChannel.backChannelRequest_, '[[1,["foo"]]]');
   browserChannel.onRequestComplete(browserChannel.backChannelRequest_);
   mockClock.tick(0);
 }
@@ -233,45 +229,42 @@ function completeBackChannel() {
 /** @suppress {visibility} suppression added to enable type checking */
 function responseVersion7() {
   browserChannel.onRequestData(
-      browserChannel.forwardChannelRequest_,
-      ChannelDebug.MAGIC_RESPONSE_COOKIE);
+    browserChannel.forwardChannelRequest_,
+    ChannelDebug.MAGIC_RESPONSE_COOKIE
+  );
   browserChannel.onRequestComplete(browserChannel.forwardChannelRequest_);
   mockClock.tick(0);
 }
 
 /** @suppress {visibility} suppression added to enable type checking */
 function responseNoBackchannel(lastArrayIdSentFromServer, outstandingDataSize) {
-  const responseData =
-      googJson.serialize([0, lastArrayIdSentFromServer, outstandingDataSize]);
-  browserChannel.onRequestData(
-      browserChannel.forwardChannelRequest_, responseData);
+  const responseData = googJson.serialize([0, lastArrayIdSentFromServer, outstandingDataSize]);
+  browserChannel.onRequestData(browserChannel.forwardChannelRequest_, responseData);
   browserChannel.onRequestComplete(browserChannel.forwardChannelRequest_);
   mockClock.tick(0);
 }
 
 /** @suppress {visibility} suppression added to enable type checking */
 function response(lastArrayIdSentFromServer, outstandingDataSize) {
-  const responseData =
-      googJson.serialize([1, lastArrayIdSentFromServer, outstandingDataSize]);
-  browserChannel.onRequestData(
-      browserChannel.forwardChannelRequest_, responseData);
+  const responseData = googJson.serialize([1, lastArrayIdSentFromServer, outstandingDataSize]);
+  browserChannel.onRequestData(browserChannel.forwardChannelRequest_, responseData);
   browserChannel.onRequestComplete(browserChannel.forwardChannelRequest_);
   mockClock.tick(0);
 }
 
 /** @suppress {visibility} suppression added to enable type checking */
 function receive(data) {
-  browserChannel.onRequestData(
-      browserChannel.backChannelRequest_, `[[1,${data}]]`);
+  browserChannel.onRequestData(browserChannel.backChannelRequest_, `[[1,${data}]]`);
   browserChannel.onRequestComplete(browserChannel.backChannelRequest_);
   mockClock.tick(0);
 }
 
 /** @suppress {visibility} suppression added to enable type checking */
 function responseTimeout() {
-  Object.assign(
-      browserChannel.forwardChannelRequest_,
-      {lastError_: ChannelRequest.Error.TIMEOUT, successful_: false});
+  Object.assign(browserChannel.forwardChannelRequest_, {
+    lastError_: ChannelRequest.Error.TIMEOUT,
+    successful_: false,
+  });
   browserChannel.onRequestComplete(browserChannel.forwardChannelRequest_);
   mockClock.tick(0);
 }
@@ -299,9 +292,10 @@ function responseUnknownSessionId() {
 
 /** @suppress {visibility} suppression added to enable type checking */
 function responseActiveXBlocked() {
-  Object.assign(
-      browserChannel.backChannelRequest_,
-      {lastError_: ChannelRequest.Error.ACTIVE_X_BLOCKED, successful_: false});
+  Object.assign(browserChannel.backChannelRequest_, {
+    lastError_: ChannelRequest.Error.ACTIVE_X_BLOCKED,
+    successful_: false,
+  });
   browserChannel.onRequestComplete(browserChannel.backChannelRequest_);
   mockClock.tick(0);
 }
@@ -340,11 +334,13 @@ testSuite({
   setUpPage() {
     // Use our MockChannelRequests instead of the real ones.
     /** @suppress {checkTypes} suppression added to enable type checking */
-    ChannelRequest.createChannelRequest =
-        (channel, channelDebug, opt_sessionId, opt_requestId, opt_retryId) =>
-            new MockChannelRequest(
-                channel, channelDebug, opt_sessionId, opt_requestId,
-                opt_retryId);
+    ChannelRequest.createChannelRequest = (
+      channel,
+      channelDebug,
+      opt_sessionId,
+      opt_requestId,
+      opt_retryId
+    ) => new MockChannelRequest(channel, channelDebug, opt_sessionId, opt_requestId, opt_retryId);
 
     // Mock out the stat notification code.
     stats.notifyStatEvent = (stat) => {
@@ -378,8 +374,7 @@ testSuite({
     handler.channelSuccess = (channel, maps) => {
       deliveredMaps = googArray.clone(maps);
     };
-    handler.channelClosed = function(
-        channel, opt_pendingMaps, opt_undeliveredMaps) {
+    handler.channelClosed = function (channel, opt_pendingMaps, opt_undeliveredMaps) {
       // Mock out the handler, and let it set a formatted user readable string
       // of the undelivered maps which we can use when verifying our assertions.
       if (opt_pendingMaps) {
@@ -441,8 +436,7 @@ testSuite({
     b.push(new BrowserChannel.QueuedMap(0, map1));
     b.push(new BrowserChannel.QueuedMap(0, map2));
     b.push(new BrowserChannel.QueuedMap(0, map3));
-    assertEquals(
-        'k1:v1, k2:v2, k3:v3, k4:v4, k5:v5, k6:v6', formatArrayOfMaps(b));
+    assertEquals('k1:v1, k2:v2, k3:v3, k4:v4, k5:v5, k6:v6', formatArrayOfMaps(b));
 
     // One map with a context.
     const c = [];
@@ -772,14 +766,18 @@ testSuite({
     responseRequestFailed();
 
     assertEquals(
-        'Should be closed immediately after request failed.',
-        BrowserChannel.State.CLOSED, browserChannel.getState());
+      'Should be closed immediately after request failed.',
+      BrowserChannel.State.CLOSED,
+      browserChannel.getState()
+    );
 
     mockClock.tick(tmpnetwork.GOOGLECOM_TIMEOUT);
 
     assertEquals(
-        'Should remain closed after the ping timeout.',
-        BrowserChannel.State.CLOSED, browserChannel.getState());
+      'Should remain closed after the ping timeout.',
+      BrowserChannel.State.CLOSED,
+      browserChannel.getState()
+    );
     assertEquals(1, numTimingEvents);
   },
 
@@ -824,9 +822,7 @@ testSuite({
     lastStatEvent = null;
     responseRequestFailed();
 
-    assertEquals(
-        'No stat event should be reported before we know the reason.', 0,
-        numStatEvents);
+    assertEquals('No stat event should be reported before we know the reason.', 0, numStatEvents);
 
     // Let the ping time out.
     mockClock.tick(tmpnetwork.GOOGLECOM_TIMEOUT);
@@ -846,9 +842,7 @@ testSuite({
     lastStatEvent = null;
     responseRequestFailed();
 
-    assertEquals(
-        'No stat event should be reported before we know the reason.', 0,
-        numStatEvents);
+    assertEquals('No stat event should be reported before we know the reason.', 0, numStatEvents);
 
     // Wait half the ping timeout period, and then fake the network being up.
     mockClock.tick(tmpnetwork.GOOGLECOM_TIMEOUT / 2);
@@ -948,9 +942,7 @@ testSuite({
     // #3 that was sent but which we don't know if the server received, and
     // #4 and #5 which remain in the outgoing maps and have not yet been sent.
     assertEquals('foo3:bar3:context3', handler.pendingMapsString);
-    assertEquals(
-        'foo4:bar4:context4, foo5:bar5:context5',
-        handler.undeliveredMapsString);
+    assertEquals('foo4:bar4:context4, foo5:bar5:context5', handler.undeliveredMapsString);
   },
 
   /**
@@ -1008,8 +1000,9 @@ testSuite({
 
     mockClock.tick(10);
     assertFalse(
-        browserChannel.backChannelRequest_.getRequestStartTime() <
-        browserChannel.forwardChannelRequest_.getRequestStartTime());
+      browserChannel.backChannelRequest_.getRequestStartTime() <
+        browserChannel.forwardChannelRequest_.getRequestStartTime()
+    );
     responseNoBackchannel();
     assertNotEquals(BrowserChannel.Stat.BACKCHANNEL_MISSING, lastStatEvent);
   },
@@ -1025,9 +1018,9 @@ testSuite({
     mockClock.tick(BrowserChannel.RTT_ESTIMATE + 1);
     sendMap('foo2', 'bar2');
     assertTrue(
-        browserChannel.backChannelRequest_.getRequestStartTime() +
-            BrowserChannel.RTT_ESTIMATE <
-        browserChannel.forwardChannelRequest_.getRequestStartTime());
+      browserChannel.backChannelRequest_.getRequestStartTime() + BrowserChannel.RTT_ESTIMATE <
+        browserChannel.forwardChannelRequest_.getRequestStartTime()
+    );
     responseNoBackchannel();
     assertEquals(BrowserChannel.Stat.BACKCHANNEL_MISSING, lastStatEvent);
   },
@@ -1188,8 +1181,7 @@ testSuite({
   testResponseWithGarbage() {
     connect(8);
     sendMap('foo1', 'bar1');
-    browserChannel.onRequestData(
-        browserChannel.forwardChannelRequest_, 'garbage');
+    browserChannel.onRequestData(browserChannel.forwardChannelRequest_, 'garbage');
     assertEquals(BrowserChannel.State.CLOSED, browserChannel.getState());
   },
 
@@ -1197,8 +1189,7 @@ testSuite({
   testResponseWithGarbageInArray() {
     connect(8);
     sendMap('foo1', 'bar1');
-    browserChannel.onRequestData(
-        browserChannel.forwardChannelRequest_, '["garbage"]');
+    browserChannel.onRequestData(browserChannel.forwardChannelRequest_, '["garbage"]');
     assertEquals(BrowserChannel.State.CLOSED, browserChannel.getState());
   },
 
@@ -1210,32 +1201,27 @@ testSuite({
     connect(8);
     sendMap('foo1', 'bar1');
     browserChannel.onRequestData(
-        browserChannel.forwardChannelRequest_,
-        BrowserChannel.LAST_ARRAY_ID_RESPONSE_PREFIX +
-            '=<script>evil()<\/script>&' +
-            BrowserChannel.OUTSTANDING_DATA_RESPONSE_PREFIX +
-            '=<script>moreEvil()<\/script>');
+      browserChannel.forwardChannelRequest_,
+      BrowserChannel.LAST_ARRAY_ID_RESPONSE_PREFIX +
+        '=<script>evil()</script>&' +
+        BrowserChannel.OUTSTANDING_DATA_RESPONSE_PREFIX +
+        '=<script>moreEvil()</script>'
+    );
     assertEquals(BrowserChannel.State.CLOSED, browserChannel.getState());
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
   testPathAbsolute() {
     connect(8, undefined, '/talkgadget');
-    assertEquals(
-        browserChannel.backChannelUri_.getDomain(), window.location.hostname);
-    assertEquals(
-        browserChannel.forwardChannelUri_.getDomain(),
-        window.location.hostname);
+    assertEquals(browserChannel.backChannelUri_.getDomain(), window.location.hostname);
+    assertEquals(browserChannel.forwardChannelUri_.getDomain(), window.location.hostname);
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
   testPathRelative() {
     connect(8, undefined, 'talkgadget');
-    assertEquals(
-        browserChannel.backChannelUri_.getDomain(), window.location.hostname);
-    assertEquals(
-        browserChannel.forwardChannelUri_.getDomain(),
-        window.location.hostname);
+    assertEquals(browserChannel.backChannelUri_.getDomain(), window.location.hostname);
+    assertEquals(browserChannel.forwardChannelUri_.getDomain(), window.location.hostname);
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -1252,8 +1238,9 @@ testSuite({
     assertFalse(xhr.getWithCredentials());
 
     assertThrows(
-        'Error connection to different host without CORS',
-        goog.bind(browserChannel.createXhrIo, browserChannel, 'some_host'));
+      'Error connection to different host without CORS',
+      goog.bind(browserChannel.createXhrIo, browserChannel, 'some_host')
+    );
 
     browserChannel.setSupportsCrossDomainXhrs(true);
 
@@ -1302,9 +1289,7 @@ testSuite({
     // Since we're assuming the channel is buferred, the "Close Immediately"
     // flag should be set.
     completeForwardChannel();
-    assertEquals(
-        '1',
-        browserChannel.backChannelRequest_.requestUri_.queryData_.get('CI'));
+    assertEquals('1', browserChannel.backChannelRequest_.requestUri_.queryData_.get('CI'));
 
     mockClock.tick(100);
 
@@ -1316,9 +1301,7 @@ testSuite({
 
     // From now on, the "Close Immediately" flag should not be set.
     completeBackChannel();
-    assertEquals(
-        '0',
-        browserChannel.backChannelRequest_.requestUri_.queryData_.get('CI'));
+    assertEquals('0', browserChannel.backChannelRequest_.requestUri_.queryData_.get('CI'));
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -1330,15 +1313,11 @@ testSuite({
 
     // Back channel will still be buffered, because #setIsBuffered was called
     // after the back channel was already open.
-    assertEquals(
-        '1',
-        browserChannel.backChannelRequest_.requestUri_.queryData_.get('CI'));
+    assertEquals('1', browserChannel.backChannelRequest_.requestUri_.queryData_.get('CI'));
 
     // Subsequent back channels that are opened will be streaming.
     completeBackChannel();
     assertFalse(browserChannel.isBuffered());
-    assertEquals(
-        '0',
-        browserChannel.backChannelRequest_.requestUri_.queryData_.get('CI'));
+    assertEquals('0', browserChannel.backChannelRequest_.requestUri_.queryData_.get('CI'));
   },
 });

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.plugins.AbstractTabHandlerTest');
-goog.setTestOnly();
 
 const AbstractTabHandler = goog.require('goog.editor.plugins.AbstractTabHandler');
 const BrowserEvent = goog.require('goog.events.BrowserEvent');
@@ -61,21 +60,24 @@ testSuite({
     event.metaKey = false;
 
     assertTrue(
-        'Event must be handled when no modifier keys are pressed.',
-        tabHandler.handleKeyboardShortcut(event, '', false));
+      'Event must be handled when no modifier keys are pressed.',
+      tabHandler.handleKeyboardShortcut(event, '', false)
+    );
     assertTrue(handleTabKeyCalled);
     handleTabKeyCalled = false;
 
     editableField.setModalMode(true);
     if (userAgent.GECKO) {
       assertFalse(
-          'Event must not be handled when in modal mode',
-          tabHandler.handleKeyboardShortcut(event, '', false));
+        'Event must not be handled when in modal mode',
+        tabHandler.handleKeyboardShortcut(event, '', false)
+      );
       assertFalse(handleTabKeyCalled);
     } else {
       assertTrue(
-          'Event must be handled when in modal mode',
-          tabHandler.handleKeyboardShortcut(event, '', false));
+        'Event must be handled when in modal mode',
+        tabHandler.handleKeyboardShortcut(event, '', false)
+      );
       assertTrue(handleTabKeyCalled);
       handleTabKeyCalled = false;
     }
@@ -86,8 +88,9 @@ testSuite({
      */
     event.ctrlKey = true;
     assertFalse(
-        'Plugin must never handle tab key press when ctrlKey is pressed.',
-        tabHandler.handleKeyboardShortcut(event, '', false));
+      'Plugin must never handle tab key press when ctrlKey is pressed.',
+      tabHandler.handleKeyboardShortcut(event, '', false)
+    );
     assertFalse(handleTabKeyCalled);
 
     /**
@@ -101,8 +104,9 @@ testSuite({
      */
     event.metaKey = true;
     assertFalse(
-        'Plugin must never handle tab key press when metaKey is pressed.',
-        tabHandler.handleKeyboardShortcut(event, '', false));
+      'Plugin must never handle tab key press when metaKey is pressed.',
+      tabHandler.handleKeyboardShortcut(event, '', false)
+    );
     assertFalse(handleTabKeyCalled);
   },
 });

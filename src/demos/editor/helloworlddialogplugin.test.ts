@@ -81,8 +81,9 @@ testSuite({
     /** @suppress {visibility} suppression added to enable type checking */
     const dialog = plugin.createDialog(googDom.getDomHelper());
     assertTrue(
-        'Dialog should be of type goog.demos.editor.HelloWorldDialog',
-        dialog instanceof HelloWorldDialog);
+      'Dialog should be of type goog.demos.editor.HelloWorldDialog',
+      dialog instanceof HelloWorldDialog
+    );
 
     mockField.$verify();
   },
@@ -97,14 +98,14 @@ testSuite({
     mockField.dispatchBeforeChange();
     mockRange.removeContents();
     // Tests that an argument is a span with the custom message.
-    const createdNodeMatcher = new ArgumentMatcher(function(arg) {
-      return arg.nodeType == NodeType.ELEMENT && arg.tagName == TagName.SPAN &&
-          googDom.getRawTextContent(arg) == CUSTOM_MESSAGE;
-    });
+    const createdNodeMatcher = new ArgumentMatcher(
+      (arg) =>
+        arg.nodeType == NodeType.ELEMENT &&
+        arg.tagName == TagName.SPAN &&
+        googDom.getRawTextContent(arg) == CUSTOM_MESSAGE
+    );
     mockRange.insertNode(createdNodeMatcher, false);
-    mockRange.$does(function(node, before) {
-      return node;
-    });
+    mockRange.$does((node, before) => node);
     mockPlaceCursorNextTo(createdNodeMatcher, false);
     stubs.set(googEditorRange, 'placeCursorNextTo', mockPlaceCursorNextTo);
     mockField.dispatchSelectionChangeEvent();
@@ -134,11 +135,13 @@ testSuite({
 
     const elem = fieldObj.getElement();
     const helper = new TestHelper(elem);
-    helper.select('12345', 1, '12345', 4);  // Selects '234'.
+    helper.select('12345', 1, '12345', 4); // Selects '234'.
 
     assertEquals(
-        'Incorrect text selected before dialog is opened', '234',
-        fieldObj.getRange().getText());
+      'Incorrect text selected before dialog is opened',
+      '234',
+      fieldObj.getRange().getText()
+    );
     plugin.execCommand(Command.HELLO_WORLD_DIALOG);
 
     // TODO(user): IE returns some bogus range when field doesn't have
@@ -148,21 +151,16 @@ testSuite({
     elem.parentNode.blur();
     expectedFailures.expectFailureFor(googUserAgent.IE);
     try {
-      assertNull(
-          'There should be no selection while dialog is open',
-          fieldObj.getRange());
+      assertNull('There should be no selection while dialog is open', fieldObj.getRange());
     } catch (e) {
       expectedFailures.handleException(e);
     }
 
     googTestingEvents.fireClickSequence(plugin.dialog_.getOkButtonElement());
-    assertEquals(
-        'No text should be selected after clicking ok', '',
-        fieldObj.getRange().getText());
+    assertEquals('No text should be selected after clicking ok', '', fieldObj.getRange().getText());
 
     // Test that the caret is placed after the custom message.
-    googTestingEditorDom.assertRangeBetweenText(
-        'Hello, world!', '5', fieldObj.getRange());
+    googTestingEditorDom.assertRangeBetweenText('Hello, world!', '5', fieldObj.getRange());
   },
 });
 

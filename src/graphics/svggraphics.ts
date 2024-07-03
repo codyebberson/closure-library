@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview SvgGraphics sub class that uses SVG to draw the graphics.
  */
@@ -42,8 +41,6 @@ goog.requireType('goog.graphics.RectElement');
 goog.requireType('goog.graphics.StrokeAndFillElement');
 goog.requireType('goog.graphics.TextElement');
 
-
-
 /**
  * A Graphics implementation for drawing using SVG.
  * @param {string|number} width The width in pixels.  Strings
@@ -63,11 +60,21 @@ goog.requireType('goog.graphics.TextElement');
  *     http://en.wikipedia.org/wiki/Canvas_element for details.
  * @final
  */
-goog.graphics.SvgGraphics = function(
-    width, height, opt_coordWidth, opt_coordHeight, opt_domHelper) {
-  'use strict';
+goog.graphics.SvgGraphics = function (
+  width,
+  height,
+  opt_coordWidth,
+  opt_coordHeight,
+  opt_domHelper
+) {
   goog.graphics.AbstractGraphics.call(
-      this, width, height, opt_coordWidth, opt_coordHeight, opt_domHelper);
+    this,
+    width,
+    height,
+    opt_coordWidth,
+    opt_coordHeight,
+    opt_domHelper
+  );
 
   /**
    * Map from def key to id of def root element.
@@ -86,8 +93,7 @@ goog.graphics.SvgGraphics = function(
    * @type {boolean}
    * @private
    */
-  this.useManualViewbox_ =
-      goog.userAgent.WEBKIT && !goog.userAgent.isVersionOrHigher(526);
+  this.useManualViewbox_ = goog.userAgent.WEBKIT && !goog.userAgent.isVersionOrHigher(526);
 
   /**
    * Event handler.
@@ -98,7 +104,6 @@ goog.graphics.SvgGraphics = function(
 };
 goog.inherits(goog.graphics.SvgGraphics, goog.graphics.AbstractGraphics);
 
-
 /**
  * The SVG namespace URN
  * @private
@@ -106,14 +111,12 @@ goog.inherits(goog.graphics.SvgGraphics, goog.graphics.AbstractGraphics);
  */
 goog.graphics.SvgGraphics.SVG_NS_ = 'http://www.w3.org/2000/svg';
 
-
 /**
  * The name prefix for def entries
  * @private
  * @type {string}
  */
 goog.graphics.SvgGraphics.DEF_ID_PREFIX_ = '_svgdef_';
-
 
 /**
  * The next available unique identifier for a def entry.
@@ -124,14 +127,12 @@ goog.graphics.SvgGraphics.DEF_ID_PREFIX_ = '_svgdef_';
  */
 goog.graphics.SvgGraphics.nextDefId_ = 0;
 
-
 /**
  * Svg element for definitions for other elements, e.g. linear gradients.
  * @type {Element}
  * @private
  */
 goog.graphics.SvgGraphics.prototype.defsElement_;
-
 
 /**
  * Creates an SVG element. Used internally and by different SVG classes.
@@ -140,11 +141,8 @@ goog.graphics.SvgGraphics.prototype.defsElement_;
  * @return {!Element} The created element.
  * @private
  */
-goog.graphics.SvgGraphics.prototype.createSvgElement_ = function(
-    tagName, opt_attributes) {
-  'use strict';
-  var element = this.dom_.getDocument().createElementNS(
-      goog.graphics.SvgGraphics.SVG_NS_, tagName);
+goog.graphics.SvgGraphics.prototype.createSvgElement_ = function (tagName, opt_attributes) {
+  var element = this.dom_.getDocument().createElementNS(goog.graphics.SvgGraphics.SVG_NS_, tagName);
 
   if (opt_attributes) {
     this.setElementAttributes(element, opt_attributes);
@@ -153,21 +151,17 @@ goog.graphics.SvgGraphics.prototype.createSvgElement_ = function(
   return element;
 };
 
-
 /**
  * Sets properties to an SVG element. Used internally and by different
  * SVG elements.
  * @param {Element} element The svg element.
  * @param {Object} attributes Map of name-value pairs for attributes.
  */
-goog.graphics.SvgGraphics.prototype.setElementAttributes = function(
-    element, attributes) {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.setElementAttributes = (element, attributes) => {
   for (var key in attributes) {
     element.setAttribute(key, attributes[key]);
   }
 };
-
 
 /**
  * Appends an element.
@@ -177,12 +171,10 @@ goog.graphics.SvgGraphics.prototype.setElementAttributes = function(
  *     to append to. If not specified, appends to the main canvas.
  * @private
  */
-goog.graphics.SvgGraphics.prototype.append_ = function(element, opt_group) {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.append_ = function (element, opt_group) {
   var parent = opt_group || this.canvasElement;
   parent.getElement().appendChild(/** @type {!Node} */ (element.getElement()));
 };
-
 
 /**
  * Sets the fill of the given element.
@@ -190,37 +182,46 @@ goog.graphics.SvgGraphics.prototype.append_ = function(element, opt_group) {
  * @param {goog.graphics.Fill?} fill The fill object.
  * @override
  */
-goog.graphics.SvgGraphics.prototype.setElementFill = function(element, fill) {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.setElementFill = function (element, fill) {
   var svgElement = element.getElement();
   if (fill instanceof goog.graphics.SolidFill) {
     svgElement.setAttribute('fill', fill.getColor());
     svgElement.setAttribute('fill-opacity', fill.getOpacity());
   } else if (fill instanceof goog.graphics.LinearGradient) {
     // create a def key which is just a concat of all the relevant fields
-    var defKey = 'lg-' + fill.getX1() + '-' + fill.getY1() + '-' +
-        fill.getX2() + '-' + fill.getY2() + '-' + fill.getColor1() + '-' +
-        fill.getColor2();
+    var defKey =
+      'lg-' +
+      fill.getX1() +
+      '-' +
+      fill.getY1() +
+      '-' +
+      fill.getX2() +
+      '-' +
+      fill.getY2() +
+      '-' +
+      fill.getColor1() +
+      '-' +
+      fill.getColor2();
     // It seems that the SVG version accepts opacity where the VML does not
 
     var id = this.getDef(defKey);
 
-    if (!id) {  // No def for this yet, create it
+    if (!id) {
+      // No def for this yet, create it
       // Create the gradient def entry (only linear gradient are supported)
       var gradient = this.createSvgElement_('linearGradient', {
-        'x1': fill.getX1(),
-        'y1': fill.getY1(),
-        'x2': fill.getX2(),
-        'y2': fill.getY2(),
-        'gradientUnits': 'userSpaceOnUse'
+        x1: fill.getX1(),
+        y1: fill.getY1(),
+        x2: fill.getX2(),
+        y2: fill.getY2(),
+        gradientUnits: 'userSpaceOnUse',
       });
 
       var gstyle = 'stop-color:' + fill.getColor1();
       if (typeof fill.getOpacity1() === 'number') {
         gstyle += ';stop-opacity:' + fill.getOpacity1();
       }
-      var stop1 =
-          this.createSvgElement_('stop', {'offset': '0%', 'style': gstyle});
+      var stop1 = this.createSvgElement_('stop', { offset: '0%', style: gstyle });
       gradient.appendChild(stop1);
 
       // LinearGradients don't have opacity in VML so implement that before
@@ -232,8 +233,7 @@ goog.graphics.SvgGraphics.prototype.setElementFill = function(element, fill) {
       if (typeof fill.getOpacity2() === 'number') {
         gstyle += ';stop-opacity:' + fill.getOpacity2();
       }
-      var stop2 =
-          this.createSvgElement_('stop', {'offset': '100%', 'style': gstyle});
+      var stop2 = this.createSvgElement_('stop', { offset: '100%', style: gstyle });
       gradient.appendChild(stop2);
 
       // LinearGradients don't have opacity in VML so implement that before
@@ -252,16 +252,13 @@ goog.graphics.SvgGraphics.prototype.setElementFill = function(element, fill) {
   }
 };
 
-
 /**
  * Sets the stroke of the given element.
  * @param {goog.graphics.StrokeAndFillElement} element The element wrapper.
  * @param {goog.graphics.Stroke?} stroke The stroke object.
  * @override
  */
-goog.graphics.SvgGraphics.prototype.setElementStroke = function(
-    element, stroke) {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.setElementStroke = function (element, stroke) {
   var svgElement = element.getElement();
   if (stroke) {
     svgElement.setAttribute('stroke', stroke.getColor());
@@ -269,8 +266,7 @@ goog.graphics.SvgGraphics.prototype.setElementStroke = function(
 
     var width = stroke.getWidth();
     if (typeof width === 'string' && width.indexOf('px') != -1) {
-      svgElement.setAttribute(
-          'stroke-width', parseFloat(width) / this.getPixelScaleX());
+      svgElement.setAttribute('stroke-width', Number.parseFloat(width) / this.getPixelScaleX());
     } else {
       svgElement.setAttribute('stroke-width', width);
     }
@@ -278,7 +274,6 @@ goog.graphics.SvgGraphics.prototype.setElementStroke = function(
     svgElement.setAttribute('stroke', 'none');
   }
 };
-
 
 /**
  * Set the translation and rotation of an element.
@@ -293,15 +288,21 @@ goog.graphics.SvgGraphics.prototype.setElementStroke = function(
  * @param {number} centerY The vertical center of the rotation transform.
  * @override
  */
-goog.graphics.SvgGraphics.prototype.setElementTransform = function(
-    element, x, y, angle, centerX, centerY) {
-  'use strict';
-  element.getElement().setAttribute(
+goog.graphics.SvgGraphics.prototype.setElementTransform = (
+  element,
+  x,
+  y,
+  angle,
+  centerX,
+  centerY
+) => {
+  element
+    .getElement()
+    .setAttribute(
       'transform',
-      'translate(' + x + ',' + y + ') rotate(' + angle + ' ' + centerX + ' ' +
-          centerY + ')');
+      'translate(' + x + ',' + y + ') rotate(' + angle + ' ' + centerX + ' ' + centerY + ')'
+    );
 };
-
 
 /**
  * Set the transformation of an element.
@@ -310,27 +311,26 @@ goog.graphics.SvgGraphics.prototype.setElementTransform = function(
  *     transformation applied to this element.
  * @override
  */
-goog.graphics.SvgGraphics.prototype.setElementAffineTransform = function(
-    element, affineTransform) {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.setElementAffineTransform = (element, affineTransform) => {
   var t = affineTransform;
   var substr = [
-    t.getScaleX(), t.getShearY(), t.getShearX(), t.getScaleY(),
-    t.getTranslateX(), t.getTranslateY()
+    t.getScaleX(),
+    t.getShearY(),
+    t.getShearX(),
+    t.getScaleY(),
+    t.getTranslateX(),
+    t.getTranslateY(),
   ].join(',');
   element.getElement().setAttribute('transform', 'matrix(' + substr + ')');
 };
-
 
 /**
  * Creates the DOM representation of the graphics area.
  * @override
  */
-goog.graphics.SvgGraphics.prototype.createDom = function() {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.createDom = function () {
   // Set up the standard attributes.
-  var attributes =
-      {'width': this.width, 'height': this.height, 'overflow': 'hidden'};
+  var attributes = { width: this.width, height: this.height, overflow: 'hidden' };
 
   var svgElement = this.createSvgElement_('svg', attributes);
 
@@ -349,21 +349,18 @@ goog.graphics.SvgGraphics.prototype.createDom = function() {
   this.setViewBox_();
 };
 
-
 /**
  * Changes the coordinate system position.
  * @param {number} left The coordinate system left bound.
  * @param {number} top The coordinate system top bound.
  * @override
  */
-goog.graphics.SvgGraphics.prototype.setCoordOrigin = function(left, top) {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.setCoordOrigin = function (left, top) {
   this.coordLeft = left;
   this.coordTop = top;
 
   this.setViewBox_();
 };
-
 
 /**
  * Changes the coordinate size.
@@ -371,31 +368,30 @@ goog.graphics.SvgGraphics.prototype.setCoordOrigin = function(left, top) {
  * @param {number} coordHeight The coordinate height.
  * @override
  */
-goog.graphics.SvgGraphics.prototype.setCoordSize = function(
-    coordWidth, coordHeight) {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.setCoordSize = function (coordWidth, coordHeight) {
   goog.graphics.SvgGraphics.superClass_.setCoordSize.apply(this, arguments);
   this.setViewBox_();
 };
-
 
 /**
  * @return {string} The view box string.
  * @private
  */
-goog.graphics.SvgGraphics.prototype.getViewBox_ = function() {
-  'use strict';
-  return this.coordLeft + ' ' + this.coordTop + ' ' +
-      (this.coordWidth ? this.coordWidth + ' ' + this.coordHeight : '');
+goog.graphics.SvgGraphics.prototype.getViewBox_ = function () {
+  return (
+    this.coordLeft +
+    ' ' +
+    this.coordTop +
+    ' ' +
+    (this.coordWidth ? this.coordWidth + ' ' + this.coordHeight : '')
+  );
 };
-
 
 /**
  * Sets up the view box.
  * @private
  */
-goog.graphics.SvgGraphics.prototype.setViewBox_ = function() {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.setViewBox_ = function () {
   if (this.coordWidth || this.coordLeft || this.coordTop) {
     this.getElement().setAttribute('preserveAspectRatio', 'none');
     if (this.useManualViewbox_) {
@@ -406,17 +402,14 @@ goog.graphics.SvgGraphics.prototype.setViewBox_ = function() {
   }
 };
 
-
 /**
  * Updates the transform of the root element to fake a viewBox.  Should only
  * be called when useManualViewbox_ is set.
  * @private
  * @suppress {strictPrimitiveOperators} Part of the go/strict_warnings_migration
  */
-goog.graphics.SvgGraphics.prototype.updateManualViewBox_ = function() {
-  'use strict';
-  if (!this.isInDocument() ||
-      !(this.coordWidth || this.coordLeft || !this.coordTop)) {
+goog.graphics.SvgGraphics.prototype.updateManualViewBox_ = function () {
+  if (!this.isInDocument() || !(this.coordWidth || this.coordLeft || !this.coordTop)) {
     return;
   }
 
@@ -434,11 +427,13 @@ goog.graphics.SvgGraphics.prototype.updateManualViewBox_ = function() {
   var scaleX = size.width / this.coordWidth;
   var scaleY = size.height / this.coordHeight;
 
-  this.canvasElement.getElement().setAttribute(
-      'transform', 'scale(' + scaleX + ' ' + scaleY + ') ' +
-          'translate(' + offsetX + ' ' + offsetY + ')');
+  this.canvasElement
+    .getElement()
+    .setAttribute(
+      'transform',
+      'scale(' + scaleX + ' ' + scaleY + ') ' + 'translate(' + offsetX + ' ' + offsetY + ')'
+    );
 };
-
 
 /**
  * Change the size of the canvas.
@@ -446,28 +441,24 @@ goog.graphics.SvgGraphics.prototype.updateManualViewBox_ = function() {
  * @param {number} pixelHeight The height in pixels.
  * @override
  */
-goog.graphics.SvgGraphics.prototype.setSize = function(
-    pixelWidth, pixelHeight) {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.setSize = function (pixelWidth, pixelHeight) {
   goog.style.setSize(this.getElement(), pixelWidth, pixelHeight);
 };
 
-
 /** @override */
-goog.graphics.SvgGraphics.prototype.getPixelSize = function() {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.getPixelSize = function () {
   if (!goog.userAgent.GECKO) {
-    return this.isInDocument() ?
-        goog.style.getSize(this.getElement()) :
-        goog.graphics.SvgGraphics.base(this, 'getPixelSize');
+    return this.isInDocument()
+      ? goog.style.getSize(this.getElement())
+      : goog.graphics.SvgGraphics.base(this, 'getPixelSize');
   }
 
   // In Gecko, goog.style.getSize does not work for SVG elements.  We have to
   // compute the size manually if it is percentage based.
   var width = this.width;
   var height = this.height;
-  var computeWidth = (typeof width === 'string') && width.indexOf('%') != -1;
-  var computeHeight = (typeof height === 'string') && height.indexOf('%') != -1;
+  var computeWidth = typeof width === 'string' && width.indexOf('%') != -1;
+  var computeHeight = typeof height === 'string' && height.indexOf('%') != -1;
 
   if (!this.isInDocument() && (computeWidth || computeHeight)) {
     return null;
@@ -479,33 +470,27 @@ goog.graphics.SvgGraphics.prototype.getPixelSize = function() {
   if (computeWidth) {
     parent = /** @type {Element} */ (this.getElement().parentNode);
     parentSize = goog.style.getSize(parent);
-    width = parseFloat(/** @type {string} */ (width)) * parentSize.width / 100;
+    width = (Number.parseFloat(/** @type {string} */ (width)) * parentSize.width) / 100;
   }
 
   if (computeHeight) {
     parent = parent || /** @type {Element} */ (this.getElement().parentNode);
     parentSize = parentSize || goog.style.getSize(parent);
-    height =
-        parseFloat(/** @type {string} */ (height)) * parentSize.height / 100;
+    height = (Number.parseFloat(/** @type {string} */ (height)) * parentSize.height) / 100;
   }
 
-  return new goog.math.Size(
-      /** @type {number} */ (width),
-      /** @type {number} */ (height));
+  return new goog.math.Size(/** @type {number} */ (width), /** @type {number} */ (height));
 };
-
 
 /**
  * Remove all drawing elements from the graphics.
  * @override
  */
-goog.graphics.SvgGraphics.prototype.clear = function() {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.clear = function () {
   this.canvasElement.clear();
   goog.dom.removeChildren(this.defsElement_);
   this.defs_ = {};
 };
-
 
 /**
  * Draw an ellipse.
@@ -523,17 +508,20 @@ goog.graphics.SvgGraphics.prototype.clear = function() {
  * @return {!goog.graphics.EllipseElement} The newly created element.
  * @override
  */
-goog.graphics.SvgGraphics.prototype.drawEllipse = function(
-    cx, cy, rx, ry, stroke, fill, opt_group) {
-  'use strict';
-  var element = this.createSvgElement_(
-      'ellipse', {'cx': cx, 'cy': cy, 'rx': rx, 'ry': ry});
-  var wrapper =
-      new goog.graphics.SvgEllipseElement(element, this, stroke, fill);
+goog.graphics.SvgGraphics.prototype.drawEllipse = function (
+  cx,
+  cy,
+  rx,
+  ry,
+  stroke,
+  fill,
+  opt_group
+) {
+  var element = this.createSvgElement_('ellipse', { cx: cx, cy: cy, rx: rx, ry: ry });
+  var wrapper = new goog.graphics.SvgEllipseElement(element, this, stroke, fill);
   this.append_(wrapper, opt_group);
   return wrapper;
 };
-
 
 /**
  * Draw a rectangle.
@@ -551,16 +539,20 @@ goog.graphics.SvgGraphics.prototype.drawEllipse = function(
  * @return {!goog.graphics.RectElement} The newly created element.
  * @override
  */
-goog.graphics.SvgGraphics.prototype.drawRect = function(
-    x, y, width, height, stroke, fill, opt_group) {
-  'use strict';
-  var element = this.createSvgElement_(
-      'rect', {'x': x, 'y': y, 'width': width, 'height': height});
+goog.graphics.SvgGraphics.prototype.drawRect = function (
+  x,
+  y,
+  width,
+  height,
+  stroke,
+  fill,
+  opt_group
+) {
+  var element = this.createSvgElement_('rect', { x: x, y: y, width: width, height: height });
   var wrapper = new goog.graphics.SvgRectElement(element, this, stroke, fill);
   this.append_(wrapper, opt_group);
   return wrapper;
 };
-
 
 /**
  * Draw an image.
@@ -576,23 +568,20 @@ goog.graphics.SvgGraphics.prototype.drawRect = function(
  * @return {!goog.graphics.ImageElement} The newly created image wrapped in a
  *     rectangle element.
  */
-goog.graphics.SvgGraphics.prototype.drawImage = function(
-    x, y, width, height, src, opt_group) {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.drawImage = function (x, y, width, height, src, opt_group) {
   var element = this.createSvgElement_('image', {
-    'x': x,
-    'y': y,
-    'width': width,
-    'height': height,
+    x: x,
+    y: y,
+    width: width,
+    height: height,
     'image-rendering': 'optimizeQuality',
-    'preserveAspectRatio': 'none'
+    preserveAspectRatio: 'none',
   });
   element.setAttributeNS('http://www.w3.org/1999/xlink', 'href', src);
   var wrapper = new goog.graphics.SvgImageElement(element, this);
   this.append_(wrapper, opt_group);
   return wrapper;
 };
-
 
 /**
  * Draw a text string vertically centered on a given line.
@@ -613,20 +602,29 @@ goog.graphics.SvgGraphics.prototype.drawImage = function(
  * @return {!goog.graphics.TextElement} The newly created element.
  * @override
  */
-goog.graphics.SvgGraphics.prototype.drawTextOnLine = function(
-    text, x1, y1, x2, y2, align, font, stroke, fill, opt_group) {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.drawTextOnLine = function (
+  text,
+  x1,
+  y1,
+  x2,
+  y2,
+  align,
+  font,
+  stroke,
+  fill,
+  opt_group
+) {
   var angle = Math.round(goog.math.angle(x1, y1, x2, y2));
   var dx = x2 - x1;
   var dy = y2 - y1;
-  var lineLength = Math.round(Math.sqrt(dx * dx + dy * dy));  // Length of line
+  var lineLength = Math.round(Math.sqrt(dx * dx + dy * dy)); // Length of line
 
   // SVG baseline is on the glyph's base line. We estimate it as 85% of the
   // font height. This is just a rough estimate, but do not have a better way.
   var fontSize = font.size;
-  var attributes = {'font-family': font.family, 'font-size': fontSize};
+  var attributes = { 'font-family': font.family, 'font-size': fontSize };
   var baseline = Math.round(fontSize * 0.85);
-  var textY = Math.round(y1 - (fontSize / 2) + baseline);
+  var textY = Math.round(y1 - fontSize / 2 + baseline);
   var textX = x1;
   if (align == 'center') {
     textX += Math.round(lineLength / 2);
@@ -666,7 +664,6 @@ goog.graphics.SvgGraphics.prototype.drawTextOnLine = function(
   return wrapper;
 };
 
-
 /**
  * Draw a path.
  *
@@ -680,16 +677,12 @@ goog.graphics.SvgGraphics.prototype.drawTextOnLine = function(
  * @return {!goog.graphics.PathElement} The newly created element.
  * @override
  */
-goog.graphics.SvgGraphics.prototype.drawPath = function(
-    path, stroke, fill, opt_group) {
-  'use strict';
-  var element = this.createSvgElement_(
-      'path', {'d': goog.graphics.SvgGraphics.getSvgPath(path)});
+goog.graphics.SvgGraphics.prototype.drawPath = function (path, stroke, fill, opt_group) {
+  var element = this.createSvgElement_('path', { d: goog.graphics.SvgGraphics.getSvgPath(path) });
   var wrapper = new goog.graphics.SvgPathElement(element, this, stroke, fill);
   this.append_(wrapper, opt_group);
   return wrapper;
 };
-
 
 /**
  * Returns a string representation of a logical path suitable for use in
@@ -699,11 +692,9 @@ goog.graphics.SvgGraphics.prototype.drawPath = function(
  * @return {string} The SVG path representation.
  * @suppress {deprecated} goog.graphics is deprecated.
  */
-goog.graphics.SvgGraphics.getSvgPath = function(path) {
-  'use strict';
+goog.graphics.SvgGraphics.getSvgPath = (path) => {
   var list = [];
-  path.forEachSegment(function(segment, args) {
-    'use strict';
+  path.forEachSegment((segment, args) => {
     switch (segment) {
       case goog.graphics.Path.Segment.MOVETO:
         list.push('M');
@@ -720,8 +711,15 @@ goog.graphics.SvgGraphics.getSvgPath = function(path) {
       case goog.graphics.Path.Segment.ARCTO:
         var extent = args[3];
         list.push(
-            'A', args[0], args[1], 0, Math.abs(extent) > 180 ? 1 : 0,
-            extent > 0 ? 1 : 0, args[4], args[5]);
+          'A',
+          args[0],
+          args[1],
+          0,
+          Math.abs(extent) > 180 ? 1 : 0,
+          extent > 0 ? 1 : 0,
+          args[4],
+          args[5]
+        );
         break;
       case goog.graphics.Path.Segment.CLOSE:
         list.push('Z');
@@ -730,7 +728,6 @@ goog.graphics.SvgGraphics.getSvgPath = function(path) {
   });
   return list.join(' ');
 };
-
 
 /**
  * Create an empty group of drawing elements.
@@ -741,14 +738,12 @@ goog.graphics.SvgGraphics.getSvgPath = function(path) {
  * @return {!goog.graphics.GroupElement} The newly created group.
  * @override
  */
-goog.graphics.SvgGraphics.prototype.createGroup = function(opt_group) {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.createGroup = function (opt_group) {
   var element = this.createSvgElement_('g');
   var parent = opt_group || this.canvasElement;
   parent.getElement().appendChild(element);
   return new goog.graphics.SvgGroupElement(element, this);
 };
-
 
 /**
  * Measure and return the width (in pixels) of a given text string.
@@ -759,12 +754,10 @@ goog.graphics.SvgGraphics.prototype.createGroup = function(opt_group) {
  *
  * @override
  */
-goog.graphics.SvgGraphics.prototype.getTextWidth = function(text, font) {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.getTextWidth = (text, font) => {
   // TODO(user) Implement
-  throw new Error("unimplemented method");
+  throw new Error('unimplemented method');
 };
-
 
 /**
  * Adds a definition of an element to the global definitions.
@@ -774,13 +767,11 @@ goog.graphics.SvgGraphics.prototype.getTextWidth = function(text, font) {
  *     have an id attribute set.
  * @return {string} The assigned id of the defElement.
  */
-goog.graphics.SvgGraphics.prototype.addDef = function(defKey, defElement) {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.addDef = function (defKey, defElement) {
   if (defKey in this.defs_) {
     return this.defs_[defKey];
   }
-  var id = goog.graphics.SvgGraphics.DEF_ID_PREFIX_ +
-      goog.graphics.SvgGraphics.nextDefId_++;
+  var id = goog.graphics.SvgGraphics.DEF_ID_PREFIX_ + goog.graphics.SvgGraphics.nextDefId_++;
   defElement.setAttribute('id', id);
   this.defs_[defKey] = id;
 
@@ -790,7 +781,6 @@ goog.graphics.SvgGraphics.prototype.addDef = function(defKey, defElement) {
   return id;
 };
 
-
 /**
  * Returns the id of a definition element.
  * @param {string} defKey This is a key that should be unique in a way that
@@ -798,19 +788,16 @@ goog.graphics.SvgGraphics.prototype.addDef = function(defKey, defElement) {
  * @return {?string} The id of the found definition element or null if
  *     not found.
  */
-goog.graphics.SvgGraphics.prototype.getDef = function(defKey) {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.getDef = function (defKey) {
   return defKey in this.defs_ ? this.defs_[defKey] : null;
 };
-
 
 /**
  * Removes a definition of an elemnt from the global definitions.
  * @param {string} defKey This is a key that should be unique in a way that
  *     if two definitions are equal they should have the same key.
  */
-goog.graphics.SvgGraphics.prototype.removeDef = function(defKey) {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.removeDef = function (defKey) {
   var id = this.getDef(defKey);
   if (id) {
     var element = this.dom_.getElement(id);
@@ -819,10 +806,8 @@ goog.graphics.SvgGraphics.prototype.removeDef = function(defKey) {
   }
 };
 
-
 /** @override */
-goog.graphics.SvgGraphics.prototype.enterDocument = function() {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.enterDocument = function () {
   var oldPixelSize = this.getPixelSize();
   goog.graphics.SvgGraphics.superClass_.enterDocument.call(this);
 
@@ -831,39 +816,43 @@ goog.graphics.SvgGraphics.prototype.enterDocument = function() {
     this.dispatchEvent(goog.events.EventType.RESIZE);
   }
 
-
   // For percentage based heights, listen for changes to size.
   if (this.useManualViewbox_) {
     var width = this.width;
     var height = this.height;
 
-    if (typeof width == 'string' && width.indexOf('%') != -1 &&
-        typeof height == 'string' && height.indexOf('%') != -1) {
+    if (
+      typeof width == 'string' &&
+      width.indexOf('%') != -1 &&
+      typeof height == 'string' &&
+      height.indexOf('%') != -1
+    ) {
       // SVG elements don't behave well with respect to size events, so we
       // resort to polling.
       this.handler_.listen(
-          goog.graphics.SvgGraphics.getResizeCheckTimer_(), goog.Timer.TICK,
-          this.updateManualViewBox_);
+        goog.graphics.SvgGraphics.getResizeCheckTimer_(),
+        goog.Timer.TICK,
+        this.updateManualViewBox_
+      );
     }
 
     this.updateManualViewBox_();
   }
 };
 
-
 /** @override */
-goog.graphics.SvgGraphics.prototype.exitDocument = function() {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.exitDocument = function () {
   goog.graphics.SvgGraphics.superClass_.exitDocument.call(this);
 
   // Stop polling.
   if (this.useManualViewbox_) {
     this.handler_.unlisten(
-        goog.graphics.SvgGraphics.getResizeCheckTimer_(), goog.Timer.TICK,
-        this.updateManualViewBox_);
+      goog.graphics.SvgGraphics.getResizeCheckTimer_(),
+      goog.Timer.TICK,
+      this.updateManualViewBox_
+    );
   }
 };
-
 
 /**
  * Disposes of the component by removing event handlers, detacing DOM nodes from
@@ -871,8 +860,7 @@ goog.graphics.SvgGraphics.prototype.exitDocument = function() {
  * @override
  * @protected
  */
-goog.graphics.SvgGraphics.prototype.disposeInternal = function() {
-  'use strict';
+goog.graphics.SvgGraphics.prototype.disposeInternal = function () {
   delete this.defs_;
   delete this.defsElement_;
   delete this.canvasElement;
@@ -881,7 +869,6 @@ goog.graphics.SvgGraphics.prototype.disposeInternal = function() {
   goog.graphics.SvgGraphics.superClass_.disposeInternal.call(this);
 };
 
-
 /**
  * The centralized resize checking timer.
  * @type {goog.Timer|undefined}
@@ -889,25 +876,18 @@ goog.graphics.SvgGraphics.prototype.disposeInternal = function() {
  */
 goog.graphics.SvgGraphics.resizeCheckTimer_;
 
-
 /**
  * @return {goog.Timer} The centralized timer object used for interval timing.
  * @private
  */
-goog.graphics.SvgGraphics.getResizeCheckTimer_ = function() {
-  'use strict';
+goog.graphics.SvgGraphics.getResizeCheckTimer_ = () => {
   if (!goog.graphics.SvgGraphics.resizeCheckTimer_) {
     goog.graphics.SvgGraphics.resizeCheckTimer_ = new goog.Timer(400);
     goog.graphics.SvgGraphics.resizeCheckTimer_.start();
   }
 
-  return /** @type {goog.Timer} */ (
-      goog.graphics.SvgGraphics.resizeCheckTimer_);
+  return /** @type {goog.Timer} */ (goog.graphics.SvgGraphics.resizeCheckTimer_);
 };
-
 
 /** @override */
-goog.graphics.SvgGraphics.prototype.isDomClonable = function() {
-  'use strict';
-  return true;
-};
+goog.graphics.SvgGraphics.prototype.isDomClonable = () => true;

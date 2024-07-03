@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 /**
  * @fileoverview Unit tests for Closure's base.js.
  */
@@ -28,8 +27,7 @@ const object = goog.require('goog.object');
 const recordFunction = goog.require('goog.testing.recordFunction');
 const testSuite = goog.require('goog.testing.testSuite');
 const userAgent = goog.require('goog.userAgent');
-const {assertInstanceof} = goog.require('goog.asserts');
-
+const { assertInstanceof } = goog.require('goog.asserts');
 
 /**
  * @param {?} name
@@ -41,7 +39,7 @@ function getFramedVars(name) {
   const doc = w.document;
   doc.open();
   doc.write(
-      '<script>' +
+    '<script>' +
       'var a = [0, 1, 2];' +
       'var o = {a: 0, b: 1};' +
       'var n = 42;' +
@@ -51,17 +49,18 @@ function getFramedVars(name) {
       'var u = undefined;' +
       'var fv = function(){};' +
       '</' +
-      'script>');
+      'script>'
+  );
   doc.close();
   return {
-    'array': w.a,
-    'object': w.o,
-    'number': w.n,
-    'boolean': w.b,
-    'string': w.s,
-    'functionVar': w.fv,
-    'nullVar': w.nv,
-    'undefinedVar': w.u
+    array: w.a,
+    object: w.o,
+    number: w.n,
+    boolean: w.b,
+    string: w.s,
+    functionVar: w.fv,
+    nullVar: w.nv,
+    undefinedVar: w.u,
   };
 }
 
@@ -70,10 +69,9 @@ let framedVars2;
 const stubs = new PropertyReplacer();
 const originalGoogBind = goog.bind;
 
-goog.exportSymbol('exceptionTest', function() {
+goog.exportSymbol('exceptionTest', () => {
   throw new Error('ERROR');
 });
-
 
 /**
  * Use mock date in testIsDateLike() rather than a real goog.date.Date to
@@ -84,12 +82,9 @@ goog.exportSymbol('exceptionTest', function() {
 function MockGoogDate() {}
 
 /** @return {number} */
-MockGoogDate.prototype.getFullYear = function() {
-  return 2007;
-};
+MockGoogDate.prototype.getFullYear = () => 2007;
 
-
-var obj = {foo: 'obj'};
+var obj = { foo: 'obj' };
 
 /**
  * @param {?} arg1
@@ -98,10 +93,8 @@ var obj = {foo: 'obj'};
  * @this {?}
  */
 function getFoo(arg1, arg2) {
-  return {foo: this.foo, arg1: arg1, arg2: arg2};
+  return { foo: this.foo, arg1: arg1, arg2: arg2 };
 }
-
-
 
 /**
  * @param {...?} var_args
@@ -114,8 +107,6 @@ function add(var_args) {
   }
   return sum;
 }
-
-
 
 testSuite({
   setUpPage() {
@@ -134,7 +125,7 @@ testSuite({
   },
 
   testLibrary() {
-    assertNotUndefined('\'goog\' not loaded', goog);
+    assertNotUndefined("'goog' not loaded", goog);
   },
 
   /** @suppress {undefinedVars} ns is created indirectly */
@@ -142,11 +133,11 @@ testSuite({
     let result;
     // avoid compiler checks on the use of goog.define by creating a local alias
     const define = goog.define;
-    result = define('SOME_DEFINE', 123);  // overridden by 456
+    result = define('SOME_DEFINE', 123); // overridden by 456
     assertEquals(456, result);
     assertEquals('undefined', typeof SOME_DEFINE);
 
-    result = define('SOME_OTHER_DEFINE', 123);  // not overridden
+    result = define('SOME_OTHER_DEFINE', 123); // not overridden
     assertEquals(123, result);
     assertEquals('undefined', typeof SOME_OTHER_DEFINE);
 
@@ -154,20 +145,20 @@ testSuite({
     const provide = goog.provide;
     provide('ns');
 
-    result = define('ns.SOME_NAMESPACED_DEFINE', 123);  // overridden by 789
+    result = define('ns.SOME_NAMESPACED_DEFINE', 123); // overridden by 789
     assertEquals(789, result);
     assertEquals('undefined', typeof ns.SOME_NAMESPACED_DEFINE);
 
-    result = define('ns.SOME_OTHER_NAMESPACED_DEFINE', 123);  // untouched
+    result = define('ns.SOME_OTHER_NAMESPACED_DEFINE', 123); // untouched
     assertEquals(123, result);
     assertEquals('undefined', typeof ns.SOME_OTHER_NAMESPACED_DEFINE);
 
     // still works even if namespace not provided.
-    result = define('ns2.SOME_UNPROVIDED_DEFINE', 123);  // overridden by 159
+    result = define('ns2.SOME_UNPROVIDED_DEFINE', 123); // overridden by 159
     assertEquals(159, result);
     assertEquals('undefined', typeof ns2);
 
-    result = define('ns3.SOME_OTHER_UNPROVIDED_DEFINE', 123);  // untouched
+    result = define('ns3.SOME_OTHER_UNPROVIDED_DEFINE', 123); // untouched
     assertEquals(123, result);
     assertEquals('undefined', typeof ns3);
   },
@@ -218,9 +209,9 @@ testSuite({
     assertEquals(date, an.existing.path);
     an = undefined;
 
-    const foo = {foo: 'foo'};
-    const bar = {bar: 'bar'};
-    const baz = {baz: 'baz'};
+    const foo = { foo: 'foo' };
+    const bar = { bar: 'bar' };
+    const baz = { baz: 'baz' };
     goog.exportSymbol('one.two.three.Four', foo);
     goog.exportSymbol('one.two.three.five', bar);
     goog.exportSymbol('one.two.six', baz);
@@ -229,7 +220,7 @@ testSuite({
     assertEquals(baz, one.two.six);
 
     const win = {};
-    const fooBar = {foo: 'foo', bar: 'bar'};
+    const fooBar = { foo: 'foo', bar: 'bar' };
     goog.exportSymbol('one.two.four', fooBar, win);
     assertEquals(fooBar, win.one.two.four);
     assertTrue('four' in win.one.two);
@@ -239,16 +230,14 @@ testSuite({
 
   /** @suppress {undefinedVars} ns is created indirectly */
   testExportSymbolExceptions() {
-    const inner = function() {
+    const inner = () => {
       // If exceptionTest wasn't exported using execScript, IE8 will throw
       // "Object doesn't support this property or method" instead.
       exceptionTest();
     };
-    const e =
-        assertThrows('Exception wasn\'t thrown by exported function', inner);
+    const e = assertThrows("Exception wasn't thrown by exported function", inner);
     assertEquals('Unexpected error thrown', 'ERROR', e.message);
   },
-
 
   //=== tests for language enhancements ===
 
@@ -259,7 +248,10 @@ testSuite({
     assertEquals('null', goog.typeOf(null));
     assertEquals('undefined', goog.typeOf(undefined));
     assertEquals('object', goog.typeOf({}));
-    assertEquals('function', goog.typeOf(function() {}));
+    assertEquals(
+      'function',
+      goog.typeOf(() => {})
+    );
 
     // Make sure that NodeList is not treated as an array... NodeLists should
     // be of type object but Safari incorrectly reports it as function so a not
@@ -299,8 +291,7 @@ testSuite({
 
   /** @suppress {missingProperties} access to properties on window */
   testTypeOfAcrossWindow() {
-    if (userAgent.IE && userAgent.isVersionOrHigher('10') &&
-        !userAgent.isVersionOrHigher('11')) {
+    if (userAgent.IE && userAgent.isVersionOrHigher('10') && !userAgent.isVersionOrHigher('11')) {
       // TODO(johnlenz): This test is flaky on IE10 (passing 90+% of the time).
       // When it flakes the values are undefined which appears to indicate the
       // script did not run in the opened window and not a failure of the logic
@@ -314,14 +305,15 @@ testSuite({
         const d = w.document;
         d.open();
         d.write(
-            '<script>function fun(){};' +
+          '<script>function fun(){};' +
             'var arr = [];' +
             'var x = 42;' +
             'var s = "";' +
             'var b = true;' +
             'var obj = {length: 0, splice: {}, call: {}};' +
             '</' +
-            'script>');
+            'script>'
+        );
         d.close();
 
         assertEquals('function', goog.typeOf(w.fun));
@@ -338,9 +330,9 @@ testSuite({
 
   testIsArrayLike() {
     const array = [1, 2, 3];
-    const objectWithNumericLength = {length: 2};
-    const objectWithNonNumericLength = {length: 'a'};
-    const object = {a: 1, b: 2};
+    const objectWithNumericLength = { length: 2 };
+    const objectWithNonNumericLength = { length: 'a' };
+    const object = { a: 1, b: 2 };
     const nullVar = null;
     let notDefined;
     const elem = document.getElementById('elem');
@@ -348,22 +340,23 @@ testSuite({
 
     assertTrue('array should be array-like', goog.isArrayLike(array));
     assertTrue(
-        'obj w/numeric length should be array-like',
-        goog.isArrayLike(objectWithNumericLength));
+      'obj w/numeric length should be array-like',
+      goog.isArrayLike(objectWithNumericLength)
+    );
     assertFalse(
-        'obj w/non-numeric length should not be array-like',
-        goog.isArrayLike(objectWithNonNumericLength));
+      'obj w/non-numeric length should not be array-like',
+      goog.isArrayLike(objectWithNonNumericLength)
+    );
     assertFalse('object should not be array-like', goog.isArrayLike(object));
     assertFalse('null should not be array-like', goog.isArrayLike(nullVar));
-    assertFalse(
-        'undefined should not be array-like', goog.isArrayLike(notDefined));
-    assertTrue(
-        'NodeList should be array-like', goog.isArrayLike(elem.childNodes));
+    assertFalse('undefined should not be array-like', goog.isArrayLike(notDefined));
+    assertTrue('NodeList should be array-like', goog.isArrayLike(elem.childNodes));
     // TODO(attila): Fix isArrayLike to return false for text nodes!
     // assertFalse('TextNode should not be array-like', goog.isArrayLike(text));
     assertTrue(
-        'Array of nodes should be array-like',
-        goog.isArrayLike([elem.firstChild, elem.lastChild]));
+      'Array of nodes should be array-like',
+      goog.isArrayLike([elem.firstChild, elem.lastChild])
+    );
   },
 
   testIsDateLike() {
@@ -379,33 +372,28 @@ testSuite({
     assertFalse('string should not be date-like', goog.isDateLike(string));
     assertFalse('number should not be date-like', goog.isDateLike(number));
     assertFalse('nullVar should not be date-like', goog.isDateLike(nullVar));
-    assertFalse(
-        'undefined should not be date-like', goog.isDateLike(notDefined));
+    assertFalse('undefined should not be date-like', goog.isDateLike(notDefined));
   },
 
   testIsFunction() {
-    const func = function() {
-      return 1;
-    };
-    const object = {a: 1, b: 2};
+    const func = () => 1;
+    const object = { a: 1, b: 2 };
     const nullVar = null;
     let notDefined;
 
     assertTrue('function should be a function', typeof func === 'function');
-    assertFalse(
-        'object should not be a function', typeof object === 'function');
+    assertFalse('object should not be a function', typeof object === 'function');
     assertFalse('null should not be a function', typeof nullVar === 'function');
-    assertFalse(
-        'undefined should not be a function', typeof notDefined === 'function');
+    assertFalse('undefined should not be a function', typeof notDefined === 'function');
   },
 
   testIsObject() {
-    const object = {a: 1, b: 2};
+    const object = { a: 1, b: 2 };
     const string = 'b';
     const nullVar = null;
     let notDefined;
     const array = [0, 1, 2];
-    const fun = function() {};
+    const fun = () => {};
 
     assertTrue('object should be an object', goog.isObject(object));
     assertTrue('array should be an object', goog.isObject(array));
@@ -414,7 +402,6 @@ testSuite({
     assertFalse('null should not be an object', goog.isObject(nullVar));
     assertFalse('undefined should not be an object', goog.isObject(notDefined));
   },
-
 
   //=== tests for unique ID methods ===
 
@@ -448,9 +435,7 @@ testSuite({
     const a = {};
     const uid = goog.getUid(a);
     goog.removeUid(a);
-    assertNotEquals(
-        'An object\'s old and new unique IDs should be different', uid,
-        goog.getUid(a));
+    assertNotEquals("An object's old and new unique IDs should be different", uid, goog.getUid(a));
   },
 
   testRemoveUidFromObjectWithoutUid() {
@@ -464,8 +449,10 @@ testSuite({
     const nodeUid = goog.getUid(node);
     goog.removeUid(node);
     assertNotEquals(
-        'A node\'s old and new unique IDs should be different', nodeUid,
-        goog.getUid(node));
+      "A node's old and new unique IDs should be different",
+      nodeUid,
+      goog.getUid(node)
+    );
   },
 
   testConstructorUid() {
@@ -478,24 +465,21 @@ testSuite({
     const baseClassUid = goog.getUid(BaseClass);
     const subClassUid = goog.getUid(SubClass);
 
-    assertTrue(
-        'Unique ID of BaseClass must be a number',
-        typeof baseClassUid == 'number');
-    assertTrue(
-        'Unique ID of SubClass must be a number',
-        typeof subClassUid == 'number');
+    assertTrue('Unique ID of BaseClass must be a number', typeof baseClassUid == 'number');
+    assertTrue('Unique ID of SubClass must be a number', typeof subClassUid == 'number');
+    assertNotEquals('Unique IDs of BaseClass and SubClass must differ', baseClassUid, subClassUid);
     assertNotEquals(
-        'Unique IDs of BaseClass and SubClass must differ', baseClassUid,
-        subClassUid);
-    assertNotEquals(
-        'Unique IDs of BaseClass and SubClass instances must differ',
-        goog.getUid(new BaseClass), goog.getUid(new SubClass));
+      'Unique IDs of BaseClass and SubClass instances must differ',
+      goog.getUid(new BaseClass()),
+      goog.getUid(new SubClass())
+    );
 
     assertNotEquals(
-        'Unique IDs of BaseClass.prototype and SubClass.prototype must differ.',
-        goog.getUid(BaseClass.prototype), goog.getUid(SubClass.prototype));
+      'Unique IDs of BaseClass.prototype and SubClass.prototype must differ.',
+      goog.getUid(BaseClass.prototype),
+      goog.getUid(SubClass.prototype)
+    );
   },
-
 
   /**
    * Tests against Chrome bug where the re-created element will have the uid
@@ -518,24 +502,19 @@ testSuite({
     assertTrue('window unique id is a number', typeof uid === 'number');
     assertEquals('returns the same id second time', uid, goog.getUid(window));
     goog.removeUid(window);
-    assertNotEquals(
-        'generates new id after the old one is removed', goog.getUid(window));
+    assertNotEquals('generates new id after the old one is removed', goog.getUid(window));
   },
 
   //=== tests for clone method ===
 
   testClonePrimitive() {
-    assertEquals(
-        'cloning a primitive should return an equal primitive', 5,
-        goog.cloneObject(5));
+    assertEquals('cloning a primitive should return an equal primitive', 5, goog.cloneObject(5));
   },
 
   testCloneObjectThatHasACloneMethod() {
     const original = {
       name: 'original',
-      clone: function() {
-        return {name: 'clone'};
-      }
+      clone: () => ({ name: 'clone' }),
     };
 
     const clone = /** @type {?} */ (goog.cloneObject(original));
@@ -544,7 +523,7 @@ testSuite({
   },
 
   testCloneFlatObject() {
-    const original = {a: 1, b: 2, c: 3};
+    const original = { a: 1, b: 2, c: 3 };
     const clone = /** @type {?} */ (goog.cloneObject(original));
     assertNotEquals(original, clone);
     assertEquals(1, clone.a);
@@ -553,7 +532,7 @@ testSuite({
   },
 
   testCloneDeepObject() {
-    const original = {a: 1, b: {c: 2, d: 3}, e: {f: {g: 4, h: 5}}};
+    const original = { a: 1, b: { c: 2, d: 3 }, e: { f: { g: 4, h: 5 } } };
     const clone = /** @type {?} */ (goog.cloneObject(original));
 
     assertNotEquals(original, clone);
@@ -568,8 +547,11 @@ testSuite({
   },
 
   testUnsafeCloneMapWithDeepObject() {
-    const original =
-        new Map([['a', 1], ['b', {c: 2, d: 3}], ['e', {f: {g: 4, h: 5}}]]);
+    const original = new Map([
+      ['a', 1],
+      ['b', { c: 2, d: 3 }],
+      ['e', { f: { g: 4, h: 5 } }],
+    ]);
     const clone = /** @type {!Map<?,?>} */ (goog.cloneObject(original));
     assertInstanceof(clone, Map);
 
@@ -586,8 +568,8 @@ testSuite({
   },
 
   testUnsafeCloneSetWithDeepObject() {
-    const container1 = {c: 2, d: 3};
-    const container2 = {f: {g: 4, h: 5}};
+    const container1 = { c: 2, d: 3 };
+    const container2 = { f: { g: 4, h: 5 } };
     const original = new Set([container1, container2]);
     const clone = /** @type {!Set<?>} */ (goog.cloneObject(original));
 
@@ -606,9 +588,7 @@ testSuite({
 
   testCloneFunctions() {
     const original = {
-      f: function() {
-        return 'hi';
-      }
+      f: () => 'hi',
     };
     const clone = /** @type {?} */ (goog.cloneObject(original));
 
@@ -616,7 +596,6 @@ testSuite({
     assertEquals('hi', clone.f());
     assertEquals(original.f, clone.f);
   },
-
 
   //=== tests for bind() and friends ===
 
@@ -653,14 +632,14 @@ testSuite({
     const getFooP2 = goog.bind(getFooP, null, 'dog');
 
     const res = getFooP2();
-    assertEquals('res.arg1 should be \'hot\'', 'hot', res.arg1);
-    assertEquals('res.arg2 should be \'dog\'', 'dog', res.arg2);
+    assertEquals("res.arg1 should be 'hot'", 'hot', res.arg1);
+    assertEquals("res.arg2 should be 'dog'", 'dog', res.arg2);
   },
 
   testBindWithCall() {
     const obj = {};
     const obj2 = {};
-    const f = function() {
+    const f = function () {
       assertEquals('this should be bound to obj', obj, this);
     };
     const b = goog.bind(f, obj);
@@ -670,44 +649,47 @@ testSuite({
 
   /** @suppress {visibility} Access to private methods. */
   testBindJs() {
-    assertEquals(1, goog.bindJs_(add, {
-      valueOf: function() {
-        return 1;
-      }
-    })());
+    assertEquals(
+      1,
+      goog.bindJs_(add, {
+        valueOf: () => 1,
+      })()
+    );
     assertEquals(3, goog.bindJs_(add, null, 1, 2)());
   },
 
   /** @suppress {visibility} Access to private methods. */
   testBindNative() {
-    if (Function.prototype.bind &&
-        Function.prototype.bind.toString().indexOf('native code') != -1) {
-      assertEquals(1, goog.bindNative_(add, {
-        valueOf: function() {
-          return 1;
-        }
-      })());
+    if (
+      Function.prototype.bind &&
+      Function.prototype.bind.toString().indexOf('native code') != -1
+    ) {
+      assertEquals(
+        1,
+        goog.bindNative_(add, {
+          valueOf: () => 1,
+        })()
+      );
       assertEquals(3, goog.bindNative_(add, null, 1, 2)());
 
-      assertThrows(function() {
+      assertThrows(() => {
         goog.bindNative_(null, null);
       });
     }
   },
 
   testBindDefault() {
-    assertEquals(1, goog.bind(add, {
-      valueOf: function() {
-        return 1;
-      }
-    })());
+    assertEquals(
+      1,
+      goog.bind(add, {
+        valueOf: () => 1,
+      })()
+    );
     assertEquals(3, goog.bind(add, null, 1, 2)());
   },
 
   testPartial() {
-    const f = function(x, y) {
-      return x + y;
-    };
+    const f = (x, y) => x + y;
     const g = goog.partial(f, 1);
     assertEquals(3, g(2));
 
@@ -719,7 +701,7 @@ testSuite({
   },
 
   testPartialUsesGlobal() {
-    const f = function(x, y) {
+    const f = function (x, y) {
       assertEquals(goog.global, this);
       return x + y;
     };
@@ -730,7 +712,7 @@ testSuite({
 
   testPartialWithCall() {
     const obj = {};
-    const f = function(x, y) {
+    const f = function (x, y) {
       assertEquals(obj, this);
       return x + y;
     };
@@ -793,17 +775,18 @@ testSuite({
   testGlobalEvalWithHtml() {
     // Make sure we don't trip on HTML markup in the code
     goog.global.evalTestResult = 'failed';
-    goog.global.evalTest = function(arg) {
+    goog.global.evalTest = (arg) => {
       goog.global.evalTestResult = arg;
     };
 
     goog.globalEval('evalTest("<test>")');
 
     assertEquals(
-        'Should be able to evaluate strings with HTML in', '<test>',
-        goog.global.evalTestResult);
+      'Should be able to evaluate strings with HTML in',
+      '<test>',
+      goog.global.evalTestResult
+    );
   },
-
 
   //=== tests for inherits ===
 
@@ -827,14 +810,13 @@ testSuite({
     goog.inherits(Bar, Foo);
     const bar = new Bar();
 
+    assertEquals('constructor property should match constructor function', Bar, bar.constructor);
     assertEquals(
-        'constructor property should match constructor function', Bar,
-        bar.constructor);
-    assertEquals(
-        'Superclass constructor should match constructor function', Foo,
-        Bar.superClass_.constructor);
+      'Superclass constructor should match constructor function',
+      Foo,
+      Bar.superClass_.constructor
+    );
   },
-
 
   //=== tests for makeSingleton ===
   testMakeSingleton() {
@@ -855,10 +837,8 @@ testSuite({
     const z = Foo.getInstance();
     assertNotNull('Should work after clearing for testing', z);
 
-    assertNotEquals(
-        'Should return a different object after clearing for testing', x, z);
+    assertNotEquals('Should return a different object after clearing for testing', x, z);
   },
-
 
   //=== tests for now ===
 
@@ -871,72 +851,71 @@ testSuite({
     assertTrue(start <= underTest && underTest <= end);
   },
 
-
   //=== tests for getmsg ===
   testGetMsgWithDollarSigns() {
-    let msg = goog.getMsg('{$amount} per minute', {amount: '$0.15'});
+    let msg = goog.getMsg('{$amount} per minute', { amount: '$0.15' });
     assertEquals('$0.15 per minute', msg);
-    msg = goog.getMsg('{$amount} per minute', {amount: '$0.$1$5'});
+    msg = goog.getMsg('{$amount} per minute', { amount: '$0.$1$5' });
     assertEquals('$0.$1$5 per minute', msg);
 
-    msg = goog.getMsg('This is a {$rate} sale!', {rate: '$$$$$$$$$$10'});
+    msg = goog.getMsg('This is a {$rate} sale!', { rate: '$$$$$$$$$$10' });
     assertEquals('This is a $$$$$$$$$$10 sale!', msg);
-    msg = goog.getMsg(
-        '{$name}! Hamburgers: {$hCost}, Hotdogs: {$dCost}.',
-        {name: 'Burger Bob', hCost: '$0.50', dCost: '$100'});
+    msg = goog.getMsg('{$name}! Hamburgers: {$hCost}, Hotdogs: {$dCost}.', {
+      name: 'Burger Bob',
+      hCost: '$0.50',
+      dCost: '$100',
+    });
     assertEquals('Burger Bob! Hamburgers: $0.50, Hotdogs: $100.', msg);
   },
 
-
   testGetMsgWithPlaceholders() {
-    let msg = goog.getMsg('{$a} has {$b}', {a: '{$b}', b: 1});
+    let msg = goog.getMsg('{$a} has {$b}', { a: '{$b}', b: 1 });
     assertEquals('{$b} has 1', msg);
 
-    msg = goog.getMsg('{$a}{$b}', {b: ''});
+    msg = goog.getMsg('{$a}{$b}', { b: '' });
     assertEquals('{$a}', msg);
   },
 
-
   testGetMsgWithHtml() {
-    const msg =
-        goog.getMsg('Hello <{$a}&gt;!', {a: '<b>World</b>'}, {html: true});
+    const msg = goog.getMsg('Hello <{$a}&gt;!', { a: '<b>World</b>' }, { html: true });
     assertEquals('Hello &lt;<b>World</b>&gt;!', msg);
   },
 
   testGetMsgWithUnescapeHtmlEntities() {
     let msg = goog.getMsg(
-        'User&apos;s &lt; email &amp; address &gt; are &quot;correct&quot;', {},
-        {unescapeHtmlEntities: true});
+      'User&apos;s &lt; email &amp; address &gt; are &quot;correct&quot;',
+      {},
+      { unescapeHtmlEntities: true }
+    );
     assertEquals('User\'s < email & address > are "correct"', msg);
     // No escaping for placeholder values.
     msg = goog.getMsg(
-        '{$username}&apos;s {$fields} are {$status}', {
-          username: 'Alice &amp; Bob',
-          fields: '&lt; email details &gt;',
-          status: '&quot;correct&quot;',
-        },
-        {unescapeHtmlEntities: true});
-    assertEquals(
-        'Alice &amp; Bob\'s &lt; email details &gt; are &quot;correct&quot;',
-        msg);
+      '{$username}&apos;s {$fields} are {$status}',
+      {
+        username: 'Alice &amp; Bob',
+        fields: '&lt; email details &gt;',
+        status: '&quot;correct&quot;',
+      },
+      { unescapeHtmlEntities: true }
+    );
+    assertEquals("Alice &amp; Bob's &lt; email details &gt; are &quot;correct&quot;", msg);
   },
-
 
   //=== miscellaneous tests ===
 
   testGetObjectByName() {
     const m = {
-      'undefined': undefined,
-      'null': null,
+      undefined: undefined,
+      null: null,
       emptyString: '',
-      'false': false,
-      'true': true,
+      false: false,
+      true: true,
       zero: 0,
       one: 1,
-      two: {three: 3, four: {five: 5}},
+      two: { three: 3, four: { five: 5 } },
       'six|seven': '6|7',
       'eight.nine': 8.9,
-      '': {b: 42},
+      '': { b: 42 },
     };
     /** @suppress {missingProperties} */
     goog.global.m = m;
@@ -964,35 +943,33 @@ testSuite({
     assertEquals(goog.getObjectByName('.b', m), 42);
   },
 
-
   testGetCssName() {
     assertEquals('classname', goog.getCssName('classname'));
     assertEquals('random-classname', goog.getCssName('random-classname'));
     // Indirect through goog.global to avoid checks on the getCssName parameter
-    assertEquals(
-        'control-modifier', goog.global.goog.getCssName('control', 'modifier'));
+    assertEquals('control-modifier', goog.global.goog.getCssName('control', 'modifier'));
 
-    goog.setCssNameMapping({'goog': 'a', 'disabled': 'b'}, 'BY_PART');
+    goog.setCssNameMapping({ goog: 'a', disabled: 'b' }, 'BY_PART');
     let g = goog.getCssName('goog');
     assertEquals('a', g);
     assertEquals('a-b', goog.getCssName(g, 'disabled'));
     assertEquals('a-b', goog.getCssName('goog-disabled'));
     assertEquals('a-button', goog.getCssName('goog-button'));
 
-    goog.setCssNameMapping({'goog-button': 'a', 'active': 'b'}, 'BY_WHOLE');
+    goog.setCssNameMapping({ 'goog-button': 'a', active: 'b' }, 'BY_WHOLE');
 
     g = goog.getCssName('goog-button');
     assertEquals('a', g);
     assertEquals('a-b', goog.getCssName(g, 'active'));
     assertEquals('goog-disabled', goog.getCssName('goog-disabled'));
 
-    const e = assertThrows(function() {
+    const e = assertThrows(() => {
       goog.getCssName('.name');
     });
     assertEquals(
-        'className passed in goog.getCssName must not start with ".".' +
-            ' You passed: .name',
-        e.message);
+      'className passed in goog.getCssName must not start with ".".' + ' You passed: .name',
+      e.message
+    );
 
     // indirect through goog.global to avoid jscompiler check for getCssName.
     assertNull(goog.global.goog.getCssName(/** @type {?} */ (null)));
@@ -1005,32 +982,27 @@ testSuite({
      * @return {string}
      * @suppress {missingProperties}
      */
-    goog.global.CLOSURE_CSS_NAME_MAP_FN = function(classname) {
-      return classname + '!';
-    };
+    goog.global.CLOSURE_CSS_NAME_MAP_FN = (classname) => classname + '!';
 
     assertEquals('classname!', goog.getCssName('classname'));
   },
 
-
   testClassBaseOnMethod() {
     /** @constructor */
     function A() {}
-    A.prototype.foo = function(x, y) {
-      return x + y;
-    };
+    A.prototype.foo = (x, y) => x + y;
 
     /** @constructor @extends {A} */
     function B() {}
     goog.inherits(B, A);
-    B.prototype.foo = function(x, y) {
+    B.prototype.foo = function (x, y) {
       return 2 + B.base(this, 'foo', x, y);
     };
 
     /** @constructor @extends {B} */
     function C() {}
     goog.inherits(C, B);
-    C.prototype.foo = function(x, y) {
+    C.prototype.foo = function (x, y) {
       return 4 + C.base(this, 'foo', x, y);
     };
 
@@ -1038,7 +1010,7 @@ testSuite({
     assertEquals(7, d.foo(1, 0));
     assertEquals(8, d.foo(1, 1));
     assertEquals(8, d.foo(2, 0));
-    assertEquals(3, (new B()).foo(1, 0));
+    assertEquals(3, new B().foo(1, 0));
 
     delete B.prototype.foo;
     assertEquals(5, d.foo(1, 0));
@@ -1074,11 +1046,11 @@ testSuite({
     }
     goog.inherits(D, C);
 
-    assertEquals(15, (new D(1, 0)).foo);
-    assertEquals(16, (new D(1, 1)).foo);
-    assertEquals(16, (new D(2, 0)).foo);
-    assertEquals(7, (new C(1, 0)).foo);
-    assertEquals(3, (new B(1, 0)).foo);
+    assertEquals(15, new D(1, 0).foo);
+    assertEquals(16, new D(1, 1).foo);
+    assertEquals(16, new D(2, 0).foo);
+    assertEquals(7, new C(1, 0).foo);
+    assertEquals(3, new B(1, 0).foo);
   },
 
   testClassBaseOnMethodAndBaseCtor() {
@@ -1088,7 +1060,7 @@ testSuite({
 
       this.foo(x, y);
     }
-    A.prototype.foo = function(x, y) {
+    A.prototype.foo = function (x, y) {
       this.bar = x + y;
     };
 
@@ -1097,7 +1069,7 @@ testSuite({
       B.base(this, 'constructor', x, y);
     }
     goog.inherits(B, A);
-    B.prototype.foo = function(x, y) {
+    B.prototype.foo = function (x, y) {
       B.base(this, 'foo', x, y);
       this.bar = this.bar * 2;
     };
@@ -1105,24 +1077,23 @@ testSuite({
     assertEquals(14, new B(3, 4).bar);
   },
 
-
   testDefineClass() {
     const Base = goog.defineClass(null, {
-      constructor: function(foo) {
+      constructor: function (foo) {
         this.foo = foo;
       },
-      statics: {x: 42},
-      frobnicate: function() {
+      statics: { x: 42 },
+      frobnicate: function () {
         return this.foo + this.foo;
-      }
+      },
     });
     const Derived = goog.defineClass(Base, {
-      constructor: function() {
+      constructor: function () {
         Derived.base(this, 'constructor', 'bar');
       },
-      frozzle: function(foo) {
+      frozzle: function (foo) {
         this.foo = foo;
-      }
+      },
     });
 
     assertEquals(42, Base.x);
@@ -1135,17 +1106,16 @@ testSuite({
   /** @suppress {checkTypes} can't new an interface */
   testDefineClass_interface() {
     /** @interface */
-    const Interface =
-        goog.defineClass(null, {statics: {foo: 'bar'}, qux: function() {}});
+    const Interface = goog.defineClass(null, { statics: { foo: 'bar' }, qux: () => {} });
     assertEquals('bar', Interface.foo);
-    assertThrows(function() {
+    assertThrows(() => {
       new Interface();
     });
   },
 
   /** @suppress {checkTypes} creating a property a sealed class. */
   testDefineClass_doesnt_seals() {
-    const A = goog.defineClass(null, {constructor: function() {}});
+    const A = goog.defineClass(null, { constructor: () => {} });
     const a = new A();
     a.foo = 'bar';
     assertEquals('bar', a.foo);
@@ -1154,7 +1124,7 @@ testSuite({
   testDefineClass_constructorIsNotWrappedWhenSealingIsDisabled() {
     const org = goog.defineClass;
     let ctr = null;
-    const replacement = function(superClass, def) {
+    const replacement = (superClass, def) => {
       ctr = def.constructor;
       return org(superClass, def);
     };
@@ -1163,21 +1133,21 @@ testSuite({
     replacement.SEAL_CLASS_INSTANCES = false;
 
     stubs.replace(goog, 'defineClass', replacement);
-    const MyClass = goog.defineClass(null, {constructor: function() {}});
+    const MyClass = goog.defineClass(null, { constructor: () => {} });
     assertEquals('The constructor should not be wrapped.', ctr, MyClass);
   },
 
   testDefineClass_constructorIsWrappedWhenSealingIsEnabled() {
     /** @constructor */
-    const LegacyBase = function() {};
+    const LegacyBase = () => {};
     LegacyBase.prototype.foo = null;
-    LegacyBase.prototype.setFoo = function(foo) {
+    LegacyBase.prototype.setFoo = function (foo) {
       this.foo = foo;
     };
 
     const org = goog.defineClass;
     let ctr = null;
-    const replacement = function(superClass, def) {
+    const replacement = (superClass, def) => {
       ctr = def.constructor;
       return org(superClass, def);
     };
@@ -1185,7 +1155,7 @@ testSuite({
     object.extend(replacement, org);
 
     stubs.replace(goog, 'defineClass', replacement);
-    const Derived = goog.defineClass(LegacyBase, {constructor: function() {}});
+    const Derived = goog.defineClass(LegacyBase, { constructor: () => {} });
 
     assertNotEquals('The constructor should be wrapped.', ctr, Derived);
   },
@@ -1202,7 +1172,6 @@ testSuite({
     goog.loadModule('goog.module("a.b.object"); exports = {};');
     const exports1 = goog.module.get('a.b.object');
     assertTrue(Object.isSealed(exports1));
-
 
     goog.loadModule('goog.module("a.b.fn"); exports = function() {};');
     const exports2 = goog.module.get('a.b.fn');
@@ -1223,10 +1192,11 @@ testSuite({
     }
 
     goog.loadModule(
-        'goog.module("a.safari.test");' +
+      'goog.module("a.safari.test");' +
         'let x = true;' +
         'function fn() { return x }' +
-        'exports.fn = fn;');
+        'exports.fn = fn;'
+    );
     const exports = goog.module.get('a.safari.test');
 
     // Safari 10 will throw an exception if the module being loaded is eval'd
@@ -1237,17 +1207,16 @@ testSuite({
   /** @suppress {visibility} goog.loadFileSync_ access violation */
   testLoadFileSync() {
     const fileContents = goog.loadFileSync_('base.js');
-    assertTrue(
-        'goog.loadFileSync_ returns string', typeof fileContents === 'string');
+    assertTrue('goog.loadFileSync_ returns string', typeof fileContents === 'string');
     assertTrue('goog.loadFileSync_ string length > 0', fileContents.length > 0);
 
-    stubs.set(goog.global, 'CLOSURE_LOAD_FILE_SYNC', function(src) {
-      return 'closure load file sync: ' + src;
-    });
+    stubs.set(goog.global, 'CLOSURE_LOAD_FILE_SYNC', (src) => 'closure load file sync: ' + src);
 
     assertEquals(
-        'goog.CLOSURE_LOAD_FILE_SYNC override', goog.loadFileSync_('test url'),
-        'closure load file sync: test url');
+      'goog.CLOSURE_LOAD_FILE_SYNC override',
+      goog.loadFileSync_('test url'),
+      'closure load file sync: test url'
+    );
   },
 
   /** @suppress {visibility} goog.normalizePath_ access violation */
@@ -1271,18 +1240,16 @@ testSuite({
     assertEquals('//foo/path.js', goog.normalizePath_('//./foo/path.js'));
 
     assertEquals('http://../x/y.js', goog.normalizePath_('http://../x/y.js'));
-    assertEquals(
-        'http://path.js', goog.normalizePath_('http://foo/../path.js'));
+    assertEquals('http://path.js', goog.normalizePath_('http://foo/../path.js'));
     assertEquals('http://x/path.js', goog.normalizePath_('http://./x/path.js'));
   },
-
 
   testGoogModuleNames() {
     // avoid usage checks
     const module = goog.module;
 
     function assertInvalidId(id) {
-      const err = assertThrows(function() {
+      const err = assertThrows(() => {
         module(id);
       });
       assertEquals('Invalid module identifier', err.message);
@@ -1292,7 +1259,7 @@ testSuite({
       // This is a cheesy check, but we validate that we don't get an invalid
       // namespace warning, but instead get a module isn't loaded correctly
       // error.
-      const err = assertThrows(function() {
+      const err = assertThrows(() => {
         module(id);
       });
       assertTrue(err.message.indexOf('has been loaded incorrectly') != -1);
@@ -1314,7 +1281,6 @@ testSuite({
     assertValidId('$_');
   },
 
-
   testGoogRequireTypeDestructuring() {
     try {
       eval('const {es6} = {es6: 1}');
@@ -1323,10 +1289,11 @@ testSuite({
       return;
     }
 
-    assertNotThrows(function() {
+    assertNotThrows(() => {
       goog.loadModule(
-          'goog.module(\'requiretype.destructuring\');' +
-          'const {type} = goog.requireType(\'module.with.types\');');
+        "goog.module('requiretype.destructuring');" +
+          "const {type} = goog.requireType('module.with.types');"
+      );
     });
   },
 

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.ContinuationTestCaseTest');
-goog.setTestOnly();
 
 const ContinuationTestCase = goog.require('goog.testing.ContinuationTestCase');
 const GoogEventTarget = goog.require('goog.events.EventTarget');
@@ -38,10 +37,8 @@ function installMockClock() {
   // Overwrite the "protected" setTimeout and clearTimeout with the versions
   // replaced by MockClock. Normal tests should never do this, but we need to
   // test the ContinuationTest itself.
-  stubs.set(
-      ContinuationTestCase.Step, 'protectedClearTimeout_', window.clearTimeout);
-  stubs.set(
-      ContinuationTestCase.Step, 'protectedSetTimeout_', window.setTimeout);
+  stubs.set(ContinuationTestCase.Step, 'protectedClearTimeout_', window.clearTimeout);
+  stubs.set(ContinuationTestCase.Step, 'protectedSetTimeout_', window.setTimeout);
 }
 
 /**
@@ -60,8 +57,7 @@ function getSampleTest() {
   const testStep = new TestCase.Test('test', () => {});
   const teardownStep = new TestCase.Test('teardown', () => {});
 
-  return new ContinuationTestCase.ContinuationTest(
-      setupStep, testStep, teardownStep);
+  return new ContinuationTestCase.ContinuationTest(setupStep, testStep, teardownStep);
 }
 
 /*
@@ -128,16 +124,18 @@ testCase.setTestObj({
     clock.uninstall();
     stubs.reset();
 
-    waitForTimeout(/**
+    waitForTimeout(
+      /**
                       @suppress {visibility} suppression added to enable type
                       checking
                     */
-                   () => {
-                     // Pointless assertion to verify that tearDown methods can
-                     // contain waits.
-                     assertTrue(testCase.now() >= testCase.startTime_);
-                   },
-                   0);
+      () => {
+        // Pointless assertion to verify that tearDown methods can
+        // contain waits.
+        assertTrue(testCase.now() >= testCase.startTime_);
+      },
+      0
+    );
   },
 
   testStepWaiting() {
@@ -201,8 +199,10 @@ testCase.setTestObj({
     assertEquals(error1, test.getError());
     test.setError(error2);
     assertEquals(
-        'Once an error has been set, it should not be overwritten.', error1,
-        test.getError());
+      'Once an error has been set, it should not be overwritten.',
+      error1,
+      test.getError()
+    );
   },
 
   testAddStep() {
@@ -295,9 +295,14 @@ testCase.setTestObj({
   testWaitForCondition() {
     let counter = 0;
 
-    waitForCondition(() => ++counter >= 2, () => {
-      assertEquals(2, counter);
-    }, 10, 200);
+    waitForCondition(
+      () => ++counter >= 2,
+      () => {
+        assertEquals(2, counter);
+      },
+      10,
+      200
+    );
   },
 
   testOutOfOrderWaits() {
@@ -318,7 +323,7 @@ testCase.setTestObj({
   },
 
   testCrazyNestedWaitFunction() {
-    testObj = {lock: true, et: new GoogEventTarget(), steps: 0};
+    testObj = { lock: true, et: new GoogEventTarget(), steps: 0 };
 
     waitForTimeout(handleTimeout, 10);
     waitForEvent(testObj.et, 'test', handleEvent);

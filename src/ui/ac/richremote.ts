@@ -31,8 +31,6 @@ goog.require('goog.ui.ac.Renderer');
 goog.require('goog.ui.ac.RichInputHandler');
 goog.require('goog.ui.ac.RichRemoteArrayMatcher');
 
-
-
 /**
  * Factory class to create a rich autocomplete widget that autocompletes an
  * inputbox or textarea from data provided via ajax.  The server returns a
@@ -48,15 +46,11 @@ goog.require('goog.ui.ac.RichRemoteArrayMatcher');
  * @constructor
  * @extends {goog.ui.ac.Remote}
  */
-goog.ui.ac.RichRemote = function(url, input, opt_multi, opt_useSimilar) {
-  'use strict';
+goog.ui.ac.RichRemote = function (url, input, opt_multi, opt_useSimilar) {
   // Create a custom renderer that renders rich rows.  The renderer calls
   // row.render(node, token) for each row.
   var customRenderer = {};
-  customRenderer.renderRow = function(row, token, node) {
-    'use strict';
-    return row.data.render(node, token);
-  };
+  customRenderer.renderRow = (row, token, node) => row.data.render(node, token);
 
   /**
    * A standard renderer that uses a custom row renderer to display the
@@ -78,8 +72,7 @@ goog.ui.ac.RichRemote = function(url, input, opt_multi, opt_useSimilar) {
    * @type {goog.ui.ac.RichInputHandler}
    * @private
    */
-  var inputhandler =
-      new goog.ui.ac.RichInputHandler(null, null, !!opt_multi, 300);
+  var inputhandler = new goog.ui.ac.RichInputHandler(null, null, !!opt_multi, 300);
 
   // Create the widget and connect it to the input handler.
   goog.ui.ac.AutoComplete.call(this, matcher, renderer, inputhandler);
@@ -88,18 +81,15 @@ goog.ui.ac.RichRemote = function(url, input, opt_multi, opt_useSimilar) {
 };
 goog.inherits(goog.ui.ac.RichRemote, goog.ui.ac.Remote);
 
-
 /**
  * Set the filter that is called before the array matches are returned.
  * @param {Function} rowFilter A function(rows) that returns an array of rows as
  *     a subset of the rows input array.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.ui.ac.RichRemote.prototype.setRowFilter = function(rowFilter) {
-  'use strict';
+goog.ui.ac.RichRemote.prototype.setRowFilter = function (rowFilter) {
   this.matcher_.setRowFilter(rowFilter);
 };
-
 
 /**
  * Sets the function building the rows.
@@ -108,7 +98,6 @@ goog.ui.ac.RichRemote.prototype.setRowFilter = function(rowFilter) {
  *     an object with two methods: render(node, token) and select(target).
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.ui.ac.RichRemote.prototype.setRowBuilder = function(rowBuilder) {
-  'use strict';
+goog.ui.ac.RichRemote.prototype.setRowBuilder = function (rowBuilder) {
   this.matcher_.setRowBuilder(rowBuilder);
 };

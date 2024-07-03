@@ -30,8 +30,7 @@ goog.requireType('goog.events.BrowserEvent');
  * @extends {goog.events.EventTarget}
  * @package
  */
-goog.editor.PluginImpl = function() {
-  'use strict';
+goog.editor.PluginImpl = function () {
   goog.events.EventTarget.call(this);
 
   /**
@@ -68,16 +67,13 @@ goog.editor.PluginImpl = function() {
 };
 goog.inherits(goog.editor.PluginImpl, goog.events.EventTarget);
 
-
 /**
  * @return {goog.dom.DomHelper?} The dom helper object associated with the
  *     currently active field.
  */
-goog.editor.PluginImpl.prototype.getFieldDomHelper = function() {
-  'use strict';
+goog.editor.PluginImpl.prototype.getFieldDomHelper = function () {
   return this.getFieldObject() && this.getFieldObject().getEditableDomHelper();
 };
-
 
 /**
  * Sets the field object for use with this plugin.
@@ -85,11 +81,9 @@ goog.editor.PluginImpl.prototype.getFieldDomHelper = function() {
  * @protected
  * @suppress {deprecated} Until fieldObject can be made private.
  */
-goog.editor.PluginImpl.prototype.getFieldObject = function() {
-  'use strict';
+goog.editor.PluginImpl.prototype.getFieldObject = function () {
   return this.fieldObject;
 };
-
 
 /**
  * Sets the field object for use with this plugin.
@@ -97,70 +91,54 @@ goog.editor.PluginImpl.prototype.getFieldObject = function() {
  * @protected
  * @suppress {deprecated} Until fieldObject can be made private.
  */
-goog.editor.PluginImpl.prototype.setFieldObject = function(fieldObject) {
-  'use strict';
+goog.editor.PluginImpl.prototype.setFieldObject = function (fieldObject) {
   this.fieldObject = fieldObject;
 };
-
 
 /**
  * Registers the field object for use with this plugin.
  * @param {goog.editor.Field} fieldObject The editable field object.
  */
-goog.editor.PluginImpl.prototype.registerFieldObject = function(fieldObject) {
-  'use strict';
+goog.editor.PluginImpl.prototype.registerFieldObject = function (fieldObject) {
   this.setFieldObject(fieldObject);
 };
-
 
 /**
  * Unregisters and disables this plugin for the current field object.
  * @param {goog.editor.Field} fieldObj The field object. For single-field
  *     plugins, this parameter is ignored.
  */
-goog.editor.PluginImpl.prototype.unregisterFieldObject = function(fieldObj) {
-  'use strict';
+goog.editor.PluginImpl.prototype.unregisterFieldObject = function (fieldObj) {
   if (this.getFieldObject()) {
     this.disable(this.getFieldObject());
     this.setFieldObject(null);
   }
 };
 
-
 /**
  * Enables this plugin for the specified, registered field object. A field
  * object should only be enabled when it is loaded.
  * @param {goog.editor.Field} fieldObject The field object.
  */
-goog.editor.PluginImpl.prototype.enable = function(fieldObject) {
-  'use strict';
+goog.editor.PluginImpl.prototype.enable = function (fieldObject) {
   if (this.getFieldObject() == fieldObject) {
     this.enabled_ = true;
   } else {
-    goog.log.error(
-        this.logger,
-        'Trying to enable an unregistered field with ' +
-            'this plugin.');
+    goog.log.error(this.logger, 'Trying to enable an unregistered field with ' + 'this plugin.');
   }
 };
-
 
 /**
  * Disables this plugin for the specified, registered field object.
  * @param {goog.editor.Field} fieldObject The field object.
  */
-goog.editor.PluginImpl.prototype.disable = function(fieldObject) {
-  'use strict';
+goog.editor.PluginImpl.prototype.disable = function (fieldObject) {
   if (this.getFieldObject() == fieldObject) {
     this.enabled_ = false;
   } else {
-    goog.log.error(
-        this.logger,
-        'Trying to disable an unregistered field ' +
-            'with this plugin.');
+    goog.log.error(this.logger, 'Trying to disable an unregistered field ' + 'with this plugin.');
   }
 };
-
 
 /**
  * Returns whether this plugin is enabled for the field object.
@@ -168,40 +146,32 @@ goog.editor.PluginImpl.prototype.disable = function(fieldObject) {
  * @param {goog.editor.Field} fieldObject The field object.
  * @return {boolean} Whether this plugin is enabled for the field object.
  */
-goog.editor.PluginImpl.prototype.isEnabled = function(fieldObject) {
-  'use strict';
+goog.editor.PluginImpl.prototype.isEnabled = function (fieldObject) {
   return this.getFieldObject() == fieldObject ? this.enabled_ : false;
 };
-
 
 /**
  * Set if this plugin should automatically be disposed when the registered
  * field is disposed.
  * @param {boolean} autoDispose Whether to autoDispose.
  */
-goog.editor.PluginImpl.prototype.setAutoDispose = function(autoDispose) {
-  'use strict';
+goog.editor.PluginImpl.prototype.setAutoDispose = function (autoDispose) {
   this.autoDispose_ = autoDispose;
 };
-
 
 /**
  * @return {boolean} Whether or not this plugin should automatically be disposed
  *     when it's registered field is disposed.
  */
-goog.editor.PluginImpl.prototype.isAutoDispose = function() {
-  'use strict';
+goog.editor.PluginImpl.prototype.isAutoDispose = function () {
   return this.autoDispose_;
 };
-
 
 /**
  * @return {boolean} If true, field will not disable the command
  *     when the field becomes uneditable.
  */
-goog.editor.PluginImpl.prototype.activeOnUneditableFields =
-    goog.functions.FALSE;
-
+goog.editor.PluginImpl.prototype.activeOnUneditableFields = goog.functions.FALSE;
 
 /**
  * @param {string} command The command to check.
@@ -211,10 +181,8 @@ goog.editor.PluginImpl.prototype.activeOnUneditableFields =
  */
 goog.editor.PluginImpl.prototype.isSilentCommand = goog.functions.FALSE;
 
-
 /** @override */
-goog.editor.PluginImpl.prototype.disposeInternal = function() {
-  'use strict';
+goog.editor.PluginImpl.prototype.disposeInternal = function () {
   if (this.getFieldObject()) {
     this.unregisterFieldObject(this.getFieldObject());
   }
@@ -222,13 +190,11 @@ goog.editor.PluginImpl.prototype.disposeInternal = function() {
   goog.editor.PluginImpl.superClass_.disposeInternal.call(this);
 };
 
-
 /**
  * @return {string} The ID unique to this plugin class. Note that different
  *     instances off the plugin share the same classId.
  */
 goog.editor.PluginImpl.prototype.getTrogClassId;
-
 
 /**
  * An enum of operations that plugins may support.
@@ -244,37 +210,36 @@ goog.editor.PluginImpl.Op = {
   QUERY_COMMAND: 7,
   PREPARE_CONTENTS_HTML: 8,
   CLEAN_CONTENTS_HTML: 10,
-  CLEAN_CONTENTS_DOM: 11
+  CLEAN_CONTENTS_DOM: 11,
 };
-
 
 /**
  * A map from plugin operations to the names of the methods that
  * invoke those operations.
  */
-goog.editor.PluginImpl.OPCODE =
-    goog.object.transpose(goog.reflect.object(goog.editor.PluginImpl, {
-      handleKeyDown: goog.editor.PluginImpl.Op.KEYDOWN,
-      handleKeyPress: goog.editor.PluginImpl.Op.KEYPRESS,
-      handleKeyUp: goog.editor.PluginImpl.Op.KEYUP,
-      handleSelectionChange: goog.editor.PluginImpl.Op.SELECTION,
-      handleKeyboardShortcut: goog.editor.PluginImpl.Op.SHORTCUT,
-      execCommand: goog.editor.PluginImpl.Op.EXEC_COMMAND,
-      queryCommandValue: goog.editor.PluginImpl.Op.QUERY_COMMAND,
-      prepareContentsHtml: goog.editor.PluginImpl.Op.PREPARE_CONTENTS_HTML,
-      cleanContentsHtml: goog.editor.PluginImpl.Op.CLEAN_CONTENTS_HTML,
-      cleanContentsDom: goog.editor.PluginImpl.Op.CLEAN_CONTENTS_DOM
-    }));
-
+goog.editor.PluginImpl.OPCODE = goog.object.transpose(
+  goog.reflect.object(goog.editor.PluginImpl, {
+    handleKeyDown: goog.editor.PluginImpl.Op.KEYDOWN,
+    handleKeyPress: goog.editor.PluginImpl.Op.KEYPRESS,
+    handleKeyUp: goog.editor.PluginImpl.Op.KEYUP,
+    handleSelectionChange: goog.editor.PluginImpl.Op.SELECTION,
+    handleKeyboardShortcut: goog.editor.PluginImpl.Op.SHORTCUT,
+    execCommand: goog.editor.PluginImpl.Op.EXEC_COMMAND,
+    queryCommandValue: goog.editor.PluginImpl.Op.QUERY_COMMAND,
+    prepareContentsHtml: goog.editor.PluginImpl.Op.PREPARE_CONTENTS_HTML,
+    cleanContentsHtml: goog.editor.PluginImpl.Op.CLEAN_CONTENTS_HTML,
+    cleanContentsDom: goog.editor.PluginImpl.Op.CLEAN_CONTENTS_DOM,
+  })
+);
 
 /**
  * A set of op codes that run even on disabled plugins.
  */
 goog.editor.PluginImpl.IRREPRESSIBLE_OPS = goog.object.createSet(
-    goog.editor.PluginImpl.Op.PREPARE_CONTENTS_HTML,
-    goog.editor.PluginImpl.Op.CLEAN_CONTENTS_HTML,
-    goog.editor.PluginImpl.Op.CLEAN_CONTENTS_DOM);
-
+  goog.editor.PluginImpl.Op.PREPARE_CONTENTS_HTML,
+  goog.editor.PluginImpl.Op.CLEAN_CONTENTS_HTML,
+  goog.editor.PluginImpl.Op.CLEAN_CONTENTS_DOM
+);
 
 /**
  * Handles keydown. It is run before handleKeyboardShortcut and if it returns
@@ -285,7 +250,6 @@ goog.editor.PluginImpl.IRREPRESSIBLE_OPS = goog.object.createSet(
  */
 goog.editor.PluginImpl.prototype.handleKeyDown;
 
-
 /**
  * Handles keypress. It is run before handleKeyboardShortcut and if it returns
  * true handleKeyboardShortcut will not be called.
@@ -295,7 +259,6 @@ goog.editor.PluginImpl.prototype.handleKeyDown;
  */
 goog.editor.PluginImpl.prototype.handleKeyPress;
 
-
 /**
  * Handles keyup.
  * @param {!goog.events.BrowserEvent} e The browser event.
@@ -303,7 +266,6 @@ goog.editor.PluginImpl.prototype.handleKeyPress;
  *     propagated to other plugins.
  */
 goog.editor.PluginImpl.prototype.handleKeyUp;
-
 
 /**
  * Handles selection change.
@@ -313,7 +275,6 @@ goog.editor.PluginImpl.prototype.handleKeyUp;
  *     propagated to other plugins.
  */
 goog.editor.PluginImpl.prototype.handleSelectionChange;
-
 
 /**
  * Handles keyboard shortcuts.  Preferred to using handleKey* as it will use
@@ -338,7 +299,6 @@ goog.editor.PluginImpl.prototype.handleSelectionChange;
  */
 goog.editor.PluginImpl.prototype.handleKeyboardShortcut;
 
-
 /**
  * Handles execCommand. This default implementation handles dispatching
  * BEFORECHANGE, CHANGE, and SELECTIONCHANGE events, and calls
@@ -354,14 +314,15 @@ goog.editor.PluginImpl.prototype.handleKeyboardShortcut;
  *     execute the command.
  * @return {*} The result of the execCommand, if any.
  */
-goog.editor.PluginImpl.prototype.execCommand = function(command, var_args) {
-  'use strict';
+goog.editor.PluginImpl.prototype.execCommand = function (command, var_args) {
   // TODO(user): Replace all uses of isSilentCommand with plugins that just
   // override this base execCommand method.
   var silent = this.isSilentCommand(command);
   if (silent) {
     this.getFieldObject().stopChangeEvents(
-        /* opt_stopChange= */ true, /* opt_stopDelayedChange= */ true);
+      /* opt_stopChange= */ true,
+      /* opt_stopDelayedChange= */ true
+    );
   } else {
     // Stop listening to mutation events in Firefox while text formatting
     // is happening.  This prevents us from trying to size the field in the
@@ -386,7 +347,9 @@ goog.editor.PluginImpl.prototype.execCommand = function(command, var_args) {
     // testExecCommandException().
     if (silent) {
       this.getFieldObject().startChangeEvents(
-          /* opt_fireChange= */ false, /* opt_fireDelayedChange= */ false);
+        /* opt_fireChange= */ false,
+        /* opt_fireDelayedChange= */ false
+      );
     } else {
       // dispatchChange includes a call to startChangeEvents, which unwinds the
       // call to stopChangeEvents made before the try block.
@@ -397,7 +360,6 @@ goog.editor.PluginImpl.prototype.execCommand = function(command, var_args) {
 
   return result;
 };
-
 
 /**
  * Handles execCommand. This default implementation does nothing, and is
@@ -416,14 +378,12 @@ goog.editor.PluginImpl.prototype.execCommand = function(command, var_args) {
  */
 goog.editor.PluginImpl.prototype.execCommandInternal;
 
-
 /**
  * Gets the state of this command if this plugin serves that command.
  * @param {string} command The command to check.
  * @return {*} The value of the command.
  */
 goog.editor.PluginImpl.prototype.queryCommandValue;
-
 
 /**
  * Prepares the given HTML for editing. Strips out content that should not
@@ -440,7 +400,6 @@ goog.editor.PluginImpl.prototype.queryCommandValue;
  */
 goog.editor.PluginImpl.prototype.prepareContentsHtml;
 
-
 /**
  * Cleans the contents of the node passed to it. The node contents are modified
  * directly, and the modifications will subsequently be used, for operations
@@ -454,7 +413,6 @@ goog.editor.PluginImpl.prototype.prepareContentsHtml;
  */
 goog.editor.PluginImpl.prototype.cleanContentsDom;
 
-
 /**
  * Cleans the html contents of Trogedit. Both cleanContentsDom and
  * and cleanContentsHtml will be called on contents extracted from Trogedit.
@@ -467,17 +425,12 @@ goog.editor.PluginImpl.prototype.cleanContentsDom;
  */
 goog.editor.PluginImpl.prototype.cleanContentsHtml;
 
-
 /**
  * Whether the string corresponds to a command this plugin handles.
  * @param {string} command Command string to check.
  * @return {boolean} Whether the plugin handles this type of command.
  */
-goog.editor.PluginImpl.prototype.isSupportedCommand = function(command) {
-  'use strict';
-  return false;
-};
-
+goog.editor.PluginImpl.prototype.isSupportedCommand = (command) => false;
 
 /**
  * Saves the field's scroll position.  See b/7279077 for context.
@@ -486,11 +439,10 @@ goog.editor.PluginImpl.prototype.isSupportedCommand = function(command) {
  * @return {function()} A function to restore the current scroll position.
  * @protected
  */
-goog.editor.PluginImpl.prototype.saveScrollPosition = function() {
-  'use strict';
+goog.editor.PluginImpl.prototype.saveScrollPosition = function () {
   if (this.getFieldObject() && goog.userAgent.EDGE) {
     var win = this.getFieldObject().getEditableDomHelper().getWindow();
     return win.scrollTo.bind(win, win.scrollX, win.scrollY);
   }
-  return function() {};
+  return () => {};
 };

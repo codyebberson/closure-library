@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Graphics utility functions and factory methods.
  * @see ../demos/graphics/advancedcoordinates.html
@@ -15,7 +14,6 @@
  * @see ../demos/graphics/tiger.html
  */
 
-
 goog.provide('goog.graphics');
 
 goog.require('goog.dom');
@@ -23,7 +21,6 @@ goog.require('goog.graphics.CanvasGraphics');
 goog.require('goog.graphics.SvgGraphics');
 goog.require('goog.userAgent');
 goog.requireType('goog.graphics.AbstractGraphics');
-
 
 /**
  * Returns an instance of goog.graphics.AbstractGraphics that knows how to draw
@@ -43,16 +40,24 @@ goog.requireType('goog.graphics.AbstractGraphics');
  *     differences before the canvas tag was widely supported.  See
  *     http://en.wikipedia.org/wiki/Canvas_element for details.
  */
-goog.graphics.createGraphics = function(
-    width, height, opt_coordWidth, opt_coordHeight, opt_domHelper) {
-  'use strict';
+goog.graphics.createGraphics = (width, height, opt_coordWidth, opt_coordHeight, opt_domHelper) => {
   var graphics;
   if (goog.userAgent.WEBKIT && goog.userAgent.MOBILE) {
     graphics = new goog.graphics.CanvasGraphics(
-        width, height, opt_coordWidth, opt_coordHeight, opt_domHelper);
+      width,
+      height,
+      opt_coordWidth,
+      opt_coordHeight,
+      opt_domHelper
+    );
   } else {
     graphics = new goog.graphics.SvgGraphics(
-        width, height, opt_coordWidth, opt_coordHeight, opt_domHelper);
+      width,
+      height,
+      opt_coordWidth,
+      opt_coordHeight,
+      opt_domHelper
+    );
   }
 
   // Create the dom now, because all drawing methods require that the
@@ -61,7 +66,6 @@ goog.graphics.createGraphics = function(
 
   return graphics;
 };
-
 
 /**
  * Returns an instance of goog.graphics.AbstractGraphics that knows how to draw
@@ -81,14 +85,22 @@ goog.graphics.createGraphics = function(
  *     differences before the canvas tag was widely supported.  See
  *     http://en.wikipedia.org/wiki/Canvas_element for details.
  */
-goog.graphics.createSimpleGraphics = function(
-    width, height, opt_coordWidth, opt_coordHeight, opt_domHelper) {
-  'use strict';
+goog.graphics.createSimpleGraphics = (
+  width,
+  height,
+  opt_coordWidth,
+  opt_coordHeight,
+  opt_domHelper
+) => {
   // Otherwise, defer to normal graphics object creation.
   return goog.graphics.createGraphics(
-      width, height, opt_coordWidth, opt_coordHeight, opt_domHelper);
+    width,
+    height,
+    opt_coordWidth,
+    opt_coordHeight,
+    opt_domHelper
+  );
 };
-
 
 /**
  * Static function to check if the current browser has Graphics support.
@@ -97,7 +109,4 @@ goog.graphics.createSimpleGraphics = function(
  *     differences before the canvas tag was widely supported.  See
  *     http://en.wikipedia.org/wiki/Canvas_element for details.
  */
-goog.graphics.isBrowserSupported = function() {
-  'use strict';
-  return true;
-};
+goog.graphics.isBrowserSupported = () => true;

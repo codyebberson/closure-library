@@ -10,16 +10,13 @@
 
 goog.provide('goog.ui.IdGenerator');
 
-
-
 /**
  * Creates a new id generator.
  * @constructor
  * @final
  */
-goog.ui.IdGenerator = function() {};
+goog.ui.IdGenerator = () => {};
 goog.addSingletonGetter(goog.ui.IdGenerator);
-
 
 /**
  * Next unique ID to use
@@ -27,7 +24,6 @@ goog.addSingletonGetter(goog.ui.IdGenerator);
  * @private
  */
 goog.ui.IdGenerator.prototype.nextId_ = 0;
-
 
 /**
  * Random ID prefix to help avoid collisions with other closure JavaScript on
@@ -37,7 +33,6 @@ goog.ui.IdGenerator.prototype.nextId_ = 0;
  */
 goog.ui.IdGenerator.prototype.idPrefix_ = '';
 
-
 /**
  * Sets the ID prefix for this singleton. This is a temporary workaround to be
  * backwards compatible with code relying on the undocumented, but consistent,
@@ -45,17 +40,14 @@ goog.ui.IdGenerator.prototype.idPrefix_ = '';
  * a randomly generated string.
  * @param {string} idPrefix
  */
-goog.ui.IdGenerator.prototype.setIdPrefix = function(idPrefix) {
-  'use strict';
+goog.ui.IdGenerator.prototype.setIdPrefix = function (idPrefix) {
   this.idPrefix_ = idPrefix;
 };
-
 
 /**
  * Gets the next unique ID.
  * @return {string} The next unique identifier.
  */
-goog.ui.IdGenerator.prototype.getNextUniqueId = function() {
-  'use strict';
+goog.ui.IdGenerator.prototype.getNextUniqueId = function () {
   return this.idPrefix_ + ':' + (this.nextId_++).toString(36);
 };

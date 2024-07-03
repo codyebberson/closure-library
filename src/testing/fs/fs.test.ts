@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.fsTest');
-goog.setTestOnly();
 
 const FsBlob = goog.require('goog.testing.fs.Blob');
 const fs = goog.require('goog.testing.fs');
@@ -21,20 +20,19 @@ testSuite({
   },
 
   testGetBlob() {
+    assertEquals(new FsBlob('foobarbaz').toString(), fs.getBlob('foo', 'bar', 'baz').toString());
     assertEquals(
-        new FsBlob('foobarbaz').toString(),
-        fs.getBlob('foo', 'bar', 'baz').toString());
-    assertEquals(
-        new FsBlob('foobarbaz').toString(),
-        fs.getBlob('foo', new FsBlob('bar'), 'baz').toString());
+      new FsBlob('foobarbaz').toString(),
+      fs.getBlob('foo', new FsBlob('bar'), 'baz').toString()
+    );
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testGetBlobWithProperties() {
     assertEquals(
-        'data:spam/eggs;base64,Zm9vYmFy',
-        new fs.getBlobWithProperties(['foo', new FsBlob('bar')], 'spam/eggs')
-            .toDataUrl());
+      'data:spam/eggs;base64,Zm9vYmFy',
+      new fs.getBlobWithProperties(['foo', new FsBlob('bar')], 'spam/eggs').toDataUrl()
+    );
   },
 
   testSliceBlob() {

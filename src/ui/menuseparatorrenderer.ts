@@ -17,20 +17,16 @@ goog.require('goog.ui.ControlRenderer');
 goog.requireType('goog.ui.Control');
 goog.requireType('goog.ui.ControlContent');
 
-
-
 /**
  * Renderer for menu separators.
  * @constructor
  * @extends {goog.ui.ControlRenderer}
  */
-goog.ui.MenuSeparatorRenderer = function() {
-  'use strict';
+goog.ui.MenuSeparatorRenderer = function () {
   goog.ui.ControlRenderer.call(this);
 };
 goog.inherits(goog.ui.MenuSeparatorRenderer, goog.ui.ControlRenderer);
 goog.addSingletonGetter(goog.ui.MenuSeparatorRenderer);
-
 
 /**
  * Default CSS class to be applied to the root element of components rendered
@@ -39,7 +35,6 @@ goog.addSingletonGetter(goog.ui.MenuSeparatorRenderer);
  */
 goog.ui.MenuSeparatorRenderer.CSS_CLASS = goog.getCssName('goog-menuseparator');
 
-
 /**
  * Returns an empty, styled menu separator DIV.  Overrides {@link
  * goog.ui.ControlRenderer#createDom}.
@@ -47,12 +42,9 @@ goog.ui.MenuSeparatorRenderer.CSS_CLASS = goog.getCssName('goog-menuseparator');
  * @return {!Element} Root element for the separator.
  * @override
  */
-goog.ui.MenuSeparatorRenderer.prototype.createDom = function(separator) {
-  'use strict';
-  return separator.getDomHelper().createDom(
-      goog.dom.TagName.DIV, this.getCssClass());
+goog.ui.MenuSeparatorRenderer.prototype.createDom = function (separator) {
+  return separator.getDomHelper().createDom(goog.dom.TagName.DIV, this.getCssClass());
 };
-
 
 /**
  * Takes an existing element, and decorates it with the separator.  Overrides
@@ -63,9 +55,7 @@ goog.ui.MenuSeparatorRenderer.prototype.createDom = function(separator) {
  * @return {!Element} Decorated element.
  * @override
  */
-goog.ui.MenuSeparatorRenderer.prototype.decorate = function(
-    separator, element) {
-  'use strict';
+goog.ui.MenuSeparatorRenderer.prototype.decorate = function (separator, element) {
   // Normally handled in the superclass. But we don't call the superclass.
   if (element.id) {
     separator.setId(element.id);
@@ -83,7 +73,6 @@ goog.ui.MenuSeparatorRenderer.prototype.decorate = function(
   return element;
 };
 
-
 /**
  * Overrides {@link goog.ui.ControlRenderer#setContent} to do nothing, since
  * separators are empty.
@@ -92,11 +81,9 @@ goog.ui.MenuSeparatorRenderer.prototype.decorate = function(
  *    set as the separators's content (ignored).
  * @override
  */
-goog.ui.MenuSeparatorRenderer.prototype.setContent = function(
-    separator, content) {
+goog.ui.MenuSeparatorRenderer.prototype.setContent = (separator, content) => {
   // Do nothing.  Separators are empty.
 };
-
 
 /**
  * Returns the CSS class to be applied to the root element of components
@@ -104,7 +91,4 @@ goog.ui.MenuSeparatorRenderer.prototype.setContent = function(
  * @return {string} Renderer-specific CSS class.
  * @override
  */
-goog.ui.MenuSeparatorRenderer.prototype.getCssClass = function() {
-  'use strict';
-  return goog.ui.MenuSeparatorRenderer.CSS_CLASS;
-};
+goog.ui.MenuSeparatorRenderer.prototype.getCssClass = () => goog.ui.MenuSeparatorRenderer.CSS_CLASS;

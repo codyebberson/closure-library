@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.math.AffineTransformTest');
-goog.setTestOnly();
 
 const AffineTransform = goog.require('goog.math.AffineTransform');
 const googArray = goog.require('goog.array');
@@ -60,27 +59,33 @@ testSuite({
   },
 
   testConstructor() {
-    assertThrows(/**
+    assertThrows(
+      /**
                     @suppress {checkTypes} suppression added to enable type
                     checking
                   */
-                 () => {
-                   new AffineTransform([0, 0]);
-                 });
-    assertThrows(/**
+      () => {
+        new AffineTransform([0, 0]);
+      }
+    );
+    assertThrows(
+      /**
                     @suppress {checkTypes} suppression added to enable type
                     checking
                   */
-                 () => {
-                   new AffineTransform({});
-                 });
-    assertThrows(/**
+      () => {
+        new AffineTransform({});
+      }
+    );
+    assertThrows(
+      /**
                     @suppress {checkTypes} suppression added to enable type
                     checking
                   */
-                 () => {
-                   new AffineTransform(0, 0, 0, 'a', 0, 0);
-                 });
+      () => {
+        new AffineTransform(0, 0, 0, 'a', 0, 0);
+      }
+    );
 
     let tx = new AffineTransform(1, 2, 3, 4, 5, 6);
     assertEquals(1, tx.getScaleX());
@@ -114,20 +119,24 @@ testSuite({
 
   testSetTransform() {
     const tx = new AffineTransform();
-    assertThrows(/**
+    assertThrows(
+      /**
                     @suppress {checkTypes} suppression added to enable type
                     checking
                   */
-                 () => {
-                   tx.setTransform(1, 2, 3, 4, 6);
-                 });
-    assertThrows(/**
+      () => {
+        tx.setTransform(1, 2, 3, 4, 6);
+      }
+    );
+    assertThrows(
+      /**
                     @suppress {checkTypes} suppression added to enable type
                     checking
                   */
-                 () => {
-                   tx.setTransform('a', 2, 3, 4, 5, 6);
-                 });
+      () => {
+        tx.setTransform('a', 2, 3, 4, 5, 6);
+      }
+    );
 
     tx.setTransform(1, 2, 3, 4, 5, 6);
     assertEquals(1, tx.getScaleX());
@@ -249,10 +258,12 @@ testSuite({
   },
 
   testAssociativeConcatenate() {
-    const x = new AffineTransform(2, 3, 5, 7, 11, 13)
-                  .concatenate(new AffineTransform(17, 19, 23, 29, 31, 37));
-    const y = new AffineTransform(17, 19, 23, 29, 31, 37)
-                  .preConcatenate(new AffineTransform(2, 3, 5, 7, 11, 13));
+    const x = new AffineTransform(2, 3, 5, 7, 11, 13).concatenate(
+      new AffineTransform(17, 19, 23, 29, 31, 37)
+    );
+    const y = new AffineTransform(17, 19, 23, 29, 31, 37).preConcatenate(
+      new AffineTransform(2, 3, 5, 7, 11, 13)
+    );
     assertEquals(x.getScaleX(), y.getScaleX());
     assertEquals(x.getShearY(), y.getShearY());
     assertEquals(x.getShearX(), y.getShearX());
@@ -268,18 +279,13 @@ testSuite({
     tx.translate(5, 10);
     tx.rotate(Math.PI / 4, 5, 10);
     tx.transform(srcPts, 0, dstPts, 0, 4);
-    assert(googArray.equals(
-        [
-          27.071068,
-          28.180195,
-          28.485281,
-          30.301516,
-          27.071068,
-          32.422836,
-          25.656855,
-          30.301516,
-        ],
-        dstPts, googMath.nearlyEquals));
+    assert(
+      googArray.equals(
+        [27.071068, 28.180195, 28.485281, 30.301516, 27.071068, 32.422836, 25.656855, 30.301516],
+        dstPts,
+        googMath.nearlyEquals
+      )
+    );
   },
 
   testGetDeterminant() {
@@ -292,18 +298,18 @@ testSuite({
   testIsInvertible() {
     assertTrue(new AffineTransform(2, 3, 4, 5, 6, 7).isInvertible());
     assertTrue(new AffineTransform(1, 0, 0, 1, 0, 0).isInvertible());
-    assertFalse(new AffineTransform(NaN, 0, 0, 1, 0, 0).isInvertible());
-    assertFalse(new AffineTransform(1, NaN, 0, 1, 0, 0).isInvertible());
-    assertFalse(new AffineTransform(1, 0, NaN, 1, 0, 0).isInvertible());
-    assertFalse(new AffineTransform(1, 0, 0, NaN, 0, 0).isInvertible());
-    assertFalse(new AffineTransform(1, 0, 0, 1, NaN, 0).isInvertible());
-    assertFalse(new AffineTransform(1, 0, 0, 1, 0, NaN).isInvertible());
-    assertFalse(new AffineTransform(Infinity, 0, 0, 1, 0, 0).isInvertible());
-    assertFalse(new AffineTransform(1, Infinity, 0, 1, 0, 0).isInvertible());
-    assertFalse(new AffineTransform(1, 0, Infinity, 1, 0, 0).isInvertible());
-    assertFalse(new AffineTransform(1, 0, 0, Infinity, 0, 0).isInvertible());
-    assertFalse(new AffineTransform(1, 0, 0, 1, Infinity, 0).isInvertible());
-    assertFalse(new AffineTransform(1, 0, 0, 1, 0, Infinity).isInvertible());
+    assertFalse(new AffineTransform(Number.NaN, 0, 0, 1, 0, 0).isInvertible());
+    assertFalse(new AffineTransform(1, Number.NaN, 0, 1, 0, 0).isInvertible());
+    assertFalse(new AffineTransform(1, 0, Number.NaN, 1, 0, 0).isInvertible());
+    assertFalse(new AffineTransform(1, 0, 0, Number.NaN, 0, 0).isInvertible());
+    assertFalse(new AffineTransform(1, 0, 0, 1, Number.NaN, 0).isInvertible());
+    assertFalse(new AffineTransform(1, 0, 0, 1, 0, Number.NaN).isInvertible());
+    assertFalse(new AffineTransform(Number.POSITIVE_INFINITY, 0, 0, 1, 0, 0).isInvertible());
+    assertFalse(new AffineTransform(1, Number.POSITIVE_INFINITY, 0, 1, 0, 0).isInvertible());
+    assertFalse(new AffineTransform(1, 0, Number.POSITIVE_INFINITY, 1, 0, 0).isInvertible());
+    assertFalse(new AffineTransform(1, 0, 0, Number.POSITIVE_INFINITY, 0, 0).isInvertible());
+    assertFalse(new AffineTransform(1, 0, 0, 1, Number.POSITIVE_INFINITY, 0).isInvertible());
+    assertFalse(new AffineTransform(1, 0, 0, 1, 0, Number.POSITIVE_INFINITY).isInvertible());
     assertFalse(new AffineTransform(0, 0, 0, 0, 1, 0).isInvertible());
   },
 

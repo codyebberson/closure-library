@@ -13,14 +13,11 @@ goog.provide('goog.events.EventWrapper');
 goog.requireType('goog.events.EventHandler');
 goog.requireType('goog.events.ListenableType');
 
-
-
 /**
  * Interface for event wrappers.
  * @interface
  */
-goog.events.EventWrapper = function() {};
-
+goog.events.EventWrapper = () => {};
 
 /**
  * Adds an event listener using the wrapper on a DOM Node or an object that has
@@ -36,9 +33,13 @@ goog.events.EventWrapper = function() {};
  * @param {goog.events.EventHandler=} opt_eventHandler Event handler to add
  *     listener to.
  */
-goog.events.EventWrapper.prototype.listen = function(
-    src, listener, opt_capt, opt_scope, opt_eventHandler) {};
-
+goog.events.EventWrapper.prototype.listen = (
+  src,
+  listener,
+  opt_capt,
+  opt_scope,
+  opt_eventHandler
+) => {};
 
 /**
  * Removes an event listener added using goog.events.EventWrapper.listen.
@@ -52,5 +53,10 @@ goog.events.EventWrapper.prototype.listen = function(
  * @param {goog.events.EventHandler=} opt_eventHandler Event handler to remove
  *     listener from.
  */
-goog.events.EventWrapper.prototype.unlisten = function(
-    src, listener, opt_capt, opt_scope, opt_eventHandler) {};
+goog.events.EventWrapper.prototype.unlisten = (
+  src,
+  listener,
+  opt_capt,
+  opt_scope,
+  opt_eventHandler
+) => {};

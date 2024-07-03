@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.i18n.CharListDecompressorTest');
-goog.setTestOnly();
 
 const CharListDecompressor = goog.require('goog.i18n.CharListDecompressor');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -51,7 +50,7 @@ testSuite({
   },
 
   testToCharList() {
-    const list = decompressor.toCharList('%812E<E');  // a, x-z, p-r
+    const list = decompressor.toCharList('%812E<E'); // a, x-z, p-r
     assertArrayEquals(['a', 'x', 'y', 'z', 'p', 'q', 'r'], list);
   },
 });

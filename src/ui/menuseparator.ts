@@ -16,8 +16,6 @@ goog.require('goog.ui.Separator');
 goog.require('goog.ui.registry');
 goog.requireType('goog.dom.DomHelper');
 
-
-
 /**
  * Class representing a menu separator.  A menu separator extends {@link
  * goog.ui.Separator} by always setting its renderer to {@link
@@ -27,18 +25,13 @@ goog.requireType('goog.dom.DomHelper');
  * @constructor
  * @extends {goog.ui.Separator}
  */
-goog.ui.MenuSeparator = function(opt_domHelper) {
-  'use strict';
-  goog.ui.Separator.call(
-      this, goog.ui.MenuSeparatorRenderer.getInstance(), opt_domHelper);
+goog.ui.MenuSeparator = function (opt_domHelper) {
+  goog.ui.Separator.call(this, goog.ui.MenuSeparatorRenderer.getInstance(), opt_domHelper);
 };
 goog.inherits(goog.ui.MenuSeparator, goog.ui.Separator);
 
-
 // Register a decorator factory function for goog.ui.MenuSeparators.
-goog.ui.registry.setDecoratorByClassName(
-    goog.ui.MenuSeparatorRenderer.CSS_CLASS, function() {
-      'use strict';
-      // Separator defaults to using MenuSeparatorRenderer.
-      return new goog.ui.Separator();
-    });
+goog.ui.registry.setDecoratorByClassName(goog.ui.MenuSeparatorRenderer.CSS_CLASS, () => {
+  // Separator defaults to using MenuSeparatorRenderer.
+  return new goog.ui.Separator();
+});

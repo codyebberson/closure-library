@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.events.ListenableTest');
-goog.setTestOnly();
 
 const Listenable = goog.require('goog.events.Listenable');
 const testSuite = goog.require('goog.testing.testSuite');

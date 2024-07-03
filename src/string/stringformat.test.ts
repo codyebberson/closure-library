@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.string.formatTest');
-goog.setTestOnly();
 
 const stringFormat = goog.require('goog.string.format');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -15,8 +14,7 @@ const testSuite = goog.require('goog.testing.testSuite');
 testSuite({
   testImmediateFormatSpecifier() {
     assertEquals('Empty String', '', stringFormat(''));
-    assertEquals(
-        'Immediate Value', 'Immediate Value', stringFormat('Immediate Value'));
+    assertEquals('Immediate Value', 'Immediate Value', stringFormat('Immediate Value'));
   },
 
   testPercentSign() {
@@ -25,8 +23,7 @@ testSuite({
     assertEquals('%%%', '%%', stringFormat('%%%'));
     assertEquals('%%%%', '%%', stringFormat('%%%%'));
 
-    assertEquals(
-        'width of the percent sign ???', '%%', stringFormat('%345%%-67.987%'));
+    assertEquals('width of the percent sign ???', '%%', stringFormat('%345%%-67.987%'));
   },
 
   testStringConversionSpecifier() {
@@ -87,17 +84,13 @@ testSuite({
     assertEquals('negative % .2f ', '-123.46', stringFormat('% .2f', -123.456));
 
     assertEquals('positive % 6.2f', ' 123.46', stringFormat('% 6.2f', 123.456));
-    assertEquals(
-        'negative % 6.2f', '-123.46', stringFormat('% 6.2f', -123.456));
+    assertEquals('negative % 6.2f', '-123.46', stringFormat('% 6.2f', -123.456));
 
     assertEquals('positive % 7.2f', ' 123.46', stringFormat('% 7.2f', 123.456));
-    assertEquals(
-        'negative % 7.2f', '-123.46', stringFormat('% 7.2f', -123.456));
+    assertEquals('negative % 7.2f', '-123.46', stringFormat('% 7.2f', -123.456));
 
-    assertEquals(
-        'positive % 10.2f', '    123.46', stringFormat('% 10.2f', 123.456));
-    assertEquals(
-        'negative % 10.2f', '-   123.46', stringFormat('% 10.2f', -123.456));
+    assertEquals('positive % 10.2f', '    123.46', stringFormat('% 10.2f', 123.456));
+    assertEquals('negative % 10.2f', '-   123.46', stringFormat('% 10.2f', -123.456));
 
     assertEquals('string % s ', 'abc', stringFormat('% s', 'abc'));
     assertEquals('string % 3s', 'abc', stringFormat('% 3s', 'abc'));
@@ -127,17 +120,13 @@ testSuite({
     assertEquals('negative %+.2f ', '-123.46', stringFormat('%+.2f', -123.456));
 
     assertEquals('positive %+6.2f', '+123.46', stringFormat('%+6.2f', 123.456));
-    assertEquals(
-        'negative %+6.2f', '-123.46', stringFormat('%+6.2f', -123.456));
+    assertEquals('negative %+6.2f', '-123.46', stringFormat('%+6.2f', -123.456));
 
     assertEquals('positive %+7.2f', '+123.46', stringFormat('%+7.2f', 123.456));
-    assertEquals(
-        'negative %+7.2f', '-123.46', stringFormat('%+7.2f', -123.456));
+    assertEquals('negative %+7.2f', '-123.46', stringFormat('%+7.2f', -123.456));
 
-    assertEquals(
-        'positive %+10.2f', '+   123.46', stringFormat('%+10.2f', 123.456));
-    assertEquals(
-        'negative %+10.2f', '-   123.46', stringFormat('%+10.2f', -123.456));
+    assertEquals('positive %+10.2f', '+   123.46', stringFormat('%+10.2f', 123.456));
+    assertEquals('negative %+10.2f', '-   123.46', stringFormat('%+10.2f', -123.456));
 
     assertEquals('string %+s ', 'abc', stringFormat('%+s', 'abc'));
     assertEquals('string %+3s', 'abc', stringFormat('%+3s', 'abc'));

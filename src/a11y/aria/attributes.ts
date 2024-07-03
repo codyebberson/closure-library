@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview The file contains generated enumerations for ARIA states
  * and properties as defined by W3C ARIA standard:
@@ -27,7 +26,6 @@ goog.provide('goog.a11y.aria.RelevantValues');
 goog.provide('goog.a11y.aria.SelectedValues');
 goog.provide('goog.a11y.aria.SortValues');
 goog.provide('goog.a11y.aria.State');
-
 
 /**
  * ARIA states and properties.
@@ -189,9 +187,8 @@ goog.a11y.aria.State = {
 
   // ARIA property for slider active value represented as text.
   // Value: string.
-  VALUETEXT: 'valuetext'
+  VALUETEXT: 'valuetext',
 };
-
 
 /**
  * ARIA state values for AutoCompleteValues.
@@ -208,9 +205,8 @@ goog.a11y.aria.AutoCompleteValues = {
   // also appears inline.
   BOTH: 'both',
   // No input completion suggestions are provided.
-  NONE: 'none'
+  NONE: 'none',
 };
-
 
 /**
  * ARIA state values for DropEffectValues.
@@ -234,9 +230,8 @@ goog.a11y.aria.DropEffectValues = {
   POPUP: 'popup',
   // No operation can be performed; effectively
   // cancels the drag operation if an attempt is made to drop on this object.
-  NONE: 'none'
+  NONE: 'none',
 };
-
 
 /**
  * ARIA state values for LivePriority.
@@ -255,9 +250,8 @@ goog.a11y.aria.LivePriority = {
   // Because an interruption may disorient users or cause them to not complete
   // their current task, authors SHOULD NOT use the assertive value unless the
   // interruption is imperative.
-  ASSERTIVE: 'assertive'
+  ASSERTIVE: 'assertive',
 };
-
 
 /**
  * ARIA state values for OrientationValues.
@@ -267,9 +261,8 @@ goog.a11y.aria.OrientationValues = {
   // The element is oriented vertically.
   VERTICAL: 'vertical',
   // The element is oriented horizontally.
-  HORIZONTAL: 'horizontal'
+  HORIZONTAL: 'horizontal',
 };
-
 
 /**
  * ARIA state values for RelevantValues.
@@ -283,9 +276,8 @@ goog.a11y.aria.RelevantValues = {
   // Text is added to any DOM descendant nodes of the live region.
   TEXT: 'text',
   // Equivalent to the combination of all values, "additions removals text".
-  ALL: 'all'
+  ALL: 'all',
 };
-
 
 /**
  * ARIA state values for SortValues.
@@ -299,9 +291,8 @@ goog.a11y.aria.SortValues = {
   // There is no defined sort applied to the column.
   NONE: 'none',
   // A sort algorithm other than ascending or descending has been applied.
-  OTHER: 'other'
+  OTHER: 'other',
 };
-
 
 /**
  * ARIA state values for CheckedValues.
@@ -316,9 +307,8 @@ goog.a11y.aria.CheckedValues = {
   // checkbox or menuitemcheckbox.
   MIXED: 'mixed',
   // The element does not support being checked.
-  UNDEFINED: 'undefined'
+  UNDEFINED: 'undefined',
 };
-
 
 /**
  * ARIA state values for ExpandedValues.
@@ -332,9 +322,8 @@ goog.a11y.aria.ExpandedValues = {
   // The element, or another grouping element
   // it controls, is neither expandable nor collapsible; all its
   // child elements are shown or there are no child elements.
-  UNDEFINED: 'undefined'
+  UNDEFINED: 'undefined',
 };
-
 
 /**
  * ARIA state values for GrabbedValues.
@@ -346,9 +335,8 @@ goog.a11y.aria.GrabbedValues = {
   // Indicates that the element supports being dragged.
   FALSE: 'false',
   // Indicates that the element does not support being dragged.
-  UNDEFINED: 'undefined'
+  UNDEFINED: 'undefined',
 };
-
 
 /**
  * ARIA state values for InvalidValues.
@@ -362,9 +350,8 @@ goog.a11y.aria.InvalidValues = {
   // A grammatical error was detected.
   GRAMMAR: 'grammar',
   // A spelling error was detected.
-  SPELLING: 'spelling'
+  SPELLING: 'spelling',
 };
-
 
 /**
  * ARIA state values for PressedValues.
@@ -378,9 +365,8 @@ goog.a11y.aria.PressedValues = {
   // Indicates a mixed mode value for a tri-state toggle button.
   MIXED: 'mixed',
   // The element does not support being pressed.
-  UNDEFINED: 'undefined'
+  UNDEFINED: 'undefined',
 };
-
 
 /**
  * ARIA state values for SelectedValues.
@@ -392,5 +378,5 @@ goog.a11y.aria.SelectedValues = {
   // The selectable element is not selected.
   FALSE: 'false',
   // The element is not selectable.
-  UNDEFINED: 'undefined'
+  UNDEFINED: 'undefined',
 };

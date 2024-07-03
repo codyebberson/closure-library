@@ -28,8 +28,6 @@ goog.requireType('goog.dom');
 goog.requireType('goog.dom.ViewportSizeMonitor');
 goog.requireType('goog.math.Size');
 
-
-
 /**
  * Creates a new BufferedViewportSizeMonitor.
  * @param {!goog.dom.ViewportSizeMonitor} viewportSizeMonitor The
@@ -40,9 +38,7 @@ goog.requireType('goog.math.Size');
  * @extends {goog.events.EventTarget}
  * @final
  */
-goog.dom.BufferedViewportSizeMonitor = function(
-    viewportSizeMonitor, opt_bufferMs) {
-  'use strict';
+goog.dom.BufferedViewportSizeMonitor = function (viewportSizeMonitor, opt_bufferMs) {
   goog.dom.BufferedViewportSizeMonitor.base(this, 'constructor');
 
   /**
@@ -70,8 +66,8 @@ goog.dom.BufferedViewportSizeMonitor = function(
    * @type {number}
    * @private
    */
-  this.resizeBufferMs_ = opt_bufferMs ||
-      goog.dom.BufferedViewportSizeMonitor.RESIZE_EVENT_DELAY_MS_;
+  this.resizeBufferMs_ =
+    opt_bufferMs || goog.dom.BufferedViewportSizeMonitor.RESIZE_EVENT_DELAY_MS_;
 
   /**
    * Listener key for the viewport size monitor.
@@ -79,11 +75,14 @@ goog.dom.BufferedViewportSizeMonitor = function(
    * @private
    */
   this.listenerKey_ = goog.events.listen(
-      viewportSizeMonitor, goog.events.EventType.RESIZE, this.handleResize_,
-      false, this);
+    viewportSizeMonitor,
+    goog.events.EventType.RESIZE,
+    this.handleResize_,
+    false,
+    this
+  );
 };
 goog.inherits(goog.dom.BufferedViewportSizeMonitor, goog.events.EventTarget);
-
 
 /**
  * Additional events to dispatch.
@@ -91,9 +90,8 @@ goog.inherits(goog.dom.BufferedViewportSizeMonitor, goog.events.EventTarget);
  */
 goog.dom.BufferedViewportSizeMonitor.EventType = {
   RESIZE_HEIGHT: goog.events.getUniqueId('resizeheight'),
-  RESIZE_WIDTH: goog.events.getUniqueId('resizewidth')
+  RESIZE_WIDTH: goog.events.getUniqueId('resizewidth'),
 };
-
 
 /**
  * Default number of milliseconds to wait after a resize event to relayout the
@@ -104,37 +102,30 @@ goog.dom.BufferedViewportSizeMonitor.EventType = {
  */
 goog.dom.BufferedViewportSizeMonitor.RESIZE_EVENT_DELAY_MS_ = 100;
 
-
 /** @override */
-goog.dom.BufferedViewportSizeMonitor.prototype.disposeInternal = function() {
-  'use strict';
+goog.dom.BufferedViewportSizeMonitor.prototype.disposeInternal = function () {
   goog.events.unlistenByKey(this.listenerKey_);
   goog.dom.BufferedViewportSizeMonitor.base(this, 'disposeInternal');
 };
-
 
 /**
  * Handles resize events on the underlying ViewportMonitor.
  * @private
  */
-goog.dom.BufferedViewportSizeMonitor.prototype.handleResize_ = function() {
-  'use strict';
+goog.dom.BufferedViewportSizeMonitor.prototype.handleResize_ = function () {
   // Lazily create when needed.
   if (!this.resizeDelay_) {
-    this.resizeDelay_ =
-        new goog.async.Delay(this.onWindowResize_, this.resizeBufferMs_, this);
+    this.resizeDelay_ = new goog.async.Delay(this.onWindowResize_, this.resizeBufferMs_, this);
     this.registerDisposable(this.resizeDelay_);
   }
   this.resizeDelay_.start();
 };
 
-
 /**
  * Window resize callback that determines whether to reflow the view contents.
  * @private
  */
-goog.dom.BufferedViewportSizeMonitor.prototype.onWindowResize_ = function() {
-  'use strict';
+goog.dom.BufferedViewportSizeMonitor.prototype.onWindowResize_ = function () {
   if (this.viewportSizeMonitor_.isDisposed()) {
     return;
   }
@@ -151,15 +142,13 @@ goog.dom.BufferedViewportSizeMonitor.prototype.onWindowResize_ = function() {
 
     // Width has changed
     if (previousSize.width != currentSize.width) {
-      this.dispatchEvent(
-          goog.dom.BufferedViewportSizeMonitor.EventType.RESIZE_WIDTH);
+      this.dispatchEvent(goog.dom.BufferedViewportSizeMonitor.EventType.RESIZE_WIDTH);
       resized = true;
     }
 
     // Height has changed
     if (previousSize.height != currentSize.height) {
-      this.dispatchEvent(
-          goog.dom.BufferedViewportSizeMonitor.EventType.RESIZE_HEIGHT);
+      this.dispatchEvent(goog.dom.BufferedViewportSizeMonitor.EventType.RESIZE_HEIGHT);
       resized = true;
     }
 
@@ -167,24 +156,19 @@ goog.dom.BufferedViewportSizeMonitor.prototype.onWindowResize_ = function() {
     if (resized) {
       this.dispatchEvent(goog.events.EventType.RESIZE);
     }
-
   } else {
     // If we didn't have a previous size, we consider all events to have
     // changed.
-    this.dispatchEvent(
-        goog.dom.BufferedViewportSizeMonitor.EventType.RESIZE_HEIGHT);
-    this.dispatchEvent(
-        goog.dom.BufferedViewportSizeMonitor.EventType.RESIZE_WIDTH);
+    this.dispatchEvent(goog.dom.BufferedViewportSizeMonitor.EventType.RESIZE_HEIGHT);
+    this.dispatchEvent(goog.dom.BufferedViewportSizeMonitor.EventType.RESIZE_WIDTH);
     this.dispatchEvent(goog.events.EventType.RESIZE);
   }
 };
-
 
 /**
  * Returns the current size of the viewport.
  * @return {goog.math.Size?} The current viewport size.
  */
-goog.dom.BufferedViewportSizeMonitor.prototype.getSize = function() {
-  'use strict';
+goog.dom.BufferedViewportSizeMonitor.prototype.getSize = function () {
   return this.currentSize_ ? this.currentSize_.clone() : null;
 };

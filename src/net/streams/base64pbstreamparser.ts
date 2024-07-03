@@ -19,7 +19,6 @@ const PbStreamParser = goog.require('goog.net.streams.PbStreamParser');
 const StreamParser = goog.require('goog.net.streams.StreamParser');
 const asserts = goog.require('goog.asserts');
 
-
 /**
  * The default base64-encoded Protobuf stream parser.
  *
@@ -28,7 +27,7 @@ const asserts = goog.require('goog.asserts');
  * @implements {StreamParser}
  * @final
  */
-const Base64PbStreamParser = function() {
+const Base64PbStreamParser = function () {
   /**
    * The current error message, if any.
    * @private {?string}
@@ -54,18 +53,15 @@ const Base64PbStreamParser = function() {
   this.pbParser_ = new PbStreamParser();
 };
 
-
 /** @override */
-Base64PbStreamParser.prototype.isInputValid = function() {
+Base64PbStreamParser.prototype.isInputValid = function () {
   return this.errorMessage_ === null;
 };
 
-
 /** @override */
-Base64PbStreamParser.prototype.getErrorMessage = function() {
+Base64PbStreamParser.prototype.getErrorMessage = function () {
   return this.errorMessage_;
 };
-
 
 /**
  * @param {string} input The current input string to be processed
@@ -73,9 +69,9 @@ Base64PbStreamParser.prototype.getErrorMessage = function() {
  * @throws {!Error} Throws an error indicating where the stream is broken
  * @private
  */
-Base64PbStreamParser.prototype.error_ = function(input, errorMsg) {
-  this.errorMessage_ = 'The stream is broken @' + this.streamPos_ +
-      '. Error: ' + errorMsg + '. With input:\n' + input;
+Base64PbStreamParser.prototype.error_ = function (input, errorMsg) {
+  this.errorMessage_ =
+    'The stream is broken @' + this.streamPos_ + '. Error: ' + errorMsg + '. With input:\n' + input;
   throw new Error(this.errorMessage_);
 };
 
@@ -83,12 +79,10 @@ Base64PbStreamParser.prototype.error_ = function(input, errorMsg) {
  * @override
  * @return {boolean}
  */
-Base64PbStreamParser.prototype.acceptsBinaryInput = function() {
-  return false;
-};
+Base64PbStreamParser.prototype.acceptsBinaryInput = () => false;
 
 /** @override */
-Base64PbStreamParser.prototype.parse = function(input) {
+Base64PbStreamParser.prototype.parse = function (input) {
   asserts.assertString(input);
 
   if (this.errorMessage_ !== null) {
@@ -98,7 +92,7 @@ Base64PbStreamParser.prototype.parse = function(input) {
   let result = null;
   try {
     const rawBytes = this.base64Decoder_.decode(input);
-    result = (rawBytes === null) ? null : this.pbParser_.parse(rawBytes);
+    result = rawBytes === null ? null : this.pbParser_.parse(rawBytes);
   } catch (e) {
     this.error_(input, e.message);
   }
@@ -106,6 +100,5 @@ Base64PbStreamParser.prototype.parse = function(input) {
   this.streamPos_ += input.length;
   return result;
 };
-
 
 exports = Base64PbStreamParser;

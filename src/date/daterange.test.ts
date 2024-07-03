@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.date.DateRangeTest');
-goog.setTestOnly();
 
 const DateDate = goog.require('goog.date.Date');
 const DateRange = goog.require('goog.date.DateRange');
@@ -15,15 +14,18 @@ const testSuite = goog.require('goog.testing.testSuite');
 
 function assertStartEnd(name, start, end, actual) {
   assertTrue(
-      `${name} start should be ${start} but was ` + actual.getStartDate(),
-      start.equals(actual.getStartDate()));
+    `${name} start should be ${start} but was ` + actual.getStartDate(),
+    start.equals(actual.getStartDate())
+  );
   assertTrue(
-      `${name} end should be ${end} but was ` + actual.getEndDate(),
-      end.equals(actual.getEndDate()));
+    `${name} end should be ${end} but was ` + actual.getEndDate(),
+    end.equals(actual.getEndDate())
+  );
   // see http://b/23820818
   assertFalse(
-      `${name} start date was the same object as the end date`,
-      actual.getStartDate() === actual.getEndDate());
+    `${name} start date was the same object as the end date`,
+    actual.getStartDate() === actual.getEndDate()
+  );
 }
 testSuite({
   testDateRange() {
@@ -93,9 +95,11 @@ testSuite({
     const e = new DateDate(2008, 9, 12);
     assertStartEnd('last7Days', s, e, DateRange.last7Days(d));
     assertStartEnd(
-        'last7Days by key', s, e,
-        DateRange.standardDateRange(
-            DateRange.StandardDateRangeKeys.LAST_7_DAYS, d));
+      'last7Days by key',
+      s,
+      e,
+      DateRange.standardDateRange(DateRange.StandardDateRangeKeys.LAST_7_DAYS, d)
+    );
   },
 
   testThisMonth() {
@@ -104,9 +108,11 @@ testSuite({
     const e = new DateDate(2008, 9, 31);
     assertStartEnd('thisMonth', s, e, DateRange.thisMonth(d));
     assertStartEnd(
-        'thisMonth by key', s, e,
-        DateRange.standardDateRange(
-            DateRange.StandardDateRangeKeys.THIS_MONTH, d));
+      'thisMonth by key',
+      s,
+      e,
+      DateRange.standardDateRange(DateRange.StandardDateRangeKeys.THIS_MONTH, d)
+    );
   },
 
   testLastMonth() {
@@ -115,9 +121,11 @@ testSuite({
     const e = new DateDate(2008, 8, 30);
     assertStartEnd('lastMonth', s, e, DateRange.lastMonth(d));
     assertStartEnd(
-        'lastMonth by key', s, e,
-        DateRange.standardDateRange(
-            DateRange.StandardDateRangeKeys.LAST_MONTH, d));
+      'lastMonth by key',
+      s,
+      e,
+      DateRange.standardDateRange(DateRange.StandardDateRangeKeys.LAST_MONTH, d)
+    );
   },
 
   testThisWeek() {
@@ -145,17 +153,18 @@ testSuite({
     for (let i = 0; i < 7; i++) {
       const date = new DateDate(2011, 3, 1);
       date.setFirstDayOfWeek(i);
-      assertStartEnd(
-          `thisWeek, ${i}`, startDates[i], endDates[i],
-          DateRange.thisWeek(date));
+      assertStartEnd(`thisWeek, ${i}`, startDates[i], endDates[i], DateRange.thisWeek(date));
     }
 
     assertStartEnd(
-        'thisWeek by key ', startDates[DateTimeSymbols.FIRSTDAYOFWEEK],
-        endDates[DateTimeSymbols.FIRSTDAYOFWEEK],
-        DateRange.standardDateRange(
-            DateRange.StandardDateRangeKeys.THIS_WEEK,
-            new DateDate(2011, 3, 1)));
+      'thisWeek by key ',
+      startDates[DateTimeSymbols.FIRSTDAYOFWEEK],
+      endDates[DateTimeSymbols.FIRSTDAYOFWEEK],
+      DateRange.standardDateRange(
+        DateRange.StandardDateRangeKeys.THIS_WEEK,
+        new DateDate(2011, 3, 1)
+      )
+    );
   },
 
   testLastWeek() {
@@ -183,17 +192,18 @@ testSuite({
     for (let i = 0; i < 7; i++) {
       const date = new DateDate(2011, 3, 1);
       date.setFirstDayOfWeek(i);
-      assertStartEnd(
-          `lastWeek, ${i}`, startDates[i], endDates[i],
-          DateRange.lastWeek(date));
+      assertStartEnd(`lastWeek, ${i}`, startDates[i], endDates[i], DateRange.lastWeek(date));
     }
 
     assertStartEnd(
-        'lastWeek by key', startDates[DateTimeSymbols.FIRSTDAYOFWEEK],
-        endDates[DateTimeSymbols.FIRSTDAYOFWEEK],
-        DateRange.standardDateRange(
-            DateRange.StandardDateRangeKeys.LAST_WEEK,
-            new DateDate(2011, 3, 1)));
+      'lastWeek by key',
+      startDates[DateTimeSymbols.FIRSTDAYOFWEEK],
+      endDates[DateTimeSymbols.FIRSTDAYOFWEEK],
+      DateRange.standardDateRange(
+        DateRange.StandardDateRangeKeys.LAST_WEEK,
+        new DateDate(2011, 3, 1)
+      )
+    );
   },
 
   testLastBusinessWeek() {
@@ -202,9 +212,11 @@ testSuite({
     const e = new DateDate(2008, 9, 10);
     assertStartEnd('lastBusinessWeek', s, e, DateRange.lastBusinessWeek(d));
     assertStartEnd(
-        'lastBusinessWeek by key', s, e,
-        DateRange.standardDateRange(
-            DateRange.StandardDateRangeKeys.LAST_BUSINESS_WEEK, d));
+      'lastBusinessWeek by key',
+      s,
+      e,
+      DateRange.standardDateRange(DateRange.StandardDateRangeKeys.LAST_BUSINESS_WEEK, d)
+    );
   },
 
   testAllTime() {
@@ -212,8 +224,11 @@ testSuite({
     const e = new DateDate(9999, 11, 31);
     assertStartEnd('allTime', s, e, DateRange.allTime());
     assertStartEnd(
-        'allTime by key', s, e,
-        DateRange.standardDateRange(DateRange.StandardDateRangeKeys.ALL_TIME));
+      'allTime by key',
+      s,
+      e,
+      DateRange.standardDateRange(DateRange.StandardDateRangeKeys.ALL_TIME)
+    );
   },
 
   testIterator() {
@@ -267,8 +282,7 @@ testSuite({
   },
 
   testContains() {
-    const r =
-        new DateRange(new DateDate(2008, 9, 10), new DateDate(2008, 9, 12));
+    const r = new DateRange(new DateDate(2008, 9, 10), new DateDate(2008, 9, 12));
     assertFalse('min date', r.contains(DateRange.MINIMUM_DATE));
     assertFalse('9/10/2007', r.contains(new DateDate(2007, 9, 10)));
     assertFalse('9/9/2008', r.contains(new DateDate(2008, 9, 9)));

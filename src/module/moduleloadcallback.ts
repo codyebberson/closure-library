@@ -15,8 +15,6 @@ goog.require('goog.debug.entryPointRegistry');
 /** @suppress {extraRequire} */
 goog.require('goog.module');
 
-
-
 /**
  * Class used to encapsulate the callbacks to be called when a module loads.
  * @param {Function} fn Callback function.
@@ -25,8 +23,7 @@ goog.require('goog.module');
  * @constructor
  * @final
  */
-goog.module.ModuleLoadCallback = function(fn, opt_handler) {
-  'use strict';
+goog.module.ModuleLoadCallback = function (fn, opt_handler) {
   /**
    * Callback function.
    * @type {Function}
@@ -42,13 +39,11 @@ goog.module.ModuleLoadCallback = function(fn, opt_handler) {
   this.handler_ = opt_handler;
 };
 
-
 /**
  * Completes the operation and calls the callback function if appropriate.
  * @param {*} context The module context.
  */
-goog.module.ModuleLoadCallback.prototype.execute = function(context) {
-  'use strict';
+goog.module.ModuleLoadCallback.prototype.execute = function (context) {
   if (this.fn_) {
     this.fn_.call(this.handler_ || null, context);
     this.handler_ = null;
@@ -56,26 +51,24 @@ goog.module.ModuleLoadCallback.prototype.execute = function(context) {
   }
 };
 
-
 /**
  * Abort the callback, but not the actual module load.
  */
-goog.module.ModuleLoadCallback.prototype.abort = function() {
-  'use strict';
+goog.module.ModuleLoadCallback.prototype.abort = function () {
   this.fn_ = null;
   this.handler_ = null;
 };
 
-
 // Register the browser event handler as an entry point, so that
 // it can be monitored for exception handling, etc.
 goog.debug.entryPointRegistry.register(
-    /**
-     * @param {function(!Function): !Function} transformer The transforming
-     *     function.
-     */
-    function(transformer) {
-      'use strict';
-      goog.module.ModuleLoadCallback.prototype.execute =
-          transformer(goog.module.ModuleLoadCallback.prototype.execute);
-    });
+  /**
+   * @param {function(!Function): !Function} transformer The transforming
+   *     function.
+   */
+  (transformer) => {
+    goog.module.ModuleLoadCallback.prototype.execute = transformer(
+      goog.module.ModuleLoadCallback.prototype.execute
+    );
+  }
+);

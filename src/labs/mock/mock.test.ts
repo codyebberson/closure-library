@@ -19,17 +19,17 @@ goog.require('goog.labs.testing.AnythingMatcher');
 /** @suppress {extraRequire} Declares globals */
 goog.require('goog.labs.testing.GreaterThanMatcher');
 
-const ParentClass = function() {};
-ParentClass.prototype.method1 = function() {};
+const ParentClass = () => {};
+ParentClass.prototype.method1 = () => {};
 ParentClass.prototype.x = 1;
 ParentClass.prototype.val = 0;
-ParentClass.prototype.incrementVal = function() {
+ParentClass.prototype.incrementVal = function () {
   this.val++;
 };
 
-const ChildClass = function() {};
+const ChildClass = () => {};
 goog.inherits(ChildClass, ParentClass);
-ChildClass.prototype.method2 = function() {};
+ChildClass.prototype.method2 = () => {};
 ChildClass.prototype.y = 2;
 
 class ParentClassEs6 {
@@ -57,17 +57,14 @@ class ChildClassEs6 extends ParentClassEs6 {
 function assertContainsInOrder(str, var_args) {
   /** @suppress {checkTypes} suppression added to enable type checking */
   const expected = array.splice(arguments, 1);
-  const indices = array.map(expected, function(val) {
-    return str.indexOf(val);
-  });
+  const indices = array.map(expected, (val) => str.indexOf(val));
 
   for (let i = 0; i < expected.length; i++) {
     let msg = 'Missing "' + expected[i] + '" from "' + str + '"';
     assertTrue(msg, indices[i] != -1);
 
     if (i > 0) {
-      msg = '"' + expected[i - 1] + '" should come before "' + expected[i] +
-          '" in "' + str + '"';
+      msg = '"' + expected[i - 1] + '" should come before "' + expected[i] + '" in "' + str + '"';
       assertTrue(msg, indices[i] > indices[i - 1]);
     }
   }
@@ -95,8 +92,9 @@ testSuite({
     assertNotUndefined(parentMock.x);
     assertUndefined(parentMock.y);
     assertTrue(
-        'Mock should be an instance of the mocked class.',
-        parentMock instanceof ParentClass);
+      'Mock should be an instance of the mocked class.',
+      parentMock instanceof ParentClass
+    );
   },
 
   /**
@@ -111,8 +109,9 @@ testSuite({
     assertHasOwnProperty(parentMock, 'parentName');
     assertUndefined(parentMock.parentName);
     assertTrue(
-        'Mock should be an instance of the mocked class.',
-        parentMock instanceof ParentClassEs6);
+      'Mock should be an instance of the mocked class.',
+      parentMock instanceof ParentClassEs6
+    );
   },
 
   /**
@@ -128,9 +127,7 @@ testSuite({
     assertUndefined(childMock.method2());
     assertNotUndefined(childMock.x);
     assertNotUndefined(childMock.y);
-    assertTrue(
-        'Mock should be an instance of the mocked class.',
-        childMock instanceof ChildClass);
+    assertTrue('Mock should be an instance of the mocked class.', childMock instanceof ChildClass);
   },
 
   /**
@@ -147,8 +144,9 @@ testSuite({
     assertHasOwnProperty(childMock, 'parentName');
     assertUndefined(childMock.parentName);
     assertTrue(
-        'Mock should be an instance of the mocked class.',
-        childMock instanceof ChildClassEs6);
+      'Mock should be an instance of the mocked class.',
+      childMock instanceof ChildClassEs6
+    );
   },
 
   /**
@@ -165,8 +163,9 @@ testSuite({
     assertNotUndefined(parentMock.x);
     assertUndefined(parentMock.y);
     assertTrue(
-        'Mock should be an instance of the mocked class.',
-        parentMock instanceof ParentClass);
+      'Mock should be an instance of the mocked class.',
+      parentMock instanceof ParentClass
+    );
   },
 
   /**
@@ -179,8 +178,9 @@ testSuite({
     assertNotUndefined(parentMock.parent);
     assertUndefined(parentMock.parent());
     assertTrue(
-        'Mock should be an instance of the mocked class.',
-        parentMock instanceof ParentClassEs6);
+      'Mock should be an instance of the mocked class.',
+      parentMock instanceof ParentClassEs6
+    );
   },
 
   /**
@@ -197,9 +197,7 @@ testSuite({
     assertUndefined(childMock.method2());
     assertNotUndefined(childMock.x);
     assertNotUndefined(childMock.y);
-    assertTrue(
-        'Mock should be an instance of the mocked class.',
-        childMock instanceof ChildClass);
+    assertTrue('Mock should be an instance of the mocked class.', childMock instanceof ChildClass);
   },
 
   /**
@@ -214,16 +212,18 @@ testSuite({
     assertNotUndefined(childMock.child);
     assertUndefined(childMock.child());
     assertTrue(
-        'Mock should be an instance of the mocked class.',
-        childMock instanceof ChildClassEs6);
+      'Mock should be an instance of the mocked class.',
+      childMock instanceof ChildClassEs6
+    );
   },
 
   testNonEnumerableProperties() {
     const mockObject = mock.mock({});
     assertNotUndefined(mockObject.toString);
-    mock.when(mockObject).toString().then(function() {
-      return 'toString';
-    });
+    mock
+      .when(mockObject)
+      .toString()
+      .then(() => 'toString');
     assertEquals('toString', mockObject.toString());
   },
 
@@ -233,29 +233,25 @@ testSuite({
    */
   testBasicStubbing() {
     const obj = {
-      method1: function(i) {
-        return 2 * i;
-      },
-      method2: function(i, str) {
-        return str;
-      },
-      method3: function(x) {
-        return x;
-      }
+      method1: (i) => 2 * i,
+      method2: (i, str) => str,
+      method3: (x) => x,
     };
 
     const mockObj = mock.mock(obj);
-    mock.when(mockObj).method1(2).then(function(i) {
-      return i;
-    });
+    mock
+      .when(mockObj)
+      .method1(2)
+      .then((i) => i);
 
     assertEquals(4, obj.method1(2));
     assertEquals(2, mockObj.method1(2));
     assertUndefined(mockObj.method1(4));
 
-    mock.when(mockObj).method2(1, 'hi').then(function(i) {
-      return 'oh';
-    });
+    mock
+      .when(mockObj)
+      .method2(1, 'hi')
+      .then((i) => 'oh');
     assertEquals('hi', obj.method2(1, 'hi'));
     assertEquals('oh', mockObj.method2(1, 'hi'));
     assertUndefined(mockObj.method2(3, 'foo'));
@@ -363,9 +359,7 @@ testSuite({
   },
 
   testMockFunctionsWithNullableParameters() {
-    const func = function(nullableObject) {
-      return 0;
-    };
+    const func = (nullableObject) => 0;
     const mockedFunc = mock.mockFunction(func);
     mock.when(mockedFunc)(null).thenReturn(-1);
 
@@ -374,10 +368,10 @@ testSuite({
   },
 
   testMockConstructor() {
-    const Ctor = function() {
+    const Ctor = function () {
       this.isMock = false;
     };
-    const mockInstance = {isMock: true};
+    const mockInstance = { isMock: true };
     const MockCtor = mock.mockConstructor(Ctor);
     mock.when(MockCtor)().thenReturn(mockInstance);
     assertEquals(mockInstance, new MockCtor());
@@ -385,7 +379,7 @@ testSuite({
 
   /** @suppress {missingProperties} suppression added to enable type checking */
   testMockConstructorCopiesProperties() {
-    const Ctor = function() {};
+    const Ctor = () => {};
     Ctor.myParam = true;
     const MockCtor = mock.mockConstructor(Ctor);
     assertTrue(MockCtor.myParam);
@@ -397,9 +391,7 @@ testSuite({
    */
   testStubbingConsecutiveCalls() {
     const obj = {
-      method: function(i) {
-        return i * 42;
-      }
+      method: (i) => i * 42,
     };
 
     const mockObj = mock.mock(obj);
@@ -410,9 +402,7 @@ testSuite({
     assertEquals(4, mockObj.method(1));
     assertEquals(4, mockObj.method(1));
 
-    const x = function(i) {
-      return i;
-    };
+    const x = (i) => i;
     const mockedFunc = mock.mockFunction(x);
     mock.when(mockedFunc)(100).thenReturn(10).thenReturn(25);
 
@@ -428,9 +418,7 @@ testSuite({
    */
   testStubbingMultipleObjectStubsNonConflictingArgsAllShouldWork() {
     const obj = {
-      method: function(i) {
-        return i * 2;
-      }
+      method: (i) => i * 2,
     };
     const mockObj = mock.mock(obj);
 
@@ -441,16 +429,13 @@ testSuite({
     assertEquals(45, mockObj.method(5));
   },
 
-
   /**
      @suppress {strictMissingProperties} suppression added to enable type
      checking
    */
   testStubbingMultipleObjectStubsConflictingArgsMostRecentShouldPrevail() {
     const obj = {
-      method: function(i) {
-        return i * 2;
-      }
+      method: (i) => i * 2,
     };
     const mockObj = mock.mock(obj);
 
@@ -461,9 +446,7 @@ testSuite({
   },
 
   testStubbingMultipleFunctionStubsNonConflictingArgsAllShouldWork() {
-    const x = function(i) {
-      return i;
-    };
+    const x = (i) => i;
     const mockedFunc = mock.mockFunction(x);
 
     mock.when(mockedFunc)(100).thenReturn(10);
@@ -473,11 +456,8 @@ testSuite({
     assertEquals(132, mockedFunc(10));
   },
 
-
   testStubbingMultipleFunctionStubsConflictingArgsMostRecentShouldPrevail() {
-    const x = function(i) {
-      return i;
-    };
+    const x = (i) => i;
     const mockedFunc = mock.mockFunction(x);
 
     mock.when(mockedFunc)(100).thenReturn(10);
@@ -492,12 +472,8 @@ testSuite({
    */
   testSpying() {
     const obj = {
-      method1: function(i) {
-        return 2 * i;
-      },
-      method2: function(i) {
-        return 5 * i;
-      }
+      method1: (i) => 2 * i,
+      method2: (i) => 5 * i,
     };
 
     const spyObj = mock.spy(obj);
@@ -544,13 +520,16 @@ testSuite({
     assertNotUndefined(parentMock.x);
     assertUndefined(parentMock.y);
     assertTrue(
-        'Mock should be an instance of the mocked class.',
-        parentMock instanceof ParentClass);
+      'Mock should be an instance of the mocked class.',
+      parentMock instanceof ParentClass
+    );
     const incrementedOrigVal = parent.val + 1;
     parentMock.incrementVal();
     assertEquals(
-        'Changes in the spied object should reflect in the spy.',
-        incrementedOrigVal, parentMock.val);
+      'Changes in the spied object should reflect in the spy.',
+      incrementedOrigVal,
+      parentMock.val
+    );
   },
 
   /**
@@ -568,14 +547,14 @@ testSuite({
     assertUndefined(childMock.method2());
     assertNotUndefined(childMock.x);
     assertNotUndefined(childMock.y);
-    assertTrue(
-        'Mock should be an instance of the mocked class.',
-        childMock instanceof ParentClass);
+    assertTrue('Mock should be an instance of the mocked class.', childMock instanceof ParentClass);
     const incrementedOrigVal = child.val + 1;
     childMock.incrementVal();
     assertEquals(
-        'Changes in the spied object should reflect in the spy.',
-        incrementedOrigVal, childMock.val);
+      'Changes in the spied object should reflect in the spy.',
+      incrementedOrigVal,
+      childMock.val
+    );
   },
 
   /**
@@ -584,12 +563,8 @@ testSuite({
    */
   testVerifyForObjects() {
     const obj = {
-      method1: function(i) {
-        return 2 * i;
-      },
-      method2: function(i) {
-        return 5 * i;
-      }
+      method1: (i) => 2 * i,
+      method2: (i) => 5 * i,
     };
 
     const mockObj = mock.mock(obj);
@@ -602,9 +577,7 @@ testSuite({
   },
 
   testVerifyForFunctions() {
-    const func = function(i) {
-      return i;
-    };
+    const func = (i) => i;
 
     const mockFunc = mock.mockFunction(func);
     mock.when(mockFunc)(2).thenReturn(55);
@@ -617,7 +590,7 @@ testSuite({
   },
 
   testVerifyForFunctionsWithNullableParameters() {
-    const func = function(nullableObject) {};
+    const func = (nullableObject) => {};
     const mockFuncCalled = mock.mockFunction(func);
     const mockFuncNotCalled = mock.mockFunction(func);
 
@@ -631,15 +604,11 @@ testSuite({
   /** @suppress {checkTypes} suppression added to enable type checking */
   testVerifyPassesWhenVerificationModeReturnsTrue() {
     const trueMode = {
-      verify: function(number) {
-        return true;
-      },
-      describe: function() {
-        return '';
-      }
+      verify: (number) => true,
+      describe: () => '',
     };
 
-    const mockObj = mock.mock({doThing: function() {}});
+    const mockObj = mock.mock({ doThing: () => {} });
 
     mock.verify(mockObj, trueMode).doThing();
   },
@@ -647,14 +616,10 @@ testSuite({
   /** @suppress {checkTypes} suppression added to enable type checking */
   testVerifyFailsWhenVerificationModeReturnsFalse() {
     const falseMode = {
-      verify: function(number) {
-        return false;
-      },
-      describe: function() {
-        return '';
-      }
+      verify: (number) => false,
+      describe: () => '',
     };
-    const mockObj = mock.mock({doThing: function() {}});
+    const mockObj = mock.mock({ doThing: () => {} });
 
     assertThrows(mock.verify(mockObj, falseMode).doThing);
   },
@@ -666,24 +631,18 @@ testSuite({
   testVerificationErrorMessagePutsVerificationModeInRightPlace() {
     const modeDescription = 'test';
     const mode = {
-      verify: function(number) {
-        return false;
-      },
-      describe: function() {
-        return modeDescription;
-      }
+      verify: (number) => false,
+      describe: () => modeDescription,
     };
-    const mockObj = mock.mock({methodName: function() {}});
+    const mockObj = mock.mock({ methodName: () => {} });
     mockObj.methodName(2);
 
     /** @suppress {checkTypes} suppression added to enable type checking */
     const e = assertThrows(mock.verify(mockObj, mode).methodName);
     // The mode description should be between the expected method
     // invocation and a newline.
-    assertTrue(
-        string.contains(e.message, 'methodName() ' + modeDescription + '\n'));
+    assertTrue(string.contains(e.message, 'methodName() ' + modeDescription + '\n'));
   },
-
 
   /**
    * When a function invocation verification fails, it should show the failed
@@ -693,93 +652,94 @@ testSuite({
    */
   testVerificationErrorMessages() {
     const mockObj = mock.mock({
-      method: function(i) {
-        return i;
-      }
+      method: (i) => i,
     });
 
     // Failure when there are no recorded calls.
-    let e = assertThrows(function() {
+    let e = assertThrows(() => {
       mock.verify(mockObj).method(4);
     });
     assertTrue(e instanceof VerificationError);
-    let expected = '\nExpected: method(4) at least 1 times\n' +
-        'Recorded: No recorded calls';
+    let expected = '\nExpected: method(4) at least 1 times\n' + 'Recorded: No recorded calls';
     assertEquals(expected, e.message);
-
 
     // Failure when there are recorded calls with ints and functions
     // as arguments.
-    const callback = function() {};
+    const callback = () => {};
     const callbackId = mock.getUid(callback);
 
     mockObj.method(1);
     mockObj.method(2);
     mockObj.method(callback);
 
-    e = assertThrows(function() {
+    e = assertThrows(() => {
       mock.verify(mockObj).method(3);
     });
     assertTrue(e instanceof VerificationError);
 
-    expected = '\nExpected: method(3) at least 1 times\n' +
-        'Recorded: method(1),\n' +
-        '          method(2),\n' +
-        '          method(<function #anonymous' + callbackId + '>)';
+    expected =
+      '\nExpected: method(3) at least 1 times\n' +
+      'Recorded: method(1),\n' +
+      '          method(2),\n' +
+      '          method(<function #anonymous' +
+      callbackId +
+      '>)';
     assertEquals(expected, e.message);
 
     // With mockFunctions
     const mockCallback = mock.mockFunction(callback);
-    e = assertThrows(function() {
+    e = assertThrows(() => {
       mock.verify(mockCallback)(5);
     });
-    expected = '\nExpected: #mockFor<#anonymous' + callbackId +
-        '>(5) at least' +
-        ' 1 times\n' +
-        'Recorded: No recorded calls';
+    expected =
+      '\nExpected: #mockFor<#anonymous' +
+      callbackId +
+      '>(5) at least' +
+      ' 1 times\n' +
+      'Recorded: No recorded calls';
 
     mockCallback(8);
     mock.verify(mockCallback)(8);
     assertEquals(expected, e.message);
 
     // Objects with circular references should not fail.
-    const obj = {x: 1};
+    const obj = { x: 1 };
     obj.y = obj;
 
     mockCallback(obj);
-    e = assertThrows(function() {
+    e = assertThrows(() => {
       mock.verify(mockCallback)(5);
     });
     assertTrue(e instanceof VerificationError);
 
     // Should respect string representation of different custom classes.
-    const myClass = function() {};
-    myClass.prototype.toString = function() {
-      return '<superClass>';
-    };
+    const myClass = () => {};
+    myClass.prototype.toString = () => '<superClass>';
 
     const mockFunction = mock.mockFunction(function f() {});
     mockFunction(new myClass());
 
-    e = assertThrows(function() {
+    e = assertThrows(() => {
       mock.verify(mockFunction)(5);
     });
-    expected = '\nExpected: #mockFor<f>(5) at least 1 times\n' +
-        'Recorded: #mockFor<f>(<superClass>)';
+    expected =
+      '\nExpected: #mockFor<f>(5) at least 1 times\n' + 'Recorded: #mockFor<f>(<superClass>)';
     assertEquals(expected, e.message);
   },
 
   async testWait() {
     const mockParent = mock.mock(ParentClass);
 
-    setTimeout(/**
+    setTimeout(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 mockParent.method1();
-               },
-               0);
+      () => {
+        mockParent.method1();
+      },
+      0
+    );
 
     await mock.waitAndVerify(mockParent).method1();
   },
@@ -799,25 +759,28 @@ testSuite({
     const timeoutMode = mockTimeout.timeout(150);
     const verificationMode = mock.verification.times(2);
 
-    setTimeout(/**
+    setTimeout(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 mockParent.method1();
-               },
-               0);
-    setTimeout(/**
+      () => {
+        mockParent.method1();
+      },
+      0
+    );
+    setTimeout(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 mockParent.method1();
-               },
-               0);
+      () => {
+        mockParent.method1();
+      },
+      0
+    );
 
-    await mock.waitAndVerify(mockParent, verificationMode, timeoutMode)
-        .method1();
+    await mock.waitAndVerify(mockParent, verificationMode, timeoutMode).method1();
   },
 
   async testMockFunctionWaitOnMultipleMethodCalls() {
@@ -838,23 +801,27 @@ testSuite({
   async testWaitOnDifferentFunctions() {
     const mockParent = mock.mock(ParentClass);
 
-    setTimeout(/**
+    setTimeout(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 mockParent.incrementVal();
-               },
-               0);
+      () => {
+        mockParent.incrementVal();
+      },
+      0
+    );
 
-    setTimeout(/**
+    setTimeout(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 mockParent.method1();
-               },
-               0);
+      () => {
+        mockParent.method1();
+      },
+      0
+    );
 
     await mock.waitAndVerify(mockParent).method1();
     await mock.waitAndVerify(mockParent).incrementVal();
@@ -863,23 +830,27 @@ testSuite({
   async testWaitOnSameFunctionWithDifferentArgs() {
     const mockParent = mock.mock(ParentClass);
 
-    setTimeout(/**
+    setTimeout(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 mockParent.method1(1);
-               },
-               0);
+      () => {
+        mockParent.method1(1);
+      },
+      0
+    );
 
-    setTimeout(/**
+    setTimeout(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 mockParent.method1(2);
-               },
-               0);
+      () => {
+        mockParent.method1(2);
+      },
+      0
+    );
 
     await mock.waitAndVerify(mockParent).method1(2);
     await mock.waitAndVerify(mockParent).method1(1);
@@ -908,24 +879,26 @@ testSuite({
     const mockParent = mock.mock(ParentClass);
     const timeoutMode = mockTimeout.timeout(1);
 
-    setTimeout(/**
+    setTimeout(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 mockParent.method1();
-               },
-               50);
+      () => {
+        mockParent.method1();
+      },
+      50
+    );
 
-    const e = await assertRejects(
-        mock.waitAndVerify(mockParent, timeoutMode).method1());
+    const e = await assertRejects(mock.waitAndVerify(mockParent, timeoutMode).method1());
     assertTrue(e instanceof TimeoutError);
     assertEquals(
-        e.message,
-        'Function call was either not invoked or never met criteria specified ' +
-            'by provided verification mode. \n' +
-            'Expected: method1() at least 1 times\n' +
-            'Recorded: No recorded calls');
+      e.message,
+      'Function call was either not invoked or never met criteria specified ' +
+        'by provided verification mode. \n' +
+        'Expected: method1() at least 1 times\n' +
+        'Recorded: No recorded calls'
+    );
   },
 
   /**
@@ -933,7 +906,7 @@ testSuite({
      checking
    */
   async testMockFunctionWaitWithTimeoutMode() {
-    const func = function() {};
+    const func = () => {};
     const funcId = mock.getUid(func);
     const mockFunc = mock.mockFunction(func);
     const timeoutMode = mockTimeout.timeout(1);
@@ -945,12 +918,14 @@ testSuite({
     const e = await assertRejects(mock.waitAndVerify(mockFunc, timeoutMode)());
     assertTrue(e instanceof TimeoutError);
     assertEquals(
-        e.message,
-        'Function call was either not invoked or never met criteria specified ' +
-            'by provided verification mode. \n' +
-            'Expected: #mockFor<#anonymous' + funcId +
-            '>() at least 1 times\n' +
-            'Recorded: No recorded calls');
+      e.message,
+      'Function call was either not invoked or never met criteria specified ' +
+        'by provided verification mode. \n' +
+        'Expected: #mockFor<#anonymous' +
+        funcId +
+        '>() at least 1 times\n' +
+        'Recorded: No recorded calls'
+    );
   },
 
   /**
@@ -963,14 +938,14 @@ testSuite({
 
     mockParent.method1();
 
-    const e = await assertRejects(
-        mock.waitAndVerify(mockParent, verificationMode).method1());
+    const e = await assertRejects(mock.waitAndVerify(mockParent, verificationMode).method1());
     assertEquals(
-        e.message,
-        'Function call was either not invoked or never met criteria specified ' +
-            'by provided verification mode. \n' +
-            'Expected: method1() 2 times\n' +
-            'Recorded: method1()');
+      e.message,
+      'Function call was either not invoked or never met criteria specified ' +
+        'by provided verification mode. \n' +
+        'Expected: method1() 2 times\n' +
+        'Recorded: method1()'
+    );
   },
 
   /**
@@ -978,21 +953,25 @@ testSuite({
      checking
    */
   async testMockFunctionWaitWithVerificationMode() {
-    const func = function() {};
+    const func = () => {};
     const funcId = mock.getUid(func);
     const mockFunc = mock.mockFunction(func);
     const verificationMode = mock.verification.times(2);
 
     mockFunc();
 
-    const e =
-        await assertRejects(mock.waitAndVerify(mockFunc, verificationMode)());
+    const e = await assertRejects(mock.waitAndVerify(mockFunc, verificationMode)());
     assertEquals(
-        e.message,
-        'Function call was either not invoked or never met criteria specified ' +
-            'by provided verification mode. \n' +
-            'Expected: #mockFor<#anonymous' + funcId + '>() 2 times\n' +
-            'Recorded: #mockFor<#anonymous' + funcId + '>()');
+      e.message,
+      'Function call was either not invoked or never met criteria specified ' +
+        'by provided verification mode. \n' +
+        'Expected: #mockFor<#anonymous' +
+        funcId +
+        '>() 2 times\n' +
+        'Recorded: #mockFor<#anonymous' +
+        funcId +
+        '>()'
+    );
   },
 
   /**
@@ -1026,34 +1005,39 @@ testSuite({
     const timeoutMode = mockTimeout.timeout(150);
     const verificationMode = mock.verification.times(2);
 
-    setTimeout(/**
+    setTimeout(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 mockParent.method1();
-               },
-               50);
+      () => {
+        mockParent.method1();
+      },
+      50
+    );
 
-    setTimeout(/**
+    setTimeout(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 mockParent.method1();
-               },
-               250);
+      () => {
+        mockParent.method1();
+      },
+      250
+    );
 
     const e = await assertRejects(
-        mock.waitAndVerify(mockParent, timeoutMode, verificationMode)
-            .method1());
+      mock.waitAndVerify(mockParent, timeoutMode, verificationMode).method1()
+    );
     assertTrue(e instanceof TimeoutError);
     assertEquals(
-        e.message,
-        'Function call was either not invoked or never met criteria specified ' +
-            'by provided verification mode. \n' +
-            'Expected: method1() 2 times\n' +
-            'Recorded: method1()');
+      e.message,
+      'Function call was either not invoked or never met criteria specified ' +
+        'by provided verification mode. \n' +
+        'Expected: method1() 2 times\n' +
+        'Recorded: method1()'
+    );
   },
 
   /**
@@ -1061,7 +1045,7 @@ testSuite({
      checking
    */
   async testMockFunctionWaitWithTimeoutAndVerificationMode() {
-    const func = function() {};
+    const func = () => {};
     const funcId = mock.getUid(func);
     const mockFunc = mock.mockFunction(func);
     const timeoutMode = mockTimeout.timeout(150);
@@ -1075,15 +1059,19 @@ testSuite({
       mockFunc();
     }, 250);
 
-    const e = await assertRejects(
-        mock.waitAndVerify(mockFunc, timeoutMode, verificationMode)());
+    const e = await assertRejects(mock.waitAndVerify(mockFunc, timeoutMode, verificationMode)());
     assertTrue(e instanceof TimeoutError);
     assertEquals(
-        e.message,
-        'Function call was either not invoked or never met criteria specified ' +
-            'by provided verification mode. \n' +
-            'Expected: #mockFor<#anonymous' + funcId + '>() 2 times\n' +
-            'Recorded: #mockFor<#anonymous' + funcId + '>()');
+      e.message,
+      'Function call was either not invoked or never met criteria specified ' +
+        'by provided verification mode. \n' +
+        'Expected: #mockFor<#anonymous' +
+        funcId +
+        '>() 2 times\n' +
+        'Recorded: #mockFor<#anonymous' +
+        funcId +
+        '>()'
+    );
   },
 
   /**
@@ -1095,34 +1083,39 @@ testSuite({
     const timeoutMode = mockTimeout.timeout(150);
     const verificationMode = mock.verification.times(2);
 
-    setTimeout(/**
+    setTimeout(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 mockParent.method1();
-               },
-               50);
+      () => {
+        mockParent.method1();
+      },
+      50
+    );
 
-    setTimeout(/**
+    setTimeout(
+      /**
                   @suppress {strictMissingProperties} suppression added to
                   enable type checking
                 */
-               () => {
-                 mockParent.method1();
-               },
-               250);
+      () => {
+        mockParent.method1();
+      },
+      250
+    );
 
     const e = await assertRejects(
-        mock.waitAndVerify(mockParent, verificationMode, timeoutMode)
-            .method1());
+      mock.waitAndVerify(mockParent, verificationMode, timeoutMode).method1()
+    );
     assertTrue(e instanceof TimeoutError);
     assertEquals(
-        e.message,
-        'Function call was either not invoked or never met criteria specified ' +
-            'by provided verification mode. \n' +
-            'Expected: method1() 2 times\n' +
-            'Recorded: method1()');
+      e.message,
+      'Function call was either not invoked or never met criteria specified ' +
+        'by provided verification mode. \n' +
+        'Expected: method1() 2 times\n' +
+        'Recorded: method1()'
+    );
   },
 
   /**
@@ -1130,7 +1123,7 @@ testSuite({
      checking
    */
   async testMockFunctionPassingVerificationModeBeforeTimeoutMode() {
-    const func = function() {};
+    const func = () => {};
     const funcId = mock.getUid(func);
     const mockFunc = mock.mockFunction(func);
     const timeoutMode = mockTimeout.timeout(150);
@@ -1144,17 +1137,20 @@ testSuite({
       mockFunc();
     }, 250);
 
-    const e = await assertRejects(
-        mock.waitAndVerify(mockFunc, verificationMode, timeoutMode)());
+    const e = await assertRejects(mock.waitAndVerify(mockFunc, verificationMode, timeoutMode)());
     assertTrue(e instanceof TimeoutError);
     assertEquals(
-        e.message,
-        'Function call was either not invoked or never met criteria specified ' +
-            'by provided verification mode. \n' +
-            'Expected: #mockFor<#anonymous' + funcId + '>() 2 times\n' +
-            'Recorded: #mockFor<#anonymous' + funcId + '>()');
+      e.message,
+      'Function call was either not invoked or never met criteria specified ' +
+        'by provided verification mode. \n' +
+        'Expected: #mockFor<#anonymous' +
+        funcId +
+        '>() 2 times\n' +
+        'Recorded: #mockFor<#anonymous' +
+        funcId +
+        '>()'
+    );
   },
-
 
   /**
      @suppress {strictMissingProperties} suppression added to enable type
@@ -1162,12 +1158,8 @@ testSuite({
    */
   testMatchers() {
     const obj = {
-      method1: function(i) {
-        return 2 * i;
-      },
-      method2: function(i) {
-        return 5 * i;
-      }
+      method1: (i) => 2 * i,
+      method2: (i) => 5 * i,
     };
 
     const mockObj = mock.mock(obj);
@@ -1188,9 +1180,7 @@ testSuite({
    */
   testMatcherVerify() {
     const obj = {
-      method: function(i) {
-        return 2 * i;
-      }
+      method: (i) => 2 * i,
     };
 
     // Using spy objects.
@@ -1218,9 +1208,7 @@ testSuite({
    */
   testMatcherVerifyCollision() {
     const obj = {
-      method: function(i) {
-        return 2 * i;
-      }
+      method: (i) => 2 * i,
     };
     const mockObj = mock.mock(obj);
 
@@ -1230,16 +1218,13 @@ testSuite({
 
   testMatcherVerifyCollisionBetweenMatchers() {
     const obj = {
-      method: function(i) {
-        return 2 * i;
-      }
+      method: (i) => 2 * i,
     };
     const mockObj = mock.mock(obj);
 
     mock.when(mockObj).method(anything()).thenReturn(100);
 
-    const e =
-        assertThrows(goog.partial(mock.verify(mockObj).method, anything()));
+    const e = assertThrows(goog.partial(mock.verify(mockObj).method, anything()));
     assertTrue(e instanceof VerificationError);
   },
 
@@ -1248,8 +1233,8 @@ testSuite({
      checking
    */
   testVerifyForUnmockedMethods() {
-    const Task = function() {};
-    Task.prototype.run = function() {};
+    const Task = () => {};
+    Task.prototype.run = () => {};
 
     const mockTask = mock.mock(Task);
     mockTask.run();
@@ -1264,20 +1249,16 @@ testSuite({
     assertEquals('alert()', formatMethodCall('alert'));
     assertEquals('sum(2, 4)', formatMethodCall('sum', [2, 4]));
     assertEquals('sum("2", "4")', formatMethodCall('sum', ['2', '4']));
-    assertEquals(
-        'call(<function unicorn>)',
-        formatMethodCall('call', [function unicorn() {}]));
+    assertEquals('call(<function unicorn>)', formatMethodCall('call', [function unicorn() {}]));
 
-    const arg = {x: 1, y: {hello: 'world'}};
-    assertEquals(
-        'call(' + mock.formatValue_(arg) + ')',
-        formatMethodCall('call', [arg]));
+    const arg = { x: 1, y: { hello: 'world' } };
+    assertEquals('call(' + mock.formatValue_(arg) + ')', formatMethodCall('call', [arg]));
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
   testGetFunctionName() {
-    const f1 = function() {};
-    const f2 = function() {};
+    const f1 = () => {};
+    const f2 = () => {};
     const named = function myName() {};
 
     assert(string.startsWith(mock.getFunctionName_(f1), '#anonymous'));
@@ -1292,40 +1273,40 @@ testSuite({
     let obj2;
     let obj3;
 
-    obj = {x: 1};
-    assertEquals(
-        '{"x":1 _id:' + mock.getUid(obj) + '}', mock.formatValue_(obj));
+    obj = { x: 1 };
+    assertEquals('{"x":1 _id:' + mock.getUid(obj) + '}', mock.formatValue_(obj));
     assertEquals('{"x":1}', mock.formatValue_(obj, false /* id */));
 
-    obj = {x: 'hello'};
-    assertEquals(
-        '{"x":"hello" _id:' + mock.getUid(obj) + '}', mock.formatValue_(obj));
+    obj = { x: 'hello' };
+    assertEquals('{"x":"hello" _id:' + mock.getUid(obj) + '}', mock.formatValue_(obj));
     assertEquals('{"x":"hello"}', mock.formatValue_(obj, false /* id */));
 
     obj3 = {};
-    obj2 = {y: obj3};
+    obj2 = { y: obj3 };
     obj3.x = obj2;
     assertEquals(
-        '{"x":{"y":<recursive/dupe obj_' + mock.getUid(obj3) + '> ' +
-            '_id:' + mock.getUid(obj2) + '} ' +
-            '_id:' + mock.getUid(obj3) + '}',
-        mock.formatValue_(obj3));
-    assertEquals(
-        '{"x":{"y":<recursive/dupe>}}',
-        mock.formatValue_(obj3, false /* id */));
+      '{"x":{"y":<recursive/dupe obj_' +
+        mock.getUid(obj3) +
+        '> ' +
+        '_id:' +
+        mock.getUid(obj2) +
+        '} ' +
+        '_id:' +
+        mock.getUid(obj3) +
+        '}',
+      mock.formatValue_(obj3)
+    );
+    assertEquals('{"x":{"y":<recursive/dupe>}}', mock.formatValue_(obj3, false /* id */));
 
-
-    obj = {x: function y() {}};
-    assertEquals(
-        '{"x":<function y> _id:' + mock.getUid(obj) + '}',
-        mock.formatValue_(obj));
+    obj = { x: function y() {} };
+    assertEquals('{"x":<function y> _id:' + mock.getUid(obj) + '}', mock.formatValue_(obj));
     assertEquals('{"x":<function y>}', mock.formatValue_(obj, false /* id */));
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
   testFormatSymbols() {
     if (typeof window['Symbol'] !== 'function') {
-      return;  // skip browsers without symbols
+      return; // skip browsers without symbols
     }
     if (Symbol().toString() !== 'Symbol()') {
       // skip testing in environments with a likely-polyfilled symbol,
@@ -1339,7 +1320,7 @@ testSuite({
   /** @suppress {visibility} suppression added to enable type checking */
   testFormatBigInts() {
     if (typeof window['BigInt'] !== 'function') {
-      return;  // skip browsers without bigints
+      return; // skip browsers without bigints
     }
     assertEquals('30n', mock.formatValue_(BigInt(30)));
   },
@@ -1347,8 +1328,8 @@ testSuite({
   testGetUid() {
     const obj1 = {};
     const obj2 = {};
-    const func1 = function() {};
-    const func2 = function() {};
+    const func1 = () => {};
+    const func2 = () => {};
 
     assertNotEquals(mock.getUid(obj1), mock.getUid(obj2));
     assertNotEquals(mock.getUid(func1), mock.getUid(func2));
@@ -1370,11 +1351,10 @@ testSuite({
 
     const mockObj = mock.mock(Foo);
     mock.when(mockObj).a().thenReturn('a');
-    assertThrowsJsUnitException(function() {
+    assertThrowsJsUnitException(() => {
       new Foo().a();
     });
     assertEquals('a', mockObj.a());
     mock.verify(mockObj).a();
   },
-
 });

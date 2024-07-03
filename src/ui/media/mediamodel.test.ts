@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.media.MediaModelTest');
-goog.setTestOnly();
 
 const MediaModel = goog.require('goog.ui.media.MediaModel');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -24,13 +23,16 @@ testSuite({
     assertEquals('a description', model.getDescription());
 
     const incompleteModel = new MediaModel(
-        'http://foo.bar', undefined,
-        'This media has no caption but has a description and a URL');
+      'http://foo.bar',
+      undefined,
+      'This media has no caption but has a description and a URL'
+    );
     assertEquals('http://foo.bar', incompleteModel.getUrl());
     assertUndefined(incompleteModel.getCaption());
     assertEquals(
-        'This media has no caption but has a description and a URL',
-        incompleteModel.getDescription());
+      'This media has no caption but has a description and a URL',
+      incompleteModel.getDescription()
+    );
     assertArrayEquals([], incompleteModel.getThumbnails());
   },
 
@@ -42,10 +44,8 @@ testSuite({
       new MediaModel.Category('scheme-b', 'value-b'),
     ]);
     assertNull(model.findCategoryWithScheme('no such scheme'));
-    assertEquals(
-        'value-a', model.findCategoryWithScheme('scheme-a').getValue());
-    assertEquals(
-        'value-b', model.findCategoryWithScheme('scheme-b').getValue());
+    assertEquals('value-a', model.findCategoryWithScheme('scheme-a').getValue());
+    assertEquals('value-b', model.findCategoryWithScheme('scheme-b').getValue());
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -66,8 +66,7 @@ testSuite({
   },
 
   testMediaModelSubtitles() {
-    model.setSubTitles(
-        [new MediaModel.SubTitle('uri', '*', 'application/tts+xml')]);
+    model.setSubTitles([new MediaModel.SubTitle('uri', '*', 'application/tts+xml')]);
     assertEquals(1, model.getSubTitles().length);
     assertEquals('uri', model.getSubTitles()[0].getHref());
     assertEquals('*', model.getSubTitles()[0].getLang());

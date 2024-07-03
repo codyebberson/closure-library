@@ -7,14 +7,13 @@
 /** @fileoverview Unit tests for device. */
 
 goog.module('goog.labs.userAgent.deviceTest');
-goog.setTestOnly();
 
 const device = goog.require('goog.labs.userAgent.device');
 const testAgentData = goog.require('goog.labs.userAgent.testAgentData');
 const testAgents = goog.require('goog.labs.userAgent.testAgents');
 const testSuite = goog.require('goog.testing.testSuite');
 const util = goog.require('goog.labs.userAgent.util');
-const {setUseClientHintsForTesting} = goog.require('goog.labs.userAgent');
+const { setUseClientHintsForTesting } = goog.require('goog.labs.userAgent');
 
 /**
  * @param {?string} uaString
@@ -71,11 +70,8 @@ testSuite({
     assertIsTablet(testAgents.CHROME_ANDROID_TABLET);
     assertIsTablet(testAgents.KINDLE_FIRE);
     assertIsTablet(testAgents.IPAD_6);
-    assertIsTablet(
-        testAgents.CHROME_ANDROID_TABLET,
-        testAgentData.CHROME_USERAGENT_DATA_LINUX);
-    assertIsTablet(
-        testAgents.KINDLE_FIRE, testAgentData.CHROME_USERAGENT_DATA_LINUX);
+    assertIsTablet(testAgents.CHROME_ANDROID_TABLET, testAgentData.CHROME_USERAGENT_DATA_LINUX);
+    assertIsTablet(testAgents.KINDLE_FIRE, testAgentData.CHROME_USERAGENT_DATA_LINUX);
   },
 
   testDesktop() {
@@ -85,7 +81,6 @@ testSuite({
     assertIsDesktop(testAgents.IE_9);
     assertIsDesktop(testAgents.IE_10);
     assertIsDesktop(testAgents.IE_11);
-    assertIsDesktop(
-        testAgents.CHROME_25, testAgentData.CHROME_USERAGENT_DATA_LINUX);
+    assertIsDesktop(testAgents.CHROME_25, testAgentData.CHROME_USERAGENT_DATA_LINUX);
   },
 });

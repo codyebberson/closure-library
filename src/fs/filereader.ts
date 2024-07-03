@@ -17,8 +17,6 @@ goog.require('goog.events.EventTarget');
 goog.require('goog.fs.Error');
 goog.require('goog.fs.ProgressEvent');
 
-
-
 /**
  * An object for monitoring the reading of files. This emits ProgressEvents of
  * the types listed in {@link goog.fs.FileReader.EventType}.
@@ -27,8 +25,7 @@ goog.require('goog.fs.ProgressEvent');
  * @extends {goog.events.EventTarget}
  * @final
  */
-goog.fs.FileReader = function() {
-  'use strict';
+goog.fs.FileReader = function () {
   goog.fs.FileReader.base(this, 'constructor');
 
   /**
@@ -48,7 +45,6 @@ goog.fs.FileReader = function() {
 };
 goog.inherits(goog.fs.FileReader, goog.events.EventTarget);
 
-
 /**
  * Possible states for a FileReader.
  *
@@ -67,9 +63,8 @@ goog.fs.FileReader.ReadyState = {
    * The data has been read from the file, the read was aborted, or an error
    * occurred.
    */
-  DONE: 2
+  DONE: 2,
 };
-
 
 /**
  * Events emitted by a FileReader.
@@ -104,15 +99,13 @@ goog.fs.FileReader.EventType = {
    * Emitted when the reading is finished, whether successfully or not.
    * readyState will be DONE.
    */
-  LOAD_END: 'loadend'
+  LOAD_END: 'loadend',
 };
-
 
 /**
  * Abort the reading of the file.
  */
-goog.fs.FileReader.prototype.abort = function() {
-  'use strict';
+goog.fs.FileReader.prototype.abort = function () {
   try {
     this.reader_.abort();
   } catch (e) {
@@ -120,34 +113,26 @@ goog.fs.FileReader.prototype.abort = function() {
   }
 };
 
-
 /**
  * @return {goog.fs.FileReader.ReadyState} The current state of the FileReader.
  */
-goog.fs.FileReader.prototype.getReadyState = function() {
-  'use strict';
+goog.fs.FileReader.prototype.getReadyState = function () {
   return /** @type {goog.fs.FileReader.ReadyState} */ (this.reader_.readyState);
 };
-
 
 /**
  * @return {*} The result of the file read.
  */
-goog.fs.FileReader.prototype.getResult = function() {
-  'use strict';
+goog.fs.FileReader.prototype.getResult = function () {
   return this.reader_.result;
 };
-
 
 /**
  * @return {goog.fs.Error} The error encountered while reading, if any.
  */
-goog.fs.FileReader.prototype.getError = function() {
-  'use strict';
-  return this.reader_.error &&
-      new goog.fs.Error(this.reader_.error, 'reading file');
+goog.fs.FileReader.prototype.getError = function () {
+  return this.reader_.error && new goog.fs.Error(this.reader_.error, 'reading file');
 };
-
 
 /**
  * Wrap a progress event emitted by the underlying file reader and re-emit it.
@@ -155,29 +140,23 @@ goog.fs.FileReader.prototype.getError = function() {
  * @param {!ProgressEvent} event The underlying event.
  * @private
  */
-goog.fs.FileReader.prototype.dispatchProgressEvent_ = function(event) {
-  'use strict';
+goog.fs.FileReader.prototype.dispatchProgressEvent_ = function (event) {
   this.dispatchEvent(new goog.fs.ProgressEvent(event, this));
 };
 
-
 /** @override */
-goog.fs.FileReader.prototype.disposeInternal = function() {
-  'use strict';
+goog.fs.FileReader.prototype.disposeInternal = function () {
   goog.fs.FileReader.base(this, 'disposeInternal');
   delete this.reader_;
 };
-
 
 /**
  * Starts reading a blob as a binary string.
  * @param {!Blob} blob The blob to read.
  */
-goog.fs.FileReader.prototype.readAsBinaryString = function(blob) {
-  'use strict';
+goog.fs.FileReader.prototype.readAsBinaryString = function (blob) {
   this.reader_.readAsBinaryString(blob);
 };
-
 
 /**
  * Reads a blob as a binary string.
@@ -185,24 +164,20 @@ goog.fs.FileReader.prototype.readAsBinaryString = function(blob) {
  * @return {!goog.async.Deferred} The deferred Blob contents as a binary string.
  *     If an error occurs, the errback is called with a {@link goog.fs.Error}.
  */
-goog.fs.FileReader.readAsBinaryString = function(blob) {
-  'use strict';
+goog.fs.FileReader.readAsBinaryString = (blob) => {
   const reader = new goog.fs.FileReader();
   const d = goog.fs.FileReader.createDeferred_(reader);
   reader.readAsBinaryString(blob);
   return d;
 };
 
-
 /**
  * Starts reading a blob as an array buffer.
  * @param {!Blob} blob The blob to read.
  */
-goog.fs.FileReader.prototype.readAsArrayBuffer = function(blob) {
-  'use strict';
+goog.fs.FileReader.prototype.readAsArrayBuffer = function (blob) {
   this.reader_.readAsArrayBuffer(blob);
 };
-
 
 /**
  * Reads a blob as an array buffer.
@@ -210,25 +185,21 @@ goog.fs.FileReader.prototype.readAsArrayBuffer = function(blob) {
  * @return {!goog.async.Deferred} The deferred Blob contents as an array buffer.
  *     If an error occurs, the errback is called with a {@link goog.fs.Error}.
  */
-goog.fs.FileReader.readAsArrayBuffer = function(blob) {
-  'use strict';
+goog.fs.FileReader.readAsArrayBuffer = (blob) => {
   const reader = new goog.fs.FileReader();
   const d = goog.fs.FileReader.createDeferred_(reader);
   reader.readAsArrayBuffer(blob);
   return d;
 };
 
-
 /**
  * Starts reading a blob as text.
  * @param {!Blob} blob The blob to read.
  * @param {string=} opt_encoding The name of the encoding to use.
  */
-goog.fs.FileReader.prototype.readAsText = function(blob, opt_encoding) {
-  'use strict';
+goog.fs.FileReader.prototype.readAsText = function (blob, opt_encoding) {
   this.reader_.readAsText(blob, opt_encoding);
 };
-
 
 /**
  * Reads a blob as text.
@@ -237,24 +208,20 @@ goog.fs.FileReader.prototype.readAsText = function(blob, opt_encoding) {
  * @return {!goog.async.Deferred} The deferred Blob contents as text.
  *     If an error occurs, the errback is called with a {@link goog.fs.Error}.
  */
-goog.fs.FileReader.readAsText = function(blob, opt_encoding) {
-  'use strict';
+goog.fs.FileReader.readAsText = (blob, opt_encoding) => {
   const reader = new goog.fs.FileReader();
   const d = goog.fs.FileReader.createDeferred_(reader);
   reader.readAsText(blob, opt_encoding);
   return d;
 };
 
-
 /**
  * Starts reading a blob as a data URL.
  * @param {!Blob} blob The blob to read.
  */
-goog.fs.FileReader.prototype.readAsDataUrl = function(blob) {
-  'use strict';
+goog.fs.FileReader.prototype.readAsDataUrl = function (blob) {
   this.reader_.readAsDataURL(blob);
 };
-
 
 /**
  * Reads a blob as a data URL.
@@ -262,14 +229,12 @@ goog.fs.FileReader.prototype.readAsDataUrl = function(blob) {
  * @return {!goog.async.Deferred} The deferred Blob contents as a data URL.
  *     If an error occurs, the errback is called with a {@link goog.fs.Error}.
  */
-goog.fs.FileReader.readAsDataUrl = function(blob) {
-  'use strict';
+goog.fs.FileReader.readAsDataUrl = (blob) => {
   const reader = new goog.fs.FileReader();
   const d = goog.fs.FileReader.createDeferred_(reader);
   reader.readAsDataUrl(blob);
   return d;
 };
-
 
 /**
  * Creates a new deferred object for the results of a read method.
@@ -277,12 +242,12 @@ goog.fs.FileReader.readAsDataUrl = function(blob) {
  * @return {!goog.async.Deferred} The deferred results.
  * @private
  */
-goog.fs.FileReader.createDeferred_ = function(reader) {
-  'use strict';
+goog.fs.FileReader.createDeferred_ = (reader) => {
   const deferred = new goog.async.Deferred();
   reader.listen(
-      goog.fs.FileReader.EventType.LOAD_END, goog.partial(function(d, r, e) {
-        'use strict';
+    goog.fs.FileReader.EventType.LOAD_END,
+    goog.partial(
+      (d, r, e) => {
         const result = r.getResult();
         const error = r.getError();
         if (result != null && !error) {
@@ -291,6 +256,10 @@ goog.fs.FileReader.createDeferred_ = function(reader) {
           d.errback(error);
         }
         r.dispose();
-      }, deferred, reader));
+      },
+      deferred,
+      reader
+    )
+  );
   return deferred;
 };

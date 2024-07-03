@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.PopupTest');
-goog.setTestOnly();
 
 const AnchoredPosition = goog.require('goog.positioning.AnchoredPosition');
 const Corner = goog.require('goog.positioning.Corner');
@@ -34,12 +33,15 @@ testSuite({
     let anchorRect = style.getBounds(anchorEl);
     let popupRect = style.getBounds(popupEl);
     assertRoundedEquals(
-        'Left edge of popup should line up with left edge ' +
-            'of anchor.',
-        anchorRect.left, popupRect.left);
+      'Left edge of popup should line up with left edge ' + 'of anchor.',
+      anchorRect.left,
+      popupRect.left
+    );
     assertRoundedEquals(
-        'Popup should be positioned just below the anchor.',
-        anchorRect.top + anchorRect.height, popupRect.top);
+      'Popup should be positioned just below the anchor.',
+      anchorRect.top + anchorRect.height,
+      popupRect.top
+    );
 
     // Reposition.
     anchorEl.style.marginTop = '7px';
@@ -48,8 +50,10 @@ testSuite({
     anchorRect = style.getBounds(anchorEl);
     popupRect = style.getBounds(popupEl);
     assertRoundedEquals(
-        'Popup should be positioned just below the anchor.',
-        anchorRect.top + anchorRect.height, popupRect.top);
+      'Popup should be positioned just below the anchor.',
+      anchorRect.top + anchorRect.height,
+      popupRect.top
+    );
   },
 
   testSetPinnedCorner() {
@@ -63,12 +67,15 @@ testSuite({
     let anchorRect = style.getBounds(anchorEl);
     let popupRect = style.getBounds(popupEl);
     assertRoundedEquals(
-        'Left edge of popup should line up with left edge ' +
-            'of anchor.',
-        anchorRect.left, popupRect.left);
+      'Left edge of popup should line up with left edge ' + 'of anchor.',
+      anchorRect.left,
+      popupRect.left
+    );
     assertRoundedEquals(
-        'Popup should be positioned just below the anchor.',
-        anchorRect.top + anchorRect.height, popupRect.top);
+      'Popup should be positioned just below the anchor.',
+      anchorRect.top + anchorRect.height,
+      popupRect.top
+    );
 
     // Change pinned corner.
     popup.setPinnedCorner(Corner.BOTTOM_END);
@@ -76,13 +83,15 @@ testSuite({
     anchorRect = style.getBounds(anchorEl);
     popupRect = style.getBounds(popupEl);
     assertRoundedEquals(
-        'Right edge of popup should line up with left edge ' +
-            'of anchor.',
-        anchorRect.left, popupRect.left + popupRect.width);
+      'Right edge of popup should line up with left edge ' + 'of anchor.',
+      anchorRect.left,
+      popupRect.left + popupRect.width
+    );
     assertRoundedEquals(
-        'Bottom edge of popup should line up with bottom ' +
-            'of anchor.',
-        anchorRect.top + anchorRect.height, popupRect.top + popupRect.height);
+      'Bottom edge of popup should line up with bottom ' + 'of anchor.',
+      anchorRect.top + anchorRect.height,
+      popupRect.top + popupRect.height
+    );
 
     // Position outside the viewport.
     anchorEl.style.marginLeft = '0';
@@ -92,9 +101,10 @@ testSuite({
     popupRect = style.getBounds(popupEl);
 
     assertRoundedEquals(
-        'Right edge of popup should line up with left edge ' +
-            'of anchor.',
-        anchorRect.left, popupRect.left + popupRect.width);
+      'Right edge of popup should line up with left edge ' + 'of anchor.',
+      anchorRect.left,
+      popupRect.left + popupRect.width
+    );
 
     anchorEl.style.marginLeft = '';
   },

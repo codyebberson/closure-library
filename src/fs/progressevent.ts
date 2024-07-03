@@ -11,8 +11,6 @@ goog.provide('goog.fs.ProgressEvent');
 
 goog.require('goog.events.Event');
 
-
-
 /**
  * A wrapper for the progress events emitted by the File APIs.
  *
@@ -22,8 +20,7 @@ goog.require('goog.events.Event');
  * @constructor
  * @final
  */
-goog.fs.ProgressEvent = function(event, target) {
-  'use strict';
+goog.fs.ProgressEvent = function (event, target) {
   goog.fs.ProgressEvent.base(this, 'constructor', event.type, target);
 
   /**
@@ -35,30 +32,24 @@ goog.fs.ProgressEvent = function(event, target) {
 };
 goog.inherits(goog.fs.ProgressEvent, goog.events.Event);
 
-
 /**
  * @return {boolean} Whether or not the total size of the of the file being
  *     saved is known.
  */
-goog.fs.ProgressEvent.prototype.isLengthComputable = function() {
-  'use strict';
+goog.fs.ProgressEvent.prototype.isLengthComputable = function () {
   return this.event_.lengthComputable;
 };
-
 
 /**
  * @return {number} The number of bytes saved so far.
  */
-goog.fs.ProgressEvent.prototype.getLoaded = function() {
-  'use strict';
+goog.fs.ProgressEvent.prototype.getLoaded = function () {
   return this.event_.loaded;
 };
-
 
 /**
  * @return {number} The total number of bytes in the file being saved.
  */
-goog.fs.ProgressEvent.prototype.getTotal = function() {
-  'use strict';
+goog.fs.ProgressEvent.prototype.getTotal = function () {
   return this.event_.total;
 };

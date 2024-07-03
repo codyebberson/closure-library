@@ -10,7 +10,6 @@
 
 goog.provide('goog.events.Keys');
 
-
 /**
  * Key values for common characters.
  *

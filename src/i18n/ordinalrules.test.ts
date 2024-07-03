@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.i18n.ordinalRulesTest');
-goog.setTestOnly();
 
 const LocaleFeature = goog.require('goog.i18n.LocaleFeature');
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
@@ -19,36 +18,32 @@ const Keyword = ordinalRules.Keyword;
 
 // Tests both JavaScript and ECMAScript on supporting browsers.
 testSuite({
-
   setUpPage() {
     propertyReplacer = new PropertyReplacer();
   },
 
   setUp() {
     propertyReplacer.replace(goog, 'LOCALE', 'en');
-    propertyReplacer.replace(
-        LocaleFeature, 'USE_ECMASCRIPT_I18N_PLURALRULES', false);
+    propertyReplacer.replace(LocaleFeature, 'USE_ECMASCRIPT_I18N_PLURALRULES', false);
   },
 
-  getTestName: function() {
-    return 'OrdinalRules Tests';
-  },
+  getTestName: () => 'OrdinalRules Tests',
 
   testSimpleSelectEn() {
     /** @suppress {visibility} suppression added to enable type checking */
     const funcSelect = ordinalRules.enSelect_;
 
-    assertEquals(Keyword.OTHER, funcSelect(0));   // 0th
-    assertEquals(Keyword.ONE, funcSelect(1));     // 1st dollar
-    assertEquals(Keyword.ONE, funcSelect(71));    // 71st dollar
-    assertEquals(Keyword.ONE, funcSelect(2381));  // 2381st dollar
-    assertEquals(Keyword.TWO, funcSelect(2));     // 2nd dollar
-    assertEquals(Keyword.TWO, funcSelect(22));    // 22nd dollar
-    assertEquals(Keyword.FEW, funcSelect(3));     // 3rd dollar
-    assertEquals(Keyword.FEW, funcSelect(1003));  // 1003rd dollar
-    assertEquals(Keyword.OTHER, funcSelect(4));   // 4th dollar
-    assertEquals(Keyword.OTHER, funcSelect(12));  // 12th dollar
-    assertEquals(Keyword.OTHER, funcSelect(25));  // 25 dollar
+    assertEquals(Keyword.OTHER, funcSelect(0)); // 0th
+    assertEquals(Keyword.ONE, funcSelect(1)); // 1st dollar
+    assertEquals(Keyword.ONE, funcSelect(71)); // 71st dollar
+    assertEquals(Keyword.ONE, funcSelect(2381)); // 2381st dollar
+    assertEquals(Keyword.TWO, funcSelect(2)); // 2nd dollar
+    assertEquals(Keyword.TWO, funcSelect(22)); // 22nd dollar
+    assertEquals(Keyword.FEW, funcSelect(3)); // 3rd dollar
+    assertEquals(Keyword.FEW, funcSelect(1003)); // 1003rd dollar
+    assertEquals(Keyword.OTHER, funcSelect(4)); // 4th dollar
+    assertEquals(Keyword.OTHER, funcSelect(12)); // 12th dollar
+    assertEquals(Keyword.OTHER, funcSelect(25)); // 25 dollar
   },
 
   testSimpleSelectEnNative() {
@@ -56,25 +51,23 @@ testSuite({
     if (undefined === Intl.PluralRules) return;
 
     propertyReplacer.replace(goog, 'LOCALE', 'en');
-    propertyReplacer.replace(
-        LocaleFeature, 'USE_ECMASCRIPT_I18N_PLURALRULES', true);
-
+    propertyReplacer.replace(LocaleFeature, 'USE_ECMASCRIPT_I18N_PLURALRULES', true);
 
     /** @suppress {visibility} suppression added to enable type checking */
     const funcSelect = ordinalRules.mapToNativeSelect_();
     assert(funcSelect !== null);
 
-    assertEquals(Keyword.OTHER, funcSelect(0));   // 0th
-    assertEquals(Keyword.ONE, funcSelect(1));     // 1st dollar
-    assertEquals(Keyword.ONE, funcSelect(71));    // 71st dollar
-    assertEquals(Keyword.ONE, funcSelect(2381));  // 2381st dollar
-    assertEquals(Keyword.TWO, funcSelect(2));     // 2nd dollar
-    assertEquals(Keyword.TWO, funcSelect(22));    // 22nd dollar
-    assertEquals(Keyword.FEW, funcSelect(3));     // 3rd dollar
-    assertEquals(Keyword.FEW, funcSelect(1003));  // 1003rd dollar
-    assertEquals(Keyword.OTHER, funcSelect(4));   // 4th dollar
-    assertEquals(Keyword.OTHER, funcSelect(12));  // 12th dollar
-    assertEquals(Keyword.OTHER, funcSelect(25));  // 25 dollar
+    assertEquals(Keyword.OTHER, funcSelect(0)); // 0th
+    assertEquals(Keyword.ONE, funcSelect(1)); // 1st dollar
+    assertEquals(Keyword.ONE, funcSelect(71)); // 71st dollar
+    assertEquals(Keyword.ONE, funcSelect(2381)); // 2381st dollar
+    assertEquals(Keyword.TWO, funcSelect(2)); // 2nd dollar
+    assertEquals(Keyword.TWO, funcSelect(22)); // 22nd dollar
+    assertEquals(Keyword.FEW, funcSelect(3)); // 3rd dollar
+    assertEquals(Keyword.FEW, funcSelect(1003)); // 1003rd dollar
+    assertEquals(Keyword.OTHER, funcSelect(4)); // 4th dollar
+    assertEquals(Keyword.OTHER, funcSelect(12)); // 12th dollar
+    assertEquals(Keyword.OTHER, funcSelect(25)); // 25 dollar
   },
 
   testSimpleSelectEnNativeUnderscore() {
@@ -82,24 +75,23 @@ testSuite({
     if (undefined === Intl.PluralRules) return;
 
     propertyReplacer.replace(goog, 'LOCALE', 'en_IN');
-    propertyReplacer.replace(
-        LocaleFeature, 'USE_ECMASCRIPT_I18N_PLURALRULES', true);
+    propertyReplacer.replace(LocaleFeature, 'USE_ECMASCRIPT_I18N_PLURALRULES', true);
 
     /** @suppress {visibility} suppression added to enable type checking */
     const funcSelect = ordinalRules.mapToNativeSelect_();
     assert(funcSelect !== null);
 
-    assertEquals(Keyword.OTHER, funcSelect(0));   // 0th
-    assertEquals(Keyword.ONE, funcSelect(1));     // 1st dollar
-    assertEquals(Keyword.ONE, funcSelect(71));    // 71st dollar
-    assertEquals(Keyword.ONE, funcSelect(2381));  // 2381st dollar
-    assertEquals(Keyword.TWO, funcSelect(2));     // 2nd dollar
-    assertEquals(Keyword.TWO, funcSelect(22));    // 22nd dollar
-    assertEquals(Keyword.FEW, funcSelect(3));     // 3rd dollar
-    assertEquals(Keyword.FEW, funcSelect(1003));  // 1003rd dollar
-    assertEquals(Keyword.OTHER, funcSelect(4));   // 4th dollar
-    assertEquals(Keyword.OTHER, funcSelect(12));  // 12th dollar
-    assertEquals(Keyword.OTHER, funcSelect(25));  // 25 dollar
+    assertEquals(Keyword.OTHER, funcSelect(0)); // 0th
+    assertEquals(Keyword.ONE, funcSelect(1)); // 1st dollar
+    assertEquals(Keyword.ONE, funcSelect(71)); // 71st dollar
+    assertEquals(Keyword.ONE, funcSelect(2381)); // 2381st dollar
+    assertEquals(Keyword.TWO, funcSelect(2)); // 2nd dollar
+    assertEquals(Keyword.TWO, funcSelect(22)); // 22nd dollar
+    assertEquals(Keyword.FEW, funcSelect(3)); // 3rd dollar
+    assertEquals(Keyword.FEW, funcSelect(1003)); // 1003rd dollar
+    assertEquals(Keyword.OTHER, funcSelect(4)); // 4th dollar
+    assertEquals(Keyword.OTHER, funcSelect(12)); // 12th dollar
+    assertEquals(Keyword.OTHER, funcSelect(25)); // 25 dollar
   },
 
   tesStimpleSelectCy() {
@@ -122,8 +114,7 @@ testSuite({
   testSimpleSelectCyNative() {
     if (undefined === Intl.PluralRules) return;
 
-    propertyReplacer.replace(
-        LocaleFeature, 'USE_ECMASCRIPT_I18N_PLURALRULES', true);
+    propertyReplacer.replace(LocaleFeature, 'USE_ECMASCRIPT_I18N_PLURALRULES', true);
 
     propertyReplacer.replace(goog, 'LOCALE', 'cy');
 
@@ -146,7 +137,7 @@ testSuite({
 
   testSimpleSelectNe() {
     /** @suppress {visibility} suppression added to enable type checking */
-    const funcSelect = ordinalRules.neSelect_;  // Nepali
+    const funcSelect = ordinalRules.neSelect_; // Nepali
 
     assertEquals(Keyword.ONE, funcSelect(1));
     assertEquals(Keyword.ONE, funcSelect(2));
@@ -163,8 +154,7 @@ testSuite({
     if (undefined === Intl.PluralRules) return;
 
     propertyReplacer.replace(goog, 'LOCALE', 'ne');
-    propertyReplacer.replace(
-        LocaleFeature, 'USE_ECMASCRIPT_I18N_PLURALRULES', true);
+    propertyReplacer.replace(LocaleFeature, 'USE_ECMASCRIPT_I18N_PLURALRULES', true);
 
     /** @suppress {visibility} suppression added to enable type checking */
     const funcSelect = ordinalRules.mapToNativeSelect_();

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.PerformanceTimerTest');
-goog.setTestOnly();
 
 const Deferred = goog.require('goog.async.Deferred');
 const MockClock = goog.require('goog.testing.MockClock');
@@ -66,21 +65,25 @@ function runAndAssert(useSetUp, useTearDown, runAsync) {
   }
   if (runAsync) {
     let assertsRan = false;
-    return timer.runAsyncTask(task)
-        .then((results) => {
-          /**
-           * @suppress {checkTypes} suppression added to enable type checking
-           */
-          assertsRan = assertResults(
-              results, useSetUp, useTearDown, setUpCount, tearDownCount,
-              fakeExecutionTime);
-        })
-        .then(() => assertTrue(assertsRan));
+    return timer
+      .runAsyncTask(task)
+      .then((results) => {
+        /**
+         * @suppress {checkTypes} suppression added to enable type checking
+         */
+        assertsRan = assertResults(
+          results,
+          useSetUp,
+          useTearDown,
+          setUpCount,
+          tearDownCount,
+          fakeExecutionTime
+        );
+      })
+      .then(() => assertTrue(assertsRan));
   } else {
     const results = timer.runTask(task);
-    assertResults(
-        results, useSetUp, useTearDown, setUpCount, tearDownCount,
-        fakeExecutionTime);
+    assertResults(results, useSetUp, useTearDown, setUpCount, tearDownCount, fakeExecutionTime);
   }
 }
 
@@ -95,30 +98,37 @@ function runAndAssert(useSetUp, useTearDown, runAsync) {
  * @suppress {checkTypes} suppression added to enable type checking
  */
 function assertResults(
-    results, useSetUp, useTearDown, setUpCount, tearDownCount,
-    fakeExecutionTime) {
+  results,
+  useSetUp,
+  useTearDown,
+  setUpCount,
+  tearDownCount,
+  fakeExecutionTime
+) {
   assertNotNull('Results must be available.', results);
 
   assertEquals(
-      'Average is wrong.', googMath.average.apply(null, fakeExecutionTime),
-      results['average']);
+    'Average is wrong.',
+    googMath.average.apply(null, fakeExecutionTime),
+    results['average']
+  );
   assertEquals(
-      'Standard deviation is wrong.',
-      googMath.standardDeviation.apply(null, fakeExecutionTime),
-      results['standardDeviation']);
+    'Standard deviation is wrong.',
+    googMath.standardDeviation.apply(null, fakeExecutionTime),
+    results['standardDeviation']
+  );
 
   assertEquals('Count must be as expected.', 10, results['count']);
   assertEquals('Maximum is wrong.', 130, results['maximum']);
   assertEquals('Mimimum is wrong.', 90, results['minimum']);
   assertEquals(
-      'Total must be a nonnegative number.',
-      googMath.sum.apply(null, fakeExecutionTime), results['total']);
+    'Total must be a nonnegative number.',
+    googMath.sum.apply(null, fakeExecutionTime),
+    results['total']
+  );
 
-  assertEquals(
-      'Set up count must be as expected.', useSetUp ? 10 : 0, setUpCount);
-  assertEquals(
-      'Tear down count must be as expected.', useTearDown ? 10 : 0,
-      tearDownCount);
+  assertEquals('Set up count must be as expected.', useSetUp ? 10 : 0, setUpCount);
+  assertEquals('Tear down count must be as expected.', useTearDown ? 10 : 0, tearDownCount);
 
   return true;
 }
@@ -141,14 +151,11 @@ testSuite({
 
   testConstructor() {
     assertTrue(
-        'Timer must be an instance of goog.testing.PerformanceTimer',
-        timer instanceof PerformanceTimer);
-    assertEquals(
-        'Timer must collect the default number of samples', 10,
-        timer.getNumSamples());
-    assertEquals(
-        'Timer must have the default timeout interval', 5000,
-        timer.getTimeoutInterval());
+      'Timer must be an instance of goog.testing.PerformanceTimer',
+      timer instanceof PerformanceTimer
+    );
+    assertEquals('Timer must collect the default number of samples', 10, timer.getNumSamples());
+    assertEquals('Timer must have the default timeout interval', 5000, timer.getTimeoutInterval());
   },
 
   testRun_noSetUpOrTearDown() {
@@ -196,23 +203,20 @@ testSuite({
 
     assertNotNull('Results must be available', results);
     assertEquals('Count is wrong', count, results['count']);
-    assertTrue(
-        'Count must less than expected',
-        results['count'] < timer.getNumSamples());
+    assertTrue('Count must less than expected', results['count'] < timer.getNumSamples());
   },
 
   testCreateResults() {
     const samples = [53, 0, 103];
     const expectedResults = {
-      'average': 52,
-      'count': 3,
-      'median': 53,
-      'maximum': 103,
-      'minimum': 0,
-      'standardDeviation': googMath.standardDeviation.apply(null, samples),
-      'total': 156,
+      average: 52,
+      count: 3,
+      median: 53,
+      maximum: 103,
+      minimum: 0,
+      standardDeviation: googMath.standardDeviation.apply(null, samples),
+      total: 156,
     };
-    assertObjectEquals(
-        expectedResults, PerformanceTimer.createResults(samples));
+    assertObjectEquals(expectedResults, PerformanceTimer.createResults(samples));
   },
 });

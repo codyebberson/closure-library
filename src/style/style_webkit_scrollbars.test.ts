@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.style.webkitScrollbarsTest');
-goog.setTestOnly();
 
 const ExpectedFailures = goog.require('goog.testing.ExpectedFailures');
 const asserts = goog.require('goog.asserts');

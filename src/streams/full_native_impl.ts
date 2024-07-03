@@ -38,7 +38,8 @@ class NativeReadableStream extends liteNativeImpl.NativeReadableStream {
    */
   getReader() {
     return new NativeReadableStreamDefaultReader(
-        /** @type {!ReadableStreamDefaultReader} */ (this.stream.getReader()));
+      /** @type {!ReadableStreamDefaultReader} */ (this.stream.getReader())
+    );
   }
 
   /** @override */
@@ -69,14 +70,12 @@ function newReadableStream(underlyingSource = {}, strategy = {}) {
   const source = {};
   if (underlyingSource.start) {
     source.start = (controller) => {
-      return underlyingSource.start(
-          new NativeReadableStreamDefaultController(controller));
+      return underlyingSource.start(new NativeReadableStreamDefaultController(controller));
     };
   }
   if (underlyingSource.pull) {
     source.pull = (controller) => {
-      return underlyingSource.pull(
-          new NativeReadableStreamDefaultController(controller));
+      return underlyingSource.pull(new NativeReadableStreamDefaultController(controller));
     };
   }
   if (underlyingSource.cancel) {
@@ -91,8 +90,7 @@ function newReadableStream(underlyingSource = {}, strategy = {}) {
  * @template T
  * @implements {fullTypes.ReadableStreamDefaultReader<T>}
  */
-class NativeReadableStreamDefaultReader extends
-    liteNativeImpl.NativeReadableStreamDefaultReader {
+class NativeReadableStreamDefaultReader extends liteNativeImpl.NativeReadableStreamDefaultReader {
   /** @override */
   cancel(reason) {
     return /** @type {!Promise<undefined>} */ (this.reader.cancel(reason));
@@ -120,8 +118,8 @@ class NativeReadableStreamAsyncIterator {
   /** @override */
   return(value) {
     return /** @type {{return: function(*): !Promise<!IIterableResult<T>>}} */ (
-               this.iterator_)
-        .return(value);
+      this.iterator_
+    ).return(value);
   }
 }
 
@@ -130,8 +128,7 @@ class NativeReadableStreamAsyncIterator {
  * @template T
  * @implements {fullTypes.ReadableStreamDefaultController<T>}
  */
-class NativeReadableStreamDefaultController extends
-    liteNativeImpl.NativeReadableStreamDefaultController {
+class NativeReadableStreamDefaultController extends liteNativeImpl.NativeReadableStreamDefaultController {
   /** @override */
   get desiredSize() {
     return this.controller.desiredSize;

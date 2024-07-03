@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.debug.TraceTest');
-goog.setTestOnly();
 
 const StopTraceDetail = goog.requireType('goog.debug.StopTraceDetail');
 const Trace = goog.require('goog.debug.Trace');
@@ -33,8 +32,9 @@ const NORMAL_STOP = {};
  */
 function validateRecordedListener(expected, recorder) {
   assertObjectEquals(
-      expected,
-      googArray.map(recorder.getCalls(), (call) => call.getArguments()));
+    expected,
+    googArray.map(recorder.getCalls(), (call) => call.getArguments())
+  );
 }
 
 testSuite({
@@ -213,7 +213,12 @@ testSuite({
     // 1000ms should be enough for silencing the tracer.
     Trace.stopTracer(t, 1000);
     validateRecordedListener(
-        [['start', t, 'first'], ['stop', t, NORMAL_STOP]], recorder);
+      [
+        ['start', t, 'first'],
+        ['stop', t, NORMAL_STOP],
+      ],
+      recorder
+    );
   },
 
   testListenerStartTracerType() {
@@ -225,7 +230,12 @@ testSuite({
     const t = Trace.startTracer('first', 'New Type');
     Trace.stopTracer(t);
     validateRecordedListener(
-        [['start', t, '[New Type] first'], ['stop', t, NORMAL_STOP]], recorder);
+      [
+        ['start', t, '[New Type] first'],
+        ['stop', t, NORMAL_STOP],
+      ],
+      recorder
+    );
   },
 
   testListenerCommentTracerType() {
@@ -274,7 +284,12 @@ testSuite({
     const t = Trace.startTracer('bar');
     Trace.stopTracer(t);
     validateRecordedListener(
-        [['start', t, 'bar'], ['stop', t, NORMAL_STOP]], recorder);
+      [
+        ['start', t, 'bar'],
+        ['stop', t, NORMAL_STOP],
+      ],
+      recorder
+    );
   },
 
   testTwoListeners() {
@@ -285,7 +300,10 @@ testSuite({
     });
     const t0 = Trace.startTracer('first');
     Trace.stopTracer(t0);
-    const expected1 = [['start', t0, 'first'], ['stop', t0, NORMAL_STOP]];
+    const expected1 = [
+      ['start', t0, 'first'],
+      ['stop', t0, NORMAL_STOP],
+    ];
     validateRecordedListener(expected1, r1);
 
     const r2 = recordFunction();

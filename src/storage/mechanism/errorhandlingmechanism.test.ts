@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.storage.mechanism.ErrorHandlingMechanismTest');
-goog.setTestOnly();
 
 const ErrorHandlingMechanism = goog.require('goog.storage.mechanism.ErrorHandlingMechanism');
 const recordFunction = goog.require('goog.testing.recordFunction');
@@ -14,13 +13,13 @@ const testSuite = goog.require('goog.testing.testSuite');
 const error = new Error();
 
 const submechanism = {
-  get: function() {
+  get: () => {
     throw error;
   },
-  set: function() {
+  set: () => {
     throw error;
   },
-  remove: function() {
+  remove: () => {
     throw error;
   },
 };
@@ -42,36 +41,26 @@ testSuite({
     mechanism.set('foo', 'bar');
     assertEquals(1, handler.getCallCount());
     assertArrayEquals(
-        [
-          error,
-          ErrorHandlingMechanism.Operation.SET,
-          'foo',
-          'bar',
-        ],
-        handler.getLastCall().getArguments());
+      [error, ErrorHandlingMechanism.Operation.SET, 'foo', 'bar'],
+      handler.getLastCall().getArguments()
+    );
   },
 
   testGet() {
     mechanism.get('foo');
     assertEquals(1, handler.getCallCount());
     assertArrayEquals(
-        [
-          error,
-          ErrorHandlingMechanism.Operation.GET,
-          'foo',
-        ],
-        handler.getLastCall().getArguments());
+      [error, ErrorHandlingMechanism.Operation.GET, 'foo'],
+      handler.getLastCall().getArguments()
+    );
   },
 
   testRemove() {
     mechanism.remove('foo');
     assertEquals(1, handler.getCallCount());
     assertArrayEquals(
-        [
-          error,
-          ErrorHandlingMechanism.Operation.REMOVE,
-          'foo',
-        ],
-        handler.getLastCall().getArguments());
+      [error, ErrorHandlingMechanism.Operation.REMOVE, 'foo'],
+      handler.getLastCall().getArguments()
+    );
   },
 });

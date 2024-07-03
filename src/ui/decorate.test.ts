@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.decorateTest');
-goog.setTestOnly();
 
 const decorate = goog.require('goog.ui.decorate');
 const registry = goog.require('goog.ui.registry');
@@ -51,17 +50,15 @@ class FakeSingletonRenderer {
   }
 }
 
-let instance = new FakeSingletonRenderer();
+const instance = new FakeSingletonRenderer();
 
 testSuite({
   setUp() {
     registry.setDefaultRenderer(FakeComponentX, FakeRenderer);
     registry.setDefaultRenderer(FakeComponentZ, FakeSingletonRenderer);
 
-    registry.setDecoratorByClassName(
-        'fake-component-x', () => new FakeComponentX());
-    registry.setDecoratorByClassName(
-        'fake-component-y', () => new FakeComponentY());
+    registry.setDecoratorByClassName('fake-component-x', () => new FakeComponentX());
+    registry.setDecoratorByClassName('fake-component-y', () => new FakeComponentY());
   },
 
   tearDown() {
@@ -75,21 +72,17 @@ testSuite({
   testDecorate() {
     const dx = decorate(document.getElementById('x'));
     assertTrue(
-        'Decorator for element with fake-component-x class must be ' +
-            'a FakeComponentX',
-        dx instanceof FakeComponentX);
-    assertEquals(
-        'Element x must have been decorated', document.getElementById('x'),
-        dx.element);
+      'Decorator for element with fake-component-x class must be ' + 'a FakeComponentX',
+      dx instanceof FakeComponentX
+    );
+    assertEquals('Element x must have been decorated', document.getElementById('x'), dx.element);
 
     const dy = decorate(document.getElementById('y'));
     assertTrue(
-        'Decorator for element with fake-component-y class must be ' +
-            'a FakeComponentY',
-        dy instanceof FakeComponentY);
-    assertEquals(
-        'Element y must have been decorated', document.getElementById('y'),
-        dy.element);
+      'Decorator for element with fake-component-y class must be ' + 'a FakeComponentY',
+      dy instanceof FakeComponentY
+    );
+    assertEquals('Element y must have been decorated', document.getElementById('y'), dy.element);
 
     const dz = decorate(document.getElementById('z'));
     assertNull('Decorator for element with unknown class must be null', dz);

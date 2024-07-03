@@ -17,7 +17,6 @@ const googIter = goog.require('goog.iter');
 const maps = goog.require('goog.collections.maps');
 const testSuite = goog.require('goog.testing.testSuite');
 
-
 /**
  * @typedef {function(new:maps.MapLike)}
  */
@@ -69,13 +68,12 @@ function createTestMap(mapLikeCtor) {
 }
 
 testSuite({
-
   testSetAll() {
     testAllMapLikeImpls((mapLikeCtor) => {
       const m = new mapLikeCtor();
-      maps.setAll(m, Object.entries({a: 0, b: 1, c: 2, d: 3}));
+      maps.setAll(m, Object.entries({ a: 0, b: 1, c: 2, d: 3 }));
       assertTrue('addAll so it should not be empty', m.size > 0);
-      assertTrue('addAll so it should have \'c\' key', m.has('c'));
+      assertTrue("addAll so it should have 'c' key", m.has('c'));
     });
 
     testAllMapLikeImpls((mapLikeCtor) => {
@@ -83,7 +81,7 @@ testSuite({
       const m2 = new mapLikeCtor();
       maps.setAll(m2, m.entries());
       assertTrue('addAll so it should not be empty', m2.size > 0);
-      assertTrue('addAll so it should have \'c\' key', m2.has('c'));
+      assertTrue("addAll so it should have 'c' key", m2.has('c'));
     });
   },
 
@@ -121,11 +119,15 @@ testSuite({
 
       const transposed = maps.transpose(m);
       assertEquals(
-          'Should contain the keys from the original map as values', 'abcde',
-          Array.from(transposed.values()).join(''));
+        'Should contain the keys from the original map as values',
+        'abcde',
+        Array.from(transposed.values()).join('')
+      );
       assertEquals(
-          'Should contain the values from the original map as keys', '12345',
-          Array.from(transposed.keys()).join(''));
+        'Should contain the values from the original map as keys',
+        '12345',
+        Array.from(transposed.keys()).join('')
+      );
     });
   },
 
@@ -136,11 +138,8 @@ testSuite({
         const m = new mapLikeCtor();
         m.set('a', 0);
         const obj = maps.toObject(m);
-        assertTrue(
-            'object representation has key "a"', obj.hasOwnProperty('a'));
-        assertFalse(
-            'object representation does not have key "b"',
-            obj.hasOwnProperty('b'));
+        assertTrue('object representation has key "a"', obj.hasOwnProperty('a'));
+        assertFalse('object representation does not have key "b"', obj.hasOwnProperty('b'));
         assertEquals('value for key "a"', 0, obj['a']);
       } finally {
         delete Object.prototype.b;
@@ -179,7 +178,7 @@ testSuite({
       // Emulate a lack of type-checking to ensure that objects are being
       // compared using === when no comparison function is provided.
       map2.set('d', '3');
-      assertFalse('maps have 3 and \'3\'', maps.equals(map1, map2));
+      assertFalse("maps have 3 and '3'", maps.equals(map1, map2));
     });
   },
 

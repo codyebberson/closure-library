@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.net.cookiesTest');
-goog.setTestOnly();
 
 const Cookies = goog.require('goog.net.Cookies');
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
@@ -20,9 +19,10 @@ function checkForCookies() {
   if (!cookies.isEnabled()) {
     let message = 'Cookies must be enabled to run this test.';
     if (location.protocol == 'file:') {
-      message += '\nNote that cookies for local files are disabled in some ' +
-          'browsers.\nThey can be enabled in Chrome with the ' +
-          '--enable-file-cookies flag.';
+      message +=
+        '\nNote that cookies for local files are disabled in some ' +
+        'browsers.\nThey can be enabled in Chrome with the ' +
+        '--enable-file-cookies flag.';
     }
 
     fail(message);
@@ -37,7 +37,7 @@ function mockSetCookie(var_args) {
   try {
     let result;
     /** @suppress {visibility} suppression added to enable type checking */
-    cookies.setCookie_ = function(arg) {
+    cookies.setCookie_ = (arg) => {
       result = arg;
     };
     cookies.set.apply(cookies, arguments);
@@ -92,13 +92,14 @@ testSuite({
 
     // Save off original value and set navigator.cookieEnabled to false
     const originalValue = goog.global.navigator;
-    Object.defineProperty(
-        goog.global, 'navigator', {value: {cookieEnabled: false}});
+    Object.defineProperty(goog.global, 'navigator', {
+      value: { cookieEnabled: false },
+    });
 
     assertFalse(cookies.isEnabled());
 
     // Restore window.navigator
-    Object.defineProperty(goog.global, 'navigator', {value: originalValue});
+    Object.defineProperty(goog.global, 'navigator', { value: originalValue });
   },
 
   testIsEnabledWithExistingCookies() {
@@ -204,21 +205,16 @@ testSuite({
   },
 
   testRemove() {
-    assertFalse(
-        '1. Cookie should not contain "testa"', cookies.containsKey('testa'));
-    cookies.set('testa', 'A', {path: '/'});
-    assertTrue(
-        '2. Cookie should contain "testa"', cookies.containsKey('testa'));
+    assertFalse('1. Cookie should not contain "testa"', cookies.containsKey('testa'));
+    cookies.set('testa', 'A', { path: '/' });
+    assertTrue('2. Cookie should contain "testa"', cookies.containsKey('testa'));
     cookies.remove('testa', '/');
-    assertFalse(
-        '3. Cookie should not contain "testa"', cookies.containsKey('testa'));
+    assertFalse('3. Cookie should not contain "testa"', cookies.containsKey('testa'));
 
     cookies.set('testa', 'A');
-    assertTrue(
-        '4. Cookie should contain "testa"', cookies.containsKey('testa'));
+    assertTrue('4. Cookie should contain "testa"', cookies.containsKey('testa'));
     cookies.remove('testa');
-    assertFalse(
-        '5. Cookie should not contain "testa"', cookies.containsKey('testa'));
+    assertFalse('5. Cookie should not contain "testa"', cookies.containsKey('testa'));
   },
 
   testStrangeValue() {
@@ -235,24 +231,23 @@ testSuite({
   },
 
   testSetCookiePath() {
-    assertEquals(
-        'foo=bar;path=/xyz', mockSetCookie('foo', 'bar', {path: '/xyz'}));
+    assertEquals('foo=bar;path=/xyz', mockSetCookie('foo', 'bar', { path: '/xyz' }));
   },
 
   testSetCookieDomain() {
     assertEquals(
-        'foo=bar;domain=google.com',
-        mockSetCookie('foo', 'bar', {domain: 'google.com'}));
+      'foo=bar;domain=google.com',
+      mockSetCookie('foo', 'bar', { domain: 'google.com' })
+    );
   },
 
   testSetCookieSecure() {
-    assertEquals('foo=bar;secure', mockSetCookie('foo', 'bar', {secure: true}));
+    assertEquals('foo=bar;secure', mockSetCookie('foo', 'bar', { secure: true }));
   },
 
   testSetCookieMaxAgeZero() {
-    const result = mockSetCookie('foo', 'bar', {maxAge: 0});
-    const pattern =
-        new RegExp('foo=bar;expires=' + new Date(1970, 1, 1).toUTCString());
+    const result = mockSetCookie('foo', 'bar', { maxAge: 0 });
+    const pattern = new RegExp('foo=bar;expires=' + new Date(1970, 1, 1).toUTCString());
     if (!result.match(pattern)) {
       fail(`expected match against ${pattern} got ${result}`);
     }
@@ -260,11 +255,13 @@ testSuite({
 
   testSetCookieSameSite() {
     assertEquals(
-        'foo=bar;samesite=lax',
-        mockSetCookie('foo', 'bar', {sameSite: Cookies.SameSite.LAX}));
+      'foo=bar;samesite=lax',
+      mockSetCookie('foo', 'bar', { sameSite: Cookies.SameSite.LAX })
+    );
     assertEquals(
-        'foo=bar;samesite=strict',
-        mockSetCookie('foo', 'bar', {sameSite: Cookies.SameSite.STRICT}));
+      'foo=bar;samesite=strict',
+      mockSetCookie('foo', 'bar', { sameSite: Cookies.SameSite.STRICT })
+    );
   },
 
   testGetEmptyCookie() {

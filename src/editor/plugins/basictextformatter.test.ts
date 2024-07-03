@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.plugins.BasicTextFormatterTest');
-goog.setTestOnly();
 
 const BasicTextFormatter = goog.require('goog.editor.plugins.BasicTextFormatter');
 const BrowserFeature = goog.require('goog.editor.BrowserFeature');
@@ -119,9 +118,8 @@ function setUpLinkTests(text, url, isEditable) {
   HELPER = new TestHelper(ROOT);
   if (isEditable) {
     HELPER.setUpEditableElement();
-    FIELDMOCK.execCommand(Command.MODAL_LINK_EDITOR, mockmatchers.isObject)
-        .$returns(undefined);
-    let focusField = () => {
+    FIELDMOCK.execCommand(Command.MODAL_LINK_EDITOR, mockmatchers.isObject).$returns(undefined);
+    const focusField = () => {
       throw 'Field should not be re-focused';
     };
   }
@@ -166,8 +164,9 @@ let defaultFontSizeMap;
 /** @suppress {missingProperties} suppression added to enable type checking */
 function setUpFontSizeTests() {
   isFontSizeTest = true;
-  ROOT.innerHTML = '1<span style="font-size:2px">23</span>4' +
-      '<span style="font-size:5px; white-space:pre">56</span>7';
+  ROOT.innerHTML =
+    '1<span style="font-size:2px">23</span>4' +
+    '<span style="font-size:5px; white-space:pre">56</span>7';
   /** @suppress {const} suppression added to enable type checking */
   HELPER = new TestHelper(ROOT);
   HELPER.setUpEditableElement();
@@ -213,14 +212,16 @@ function tearDownFontSizeTests() {
  */
 function assertFontSizes(msg, sizeChangesMap) {
   googObject.extend(defaultFontSizeMap, sizeChangesMap);
-  for (let k in defaultFontSizeMap) {
+  for (const k in defaultFontSizeMap) {
     const node = HELPER.findTextNode(k);
     const expected = defaultFontSizeMap[k];
     if (expected) {
       assertNotNull(`${msg} [couldn't find text node "${k}"]`, node);
       assertEquals(
-          `${msg} [incorrect font size for "${k}"]`, expected,
-          style.getFontSize(node.parentNode));
+        `${msg} [incorrect font size for "${k}"]`,
+        expected,
+        style.getFontSize(node.parentNode)
+      );
     } else {
       assertNull(`${msg} [unexpected text node "${k}"]`, node);
     }
@@ -245,8 +246,7 @@ function assertFontSizes(msg, sizeChangesMap) {
 function doTestFontSizeStyledSpan(doSelect) {
   // Make sure no new browsers start getting this bad behavior. If they do,
   // this test will unexpectedly pass.
-  expectedFailures.expectFailureFor(
-      !BrowserFeature.DOESNT_OVERRIDE_FONT_SIZE_IN_STYLE_ATTR);
+  expectedFailures.expectFailureFor(!BrowserFeature.DOESNT_OVERRIDE_FONT_SIZE_IN_STYLE_ATTR);
 
   try {
     setUpFontSizeTests();
@@ -256,15 +256,13 @@ function doTestFontSizeStyledSpan(doSelect) {
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.FONT_SIZE, 7);
     const parentNode = HELPER.findTextNode('23').parentNode;
     const grandparentNode = parentNode.parentNode;
-    const fontNode =
-        dom.getElementsByTagNameAndClass(TagName.FONT, undefined, ROOT)[0];
-    const spanNode =
-        dom.getElementsByTagNameAndClass(TagName.SPAN, undefined, ROOT)[0];
+    const fontNode = dom.getElementsByTagNameAndClass(TagName.FONT, undefined, ROOT)[0];
+    const spanNode = dom.getElementsByTagNameAndClass(TagName.SPAN, undefined, ROOT)[0];
     assertTrue(
-        'A font tag should have been added either outside or inside' +
-            ' the existing span',
-        parentNode == spanNode && grandparentNode == fontNode ||
-            parentNode == fontNode && grandparentNode == spanNode);
+      'A font tag should have been added either outside or inside' + ' the existing span',
+      (parentNode == spanNode && grandparentNode == fontNode) ||
+        (parentNode == fontNode && grandparentNode == spanNode)
+    );
 
     FIELDMOCK.$verify();
   } catch (e) {
@@ -339,14 +337,22 @@ function doTestIsJustification(command) {
   for (let i = 0; i < JUSTIFICATION_COMMANDS.length; i++) {
     if (JUSTIFICATION_COMMANDS[i] == command) {
       assertTrue(
-          'queryCommandValue(' + JUSTIFICATION_COMMANDS[i] +
-              ') should be true after execCommand(' + command + ')',
-          REAL_FIELD.queryCommandValue(JUSTIFICATION_COMMANDS[i]));
+        'queryCommandValue(' +
+          JUSTIFICATION_COMMANDS[i] +
+          ') should be true after execCommand(' +
+          command +
+          ')',
+        REAL_FIELD.queryCommandValue(JUSTIFICATION_COMMANDS[i])
+      );
     } else {
       assertFalse(
-          'queryCommandValue(' + JUSTIFICATION_COMMANDS[i] +
-              ') should be false after execCommand(' + command + ')',
-          REAL_FIELD.queryCommandValue(JUSTIFICATION_COMMANDS[i]));
+        'queryCommandValue(' +
+          JUSTIFICATION_COMMANDS[i] +
+          ') should be false after execCommand(' +
+          command +
+          ')',
+        REAL_FIELD.queryCommandValue(JUSTIFICATION_COMMANDS[i])
+      );
     }
   }
 }
@@ -356,7 +362,7 @@ function doTestIsJustificationPInDiv(useCss, align, command) {
   setUpRealField();
   const attrs = {};
   if (useCss) {
-    attrs['style'] = {'text-align': align};
+    attrs['style'] = { 'text-align': align };
   } else {
     attrs['align'] = align;
   }
@@ -365,9 +371,13 @@ function doTestIsJustificationPInDiv(useCss, align, command) {
   REAL_FIELD.setSafeHtml(false, html);
   selectRealField();
   assertTrue(
-      `P inside ${align} aligned` + (useCss ? ' (using CSS)' : '') +
-          ' DIV should be considered ' + align + ' aligned',
-      REAL_FIELD.queryCommandValue(command));
+    `P inside ${align} aligned` +
+      (useCss ? ' (using CSS)' : '') +
+      ' DIV should be considered ' +
+      align +
+      ' aligned',
+    REAL_FIELD.queryCommandValue(command)
+  );
 }
 
 /**
@@ -375,9 +385,7 @@ function doTestIsJustificationPInDiv(useCss, align, command) {
  * @suppress {visibility} suppression added to enable type checking
  */
 function assertPreparedContents(expected, original) {
-  assertEquals(
-      expected,
-      REAL_FIELD.reduceOp_(Plugin.Op.PREPARE_CONTENTS_HTML, original));
+  assertEquals(expected, REAL_FIELD.reduceOp_(Plugin.Op.PREPARE_CONTENTS_HTML, original));
 }
 
 /** Assert that sanitization doesn't affect the given text. */
@@ -394,9 +402,11 @@ function assertNotBadBrElements(html) {
     assertNotContains('There should not be <br> elements', '<br', html);
   } else {
     assertFalse(
-        'There should not be <br> elements, except ones to prevent ' +
-            '<div>s from collapsing' + html,
-        /(?!<div>)<br>(?!<\/div>)/.test(html));
+      'There should not be <br> elements, except ones to prevent ' +
+        '<div>s from collapsing' +
+        html,
+      /(?!<div>)<br>(?!<\/div>)/.test(html)
+    );
   }
 }
 testSuite({
@@ -456,8 +466,7 @@ testSuite({
 
       FIELDMOCK.$replay();
       const ul = dom.getElement('outerUL');
-      Range.createFromNodeContents(dom.getFirstElementChild(ul).firstChild)
-          .select();
+      Range.createFromNodeContents(dom.getFirstElementChild(ul).firstChild).select();
       FORMATTER.fixIELists_();
       assertFalse('Unordered list must not have ordered type', ul.type == '1');
       const ol = dom.getElement('ol');
@@ -466,18 +475,15 @@ testSuite({
        * checking
        */
       ol.type = 'disc';
-      Range.createFromNodeContents(dom.getFirstElementChild(ul).firstChild)
-          .select();
+      Range.createFromNodeContents(dom.getFirstElementChild(ul).firstChild).select();
       FORMATTER.fixIELists_();
-      assertFalse(
-          'Ordered list must not have unordered type', ol.type == 'disc');
+      assertFalse('Ordered list must not have unordered type', ol.type == 'disc');
       /**
        * @suppress {strictMissingProperties} suppression added to enable type
        * checking
        */
       ol.type = '1';
-      Range.createFromNodeContents(dom.getFirstElementChild(ul).firstChild)
-          .select();
+      Range.createFromNodeContents(dom.getFirstElementChild(ul).firstChild).select();
       FORMATTER.fixIELists_();
       assertTrue('Ordered list must retain ordered list type', ol.type == '1');
       tearDownListAndBlockquoteTests();
@@ -500,7 +506,7 @@ testSuite({
       Range.createFromNodeContents(ul).select();
 
       FORMATTER.fixSafariLists_();
-      assertEquals('Contents of UL shouldn\'t change', html, ul.innerHTML);
+      assertEquals("Contents of UL shouldn't change", html, ul.innerHTML);
 
       ul = document.getElementById('outerUL2');
       Range.createFromNodeContents(ul).select();
@@ -525,7 +531,7 @@ testSuite({
       Range.createFromNodeContents(font).select();
       /** @suppress {visibility} suppression added to enable type checking */
       let retVal = FORMATTER.beforeInsertListGecko_();
-      assertFalse('Workaround shouldn\'t be applied when not needed', retVal);
+      assertFalse("Workaround shouldn't be applied when not needed", retVal);
 
       dom.removeChildren(font);
       Range.createFromNodeContents(font).select();
@@ -533,9 +539,7 @@ testSuite({
       retVal = FORMATTER.beforeInsertListGecko_();
       assertTrue('Workaround should be applied when needed', retVal);
       document.execCommand('insertorderedlist', false, true);
-      assertTrue(
-          'Font should be Courier',
-          /courier/i.test(document.queryCommandValue('fontname')));
+      assertTrue('Font should be Courier', /courier/i.test(document.queryCommandValue('fontname')));
       tearDownListAndBlockquoteTests();
     }
   },
@@ -547,12 +551,10 @@ testSuite({
   testCursorPreservedOnListCreation() {
     setUpListAndBlockquoteTests();
     FIELDMOCK.getPluginByClassId('Bidi').$anyTimes().$returns(null);
-    FIELDMOCK.queryCommandValue(Command.DEFAULT_TAG)
-        .$anyTimes()
-        .$returns(TagName.P);
+    FIELDMOCK.queryCommandValue(Command.DEFAULT_TAG).$anyTimes().$returns(TagName.P);
 
     FIELDMOCK.$replay();
-    let cursorPlaceholder = dom.getElement('cursorRoot');
+    const cursorPlaceholder = dom.getElement('cursorRoot');
     Range.createCaret(cursorPlaceholder.firstChild, 3).select();
 
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.UNORDERED_LIST);
@@ -560,8 +562,7 @@ testSuite({
     assertTrue(selection.isCollapsed);
     assertEquals(selection.rangeCount, 1);
 
-    const li = dom.getElementByTagNameAndClass(
-        TagName.LI, null, dom.getElement('cursorTest'));
+    const li = dom.getElementByTagNameAndClass(TagName.LI, null, dom.getElement('cursorTest'));
     if (userAgent.WEBKIT) {
       assertEquals(selection.anchorNode, li.firstChild);
       assertEquals(selection.anchorOffset, 3);
@@ -593,15 +594,13 @@ testSuite({
     FORMATTER.execCommandInternal('insertunorderedlist');
     list = dom.getFirstElementChild(parent);
     assertEquals(String(TagName.UL), list.tagName);
-    assertEquals(
-        3, dom.getElementsByTagNameAndClass(TagName.LI, null, list).length);
+    assertEquals(3, dom.getElementsByTagNameAndClass(TagName.LI, null, list).length);
 
     Range.createFromNodeContents(list).select();
     FORMATTER.execCommandInternal('insertorderedlist');
     list = dom.getFirstElementChild(parent);
     assertEquals(String(TagName.OL), list.tagName);
-    assertEquals(
-        3, dom.getElementsByTagNameAndClass(TagName.LI, null, list).length);
+    assertEquals(3, dom.getElementsByTagNameAndClass(TagName.LI, null, list).length);
     tearDownListAndBlockquoteTests();
   },
 
@@ -615,16 +614,14 @@ testSuite({
     setUpListAndBlockquoteTests();
 
     FIELDMOCK.$replay();
-    let parent = dom.getElement('addAndRemoveList');
+    const parent = dom.getElement('addAndRemoveList');
 
     Range.createFromNodeContents(parent).select();
     // Add the ordered list
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.ORDERED_LIST);
-    assertEquals(
-        3, dom.getElementsByTagNameAndClass(TagName.LI, null, parent).length);
+    assertEquals(3, dom.getElementsByTagNameAndClass(TagName.LI, null, parent).length);
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.ORDERED_LIST);
-    assertEquals(
-        0, dom.getElementsByTagNameAndClass(TagName.LI, null, parent).length);
+    assertEquals(0, dom.getElementsByTagNameAndClass(TagName.LI, null, parent).length);
     // Assert that no placeholder is left behind
     assertFalse(parent.textContent.includes('goog'));
     tearDownListAndBlockquoteTests();
@@ -638,22 +635,18 @@ testSuite({
     setUpListAndBlockquoteTests();
 
     FIELDMOCK.$replay();
-    const selectionStart =
-        dom.getElement('switchListSelectionStart').firstChild.firstChild;
+    const selectionStart = dom.getElement('switchListSelectionStart').firstChild.firstChild;
     const selectionEnd = dom.getElement('switchListSelectionEnd').firstChild;
 
     window.getSelection().removeAllRanges();
     Range.createFromNodes(selectionStart, 0, selectionEnd, 3).select();
 
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.ORDERED_LIST);
-    const root =
-        /** @type {!Element} */ (dom.getElement('switchFormattedList'));
+    const root = /** @type {!Element} */ dom.getElement('switchFormattedList');
     assert(root !== null);
 
     const orderedList = dom.getElementByTagNameAndClass(TagName.OL, null, root);
-    assertEquals(
-        2,
-        dom.getElementsByTagNameAndClass(TagName.LI, null, orderedList).length);
+    assertEquals(2, dom.getElementsByTagNameAndClass(TagName.LI, null, orderedList).length);
 
     const bold = dom.getElementsByTagNameAndClass(TagName.B, null, root);
     assertEquals(1, bold.length);
@@ -668,8 +661,7 @@ testSuite({
     for (let i = 0; i < commands.length; i += 1) {
       const command = commands[i];
       const shouldBeSilent = googArray.contains(silentCommands, command);
-      const isSilent =
-          BasicTextFormatter.prototype.isSilentCommand.call(null, command);
+      const isSilent = BasicTextFormatter.prototype.isSilentCommand.call(null, command);
       assertEquals(shouldBeSilent, isSilent);
     }
   },
@@ -679,7 +671,7 @@ testSuite({
     setUpSubSuperTests();
     FIELDMOCK.$replay();
 
-    HELPER.select('12345', 1, '12345', 4);  // Selects '234'.
+    HELPER.select('12345', 1, '12345', 4); // Selects '234'.
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.SUPERSCRIPT);
     HELPER.assertHtmlMatches(`1${OPEN_SUPER}234${CLOSE_SUPER}5`);
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.SUBSCRIPT);
@@ -694,7 +686,7 @@ testSuite({
     setUpSubSuperTests();
     FIELDMOCK.$replay();
 
-    HELPER.select('12345', 1, '12345', 4);  // Selects '234'.
+    HELPER.select('12345', 1, '12345', 4); // Selects '234'.
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.SUBSCRIPT);
     HELPER.assertHtmlMatches(`1${OPEN_SUB}234${CLOSE_SUB}5`);
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.SUPERSCRIPT);
@@ -713,13 +705,12 @@ testSuite({
     setUpSubSuperTests();
     FIELDMOCK.$replay();
 
-    HELPER.select('12345', 1, '12345', 3);  // Selects '23'.
+    HELPER.select('12345', 1, '12345', 3); // Selects '23'.
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.SUPERSCRIPT);
     HELPER.assertHtmlMatches(`1${OPEN_SUPER}23${CLOSE_SUPER}45`);
-    HELPER.select('23', 1, '45', 1);  // Selects '34'.
+    HELPER.select('23', 1, '45', 1); // Selects '34'.
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.SUBSCRIPT);
-    HELPER.assertHtmlMatches(
-        `1${OPEN_SUPER}2${CLOSE_SUPER}${OPEN_SUB}34${CLOSE_SUB}5`);
+    HELPER.assertHtmlMatches(`1${OPEN_SUPER}2${CLOSE_SUPER}${OPEN_SUB}34${CLOSE_SUB}5`);
 
     FIELDMOCK.$verify();
     tearDownSubSuperTests();
@@ -731,13 +722,12 @@ testSuite({
     setUpSubSuperTests();
     FIELDMOCK.$replay();
 
-    HELPER.select('12345', 1, '12345', 3);  // Selects '23'.
+    HELPER.select('12345', 1, '12345', 3); // Selects '23'.
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.SUBSCRIPT);
     HELPER.assertHtmlMatches(`1${OPEN_SUB}23${CLOSE_SUB}45`);
-    HELPER.select('23', 1, '45', 1);  // Selects '34'.
+    HELPER.select('23', 1, '45', 1); // Selects '34'.
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.SUPERSCRIPT);
-    HELPER.assertHtmlMatches(
-        `1${OPEN_SUB}2${CLOSE_SUB}${OPEN_SUPER}34${CLOSE_SUPER}5`);
+    HELPER.assertHtmlMatches(`1${OPEN_SUB}2${CLOSE_SUB}${OPEN_SUPER}34${CLOSE_SUPER}5`);
 
     FIELDMOCK.$verify();
     tearDownSubSuperTests();
@@ -750,8 +740,7 @@ testSuite({
 
     HELPER.select('12345', 3);
     FORMATTER.execCommandInternal(Command.LINK);
-    HELPER.assertHtmlMatches(
-        '123<a href="http://www.x.com/">http://www.x.com/</a>45');
+    HELPER.assertHtmlMatches('123<a href="http://www.x.com/">http://www.x.com/</a>45');
 
     FIELDMOCK.$verify();
     tearDownLinkTests();
@@ -773,9 +762,13 @@ testSuite({
       expectDialogUrl = true;
     }
     HELPER.assertHtmlMatches(
-        `<p><a href="${url1}">${url1}</a></p><p>` +
-        '<a href="' + dialogUrl + '">' + (expectDialogUrl ? dialogUrl : url2) +
-        '</a></p>');
+      `<p><a href="${url1}">${url1}</a></p><p>` +
+        '<a href="' +
+        dialogUrl +
+        '">' +
+        (expectDialogUrl ? dialogUrl : url2) +
+        '</a></p>'
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -815,8 +808,7 @@ testSuite({
    */
   testUnfocusedLink() {
     FIELDMOCK.$reset();
-    FIELDMOCK.getEditableDomHelper().$anyTimes().$returns(
-        dom.getDomHelper(window.document));
+    FIELDMOCK.getEditableDomHelper().$anyTimes().$returns(dom.getDomHelper(window.document));
     setUpLinkTests('12345', undefined, false);
     FIELDMOCK.getRange().$anyTimes().$returns(null);
     FIELDMOCK.dispatchSelectionChangeEvent().$anyTimes().$returns(null);
@@ -847,7 +839,10 @@ testSuite({
 
     HELPER.select(text, 0, text, text.length);
     FORMATTER.execCommandInternal(
-        BasicTextFormatter.COMMAND.CREATE_LINK, FIELDMOCK.getRange(), url);
+      BasicTextFormatter.COMMAND.CREATE_LINK,
+      FIELDMOCK.getRange(),
+      url
+    );
     HELPER.assertHtmlMatches(`<a href="${url}">${text}</a>`);
 
     FIELDMOCK.$verify();
@@ -884,12 +879,13 @@ testSuite({
     setUpJustifyTests('<div>abc</div><p>def</p><div>ghi</div>');
     FIELDMOCK.$replay();
 
-    HELPER.select('abc', 1, 'def', 1);  // Selects 'bcd'.
+    HELPER.select('abc', 1, 'def', 1); // Selects 'bcd'.
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.JUSTIFY_CENTER);
     HELPER.assertHtmlMatches(
-        '<div style="text-align: center">abc</div>' +
+      '<div style="text-align: center">abc</div>' +
         '<p style="text-align: center">def</p>' +
-        '<div>ghi</div>');
+        '<div>ghi</div>'
+    );
 
     FIELDMOCK.$verify();
     tearDownJustifyTests();
@@ -900,10 +896,9 @@ testSuite({
     setUpJustifyTests('<div>a<i>b</i>c</div><div>d</div>');
     FIELDMOCK.$replay();
 
-    HELPER.select('b', 0, 'b', 1);  // Selects 'b'.
+    HELPER.select('b', 0, 'b', 1); // Selects 'b'.
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.JUSTIFY_CENTER);
-    HELPER.assertHtmlMatches(
-        '<div style="text-align: center">a<i>b</i>c</div><div>d</div>');
+    HELPER.assertHtmlMatches('<div style="text-align: center">a<i>b</i>c</div><div>d</div>');
 
     FIELDMOCK.$verify();
     tearDownJustifyTests();
@@ -914,10 +909,9 @@ testSuite({
     setUpJustifyTests('<div>a<div>b</div>c</div>');
     FIELDMOCK.$replay();
 
-    HELPER.select('b', 0, 'b', 1);  // Selects 'h'.
+    HELPER.select('b', 0, 'b', 1); // Selects 'h'.
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.JUSTIFY_CENTER);
-    HELPER.assertHtmlMatches(
-        '<div>a<div style="text-align: center">b</div>c</div>');
+    HELPER.assertHtmlMatches('<div>a<div style="text-align: center">b</div>c</div>');
 
     FIELDMOCK.$verify();
     tearDownJustifyTests();
@@ -933,19 +927,21 @@ testSuite({
     setUpFontSizeTests();
     FIELDMOCK.$replay();
 
-    HELPER.select('1', 0, '4', 1);  // Selects 1234.
+    HELPER.select('1', 0, '4', 1); // Selects 1234.
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.FONT_SIZE, 6);
 
-    assertFontSizes(
-        'New font size should override existing font size',
-        {'1': 32, '23': 32, '4': 32});
+    assertFontSizes('New font size should override existing font size', {
+      '1': 32,
+      '23': 32,
+      '4': 32,
+    });
 
     if (BrowserFeature.DOESNT_OVERRIDE_FONT_SIZE_IN_STYLE_ATTR) {
       const span = HELPER.findTextNode('23').parentNode;
       assertFalse(
-          'Style attribute should be gone',
-          span.getAttributeNode('style') != null &&
-              span.getAttributeNode('style').specified);
+        'Style attribute should be gone',
+        span.getAttributeNode('style') != null && span.getAttributeNode('style').specified
+      );
     }
 
     FIELDMOCK.$verify();
@@ -960,29 +956,30 @@ testSuite({
     setUpFontSizeTests();
     FIELDMOCK.$replay();
 
-    HELPER.select('23', 0, '56', 2);  // Selects 23456.
+    HELPER.select('23', 0, '56', 2); // Selects 23456.
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.FONT_SIZE, 6);
     const span = HELPER.findTextNode('23').parentNode;
     const span2 = HELPER.findTextNode('56').parentNode;
 
-    assertFontSizes(
-        'New font size should override existing font size in all spans',
-        {'23': 32, '4': 32, '56': 32});
-    const whiteSpace = userAgent.IE ?
-        style.getCascadedStyle(span2, 'whiteSpace') :
-        style.getComputedStyle(span2, 'whiteSpace');
-    assertEquals(
-        'Whitespace style in last span should have been left', 'pre',
-        whiteSpace);
+    assertFontSizes('New font size should override existing font size in all spans', {
+      '23': 32,
+      '4': 32,
+      '56': 32,
+    });
+    const whiteSpace = userAgent.IE
+      ? style.getCascadedStyle(span2, 'whiteSpace')
+      : style.getComputedStyle(span2, 'whiteSpace');
+    assertEquals('Whitespace style in last span should have been left', 'pre', whiteSpace);
 
     if (BrowserFeature.DOESNT_OVERRIDE_FONT_SIZE_IN_STYLE_ATTR) {
       assertFalse(
-          'Style attribute should be gone from first span',
-          span.getAttributeNode('style') != null &&
-              span.getAttributeNode('style').specified);
+        'Style attribute should be gone from first span',
+        span.getAttributeNode('style') != null && span.getAttributeNode('style').specified
+      );
       assertTrue(
-          'Style attribute should not be gone from last span',
-          span2.getAttributeNode('style').specified);
+        'Style attribute should not be gone from last span',
+        span2.getAttributeNode('style').specified
+      );
     }
 
     FIELDMOCK.$verify();
@@ -997,13 +994,15 @@ testSuite({
     setUpFontSizeTests();
     FIELDMOCK.$replay();
 
-    HELPER.select(
-        '23', 1, '4', 1);  // Selects 34 (half of span with font size).
+    HELPER.select('23', 1, '4', 1); // Selects 34 (half of span with font size).
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.FONT_SIZE, 6);
 
-    assertFontSizes(
-        'New font size shouldn\'t override existing font size before selection',
-        {'2': 2, '23': null, '3': 32, '4': 32});
+    assertFontSizes("New font size shouldn't override existing font size before selection", {
+      '2': 2,
+      '23': null,
+      '3': 32,
+      '4': 32,
+    });
 
     FIELDMOCK.$verify();
   },
@@ -1018,13 +1017,14 @@ testSuite({
     setUpFontSizeTests();
     FIELDMOCK.$replay();
 
-    HELPER.select('23', 1, '56', 2);  // Selects 3456.
+    HELPER.select('23', 1, '56', 2); // Selects 3456.
     FORMATTER.execCommandInternal(BasicTextFormatter.COMMAND.FONT_SIZE, 6);
 
     assertFontSizes(
-        'New font size shouldn\'t override existing font size before ' +
-            'selection, but still override existing font size in last span',
-        {'2': 2, '23': null, '3': 32, '4': 32, '56': 32});
+      "New font size shouldn't override existing font size before " +
+        'selection, but still override existing font size in last span',
+      { '2': 2, '23': null, '3': 32, '4': 32, '56': 32 }
+    );
 
     FIELDMOCK.$verify();
   },
@@ -1064,15 +1064,16 @@ testSuite({
     HELPER.select('three', 0);
     FORMATTER.convertBreaksToDivs_();
     assertEquals(
-        'There should still be a <p> tag', 1,
-        dom.getElementsByTagName(TagName.P, FIELDMOCK.getElement()).length);
+      'There should still be a <p> tag',
+      1,
+      dom.getElementsByTagName(TagName.P, FIELDMOCK.getElement()).length
+    );
     /**
      * @suppress {missingProperties} suppression added to enable type checking
      */
     const html = FIELDMOCK.getElement().innerHTML.toLowerCase();
     assertNotBadBrElements(html);
-    assertNotContains(
-        'There should not be empty <div> elements', '<div><\/div>', html);
+    assertNotContains('There should not be empty <div> elements', '<div></div>', html);
 
     FIELDMOCK.$verify();
     tearDownConvertBreaksToDivTests();
@@ -1097,13 +1098,14 @@ testSuite({
      */
     const html = FIELDMOCK.getElement().innerHTML.toLowerCase();
     assertNotBadBrElements(html);
-    assertNotContains(
-        'There should not be empty <div> elements', '<div><\/div>', html);
+    assertNotContains('There should not be empty <div> elements', '<div></div>', html);
     if (userAgent.IE) {
       // <div><br></div> misbehaves in IE
       assertNotContains(
-          '<br> should not be used to prevent <div> from collapsing',
-          '<div><br><\/div>', html);
+        '<br> should not be used to prevent <div> from collapsing',
+        '<div><br></div>',
+        html
+      );
     }
 
     FIELDMOCK.$verify();
@@ -1128,8 +1130,10 @@ testSuite({
     const before = FIELDMOCK.getRange().getText().replace(/\s/g, '');
     FORMATTER.convertBreaksToDivs_();
     assertEquals(
-        'Selection must not be changed', before,
-        FIELDMOCK.getRange().getText().replace(/\s/g, ''));
+      'Selection must not be changed',
+      before,
+      FIELDMOCK.getRange().getText().replace(/\s/g, '')
+    );
 
     FIELDMOCK.$verify();
     tearDownConvertBreaksToDivTests();
@@ -1147,9 +1151,9 @@ testSuite({
     HELPER.select('three', 0);
     FORMATTER.execCommandInternal('insertorderedlist');
     assertTrue(
-        'Ordered list must be inserted',
-        FIELDMOCK.getEditableDomHelper().getDocument().queryCommandState(
-            'insertorderedlist'));
+      'Ordered list must be inserted',
+      FIELDMOCK.getEditableDomHelper().getDocument().queryCommandState('insertorderedlist')
+    );
     tearDownConvertBreaksToDivTests();
   },
 
@@ -1175,12 +1179,8 @@ testSuite({
     assertNotBadBrElements(html);
     const idBr = document.getElementById('br1');
     assertNotNull('There should still be a tag with id="br1"', idBr);
-    assertEquals(
-        'The tag with id="br1" should be a <div> now', String(TagName.DIV),
-        idBr.tagName);
-    assertNull(
-        'There should not be any tag with id="temp_br"',
-        document.getElementById('temp_br'));
+    assertEquals('The tag with id="br1" should be a <div> now', String(TagName.DIV), idBr.tagName);
+    assertNull('There should not be any tag with id="temp_br"', document.getElementById('temp_br'));
 
     FIELDMOCK.$verify();
     tearDownConvertBreaksToDivTests();
@@ -1228,161 +1228,152 @@ testSuite({
     mockField.$replay();
 
     assertFalse(
-        'Empty selection should not be justified',
-        FORMATTER.isJustification_(BasicTextFormatter.COMMAND.JUSTIFY_CENTER));
+      'Empty selection should not be justified',
+      FORMATTER.isJustification_(BasicTextFormatter.COMMAND.JUSTIFY_CENTER)
+    );
     assertFalse(
-        'Empty selection should not be justified',
-        FORMATTER.isJustification_(BasicTextFormatter.COMMAND.JUSTIFY_FULL));
+      'Empty selection should not be justified',
+      FORMATTER.isJustification_(BasicTextFormatter.COMMAND.JUSTIFY_FULL)
+    );
     assertFalse(
-        'Empty selection should not be justified',
-        FORMATTER.isJustification_(BasicTextFormatter.COMMAND.JUSTIFY_RIGHT));
+      'Empty selection should not be justified',
+      FORMATTER.isJustification_(BasicTextFormatter.COMMAND.JUSTIFY_RIGHT)
+    );
     assertFalse(
-        'Empty selection should not be justified',
-        FORMATTER.isJustification_(BasicTextFormatter.COMMAND.JUSTIFY_LEFT));
+      'Empty selection should not be justified',
+      FORMATTER.isJustification_(BasicTextFormatter.COMMAND.JUSTIFY_LEFT)
+    );
 
     mockField.$verify();
   },
 
   testIsJustificationSimple1() {
     setUpRealField();
-    REAL_FIELD.setSafeHtml(
-        false, SafeHtml.create('div', {'align': 'right'}, 'foo'));
+    REAL_FIELD.setSafeHtml(false, SafeHtml.create('div', { align: 'right' }, 'foo'));
     selectRealField();
 
-    assertFalse(
-        REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_LEFT));
-    assertTrue(
-        REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_RIGHT));
+    assertFalse(REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_LEFT));
+    assertTrue(REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_RIGHT));
   },
 
   testIsJustificationSimple2() {
     setUpRealField();
     REAL_FIELD.setSafeHtml(
-        false,
-        SafeHtml.create('div', {'style': {'text-align': 'right'}}, 'foo'));
+      false,
+      SafeHtml.create('div', { style: { 'text-align': 'right' } }, 'foo')
+    );
     selectRealField();
 
-    assertFalse(
-        REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_LEFT));
-    assertTrue(
-        REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_RIGHT));
+    assertFalse(REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_LEFT));
+    assertTrue(REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_RIGHT));
   },
 
   testIsJustificationComplete1() {
     setUpRealField();
     REAL_FIELD.setSafeHtml(
-        false,
-        SafeHtml.concat(
-            SafeHtml.create('div', {'align': 'left'}, 'a'),
-            SafeHtml.create('div', {'align': 'right'}, 'b')));
+      false,
+      SafeHtml.concat(
+        SafeHtml.create('div', { align: 'left' }, 'a'),
+        SafeHtml.create('div', { align: 'right' }, 'b')
+      )
+    );
     selectRealField();
 
-    assertFalse(
-        REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_LEFT));
-    assertFalse(
-        REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_RIGHT));
+    assertFalse(REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_LEFT));
+    assertFalse(REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_RIGHT));
   },
 
   testIsJustificationComplete2() {
     setUpRealField();
     REAL_FIELD.setSafeHtml(
-        false,
-        SafeHtml.concat(
-            SafeHtml.create('div', {'align': 'left'}, 'a'),
-            SafeHtml.create('div', {'align': 'left'}, 'b')));
+      false,
+      SafeHtml.concat(
+        SafeHtml.create('div', { align: 'left' }, 'a'),
+        SafeHtml.create('div', { align: 'left' }, 'b')
+      )
+    );
     selectRealField();
 
-    assertTrue(
-        REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_LEFT));
-    assertFalse(
-        REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_RIGHT));
+    assertTrue(REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_LEFT));
+    assertFalse(REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_RIGHT));
   },
 
   testIsJustificationComplete3() {
     setUpRealField();
     REAL_FIELD.setSafeHtml(
-        false,
-        SafeHtml.concat(
-            SafeHtml.create('div', {'align': 'right'}, 'a'),
-            SafeHtml.create('div', {'align': 'right'}, 'b')));
+      false,
+      SafeHtml.concat(
+        SafeHtml.create('div', { align: 'right' }, 'a'),
+        SafeHtml.create('div', { align: 'right' }, 'b')
+      )
+    );
     selectRealField();
 
-    assertFalse(
-        REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_LEFT));
-    assertTrue(
-        REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_RIGHT));
+    assertFalse(REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_LEFT));
+    assertTrue(REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_RIGHT));
   },
 
   testIsJustificationComplete4() {
     setUpRealField();
     REAL_FIELD.setSafeHtml(
-        false,
-        SafeHtml.concat(
-            SafeHtml.create(
-                'div', {'align': 'right'},
-                SafeHtml.create('div', {'align': 'left'}, 'a')),
-            SafeHtml.create('div', {'align': 'right'}, 'b')));
+      false,
+      SafeHtml.concat(
+        SafeHtml.create('div', { align: 'right' }, SafeHtml.create('div', { align: 'left' }, 'a')),
+        SafeHtml.create('div', { align: 'right' }, 'b')
+      )
+    );
     selectRealField();
 
-    assertFalse(
-        REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_LEFT));
-    assertTrue(
-        REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_RIGHT));
+    assertFalse(REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_LEFT));
+    assertTrue(REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_RIGHT));
   },
 
   testIsJustificationComplete5() {
     setUpRealField();
     REAL_FIELD.setSafeHtml(
-        false,
-        SafeHtml.concat(
-            SafeHtml.create('div', {'align': 'right'}, 'a'), 'b',
-            SafeHtml.create('div', {'align': 'right'}, 'c')));
+      false,
+      SafeHtml.concat(
+        SafeHtml.create('div', { align: 'right' }, 'a'),
+        'b',
+        SafeHtml.create('div', { align: 'right' }, 'c')
+      )
+    );
     selectRealField();
 
-    assertFalse(
-        REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_LEFT));
-    assertFalse(
-        REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_RIGHT));
+    assertFalse(REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_LEFT));
+    assertFalse(REAL_FIELD.queryCommandValue(BasicTextFormatter.COMMAND.JUSTIFY_RIGHT));
   },
 
   testIsJustificationPInDivLeft() {
-    doTestIsJustificationPInDiv(
-        false, 'left', BasicTextFormatter.COMMAND.JUSTIFY_LEFT);
+    doTestIsJustificationPInDiv(false, 'left', BasicTextFormatter.COMMAND.JUSTIFY_LEFT);
   },
 
   testIsJustificationPInDivRight() {
-    doTestIsJustificationPInDiv(
-        false, 'right', BasicTextFormatter.COMMAND.JUSTIFY_RIGHT);
+    doTestIsJustificationPInDiv(false, 'right', BasicTextFormatter.COMMAND.JUSTIFY_RIGHT);
   },
 
   testIsJustificationPInDivCenter() {
-    doTestIsJustificationPInDiv(
-        false, 'center', BasicTextFormatter.COMMAND.JUSTIFY_CENTER);
+    doTestIsJustificationPInDiv(false, 'center', BasicTextFormatter.COMMAND.JUSTIFY_CENTER);
   },
 
   testIsJustificationPInDivJustify() {
-    doTestIsJustificationPInDiv(
-        false, 'justify', BasicTextFormatter.COMMAND.JUSTIFY_FULL);
+    doTestIsJustificationPInDiv(false, 'justify', BasicTextFormatter.COMMAND.JUSTIFY_FULL);
   },
 
   testIsJustificationPInDivLeftCss() {
-    doTestIsJustificationPInDiv(
-        true, 'left', BasicTextFormatter.COMMAND.JUSTIFY_LEFT);
+    doTestIsJustificationPInDiv(true, 'left', BasicTextFormatter.COMMAND.JUSTIFY_LEFT);
   },
 
   testIsJustificationPInDivRightCss() {
-    doTestIsJustificationPInDiv(
-        true, 'right', BasicTextFormatter.COMMAND.JUSTIFY_RIGHT);
+    doTestIsJustificationPInDiv(true, 'right', BasicTextFormatter.COMMAND.JUSTIFY_RIGHT);
   },
 
   testIsJustificationPInDivCenterCss() {
-    doTestIsJustificationPInDiv(
-        true, 'center', BasicTextFormatter.COMMAND.JUSTIFY_CENTER);
+    doTestIsJustificationPInDiv(true, 'center', BasicTextFormatter.COMMAND.JUSTIFY_CENTER);
   },
 
   testIsJustificationPInDivJustifyCss() {
-    doTestIsJustificationPInDiv(
-        true, 'justify', BasicTextFormatter.COMMAND.JUSTIFY_FULL);
+    doTestIsJustificationPInDiv(true, 'justify', BasicTextFormatter.COMMAND.JUSTIFY_FULL);
   },
 
   testPrepareContent() {
@@ -1391,24 +1382,20 @@ testSuite({
 
     if (BrowserFeature.COLLAPSES_EMPTY_NODES) {
       assertPreparedContents(
-          '&nbsp;<script>alert(\'hi\')<' +
-              '/script>',
-          '<script>alert(\'hi\')<' +
-              '/script>');
+        "&nbsp;<script>alert('hi')<" + '/script>',
+        "<script>alert('hi')<" + '/script>'
+      );
     } else {
-      assertNotPreparedContents(
-          '<script>alert(\'hi\')<' +
-          '/script>');
+      assertNotPreparedContents("<script>alert('hi')<" + '/script>');
     }
 
     if (BrowserFeature.CONVERT_TO_B_AND_I_TAGS) {
-      assertPreparedContents(
-          '<b id=\'foo\'>hi</b>', '<strong id=\'foo\'>hi</strong>');
+      assertPreparedContents("<b id='foo'>hi</b>", "<strong id='foo'>hi</strong>");
       assertPreparedContents('<i>hi</i>', '<em>hi</em>');
       assertNotPreparedContents('<embed>');
     } else {
       assertNotPreparedContents('<em>hi</em>');
-      assertNotPreparedContents('<strong id=\'foo\'>hi</strong>');
+      assertNotPreparedContents("<strong id='foo'>hi</strong>");
     }
   },
 
@@ -1416,9 +1403,9 @@ testSuite({
     const fieldElem = dom.getElement('real-field');
     dom.removeChildren(fieldElem);
     const attrs = {
-      'src': 'http://www.google.com/foo.jpg',
-      'tabIndex': '0',
-      'tabIndexSet': '0',
+      src: 'http://www.google.com/foo.jpg',
+      tabIndex: '0',
+      tabIndexSet: '0',
     };
     /**
      * @suppress {missingProperties} suppression added to enable type checking
@@ -1430,11 +1417,13 @@ testSuite({
 
     const html = REAL_FIELD.getCleanContents();
     assert(
-        `Images must not have forbidden attributes: ${html}`,
-        -1 == html.indexOf('tabIndex') && -1 == html.indexOf('closure'));
+      `Images must not have forbidden attributes: ${html}`,
+      -1 == html.indexOf('tabIndex') && -1 == html.indexOf('closure')
+    );
     assert(
-        `Image URLs must not be made relative by default: ${html}`,
-        -1 != html.indexOf('/foo.jpg'));
+      `Image URLs must not be made relative by default: ${html}`,
+      -1 != html.indexOf('/foo.jpg')
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -1451,8 +1440,7 @@ testSuite({
      * @suppress {strictMissingProperties} suppression added to enable type
      * checking
      */
-    ifr.contentWindow.document.body.innerHTML =
-        'hello<br id="br1"><br id="br2">';
+    ifr.contentWindow.document.body.innerHTML = 'hello<br id="br1"><br id="br2">';
     /**
      * @suppress {strictMissingProperties} suppression added to enable type
      * checking
@@ -1465,11 +1453,11 @@ testSuite({
     FORMATTER.applyExecCommandGeckoFixes_('formatblock');
     const updatedRange = REAL_FIELD.getRange().getBrowserRangeObject();
     assertEquals(
-        'Range should have been updated to deep range', 'br2',
-        updatedRange.startContainer.id);
-    assertEquals(
-        'Range should have been updated to deep range', 0,
-        updatedRange.startOffset);
+      'Range should have been updated to deep range',
+      'br2',
+      updatedRange.startContainer.id
+    );
+    assertEquals('Range should have been updated to deep range', 0, updatedRange.startOffset);
   },
 
   testIEExecCommandFixes() {
@@ -1484,7 +1472,8 @@ testSuite({
     /** @suppress {visibility} suppression added to enable type checking */
     const nodes = REAL_PLUGIN.applyExecCommandIEFixes_('insertOrderedList');
     assertHTMLEquals(
-        '<blockquote>hi<div style="height:0px"></div></blockquote>',
-        REAL_FIELD.getCleanContents());
+      '<blockquote>hi<div style="height:0px"></div></blockquote>',
+      REAL_FIELD.getCleanContents()
+    );
   },
 });

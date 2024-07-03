@@ -13,13 +13,11 @@
 
 goog.provide('goog.crypt.BlockCipher');
 
-
-
 /**
  * Interface definition for a block cipher.
  * @interface
  */
-goog.crypt.BlockCipher = function() {};
+goog.crypt.BlockCipher = () => {};
 
 /**
  * Block size, in bytes.
@@ -37,7 +35,6 @@ goog.crypt.BlockCipher.prototype.BLOCK_SIZE;
  *     same length as input.
  */
 goog.crypt.BlockCipher.prototype.encrypt;
-
 
 /**
  * Decrypt a plaintext block.  The implementation may expect (and assert)

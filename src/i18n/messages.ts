@@ -10,7 +10,7 @@
 
 goog.module('goog.i18n.messages');
 
-const {assert} = goog.require('goog.asserts');
+const { assert } = goog.require('goog.asserts');
 
 /**
  * Options bag type for `declareIcuTemplate()` options argument.
@@ -22,7 +22,7 @@ const {assert} = goog.require('goog.asserts');
  *
  * @record
  */
-const IcuTemplateOptions = function() {};
+const IcuTemplateOptions = () => {};
 
 /**
  * Required text describing how the message will be used.
@@ -197,8 +197,7 @@ function declareIcuTemplate(templateString, options) {
  *
  * @type {!Set<string>}
  */
-const VALID_OPTIONS =
-    new Set(['description', 'meaning', 'example', 'original_code']);
+const VALID_OPTIONS = new Set(['description', 'meaning', 'example', 'original_code']);
 
 /**
  * Throw an exception if the parameters are not valid for a `declareIcuTemplate`
@@ -219,27 +218,21 @@ function assertDeclareIcuTemplateParametersAreValid(templateString, options) {
 
   const description = options.description;
   assert(description, 'no description supplied');
-  assert(
-      typeof description == 'string', 'invalid description: "%s"', description);
+  assert(typeof description == 'string', 'invalid description: "%s"', description);
 
   const meaning = options.meaning;
-  assert(
-      !meaning || typeof meaning == 'string', 'invalid meaning: "%s"', meaning);
+  assert(!meaning || typeof meaning == 'string', 'invalid meaning: "%s"', meaning);
 
   const exampleMap = options.example;
   if (exampleMap) {
-    assert(
-        typeof exampleMap == 'object', 'invalid example map: "%s"', exampleMap);
+    assert(typeof exampleMap == 'object', 'invalid example map: "%s"', exampleMap);
     assertValidPlaceholderMap('example', exampleMap, icuPlaceholderNames);
   }
 
   const originalCodeMap = options.original_code;
   if (originalCodeMap) {
-    assert(
-        typeof originalCodeMap == 'object', 'invalid original_code map: "%s"',
-        originalCodeMap);
-    assertValidPlaceholderMap(
-        'original_code', originalCodeMap, icuPlaceholderNames);
+    assert(typeof originalCodeMap == 'object', 'invalid original_code map: "%s"', originalCodeMap);
+    assertValidPlaceholderMap('original_code', originalCodeMap, icuPlaceholderNames);
   }
 
   for (const propName of Object.keys(options)) {
@@ -256,19 +249,24 @@ function assertDeclareIcuTemplateParametersAreValid(templateString, options) {
  *     values
  * @param {!Set<string>} allPlaceholderNames All known placeholder names
  */
-function assertValidPlaceholderMap(
-    mapName, placeholderMap, allPlaceholderNames) {
+function assertValidPlaceholderMap(mapName, placeholderMap, allPlaceholderNames) {
   for (const placeholderName of Object.keys(placeholderMap)) {
     assert(
-        allPlaceholderNames.has(placeholderName),
-        '%s: unknown placeholder: "%s"', mapName, placeholderName);
+      allPlaceholderNames.has(placeholderName),
+      '%s: unknown placeholder: "%s"',
+      mapName,
+      placeholderName
+    );
     const placeholderValue = placeholderMap[placeholderName];
     assert(
-        typeof placeholderValue == 'string', 'invalid %s value for %s: "%s"',
-        mapName, placeholderName, placeholderValue);
+      typeof placeholderValue == 'string',
+      'invalid %s value for %s: "%s"',
+      mapName,
+      placeholderName,
+      placeholderValue
+    );
   }
 }
-
 
 /** Matches a single closure-style placeholder. */
 const CLOSURE_PLACEHOLDER_RE = /\{\$([^}]+)}/;
@@ -281,9 +279,11 @@ const CLOSURE_PLACEHOLDER_RE = /\{\$([^}]+)}/;
 function assertNoClosureStylePlaceholdersInIcuTemplate(icuTemplate) {
   const match = CLOSURE_PLACEHOLDER_RE.exec(icuTemplate);
   assert(
-      match == null,
-      'closure-style placeholder: "%s" found in ICU template: "%s"',
-      match && match[0], icuTemplate);
+    match == null,
+    'closure-style placeholder: "%s" found in ICU template: "%s"',
+    match && match[0],
+    icuTemplate
+  );
 }
 
 /**
@@ -291,7 +291,7 @@ function assertNoClosureStylePlaceholdersInIcuTemplate(icuTemplate) {
  *
  * Capturing group #1 contains the the placeholder name for each match.
  */
-const ICU_PLACEHOLDER_GLOBAL_RE = /\{([a-z_]\w*)}/ig;
+const ICU_PLACEHOLDER_GLOBAL_RE = /\{([a-z_]\w*)}/gi;
 
 /**
  * @param {string} icuTemplate
@@ -301,7 +301,7 @@ function gatherIcuPlaceholderNames(icuTemplate) {
   const resultSet = new Set();
   let match = null;
 
-  while (match = ICU_PLACEHOLDER_GLOBAL_RE.exec(icuTemplate)) {
+  while ((match = ICU_PLACEHOLDER_GLOBAL_RE.exec(icuTemplate))) {
     resultSet.add(match[1]);
   }
   return resultSet;
@@ -311,5 +311,5 @@ function gatherIcuPlaceholderNames(icuTemplate) {
 //     replace goog.getMsg(), so we can drop that method from base.js.
 exports = {
   declareIcuTemplate,
-  IcuTemplateOptions
+  IcuTemplateOptions,
 };

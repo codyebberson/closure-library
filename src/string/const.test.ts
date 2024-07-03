@@ -7,7 +7,6 @@
 /** @fileoverview Unit tests for Const. */
 
 goog.module('goog.string.constTest');
-goog.setTestOnly();
 
 const Const = goog.require('goog.string.Const');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -27,8 +26,7 @@ testSuite({
   /** @suppress {checkTypes} */
   testUnwrap() {
     const evil = {};
-    evil.constStringValueWithSecurityContract__googStringSecurityPrivate_ =
-        'evil';
+    evil.constStringValueWithSecurityContract__googStringSecurityPrivate_ = 'evil';
     evil.CONST_STRING_TYPE_MARKER__GOOG_STRING_SECURITY_PRIVATE_ = {};
 
     const exception = assertThrows(() => {

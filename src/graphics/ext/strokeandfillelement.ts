@@ -4,11 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview A thick wrapper around elements with stroke and fill.
  */
-
 
 goog.provide('goog.graphics.ext.StrokeAndFillElement');
 
@@ -17,8 +15,6 @@ goog.requireType('goog.graphics.Fill');
 goog.requireType('goog.graphics.Stroke');
 goog.requireType('goog.graphics.StrokeAndFillElement');
 goog.requireType('goog.graphics.ext.Group');
-
-
 
 /**
  * Interface for a graphics element that has a stroke and fill.
@@ -30,35 +26,28 @@ goog.requireType('goog.graphics.ext.Group');
  * @constructor
  * @extends {goog.graphics.ext.Element}
  */
-goog.graphics.ext.StrokeAndFillElement = function(group, wrapper) {
-  'use strict';
+goog.graphics.ext.StrokeAndFillElement = function (group, wrapper) {
   goog.graphics.ext.Element.call(this, group, wrapper);
 };
-goog.inherits(
-    goog.graphics.ext.StrokeAndFillElement, goog.graphics.ext.Element);
-
+goog.inherits(goog.graphics.ext.StrokeAndFillElement, goog.graphics.ext.Element);
 
 /**
  * Sets the fill for this element.
  * @param {goog.graphics.Fill?} fill The fill object.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.ext.StrokeAndFillElement.prototype.setFill = function(fill) {
-  'use strict';
+goog.graphics.ext.StrokeAndFillElement.prototype.setFill = function (fill) {
   this.getWrapper().setFill(fill);
 };
-
 
 /**
  * Sets the stroke for this element.
  * @param {goog.graphics.Stroke?} stroke The stroke object.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.ext.StrokeAndFillElement.prototype.setStroke = function(stroke) {
-  'use strict';
+goog.graphics.ext.StrokeAndFillElement.prototype.setStroke = function (stroke) {
   this.getWrapper().setStroke(stroke);
 };
-
 
 /**
  * Redraw the rectangle.  Called when the coordinate system is changed.
@@ -66,7 +55,6 @@ goog.graphics.ext.StrokeAndFillElement.prototype.setStroke = function(stroke) {
  * @override
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.graphics.ext.StrokeAndFillElement.prototype.redraw = function() {
-  'use strict';
+goog.graphics.ext.StrokeAndFillElement.prototype.redraw = function () {
   this.getWrapper().reapplyStroke();
 };

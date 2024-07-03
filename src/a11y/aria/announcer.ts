@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview Announcer that allows messages to be spoken by assistive
  * technologies.
@@ -20,8 +19,6 @@ goog.require('goog.dom.TagName');
 goog.require('goog.object');
 goog.require('goog.string');
 
-
-
 /**
  * Class that allows messages to be spoken by assistive technologies that the
  * user may have active.
@@ -31,8 +28,7 @@ goog.require('goog.string');
  * @extends {goog.Disposable}
  * @final
  */
-goog.a11y.aria.Announcer = function(opt_domHelper) {
-  'use strict';
+goog.a11y.aria.Announcer = function (opt_domHelper) {
   goog.a11y.aria.Announcer.base(this, 'constructor');
 
   /**
@@ -58,18 +54,14 @@ goog.a11y.aria.Announcer = function(opt_domHelper) {
 };
 goog.inherits(goog.a11y.aria.Announcer, goog.Disposable);
 
-
 /** @override */
-goog.a11y.aria.Announcer.prototype.disposeInternal = function() {
-  'use strict';
-  goog.object.forEach(
-      this.liveRegions_, this.domHelper_.removeNode, this.domHelper_);
+goog.a11y.aria.Announcer.prototype.disposeInternal = function () {
+  goog.object.forEach(this.liveRegions_, this.domHelper_.removeNode, this.domHelper_);
   this.liveRegions_ = null;
   this.domHelper_ = null;
   this.lastMessageAnnouncedPerPriority_ = null;
   goog.a11y.aria.Announcer.base(this, 'disposeInternal');
 };
-
 
 /**
  * Announce a message to be read by any assistive technologies the user may
@@ -78,8 +70,7 @@ goog.a11y.aria.Announcer.prototype.disposeInternal = function() {
  * @param {goog.a11y.aria.LivePriority=} opt_priority The priority of the
  *     message. Defaults to POLITE.
  */
-goog.a11y.aria.Announcer.prototype.say = function(message, opt_priority) {
-  'use strict';
+goog.a11y.aria.Announcer.prototype.say = function (message, opt_priority) {
   const priority = opt_priority || goog.a11y.aria.LivePriority.POLITE;
   const liveRegion = this.getLiveRegion_(priority);
   // TODO(user): Remove the code once Chrome fix the bug on their
@@ -87,9 +78,9 @@ goog.a11y.aria.Announcer.prototype.say = function(message, opt_priority) {
   // to verbalize repeated character or text.
   const lastMessageAnnounced = this.lastMessageAnnouncedPerPriority_[priority];
   const announceMessage =
-      lastMessageAnnounced && lastMessageAnnounced === message ?
-      message + goog.string.Unicode.NBSP :
-      message;
+    lastMessageAnnounced && lastMessageAnnounced === message
+      ? message + goog.string.Unicode.NBSP
+      : message;
   if (message) {
     this.lastMessageAnnouncedPerPriority_[priority] = announceMessage;
   }
@@ -101,7 +92,7 @@ goog.a11y.aria.Announcer.prototype.say = function(message, opt_priority) {
  * @param {!goog.a11y.aria.LivePriority} priority The required priority.
  * @return {string} The generated id on the liveRegion.
  */
-goog.a11y.aria.Announcer.prototype.getLiveRegionId = function(priority) {
+goog.a11y.aria.Announcer.prototype.getLiveRegionId = function (priority) {
   return this.getLiveRegion_(priority).getAttribute('id');
 };
 
@@ -111,8 +102,7 @@ goog.a11y.aria.Announcer.prototype.getLiveRegionId = function(priority) {
  * @return {!Element} A live region of the requested priority.
  * @private
  */
-goog.a11y.aria.Announcer.prototype.getLiveRegion_ = function(priority) {
-  'use strict';
+goog.a11y.aria.Announcer.prototype.getLiveRegion_ = function (priority) {
   var liveRegion = this.liveRegions_[priority];
   if (liveRegion) {
     // Make sure the live region is not aria-hidden.

@@ -21,10 +21,9 @@ goog.require('goog.Promise');
 
 goog.setTestOnly('goog.promise.testSuiteAdapter');
 
-
 var promisesAplusTests = /** @type {function(!Object, function(*))} */ (
-    require('promises-aplus-tests'));
-
+  require('promises-aplus-tests')
+);
 
 /**
  * Adapter for specifying Promise-creating functions to the Promises test suite.
@@ -32,45 +31,40 @@ var promisesAplusTests = /** @type {function(!Object, function(*))} */ (
  */
 goog.promise.testSuiteAdapter = {
   /** @type {function(*): !goog.Promise} */
-  'resolved': goog.Promise.resolve,
+  resolved: goog.Promise.resolve,
 
   /** @type {function(*): !goog.Promise} */
-  'rejected': goog.Promise.reject,
+  rejected: goog.Promise.reject,
 
   /** @return {!Object} */
-  'deferred': function() {
-    'use strict';
+  deferred: () => {
     var promiseObj = {};
-    promiseObj['promise'] = new goog.Promise(function(resolve, reject) {
-      'use strict';
+    promiseObj['promise'] = new goog.Promise((resolve, reject) => {
       promiseObj['resolve'] = resolve;
       promiseObj['reject'] = reject;
     });
     return promiseObj;
-  }
+  },
 };
-
 
 // Node.js defines setTimeout globally, but Closure relies on finding it
 // defined on goog.global.
 goog.exportSymbol('setTimeout', setTimeout);
 
-
 // Rethrowing an error to the global scope kills Node immediately. Suppress
 // error rethrowing for running this test suite.
 goog.Promise.setUnhandledRejectionHandler(() => {});
 
-
 // Run the tests, exiting with a failure code if any of the tests fail.
 promisesAplusTests(
-    goog.promise.testSuiteAdapter,
-    /**
-     * @suppress {missingProperties}
-     * @param {?} err
-     */
-    function(err) {
-      'use strict';
-      if (err) {
-        process.exit(1);
-      }
-    });
+  goog.promise.testSuiteAdapter,
+  /**
+   * @suppress {missingProperties}
+   * @param {?} err
+   */
+  (err) => {
+    if (err) {
+      process.exit(1);
+    }
+  }
+);

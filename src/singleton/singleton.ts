@@ -12,7 +12,7 @@ goog.module('goog.singleton');
 goog.module.declareLegacyNamespace();
 
 const reflect = goog.require('goog.reflect');
-const {assert} = goog.require('goog.asserts');
+const { assert } = goog.require('goog.asserts');
 
 /** @type {!Array<function(new: ?): ?>} */
 const instantiatedSingletons = [];
@@ -45,9 +45,7 @@ class Singleton {
  *     instead.
  */
 exports.getInstance = (ctor) => {
-  assert(
-      !Object.isSealed(ctor),
-      'Cannot use getInstance() with a sealed constructor.');
+  assert(!Object.isSealed(ctor), 'Cannot use getInstance() with a sealed constructor.');
   const ctorWithInstance = /** @type {!Singleton} */ (ctor);
   const prop = reflect.objectProperty('instance_', ctorWithInstance);
   if (ctorWithInstance.instance_ && ctorWithInstance.hasOwnProperty(prop)) {
@@ -59,9 +57,7 @@ exports.getInstance = (ctor) => {
   }
   const instance = new ctor();
   ctorWithInstance.instance_ = instance;
-  assert(
-      ctorWithInstance.hasOwnProperty(prop),
-      'Could not instantiate singleton.');
+  assert(ctorWithInstance.hasOwnProperty(prop), 'Could not instantiate singleton.');
   return instance;
 };
 

@@ -11,7 +11,6 @@
 
 goog.provide('goog.module.testdata.modA_1');
 
-
 goog.setTestOnly('goog.module.testdata.modA_1');
 
 goog.require('goog.testing.asserts');

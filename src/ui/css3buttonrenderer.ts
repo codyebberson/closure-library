@@ -30,8 +30,6 @@ goog.require('goog.ui.INLINE_BLOCK_CLASSNAME');
 goog.require('goog.ui.registry');
 goog.requireType('goog.ui.Control');
 
-
-
 /**
  * Custom renderer for {@link goog.ui.Button}s. Css3 buttons can contain
  * almost arbitrary HTML content, will flow like inline elements, but can be
@@ -41,13 +39,11 @@ goog.requireType('goog.ui.Control');
  * @extends {goog.ui.ButtonRenderer}
  * @final
  */
-goog.ui.Css3ButtonRenderer = function() {
-  'use strict';
+goog.ui.Css3ButtonRenderer = function () {
   goog.ui.ButtonRenderer.call(this);
 };
 goog.inherits(goog.ui.Css3ButtonRenderer, goog.ui.ButtonRenderer);
 goog.addSingletonGetter(goog.ui.Css3ButtonRenderer);
-
 
 /**
  * Default CSS class to be applied to the root element of components rendered
@@ -56,13 +52,8 @@ goog.addSingletonGetter(goog.ui.Css3ButtonRenderer);
  */
 goog.ui.Css3ButtonRenderer.CSS_CLASS = goog.getCssName('goog-css3-button');
 
-
 /** @override */
-goog.ui.Css3ButtonRenderer.prototype.getContentElement = function(element) {
-  'use strict';
-  return /** @type {Element} */ (element);
-};
-
+goog.ui.Css3ButtonRenderer.prototype.getContentElement = (element) => element;
 
 /**
  * Returns the button's contents wrapped in the following DOM structure:
@@ -76,18 +67,18 @@ goog.ui.Css3ButtonRenderer.prototype.getContentElement = function(element) {
  * @return {!Element} Root element for the button.
  * @override
  */
-goog.ui.Css3ButtonRenderer.prototype.createDom = function(control) {
-  'use strict';
+goog.ui.Css3ButtonRenderer.prototype.createDom = function (control) {
   var button = /** @type {goog.ui.Button} */ (control);
   var classNames = this.getClassNames(button);
   return button.getDomHelper().createDom(
-      goog.dom.TagName.DIV, {
-        'class': goog.ui.INLINE_BLOCK_CLASSNAME + ' ' + classNames.join(' '),
-        'title': button.getTooltip() || ''
-      },
-      button.getContent());
+    goog.dom.TagName.DIV,
+    {
+      class: goog.ui.INLINE_BLOCK_CLASSNAME + ' ' + classNames.join(' '),
+      title: button.getTooltip() || '',
+    },
+    button.getContent()
+  );
 };
-
 
 /**
  * Returns true if this renderer can decorate the element.  Overrides
@@ -97,22 +88,15 @@ goog.ui.Css3ButtonRenderer.prototype.createDom = function(control) {
  * @return {boolean} Whether the renderer can decorate the element.
  * @override
  */
-goog.ui.Css3ButtonRenderer.prototype.canDecorate = function(element) {
-  'use strict';
-  return element.tagName == goog.dom.TagName.DIV;
-};
-
+goog.ui.Css3ButtonRenderer.prototype.canDecorate = (element) =>
+  element.tagName == goog.dom.TagName.DIV;
 
 /** @override */
-goog.ui.Css3ButtonRenderer.prototype.decorate = function(button, element) {
-  'use strict';
+goog.ui.Css3ButtonRenderer.prototype.decorate = function (button, element) {
   goog.asserts.assert(element);
-  goog.dom.classlist.addAll(
-      element, [goog.ui.INLINE_BLOCK_CLASSNAME, this.getCssClass()]);
-  return goog.ui.Css3ButtonRenderer.superClass_.decorate.call(
-      this, button, element);
+  goog.dom.classlist.addAll(element, [goog.ui.INLINE_BLOCK_CLASSNAME, this.getCssClass()]);
+  return goog.ui.Css3ButtonRenderer.superClass_.decorate.call(this, button, element);
 };
-
 
 /**
  * Returns the CSS class to be applied to the root element of components
@@ -120,27 +104,18 @@ goog.ui.Css3ButtonRenderer.prototype.decorate = function(button, element) {
  * @return {string} Renderer-specific CSS class.
  * @override
  */
-goog.ui.Css3ButtonRenderer.prototype.getCssClass = function() {
-  'use strict';
-  return goog.ui.Css3ButtonRenderer.CSS_CLASS;
-};
-
+goog.ui.Css3ButtonRenderer.prototype.getCssClass = () => goog.ui.Css3ButtonRenderer.CSS_CLASS;
 
 // Register a decorator factory function for goog.ui.Css3ButtonRenderer.
 goog.ui.registry.setDecoratorByClassName(
-    goog.ui.Css3ButtonRenderer.CSS_CLASS, function() {
-      'use strict';
-      return new goog.ui.Button(null, goog.ui.Css3ButtonRenderer.getInstance());
-    });
-
+  goog.ui.Css3ButtonRenderer.CSS_CLASS,
+  () => new goog.ui.Button(null, goog.ui.Css3ButtonRenderer.getInstance())
+);
 
 // Register a decorator factory function for toggle buttons using the
 // goog.ui.Css3ButtonRenderer.
-goog.ui.registry.setDecoratorByClassName(
-    goog.getCssName('goog-css3-toggle-button'), function() {
-      'use strict';
-      var button =
-          new goog.ui.Button(null, goog.ui.Css3ButtonRenderer.getInstance());
-      button.setSupportedState(goog.ui.Component.State.CHECKED, true);
-      return button;
-    });
+goog.ui.registry.setDecoratorByClassName(goog.getCssName('goog-css3-toggle-button'), () => {
+  var button = new goog.ui.Button(null, goog.ui.Css3ButtonRenderer.getInstance());
+  button.setSupportedState(goog.ui.Component.State.CHECKED, true);
+  return button;
+});

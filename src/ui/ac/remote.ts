@@ -19,8 +19,6 @@ goog.require('goog.ui.ac.RemoteArrayMatcher');
 goog.require('goog.ui.ac.Renderer');
 goog.requireType('goog.structs.Map');
 
-
-
 /**
  * Factory class for building a remote autocomplete widget that autocompletes
  * an inputbox or text area from a data array provided via ajax.
@@ -33,8 +31,7 @@ goog.requireType('goog.structs.Map');
  * @constructor
  * @extends {goog.ui.ac.AutoComplete}
  */
-goog.ui.ac.Remote = function(url, input, opt_multi, opt_useSimilar) {
-  'use strict';
+goog.ui.ac.Remote = function (url, input, opt_multi, opt_useSimilar) {
   var matcher = new goog.ui.ac.RemoteArrayMatcher(url, !opt_useSimilar);
   this.matcher_ = matcher;
 
@@ -49,50 +46,40 @@ goog.ui.ac.Remote = function(url, input, opt_multi, opt_useSimilar) {
 };
 goog.inherits(goog.ui.ac.Remote, goog.ui.ac.AutoComplete);
 
-
 /**
  * Set whether or not standard highlighting should be used when rendering rows.
  * @param {boolean} useStandardHighlighting true if standard highlighting used.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.ui.ac.Remote.prototype.setUseStandardHighlighting = function(
-    useStandardHighlighting) {
-  'use strict';
+goog.ui.ac.Remote.prototype.setUseStandardHighlighting = function (useStandardHighlighting) {
   this.renderer_.setUseStandardHighlighting(useStandardHighlighting);
 };
-
 
 /**
  * Gets the attached InputHandler object.
  * @return {goog.ui.ac.InputHandler} The input handler.
  */
-goog.ui.ac.Remote.prototype.getInputHandler = function() {
-  'use strict';
+goog.ui.ac.Remote.prototype.getInputHandler = function () {
   return /** @type {goog.ui.ac.InputHandler} */ (this.selectionHandler_);
 };
-
 
 /**
  * Set the send method ("GET", "POST") for the matcher.
  * @param {string} method The send method; default: GET.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.ui.ac.Remote.prototype.setMethod = function(method) {
-  'use strict';
+goog.ui.ac.Remote.prototype.setMethod = function (method) {
   this.matcher_.setMethod(method);
 };
-
 
 /**
  * Set the post data for the matcher.
  * @param {string} content Post data.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.ui.ac.Remote.prototype.setContent = function(content) {
-  'use strict';
+goog.ui.ac.Remote.prototype.setContent = function (content) {
   this.matcher_.setContent(content);
 };
-
 
 /**
  * Set the HTTP headers for the matcher.
@@ -100,11 +87,9 @@ goog.ui.ac.Remote.prototype.setContent = function(content) {
  *     request.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.ui.ac.Remote.prototype.setHeaders = function(headers) {
-  'use strict';
+goog.ui.ac.Remote.prototype.setHeaders = function (headers) {
   this.matcher_.setHeaders(headers);
 };
-
 
 /**
  * Set the timeout interval for the matcher.
@@ -112,7 +97,6 @@ goog.ui.ac.Remote.prototype.setHeaders = function(headers) {
  *     incomplete request will be aborted; 0 means no timeout is set.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.ui.ac.Remote.prototype.setTimeoutInterval = function(interval) {
-  'use strict';
+goog.ui.ac.Remote.prototype.setTimeoutInterval = function (interval) {
   this.matcher_.setTimeoutInterval(interval);
 };

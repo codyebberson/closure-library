@@ -21,12 +21,12 @@ goog.module.declareLegacyNamespace();
  * @constructor
  * @final
  */
-const TableCell = function(td, startRow, startCol) {
+const TableCell = function (td, startRow, startCol) {
   this.element = td;
   /** @suppress {strictMissingProperties} Added to tighten compiler checks */
-  this.colSpan = parseInt(td.colSpan, 10) || 1;
+  this.colSpan = Number.parseInt(td.colSpan, 10) || 1;
   /** @suppress {strictMissingProperties} Added to tighten compiler checks */
-  this.rowSpan = parseInt(td.rowSpan, 10) || 1;
+  this.rowSpan = Number.parseInt(td.rowSpan, 10) || 1;
   this.startRow = startRow;
   this.startCol = startCol;
   this.updateCoordinates_();
@@ -36,13 +36,12 @@ const TableCell = function(td, startRow, startCol) {
  * Calculates this cell's endRow/endCol coordinates based on rowSpan/colSpan
  * @private
  */
-TableCell.prototype.updateCoordinates_ = function() {
+TableCell.prototype.updateCoordinates_ = function () {
   /** @suppress {strictMissingProperties} Added to tighten compiler checks */
   this.endCol = this.startCol + this.colSpan - 1;
   /** @suppress {strictMissingProperties} Added to tighten compiler checks */
   this.endRow = this.startRow + this.rowSpan - 1;
 };
-
 
 /**
  * Set this cell's colSpan, updating both its colSpan property and the
@@ -50,7 +49,7 @@ TableCell.prototype.updateCoordinates_ = function() {
  * @param {number} colSpan The new colSpan.
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-TableCell.prototype.setColSpan = function(colSpan) {
+TableCell.prototype.setColSpan = function (colSpan) {
   if (colSpan != this.colSpan) {
     if (colSpan > 1) {
       /**
@@ -58,20 +57,19 @@ TableCell.prototype.setColSpan = function(colSpan) {
        */
       this.element.colSpan = colSpan;
     } else {
-      this.element.colSpan = 1, this.element.removeAttribute('colSpan');
+      (this.element.colSpan = 1), this.element.removeAttribute('colSpan');
     }
     this.colSpan = colSpan;
     this.updateCoordinates_();
   }
 };
 
-
 /**
  * Set this cell's rowSpan, updating both its rowSpan property and the
  * underlying element's rowSpan attribute.
  * @param {number} rowSpan The new rowSpan.
  */
-TableCell.prototype.setRowSpan = function(rowSpan) {
+TableCell.prototype.setRowSpan = function (rowSpan) {
   if (rowSpan != this.rowSpan) {
     if (rowSpan > 1) {
       /**

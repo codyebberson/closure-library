@@ -17,15 +17,12 @@ goog.require('goog.string');
 goog.requireType('goog.proto2.FieldDescriptor');
 goog.requireType('goog.proto2.Message');
 
-
 /**
  * @typedef {{name: (string|undefined),
  *            fullName: (string|undefined),
  *            containingType: (goog.proto2.Message|undefined)}}
  */
 goog.proto2.Metadata;
-
-
 
 /**
  * A class which describes a Protocol Buffer 2 Message.
@@ -40,8 +37,7 @@ goog.proto2.Metadata;
  * @constructor
  * @final
  */
-goog.proto2.Descriptor = function(messageType, metadata, fields) {
-  'use strict';
+goog.proto2.Descriptor = function (messageType, metadata, fields) {
   /**
    * @type {function(new:goog.proto2.Message)}
    * @private
@@ -79,43 +75,36 @@ goog.proto2.Descriptor = function(messageType, metadata, fields) {
   }
 };
 
-
 /**
  * Returns the name of the message, if any.
  *
  * @return {?string} The name.
  */
-goog.proto2.Descriptor.prototype.getName = function() {
-  'use strict';
+goog.proto2.Descriptor.prototype.getName = function () {
   return this.name_;
 };
-
 
 /**
  * Returns the full name of the message, if any.
  *
  * @return {?string} The name.
  */
-goog.proto2.Descriptor.prototype.getFullName = function() {
-  'use strict';
+goog.proto2.Descriptor.prototype.getFullName = function () {
   return this.fullName_;
 };
-
 
 /**
  * Returns the descriptor of the containing message type or null if none.
  *
  * @return {goog.proto2.Descriptor} The descriptor.
  */
-goog.proto2.Descriptor.prototype.getContainingType = function() {
-  'use strict';
+goog.proto2.Descriptor.prototype.getContainingType = function () {
   if (!this.containingType_) {
     return null;
   }
 
   return this.containingType_.getDescriptor();
 };
-
 
 /**
  * Returns the fields in the message described by this descriptor ordered by
@@ -124,8 +113,7 @@ goog.proto2.Descriptor.prototype.getContainingType = function() {
  * @return {!Array<!goog.proto2.FieldDescriptor>} The array of field
  *     descriptors.
  */
-goog.proto2.Descriptor.prototype.getFields = function() {
-  'use strict';
+goog.proto2.Descriptor.prototype.getFields = function () {
   /**
    * @param {!goog.proto2.FieldDescriptor} fieldA First field.
    * @param {!goog.proto2.FieldDescriptor} fieldB Second field.
@@ -142,7 +130,6 @@ goog.proto2.Descriptor.prototype.getFields = function() {
   return fields;
 };
 
-
 /**
  * Returns the fields in the message as a key/value map, where the key is
  * the tag number of the field. DO NOT MODIFY THE RETURNED OBJECT. We return
@@ -151,11 +138,9 @@ goog.proto2.Descriptor.prototype.getFields = function() {
  *
  * @return {!Object<number, !goog.proto2.FieldDescriptor>} The field map.
  */
-goog.proto2.Descriptor.prototype.getFieldsMap = function() {
-  'use strict';
+goog.proto2.Descriptor.prototype.getFieldsMap = function () {
   return this.fields_;
 };
-
 
 /**
  * Returns the field matching the given name, if any. Note that
@@ -166,17 +151,14 @@ goog.proto2.Descriptor.prototype.getFieldsMap = function() {
  *
  * @return {goog.proto2.FieldDescriptor} The field found, if any.
  */
-goog.proto2.Descriptor.prototype.findFieldByName = function(name) {
-  'use strict';
-  var valueFound =
-      goog.object.findValue(this.fields_, function(field, key, obj) {
-        'use strict';
-        return field.getName() == name;
-      });
+goog.proto2.Descriptor.prototype.findFieldByName = function (name) {
+  var valueFound = goog.object.findValue(
+    this.fields_,
+    (field, key, obj) => field.getName() == name
+  );
 
   return /** @type {goog.proto2.FieldDescriptor} */ (valueFound) || null;
 };
-
 
 /**
  * Returns the field matching the given tag number, if any.
@@ -185,12 +167,10 @@ goog.proto2.Descriptor.prototype.findFieldByName = function(name) {
  *
  * @return {goog.proto2.FieldDescriptor} The field found, if any.
  */
-goog.proto2.Descriptor.prototype.findFieldByTag = function(tag) {
-  'use strict';
+goog.proto2.Descriptor.prototype.findFieldByTag = function (tag) {
   goog.asserts.assert(goog.string.isNumeric(tag));
-  return this.fields_[parseInt(tag, 10)] || null;
+  return this.fields_[Number.parseInt(tag, 10)] || null;
 };
-
 
 /**
  * Creates an instance of the message type that this descriptor
@@ -198,7 +178,6 @@ goog.proto2.Descriptor.prototype.findFieldByTag = function(tag) {
  *
  * @return {!goog.proto2.Message} The instance of the message.
  */
-goog.proto2.Descriptor.prototype.createMessageInstance = function() {
-  'use strict';
-  return new this.messageType_;
+goog.proto2.Descriptor.prototype.createMessageInstance = function () {
+  return new this.messageType_();
 };

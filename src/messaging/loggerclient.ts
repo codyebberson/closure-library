@@ -16,7 +16,6 @@ goog.require('goog.debug');
 goog.require('goog.log');
 goog.requireType('goog.messaging.MessageChannel');
 
-
 /**
  * Creates a logger client that sends messages along a message channel for the
  * remote end to log. The remote end of the channel should use a
@@ -29,8 +28,7 @@ goog.requireType('goog.messaging.MessageChannel');
  * @extends {goog.Disposable}
  * @final
  */
-goog.messaging.LoggerClient = function(channel, serviceName) {
-  'use strict';
+goog.messaging.LoggerClient = function (channel, serviceName) {
   if (goog.messaging.LoggerClient.instance_) {
     return goog.messaging.LoggerClient.instance_;
   }
@@ -64,7 +62,6 @@ goog.messaging.LoggerClient = function(channel, serviceName) {
 };
 goog.inherits(goog.messaging.LoggerClient, goog.Disposable);
 
-
 /**
  * The singleton instance, if any.
  * @type {?goog.messaging.LoggerClient}
@@ -72,14 +69,12 @@ goog.inherits(goog.messaging.LoggerClient, goog.Disposable);
  */
 goog.messaging.LoggerClient.instance_ = null;
 
-
 /**
  * Sends a log message through the channel.
  * @param {!goog.log.LogRecord} logRecord The log message.
  * @private
  */
-goog.messaging.LoggerClient.prototype.sendLog_ = function(logRecord) {
-  'use strict';
+goog.messaging.LoggerClient.prototype.sendLog_ = function (logRecord) {
   var name = logRecord.getLoggerName();
   var level = logRecord.getLevel();
   var msg = logRecord.getMessage();
@@ -87,18 +82,17 @@ goog.messaging.LoggerClient.prototype.sendLog_ = function(logRecord) {
 
   var exception;
   if (originalException !== undefined) {
-    var normalizedException =
-        goog.debug.normalizeErrorObject(originalException);
+    var normalizedException = goog.debug.normalizeErrorObject(originalException);
     /** @suppress {strictMissingProperties} Added to tighten compiler checks */
     exception = {
-      'name': normalizedException.name,
-      'message': normalizedException.message,
-      'lineNumber': normalizedException.lineNumber,
-      'fileName': normalizedException.fileName,
+      name: normalizedException.name,
+      message: normalizedException.message,
+      lineNumber: normalizedException.lineNumber,
+      fileName: normalizedException.fileName,
       // Normalized exceptions without a stack have 'stack' set to 'Not
       // available', so we check for the existence of 'stack' on the original
       // exception instead.
-      'stack': originalException.stack || goog.debug.getStacktrace(goog.log.log)
+      stack: originalException.stack || goog.debug.getStacktrace(goog.log.log),
     };
 
     if (goog.isObject(originalException)) {
@@ -110,17 +104,15 @@ goog.messaging.LoggerClient.prototype.sendLog_ = function(logRecord) {
     }
   }
   this.channel_.send(this.serviceName_, {
-    'name': name,
-    'level': level.value,
-    'message': msg,
-    'exception': exception
+    name: name,
+    level: level.value,
+    message: msg,
+    exception: exception,
   });
 };
 
-
 /** @override */
-goog.messaging.LoggerClient.prototype.disposeInternal = function() {
-  'use strict';
+goog.messaging.LoggerClient.prototype.disposeInternal = function () {
   goog.messaging.LoggerClient.base(this, 'disposeInternal');
   goog.log.removeHandler(goog.log.getRootLogger(), this.publishHandler_);
   delete this.channel_;

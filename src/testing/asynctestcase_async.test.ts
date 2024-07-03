@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.AsyncTestCaseAsyncTest');
-goog.setTestOnly();
 
 const AsyncTestCase = goog.require('goog.testing.AsyncTestCase');
 const TestCase = goog.require('goog.testing.TestCase');
@@ -29,9 +28,7 @@ let curTestIsDone = true;
 function doAsyncStuff(numAsyncCalls, name) {
   if (numAsyncCalls > 0) {
     curTestIsDone = false;
-    asyncTestCase.waitForAsync(
-        `doAsyncStuff-${name}` +
-        '(' + numAsyncCalls + ')');
+    asyncTestCase.waitForAsync(`doAsyncStuff-${name}` + '(' + numAsyncCalls + ')');
     window.setTimeout(() => {
       doAsyncStuff(numAsyncCalls - 1, name);
     }, 0);
@@ -84,9 +81,7 @@ asyncTestCase.setTestObj({
      */
     function async2() {
       asyncTestCase.continueTesting();
-      assertEquals(
-          'Did not wait for inner waitForAsync', activeTest,
-          asyncTestCase.activeTest_);
+      assertEquals('Did not wait for inner waitForAsync', activeTest, asyncTestCase.activeTest_);
     }
     asyncTestCase.waitForAsync('1');
     window.setTimeout(async1, 0);
@@ -133,7 +128,7 @@ asyncTestCase.setTestObj({
       });
       assertEquals('Still waiting for 1 signals.', thrown.message);
     }, 0);
-    doAsyncSignals();  // To not timeout.
+    doAsyncSignals(); // To not timeout.
   },
 
   testCurrentTestName() {
@@ -144,15 +139,16 @@ asyncTestCase.setTestObj({
   testCurrentTestNameAsync() {
     const getAssertSameTest = () => {
       const expectedTestCase = TestCase.getActiveTestCase();
-      const expectedTestName = (expectedTestCase ? expectedTestCase.getName() :
-                                                   '<no active TestCase>') +
-          '.' + (TestCase.currentTestName || '<no active test name>');
+      const expectedTestName =
+        (expectedTestCase ? expectedTestCase.getName() : '<no active TestCase>') +
+        '.' +
+        (TestCase.currentTestName || '<no active test name>');
       const assertSameTest = () => {
         const currentTestCase = TestCase.getActiveTestCase();
-        const currentTestName = (currentTestCase ? currentTestCase.getName() :
-                                                   '<no active TestCase>') +
-                '.' + TestCase.currentTestName ||
-            '<no active test name>';
+        const currentTestName =
+          (currentTestCase ? currentTestCase.getName() : '<no active TestCase>') +
+            '.' +
+            TestCase.currentTestName || '<no active test name>';
         assertEquals(expectedTestName, currentTestName);
         assertEquals(expectedTestCase, currentTestCase);
       };

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.TableSorterTest');
-goog.setTestOnly();
 
 const TableSorter = goog.require('goog.ui.TableSorter');
 const TagName = goog.require('goog.dom.TagName');
@@ -24,13 +23,12 @@ let tableSorter;
 function assertOrder(arr, opt_table) {
   const tbl = opt_table || table;
   const actual = [];
-  Array.prototype.forEach.call(
-      dom.getElementsByTagName(TagName.TD, tbl), (td, idx) => {
-        const txt = dom.getTextContent(td);
-        if (txt) {
-          actual.push(txt);
-        }
-      });
+  Array.prototype.forEach.call(dom.getElementsByTagName(TagName.TD, tbl), (td, idx) => {
+    const txt = dom.getTextContent(td);
+    if (txt) {
+      actual.push(txt);
+    }
+  });
   assertArrayEquals(arr, actual);
 }
 testSuite({
@@ -77,8 +75,7 @@ testSuite({
     events.fireClickEvent(alphaHeader);
     assertOrder(['C', '10', 'C', '17', 'C', '3', 'B', '0', 'A', '10']);
     assertFalse(classlist.contains(alphaHeader, 'goog-tablesorter-sorted'));
-    assertTrue(
-        classlist.contains(alphaHeader, 'goog-tablesorter-sorted-reverse'));
+    assertTrue(classlist.contains(alphaHeader, 'goog-tablesorter-sorted-reverse'));
     assertEquals(0, tableSorter.getSortColumn());
     assertTrue(tableSorter.isSortReversed());
   },
@@ -95,8 +92,7 @@ testSuite({
     events.fireClickEvent(numberHeader);
     events.fireClickEvent(numberHeader);
     assertOrder(['C', '17', 'C', '10', 'A', '10', 'C', '3', 'B', '0']);
-    assertTrue(
-        classlist.contains(numberHeader, 'goog-tablesorter-sorted-reverse'));
+    assertTrue(classlist.contains(numberHeader, 'goog-tablesorter-sorted-reverse'));
     assertEquals(1, tableSorter.getSortColumn());
     assertTrue(tableSorter.isSortReversed());
   },
@@ -140,33 +136,23 @@ testSuite({
     tableSorter2.decorate(dom.getElement('sortable-2'));
 
     // Initial order.
-    assertOrder(
-        ['4', '5', '6', '1', '2', '3', '3', '1', '9'],
-        dom.getElement('sortable-2'));
+    assertOrder(['4', '5', '6', '1', '2', '3', '3', '1', '9'], dom.getElement('sortable-2'));
 
     // Sort on first column.
     events.fireClickEvent(dom.getElement('sorttable-2-col-1'));
-    assertOrder(
-        ['1', '2', '3', '3', '1', '9', '4', '5', '6'],
-        dom.getElement('sortable-2'));
+    assertOrder(['1', '2', '3', '3', '1', '9', '4', '5', '6'], dom.getElement('sortable-2'));
 
     // Sort on second column.
     events.fireClickEvent(dom.getElement('sorttable-2-col-2'));
-    assertOrder(
-        ['3', '1', '9', '1', '2', '3', '4', '5', '6'],
-        dom.getElement('sortable-2'));
+    assertOrder(['3', '1', '9', '1', '2', '3', '4', '5', '6'], dom.getElement('sortable-2'));
 
     // Sort on third column.
     events.fireClickEvent(dom.getElement('sorttable-2-col-3'));
-    assertOrder(
-        ['1', '2', '3', '4', '5', '6', '3', '1', '9'],
-        dom.getElement('sortable-2'));
+    assertOrder(['1', '2', '3', '4', '5', '6', '3', '1', '9'], dom.getElement('sortable-2'));
 
     // Reverse sort on third column.
     events.fireClickEvent(dom.getElement('sorttable-2-col-3'));
-    assertOrder(
-        ['3', '1', '9', '4', '5', '6', '1', '2', '3'],
-        dom.getElement('sortable-2'));
+    assertOrder(['3', '1', '9', '4', '5', '6', '1', '2', '3'], dom.getElement('sortable-2'));
 
     tableSorter2.dispose();
   },

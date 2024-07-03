@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.testing.eventsTest');
-goog.setTestOnly();
 
 const Coordinate = goog.require('goog.math.Coordinate');
 const EventType = goog.require('goog.events.EventType');
@@ -39,25 +38,19 @@ let eventCount;
 
 // For a double click, IE fires selectstart instead of the second mousedown,
 // but we don't simulate selectstart. Also, IE doesn't fire the second click.
-const DBLCLICK_SEQ =
-    (userAgent.IE ? ['mousedown', 'mouseup', 'click', 'mouseup', 'dblclick'] : [
-      'mousedown',
-      'mouseup',
-      'click',
-      'mousedown',
-      'mouseup',
-      'click',
-      'dblclick',
-    ]);
+const DBLCLICK_SEQ = userAgent.IE
+  ? ['mousedown', 'mouseup', 'click', 'mouseup', 'dblclick']
+  : ['mousedown', 'mouseup', 'click', 'mousedown', 'mouseup', 'click', 'dblclick'];
 
-const DBLCLICK_SEQ_COORDS = (new Array(DBLCLICK_SEQ.length)).fill(coordinate);
+const DBLCLICK_SEQ_COORDS = new Array(DBLCLICK_SEQ.length).fill(coordinate);
 
-const CONTEXTMENU_SEQ = userAgent.WINDOWS ?
-    ['mousedown', 'mouseup', 'contextmenu'] :
-    userAgent.GECKO ? ['mousedown', 'contextmenu', 'mouseup'] :
-                      userAgent.WEBKIT && userAgent.MAC ?
-                      ['mousedown', 'contextmenu', 'mouseup', 'click'] :
-                      ['mousedown', 'contextmenu', 'mouseup'];
+const CONTEXTMENU_SEQ = userAgent.WINDOWS
+  ? ['mousedown', 'mouseup', 'contextmenu']
+  : userAgent.GECKO
+    ? ['mousedown', 'contextmenu', 'mouseup']
+    : userAgent.WEBKIT && userAgent.MAC
+      ? ['mousedown', 'contextmenu', 'mouseup', 'click']
+      : ['mousedown', 'contextmenu', 'mouseup'];
 
 /** Assert that the list of events given was fired, in that order. */
 function assertEventTypes(list) {
@@ -106,7 +99,7 @@ testSuite({
     firedShiftKeys = [];
     firedKeyCodes = [];
 
-    for (let key in EventType) {
+    for (const key in EventType) {
       events.listen(root, EventType[key], (e) => {
         firedEventTypes.push(e.type);
         const coord = new Coordinate(e.clientX, e.clientY);
@@ -119,19 +112,33 @@ testSuite({
       });
     }
 
-    eventCount =
-        {parentBubble: 0, parentCapture: 0, childCapture: 0, childBubble: 0};
+    eventCount = {
+      parentBubble: 0,
+      parentCapture: 0,
+      childCapture: 0,
+      childBubble: 0,
+    };
     // Event listeners for the capture/bubble test.
-    events.listen(parentEl, EventType.CLICK, (e) => {
-      eventCount.parentCapture++;
-      assertEquals(parentEl, e.currentTarget);
-      assertEquals(childEl, e.target);
-    }, true);
-    events.listen(childEl, EventType.CLICK, (e) => {
-      eventCount.childCapture++;
-      assertEquals(childEl, e.currentTarget);
-      assertEquals(childEl, e.target);
-    }, true);
+    events.listen(
+      parentEl,
+      EventType.CLICK,
+      (e) => {
+        eventCount.parentCapture++;
+        assertEquals(parentEl, e.currentTarget);
+        assertEquals(childEl, e.target);
+      },
+      true
+    );
+    events.listen(
+      childEl,
+      EventType.CLICK,
+      (e) => {
+        eventCount.childCapture++;
+        assertEquals(childEl, e.currentTarget);
+        assertEquals(childEl, e.target);
+      },
+      true
+    );
     events.listen(childEl, EventType.CLICK, (e) => {
       eventCount.childBubble++;
       assertEquals(childEl, e.currentTarget);
@@ -145,32 +152,38 @@ testSuite({
   },
 
   tearDownPage() {
-    for (let key in EventType) {
+    for (const key in EventType) {
       const type = EventType[key];
       if (type == 'mousemove' || type == 'mouseout' || type == 'mouseover') {
         continue;
       }
       dom.appendChild(
-          input,
-          dom.createDom(
-              TagName.LABEL, null,
-              dom.createDom(
-                  TagName.INPUT, {'id': type, 'type': InputType.CHECKBOX}),
-              type, dom.createDom(TagName.BR)));
+        input,
+        dom.createDom(
+          TagName.LABEL,
+          null,
+          dom.createDom(TagName.INPUT, { id: type, type: InputType.CHECKBOX }),
+          type,
+          dom.createDom(TagName.BR)
+        )
+      );
       events.listen(
-          testButton, type, /**
+        testButton,
+        type /**
                                @suppress {strictMissingProperties} suppression
                                added to enable type checking
-                             */
-          (e) => {
-            if (dom.getElement(e.type).checked) {
-              e.preventDefault();
-            }
+                             */,
+        (e) => {
+          if (dom.getElement(e.type).checked) {
+            e.preventDefault();
+          }
 
-            log.append(
-                document.createElement('br'),
-                googString.subs('%s (%s, %s)', e.type, e.clientX, e.clientY));
-          });
+          log.append(
+            document.createElement('br'),
+            googString.subs('%s (%s, %s)', e.type, e.clientX, e.clientY)
+          );
+        }
+      );
     }
   },
 
@@ -243,7 +256,7 @@ testSuite({
 
   testTouchMove() {
     testingEvents.fireTouchMoveEvent(root);
-    testingEvents.fireTouchMoveEvent(root, coordinate, {touches: []});
+    testingEvents.fireTouchMoveEvent(root, coordinate, { touches: [] });
     assertEventTypes(['touchmove', 'touchmove']);
     assertCoordinates([style.getClientPosition(root), coordinate]);
   },
@@ -269,8 +282,7 @@ testSuite({
 
   /** @suppress {checkTypes} suppression added to enable type checking */
   testClickSequenceWithEventProperty() {
-    assertTrue(testingEvents.fireClickSequence(
-        root, null, undefined, {shiftKey: true}));
+    assertTrue(testingEvents.fireClickSequence(root, null, undefined, { shiftKey: true }));
     assertArrayEquals([true, true, true], firedShiftKeys);
   },
 
@@ -406,7 +418,7 @@ testSuite({
   testKeySequenceForMacActionKeys() {
     stubs.set(userAgent, 'GECKO', true);
     stubs.set(userAgent, 'MAC', true);
-    testingEvents.fireKeySequence(root, KeyCodes.C, {'metaKey': true});
+    testingEvents.fireKeySequence(root, KeyCodes.C, { metaKey: true });
     assertEventTypes(['keydown', 'keyup']);
   },
 
@@ -418,54 +430,51 @@ testSuite({
     stubs.set(userAgent, 'MAC', true);
 
     const optionKeyCodes = [
-      [0xc0, 0x00e6],  // option+'
-      [0xbc, 0x2264],  // option+,
-      [0xbd, 0x2013],  // option+-
-      [0xbe, 0x2265],  // option+.
-      [0xbf, 0x00f7],  // option+/
-      [0x30, 0x00ba],  // option+0
-      [0x31, 0x00a1],  // option+1
-      [0x32, 0x2122],  // option+2
-      [0x33, 0x00a3],  // option+3
-      [0x34, 0x00a2],  // option+4
-      [0x35, 0x221e],  // option+5
-      [0x36, 0x00a7],  // option+6
-      [0x37, 0x00b6],  // option+7
-      [0x38, 0x2022],  // option+8
-      [0x39, 0x00aa],  // option+9
-      [0xba, 0x2026],  // option+;
-      [0xbb, 0x2260],  // option+=
-      [0xdb, 0x201c],  // option+[
-      [
-        0xdc,
-        0x00ab,
-      ],               // option+\
-      [0xdd, 0x2018],  // option+]
-      [0x41, 0x00e5],  // option+a
-      [0x42, 0x222b],  // option+b
-      [0x43, 0x00e7],  // option+c
-      [0x44, 0x2202],  // option+d
-      [0x45, 0x00b4],  // option+e
-      [0x46, 0x0192],  // option+f
-      [0x47, 0x00a9],  // option+g
-      [0x48, 0x02d9],  // option+h
-      [0x49, 0x02c6],  // option+i
-      [0x4a, 0x2206],  // option+j
-      [0x4b, 0x02da],  // option+k
-      [0x4c, 0x00ac],  // option+l
-      [0x4d, 0x00b5],  // option+m
-      [0x4e, 0x02dc],  // option+n
-      [0x4f, 0x00f8],  // option+o
-      [0x50, 0x03c0],  // option+p
-      [0x51, 0x0153],  // option+q
-      [0x52, 0x00ae],  // option+r
-      [0x53, 0x00df],  // option+s
-      [0x54, 0x2020],  // option+t
-      [0x56, 0x221a],  // option+v
-      [0x57, 0x2211],  // option+w
-      [0x58, 0x2248],  // option+x
-      [0x59, 0x00a5],  // option+y
-      [0x5a, 0x03a9]   // option+z
+      [0xc0, 0x00e6], // option+'
+      [0xbc, 0x2264], // option+,
+      [0xbd, 0x2013], // option+-
+      [0xbe, 0x2265], // option+.
+      [0xbf, 0x00f7], // option+/
+      [0x30, 0x00ba], // option+0
+      [0x31, 0x00a1], // option+1
+      [0x32, 0x2122], // option+2
+      [0x33, 0x00a3], // option+3
+      [0x34, 0x00a2], // option+4
+      [0x35, 0x221e], // option+5
+      [0x36, 0x00a7], // option+6
+      [0x37, 0x00b6], // option+7
+      [0x38, 0x2022], // option+8
+      [0x39, 0x00aa], // option+9
+      [0xba, 0x2026], // option+;
+      [0xbb, 0x2260], // option+=
+      [0xdb, 0x201c], // option+[
+      [0xdc, 0x00ab], // option+\
+      [0xdd, 0x2018], // option+]
+      [0x41, 0x00e5], // option+a
+      [0x42, 0x222b], // option+b
+      [0x43, 0x00e7], // option+c
+      [0x44, 0x2202], // option+d
+      [0x45, 0x00b4], // option+e
+      [0x46, 0x0192], // option+f
+      [0x47, 0x00a9], // option+g
+      [0x48, 0x02d9], // option+h
+      [0x49, 0x02c6], // option+i
+      [0x4a, 0x2206], // option+j
+      [0x4b, 0x02da], // option+k
+      [0x4c, 0x00ac], // option+l
+      [0x4d, 0x00b5], // option+m
+      [0x4e, 0x02dc], // option+n
+      [0x4f, 0x00f8], // option+o
+      [0x50, 0x03c0], // option+p
+      [0x51, 0x0153], // option+q
+      [0x52, 0x00ae], // option+r
+      [0x53, 0x00df], // option+s
+      [0x54, 0x2020], // option+t
+      [0x56, 0x221a], // option+v
+      [0x57, 0x2211], // option+w
+      [0x58, 0x2248], // option+x
+      [0x59, 0x00a5], // option+y
+      [0x5a, 0x03a9], // option+z
     ];
 
     for (let i = 0; i < optionKeyCodes.length; ++i) {
@@ -473,8 +482,9 @@ testSuite({
       firedKeyCodes = [];
       const keyCode = optionKeyCodes[i][0];
       const keyPressKeyCode = optionKeyCodes[i][1];
-      testingEvents.fireNonAsciiKeySequence(
-          root, keyCode, keyPressKeyCode, {'altKey': true});
+      testingEvents.fireNonAsciiKeySequence(root, keyCode, keyPressKeyCode, {
+        altKey: true,
+      });
       assertEventTypes(['keydown', 'keypress', 'keyup']);
       assertArrayEquals([keyCode, keyPressKeyCode, keyCode], firedKeyCodes);
     }
@@ -488,7 +498,7 @@ testSuite({
   testContextMenuSequenceWithCoordinate() {
     assertTrue(testingEvents.fireContextMenuSequence(root, coordinate));
     assertEventTypes(CONTEXTMENU_SEQ);
-    assertCoordinates((new Array(CONTEXTMENU_SEQ.length)).fill(coordinate));
+    assertCoordinates(new Array(CONTEXTMENU_SEQ.length).fill(coordinate));
   },
 
   testContextMenuSequenceCancellingMousedown() {
@@ -520,8 +530,9 @@ testSuite({
   testCaptureBubble_simple() {
     assertTrue(testingEvents.fireClickEvent(childEl));
     assertObjectEquals(
-        {parentCapture: 1, childCapture: 1, childBubble: 1, parentBubble: 1},
-        eventCount);
+      { parentCapture: 1, childCapture: 1, childBubble: 1, parentBubble: 1 },
+      eventCount
+    );
   },
 
   testCaptureBubble_preventDefault() {
@@ -530,28 +541,41 @@ testSuite({
     });
     assertFalse(testingEvents.fireClickEvent(childEl));
     assertObjectEquals(
-        {parentCapture: 1, childCapture: 1, childBubble: 1, parentBubble: 1},
-        eventCount);
+      { parentCapture: 1, childCapture: 1, childBubble: 1, parentBubble: 1 },
+      eventCount
+    );
   },
 
   testCaptureBubble_stopPropagationParentCapture() {
-    events.listen(parentEl, EventType.CLICK, (e) => {
-      e.stopPropagation();
-    }, true /* capture */);
+    events.listen(
+      parentEl,
+      EventType.CLICK,
+      (e) => {
+        e.stopPropagation();
+      },
+      true /* capture */
+    );
     assertTrue(testingEvents.fireClickEvent(childEl));
     assertObjectEquals(
-        {parentCapture: 1, childCapture: 0, childBubble: 0, parentBubble: 0},
-        eventCount);
+      { parentCapture: 1, childCapture: 0, childBubble: 0, parentBubble: 0 },
+      eventCount
+    );
   },
 
   testCaptureBubble_stopPropagationChildCapture() {
-    events.listen(childEl, EventType.CLICK, (e) => {
-      e.stopPropagation();
-    }, true /* capture */);
+    events.listen(
+      childEl,
+      EventType.CLICK,
+      (e) => {
+        e.stopPropagation();
+      },
+      true /* capture */
+    );
     assertTrue(testingEvents.fireClickEvent(childEl));
     assertObjectEquals(
-        {parentCapture: 1, childCapture: 1, childBubble: 0, parentBubble: 0},
-        eventCount);
+      { parentCapture: 1, childCapture: 1, childBubble: 0, parentBubble: 0 },
+      eventCount
+    );
   },
 
   testCaptureBubble_stopPropagationChildBubble() {
@@ -560,8 +584,9 @@ testSuite({
     });
     assertTrue(testingEvents.fireClickEvent(childEl));
     assertObjectEquals(
-        {parentCapture: 1, childCapture: 1, childBubble: 1, parentBubble: 0},
-        eventCount);
+      { parentCapture: 1, childCapture: 1, childBubble: 1, parentBubble: 0 },
+      eventCount
+    );
   },
 
   testCaptureBubble_stopPropagationParentBubble() {
@@ -570,8 +595,9 @@ testSuite({
     });
     assertTrue(testingEvents.fireClickEvent(childEl));
     assertObjectEquals(
-        {parentCapture: 1, childCapture: 1, childBubble: 1, parentBubble: 1},
-        eventCount);
+      { parentCapture: 1, childCapture: 1, childBubble: 1, parentBubble: 1 },
+      eventCount
+    );
   },
 
   /**

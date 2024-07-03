@@ -10,7 +10,6 @@
  */
 
 goog.module('goog.labs.net.webChannel.webChannelBaseTransportTest');
-goog.setTestOnly();
 
 const ArgumentMatcher = goog.require('goog.testing.mockmatchers.ArgumentMatcher');
 const ChannelRequest = goog.require('goog.labs.net.webChannel.ChannelRequest');
@@ -26,9 +25,9 @@ const events = goog.require('goog.events');
 const functions = goog.require('goog.functions');
 const googJson = goog.require('goog.json');
 const testSuite = goog.require('goog.testing.testSuite');
-const {anything} = goog.require('goog.labs.testing.AnythingMatcher');
-const {atMost, times} = goog.require('goog.labs.mock.verification');
-const {mock, mockFunction, verify} = goog.require('goog.labs.mock');
+const { anything } = goog.require('goog.labs.testing.AnythingMatcher');
+const { atMost, times } = goog.require('goog.labs.mock.verification');
+const { mock, mockFunction, verify } = goog.require('goog.labs.mock');
 
 let webChannel;
 const channelUrl = 'http://127.0.0.1:8080/channel';
@@ -121,7 +120,7 @@ testSuite({
 
   testOpenWithCustomHeaders() {
     const webChannelTransport = new WebChannelBaseTransport();
-    const options = {'messageHeaders': {'foo-key': 'foo-value'}};
+    const options = { messageHeaders: { 'foo-key': 'foo-value' } };
     webChannel = webChannelTransport.createWebChannel(channelUrl, options);
     webChannel.open();
 
@@ -134,7 +133,7 @@ testSuite({
 
   testOpenWithInitHeaders() {
     const webChannelTransport = new WebChannelBaseTransport();
-    const options = {'initMessageHeaders': {'foo-key': 'foo-value'}};
+    const options = { initMessageHeaders: { 'foo-key': 'foo-value' } };
     webChannel = webChannelTransport.createWebChannel(channelUrl, options);
     webChannel.open();
 
@@ -146,22 +145,21 @@ testSuite({
 
   testOpenWithMessageContentType() {
     const webChannelTransport = new WebChannelBaseTransport();
-    const options = {'messageContentType': 'application/protobuf+json'};
+    const options = { messageContentType: 'application/protobuf+json' };
     webChannel = webChannelTransport.createWebChannel(channelUrl, options);
     webChannel.open();
 
     /** @suppress {strictMissingProperties} Accessing private property. */
     const initHeaders_ = webChannel.channel_.initHeaders_;
     assertNotNullNorUndefined(initHeaders_);
-    assertEquals(
-        'application/protobuf+json', initHeaders_['X-WebChannel-Content-Type']);
+    assertEquals('application/protobuf+json', initHeaders_['X-WebChannel-Content-Type']);
   },
 
   testOpenWithMessageContentTypeAndInitHeaders() {
     const webChannelTransport = new WebChannelBaseTransport();
     const options = {
-      'messageContentType': 'application/protobuf+json',
-      'initMessageHeaders': {'foo-key': 'foo-value'},
+      messageContentType: 'application/protobuf+json',
+      initMessageHeaders: { 'foo-key': 'foo-value' },
     };
     webChannel = webChannelTransport.createWebChannel(channelUrl, options);
     webChannel.open();
@@ -169,14 +167,13 @@ testSuite({
     /** @suppress {strictMissingProperties} Accessing private property. */
     const initHeaders_ = webChannel.channel_.initHeaders_;
     assertNotNullNorUndefined(initHeaders_);
-    assertEquals(
-        'application/protobuf+json', initHeaders_['X-WebChannel-Content-Type']);
+    assertEquals('application/protobuf+json', initHeaders_['X-WebChannel-Content-Type']);
     assertEquals('foo-value', initHeaders_['foo-key']);
   },
 
   testClientProtocolHeaderRequired() {
     const webChannelTransport = new WebChannelBaseTransport();
-    const options = {'clientProtocolHeaderRequired': true};
+    const options = { clientProtocolHeaderRequired: true };
     webChannel = webChannelTransport.createWebChannel(channelUrl, options);
     webChannel.open();
 
@@ -199,8 +196,8 @@ testSuite({
   testClientProtocolHeaderRequiredWithCustomHeader() {
     const webChannelTransport = new WebChannelBaseTransport();
     const options = {
-      'clientProtocolHeaderRequired': true,
-      'messageHeaders': {'foo-key': 'foo-value'},
+      clientProtocolHeaderRequired: true,
+      messageHeaders: { 'foo-key': 'foo-value' },
     };
     webChannel = webChannelTransport.createWebChannel(channelUrl, options);
     webChannel.open();
@@ -214,7 +211,7 @@ testSuite({
 
   async testOpenWithCustomParams() {
     const webChannelTransport = new WebChannelBaseTransport();
-    const options = {'messageUrlParams': {'foo-key': 'foo-value'}};
+    const options = { messageUrlParams: { 'foo-key': 'foo-value' } };
     webChannel = webChannelTransport.createWebChannel(channelUrl, options);
     /** @suppress {strictMissingProperties} Accessing private property. */
     const channel = webChannel.channel_;
@@ -228,17 +225,19 @@ testSuite({
     webChannel.open();
     await Timer.promise(0);
 
-    verify(mockXhrIo, times(1))
-        .send(
-            new ArgumentMatcher((uri) => {
-              return uri.getParameterValue('foo-key') == 'foo-value';
-            }),
-            anything(), anything(), anything());
+    verify(mockXhrIo, times(1)).send(
+      new ArgumentMatcher((uri) => {
+        return uri.getParameterValue('foo-key') == 'foo-value';
+      }),
+      anything(),
+      anything(),
+      anything()
+    );
   },
 
   testOpenWithHttpSessionIdParam() {
     const webChannelTransport = new WebChannelBaseTransport();
-    const options = {'httpSessionIdParam': 'xsessionid'};
+    const options = { httpSessionIdParam: 'xsessionid' };
     webChannel = webChannelTransport.createWebChannel(channelUrl, options);
     webChannel.open();
 
@@ -250,8 +249,8 @@ testSuite({
   testOpenWithDuplicatedHttpSessionIdParam() {
     const webChannelTransport = new WebChannelBaseTransport();
     const options = {
-      'messageUrlParams': {'xsessionid': 'abcd1234'},
-      'httpSessionIdParam': 'xsessionid',
+      messageUrlParams: { xsessionid: 'abcd1234' },
+      httpSessionIdParam: 'xsessionid',
     };
     webChannel = webChannelTransport.createWebChannel(channelUrl, options);
     webChannel.open();
@@ -268,7 +267,7 @@ testSuite({
   /** @suppress {strictMissingProperties} Accessing private property. */
   testOpenWithCorsEnabled() {
     const webChannelTransport = new WebChannelBaseTransport();
-    const options = {'supportsCrossDomainXhr': true};
+    const options = { supportsCrossDomainXhr: true };
     webChannel = webChannelTransport.createWebChannel(channelUrl, options);
     webChannel.open();
 
@@ -285,7 +284,7 @@ testSuite({
     webChannel = webChannelTransport.createWebChannel(channelUrl);
     webChannel.open();
 
-    webChannel.send({foo: 'bar'});
+    webChannel.send({ foo: 'bar' });
     assertEquals('bar', channelMsg.foo);
   },
 
@@ -300,7 +299,7 @@ testSuite({
     webChannel = webChannelTransport.createWebChannel(channelUrl, options);
     webChannel.open();
 
-    webChannel.send({foo: 'bar'});
+    webChannel.send({ foo: 'bar' });
     assertEquals('bar', channelMsg.foo);
   },
 
@@ -316,11 +315,11 @@ testSuite({
     stubs.set(WebChannelBase.prototype, 'getServerVersion', () => 12);
 
     const webChannelTransport = new WebChannelBaseTransport();
-    const options = {'sendRawJson': true};
+    const options = { sendRawJson: true };
     webChannel = webChannelTransport.createWebChannel(channelUrl, options);
     webChannel.open();
 
-    webChannel.send({foo: 'bar'});
+    webChannel.send({ foo: 'bar' });
 
     const receivedMsg = googJson.parse(channelMsg[Wire.RAW_DATA_KEY]);
     assertEquals('bar', receivedMsg.foo);
@@ -334,11 +333,11 @@ testSuite({
     stubs.set(WebChannelBase.prototype, 'getServerVersion', () => 12);
 
     const webChannelTransport = new WebChannelBaseTransport();
-    const options = {'sendRawJson': false};
+    const options = { sendRawJson: false };
     webChannel = webChannelTransport.createWebChannel(channelUrl, options);
     webChannel.open();
 
-    webChannel.send({foo: 'bar'});
+    webChannel.send({ foo: 'bar' });
     assertEquals('bar', channelMsg.foo);
   },
 
@@ -364,8 +363,8 @@ testSuite({
 
   async testOpenThenCloseChannelWithUpdatedCustomParams() {
     const webChannelTransport = new WebChannelBaseTransport();
-    let messageUrlParams = {'foo-key': 'foo-value'};
-    const options = {'messageUrlParams': messageUrlParams};
+    const messageUrlParams = { 'foo-key': 'foo-value' };
+    const options = { messageUrlParams: messageUrlParams };
     webChannel = webChannelTransport.createWebChannel(channelUrl, options);
     /** @suppress {strictMissingProperties} Accessing private property. */
     const channel = webChannel.channel_;
@@ -379,8 +378,7 @@ testSuite({
     webChannel.open();
     await Timer.promise(0);
 
-    verify(mockXhrIo, atMost(1))
-        .send(anything(), anything(), anything(), anything());
+    verify(mockXhrIo, atMost(1)).send(anything(), anything(), anything(), anything());
 
     // Update internal webchannel state to OPENED so that the close request can
     // be sent.
@@ -401,10 +399,11 @@ testSuite({
     await Timer.promise(0);
 
     verify(sendBeaconMock, times(1))(
-        new ArgumentMatcher((uriStr) => {
-          return uriStr.includes('close-key=close-value');
-        }),
-        anything());
+      new ArgumentMatcher((uriStr) => {
+        return uriStr.includes('close-key=close-value');
+      }),
+      anything()
+    );
   },
 
   testChannelError() {
@@ -434,7 +433,7 @@ testSuite({
     webChannel = webChannelTransport.createWebChannel(channelUrl);
 
     let eventFired = false;
-    const data = {message: 'foo'};
+    const data = { message: 'foo' };
     events.listen(webChannel, WebChannel.EventType.MESSAGE, (e) => {
       eventFired = true;
       assertEquals(data, e.data);
@@ -482,9 +481,9 @@ testSuite({
     webChannel = webChannelTransport.createWebChannel(channelUrl);
 
     let eventFired = false;
-    const headers = {'header': 'value'};
+    const headers = { header: 'value' };
     const statusCode = 200;
-    const data = {'__headers__': {'header': 'value'}, '__status__': statusCode};
+    const data = { __headers__: { header: 'value' }, __status__: statusCode };
     events.listen(webChannel, WebChannel.EventType.MESSAGE, (e) => {
       eventFired = true;
       assertObjectEquals({}, e.data);
@@ -507,7 +506,7 @@ testSuite({
   testEnableOriginTrials() {
     const webChannelTransport = new WebChannelBaseTransport();
     let options = {
-      'enableOriginTrials': true,
+      enableOriginTrials: true,
     };
     webChannel = webChannelTransport.createWebChannel(channelUrl, options);
     webChannel.open();
@@ -517,7 +516,7 @@ testSuite({
     assertFalse(enabled);
 
     options = {
-      'enableOriginTrials': false,
+      enableOriginTrials: false,
     };
     webChannel = webChannelTransport.createWebChannel(channelUrl, options);
     webChannel.open();
@@ -546,16 +545,17 @@ testSuite({
   testGetNonAckedMessages_withJsObjectReturnsExactMessage() {
     const webChannelTransport = new WebChannelBaseTransport();
     webChannel = webChannelTransport.createWebChannel(channelUrl);
-    const messageToSend = {foo: 'bar'};
-    const messageToSend2 = {foo2: 'bar2'};
+    const messageToSend = { foo: 'bar' };
+    const messageToSend2 = { foo2: 'bar2' };
 
     webChannel.open();
     webChannel.send(messageToSend);
     webChannel.send(messageToSend2);
 
     assertElementsEquals(
-        [messageToSend, messageToSend2],
-        webChannel.getRuntimeProperties().getNonAckedMessages());
+      [messageToSend, messageToSend2],
+      webChannel.getRuntimeProperties().getNonAckedMessages()
+    );
   },
 
   testGetNonAckedMessages_withStringReturnsExactMessage() {
@@ -569,21 +569,21 @@ testSuite({
     webChannel.send(messageToSend2);
 
     assertElementsEquals(
-        [messageToSend, messageToSend2],
-        webChannel.getRuntimeProperties().getNonAckedMessages());
+      [messageToSend, messageToSend2],
+      webChannel.getRuntimeProperties().getNonAckedMessages()
+    );
   },
 
   testGetNonAckedMessages_withRawJsonReturnsEqualObject() {
     const webChannelTransport = new WebChannelBaseTransport();
-    const options = {'sendRawJson': true};
+    const options = { sendRawJson: true };
     webChannel = webChannelTransport.createWebChannel(channelUrl, options);
-    const messageToSend = {foo: 'bar'};
+    const messageToSend = { foo: 'bar' };
 
     webChannel.open();
     webChannel.send(messageToSend);
 
-    const nonAckedMessages =
-        webChannel.getRuntimeProperties().getNonAckedMessages();
+    const nonAckedMessages = webChannel.getRuntimeProperties().getNonAckedMessages();
     assertEquals(1, nonAckedMessages.length);
     // JSON objects went through serialization and deserialization so an equal
     // (but not the same) object is returned.
@@ -593,8 +593,8 @@ testSuite({
   testGetNonAckedMessagesAfterChannelClose() {
     const webChannelTransport = new WebChannelBaseTransport();
     webChannel = webChannelTransport.createWebChannel(channelUrl);
-    const messageToSend = {foo: 'bar'};
-    const messageToSend2 = {foo2: 'bar2'};
+    const messageToSend = { foo: 'bar' };
+    const messageToSend2 = { foo2: 'bar2' };
 
     webChannel.open();
     webChannel.send(messageToSend);
@@ -602,7 +602,8 @@ testSuite({
     webChannel.close();
 
     assertElementsEquals(
-        [messageToSend, messageToSend2],
-        webChannel.getRuntimeProperties().getNonAckedMessages());
+      [messageToSend, messageToSend2],
+      webChannel.getRuntimeProperties().getNonAckedMessages()
+    );
   },
 });

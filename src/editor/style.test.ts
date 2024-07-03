@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.styleTest');
-goog.setTestOnly();
 
 const BrowserFeature = goog.require('goog.editor.BrowserFeature');
 const EventHandler = goog.require('goog.events.EventHandler');
@@ -37,19 +36,30 @@ const $text = dom.createTextNode;
 
 function setUpGetNodeFunctions() {
   parentNode = $dom(
-      TagName.P, {id: 'parentNode'},
-      childNode1 = $dom(
-          TagName.DIV, null, gChildWsNode1 = $text(' \t\r\n'),
-          gChildTextNode1 = $text('Child node'),
-          gChildNbspNode1 = $text('\u00a0'),
-          gChildMixedNode1 = $text('Text\n plus\u00a0')),
-      childNode2 = $dom(
-          TagName.DIV, null, gChildWsNode2a = $text(''),
-          gChildWsNode2b = $text(' ')),
-      childNode3 = $dom(
-          TagName.DIV, null, gChildTextNode3a = $text('I am a grand child'),
-          gChildWsNode3 = $text('   \t  \r   \n'),
-          gChildTextNode3b = $text('I am also a grand child')));
+    TagName.P,
+    { id: 'parentNode' },
+    (childNode1 = $dom(
+      TagName.DIV,
+      null,
+      (gChildWsNode1 = $text(' \t\r\n')),
+      (gChildTextNode1 = $text('Child node')),
+      (gChildNbspNode1 = $text('\u00a0')),
+      (gChildMixedNode1 = $text('Text\n plus\u00a0'))
+    )),
+    (childNode2 = $dom(
+      TagName.DIV,
+      null,
+      (gChildWsNode2a = $text('')),
+      (gChildWsNode2b = $text(' '))
+    )),
+    (childNode3 = $dom(
+      TagName.DIV,
+      null,
+      (gChildTextNode3a = $text('I am a grand child')),
+      (gChildWsNode3 = $text('   \t  \r   \n')),
+      (gChildTextNode3b = $text('I am also a grand child'))
+    ))
+  );
 
   document.body.appendChild(parentNode);
 }
@@ -104,10 +114,8 @@ testSuite({
    */
   testGetContainer() {
     setUpGetNodeFunctions();
-    assertEquals(
-        'Should return self', childNode1, style.getContainer(childNode1));
-    assertEquals(
-        'Should return parent', childNode1, style.getContainer(gChildWsNode1));
+    assertEquals('Should return self', childNode1, style.getContainer(childNode1));
+    assertEquals('Should return parent', childNode1, style.getContainer(gChildWsNode1));
     assertNull('Document has no ancestors', style.getContainer(document));
     tearDownGetNodeFunctions();
   },
@@ -118,15 +126,15 @@ testSuite({
    */
   testMakeUnselectable() {
     const div = dom.createElement(TagName.DIV);
-    div.innerHTML = '<div>No input</div>' +
-        '<p><input type="checkbox">Checkbox</p>' +
-        '<span><input type="text"></span>';
+    div.innerHTML =
+      '<div>No input</div>' +
+      '<p><input type="checkbox">Checkbox</p>' +
+      '<span><input type="text"></span>';
     document.body.appendChild(div);
 
     const eventHandler = new LooseMock(EventHandler);
     if (BrowserFeature.HAS_UNSELECTABLE_STYLE) {
-      eventHandler.listen(
-          div, EventType.MOUSEDOWN, mockmatchers.isFunction, true);
+      eventHandler.listen(div, EventType.MOUSEDOWN, mockmatchers.isFunction, true);
     }
     eventHandler.$replay();
 
@@ -139,17 +147,21 @@ testSuite({
     style.makeUnselectable(div, eventHandler);
 
     assertEquals(
-        'For browsers with non-overridable selectability, the root should be ' +
-            'selectable.  Otherwise it should be unselectable.',
-        !BrowserFeature.HAS_UNSELECTABLE_STYLE, googStyle.isUnselectable(div));
+      'For browsers with non-overridable selectability, the root should be ' +
+        'selectable.  Otherwise it should be unselectable.',
+      !BrowserFeature.HAS_UNSELECTABLE_STYLE,
+      googStyle.isUnselectable(div)
+    );
     assertTrue(googStyle.isUnselectable(childDiv));
     assertTrue(googStyle.isUnselectable(p));
     assertTrue(googStyle.isUnselectable(checkbox));
 
     assertEquals(
-        'For browsers with non-overridable selectability, the span will be ' +
-            'selectable.  Otherwise it will be unselectable. ',
-        !BrowserFeature.HAS_UNSELECTABLE_STYLE, googStyle.isUnselectable(span));
+      'For browsers with non-overridable selectability, the span will be ' +
+        'selectable.  Otherwise it will be unselectable. ',
+      !BrowserFeature.HAS_UNSELECTABLE_STYLE,
+      googStyle.isUnselectable(span)
+    );
     assertFalse(googStyle.isUnselectable(text));
 
     eventHandler.$verify();

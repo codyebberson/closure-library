@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.reflectTest');
-goog.setTestOnly();
 
 const googObject = goog.require('goog.object');
 const reflect = goog.require('goog.reflect');
@@ -48,8 +47,7 @@ testSuite({
     assertEquals(1, googObject.getCount(cacheObj));
 
     // Ensure cache works with all string keys.
-    assertEquals(
-        'toString', reflect.cache(cacheObj, 'toString', passthroughFn));
+    assertEquals('toString', reflect.cache(cacheObj, 'toString', passthroughFn));
     assertEquals('toString', reflect.cache(cacheObj, 'toString', throwsFn));
     // Not checking count as it is not correct for IE8 (doesn't enumerate
     // toString).

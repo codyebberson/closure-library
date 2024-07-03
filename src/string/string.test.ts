@@ -10,7 +10,6 @@
 
 /** @suppress {extraProvide} */
 goog.module('goog.stringTest');
-goog.setTestOnly();
 
 const MockControl = goog.require('goog.testing.MockControl');
 const PropertyReplacer = goog.require('goog.testing.PropertyReplacer');
@@ -37,8 +36,8 @@ const NUMERIC_COMPARISON_TEST_CASES = [
   ['2', '10'],
   ['05', '9'],
   ['sub', 'substring'],
-  ['photo 7', 'Photo 8'],  // Case insensitive for most sorts.
-  ['Mango', 'mango'],      // Case sensitive if strings are otherwise identical.
+  ['photo 7', 'Photo 8'], // Case insensitive for most sorts.
+  ['Mango', 'mango'], // Case sensitive if strings are otherwise identical.
   ['album 2 photo 20', 'album 10 photo 20'],
   ['album 7 photo 20', 'album 7 photo 100'],
 ];
@@ -57,8 +56,10 @@ function allChars(start = undefined, end = undefined) {
 
 function assertHashcodeEquals(expectedHashCode, str) {
   assertEquals(
-      'wrong hashCode for ' + str.substring(0, 32), expectedHashCode,
-      googString.hashCode(str));
+    'wrong hashCode for ' + str.substring(0, 32),
+    expectedHashCode,
+    googString.hashCode(str)
+  );
 }
 
 testSuite({
@@ -79,16 +80,13 @@ testSuite({
     assertEquals('Trailing spaces not stripped', f('abc  '), 'abc');
     assertEquals('Wrapping spaces not stripped', f('  abc  '), 'abc');
 
-    assertEquals(
-        'All white space chars not stripped', f('\xa0\n\t abc\xa0\n\t '),
-        'abc');
+    assertEquals('All white space chars not stripped', f('\xa0\n\t abc\xa0\n\t '), 'abc');
 
     assertEquals('Spaces not collapsed', f('a   b    c'), 'a b c');
 
     assertEquals('Tabs not collapsed', f('a\t\t\tb\tc'), 'a b c');
 
-    assertEquals(
-        'All check failed', f(' \ta \t \t\tb\t\n\xa0  c  \t\n'), 'a b c');
+    assertEquals('All check failed', f(' \ta \t \t\tb\t\n\xa0  c  \t\n'), 'a b c');
   },
 
   testIsEmpty() {
@@ -101,9 +99,9 @@ testSuite({
     assertFalse(googString.isEmpty(' a b c \t'));
     assertFalse(googString.isEmpty(';'));
 
-    assertFalse(googString.isEmpty(/** @type {?} */ (undefined)));
-    assertFalse(googString.isEmpty(/** @type {?} */ (null)));
-    assertFalse(googString.isEmpty(/** @type {?} */ ({a: 1, b: 2})));
+    assertFalse(googString.isEmpty(/** @type {?} */ undefined));
+    assertFalse(googString.isEmpty(/** @type {?} */ null));
+    assertFalse(googString.isEmpty(/** @type {?} */ { a: 1, b: 2 }));
   },
 
   testIsEmptyOrWhitespace() {
@@ -116,10 +114,9 @@ testSuite({
     assertFalse(googString.isEmptyOrWhitespace(' a b c \t'));
     assertFalse(googString.isEmptyOrWhitespace(';'));
 
-    assertFalse(googString.isEmptyOrWhitespace(/** @type {?} */ (undefined)));
-    assertFalse(googString.isEmptyOrWhitespace(/** @type {?} */ (null)));
-    assertFalse(
-        googString.isEmptyOrWhitespace(/** @type {?} */ ({a: 1, b: 2})));
+    assertFalse(googString.isEmptyOrWhitespace(/** @type {?} */ undefined));
+    assertFalse(googString.isEmptyOrWhitespace(/** @type {?} */ null));
+    assertFalse(googString.isEmptyOrWhitespace(/** @type {?} */ { a: 1, b: 2 }));
   },
 
   testIsEmptyString() {
@@ -132,7 +129,7 @@ testSuite({
     assertFalse(googString.isEmptyString(' a b c \t'));
     assertFalse(googString.isEmptyString(';'));
 
-    assertFalse(googString.isEmptyString(/** @type {?} */ ({a: 1, b: 2})));
+    assertFalse(googString.isEmptyString(/** @type {?} */ { a: 1, b: 2 }));
   },
 
   testIsEmptySafe() {
@@ -147,7 +144,7 @@ testSuite({
 
     assertTrue(googString.isEmptySafe(undefined));
     assertTrue(googString.isEmptySafe(null));
-    assertFalse(googString.isEmptySafe({a: 1, b: 2}));
+    assertFalse(googString.isEmptySafe({ a: 1, b: 2 }));
   },
 
   testIsEmptyOrWhitespaceSafe() {
@@ -162,7 +159,7 @@ testSuite({
 
     assertTrue(googString.isEmptyOrWhitespaceSafe(undefined));
     assertTrue(googString.isEmptyOrWhitespaceSafe(null));
-    assertFalse(googString.isEmptyOrWhitespaceSafe({a: 1, b: 2}));
+    assertFalse(googString.isEmptyOrWhitespaceSafe({ a: 1, b: 2 }));
   },
 
   testIsAlpha() {
@@ -173,9 +170,8 @@ testSuite({
     assertTrue('"N" should be alpha', googString.isAlpha('N'));
     assertTrue('"Z" should be alpha', googString.isAlpha('Z'));
     assertTrue('"aa" should be alpha', googString.isAlpha('aa'));
-    assertTrue('null is alpha', googString.isAlpha(/** @type {?} */ (null)));
-    assertTrue(
-        'undefined is alpha', googString.isAlpha(/** @type {?} */ (undefined)));
+    assertTrue('null is alpha', googString.isAlpha(/** @type {?} */ null));
+    assertTrue('undefined is alpha', googString.isAlpha(/** @type {?} */ undefined));
 
     assertFalse('"aa!" is not alpha', googString.isAlpha('aa!s'));
     assertFalse('"!" is not alpha', googString.isAlpha('!'));
@@ -197,24 +193,14 @@ testSuite({
   },
 
   testIsAlphaNumeric() {
-    assertTrue(
-        '"ABCabc" should be alphanumeric', googString.isAlphaNumeric('ABCabc'));
-    assertTrue(
-        '"123" should be alphanumeric', googString.isAlphaNumeric('123'));
-    assertTrue(
-        '"ABCabc123" should be alphanumeric',
-        googString.isAlphaNumeric('ABCabc123'));
-    assertTrue(
-        'null is alphanumeric',
-        googString.isAlphaNumeric(/** @type {?} */ (null)));
-    assertTrue(
-        'undefined is alphanumeric',
-        googString.isAlphaNumeric(/** @type {?} */ (undefined)));
+    assertTrue('"ABCabc" should be alphanumeric', googString.isAlphaNumeric('ABCabc'));
+    assertTrue('"123" should be alphanumeric', googString.isAlphaNumeric('123'));
+    assertTrue('"ABCabc123" should be alphanumeric', googString.isAlphaNumeric('ABCabc123'));
+    assertTrue('null is alphanumeric', googString.isAlphaNumeric(/** @type {?} */ null));
+    assertTrue('undefined is alphanumeric', googString.isAlphaNumeric(/** @type {?} */ undefined));
 
-    assertFalse(
-        '"123!" should not be alphanumeric', googString.isAlphaNumeric('123!'));
-    assertFalse(
-        '"  " should not be alphanumeric', googString.isAlphaNumeric('  '));
+    assertFalse('"123!" should not be alphanumeric', googString.isAlphaNumeric('123!'));
+    assertFalse('"  " should not be alphanumeric', googString.isAlphaNumeric('  '));
   },
 
   testIsBreakingWhitespace() {
@@ -222,14 +208,11 @@ testSuite({
     assertTrue('"\\n" is breaking', googString.isBreakingWhitespace('\n'));
     assertTrue('"\\t" is breaking', googString.isBreakingWhitespace('\t'));
     assertTrue('"\\r" is breaking', googString.isBreakingWhitespace('\r'));
-    assertTrue(
-        '"\\r\\n\\t " is breaking', googString.isBreakingWhitespace('\r\n\t '));
+    assertTrue('"\\r\\n\\t " is breaking', googString.isBreakingWhitespace('\r\n\t '));
 
-    assertFalse(
-        'nbsp is non-breaking', googString.isBreakingWhitespace('\xa0'));
+    assertFalse('nbsp is non-breaking', googString.isBreakingWhitespace('\xa0'));
     assertFalse('"a" is non-breaking', googString.isBreakingWhitespace('a'));
-    assertFalse(
-        '"a\\r" is non-breaking', googString.isBreakingWhitespace('a\r'));
+    assertFalse('"a\\r" is non-breaking', googString.isBreakingWhitespace('a\r'));
   },
 
   testIsSpace() {
@@ -237,126 +220,107 @@ testSuite({
 
     assertFalse('"\\n" is not a space', googString.isSpace('\n'));
     assertFalse('"\\t" is not a space', googString.isSpace('\t'));
-    assertFalse(
-        '"  " is not a space, it\'s two spaces', googString.isSpace('  '));
+    assertFalse('"  " is not a space, it\'s two spaces', googString.isSpace('  '));
     assertFalse('"a" is not a space', googString.isSpace('a'));
     assertFalse('"3" is not a space', googString.isSpace('3'));
     assertFalse('"#" is not a space', googString.isSpace('#'));
-    assertFalse(
-        'null is not a space', googString.isSpace(/** @type {?} */ (null)));
+    assertFalse('null is not a space', googString.isSpace(/** @type {?} */ null));
     assertFalse('nbsp is not a space', googString.isSpace('\xa0'));
   },
 
   testStripNewLines() {
     assertEquals(
-        'Should replace new lines with spaces',
-        googString.stripNewlines('some\nlines\rthat\r\nare\n\nsplit'),
-        'some lines that are split');
+      'Should replace new lines with spaces',
+      googString.stripNewlines('some\nlines\rthat\r\nare\n\nsplit'),
+      'some lines that are split'
+    );
   },
 
   testCanonicalizeNewlines() {
     assertEquals(
-        'Should replace all types of new line with \\n',
-        googString.canonicalizeNewlines('some\nlines\rthat\r\nare\n\nsplit'),
-        'some\nlines\nthat\nare\n\nsplit');
+      'Should replace all types of new line with \\n',
+      googString.canonicalizeNewlines('some\nlines\rthat\r\nare\n\nsplit'),
+      'some\nlines\nthat\nare\n\nsplit'
+    );
   },
 
   testNormalizeWhitespace() {
     assertEquals(
-        'All whitespace chars should be replaced with a normal space',
-        googString.normalizeWhitespace('\xa0 \n\t \xa0 \n\t'), '         ');
+      'All whitespace chars should be replaced with a normal space',
+      googString.normalizeWhitespace('\xa0 \n\t \xa0 \n\t'),
+      '         '
+    );
   },
 
   testNormalizeSpaces() {
     assertEquals(
-        'All whitespace chars should be replaced with a normal space',
-        googString.normalizeSpaces('\xa0 \t \xa0 \t'), '    ');
+      'All whitespace chars should be replaced with a normal space',
+      googString.normalizeSpaces('\xa0 \t \xa0 \t'),
+      '    '
+    );
   },
 
   testCollapseBreakingSpaces() {
     assertEquals(
-        'breaking spaces are collapsed', 'a b',
-        googString.collapseBreakingSpaces(' \t\r\n a \t\r\n b \t\r\n '));
+      'breaking spaces are collapsed',
+      'a b',
+      googString.collapseBreakingSpaces(' \t\r\n a \t\r\n b \t\r\n ')
+    );
     assertEquals(
-        'non-breaking spaces are kept', 'a \u00a0\u2000 b',
-        googString.collapseBreakingSpaces('a \u00a0\u2000 b'));
+      'non-breaking spaces are kept',
+      'a \u00a0\u2000 b',
+      googString.collapseBreakingSpaces('a \u00a0\u2000 b')
+    );
   },
 
   testTrim() {
-    assertEquals(
-        'Should be the same', googString.trim('nothing 2 trim'),
-        'nothing 2 trim');
-    assertEquals(
-        'Remove spaces', googString.trim('   hello  goodbye   '),
-        'hello  goodbye');
-    assertEquals(
-        'Trim other stuff', googString.trim('\n\r\xa0 hi \r\n\xa0'), 'hi');
+    assertEquals('Should be the same', googString.trim('nothing 2 trim'), 'nothing 2 trim');
+    assertEquals('Remove spaces', googString.trim('   hello  goodbye   '), 'hello  goodbye');
+    assertEquals('Trim other stuff', googString.trim('\n\r\xa0 hi \r\n\xa0'), 'hi');
   },
 
   testTrimLeft() {
     const f = googString.trimLeft;
     assertEquals('Should be the same', f('nothing to trim'), 'nothing to trim');
-    assertEquals(
-        'Remove spaces', f('   hello  goodbye   '), 'hello  goodbye   ');
+    assertEquals('Remove spaces', f('   hello  goodbye   '), 'hello  goodbye   ');
     assertEquals('Trim other stuff', f('\xa0\n\r hi \r\n\xa0'), 'hi \r\n\xa0');
   },
 
   testTrimRight() {
     const f = googString.trimRight;
     assertEquals('Should be the same', f('nothing to trim'), 'nothing to trim');
-    assertEquals(
-        'Remove spaces', f('   hello  goodbye   '), '   hello  goodbye');
+    assertEquals('Remove spaces', f('   hello  goodbye   '), '   hello  goodbye');
     assertEquals('Trim other stuff', f('\n\r\xa0 hi \r\n\xa0'), '\n\r\xa0 hi');
   },
 
   testStartsWith() {
-    assertTrue('Should start with \'\'', googString.startsWith('abcd', ''));
-    assertTrue('Should start with \'ab\'', googString.startsWith('abcd', 'ab'));
-    assertTrue(
-        'Should start with \'abcd\'', googString.startsWith('abcd', 'abcd'));
-    assertFalse(
-        'Should not start with \'bcd\'', googString.startsWith('abcd', 'bcd'));
+    assertTrue("Should start with ''", googString.startsWith('abcd', ''));
+    assertTrue("Should start with 'ab'", googString.startsWith('abcd', 'ab'));
+    assertTrue("Should start with 'abcd'", googString.startsWith('abcd', 'abcd'));
+    assertFalse("Should not start with 'bcd'", googString.startsWith('abcd', 'bcd'));
   },
 
   testEndsWith() {
-    assertTrue('Should end with \'\'', googString.endsWith('abcd', ''));
-    assertTrue('Should end with \'ab\'', googString.endsWith('abcd', 'cd'));
-    assertTrue('Should end with \'abcd\'', googString.endsWith('abcd', 'abcd'));
-    assertFalse('Should not end \'abc\'', googString.endsWith('abcd', 'abc'));
-    assertFalse(
-        'Should not end \'abcde\'', googString.endsWith('abcd', 'abcde'));
+    assertTrue("Should end with ''", googString.endsWith('abcd', ''));
+    assertTrue("Should end with 'ab'", googString.endsWith('abcd', 'cd'));
+    assertTrue("Should end with 'abcd'", googString.endsWith('abcd', 'abcd'));
+    assertFalse("Should not end 'abc'", googString.endsWith('abcd', 'abc'));
+    assertFalse("Should not end 'abcde'", googString.endsWith('abcd', 'abcde'));
   },
 
   testCaseInsensitiveStartsWith() {
-    assertTrue(
-        'Should start with \'\'',
-        googString.caseInsensitiveStartsWith('abcd', ''));
-    assertTrue(
-        'Should start with \'ab\'',
-        googString.caseInsensitiveStartsWith('abcd', 'Ab'));
-    assertTrue(
-        'Should start with \'abcd\'',
-        googString.caseInsensitiveStartsWith('AbCd', 'abCd'));
-    assertFalse(
-        'Should not start with \'bcd\'',
-        googString.caseInsensitiveStartsWith('ABCD', 'bcd'));
+    assertTrue("Should start with ''", googString.caseInsensitiveStartsWith('abcd', ''));
+    assertTrue("Should start with 'ab'", googString.caseInsensitiveStartsWith('abcd', 'Ab'));
+    assertTrue("Should start with 'abcd'", googString.caseInsensitiveStartsWith('AbCd', 'abCd'));
+    assertFalse("Should not start with 'bcd'", googString.caseInsensitiveStartsWith('ABCD', 'bcd'));
   },
 
   testCaseInsensitiveEndsWith() {
-    assertTrue(
-        'Should end with \'\'', googString.caseInsensitiveEndsWith('abcd', ''));
-    assertTrue(
-        'Should end with \'cd\'',
-        googString.caseInsensitiveEndsWith('abCD', 'cd'));
-    assertTrue(
-        'Should end with \'abcd\'',
-        googString.caseInsensitiveEndsWith('abcd', 'abCd'));
-    assertFalse(
-        'Should not end \'abc\'',
-        googString.caseInsensitiveEndsWith('aBCd', 'ABc'));
-    assertFalse(
-        'Should not end \'abcde\'',
-        googString.caseInsensitiveEndsWith('ABCD', 'abcde'));
+    assertTrue("Should end with ''", googString.caseInsensitiveEndsWith('abcd', ''));
+    assertTrue("Should end with 'cd'", googString.caseInsensitiveEndsWith('abCD', 'cd'));
+    assertTrue("Should end with 'abcd'", googString.caseInsensitiveEndsWith('abcd', 'abCd'));
+    assertFalse("Should not end 'abc'", googString.caseInsensitiveEndsWith('aBCd', 'ABc'));
+    assertFalse("Should not end 'abcde'", googString.caseInsensitiveEndsWith('ABCD', 'abcde'));
   },
 
   testCaseInsensitiveEquals() {
@@ -380,13 +344,9 @@ testSuite({
   },
 
   testSubs() {
-    assertEquals(
-        'Should be the same', 'nothing to subs',
-        googString.subs('nothing to subs'));
+    assertEquals('Should be the same', 'nothing to subs', googString.subs('nothing to subs'));
     assertEquals('Should be the same', '1', googString.subs('%s', '1'));
-    assertEquals(
-        'Should be the same', '12true',
-        googString.subs('%s%s%s', '1', 2, true));
+    assertEquals('Should be the same', '12true', googString.subs('%s%s%s', '1', 2, true));
     function f() {
       fail('This should not be called');
     }
@@ -397,28 +357,27 @@ testSuite({
     // usually be replaced with %s, we need to check goog.string.subs, handles
     // this case.
     assertEquals(
-        '$& should not be substituted with %s', 'Foo Bar $&',
-        googString.subs('Foo %s', 'Bar $&'));
+      '$& should not be substituted with %s',
+      'Foo Bar $&',
+      googString.subs('Foo %s', 'Bar $&')
+    );
 
-    assertEquals(
-        '$$ should not be substituted', '_$$_', googString.subs('%s', '_$$_'));
-    assertEquals(
-        '$` should not be substituted', '_$`_', googString.subs('%s', '_$`_'));
-    assertEquals(
-        '$\' should not be substituted', '_$\'_',
-        googString.subs('%s', '_$\'_'));
+    assertEquals('$$ should not be substituted', '_$$_', googString.subs('%s', '_$$_'));
+    assertEquals('$` should not be substituted', '_$`_', googString.subs('%s', '_$`_'));
+    assertEquals("$' should not be substituted", "_$'_", googString.subs('%s', "_$'_"));
     for (let i = 0; i < 99; i += 9) {
       assertEquals(
-          `\$${i} should not be substituted`, `_\$${i}_`,
-          googString.subs('%s', `_\$${i}_`));
+        `\$${i} should not be substituted`,
+        `_\$${i}_`,
+        googString.subs('%s', `_\$${i}_`)
+      );
     }
 
     assertEquals(
-        'Only the first three "%s" strings should be replaced.',
-        'test foo test bar test baz test %s test %s test',
-        googString.subs(
-            'test %s test %s test %s test %s test %s test', 'foo', 'bar',
-            'baz'));
+      'Only the first three "%s" strings should be replaced.',
+      'test foo test bar test baz test %s test %s test',
+      googString.subs('test %s test %s test %s test %s test %s test', 'foo', 'bar', 'baz')
+    );
   },
 
   /**
@@ -447,17 +406,21 @@ testSuite({
     for (let i = 0; i < comparisons.length; i++) {
       const terms = comparisons[i];
       assert(
-          terms[0] + ' should be less than ' + terms[1],
-          googString.floatAwareCompare(terms[0], terms[1]) < 0);
+        terms[0] + ' should be less than ' + terms[1],
+        googString.floatAwareCompare(terms[0], terms[1]) < 0
+      );
       assert(
-          terms[1] + ' should be greater than ' + terms[0],
-          googString.floatAwareCompare(terms[1], terms[0]) > 0);
+        terms[1] + ' should be greater than ' + terms[0],
+        googString.floatAwareCompare(terms[1], terms[0]) > 0
+      );
       assert(
-          terms[0] + ' should be equal to ' + terms[0],
-          googString.floatAwareCompare(terms[0], terms[0]) == 0);
+        terms[0] + ' should be equal to ' + terms[0],
+        googString.floatAwareCompare(terms[0], terms[0]) == 0
+      );
       assert(
-          terms[1] + ' should be equal to ' + terms[1],
-          googString.floatAwareCompare(terms[1], terms[1]) == 0);
+        terms[1] + ' should be equal to ' + terms[1],
+        googString.floatAwareCompare(terms[1], terms[1]) == 0
+      );
     }
   },
 
@@ -466,17 +429,21 @@ testSuite({
     for (let i = 0; i < comparisons.length; i++) {
       const terms = comparisons[i];
       assert(
-          terms[0] + ' should be less than ' + terms[1],
-          googString.intAwareCompare(terms[0], terms[1]) < 0);
+        terms[0] + ' should be less than ' + terms[1],
+        googString.intAwareCompare(terms[0], terms[1]) < 0
+      );
       assert(
-          terms[1] + ' should be greater than ' + terms[0],
-          googString.intAwareCompare(terms[1], terms[0]) > 0);
+        terms[1] + ' should be greater than ' + terms[0],
+        googString.intAwareCompare(terms[1], terms[0]) > 0
+      );
       assert(
-          terms[0] + ' should be equal to ' + terms[0],
-          googString.intAwareCompare(terms[0], terms[0]) == 0);
+        terms[0] + ' should be equal to ' + terms[0],
+        googString.intAwareCompare(terms[0], terms[0]) == 0
+      );
       assert(
-          terms[1] + ' should be equal to ' + terms[1],
-          googString.intAwareCompare(terms[1], terms[1]) == 0);
+        terms[1] + ' should be equal to ' + terms[1],
+        googString.intAwareCompare(terms[1], terms[1]) == 0
+      );
     }
   },
 
@@ -486,24 +453,30 @@ testSuite({
     // in the future it doesn't get broken.
     const input = '<p>"hello there," she said, "what is going on here?</p>';
     const output =
-        '%3Cp%3E%22hello%20there%2C%22%20she%20said%2C%20%22what%20is' +
-        '%20going%20on%20here%3F%3C%2Fp%3E';
+      '%3Cp%3E%22hello%20there%2C%22%20she%20said%2C%20%22what%20is' +
+      '%20going%20on%20here%3F%3C%2Fp%3E';
 
     assertEquals(
-        'urlEncode vs encodeURIComponent', encodeURIComponent(input),
-        googString.urlEncode(input));
+      'urlEncode vs encodeURIComponent',
+      encodeURIComponent(input),
+      googString.urlEncode(input)
+    );
 
     assertEquals('urlEncode vs model', googString.urlEncode(input), output);
 
     assertEquals('urlDecode vs model', googString.urlDecode(output), input);
 
     assertEquals(
-        'urlDecode vs urlEncode',
-        googString.urlDecode(googString.urlEncode(input)), input);
+      'urlDecode vs urlEncode',
+      googString.urlDecode(googString.urlEncode(input)),
+      input
+    );
 
     assertEquals(
-        'urlDecode with +s instead of %20s',
-        googString.urlDecode(output.replace(/%20/g, '+')), input);
+      'urlDecode with +s instead of %20s',
+      googString.urlDecode(output.replace(/%20/g, '+')),
+      input
+    );
   },
 
   testNewLineToBr() {
@@ -521,18 +494,20 @@ testSuite({
     const html = '&#39;&quot;x1 &lt; x2 &amp;&amp; y2 &gt; y1&quot;&#39;';
 
     assertEquals('Testing htmlEscape', html, googString.htmlEscape(text));
-    assertEquals(
-        'Testing htmlEscape', html, googString.htmlEscape(text, false));
+    assertEquals('Testing htmlEscape', html, googString.htmlEscape(text, false));
     assertEquals('Testing htmlEscape', html, googString.htmlEscape(text, true));
-    assertEquals(
-        'Testing unescapeEntities', text, googString.unescapeEntities(html));
+    assertEquals('Testing unescapeEntities', text, googString.unescapeEntities(html));
 
     assertEquals(
-        'escape -> unescape', text,
-        googString.unescapeEntities(googString.htmlEscape(text)));
+      'escape -> unescape',
+      text,
+      googString.unescapeEntities(googString.htmlEscape(text))
+    );
     assertEquals(
-        'unescape -> escape', html,
-        googString.htmlEscape(googString.unescapeEntities(html)));
+      'unescape -> escape',
+      html,
+      googString.htmlEscape(googString.unescapeEntities(html))
+    );
   },
 
   testHtmlUnescapeEntitiesWithDocument() {
@@ -548,10 +523,11 @@ testSuite({
     const text = '<a&b>';
 
     assertEquals(
-        'wrong unescaped value', text,
-        googString.unescapeEntitiesWithDocument(html, documentMock));
-    assertNotEquals(
-        'divMock.innerHTML should have been used', '', divMock.innerHTML);
+      'wrong unescaped value',
+      text,
+      googString.unescapeEntitiesWithDocument(html, documentMock)
+    );
+    assertNotEquals('divMock.innerHTML should have been used', '', divMock.innerHTML);
     mockControl.$verifyAll();
   },
 
@@ -560,17 +536,17 @@ testSuite({
     const text = '"x1 < x2 && y2 > y1"';
     const html = '&quot;x1 &lt; x2 &amp;&amp; y2 &gt; y1&quot;';
 
+    assertEquals('Testing unescapeEntities', googString.unescapeEntitiesUsingDom_(html), text);
     assertEquals(
-        'Testing unescapeEntities', googString.unescapeEntitiesUsingDom_(html),
-        text);
+      'escape -> unescape',
+      googString.unescapeEntitiesUsingDom_(googString.htmlEscape(text)),
+      text
+    );
     assertEquals(
-        'escape -> unescape',
-        googString.unescapeEntitiesUsingDom_(googString.htmlEscape(text)),
-        text);
-    assertEquals(
-        'unescape -> escape',
-        googString.htmlEscape(googString.unescapeEntitiesUsingDom_(html)),
-        html);
+      'unescape -> escape',
+      googString.htmlEscape(googString.unescapeEntitiesUsingDom_(html)),
+      html
+    );
   },
 
   /** @suppress {visibility} */
@@ -578,9 +554,7 @@ testSuite({
     const html = '&lt;a&b&gt;';
     const text = '<a&b>';
 
-    assertEquals(
-        'wrong unescaped value', text,
-        googString.unescapeEntitiesUsingDom_(html));
+    assertEquals('wrong unescaped value', text, googString.unescapeEntitiesUsingDom_(html));
   },
 
   /** @suppress {visibility} */
@@ -589,14 +563,20 @@ testSuite({
     const html = '&quot;x1 &lt; x2 &amp;&amp; y2 &gt; y1&quot;';
 
     assertEquals(
-        'Testing unescapePureXmlEntities_',
-        googString.unescapePureXmlEntities_(html), text);
+      'Testing unescapePureXmlEntities_',
+      googString.unescapePureXmlEntities_(html),
+      text
+    );
     assertEquals(
-        'escape -> unescape',
-        googString.unescapePureXmlEntities_(googString.htmlEscape(text)), text);
+      'escape -> unescape',
+      googString.unescapePureXmlEntities_(googString.htmlEscape(text)),
+      text
+    );
     assertEquals(
-        'unescape -> escape',
-        googString.htmlEscape(googString.unescapePureXmlEntities_(html)), html);
+      'unescape -> escape',
+      googString.htmlEscape(googString.unescapePureXmlEntities_(html)),
+      html
+    );
   },
 
   testForceNonDomHtmlUnescaping() {
@@ -624,24 +604,16 @@ testSuite({
 
   testXssUnescapeEntities() {
     // This tests that we don't have any XSS exploits in unescapeEntities
-    let test = '&amp;<script defer>globalXssVar=1;</' +
-        'script>';
-    let expected = '&<script defer>globalXssVar=1;</' +
-        'script>';
+    let test = '&amp;<script defer>globalXssVar=1;</' + 'script>';
+    let expected = '&<script defer>globalXssVar=1;</' + 'script>';
 
-    assertEquals(
-        'Testing unescapeEntities', expected,
-        googString.unescapeEntities(test));
+    assertEquals('Testing unescapeEntities', expected, googString.unescapeEntities(test));
     assertEquals('unescapeEntities is vulnarable to XSS', 0, globalXssVar);
 
-    test = '&amp;<script>globalXssVar=1;</' +
-        'script>';
-    expected = '&<script>globalXssVar=1;</' +
-        'script>';
+    test = '&amp;<script>globalXssVar=1;</' + 'script>';
+    expected = '&<script>globalXssVar=1;</' + 'script>';
 
-    assertEquals(
-        'Testing unescapeEntities', expected,
-        googString.unescapeEntities(test));
+    assertEquals('Testing unescapeEntities', expected, googString.unescapeEntities(test));
     assertEquals('unescapeEntities is vulnarable to XSS', 0, globalXssVar);
   },
 
@@ -649,53 +621,49 @@ testSuite({
   testXssUnescapeEntitiesUsingDom() {
     // This tests that we don't have any XSS exploits in
     // unescapeEntitiesUsingDom
-    let test = '&amp;<script defer>globalXssVar=1;</' +
-        'script>';
-    let expected = '&<script defer>globalXssVar=1;</' +
-        'script>';
+    let test = '&amp;<script defer>globalXssVar=1;</' + 'script>';
+    let expected = '&<script defer>globalXssVar=1;</' + 'script>';
 
     assertEquals(
-        'Testing unescapeEntitiesUsingDom_', expected,
-        googString.unescapeEntitiesUsingDom_(test));
-    assertEquals(
-        'unescapeEntitiesUsingDom_ is vulnerable to XSS', 0, globalXssVar);
+      'Testing unescapeEntitiesUsingDom_',
+      expected,
+      googString.unescapeEntitiesUsingDom_(test)
+    );
+    assertEquals('unescapeEntitiesUsingDom_ is vulnerable to XSS', 0, globalXssVar);
 
-    test = '&amp;<script>globalXssVar=1;</' +
-        'script>';
-    expected = '&<script>globalXssVar=1;</' +
-        'script>';
+    test = '&amp;<script>globalXssVar=1;</' + 'script>';
+    expected = '&<script>globalXssVar=1;</' + 'script>';
 
     assertEquals(
-        'Testing unescapeEntitiesUsingDom_', expected,
-        googString.unescapeEntitiesUsingDom_(test));
-    assertEquals(
-        'unescapeEntitiesUsingDom_ is vulnerable to XSS', 0, globalXssVar);
+      'Testing unescapeEntitiesUsingDom_',
+      expected,
+      googString.unescapeEntitiesUsingDom_(test)
+    );
+    assertEquals('unescapeEntitiesUsingDom_ is vulnerable to XSS', 0, globalXssVar);
   },
 
   /** @suppress {visibility} */
   testXssUnescapePureXmlEntities() {
     // This tests that we don't have any XSS exploits in unescapePureXmlEntities
-    let test = '&amp;<script defer>globalXssVar=1;</' +
-        'script>';
-    let expected = '&<script defer>globalXssVar=1;</' +
-        'script>';
+    let test = '&amp;<script defer>globalXssVar=1;</' + 'script>';
+    let expected = '&<script defer>globalXssVar=1;</' + 'script>';
 
     assertEquals(
-        'Testing unescapePureXmlEntities_', expected,
-        googString.unescapePureXmlEntities_(test));
-    assertEquals(
-        'unescapePureXmlEntities_ is vulnarable to XSS', 0, globalXssVar);
+      'Testing unescapePureXmlEntities_',
+      expected,
+      googString.unescapePureXmlEntities_(test)
+    );
+    assertEquals('unescapePureXmlEntities_ is vulnarable to XSS', 0, globalXssVar);
 
-    test = '&amp;<script>globalXssVar=1;</' +
-        'script>';
-    expected = '&<script>globalXssVar=1;</' +
-        'script>';
+    test = '&amp;<script>globalXssVar=1;</' + 'script>';
+    expected = '&<script>globalXssVar=1;</' + 'script>';
 
     assertEquals(
-        'Testing unescapePureXmlEntities_', expected,
-        googString.unescapePureXmlEntities_(test));
-    assertEquals(
-        'unescapePureXmlEntities_ is vulnarable to XSS', 0, globalXssVar);
+      'Testing unescapePureXmlEntities_',
+      expected,
+      googString.unescapePureXmlEntities_(test)
+    );
+    assertEquals('unescapePureXmlEntities_ is vulnarable to XSS', 0, globalXssVar);
   },
 
   testUnescapeEntitiesPreservesWhitespace() {
@@ -704,23 +672,20 @@ testSuite({
     let test = '\nTesting\n\twhitespace\n    preservation\n';
     let expected = test;
 
-    assertEquals(
-        'Testing unescapeEntities', expected,
-        googString.unescapeEntities(test));
+    assertEquals('Testing unescapeEntities', expected, googString.unescapeEntities(test));
 
     // Now with entities
     test += ' &amp;&nbsp;\n';
     expected += ' &\u00A0\n';
-    assertEquals(
-        'Testing unescapeEntities', expected,
-        googString.unescapeEntities(test));
+    assertEquals('Testing unescapeEntities', expected, googString.unescapeEntities(test));
   },
 
   testWhitespaceEscape() {
     assertEquals(
-        'Should be the same',
-        googString.whitespaceEscape('one two  three   four    five     '),
-        'one two &#160;three &#160; four &#160; &#160;five &#160; &#160; ');
+      'Should be the same',
+      googString.whitespaceEscape('one two  three   four    five     '),
+      'one two &#160;three &#160; four &#160; &#160;five &#160; &#160; '
+    );
   },
 
   testPreserveSpaces() {
@@ -738,54 +703,50 @@ testSuite({
   },
 
   testStripQuotes() {
-    assertEquals(
-        'Quotes should be stripped', googString.stripQuotes('"hello"', '"'),
-        'hello');
+    assertEquals('Quotes should be stripped', googString.stripQuotes('"hello"', '"'), 'hello');
+
+    assertEquals('Quotes should be stripped', googString.stripQuotes("'hello'", "'"), 'hello');
 
     assertEquals(
-        'Quotes should be stripped', googString.stripQuotes('\'hello\'', '\''),
-        'hello');
-
-    assertEquals(
-        'Quotes should not be stripped',
-        googString.stripQuotes('-"hello"', '"'), '-"hello"');
+      'Quotes should not be stripped',
+      googString.stripQuotes('-"hello"', '"'),
+      '-"hello"'
+    );
   },
 
   testStripQuotesMultiple() {
-    assertEquals(
-        'Quotes should be stripped', googString.stripQuotes('"hello"', '"\''),
-        'hello');
-    assertEquals(
-        'Quotes should be stripped', googString.stripQuotes('\'hello\'', '"\''),
-        'hello');
+    assertEquals('Quotes should be stripped', googString.stripQuotes('"hello"', '"\''), 'hello');
+    assertEquals('Quotes should be stripped', googString.stripQuotes("'hello'", '"\''), 'hello');
 
-    assertEquals(
-        'Quotes should be stripped', googString.stripQuotes('\'hello\'', ''),
-        '\'hello\'');
+    assertEquals('Quotes should be stripped', googString.stripQuotes("'hello'", ''), "'hello'");
   },
 
   testStripQuotesMultiple2() {
     // Makes sure we do not strip twice
     assertEquals(
-        'Quotes should be stripped',
-        googString.stripQuotes('"\'hello\'"', '"\''), '\'hello\'');
+      'Quotes should be stripped',
+      googString.stripQuotes('"\'hello\'"', '"\''),
+      "'hello'"
+    );
     assertEquals(
-        'Quotes should be stripped',
-        googString.stripQuotes('"\'hello\'"', '\'"'), '\'hello\'');
+      'Quotes should be stripped',
+      googString.stripQuotes('"\'hello\'"', '\'"'),
+      "'hello'"
+    );
   },
 
   testTruncate() {
     const str = 'abcdefghijklmnopqrstuvwxyz';
     assertEquals('Should be equal', googString.truncate(str, 8), 'abcde...');
-    assertEquals(
-        'Should be equal', googString.truncate(str, 11), 'abcdefgh...');
+    assertEquals('Should be equal', googString.truncate(str, 11), 'abcdefgh...');
 
     const html = 'true &amp;&amp; false == false';
+    assertEquals('Should clip html char', googString.truncate(html, 11), 'true &am...');
     assertEquals(
-        'Should clip html char', googString.truncate(html, 11), 'true &am...');
-    assertEquals(
-        'Should not clip html char', googString.truncate(html, 12, true),
-        'true &amp;&amp; f...');
+      'Should not clip html char',
+      googString.truncate(html, 12, true),
+      'true &amp;&amp; f...'
+    );
   },
 
   testTruncateMiddle() {
@@ -795,33 +756,29 @@ testSuite({
     assertEquals(str, googString.truncateMiddle(str, str.length));
 
     const html = 'true &amp;&amp; false == false';
+    assertEquals('Should clip html char', 'true &a...= false', googString.truncateMiddle(html, 14));
     assertEquals(
-        'Should clip html char', 'true &a...= false',
-        googString.truncateMiddle(html, 14));
-    assertEquals(
-        'Should not clip html char', 'true &amp;&amp;...= false',
-        googString.truncateMiddle(html, 14, true));
+      'Should not clip html char',
+      'true &amp;&amp;...= false',
+      googString.truncateMiddle(html, 14, true)
+    );
+
+    assertEquals('ab...xyz', googString.truncateMiddle(str, 5, /** @type {?} */ null, 3));
+    assertEquals('abcdefg...xyz', googString.truncateMiddle(str, 10, /** @type {?} */ null, 3));
+    assertEquals('abcdef...wxyz', googString.truncateMiddle(str, 10, /** @type {?} */ null, 4));
+    assertEquals('...yz', googString.truncateMiddle(str, 2, /** @type {?} */ null, 3));
+    assertEquals(str, googString.truncateMiddle(str, 50, /** @type {?} */ null, 3));
 
     assertEquals(
-        'ab...xyz',
-        googString.truncateMiddle(str, 5, /** @type {?} */ (null), 3));
+      'Should clip html char',
+      'true &amp;&...lse',
+      googString.truncateMiddle(html, 14, /** @type {?} */ null, 3)
+    );
     assertEquals(
-        'abcdefg...xyz',
-        googString.truncateMiddle(str, 10, /** @type {?} */ (null), 3));
-    assertEquals(
-        'abcdef...wxyz',
-        googString.truncateMiddle(str, 10, /** @type {?} */ (null), 4));
-    assertEquals(
-        '...yz', googString.truncateMiddle(str, 2, /** @type {?} */ (null), 3));
-    assertEquals(
-        str, googString.truncateMiddle(str, 50, /** @type {?} */ (null), 3));
-
-    assertEquals(
-        'Should clip html char', 'true &amp;&...lse',
-        googString.truncateMiddle(html, 14, /** @type {?} */ (null), 3));
-    assertEquals(
-        'Should not clip html char', 'true &amp;&amp; fal...lse',
-        googString.truncateMiddle(html, 14, true, 3));
+      'Should not clip html char',
+      'true &amp;&amp; fal...lse',
+      googString.truncateMiddle(html, 14, true, 3)
+    );
   },
 
   testQuote() {
@@ -838,14 +795,15 @@ testSuite({
 
   testQuoteSpecialChars() {
     assertEquals('"\\""', googString.quote('"'));
-    assertEquals('"\'"', googString.quote('\''));
+    assertEquals('"\'"', googString.quote("'"));
     assertEquals('"\\\\"', googString.quote('\\'));
     assertEquals('"\\u003C"', googString.quote('<'));
 
     const zeroQuoted = googString.quote('\0');
     assertTrue(
-        'goog.string.quote mangles the 0 char: ',
-        '"\\0"' == zeroQuoted || '"\\x00"' == zeroQuoted);
+      'goog.string.quote mangles the 0 char: ',
+      '"\\0"' == zeroQuoted || '"\\x00"' == zeroQuoted
+    );
   },
 
   testCrossBrowserQuote() {
@@ -857,8 +815,7 @@ testSuite({
     // and tested above.
     const zeroChar = 0;
 
-    const str =
-        allChars(zeroChar + 1, vertChar) + allChars(vertChar + 1, 10000);
+    const str = allChars(zeroChar + 1, vertChar) + allChars(vertChar + 1, 10000);
     const nativeQuote = googString.quote(str);
 
     stubs.set(String.prototype, 'quote', null);
@@ -879,23 +836,17 @@ testSuite({
   },
 
   testCountOf() {
-    assertEquals(
-        googString.countOf('REDSOXROX', /** @type {?} */ (undefined)), 0);
-    assertEquals(googString.countOf('REDSOXROX', /** @type {?} */ (null)), 0);
+    assertEquals(googString.countOf('REDSOXROX', /** @type {?} */ undefined), 0);
+    assertEquals(googString.countOf('REDSOXROX', /** @type {?} */ null), 0);
     assertEquals(googString.countOf('REDSOXROX', ''), 0);
-    assertEquals(googString.countOf('', /** @type {?} */ (undefined)), 0);
-    assertEquals(googString.countOf('', /** @type {?} */ (null)), 0);
+    assertEquals(googString.countOf('', /** @type {?} */ undefined), 0);
+    assertEquals(googString.countOf('', /** @type {?} */ null), 0);
     assertEquals(googString.countOf('', ''), 0);
     assertEquals(googString.countOf('', 'REDSOXROX'), 0);
-    assertEquals(googString.countOf(/** @type {?} */ (undefined), 'R'), 0);
-    assertEquals(googString.countOf(/** @type {?} */ (null), 'R'), 0);
-    assertEquals(
-        googString.countOf(
-            /** @type {?} */ (undefined), /** @type {?} */ (undefined)),
-        0);
-    assertEquals(
-        googString.countOf(/** @type {?} */ (null), /** @type {?} */ (null)),
-        0);
+    assertEquals(googString.countOf(/** @type {?} */ undefined, 'R'), 0);
+    assertEquals(googString.countOf(/** @type {?} */ null, 'R'), 0);
+    assertEquals(googString.countOf(/** @type {?} */ undefined, /** @type {?} */ undefined), 0);
+    assertEquals(googString.countOf(/** @type {?} */ null, /** @type {?} */ null), 0);
 
     assertEquals(googString.countOf('REDSOXROX', 'R'), 2);
     assertEquals(googString.countOf('REDSOXROX', 'E'), 1);
@@ -924,20 +875,16 @@ testSuite({
     assertEquals('Remove middle bar', 'foobazbar', str);
     str = googString.removeAt(str, 6, 3);
     assertEquals('Remove last bar', 'foobaz', str);
+    assertEquals('Invalid negative index', 'foobaz', googString.removeAt(str, -1, 0));
+    assertEquals('Invalid overflow index', 'foobaz', googString.removeAt(str, 9, 0));
+    assertEquals('Invalid negative stringLength', 'foobaz', googString.removeAt(str, 0, -1));
+    assertEquals('Invalid overflow stringLength', '', googString.removeAt(str, 0, 9));
     assertEquals(
-        'Invalid negative index', 'foobaz', googString.removeAt(str, -1, 0));
-    assertEquals(
-        'Invalid overflow index', 'foobaz', googString.removeAt(str, 9, 0));
-    assertEquals(
-        'Invalid negative stringLength', 'foobaz',
-        googString.removeAt(str, 0, -1));
-    assertEquals(
-        'Invalid overflow stringLength', '', googString.removeAt(str, 0, 9));
-    assertEquals(
-        'Invalid overflow index and stringLength', 'foobaz',
-        googString.removeAt(str, 9, 9));
-    assertEquals(
-        'Invalid zero stringLength', 'foobaz', googString.removeAt(str, 0, 0));
+      'Invalid overflow index and stringLength',
+      'foobaz',
+      googString.removeAt(str, 9, 9)
+    );
+    assertEquals('Invalid zero stringLength', 'foobaz', googString.removeAt(str, 0, 0));
   },
 
   testRemove() {
@@ -963,14 +910,14 @@ testSuite({
   testReplaceAll() {
     let str = 'foobarbazbarfoobazfoo';
     str = googString.replaceAll(str, 'foo', 'test');
-    assertEquals(
-        'Replace all occurrences of foo with test', 'testbarbazbartestbaztest',
-        str);
+    assertEquals('Replace all occurrences of foo with test', 'testbarbazbartestbaztest', str);
     let str2 = 'foobarbazbar^foo$baz^foo$';
     str2 = googString.replaceAll(str2, '^foo', '$&test');
     assertEquals(
-        'Replace all occurrences of ^foo with $&test',
-        'foobarbazbar$&test$baz$&test$', str2);
+      'Replace all occurrences of ^foo with $&test',
+      'foobarbazbar$&test$baz$&test$',
+      str2
+    );
   },
 
   testRegExpEscape() {
@@ -1005,9 +952,9 @@ testSuite({
     assertEquals('-0012', googString.padNumber(-12, 5));
     assertEquals('-2.350', googString.padNumber(-2.35, 2, 3));
     assertEquals('-02.350', googString.padNumber(-2.35, 3, 3));
-    assertEquals('NaN', googString.padNumber(NaN, 10, 10));
-    assertEquals('Infinity', googString.padNumber(Infinity, 10, 10));
-    assertEquals('-Infinity', googString.padNumber(-Infinity, 10, 10));
+    assertEquals('NaN', googString.padNumber(Number.NaN, 10, 10));
+    assertEquals('Infinity', googString.padNumber(Number.POSITIVE_INFINITY, 10, 10));
+    assertEquals('-Infinity', googString.padNumber(Number.NEGATIVE_INFINITY, 10, 10));
   },
 
   testAsString() {
@@ -1075,8 +1022,7 @@ testSuite({
 
   testIsUnicodeChar() {
     assertFalse('empty string broken', googString.isUnicodeChar(''));
-    assertFalse(
-        'non-single char string broken', googString.isUnicodeChar('abc'));
+    assertFalse('non-single char string broken', googString.isUnicodeChar('abc'));
     assertTrue('space broken', googString.isUnicodeChar(' '));
     assertTrue('single char broken', googString.isUnicodeChar('a'));
     assertTrue('upper case broken', googString.isUnicodeChar('A'));
@@ -1086,7 +1032,7 @@ testSuite({
   /** Verify we get random-ish looking values for hash of Strings. */
   testHashCode() {
     try {
-      googString.hashCode(/** @type {?} */ (null));
+      googString.hashCode(/** @type {?} */ null);
       fail('should throw exception for null');
     } catch (ex) {
       // success
@@ -1109,8 +1055,7 @@ testSuite({
       obj[googString.createUniqueString()] = true;
     }
 
-    assertEquals(
-        'All strings should be unique.', TEST_COUNT, googObject.getCount(obj));
+    assertEquals('All strings should be unique.', TEST_COUNT, googObject.getCount(obj));
   },
 
   testToNumber() {
@@ -1141,8 +1086,9 @@ testSuite({
     stubs.set(Date, 'now', functions.constant(1295726605874));
     stubs.set(Math, 'random', functions.constant(0.6679361383522245));
     assertTrue(
-        'String must be alphanumeric',
-        googString.isAlphaNumeric(googString.getRandomString()));
+      'String must be alphanumeric',
+      googString.isAlphaNumeric(googString.getRandomString())
+    );
   },
 
   testToCamelCase() {
@@ -1152,8 +1098,10 @@ testSuite({
     assertEquals('one', googString.toCamelCase('one'));
     assertEquals('oneTwo', googString.toCamelCase('oneTwo'));
     assertEquals(
-        'String value matching a native function name.', 'toString',
-        googString.toCamelCase('toString'));
+      'String value matching a native function name.',
+      'toString',
+      googString.toCamelCase('toString')
+    );
   },
 
   testToSelectorCase() {
@@ -1163,8 +1111,10 @@ testSuite({
     assertEquals('one', googString.toSelectorCase('one'));
     assertEquals('one-two', googString.toSelectorCase('one-two'));
     assertEquals(
-        'String value matching a native function name.', 'to-string',
-        googString.toSelectorCase('toString'));
+      'String value matching a native function name.',
+      'to-string',
+      googString.toSelectorCase('toString')
+    );
   },
 
   testToTitleCase() {
@@ -1172,15 +1122,15 @@ testSuite({
     assertEquals('CamelCase', googString.toTitleCase('camelCase'));
     assertEquals('Onelongword', googString.toTitleCase('onelongword'));
     assertEquals('One Two Three', googString.toTitleCase('one two three'));
-    assertEquals(
-        'One        Two    Three',
-        googString.toTitleCase('one        two    three'));
+    assertEquals('One        Two    Three', googString.toTitleCase('one        two    three'));
     assertEquals('   Longword  ', googString.toTitleCase('   longword  '));
     assertEquals('One-two-three', googString.toTitleCase('one-two-three'));
     assertEquals('One_two_three', googString.toTitleCase('one_two_three'));
     assertEquals(
-        'String value matching a native function name.', 'ToString',
-        googString.toTitleCase('toString'));
+      'String value matching a native function name.',
+      'ToString',
+      googString.toTitleCase('toString')
+    );
 
     // Verify results with no delimiter.
     assertEquals('One two three', googString.toTitleCase('one two three', ''));
@@ -1196,21 +1146,12 @@ testSuite({
 
     // Verify results with multiple delimiters.
     const delimiters = '_-.';
-    assertEquals(
-        'One two three', googString.toTitleCase('one two three', delimiters));
-    assertEquals(
-        '  one two three',
-        googString.toTitleCase('  one two three', delimiters));
-    assertEquals(
-        'One-Two-Three', googString.toTitleCase('one-two-three', delimiters));
-    assertEquals(
-        'One_Two_Three', googString.toTitleCase('one_two_three', delimiters));
-    assertEquals(
-        'One...Two...Three',
-        googString.toTitleCase('one...two...three', delimiters));
-    assertEquals(
-        'One.  two.  three',
-        googString.toTitleCase('one.  two.  three', delimiters));
+    assertEquals('One two three', googString.toTitleCase('one two three', delimiters));
+    assertEquals('  one two three', googString.toTitleCase('  one two three', delimiters));
+    assertEquals('One-Two-Three', googString.toTitleCase('one-two-three', delimiters));
+    assertEquals('One_Two_Three', googString.toTitleCase('one_two_three', delimiters));
+    assertEquals('One...Two...Three', googString.toTitleCase('one...two...three', delimiters));
+    assertEquals('One.  two.  three', googString.toTitleCase('one.  two.  three', delimiters));
   },
 
   testCapitalize() {
@@ -1233,7 +1174,7 @@ testSuite({
     // Check non-numbers and strings
     assertTrue(isNaN(googString.parseInt(undefined)));
     assertTrue(isNaN(googString.parseInt(null)));
-    assertTrue(isNaN(googString.parseInt(/** @type {?} */ ({}))));
+    assertTrue(isNaN(googString.parseInt(/** @type {?} */ {})));
 
     assertTrue(isNaN(googString.parseInt('')));
     assertTrue(isNaN(googString.parseInt(' ')));
@@ -1269,8 +1210,8 @@ testSuite({
     assertEquals(3, googString.parseInt(3.3));
     assertEquals(-3, googString.parseInt(-3.3));
     assertEquals(0, googString.parseInt(-0));
-    assertTrue(isNaN(googString.parseInt(Infinity)));
-    assertTrue(isNaN(googString.parseInt(NaN)));
+    assertTrue(isNaN(googString.parseInt(Number.POSITIVE_INFINITY)));
+    assertTrue(isNaN(googString.parseInt(Number.NaN)));
     assertTrue(isNaN(googString.parseInt(Number.POSITIVE_INFINITY)));
     assertTrue(isNaN(googString.parseInt(Number.NEGATIVE_INFINITY)));
 
@@ -1322,24 +1263,17 @@ testSuite({
     assertArrayEquals(['a*a*a*a'], googString.splitLimit('a*a*a*a', '*', -1));
     assertArrayEquals(['a*a*a*a'], googString.splitLimit('a*a*a*a', '*', 0));
     assertArrayEquals(['a', 'a*a*a'], googString.splitLimit('a*a*a*a', '*', 1));
-    assertArrayEquals(
-        ['a', 'a', 'a*a'], googString.splitLimit('a*a*a*a', '*', 2));
-    assertArrayEquals(
-        ['a', 'a', 'a', 'a'], googString.splitLimit('a*a*a*a', '*', 3));
-    assertArrayEquals(
-        ['a', 'a', 'a', 'a'], googString.splitLimit('a*a*a*a', '*', 4));
+    assertArrayEquals(['a', 'a', 'a*a'], googString.splitLimit('a*a*a*a', '*', 2));
+    assertArrayEquals(['a', 'a', 'a', 'a'], googString.splitLimit('a*a*a*a', '*', 3));
+    assertArrayEquals(['a', 'a', 'a', 'a'], googString.splitLimit('a*a*a*a', '*', 4));
 
+    assertArrayEquals(['bbbbbbbbbbbb'], googString.splitLimit('bbbbbbbbbbbb', 'a', 10));
+    assertArrayEquals(['babab', 'bab', 'abb'], googString.splitLimit('bababaababaaabb', 'aa', 10));
+    assertArrayEquals(['babab', 'babaaabb'], googString.splitLimit('bababaababaaabb', 'aa', 1));
     assertArrayEquals(
-        ['bbbbbbbbbbbb'], googString.splitLimit('bbbbbbbbbbbb', 'a', 10));
-    assertArrayEquals(
-        ['babab', 'bab', 'abb'],
-        googString.splitLimit('bababaababaaabb', 'aa', 10));
-    assertArrayEquals(
-        ['babab', 'babaaabb'],
-        googString.splitLimit('bababaababaaabb', 'aa', 1));
-    assertArrayEquals(
-        ['b', 'a', 'b', 'a', 'b', 'a', 'a', 'b', 'a', 'b', 'aaabb'],
-        googString.splitLimit('bababaababaaabb', '', 10));
+      ['b', 'a', 'b', 'a', 'b', 'a', 'a', 'b', 'a', 'b', 'aaabb'],
+      googString.splitLimit('bababaababaaabb', '', 10)
+    );
   },
 
   testContains() {
@@ -1358,89 +1292,129 @@ testSuite({
 
   testEditDistance() {
     assertEquals(
-        'Empty string should match to length of other string', 4,
-        googString.editDistance('goat', ''));
+      'Empty string should match to length of other string',
+      4,
+      googString.editDistance('goat', '')
+    );
     assertEquals(
-        'Empty string should match to length of other string', 4,
-        googString.editDistance('', 'moat'));
+      'Empty string should match to length of other string',
+      4,
+      googString.editDistance('', 'moat')
+    );
 
     assertEquals(
-        'Equal strings should have zero edit distance', 0,
-        googString.editDistance('abcd', 'abcd'));
+      'Equal strings should have zero edit distance',
+      0,
+      googString.editDistance('abcd', 'abcd')
+    );
     assertEquals(
-        'Equal strings should have zero edit distance', 0,
-        googString.editDistance('', ''));
+      'Equal strings should have zero edit distance',
+      0,
+      googString.editDistance('', '')
+    );
 
     assertEquals(
-        'Edit distance for adding characters incorrect', 4,
-        googString.editDistance('bdf', 'abcdefg'));
+      'Edit distance for adding characters incorrect',
+      4,
+      googString.editDistance('bdf', 'abcdefg')
+    );
     assertEquals(
-        'Edit distance for removing characters incorrect', 4,
-        googString.editDistance('abcdefg', 'bdf'));
+      'Edit distance for removing characters incorrect',
+      4,
+      googString.editDistance('abcdefg', 'bdf')
+    );
 
     assertEquals(
-        'Edit distance for substituting characters incorrect', 4,
-        googString.editDistance('adef', 'ghij'));
+      'Edit distance for substituting characters incorrect',
+      4,
+      googString.editDistance('adef', 'ghij')
+    );
     assertEquals(
-        'Edit distance for substituting characters incorrect', 1,
-        googString.editDistance('goat', 'boat'));
+      'Edit distance for substituting characters incorrect',
+      1,
+      googString.editDistance('goat', 'boat')
+    );
 
     assertEquals(
-        'Substitution should be preferred over insert/delete', 4,
-        googString.editDistance('abcd', 'defg'));
+      'Substitution should be preferred over insert/delete',
+      4,
+      googString.editDistance('abcd', 'defg')
+    );
   },
 
   testLastComponent() {
     assertEquals(
-        'Last component of a string without separators should be the string',
-        'abcdefgh', googString.lastComponent('abcdefgh', []));
+      'Last component of a string without separators should be the string',
+      'abcdefgh',
+      googString.lastComponent('abcdefgh', [])
+    );
     assertEquals(
-        'Last component of a string without separators should be the string',
-        'abcdefgh',
-        googString.lastComponent('abcdefgh', /** @type {?} */ (null)));
+      'Last component of a string without separators should be the string',
+      'abcdefgh',
+      googString.lastComponent('abcdefgh', /** @type {?} */ null)
+    );
     assertEquals(
-        'Last component of a string without separators should be the string',
-        'abcdefgh',
-        googString.lastComponent('abcdefgh', /** @type {?} */ (undefined)));
+      'Last component of a string without separators should be the string',
+      'abcdefgh',
+      googString.lastComponent('abcdefgh', /** @type {?} */ undefined)
+    );
     assertEquals(
-        'Last component of a string without separators should be the string',
-        'abcdefgh', googString.lastComponent('abcdefgh', ''));
+      'Last component of a string without separators should be the string',
+      'abcdefgh',
+      googString.lastComponent('abcdefgh', '')
+    );
     assertEquals(
-        'Giving a simple string separator instead of an array should work',
-        'fgh', googString.lastComponent('abcdefgh', 'e'));
+      'Giving a simple string separator instead of an array should work',
+      'fgh',
+      googString.lastComponent('abcdefgh', 'e')
+    );
     assertEquals(
-        'Last component of a string without separators should be the string',
-        'abcdefgh', googString.lastComponent('abcdefgh', ['']));
+      'Last component of a string without separators should be the string',
+      'abcdefgh',
+      googString.lastComponent('abcdefgh', [''])
+    );
     assertEquals(
-        'Last component of a string without separators should be the string',
-        'abcdefgh', googString.lastComponent('abcdefgh', ['', '']));
+      'Last component of a string without separators should be the string',
+      'abcdefgh',
+      googString.lastComponent('abcdefgh', ['', ''])
+    );
     assertEquals(
-        'Last component of a string without separators should be the string',
-        'abcdefgh', googString.lastComponent('abcdefgh', ['']));
+      'Last component of a string without separators should be the string',
+      'abcdefgh',
+      googString.lastComponent('abcdefgh', [''])
+    );
     assertEquals(
-        'Last component of a single character string should be the string', 'a',
-        googString.lastComponent('a', ['']));
+      'Last component of a single character string should be the string',
+      'a',
+      googString.lastComponent('a', [''])
+    );
     assertEquals(
-        'Last component of a single character string separated by its only' +
-            'character should be the empty string',
-        '', googString.lastComponent('a', ['a']));
+      'Last component of a single character string separated by its only' +
+        'character should be the empty string',
+      '',
+      googString.lastComponent('a', ['a'])
+    );
     assertEquals(
-        'Last component of the empty string should be the empty string', '',
-        googString.lastComponent('', ['']));
+      'Last component of the empty string should be the empty string',
+      '',
+      googString.lastComponent('', [''])
+    );
     assertEquals(
-        'Last component of the empty string should be the empty string', '',
-        googString.lastComponent('', ['a']));
+      'Last component of the empty string should be the empty string',
+      '',
+      googString.lastComponent('', ['a'])
+    );
     assertEquals(
-        'Last component of the empty string should be the empty string', '',
-        googString.lastComponent('', ['']));
+      'Last component of the empty string should be the empty string',
+      '',
+      googString.lastComponent('', [''])
+    );
     assertEquals('ccc', googString.lastComponent('aaabbbccc', ['b']));
     assertEquals('baz', googString.lastComponent('foo/bar/baz', ['/']));
     assertEquals('baz', googString.lastComponent('foo.bar.baz', ['.']));
     assertEquals('baz', googString.lastComponent('foo.bar.baz', ['/', '.']));
     assertEquals('bar/baz', googString.lastComponent('foo.bar/baz', ['.']));
-    assertEquals(
-        'bar-baz', googString.lastComponent('foo.bar-baz', ['/', '.']));
-    assertEquals(
-        'baz', googString.lastComponent('foo.bar-baz', ['-', '', '.']));
+    assertEquals('bar-baz', googString.lastComponent('foo.bar-baz', ['/', '.']));
+    assertEquals('baz', googString.lastComponent('foo.bar-baz', ['-', '', '.']));
   },
 });

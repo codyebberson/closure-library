@@ -71,38 +71,41 @@ function prototypeMethodOrNull(className, method) {
 // multiple times.
 /** @const @enum {?Function} */
 var Methods = {
-  ATTRIBUTES_GETTER: getterOrNull('Element', 'attributes') ||
-      // Edge and IE10 define this Element property on Node instead of
-      // Element.
-      getterOrNull('Node', 'attributes'),
+  ATTRIBUTES_GETTER:
+    getterOrNull('Element', 'attributes') ||
+    // Edge and IE10 define this Element property on Node instead of
+    // Element.
+    getterOrNull('Node', 'attributes'),
   HAS_ATTRIBUTE: prototypeMethodOrNull('Element', 'hasAttribute'),
   GET_ATTRIBUTE: prototypeMethodOrNull('Element', 'getAttribute'),
   SET_ATTRIBUTE: prototypeMethodOrNull('Element', 'setAttribute'),
   REMOVE_ATTRIBUTE: prototypeMethodOrNull('Element', 'removeAttribute'),
-  INNER_HTML_GETTER: getterOrNull('Element', 'innerHTML') ||
-      // IE 10 defines this Element property on HTMLElement.
-      getterOrNull('HTMLElement', 'innerHTML'),
-  GET_ELEMENTS_BY_TAG_NAME:
-      prototypeMethodOrNull('Element', 'getElementsByTagName'),
-  MATCHES: prototypeMethodOrNull('Element', 'matches') ||
-      prototypeMethodOrNull('Element', 'msMatchesSelector'),
+  INNER_HTML_GETTER:
+    getterOrNull('Element', 'innerHTML') ||
+    // IE 10 defines this Element property on HTMLElement.
+    getterOrNull('HTMLElement', 'innerHTML'),
+  GET_ELEMENTS_BY_TAG_NAME: prototypeMethodOrNull('Element', 'getElementsByTagName'),
+  MATCHES:
+    prototypeMethodOrNull('Element', 'matches') ||
+    prototypeMethodOrNull('Element', 'msMatchesSelector'),
   NODE_NAME_GETTER: getterOrNull('Node', 'nodeName'),
   NODE_TYPE_GETTER: getterOrNull('Node', 'nodeType'),
   PARENT_NODE_GETTER: getterOrNull('Node', 'parentNode'),
   CHILD_NODES_GETTER: getterOrNull('Node', 'childNodes'),
   APPEND_CHILD: prototypeMethodOrNull('Node', 'appendChild'),
-  STYLE_GETTER: getterOrNull('HTMLElement', 'style') ||
-      // Safari 10 defines the property on Element instead of
-      // HTMLElement.
-      getterOrNull('Element', 'style'),
+  STYLE_GETTER:
+    getterOrNull('HTMLElement', 'style') ||
+    // Safari 10 defines the property on Element instead of
+    // HTMLElement.
+    getterOrNull('Element', 'style'),
   SHEET_GETTER: getterOrNull('HTMLStyleElement', 'sheet'),
-  GET_PROPERTY_VALUE:
-      prototypeMethodOrNull('CSSStyleDeclaration', 'getPropertyValue'),
+  GET_PROPERTY_VALUE: prototypeMethodOrNull('CSSStyleDeclaration', 'getPropertyValue'),
   SET_PROPERTY: prototypeMethodOrNull('CSSStyleDeclaration', 'setProperty'),
-  NAMESPACE_URI_GETTER: getterOrNull('Element', 'namespaceURI') ||
-      // Edge and IE10 define this Element property on Node instead of
-      // Element.
-      getterOrNull('Node', 'namespaceURI'),
+  NAMESPACE_URI_GETTER:
+    getterOrNull('Element', 'namespaceURI') ||
+    // Edge and IE10 define this Element property on Node instead of
+    // Element.
+    getterOrNull('Node', 'namespaceURI'),
 };
 
 /**
@@ -163,9 +166,11 @@ function genericMethodCall(fn, object, fallbackMethodName, args) {
  */
 function getElementAttributes(element) {
   return genericPropertyGet(
-      Methods.ATTRIBUTES_GETTER, element, 'attributes', function(attributes) {
-        return attributes instanceof NamedNodeMap;
-      });
+    Methods.ATTRIBUTES_GETTER,
+    element,
+    'attributes',
+    (attributes) => attributes instanceof NamedNodeMap
+  );
 }
 
 /**
@@ -177,8 +182,7 @@ function getElementAttributes(element) {
  * @return {boolean}
  */
 function hasElementAttribute(element, attrName) {
-  return genericMethodCall(
-      Methods.HAS_ATTRIBUTE, element, 'hasAttribute', [attrName]);
+  return genericMethodCall(Methods.HAS_ATTRIBUTE, element, 'hasAttribute', [attrName]);
 }
 
 /**
@@ -192,9 +196,7 @@ function hasElementAttribute(element, attrName) {
 function getElementAttribute(element, attrName) {
   // Older browsers might return empty string instead of null to follow the
   // DOM 3 Core Specification.
-  return genericMethodCall(
-             Methods.GET_ATTRIBUTE, element, 'getAttribute', [attrName]) ||
-      null;
+  return genericMethodCall(Methods.GET_ATTRIBUTE, element, 'getAttribute', [attrName]) || null;
 }
 
 /**
@@ -207,8 +209,7 @@ function getElementAttribute(element, attrName) {
  */
 function setElementAttribute(element, name, value) {
   try {
-    genericMethodCall(
-        Methods.SET_ATTRIBUTE, element, 'setAttribute', [name, value]);
+    genericMethodCall(Methods.SET_ATTRIBUTE, element, 'setAttribute', [name, value]);
   } catch (e) {
     // IE throws an exception if the src attribute contains HTTP credentials.
     // However the attribute gets set anyway.
@@ -227,8 +228,7 @@ function setElementAttribute(element, name, value) {
  * @param {string} attrName
  */
 function removeElementAttribute(element, attrName) {
-  genericMethodCall(
-      Methods.REMOVE_ATTRIBUTE, element, 'removeAttribute', [attrName]);
+  genericMethodCall(Methods.REMOVE_ATTRIBUTE, element, 'removeAttribute', [attrName]);
 }
 
 /**
@@ -240,9 +240,11 @@ function removeElementAttribute(element, attrName) {
  */
 function getElementInnerHTML(element) {
   return genericPropertyGet(
-      Methods.INNER_HTML_GETTER, element, 'innerHTML', function(html) {
-        return typeof html == 'string';
-      });
+    Methods.INNER_HTML_GETTER,
+    element,
+    'innerHTML',
+    (html) => typeof html == 'string'
+  );
 }
 
 /**
@@ -254,9 +256,11 @@ function getElementInnerHTML(element) {
 function getElementStyle(element) {
   assertHTMLElement(element);
   return genericPropertyGet(
-      Methods.STYLE_GETTER, element, 'style', function(style) {
-        return style instanceof CSSStyleDeclaration;
-      });
+    Methods.STYLE_GETTER,
+    element,
+    'style',
+    (style) => style instanceof CSSStyleDeclaration
+  );
 }
 
 /**
@@ -278,9 +282,9 @@ function assertHTMLElement(element) {
  * @return {!Array<!Element>}
  */
 function getElementsByTagName(element, name) {
-  return Array.from(genericMethodCall(
-      Methods.GET_ELEMENTS_BY_TAG_NAME, element, 'getElementsByTagName',
-      [name]));
+  return Array.from(
+    genericMethodCall(Methods.GET_ELEMENTS_BY_TAG_NAME, element, 'getElementsByTagName', [name])
+  );
 }
 
 /**
@@ -292,9 +296,11 @@ function getElementsByTagName(element, name) {
 function getElementStyleSheet(element) {
   assertHTMLElement(element);
   return genericPropertyGet(
-      Methods.SHEET_GETTER, element, 'sheet', function(sheet) {
-        return sheet instanceof CSSStyleSheet;
-      });
+    Methods.SHEET_GETTER,
+    element,
+    'sheet',
+    (sheet) => sheet instanceof CSSStyleSheet
+  );
 }
 
 /**
@@ -307,8 +313,11 @@ function getElementStyleSheet(element) {
  */
 function elementMatches(element, selector) {
   return genericMethodCall(
-      Methods.MATCHES, element,
-      element.matches ? 'matches' : 'msMatchesSelector', [selector]);
+    Methods.MATCHES,
+    element,
+    element.matches ? 'matches' : 'msMatchesSelector',
+    [selector]
+  );
 }
 
 /**
@@ -319,9 +328,7 @@ function elementMatches(element, selector) {
  */
 function assertNodeIsElement(node) {
   if (googAsserts.ENABLE_ASSERTS && !isNodeElement(node)) {
-    googAsserts.fail(
-        'Expected Node of type Element but got Node of type %s',
-        getNodeType(node));
+    googAsserts.fail('Expected Node of type Element but got Node of type %s', getNodeType(node));
   }
   return /** @type {!Element} */ (node);
 }
@@ -344,9 +351,11 @@ function isNodeElement(node) {
  */
 function getNodeName(node) {
   return genericPropertyGet(
-      Methods.NODE_NAME_GETTER, node, 'nodeName', function(name) {
-        return typeof name == 'string';
-      });
+    Methods.NODE_NAME_GETTER,
+    node,
+    'nodeName',
+    (name) => typeof name == 'string'
+  );
 }
 
 /**
@@ -357,9 +366,11 @@ function getNodeName(node) {
  */
 function getNodeType(node) {
   return genericPropertyGet(
-      Methods.NODE_TYPE_GETTER, node, 'nodeType', function(type) {
-        return typeof type == 'number';
-      });
+    Methods.NODE_TYPE_GETTER,
+    node,
+    'nodeType',
+    (type) => typeof type == 'number'
+  );
 }
 
 /**
@@ -369,17 +380,19 @@ function getNodeType(node) {
  * @return {?Node}
  */
 function getParentNode(node) {
-  return genericPropertyGet(
-      Methods.PARENT_NODE_GETTER, node, 'parentNode', function(parentNode) {
-        // We need to ensure that parentNode is returning the actual parent node
-        // and not a child node that happens to have a name of "parentNode".
-        // We check that the node returned by parentNode is itself not named
-        // "parentNode" - this could happen legitimately but on IE we have no
-        // better means of avoiding the pitfall.
-        return !(
-            parentNode && typeof parentNode.name == 'string' &&
-            parentNode.name && parentNode.name.toLowerCase() == 'parentnode');
-      });
+  return genericPropertyGet(Methods.PARENT_NODE_GETTER, node, 'parentNode', (parentNode) => {
+    // We need to ensure that parentNode is returning the actual parent node
+    // and not a child node that happens to have a name of "parentNode".
+    // We check that the node returned by parentNode is itself not named
+    // "parentNode" - this could happen legitimately but on IE we have no
+    // better means of avoiding the pitfall.
+    return !(
+      parentNode &&
+      typeof parentNode.name == 'string' &&
+      parentNode.name &&
+      parentNode.name.toLowerCase() == 'parentnode'
+    );
+  });
 }
 
 /**
@@ -390,9 +403,11 @@ function getParentNode(node) {
  */
 function getChildNodes(node) {
   return genericPropertyGet(
-      Methods.CHILD_NODES_GETTER, node, 'childNodes', function(childNodes) {
-        return childNodes instanceof NodeList;
-      });
+    Methods.CHILD_NODES_GETTER,
+    node,
+    'childNodes',
+    (childNodes) => childNodes instanceof NodeList
+  );
 }
 
 /**
@@ -403,8 +418,7 @@ function getChildNodes(node) {
  * @return {!Node}
  */
 function appendNodeChild(parent, child) {
-  return genericMethodCall(
-      Methods.APPEND_CHILD, parent, 'appendChild', [child]);
+  return genericMethodCall(Methods.APPEND_CHILD, parent, 'appendChild', [child]);
 }
 
 /**
@@ -415,11 +429,14 @@ function appendNodeChild(parent, child) {
  * @supported IE8 and newer.
  */
 function getCssPropertyValue(cssStyle, propName) {
-  return genericMethodCall(
-             Methods.GET_PROPERTY_VALUE, cssStyle,
-             cssStyle.getPropertyValue ? 'getPropertyValue' : 'getAttribute',
-             [propName]) ||
-      '';
+  return (
+    genericMethodCall(
+      Methods.GET_PROPERTY_VALUE,
+      cssStyle,
+      cssStyle.getPropertyValue ? 'getPropertyValue' : 'getAttribute',
+      [propName]
+    ) || ''
+  );
 }
 
 /**
@@ -432,9 +449,11 @@ function getCssPropertyValue(cssStyle, propName) {
  */
 function setCssProperty(cssStyle, propName, sanitizedValue) {
   genericMethodCall(
-      Methods.SET_PROPERTY, cssStyle,
-      cssStyle.setProperty ? 'setProperty' : 'setAttribute',
-      [propName, sanitizedValue]);
+    Methods.SET_PROPERTY,
+    cssStyle,
+    cssStyle.setProperty ? 'setProperty' : 'setAttribute',
+    [propName, sanitizedValue]
+  );
 }
 
 /**
@@ -445,10 +464,11 @@ function setCssProperty(cssStyle, propName, sanitizedValue) {
  */
 function getElementNamespaceURI(element) {
   return genericPropertyGet(
-      Methods.NAMESPACE_URI_GETTER, element, 'namespaceURI',
-      function(namespaceURI) {
-        return typeof namespaceURI == 'string';
-      });
+    Methods.NAMESPACE_URI_GETTER,
+    element,
+    'namespaceURI',
+    (namespaceURI) => typeof namespaceURI == 'string'
+  );
 }
 
 exports = {

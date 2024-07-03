@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.plugins.UndoRedoStateTest');
-goog.setTestOnly();
 
 const UndoRedoState = goog.require('goog.editor.plugins.UndoRedoState');
 const testSuite = goog.require('goog.testing.testSuite');
@@ -20,9 +19,7 @@ testSuite({
   },
 
   testIsAsynchronous() {
-    assertTrue(
-        'Must return true for asynchronous state', asyncState.isAsynchronous());
-    assertFalse(
-        'Must return false for synchronous state', syncState.isAsynchronous());
+    assertTrue('Must return true for asynchronous state', asyncState.isAsynchronous());
+    assertFalse('Must return false for synchronous state', syncState.isAsynchronous());
   },
 });

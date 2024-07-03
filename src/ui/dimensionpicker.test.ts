@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.DimensionPickerTest');
-goog.setTestOnly();
 
 const BrowserEvent = goog.require('goog.events.BrowserEvent');
 const DimensionPicker = goog.require('goog.ui.DimensionPicker');
@@ -46,15 +45,13 @@ testSuite({
     picker.render(render);
 
     assertEquals('Should create 1 child', 1, render.childNodes.length);
-    assertEquals(
-        'Should be a div', String(TagName.DIV), render.firstChild.tagName);
+    assertEquals('Should be a div', String(TagName.DIV), render.firstChild.tagName);
   },
 
   testDecorate() {
     picker.decorate(decorate);
 
-    assertNotEquals(
-        'Should add several children', decorate.firstChild, decorate.lastChild);
+    assertNotEquals('Should add several children', decorate.firstChild, decorate.lastChild);
   },
 
   testHighlightedSize() {
@@ -77,24 +74,28 @@ testSuite({
     picker.setValue(new Size(-3, 0));
     size = picker.getValue();
     assertEquals(
-        'Should have 1 column highlighted when passed a negative ' +
-            'column value.',
-        1, size.width);
+      'Should have 1 column highlighted when passed a negative ' + 'column value.',
+      1,
+      size.width
+    );
     assertEquals(
-        'Should have 1 row highlighted when passed 0 as the row ' +
-            'value.',
-        1, size.height);
+      'Should have 1 row highlighted when passed 0 as the row ' + 'value.',
+      1,
+      size.height
+    );
 
     picker.setValue(picker.maxColumns + 10, picker.maxRows + 2);
     size = picker.getValue();
     assertEquals(
-        'Column value should be decreased to match max columns ' +
-            'if it is too high.',
-        picker.maxColumns, size.width);
+      'Column value should be decreased to match max columns ' + 'if it is too high.',
+      picker.maxColumns,
+      size.width
+    );
     assertEquals(
-        'Row value should be decreased to match max rows ' +
-            'if it is too high.',
-        picker.maxRows, size.height);
+      'Row value should be decreased to match max rows ' + 'if it is too high.',
+      picker.maxRows,
+      size.height
+    );
   },
 
   testSizeShown() {
@@ -135,7 +136,7 @@ testSuite({
     picker.rightToLeft_ = false;
     const e = {
       target: mouseMoveElem,
-      offsetX: 18,  // Each grid square currently a magic 18px.
+      offsetX: 18, // Each grid square currently a magic 18px.
       offsetY: 36,
     };
 
@@ -152,8 +153,10 @@ testSuite({
     // In RTL we pick from the right side of the picker, so an offsetX of 0
     // would actually mean select all columns.
     assertEquals(
-        'Should have columns to the right of the mouse highlighted',
-        Math.ceil((mouseMoveElem.offsetWidth - e.offsetX) / 18), size.width);
+      'Should have columns to the right of the mouse highlighted',
+      Math.ceil((mouseMoveElem.offsetWidth - e.offsetX) / 18),
+      size.width
+    );
     assertEquals('Should have 2 rows highlighted', 2, size.height);
   },
 
@@ -163,19 +166,19 @@ testSuite({
     /** @suppress {visibility} suppression added to enable type checking */
     picker.rightToLeft_ = false;
 
-    let result = picker.handleKeyEvent({keyCode: KeyCodes.DOWN});
+    let result = picker.handleKeyEvent({ keyCode: KeyCodes.DOWN });
     let size = picker.getValue();
     assertEquals('Should have 1 column highlighted', 1, size.width);
     assertEquals('Should have 2 rows highlighted', 2, size.height);
     assertTrue('Should handle DOWN key event', result);
 
-    result = picker.handleKeyEvent({keyCode: KeyCodes.RIGHT});
+    result = picker.handleKeyEvent({ keyCode: KeyCodes.RIGHT });
     size = picker.getValue();
     assertEquals('Should have 2 column highlighted', 2, size.width);
     assertEquals('Should have 2 rows highlighted', 2, size.height);
     assertTrue('Should handle RIGHT key event', result);
 
-    result = picker.handleKeyEvent({keyCode: KeyCodes.UP});
+    result = picker.handleKeyEvent({ keyCode: KeyCodes.UP });
     size = picker.getValue();
     assertEquals('Should have 2 column highlighted', 2, size.width);
     assertEquals('Should have 1 rows highlighted', 1, size.height);
@@ -183,13 +186,13 @@ testSuite({
 
     // Pressing UP when there is only 1 row should be handled but has no
     // effect.
-    result = picker.handleKeyEvent({keyCode: KeyCodes.UP});
+    result = picker.handleKeyEvent({ keyCode: KeyCodes.UP });
     size = picker.getValue();
     assertEquals('Should have 2 column highlighted', 2, size.width);
     assertEquals('Should have 1 rows highlighted', 1, size.height);
     assertTrue('Should handle UP key event', result);
 
-    result = picker.handleKeyEvent({keyCode: KeyCodes.LEFT});
+    result = picker.handleKeyEvent({ keyCode: KeyCodes.LEFT });
     size = picker.getValue();
     assertEquals('Should have 2 column highlighted', 1, size.width);
     assertEquals('Should have 1 rows highlighted', 1, size.height);
@@ -197,31 +200,27 @@ testSuite({
 
     // Pressing LEFT when there is only 1 row should not be handled
     // allowing SubMenu to close.
-    result = picker.handleKeyEvent({keyCode: KeyCodes.LEFT});
-    assertFalse(
-        'Should not handle LEFT key event when there is only one column',
-        result);
+    result = picker.handleKeyEvent({ keyCode: KeyCodes.LEFT });
+    assertFalse('Should not handle LEFT key event when there is only one column', result);
 
     /** @suppress {visibility} suppression added to enable type checking */
     picker.rightToLeft_ = true;
 
     // In RTL the roles of the LEFT and RIGHT keys are swapped.
-    result = picker.handleKeyEvent({keyCode: KeyCodes.LEFT});
+    result = picker.handleKeyEvent({ keyCode: KeyCodes.LEFT });
     size = picker.getValue();
     assertEquals('Should have 2 column highlighted', 2, size.width);
     assertEquals('Should have 2 rows highlighted', 1, size.height);
     assertTrue('Should handle LEFT key event', result);
 
-    result = picker.handleKeyEvent({keyCode: KeyCodes.RIGHT});
+    result = picker.handleKeyEvent({ keyCode: KeyCodes.RIGHT });
     size = picker.getValue();
     assertEquals('Should have 2 column highlighted', 1, size.width);
     assertEquals('Should have 1 rows highlighted', 1, size.height);
     assertTrue('Should handle RIGHT key event', result);
 
-    result = picker.handleKeyEvent({keyCode: KeyCodes.RIGHT});
-    assertFalse(
-        'Should not handle RIGHT key event when there is only one column',
-        result);
+    result = picker.handleKeyEvent({ keyCode: KeyCodes.RIGHT });
+    assertFalse('Should not handle RIGHT key event when there is only one column', result);
   },
 
   testDispose() {
@@ -229,31 +228,31 @@ testSuite({
     picker.render(render);
     picker.dispose();
     assertTrue('Picker should have been disposed of', picker.isDisposed());
-    assertNull(
-        'Picker element reference should have been nulled out',
-        picker.getElement());
+    assertNull('Picker element reference should have been nulled out', picker.getElement());
   },
 
   testRendererDoesntCallGetCssClassInConstructor() {
-    rendererasserts.assertNoGetCssClassCallsInConstructor(
-        DimensionPickerRenderer);
+    rendererasserts.assertNoGetCssClassCallsInConstructor(DimensionPickerRenderer);
   },
 
   testSetAriaLabel() {
-    assertNull(
-        'Picker must not have aria label by default', picker.getAriaLabel());
+    assertNull('Picker must not have aria label by default', picker.getAriaLabel());
     picker.setAriaLabel('My picker');
     picker.render(render);
     const element = picker.getElementStrict();
     assertNotNull('Element must not be null', element);
     assertEquals(
-        'Picker element must have expected aria-label', 'My picker',
-        element.getAttribute('aria-label'));
+      'Picker element must have expected aria-label',
+      'My picker',
+      element.getAttribute('aria-label')
+    );
     assertTrue(dom.isFocusableTabIndex(element));
     picker.setAriaLabel('My new picker');
     assertEquals(
-        'Picker element must have updated aria-label', 'My new picker',
-        element.getAttribute('aria-label'));
+      'Picker element must have updated aria-label',
+      'My new picker',
+      element.getAttribute('aria-label')
+    );
   },
 
   testHandleTouchTapInsideGrid() {
@@ -266,7 +265,7 @@ testSuite({
     /** @suppress {checkTypes} suppression added to enable type checking */
     const e = new BrowserEvent({
       target: mouseMoveElem,
-      offsetX: 18,  // Each grid square currently a magic 18px.
+      offsetX: 18, // Each grid square currently a magic 18px.
       offsetY: 36,
       clientX: 8 + 18,
       clientY: 8 + 36,
@@ -291,8 +290,8 @@ testSuite({
     /** @suppress {checkTypes} suppression added to enable type checking */
     const e = new BrowserEvent({
       target: mouseMoveElem,
-      offsetX: 18,   // Each grid square currently a magic 18px.
-      offsetY: 108,  // 6th column is at 108px (6 * 18px)
+      offsetX: 18, // Each grid square currently a magic 18px.
+      offsetY: 108, // 6th column is at 108px (6 * 18px)
       clientX: 8 + 18,
       clientY: 8 + 108,
       pointerType: BrowserEvent.PointerType.TOUCH,

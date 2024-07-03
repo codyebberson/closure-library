@@ -21,7 +21,6 @@ const DurationSymbols = goog.require('goog.i18n.DurationSymbols');
 /** @type {!DurationSymbolTypes.DurationSymbols} */
 let defaultSymbols;
 
-
 /** @const {!DurationSymbolTypes.DurationSymbols} */
 exports.DurationSymbols_af_NA = DurationSymbols.DurationSymbols_af;
 
@@ -29,41 +28,41 @@ exports.DurationSymbols_af_NA = DurationSymbols.DurationSymbols_af;
 exports.DurationSymbols_af_ZA = DurationSymbols.DurationSymbols_af;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_agq =  {
+exports.DurationSymbols_agq = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -71,41 +70,41 @@ exports.DurationSymbols_agq =  {
 exports.DurationSymbols_agq_CM = exports.DurationSymbols_agq;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ak =  {
+exports.DurationSymbols_ak = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -170,41 +169,41 @@ exports.DurationSymbols_ar_PS = DurationSymbols.DurationSymbols_ar;
 exports.DurationSymbols_ar_QA = DurationSymbols.DurationSymbols_ar;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ar_SA =  {
+exports.DurationSymbols_ar_SA = {
   DAY: {
-    LONG: "zero{# يوم}one{يوم}two{يومان}few{# أيام}many{# يومًا}other{# يوم}",
-    SHORT: "zero{# يوم}one{يوم}two{يومان}few{# أيام}many{# يومًا}other{# يوم}",
-    NARROW: "zero{# ي}one{# ي}two{# ي}few{# ي}many{# ي}other{# ي}",
+    LONG: 'zero{# يوم}one{يوم}two{يومان}few{# أيام}many{# يومًا}other{# يوم}',
+    SHORT: 'zero{# يوم}one{يوم}two{يومان}few{# أيام}many{# يومًا}other{# يوم}',
+    NARROW: 'zero{# ي}one{# ي}two{# ي}few{# ي}many{# ي}other{# ي}',
   },
   HOUR: {
-    LONG: "zero{# ساعة}one{ساعة}two{ساعتان}few{# ساعات}many{# ساعة}other{# ساعة}",
-    SHORT: "zero{# س}one{# س}two{# س}few{# س}many{# س}other{# س}",
-    NARROW: "zero{# س}one{# س}two{# س}few{# س}many{# س}other{# س}",
+    LONG: 'zero{# ساعة}one{ساعة}two{ساعتان}few{# ساعات}many{# ساعة}other{# ساعة}',
+    SHORT: 'zero{# س}one{# س}two{# س}few{# س}many{# س}other{# س}',
+    NARROW: 'zero{# س}one{# س}two{# س}few{# س}many{# س}other{# س}',
   },
   MINUTE: {
-    LONG: "zero{# دقيقة}one{دقيقة}two{دقيقتان}few{# دقائق}many{# دقيقة}other{# دقيقة}",
-    SHORT: "zero{# د}one{# د}two{# د}few{# د}many{# د}other{# د}",
-    NARROW: "zero{# د}one{# د}two{# د}few{# د}many{# د}other{# د}",
+    LONG: 'zero{# دقيقة}one{دقيقة}two{دقيقتان}few{# دقائق}many{# دقيقة}other{# دقيقة}',
+    SHORT: 'zero{# د}one{# د}two{# د}few{# د}many{# د}other{# د}',
+    NARROW: 'zero{# د}one{# د}two{# د}few{# د}many{# د}other{# د}',
   },
   MONTH: {
-    LONG: "zero{# شهر}one{شهر}two{شهران}few{# أشهر}many{# شهرًا}other{# شهر}",
-    SHORT: "zero{# شهر}one{شهر}two{شهران}few{# أشهر}many{# شهرًا}other{# شهر}",
-    NARROW: "zero{# شهر}one{شهر}two{شهران}few{# أشهر}many{# شهرًا}other{# شهر}",
+    LONG: 'zero{# شهر}one{شهر}two{شهران}few{# أشهر}many{# شهرًا}other{# شهر}',
+    SHORT: 'zero{# شهر}one{شهر}two{شهران}few{# أشهر}many{# شهرًا}other{# شهر}',
+    NARROW: 'zero{# شهر}one{شهر}two{شهران}few{# أشهر}many{# شهرًا}other{# شهر}',
   },
   SECOND: {
-    LONG: "zero{# ثانية}one{ثانية}two{ثانيتان}few{# ثوانٍ}many{# ثانية}other{# ثانية}",
-    SHORT: "zero{# ث}one{# ث}two{# ث}few{# ث}many{# ث}other{# ث}",
-    NARROW: "zero{# ث}one{# ث}two{# ث}few{# ث}many{# ث}other{# ث}",
+    LONG: 'zero{# ثانية}one{ثانية}two{ثانيتان}few{# ثوانٍ}many{# ثانية}other{# ثانية}',
+    SHORT: 'zero{# ث}one{# ث}two{# ث}few{# ث}many{# ث}other{# ث}',
+    NARROW: 'zero{# ث}one{# ث}two{# ث}few{# ث}many{# ث}other{# ث}',
   },
   WEEK: {
-    LONG: "zero{# أسبوع}one{أسبوع}two{أسبوعان}few{# أسابيع}many{# أسبوعًا}other{# أسبوع}",
-    SHORT: "zero{# أسبوع}one{أسبوع}two{أسبوعان}few{# أسابيع}many{# أسبوعًا}other{# أسبوع}",
-    NARROW: "zero{# أ}one{# أ}two{# أ}few{# أ}many{# أ}other{# أ}",
+    LONG: 'zero{# أسبوع}one{أسبوع}two{أسبوعان}few{# أسابيع}many{# أسبوعًا}other{# أسبوع}',
+    SHORT: 'zero{# أسبوع}one{أسبوع}two{أسبوعان}few{# أسابيع}many{# أسبوعًا}other{# أسبوع}',
+    NARROW: 'zero{# أ}one{# أ}two{# أ}few{# أ}many{# أ}other{# أ}',
   },
   YEAR: {
-    LONG: "zero{# سنة}one{سنة}two{سنتان}few{# سنوات}many{# سنة}other{# سنة}",
-    SHORT: "zero{# سنة}one{سنة}two{سنتان}few{# سنوات}many{# سنة}other{# سنة}",
-    NARROW: "zero{# سنة}one{سنة}two{سنتان}few{# سنوات}many{# سنة}other{# سنة}",
+    LONG: 'zero{# سنة}one{سنة}two{سنتان}few{# سنوات}many{# سنة}other{# سنة}',
+    SHORT: 'zero{# سنة}one{سنة}two{سنتان}few{# سنوات}many{# سنة}other{# سنة}',
+    NARROW: 'zero{# سنة}one{سنة}two{سنتان}few{# سنوات}many{# سنة}other{# سنة}',
   },
 };
 
@@ -227,41 +226,41 @@ exports.DurationSymbols_ar_TD = DurationSymbols.DurationSymbols_ar;
 exports.DurationSymbols_ar_TN = DurationSymbols.DurationSymbols_ar;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ar_XB =  {
+exports.DurationSymbols_ar_XB = {
   DAY: {
-    LONG: "zero{# يوم}one{# ؜‮day‬؜}two{يومان}few{# أيام}many{# يومًا}other{# ؜‮days‬؜}",
-    SHORT: "zero{# يوم}one{# ؜‮day‬؜}two{يومان}few{# أيام}many{# يومًا}other{# ؜‮days‬؜}",
-    NARROW: "zero{# ي}one{# ي}two{# ي}few{# ي}many{# ي}other{# ي}",
+    LONG: 'zero{# يوم}one{# ؜‮day‬؜}two{يومان}few{# أيام}many{# يومًا}other{# ؜‮days‬؜}',
+    SHORT: 'zero{# يوم}one{# ؜‮day‬؜}two{يومان}few{# أيام}many{# يومًا}other{# ؜‮days‬؜}',
+    NARROW: 'zero{# ي}one{# ي}two{# ي}few{# ي}many{# ي}other{# ي}',
   },
   HOUR: {
-    LONG: "zero{# ساعة}one{# ؜‮hour‬؜}two{ساعتان}few{# ساعات}many{# ساعة}other{# ؜‮hours‬؜}",
-    SHORT: "zero{# س}one{# ؜‮hr‬؜}two{# س}few{# س}many{# س}other{# ؜‮hr‬؜}",
-    NARROW: "zero{# س}one{# س}two{# س}few{# س}many{# س}other{# س}",
+    LONG: 'zero{# ساعة}one{# ؜‮hour‬؜}two{ساعتان}few{# ساعات}many{# ساعة}other{# ؜‮hours‬؜}',
+    SHORT: 'zero{# س}one{# ؜‮hr‬؜}two{# س}few{# س}many{# س}other{# ؜‮hr‬؜}',
+    NARROW: 'zero{# س}one{# س}two{# س}few{# س}many{# س}other{# س}',
   },
   MINUTE: {
-    LONG: "zero{# دقيقة}one{# ؜‮minute‬؜}two{دقيقتان}few{# دقائق}many{# دقيقة}other{# ؜‮minutes‬؜}",
-    SHORT: "zero{# د}one{# ؜‮min‬؜}two{# د}few{# د}many{# د}other{# ؜‮min‬؜}",
-    NARROW: "zero{# د}one{# د}two{# د}few{# د}many{# د}other{# د}",
+    LONG: 'zero{# دقيقة}one{# ؜‮minute‬؜}two{دقيقتان}few{# دقائق}many{# دقيقة}other{# ؜‮minutes‬؜}',
+    SHORT: 'zero{# د}one{# ؜‮min‬؜}two{# د}few{# د}many{# د}other{# ؜‮min‬؜}',
+    NARROW: 'zero{# د}one{# د}two{# د}few{# د}many{# د}other{# د}',
   },
   MONTH: {
-    LONG: "zero{# شهر}one{# ؜‮month‬؜}two{شهران}few{# أشهر}many{# شهرًا}other{# ؜‮months‬؜}",
-    SHORT: "zero{# شهر}one{# ؜‮mth‬؜}two{شهران}few{# أشهر}many{# شهرًا}other{# ؜‮mths‬؜}",
-    NARROW: "zero{# شهر}one{شهر}two{شهران}few{# أشهر}many{# شهرًا}other{# شهر}",
+    LONG: 'zero{# شهر}one{# ؜‮month‬؜}two{شهران}few{# أشهر}many{# شهرًا}other{# ؜‮months‬؜}',
+    SHORT: 'zero{# شهر}one{# ؜‮mth‬؜}two{شهران}few{# أشهر}many{# شهرًا}other{# ؜‮mths‬؜}',
+    NARROW: 'zero{# شهر}one{شهر}two{شهران}few{# أشهر}many{# شهرًا}other{# شهر}',
   },
   SECOND: {
-    LONG: "zero{# ثانية}one{# ؜‮second‬؜}two{ثانيتان}few{# ثوان}many{# ثانية}other{# ؜‮seconds‬؜}",
-    SHORT: "zero{# ث}one{# ؜‮sec‬؜}two{# ث}few{# ث}many{# ث}other{# ؜‮sec‬؜}",
-    NARROW: "zero{# ث}one{# ث}two{# ث}few{# ث}many{# ث}other{# ث}",
+    LONG: 'zero{# ثانية}one{# ؜‮second‬؜}two{ثانيتان}few{# ثوان}many{# ثانية}other{# ؜‮seconds‬؜}',
+    SHORT: 'zero{# ث}one{# ؜‮sec‬؜}two{# ث}few{# ث}many{# ث}other{# ؜‮sec‬؜}',
+    NARROW: 'zero{# ث}one{# ث}two{# ث}few{# ث}many{# ث}other{# ث}',
   },
   WEEK: {
-    LONG: "zero{# أسبوع}one{# ؜‮week‬؜}two{أسبوعان}few{# أسابيع}many{# أسبوعًا}other{# ؜‮weeks‬؜}",
-    SHORT: "zero{# أسبوع}one{# ؜‮wk‬؜}two{أسبوعان}few{# أسابيع}many{# أسبوعًا}other{# ؜‮wks‬؜}",
-    NARROW: "zero{# أ}one{# أ}two{# أ}few{# أ}many{# أ}other{# أ}",
+    LONG: 'zero{# أسبوع}one{# ؜‮week‬؜}two{أسبوعان}few{# أسابيع}many{# أسبوعًا}other{# ؜‮weeks‬؜}',
+    SHORT: 'zero{# أسبوع}one{# ؜‮wk‬؜}two{أسبوعان}few{# أسابيع}many{# أسبوعًا}other{# ؜‮wks‬؜}',
+    NARROW: 'zero{# أ}one{# أ}two{# أ}few{# أ}many{# أ}other{# أ}',
   },
   YEAR: {
-    LONG: "zero{# سنة}one{# ؜‮year‬؜}two{سنتان}few{# سنوات}many{# سنة}other{# ؜‮years‬؜}",
-    SHORT: "zero{# سنة}one{# ؜‮yr‬؜}two{سنتان}few{# سنوات}many{# سنة}other{# ؜‮yrs‬؜}",
-    NARROW: "zero{# سنة}one{# سنة}two{# سنة}few{# سنة}many{# سنة}other{# سنة}",
+    LONG: 'zero{# سنة}one{# ؜‮year‬؜}two{سنتان}few{# سنوات}many{# سنة}other{# ؜‮years‬؜}',
+    SHORT: 'zero{# سنة}one{# ؜‮yr‬؜}two{سنتان}few{# سنوات}many{# سنة}other{# ؜‮yrs‬؜}',
+    NARROW: 'zero{# سنة}one{# سنة}two{# سنة}few{# سنة}many{# سنة}other{# سنة}',
   },
 };
 
@@ -269,41 +268,41 @@ exports.DurationSymbols_ar_XB =  {
 exports.DurationSymbols_ar_YE = DurationSymbols.DurationSymbols_ar;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_as =  {
+exports.DurationSymbols_as = {
   DAY: {
-    LONG: "one{# দিন}other{# দিন}",
-    SHORT: "one{# দিন}other{# দিন}",
-    NARROW: "one{# দিন}other{# দিন}",
+    LONG: 'one{# দিন}other{# দিন}',
+    SHORT: 'one{# দিন}other{# দিন}',
+    NARROW: 'one{# দিন}other{# দিন}',
   },
   HOUR: {
-    LONG: "one{# ঘণ্টা}other{# ঘণ্টা}",
-    SHORT: "one{# ঘণ্টা}other{# ঘণ্টা}",
-    NARROW: "one{# ঘণ্টা}other{# ঘণ্টা}",
+    LONG: 'one{# ঘণ্টা}other{# ঘণ্টা}',
+    SHORT: 'one{# ঘণ্টা}other{# ঘণ্টা}',
+    NARROW: 'one{# ঘণ্টা}other{# ঘণ্টা}',
   },
   MINUTE: {
-    LONG: "one{# মিনিট}other{# মিনিট}",
-    SHORT: "one{# মিনিট}other{# মিনিট}",
-    NARROW: "one{# মিনিট}other{# মিনিট}",
+    LONG: 'one{# মিনিট}other{# মিনিট}',
+    SHORT: 'one{# মিনিট}other{# মিনিট}',
+    NARROW: 'one{# মিনিট}other{# মিনিট}',
   },
   MONTH: {
-    LONG: "one{# মাহ}other{# মাহ}",
-    SHORT: "one{# মাহ}other{# মাহ}",
-    NARROW: "one{# মাহ}other{# মাহ}",
+    LONG: 'one{# মাহ}other{# মাহ}',
+    SHORT: 'one{# মাহ}other{# মাহ}',
+    NARROW: 'one{# মাহ}other{# মাহ}',
   },
   SECOND: {
-    LONG: "one{# ছেকেণ্ড}other{# ছেকেণ্ড}",
-    SHORT: "one{# ছেকেণ্ড}other{# ছেকেণ্ড}",
-    NARROW: "one{# ছেকেণ্ড}other{# ছেকেণ্ড}",
+    LONG: 'one{# ছেকেণ্ড}other{# ছেকেণ্ড}',
+    SHORT: 'one{# ছেকেণ্ড}other{# ছেকেণ্ড}',
+    NARROW: 'one{# ছেকেণ্ড}other{# ছেকেণ্ড}',
   },
   WEEK: {
-    LONG: "one{# সপ্তাহ}other{# সপ্তাহ}",
-    SHORT: "one{# সপ্তাহ}other{# সপ্তাহ}",
-    NARROW: "one{# সপ্তাহ}other{# সপ্তাহ}",
+    LONG: 'one{# সপ্তাহ}other{# সপ্তাহ}',
+    SHORT: 'one{# সপ্তাহ}other{# সপ্তাহ}',
+    NARROW: 'one{# সপ্তাহ}other{# সপ্তাহ}',
   },
   YEAR: {
-    LONG: "one{# বছৰ}other{# বছৰ}",
-    SHORT: "one{# বছৰ}other{# বছৰ}",
-    NARROW: "one{# বছৰ}other{# বছৰ}",
+    LONG: 'one{# বছৰ}other{# বছৰ}',
+    SHORT: 'one{# বছৰ}other{# বছৰ}',
+    NARROW: 'one{# বছৰ}other{# বছৰ}',
   },
 };
 
@@ -311,41 +310,41 @@ exports.DurationSymbols_as =  {
 exports.DurationSymbols_as_IN = exports.DurationSymbols_as;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_asa =  {
+exports.DurationSymbols_asa = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -353,41 +352,41 @@ exports.DurationSymbols_asa =  {
 exports.DurationSymbols_asa_TZ = exports.DurationSymbols_asa;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ast =  {
+exports.DurationSymbols_ast = {
   DAY: {
-    LONG: "one{# día}other{# díes}",
-    SHORT: "one{# día}other{# díes}",
-    NARROW: "one{#día}other{#díes}",
+    LONG: 'one{# día}other{# díes}',
+    SHORT: 'one{# día}other{# díes}',
+    NARROW: 'one{#día}other{#díes}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# hores}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#hr}other{#hrs}",
+    LONG: 'one{# hora}other{# hores}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#hr}other{#hrs}',
   },
   MINUTE: {
-    LONG: "one{# minutu}other{# minutos}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#min}other{#mins}",
+    LONG: 'one{# minutu}other{# minutos}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#min}other{#mins}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# mes}other{# meses}",
-    NARROW: "one{#mes}other{#meses}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# mes}other{# meses}',
+    NARROW: 'one{#mes}other{#meses}',
   },
   SECOND: {
-    LONG: "one{# segundu}other{# segundos}",
-    SHORT: "one{# seg}other{# segs}",
-    NARROW: "one{#seg}other{#segs}",
+    LONG: 'one{# segundu}other{# segundos}',
+    SHORT: 'one{# seg}other{# segs}',
+    NARROW: 'one{#seg}other{#segs}',
   },
   WEEK: {
-    LONG: "one{# selmana}other{# selmanes}",
-    SHORT: "one{# sel}other{# sels}",
-    NARROW: "one{#sel}other{#sels}",
+    LONG: 'one{# selmana}other{# selmanes}',
+    SHORT: 'one{# sel}other{# sels}',
+    NARROW: 'one{#sel}other{#sels}',
   },
   YEAR: {
-    LONG: "one{# añu}other{# años}",
-    SHORT: "one{# añ}other{# añs}",
-    NARROW: "one{#añ}other{#añs}",
+    LONG: 'one{# añu}other{# años}',
+    SHORT: 'one{# añ}other{# añs}',
+    NARROW: 'one{#añ}other{#añs}',
   },
 };
 
@@ -395,80 +394,80 @@ exports.DurationSymbols_ast =  {
 exports.DurationSymbols_ast_ES = exports.DurationSymbols_ast;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_az_Cyrl =  {
+exports.DurationSymbols_az_Cyrl = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_az_Cyrl_AZ =  {
+exports.DurationSymbols_az_Cyrl_AZ = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -479,41 +478,41 @@ exports.DurationSymbols_az_Latn = DurationSymbols.DurationSymbols_az;
 exports.DurationSymbols_az_Latn_AZ = DurationSymbols.DurationSymbols_az;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_bas =  {
+exports.DurationSymbols_bas = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -524,41 +523,41 @@ exports.DurationSymbols_bas_CM = exports.DurationSymbols_bas;
 exports.DurationSymbols_be_BY = DurationSymbols.DurationSymbols_be;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_bem =  {
+exports.DurationSymbols_bem = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -566,41 +565,41 @@ exports.DurationSymbols_bem =  {
 exports.DurationSymbols_bem_ZM = exports.DurationSymbols_bem;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_bez =  {
+exports.DurationSymbols_bez = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -611,41 +610,41 @@ exports.DurationSymbols_bez_TZ = exports.DurationSymbols_bez;
 exports.DurationSymbols_bg_BG = DurationSymbols.DurationSymbols_bg;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_bgc =  {
+exports.DurationSymbols_bgc = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -653,41 +652,41 @@ exports.DurationSymbols_bgc =  {
 exports.DurationSymbols_bgc_IN = exports.DurationSymbols_bgc;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_bho =  {
+exports.DurationSymbols_bho = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -695,41 +694,41 @@ exports.DurationSymbols_bho =  {
 exports.DurationSymbols_bho_IN = exports.DurationSymbols_bho;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_bm =  {
+exports.DurationSymbols_bm = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -743,41 +742,41 @@ exports.DurationSymbols_bn_BD = DurationSymbols.DurationSymbols_bn;
 exports.DurationSymbols_bn_IN = DurationSymbols.DurationSymbols_bn;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_bo =  {
+exports.DurationSymbols_bo = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -791,41 +790,41 @@ exports.DurationSymbols_bo_IN = exports.DurationSymbols_bo;
 exports.DurationSymbols_br_FR = DurationSymbols.DurationSymbols_br;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_brx =  {
+exports.DurationSymbols_brx = {
   DAY: {
-    LONG: "one{# सान}other{# सान}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'one{# सान}other{# सान}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "one{# रिंगा}other{# घंटे}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'one{# रिंगा}other{# घंटे}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "one{# मिन.}other{# मिन.}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'one{# मिन.}other{# मिन.}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "one{# महीना}other{# महीने}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'one{# महीना}other{# महीने}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "one{# सेकं.}other{# सेकं.}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'one{# सेकं.}other{# सेकं.}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "one{# सप्ताह}other{# सप्ताह}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'one{# सप्ताह}other{# सप्ताह}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "one{# साल}other{# साल}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'one{# साल}other{# साल}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -833,80 +832,80 @@ exports.DurationSymbols_brx =  {
 exports.DurationSymbols_brx_IN = exports.DurationSymbols_brx;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_bs_Cyrl =  {
+exports.DurationSymbols_bs_Cyrl = {
   DAY: {
-    LONG: "one{# дан}few{# дана}other{# дана}",
-    SHORT: "one{# дан}few{# дана}other{# дан}",
-    NARROW: "one{# дан}few{# дана}other{# дан}",
+    LONG: 'one{# дан}few{# дана}other{# дана}',
+    SHORT: 'one{# дан}few{# дана}other{# дан}',
+    NARROW: 'one{# дан}few{# дана}other{# дан}',
   },
   HOUR: {
-    LONG: "one{# сат}few{# сата}other{# сати}",
-    SHORT: "one{# сат}few{# сата}other{# сати}",
-    NARROW: "one{# сат}few{# сата}other{# сати}",
+    LONG: 'one{# сат}few{# сата}other{# сати}',
+    SHORT: 'one{# сат}few{# сата}other{# сати}',
+    NARROW: 'one{# сат}few{# сата}other{# сати}',
   },
   MINUTE: {
-    LONG: "one{# минут}few{# минута}other{# минута}",
-    SHORT: "one{# мин.}few{# мин.}other{# мин.}",
-    NARROW: "one{# мин.}few{# мин.}other{# мин.}",
+    LONG: 'one{# минут}few{# минута}other{# минута}',
+    SHORT: 'one{# мин.}few{# мин.}other{# мин.}',
+    NARROW: 'one{# мин.}few{# мин.}other{# мин.}',
   },
   MONTH: {
-    LONG: "one{# мјесец}few{# мјесеца}other{# мјесеци}",
-    SHORT: "one{# мјес.}few{# мјес.}other{# мјес.}",
-    NARROW: "one{# мјес.}few{# мјес.}other{# мјес.}",
+    LONG: 'one{# мјесец}few{# мјесеца}other{# мјесеци}',
+    SHORT: 'one{# мјес.}few{# мјес.}other{# мјес.}',
+    NARROW: 'one{# мјес.}few{# мјес.}other{# мјес.}',
   },
   SECOND: {
-    LONG: "one{# секунда}few{# секунде}other{# секунди}",
-    SHORT: "one{# сек.}few{# сек.}other{# сек.}",
-    NARROW: "one{# сек.}few{# сек.}other{# сек.}",
+    LONG: 'one{# секунда}few{# секунде}other{# секунди}',
+    SHORT: 'one{# сек.}few{# сек.}other{# сек.}',
+    NARROW: 'one{# сек.}few{# сек.}other{# сек.}',
   },
   WEEK: {
-    LONG: "one{# седмица}few{# седмице}other{# седмица}",
-    SHORT: "one{# сед.}few{# сед.}other{# сед.}",
-    NARROW: "one{# сед.}few{# сед.}other{# сед.}",
+    LONG: 'one{# седмица}few{# седмице}other{# седмица}',
+    SHORT: 'one{# сед.}few{# сед.}other{# сед.}',
+    NARROW: 'one{# сед.}few{# сед.}other{# сед.}',
   },
   YEAR: {
-    LONG: "one{# година}few{# године}other{# година}",
-    SHORT: "one{# год}few{# год}other{# год}",
-    NARROW: "one{# год}few{# год}other{# год}",
+    LONG: 'one{# година}few{# године}other{# година}',
+    SHORT: 'one{# год}few{# год}other{# год}',
+    NARROW: 'one{# год}few{# год}other{# год}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_bs_Cyrl_BA =  {
+exports.DurationSymbols_bs_Cyrl_BA = {
   DAY: {
-    LONG: "one{# дан}few{# дана}other{# дана}",
-    SHORT: "one{# дан}few{# дана}other{# дан}",
-    NARROW: "one{# дан}few{# дана}other{# дан}",
+    LONG: 'one{# дан}few{# дана}other{# дана}',
+    SHORT: 'one{# дан}few{# дана}other{# дан}',
+    NARROW: 'one{# дан}few{# дана}other{# дан}',
   },
   HOUR: {
-    LONG: "one{# сат}few{# сата}other{# сати}",
-    SHORT: "one{# сат}few{# сата}other{# сати}",
-    NARROW: "one{# сат}few{# сата}other{# сати}",
+    LONG: 'one{# сат}few{# сата}other{# сати}',
+    SHORT: 'one{# сат}few{# сата}other{# сати}',
+    NARROW: 'one{# сат}few{# сата}other{# сати}',
   },
   MINUTE: {
-    LONG: "one{# минут}few{# минута}other{# минута}",
-    SHORT: "one{# мин.}few{# мин.}other{# мин.}",
-    NARROW: "one{# мин.}few{# мин.}other{# мин.}",
+    LONG: 'one{# минут}few{# минута}other{# минута}',
+    SHORT: 'one{# мин.}few{# мин.}other{# мин.}',
+    NARROW: 'one{# мин.}few{# мин.}other{# мин.}',
   },
   MONTH: {
-    LONG: "one{# мјесец}few{# мјесеца}other{# мјесеци}",
-    SHORT: "one{# мјес.}few{# мјес.}other{# мјес.}",
-    NARROW: "one{# мјес.}few{# мјес.}other{# мјес.}",
+    LONG: 'one{# мјесец}few{# мјесеца}other{# мјесеци}',
+    SHORT: 'one{# мјес.}few{# мјес.}other{# мјес.}',
+    NARROW: 'one{# мјес.}few{# мјес.}other{# мјес.}',
   },
   SECOND: {
-    LONG: "one{# секунда}few{# секунде}other{# секунди}",
-    SHORT: "one{# сек.}few{# сек.}other{# сек.}",
-    NARROW: "one{# сек.}few{# сек.}other{# сек.}",
+    LONG: 'one{# секунда}few{# секунде}other{# секунди}',
+    SHORT: 'one{# сек.}few{# сек.}other{# сек.}',
+    NARROW: 'one{# сек.}few{# сек.}other{# сек.}',
   },
   WEEK: {
-    LONG: "one{# седмица}few{# седмице}other{# седмица}",
-    SHORT: "one{# сед.}few{# сед.}other{# сед.}",
-    NARROW: "one{# сед.}few{# сед.}other{# сед.}",
+    LONG: 'one{# седмица}few{# седмице}other{# седмица}',
+    SHORT: 'one{# сед.}few{# сед.}other{# сед.}',
+    NARROW: 'one{# сед.}few{# сед.}other{# сед.}',
   },
   YEAR: {
-    LONG: "one{# година}few{# године}other{# година}",
-    SHORT: "one{# год}few{# год}other{# год}",
-    NARROW: "one{# год}few{# год}other{# год}",
+    LONG: 'one{# година}few{# године}other{# година}',
+    SHORT: 'one{# год}few{# год}other{# год}',
+    NARROW: 'one{# год}few{# год}other{# год}',
   },
 };
 
@@ -929,41 +928,41 @@ exports.DurationSymbols_ca_FR = DurationSymbols.DurationSymbols_ca;
 exports.DurationSymbols_ca_IT = DurationSymbols.DurationSymbols_ca;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ccp =  {
+exports.DurationSymbols_ccp = {
   DAY: {
-    LONG: "one{# 𑄘𑄨𑄚𑄴}other{# 𑄘𑄨𑄚𑄴}",
-    SHORT: "one{# 𑄘𑄨𑄚𑄴}other{# 𑄘𑄨𑄚𑄴}",
-    NARROW: "one{# 𑄘𑄨𑄚𑄴}other{# 𑄘𑄨𑄚𑄴}",
+    LONG: 'one{# 𑄘𑄨𑄚𑄴}other{# 𑄘𑄨𑄚𑄴}',
+    SHORT: 'one{# 𑄘𑄨𑄚𑄴}other{# 𑄘𑄨𑄚𑄴}',
+    NARROW: 'one{# 𑄘𑄨𑄚𑄴}other{# 𑄘𑄨𑄚𑄴}',
   },
   HOUR: {
-    LONG: "one{# 𑄊𑄧𑄚𑄴𑄘}other{# 𑄊𑄧𑄚𑄴𑄘}",
-    SHORT: "one{# 𑄊𑄧𑄚𑄴𑄑}other{# 𑄊𑄧𑄚𑄴𑄑}",
-    NARROW: "one{# 𑄊𑄂}other{# 𑄊𑄂}",
+    LONG: 'one{# 𑄊𑄧𑄚𑄴𑄘}other{# 𑄊𑄧𑄚𑄴𑄘}',
+    SHORT: 'one{# 𑄊𑄧𑄚𑄴𑄑}other{# 𑄊𑄧𑄚𑄴𑄑}',
+    NARROW: 'one{# 𑄊𑄂}other{# 𑄊𑄂}',
   },
   MINUTE: {
-    LONG: "one{# 𑄟𑄨𑄚𑄨𑄖𑄴}other{# 𑄟𑄨𑄚𑄨𑄖𑄴}",
-    SHORT: "one{# 𑄟𑄨𑄚𑄨𑄖𑄴}other{# 𑄟𑄨𑄚𑄨𑄖𑄴}",
-    NARROW: "one{# 𑄟𑄨𑄂}other{# 𑄟𑄨𑄂}",
+    LONG: 'one{# 𑄟𑄨𑄚𑄨𑄖𑄴}other{# 𑄟𑄨𑄚𑄨𑄖𑄴}',
+    SHORT: 'one{# 𑄟𑄨𑄚𑄨𑄖𑄴}other{# 𑄟𑄨𑄚𑄨𑄖𑄴}',
+    NARROW: 'one{# 𑄟𑄨𑄂}other{# 𑄟𑄨𑄂}',
   },
   MONTH: {
-    LONG: "one{# 𑄟𑄌𑄴}other{# 𑄟𑄌𑄴}",
-    SHORT: "one{# 𑄟𑄌𑄴}other{# 𑄟𑄌𑄴}",
-    NARROW: "one{# 𑄟𑄌𑄴}other{# 𑄟𑄌𑄴}",
+    LONG: 'one{# 𑄟𑄌𑄴}other{# 𑄟𑄌𑄴}',
+    SHORT: 'one{# 𑄟𑄌𑄴}other{# 𑄟𑄌𑄴}',
+    NARROW: 'one{# 𑄟𑄌𑄴}other{# 𑄟𑄌𑄴}',
   },
   SECOND: {
-    LONG: "one{# 𑄥𑄬𑄇𑄬𑄚𑄳𑄓𑄴}other{# 𑄥𑄬𑄇𑄬𑄚𑄳𑄓𑄴}",
-    SHORT: "one{# 𑄥𑄬𑄇𑄬𑄚𑄳𑄓𑄴}other{# 𑄥𑄬𑄇𑄬𑄚𑄳𑄓𑄴}",
-    NARROW: "one{# 𑄥𑄬𑄂}other{# 𑄥𑄬𑄂}",
+    LONG: 'one{# 𑄥𑄬𑄇𑄬𑄚𑄳𑄓𑄴}other{# 𑄥𑄬𑄇𑄬𑄚𑄳𑄓𑄴}',
+    SHORT: 'one{# 𑄥𑄬𑄇𑄬𑄚𑄳𑄓𑄴}other{# 𑄥𑄬𑄇𑄬𑄚𑄳𑄓𑄴}',
+    NARROW: 'one{# 𑄥𑄬𑄂}other{# 𑄥𑄬𑄂}',
   },
   WEEK: {
-    LONG: "one{# 𑄥𑄛𑄴𑄖}other{# 𑄥𑄛𑄴𑄖}",
-    SHORT: "one{# 𑄥𑄛𑄴𑄖}other{# 𑄥𑄛𑄴𑄖}",
-    NARROW: "one{# 𑄥𑄛𑄴𑄖}other{# 𑄥𑄛𑄴𑄖}",
+    LONG: 'one{# 𑄥𑄛𑄴𑄖}other{# 𑄥𑄛𑄴𑄖}',
+    SHORT: 'one{# 𑄥𑄛𑄴𑄖}other{# 𑄥𑄛𑄴𑄖}',
+    NARROW: 'one{# 𑄥𑄛𑄴𑄖}other{# 𑄥𑄛𑄴𑄖}',
   },
   YEAR: {
-    LONG: "one{# 𑄝𑄧𑄏𑄧𑄢𑄴}other{# 𑄝𑄧𑄏𑄧𑄢𑄴}",
-    SHORT: "one{# 𑄝𑄧𑄏𑄧𑄢𑄴}other{# 𑄝𑄧𑄏𑄧𑄢𑄴}",
-    NARROW: "one{# 𑄝𑄧𑄏𑄧𑄢𑄴}other{# 𑄝𑄧𑄏𑄧𑄢𑄴}",
+    LONG: 'one{# 𑄝𑄧𑄏𑄧𑄢𑄴}other{# 𑄝𑄧𑄏𑄧𑄢𑄴}',
+    SHORT: 'one{# 𑄝𑄧𑄏𑄧𑄢𑄴}other{# 𑄝𑄧𑄏𑄧𑄢𑄴}',
+    NARROW: 'one{# 𑄝𑄧𑄏𑄧𑄢𑄴}other{# 𑄝𑄧𑄏𑄧𑄢𑄴}',
   },
 };
 
@@ -974,41 +973,41 @@ exports.DurationSymbols_ccp_BD = exports.DurationSymbols_ccp;
 exports.DurationSymbols_ccp_IN = exports.DurationSymbols_ccp;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ce =  {
+exports.DurationSymbols_ce = {
   DAY: {
-    LONG: "one{# де}other{# де}",
-    SHORT: "one{д.}other{# д.}",
-    NARROW: "one{# д.}other{# д.}",
+    LONG: 'one{# де}other{# де}',
+    SHORT: 'one{д.}other{# д.}',
+    NARROW: 'one{# д.}other{# д.}',
   },
   HOUR: {
-    LONG: "one{# сахьт}other{# сахьт}",
-    SHORT: "one{# сахь.}other{# сахь.}",
-    NARROW: "one{# сахь.}other{# сахь.}",
+    LONG: 'one{# сахьт}other{# сахьт}',
+    SHORT: 'one{# сахь.}other{# сахь.}',
+    NARROW: 'one{# сахь.}other{# сахь.}',
   },
   MINUTE: {
-    LONG: "one{# минот}other{# минот}",
-    SHORT: "one{# мин}other{# мин}",
-    NARROW: "one{# мин}other{# мин}",
+    LONG: 'one{# минот}other{# минот}',
+    SHORT: 'one{# мин}other{# мин}',
+    NARROW: 'one{# мин}other{# мин}',
   },
   MONTH: {
-    LONG: "one{# бутт}other{# бутт}",
-    SHORT: "one{# бут.}other{# бут.}",
-    NARROW: "one{# б.}other{# б.}",
+    LONG: 'one{# бутт}other{# бутт}',
+    SHORT: 'one{# бут.}other{# бут.}',
+    NARROW: 'one{# б.}other{# б.}',
   },
   SECOND: {
-    LONG: "one{# секунд}other{# секунд}",
-    SHORT: "one{# сек}other{# сек}",
-    NARROW: "one{# с}other{# с}",
+    LONG: 'one{# секунд}other{# секунд}',
+    SHORT: 'one{# сек}other{# сек}',
+    NARROW: 'one{# с}other{# с}',
   },
   WEEK: {
-    LONG: "one{# кӀира}other{# кӀира}",
-    SHORT: "one{# кӀир.}other{# кӀир.}",
-    NARROW: "one{# кӀ.}other{# кӀ.}",
+    LONG: 'one{# кӀира}other{# кӀира}',
+    SHORT: 'one{# кӀир.}other{# кӀир.}',
+    NARROW: 'one{# кӀ.}other{# кӀ.}',
   },
   YEAR: {
-    LONG: "one{# шо}other{# шо}",
-    SHORT: "one{# ш.}other{# ш.}",
-    NARROW: "one{# ш.}other{# ш.}",
+    LONG: 'one{# шо}other{# шо}',
+    SHORT: 'one{# ш.}other{# ш.}',
+    NARROW: 'one{# ш.}other{# ш.}',
   },
 };
 
@@ -1016,41 +1015,41 @@ exports.DurationSymbols_ce =  {
 exports.DurationSymbols_ce_RU = exports.DurationSymbols_ce;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ceb =  {
+exports.DurationSymbols_ceb = {
   DAY: {
-    LONG: "one{# ka adlaw}other{# ka mga adlaw}",
-    SHORT: "one{# ka adlaw}other{# ka adlaw}",
-    NARROW: "one{# adlaw}other{# adlaw}",
+    LONG: 'one{# ka adlaw}other{# ka mga adlaw}',
+    SHORT: 'one{# ka adlaw}other{# ka adlaw}',
+    NARROW: 'one{# adlaw}other{# adlaw}',
   },
   HOUR: {
-    LONG: "one{# ka oras}other{# ka mga oras}",
-    SHORT: "one{# ka oras}other{# ka oras}",
-    NARROW: "one{# ka oras}other{# ka oras}",
+    LONG: 'one{# ka oras}other{# ka mga oras}',
+    SHORT: 'one{# ka oras}other{# ka oras}',
+    NARROW: 'one{# ka oras}other{# ka oras}',
   },
   MINUTE: {
-    LONG: "one{# ka minuto}other{# ka mga minuto}",
-    SHORT: "one{# ka minuto}other{# ka minuto}",
-    NARROW: "one{# minuto}other{# minuto}",
+    LONG: 'one{# ka minuto}other{# ka mga minuto}',
+    SHORT: 'one{# ka minuto}other{# ka minuto}',
+    NARROW: 'one{# minuto}other{# minuto}',
   },
   MONTH: {
-    LONG: "one{# ka buwan}other{# ka mga buwan}",
-    SHORT: "one{# ka buwan}other{# ka buwan}",
-    NARROW: "one{# buwan}other{# buwan}",
+    LONG: 'one{# ka buwan}other{# ka mga buwan}',
+    SHORT: 'one{# ka buwan}other{# ka buwan}',
+    NARROW: 'one{# buwan}other{# buwan}',
   },
   SECOND: {
-    LONG: "one{# ka segundo}other{# ka mga segundo}",
-    SHORT: "one{#segundo}other{#segundo}",
-    NARROW: "one{#segundo}other{#segundo}",
+    LONG: 'one{# ka segundo}other{# ka mga segundo}',
+    SHORT: 'one{#segundo}other{#segundo}',
+    NARROW: 'one{#segundo}other{#segundo}',
   },
   WEEK: {
-    LONG: "one{# ka semana}other{# ka mga semana}",
-    SHORT: "one{# ka semana}other{# ka semana}",
-    NARROW: "one{# semana}other{#w}",
+    LONG: 'one{# ka semana}other{# ka mga semana}',
+    SHORT: 'one{# ka semana}other{# ka semana}',
+    NARROW: 'one{# semana}other{#w}',
   },
   YEAR: {
-    LONG: "one{# ka tuig}other{# ka mga tuig}",
-    SHORT: "one{# ka tuig}other{# ka tuig}",
-    NARROW: "one{# ka tuig}other{# ka tuig}",
+    LONG: 'one{# ka tuig}other{# ka mga tuig}',
+    SHORT: 'one{# ka tuig}other{# ka tuig}',
+    NARROW: 'one{# ka tuig}other{# ka tuig}',
   },
 };
 
@@ -1058,41 +1057,41 @@ exports.DurationSymbols_ceb =  {
 exports.DurationSymbols_ceb_PH = exports.DurationSymbols_ceb;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_cgg =  {
+exports.DurationSymbols_cgg = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -1103,41 +1102,41 @@ exports.DurationSymbols_cgg_UG = exports.DurationSymbols_cgg;
 exports.DurationSymbols_chr_US = DurationSymbols.DurationSymbols_chr;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ckb =  {
+exports.DurationSymbols_ckb = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -1160,41 +1159,41 @@ exports.DurationSymbols_ckb_IR = exports.DurationSymbols_ckb;
 exports.DurationSymbols_cs_CZ = DurationSymbols.DurationSymbols_cs;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_cv =  {
+exports.DurationSymbols_cv = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -1211,41 +1210,41 @@ exports.DurationSymbols_da_DK = DurationSymbols.DurationSymbols_da;
 exports.DurationSymbols_da_GL = DurationSymbols.DurationSymbols_da;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_dav =  {
+exports.DurationSymbols_dav = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -1268,41 +1267,41 @@ exports.DurationSymbols_de_LI = DurationSymbols.DurationSymbols_de;
 exports.DurationSymbols_de_LU = DurationSymbols.DurationSymbols_de;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_dje =  {
+exports.DurationSymbols_dje = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -1310,41 +1309,41 @@ exports.DurationSymbols_dje =  {
 exports.DurationSymbols_dje_NE = exports.DurationSymbols_dje;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_doi =  {
+exports.DurationSymbols_doi = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -1352,41 +1351,41 @@ exports.DurationSymbols_doi =  {
 exports.DurationSymbols_doi_IN = exports.DurationSymbols_doi;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_dsb =  {
+exports.DurationSymbols_dsb = {
   DAY: {
-    LONG: "one{# źeń}two{# dnja}few{# dny}other{# dnjow}",
-    SHORT: "one{# ź.}two{# dn.}few{# dn.}other{# dn.}",
-    NARROW: "one{# ź}two{# d}few{# d}other{# d}",
+    LONG: 'one{# źeń}two{# dnja}few{# dny}other{# dnjow}',
+    SHORT: 'one{# ź.}two{# dn.}few{# dn.}other{# dn.}',
+    NARROW: 'one{# ź}two{# d}few{# d}other{# d}',
   },
   HOUR: {
-    LONG: "one{# góźina}two{# góźinje}few{# góźiny}other{# góźinow}",
-    SHORT: "one{# góź.}two{# góź.}few{# góź.}other{# góź.}",
-    NARROW: "one{# g}two{# g}few{# g}other{# g}",
+    LONG: 'one{# góźina}two{# góźinje}few{# góźiny}other{# góźinow}',
+    SHORT: 'one{# góź.}two{# góź.}few{# góź.}other{# góź.}',
+    NARROW: 'one{# g}two{# g}few{# g}other{# g}',
   },
   MINUTE: {
-    LONG: "one{# minuta}two{# minuśe}few{# minuty}other{# minutow}",
-    SHORT: "one{# min.}two{# min.}few{# min.}other{# min.}",
-    NARROW: "one{# min}two{# min}few{# min}other{# min}",
+    LONG: 'one{# minuta}two{# minuśe}few{# minuty}other{# minutow}',
+    SHORT: 'one{# min.}two{# min.}few{# min.}other{# min.}',
+    NARROW: 'one{# min}two{# min}few{# min}other{# min}',
   },
   MONTH: {
-    LONG: "one{# mjasec}two{# mjaseca}few{# mjasecy}other{# mjasecow}",
-    SHORT: "one{# mjas.}two{# mjas.}few{# mjas.}other{# mjas.}",
-    NARROW: "one{# mjas.}two{# mjas.}few{# mjas.}other{# mjas.}",
+    LONG: 'one{# mjasec}two{# mjaseca}few{# mjasecy}other{# mjasecow}',
+    SHORT: 'one{# mjas.}two{# mjas.}few{# mjas.}other{# mjas.}',
+    NARROW: 'one{# mjas.}two{# mjas.}few{# mjas.}other{# mjas.}',
   },
   SECOND: {
-    LONG: "one{# sekunda}two{# sekunźe}few{# sekundy}other{# sekundow}",
-    SHORT: "one{# sek.}two{# sek.}few{# sek.}other{# sek.}",
-    NARROW: "one{# s}two{# s}few{# s}other{# s}",
+    LONG: 'one{# sekunda}two{# sekunźe}few{# sekundy}other{# sekundow}',
+    SHORT: 'one{# sek.}two{# sek.}few{# sek.}other{# sek.}',
+    NARROW: 'one{# s}two{# s}few{# s}other{# s}',
   },
   WEEK: {
-    LONG: "one{# tyźeń}two{# tyźenja}few{# tyźenje}other{# tyźenjow}",
-    SHORT: "one{# tyź.}two{# tyź.}few{# tyź.}other{# tyź.}",
-    NARROW: "one{# tyź.}two{# tyź.}few{# tyź.}other{# tyź.}",
+    LONG: 'one{# tyźeń}two{# tyźenja}few{# tyźenje}other{# tyźenjow}',
+    SHORT: 'one{# tyź.}two{# tyź.}few{# tyź.}other{# tyź.}',
+    NARROW: 'one{# tyź.}two{# tyź.}few{# tyź.}other{# tyź.}',
   },
   YEAR: {
-    LONG: "one{# lěto}two{# lěśe}few{# lěta}other{# lět}",
-    SHORT: "one{# l.}two{# l.}few{# l.}other{# l.}",
-    NARROW: "one{# l.}two{# l.}few{# l.}other{# l.}",
+    LONG: 'one{# lěto}two{# lěśe}few{# lěta}other{# lět}',
+    SHORT: 'one{# l.}two{# l.}few{# l.}other{# l.}',
+    NARROW: 'one{# l.}two{# l.}few{# l.}other{# l.}',
   },
 };
 
@@ -1394,41 +1393,41 @@ exports.DurationSymbols_dsb =  {
 exports.DurationSymbols_dsb_DE = exports.DurationSymbols_dsb;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_dua =  {
+exports.DurationSymbols_dua = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -1436,41 +1435,41 @@ exports.DurationSymbols_dua =  {
 exports.DurationSymbols_dua_CM = exports.DurationSymbols_dua;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_dyo =  {
+exports.DurationSymbols_dyo = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -1478,41 +1477,41 @@ exports.DurationSymbols_dyo =  {
 exports.DurationSymbols_dyo_SN = exports.DurationSymbols_dyo;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_dz =  {
+exports.DurationSymbols_dz = {
   DAY: {
-    LONG: "other{ཉིན་ཞག་ #}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{ཉིན་ཞག་ #}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{ཆུ་ཚོད་ #}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{ཆུ་ཚོད་ #}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{སྐར་མ་ #}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{སྐར་མ་ #}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{ཟླཝ་ #}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{ཟླཝ་ #}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{སྐར་ཆ་ #}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{སྐར་ཆ་ #}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{བངུན་ཕྲག་ #}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{བངུན་ཕྲག་ #}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{ལོ་འཁོར་ #}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{ལོ་འཁོར་ #}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -1520,41 +1519,41 @@ exports.DurationSymbols_dz =  {
 exports.DurationSymbols_dz_BT = exports.DurationSymbols_dz;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ebu =  {
+exports.DurationSymbols_ebu = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -1562,41 +1561,41 @@ exports.DurationSymbols_ebu =  {
 exports.DurationSymbols_ebu_KE = exports.DurationSymbols_ebu;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ee =  {
+exports.DurationSymbols_ee = {
   DAY: {
-    LONG: "one{ŋkeke #}other{ŋkeke #}",
-    SHORT: "one{ŋkeke #}other{ŋkeke #}",
-    NARROW: "one{ŋkeke #}other{ŋkeke #}",
+    LONG: 'one{ŋkeke #}other{ŋkeke #}',
+    SHORT: 'one{ŋkeke #}other{ŋkeke #}',
+    NARROW: 'one{ŋkeke #}other{ŋkeke #}',
   },
   HOUR: {
-    LONG: "one{gaƒoƒo #}other{gaƒoƒo #}",
-    SHORT: "one{gaƒoƒo #}other{gaƒoƒo #}",
-    NARROW: "one{gaƒoƒo #}other{gaƒoƒo #}",
+    LONG: 'one{gaƒoƒo #}other{gaƒoƒo #}',
+    SHORT: 'one{gaƒoƒo #}other{gaƒoƒo #}',
+    NARROW: 'one{gaƒoƒo #}other{gaƒoƒo #}',
   },
   MINUTE: {
-    LONG: "one{aɖabaƒoƒo #}other{aɖabaƒoƒo #}",
-    SHORT: "one{a #}other{a #}",
-    NARROW: "one{a #}other{a #}",
+    LONG: 'one{aɖabaƒoƒo #}other{aɖabaƒoƒo #}',
+    SHORT: 'one{a #}other{a #}',
+    NARROW: 'one{a #}other{a #}',
   },
   MONTH: {
-    LONG: "one{ɣleti #}other{ɣleti #}",
-    SHORT: "one{ɣleti #}other{ɣleti #}",
-    NARROW: "one{ɣleti #}other{ɣleti #}",
+    LONG: 'one{ɣleti #}other{ɣleti #}',
+    SHORT: 'one{ɣleti #}other{ɣleti #}',
+    NARROW: 'one{ɣleti #}other{ɣleti #}',
   },
   SECOND: {
-    LONG: "one{sekend # wo}other{sekend # wo}",
-    SHORT: "one{sekend #}other{sekend #}",
-    NARROW: "one{s #}other{s #}",
+    LONG: 'one{sekend # wo}other{sekend # wo}',
+    SHORT: 'one{sekend #}other{sekend #}',
+    NARROW: 'one{s #}other{s #}',
   },
   WEEK: {
-    LONG: "one{kɔsiɖa #}other{kɔsiɖa #}",
-    SHORT: "one{kɔsiɖa #}other{kɔsiɖa #}",
-    NARROW: "one{kɔsiɖa #}other{kɔsiɖa #}",
+    LONG: 'one{kɔsiɖa #}other{kɔsiɖa #}',
+    SHORT: 'one{kɔsiɖa #}other{kɔsiɖa #}',
+    NARROW: 'one{kɔsiɖa #}other{kɔsiɖa #}',
   },
   YEAR: {
-    LONG: "one{ƒe #}other{ƒe #}",
-    SHORT: "one{ƒe #}other{ƒe #}",
-    NARROW: "one{ƒe #}other{ƒe #}",
+    LONG: 'one{ƒe #}other{ƒe #}',
+    SHORT: 'one{ƒe #}other{ƒe #}',
+    NARROW: 'one{ƒe #}other{ƒe #}',
   },
 };
 
@@ -1613,80 +1612,80 @@ exports.DurationSymbols_el_CY = DurationSymbols.DurationSymbols_el;
 exports.DurationSymbols_el_GR = DurationSymbols.DurationSymbols_el;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_001 =  {
+exports.DurationSymbols_en_001 = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_150 =  {
+exports.DurationSymbols_en_150 = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
@@ -1694,80 +1693,80 @@ exports.DurationSymbols_en_150 =  {
 exports.DurationSymbols_en_AE = DurationSymbols.DurationSymbols_en;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_AG =  {
+exports.DurationSymbols_en_AG = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_AI =  {
+exports.DurationSymbols_en_AI = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
@@ -1775,119 +1774,119 @@ exports.DurationSymbols_en_AI =  {
 exports.DurationSymbols_en_AS = DurationSymbols.DurationSymbols_en;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_AT =  {
+exports.DurationSymbols_en_AT = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_BB =  {
+exports.DurationSymbols_en_BB = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_BE =  {
+exports.DurationSymbols_en_BE = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
@@ -1895,938 +1894,938 @@ exports.DurationSymbols_en_BE =  {
 exports.DurationSymbols_en_BI = DurationSymbols.DurationSymbols_en;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_BM =  {
+exports.DurationSymbols_en_BM = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_BS =  {
+exports.DurationSymbols_en_BS = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_BW =  {
+exports.DurationSymbols_en_BW = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_BZ =  {
+exports.DurationSymbols_en_BZ = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_CC =  {
+exports.DurationSymbols_en_CC = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_CH =  {
+exports.DurationSymbols_en_CH = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_CK =  {
+exports.DurationSymbols_en_CK = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_CM =  {
+exports.DurationSymbols_en_CM = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_CX =  {
+exports.DurationSymbols_en_CX = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_CY =  {
+exports.DurationSymbols_en_CY = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_DE =  {
+exports.DurationSymbols_en_DE = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_DG =  {
+exports.DurationSymbols_en_DG = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_DK =  {
+exports.DurationSymbols_en_DK = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_DM =  {
+exports.DurationSymbols_en_DM = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_ER =  {
+exports.DurationSymbols_en_ER = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_FI =  {
+exports.DurationSymbols_en_FI = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_FJ =  {
+exports.DurationSymbols_en_FJ = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_FK =  {
+exports.DurationSymbols_en_FK = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_FM =  {
+exports.DurationSymbols_en_FM = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_GD =  {
+exports.DurationSymbols_en_GD = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_GG =  {
+exports.DurationSymbols_en_GG = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_GH =  {
+exports.DurationSymbols_en_GH = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_GI =  {
+exports.DurationSymbols_en_GI = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_GM =  {
+exports.DurationSymbols_en_GM = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
@@ -2834,587 +2833,587 @@ exports.DurationSymbols_en_GM =  {
 exports.DurationSymbols_en_GU = DurationSymbols.DurationSymbols_en;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_GY =  {
+exports.DurationSymbols_en_GY = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_HK =  {
+exports.DurationSymbols_en_HK = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_IL =  {
+exports.DurationSymbols_en_IL = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_IM =  {
+exports.DurationSymbols_en_IM = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_IO =  {
+exports.DurationSymbols_en_IO = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_JE =  {
+exports.DurationSymbols_en_JE = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_JM =  {
+exports.DurationSymbols_en_JM = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_KE =  {
+exports.DurationSymbols_en_KE = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_KI =  {
+exports.DurationSymbols_en_KI = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_KN =  {
+exports.DurationSymbols_en_KN = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_KY =  {
+exports.DurationSymbols_en_KY = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_LC =  {
+exports.DurationSymbols_en_LC = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_LR =  {
+exports.DurationSymbols_en_LR = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_LS =  {
+exports.DurationSymbols_en_LS = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_MG =  {
+exports.DurationSymbols_en_MG = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
@@ -3422,41 +3421,41 @@ exports.DurationSymbols_en_MG =  {
 exports.DurationSymbols_en_MH = DurationSymbols.DurationSymbols_en;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_MO =  {
+exports.DurationSymbols_en_MO = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
@@ -3464,548 +3463,548 @@ exports.DurationSymbols_en_MO =  {
 exports.DurationSymbols_en_MP = DurationSymbols.DurationSymbols_en;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_MS =  {
+exports.DurationSymbols_en_MS = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_MT =  {
+exports.DurationSymbols_en_MT = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_MU =  {
+exports.DurationSymbols_en_MU = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_MV =  {
+exports.DurationSymbols_en_MV = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_MW =  {
+exports.DurationSymbols_en_MW = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_MY =  {
+exports.DurationSymbols_en_MY = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_NA =  {
+exports.DurationSymbols_en_NA = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_NF =  {
+exports.DurationSymbols_en_NF = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_NG =  {
+exports.DurationSymbols_en_NG = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_NL =  {
+exports.DurationSymbols_en_NL = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_NR =  {
+exports.DurationSymbols_en_NR = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_NU =  {
+exports.DurationSymbols_en_NU = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_NZ =  {
+exports.DurationSymbols_en_NZ = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_PG =  {
+exports.DurationSymbols_en_PG = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
@@ -4013,80 +4012,80 @@ exports.DurationSymbols_en_PG =  {
 exports.DurationSymbols_en_PH = DurationSymbols.DurationSymbols_en;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_PK =  {
+exports.DurationSymbols_en_PK = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_PN =  {
+exports.DurationSymbols_en_PN = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
@@ -4094,743 +4093,743 @@ exports.DurationSymbols_en_PN =  {
 exports.DurationSymbols_en_PR = DurationSymbols.DurationSymbols_en;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_PW =  {
+exports.DurationSymbols_en_PW = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_RW =  {
+exports.DurationSymbols_en_RW = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_SB =  {
+exports.DurationSymbols_en_SB = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_SC =  {
+exports.DurationSymbols_en_SC = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_SD =  {
+exports.DurationSymbols_en_SD = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_SE =  {
+exports.DurationSymbols_en_SE = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_SH =  {
+exports.DurationSymbols_en_SH = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_SI =  {
+exports.DurationSymbols_en_SI = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_SL =  {
+exports.DurationSymbols_en_SL = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_SS =  {
+exports.DurationSymbols_en_SS = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_SX =  {
+exports.DurationSymbols_en_SX = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_SZ =  {
+exports.DurationSymbols_en_SZ = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_TC =  {
+exports.DurationSymbols_en_TC = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_TK =  {
+exports.DurationSymbols_en_TK = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_TO =  {
+exports.DurationSymbols_en_TO = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_TT =  {
+exports.DurationSymbols_en_TT = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_TV =  {
+exports.DurationSymbols_en_TV = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_TZ =  {
+exports.DurationSymbols_en_TZ = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_UG =  {
+exports.DurationSymbols_en_UG = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
@@ -4841,80 +4840,80 @@ exports.DurationSymbols_en_UM = DurationSymbols.DurationSymbols_en;
 exports.DurationSymbols_en_US_POSIX = DurationSymbols.DurationSymbols_en;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_VC =  {
+exports.DurationSymbols_en_VC = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_VG =  {
+exports.DurationSymbols_en_VG = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
@@ -4922,236 +4921,236 @@ exports.DurationSymbols_en_VG =  {
 exports.DurationSymbols_en_VI = DurationSymbols.DurationSymbols_en;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_VU =  {
+exports.DurationSymbols_en_VU = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_WS =  {
+exports.DurationSymbols_en_WS = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_XA =  {
+exports.DurationSymbols_en_XA = {
   DAY: {
-    LONG: "one{[# ðåý one two]}other{[# ðåýš one two]}",
-    SHORT: "one{[# ðåý one two]}other{[# ðåýš one two]}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{[# ðåý one two]}other{[# ðåýš one two]}',
+    SHORT: 'one{[# ðåý one two]}other{[# ðåýš one two]}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{[# ĥöûŕ one two]}other{[# ĥöûŕš one two]}",
-    SHORT: "one{[# ĥŕ one]}other{[# ĥŕ one]}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{[# ĥöûŕ one two]}other{[# ĥöûŕš one two]}',
+    SHORT: 'one{[# ĥŕ one]}other{[# ĥŕ one]}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{[# ɱîñûţé one two]}other{[# ɱîñûţéš one two]}",
-    SHORT: "one{[# ɱîñ one two]}other{[# ɱîñ one two]}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{[# ɱîñûţé one two]}other{[# ɱîñûţéš one two]}',
+    SHORT: 'one{[# ɱîñ one two]}other{[# ɱîñ one two]}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{[# ɱöñţĥ one two]}other{[# ɱöñţĥš one two]}",
-    SHORT: "one{[# ɱţĥ one two]}other{[# ɱţĥš one two]}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{[# ɱöñţĥ one two]}other{[# ɱöñţĥš one two]}',
+    SHORT: 'one{[# ɱţĥ one two]}other{[# ɱţĥš one two]}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{[# šéçöñð one two]}other{[# šéçöñðš one two]}",
-    SHORT: "one{[# šéç one two]}other{[# šéç one two]}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{[# šéçöñð one two]}other{[# šéçöñðš one two]}',
+    SHORT: 'one{[# šéç one two]}other{[# šéç one two]}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{[# ŵééķ one two]}other{[# ŵééķš one two]}",
-    SHORT: "one{[# ŵķ one]}other{[# ŵķš one two]}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{[# ŵééķ one two]}other{[# ŵééķš one two]}',
+    SHORT: 'one{[# ŵķ one]}other{[# ŵķš one two]}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{[# ýéåŕ one two]}other{[# ýéåŕš one two]}",
-    SHORT: "one{[# ýŕ one]}other{[# ýŕš one two]}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{[# ýéåŕ one two]}other{[# ýéåŕš one two]}',
+    SHORT: 'one{[# ýŕ one]}other{[# ýŕš one two]}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_ZM =  {
+exports.DurationSymbols_en_ZM = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_en_ZW =  {
+exports.DurationSymbols_en_ZW = {
   DAY: {
-    LONG: "one{# day}other{# days}",
-    SHORT: "one{# day}other{# days}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# day}other{# days}',
+    SHORT: 'one{# day}other{# days}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hour}other{# hours}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hour}other{# hours}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# year}other{# years}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# year}other{# years}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_eo =  {
+exports.DurationSymbols_eo = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "one{# mon.}other{# mon.}",
-    SHORT: "one{# mon.}other{# mon.}",
-    NARROW: "one{# mon.}other{# mon.}",
+    LONG: 'one{# mon.}other{# mon.}',
+    SHORT: 'one{# mon.}other{# mon.}',
+    NARROW: 'one{# mon.}other{# mon.}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -5159,353 +5158,353 @@ exports.DurationSymbols_eo =  {
 exports.DurationSymbols_eo_001 = exports.DurationSymbols_eo;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_AR =  {
+exports.DurationSymbols_es_AR = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# d.}other{# dd.}",
-    NARROW: "one{#d.}other{#dd.}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# d.}other{# dd.}',
+    NARROW: 'one{#d.}other{#dd.}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# m.}other{# mm.}",
-    NARROW: "one{#m.}other{#mm.}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# m.}other{# mm.}',
+    NARROW: 'one{#m.}other{#mm.}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# seg.}other{# seg.}",
-    NARROW: "one{#seg.}other{#seg.}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# seg.}other{# seg.}',
+    NARROW: 'one{#seg.}other{#seg.}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{#sem.}other{#sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{#sem.}other{#sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# año}other{# años}",
-    NARROW: "one{#a.}other{#a.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# año}other{# años}',
+    NARROW: 'one{#a.}other{#a.}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_BO =  {
+exports.DurationSymbols_es_BO = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# d.}other{# dd.}",
-    NARROW: "one{#d.}other{#dd.}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# d.}other{# dd.}',
+    NARROW: 'one{#d.}other{#dd.}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# m.}other{# mm.}",
-    NARROW: "one{#m.}other{#mm.}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# m.}other{# mm.}',
+    NARROW: 'one{#m.}other{#mm.}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{#sem.}other{#sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{#sem.}other{#sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# a.}other{# aa.}",
-    NARROW: "one{#a.}other{#aa.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# a.}other{# aa.}',
+    NARROW: 'one{#a.}other{#aa.}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_BR =  {
+exports.DurationSymbols_es_BR = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# d.}other{# dd.}",
-    NARROW: "one{#d.}other{#dd.}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# d.}other{# dd.}',
+    NARROW: 'one{#d.}other{#dd.}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# m.}other{# mm.}",
-    NARROW: "one{#m.}other{#mm.}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# m.}other{# mm.}',
+    NARROW: 'one{#m.}other{#mm.}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{#sem.}other{#sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{#sem.}other{#sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# a.}other{# aa.}",
-    NARROW: "one{#a.}other{#aa.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# a.}other{# aa.}',
+    NARROW: 'one{#a.}other{#aa.}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_BZ =  {
+exports.DurationSymbols_es_BZ = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# d.}other{# dd.}",
-    NARROW: "one{#d.}other{#dd.}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# d.}other{# dd.}',
+    NARROW: 'one{#d.}other{#dd.}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# m.}other{# mm.}",
-    NARROW: "one{#m.}other{#mm.}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# m.}other{# mm.}',
+    NARROW: 'one{#m.}other{#mm.}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{#sem.}other{#sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{#sem.}other{#sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# a.}other{# aa.}",
-    NARROW: "one{#a.}other{#aa.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# a.}other{# aa.}',
+    NARROW: 'one{#a.}other{#aa.}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_CL =  {
+exports.DurationSymbols_es_CL = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# d.}other{# dd.}",
-    NARROW: "one{#d.}other{#dd.}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# d.}other{# dd.}',
+    NARROW: 'one{#d.}other{#dd.}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# m.}other{# mm.}",
-    NARROW: "one{#m.}other{#mm.}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# m.}other{# mm.}',
+    NARROW: 'one{#m.}other{#mm.}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{#sem.}other{#sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{#sem.}other{#sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# a.}other{# aa.}",
-    NARROW: "one{#a.}other{#aa.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# a.}other{# aa.}',
+    NARROW: 'one{#a.}other{#aa.}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_CO =  {
+exports.DurationSymbols_es_CO = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# día}other{# días}",
-    NARROW: "one{# día}other{# días}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# día}other{# días}',
+    NARROW: 'one{# día}other{# días}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{# h}other{# h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{# h}other{# h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{# min}other{# min}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{# min}other{# min}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# mes}other{# meses}",
-    NARROW: "one{# mes}other{# meses}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# mes}other{# meses}',
+    NARROW: 'one{# mes}other{# meses}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{# s}other{# s}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{# s}other{# s}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{# sem.}other{# sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{# sem.}other{# sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# a.}other{# a.}",
-    NARROW: "one{# a.}other{# a.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# a.}other{# a.}',
+    NARROW: 'one{# a.}other{# a.}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_CR =  {
+exports.DurationSymbols_es_CR = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# d.}other{# dd.}",
-    NARROW: "one{#d.}other{#dd.}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# d.}other{# dd.}',
+    NARROW: 'one{#d.}other{#dd.}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# m.}other{# mm.}",
-    NARROW: "one{#m.}other{#mm.}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# m.}other{# mm.}',
+    NARROW: 'one{#m.}other{#mm.}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{#sem.}other{#sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{#sem.}other{#sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# a.}other{# aa.}",
-    NARROW: "one{#a.}other{#aa.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# a.}other{# aa.}',
+    NARROW: 'one{#a.}other{#aa.}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_CU =  {
+exports.DurationSymbols_es_CU = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# d.}other{# dd.}",
-    NARROW: "one{#d.}other{#dd.}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# d.}other{# dd.}',
+    NARROW: 'one{#d.}other{#dd.}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# m.}other{# mm.}",
-    NARROW: "one{#m.}other{#mm.}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# m.}other{# mm.}',
+    NARROW: 'one{#m.}other{#mm.}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{#sem.}other{#sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{#sem.}other{#sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# a.}other{# aa.}",
-    NARROW: "one{#a.}other{#aa.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# a.}other{# aa.}',
+    NARROW: 'one{#a.}other{#aa.}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_DO =  {
+exports.DurationSymbols_es_DO = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# d.}other{# dd.}",
-    NARROW: "one{#d.}other{#d.}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# d.}other{# dd.}',
+    NARROW: 'one{#d.}other{#d.}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# m.}other{# mm.}",
-    NARROW: "one{#m.}other{#m.}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# m.}other{# mm.}',
+    NARROW: 'one{#m.}other{#m.}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# seg.}other{# seg.}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# seg.}other{# seg.}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{#sem.}other{#sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{#sem.}other{#sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# a.}other{# aa.}",
-    NARROW: "one{#a.}other{#aa.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# a.}other{# aa.}',
+    NARROW: 'one{#a.}other{#aa.}',
   },
 };
 
@@ -5513,41 +5512,41 @@ exports.DurationSymbols_es_DO =  {
 exports.DurationSymbols_es_EA = DurationSymbols.DurationSymbols_es;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_EC =  {
+exports.DurationSymbols_es_EC = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# d.}other{# dd.}",
-    NARROW: "one{#d.}other{#dd.}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# d.}other{# dd.}',
+    NARROW: 'one{#d.}other{#dd.}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# m.}other{# mm.}",
-    NARROW: "one{#m.}other{#mm.}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# m.}other{# mm.}',
+    NARROW: 'one{#m.}other{#mm.}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{#sem.}other{#sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{#sem.}other{#sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# a.}other{# aa.}",
-    NARROW: "one{#a.}other{#aa.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# a.}other{# aa.}',
+    NARROW: 'one{#a.}other{#aa.}',
   },
 };
 
@@ -5555,80 +5554,80 @@ exports.DurationSymbols_es_EC =  {
 exports.DurationSymbols_es_GQ = DurationSymbols.DurationSymbols_es;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_GT =  {
+exports.DurationSymbols_es_GT = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# d.}other{# dd.}",
-    NARROW: "one{#d.}other{#dd.}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# d.}other{# dd.}',
+    NARROW: 'one{#d.}other{#dd.}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# m.}other{# mm.}",
-    NARROW: "one{#m.}other{#mm.}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# m.}other{# mm.}',
+    NARROW: 'one{#m.}other{#mm.}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{#sem.}other{#sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{#sem.}other{#sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# a.}other{# aa.}",
-    NARROW: "one{#a.}other{#aa.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# a.}other{# aa.}',
+    NARROW: 'one{#a.}other{#aa.}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_HN =  {
+exports.DurationSymbols_es_HN = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# d.}other{# dd.}",
-    NARROW: "one{#d.}other{#dd.}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# d.}other{# dd.}',
+    NARROW: 'one{#d.}other{#dd.}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# m.}other{# mm.}",
-    NARROW: "one{#m.}other{#mm.}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# m.}other{# mm.}',
+    NARROW: 'one{#m.}other{#mm.}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{#sem.}other{#sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{#sem.}other{#sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# a.}other{# aa.}",
-    NARROW: "one{#a.}other{#aa.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# a.}other{# aa.}',
+    NARROW: 'one{#a.}other{#aa.}',
   },
 };
 
@@ -5636,119 +5635,119 @@ exports.DurationSymbols_es_HN =  {
 exports.DurationSymbols_es_IC = DurationSymbols.DurationSymbols_es;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_NI =  {
+exports.DurationSymbols_es_NI = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# d.}other{# dd.}",
-    NARROW: "one{#d.}other{#dd.}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# d.}other{# dd.}',
+    NARROW: 'one{#d.}other{#dd.}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# m.}other{# mm.}",
-    NARROW: "one{#m.}other{#mm.}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# m.}other{# mm.}',
+    NARROW: 'one{#m.}other{#mm.}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{#sem.}other{#sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{#sem.}other{#sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# a.}other{# aa.}",
-    NARROW: "one{#a.}other{#aa.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# a.}other{# aa.}',
+    NARROW: 'one{#a.}other{#aa.}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_PA =  {
+exports.DurationSymbols_es_PA = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# d.}other{# dd.}",
-    NARROW: "one{#d.}other{#dd.}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# d.}other{# dd.}',
+    NARROW: 'one{#d.}other{#dd.}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# m.}other{# mm.}",
-    NARROW: "one{#m.}other{#mm.}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# m.}other{# mm.}',
+    NARROW: 'one{#m.}other{#mm.}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{#sem.}other{#sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{#sem.}other{#sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# a.}other{# aa.}",
-    NARROW: "one{#a.}other{#aa.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# a.}other{# aa.}',
+    NARROW: 'one{#a.}other{#aa.}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_PE =  {
+exports.DurationSymbols_es_PE = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# d.}other{# dd.}",
-    NARROW: "one{#d.}other{#dd.}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# d.}other{# dd.}',
+    NARROW: 'one{#d.}other{#dd.}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# m.}other{# mm.}",
-    NARROW: "one{#m.}other{#mm.}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# m.}other{# mm.}',
+    NARROW: 'one{#m.}other{#mm.}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{#sem.}other{#sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{#sem.}other{#sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# a.}other{# aa.}",
-    NARROW: "one{#a.}other{#aa.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# a.}other{# aa.}',
+    NARROW: 'one{#a.}other{#aa.}',
   },
 };
 
@@ -5756,197 +5755,197 @@ exports.DurationSymbols_es_PE =  {
 exports.DurationSymbols_es_PH = DurationSymbols.DurationSymbols_es;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_PR =  {
+exports.DurationSymbols_es_PR = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# d.}other{# dd.}",
-    NARROW: "one{#d.}other{#dd.}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# d.}other{# dd.}',
+    NARROW: 'one{#d.}other{#dd.}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# m.}other{# mm.}",
-    NARROW: "one{#m.}other{#mm.}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# m.}other{# mm.}',
+    NARROW: 'one{#m.}other{#mm.}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{#sem.}other{#sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{#sem.}other{#sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# a.}other{# aa.}",
-    NARROW: "one{#a.}other{#aa.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# a.}other{# aa.}',
+    NARROW: 'one{#a.}other{#aa.}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_PY =  {
+exports.DurationSymbols_es_PY = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# día}other{# días}",
-    NARROW: "one{#d.}other{#dd.}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# día}other{# días}',
+    NARROW: 'one{#d.}other{#dd.}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# mes}other{# meses}",
-    NARROW: "one{#m.}other{#mm.}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# mes}other{# meses}',
+    NARROW: 'one{#m.}other{#mm.}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# seg.}other{# seg.}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# seg.}other{# seg.}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{#sem.}other{#sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{#sem.}other{#sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# año}other{# años}",
-    NARROW: "one{#a.}other{#aa.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# año}other{# años}',
+    NARROW: 'one{#a.}other{#aa.}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_SV =  {
+exports.DurationSymbols_es_SV = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# d.}other{# dd.}",
-    NARROW: "one{#d.}other{#dd.}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# d.}other{# dd.}',
+    NARROW: 'one{#d.}other{#dd.}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# m.}other{# mm.}",
-    NARROW: "one{#m.}other{#mm.}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# m.}other{# mm.}',
+    NARROW: 'one{#m.}other{#mm.}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{#sem.}other{#sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{#sem.}other{#sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# a.}other{# aa.}",
-    NARROW: "one{#a.}other{#aa.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# a.}other{# aa.}',
+    NARROW: 'one{#a.}other{#aa.}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_UY =  {
+exports.DurationSymbols_es_UY = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# d.}other{# dd.}",
-    NARROW: "one{#d.}other{#dd.}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# d.}other{# dd.}',
+    NARROW: 'one{#d.}other{#dd.}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# m.}other{# mm.}",
-    NARROW: "one{#m.}other{#mm.}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# m.}other{# mm.}',
+    NARROW: 'one{#m.}other{#mm.}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{#sem.}other{#sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{#sem.}other{#sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# a.}other{# aa.}",
-    NARROW: "one{#a.}other{#aa.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# a.}other{# aa.}',
+    NARROW: 'one{#a.}other{#aa.}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_es_VE =  {
+exports.DurationSymbols_es_VE = {
   DAY: {
-    LONG: "one{# día}other{# días}",
-    SHORT: "one{# d.}other{# dd.}",
-    NARROW: "one{#d.}other{#dd.}",
+    LONG: 'one{# día}other{# días}',
+    SHORT: 'one{# d.}other{# dd.}',
+    NARROW: 'one{#d.}other{#dd.}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuto}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuto}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mes}other{# meses}",
-    SHORT: "one{# m.}other{# mm.}",
-    NARROW: "one{#m.}other{#mm.}",
+    LONG: 'one{# mes}other{# meses}',
+    SHORT: 'one{# m.}other{# mm.}',
+    NARROW: 'one{#m.}other{#mm.}',
   },
   SECOND: {
-    LONG: "one{# segundo}other{# segundos}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# segundo}other{# segundos}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# semana}other{# semanas}",
-    SHORT: "one{# sem.}other{# sems.}",
-    NARROW: "one{#sem.}other{#sems.}",
+    LONG: 'one{# semana}other{# semanas}',
+    SHORT: 'one{# sem.}other{# sems.}',
+    NARROW: 'one{#sem.}other{#sems.}',
   },
   YEAR: {
-    LONG: "one{# año}other{# años}",
-    SHORT: "one{# a.}other{# aa.}",
-    NARROW: "one{#a.}other{#aa.}",
+    LONG: 'one{# año}other{# años}',
+    SHORT: 'one{# a.}other{# aa.}',
+    NARROW: 'one{#a.}other{#aa.}',
   },
 };
 
@@ -5957,41 +5956,41 @@ exports.DurationSymbols_et_EE = DurationSymbols.DurationSymbols_et;
 exports.DurationSymbols_eu_ES = DurationSymbols.DurationSymbols_eu;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ewo =  {
+exports.DurationSymbols_ewo = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -6005,548 +6004,548 @@ exports.DurationSymbols_fa_AF = DurationSymbols.DurationSymbols_fa;
 exports.DurationSymbols_fa_IR = DurationSymbols.DurationSymbols_fa;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ff =  {
+exports.DurationSymbols_ff = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ff_Adlm =  {
+exports.DurationSymbols_ff_Adlm = {
   DAY: {
-    LONG: "one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}",
-    SHORT: "one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}",
-    NARROW: "one{#𞤻}other{#𞤻}",
+    LONG: 'one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}',
+    SHORT: 'one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}',
+    NARROW: 'one{#𞤻}other{#𞤻}',
   },
   HOUR: {
-    LONG: "one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}",
-    SHORT: "one{# 𞤶𞤢}other{# 𞤶𞤢}",
-    NARROW: "one{#𞤶}other{#𞤶}",
+    LONG: 'one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}',
+    SHORT: 'one{# 𞤶𞤢}other{# 𞤶𞤢}',
+    NARROW: 'one{#𞤶}other{#𞤶}',
   },
   MINUTE: {
-    LONG: "one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}",
-    SHORT: "one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}",
-    NARROW: "one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}",
+    LONG: 'one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}',
+    SHORT: 'one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}',
+    NARROW: 'one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}',
   },
   MONTH: {
-    LONG: "one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}",
-    SHORT: "one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}",
-    NARROW: "one{# 𞤤}other{# 𞤤}",
+    LONG: 'one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}',
+    SHORT: 'one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}',
+    NARROW: 'one{# 𞤤}other{# 𞤤}',
   },
   SECOND: {
-    LONG: "one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}",
-    SHORT: "one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}",
-    NARROW: "one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}",
+    LONG: 'one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}',
+    SHORT: 'one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}',
+    NARROW: 'one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}',
   },
   WEEK: {
-    LONG: "one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}",
-    SHORT: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
-    NARROW: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
+    LONG: 'one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}',
+    SHORT: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
+    NARROW: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
   },
   YEAR: {
-    LONG: "one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}",
-    SHORT: "one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}",
-    NARROW: "one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}",
+    LONG: 'one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}',
+    SHORT: 'one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}',
+    NARROW: 'one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ff_Adlm_BF =  {
+exports.DurationSymbols_ff_Adlm_BF = {
   DAY: {
-    LONG: "one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}",
-    SHORT: "one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}",
-    NARROW: "one{#𞤻}other{#𞤻}",
+    LONG: 'one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}',
+    SHORT: 'one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}',
+    NARROW: 'one{#𞤻}other{#𞤻}',
   },
   HOUR: {
-    LONG: "one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}",
-    SHORT: "one{# 𞤶𞤢}other{# 𞤶𞤢}",
-    NARROW: "one{#𞤶}other{#𞤶}",
+    LONG: 'one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}',
+    SHORT: 'one{# 𞤶𞤢}other{# 𞤶𞤢}',
+    NARROW: 'one{#𞤶}other{#𞤶}',
   },
   MINUTE: {
-    LONG: "one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}",
-    SHORT: "one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}",
-    NARROW: "one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}",
+    LONG: 'one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}',
+    SHORT: 'one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}',
+    NARROW: 'one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}',
   },
   MONTH: {
-    LONG: "one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}",
-    SHORT: "one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}",
-    NARROW: "one{# 𞤤}other{# 𞤤}",
+    LONG: 'one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}',
+    SHORT: 'one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}',
+    NARROW: 'one{# 𞤤}other{# 𞤤}',
   },
   SECOND: {
-    LONG: "one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}",
-    SHORT: "one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}",
-    NARROW: "one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}",
+    LONG: 'one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}',
+    SHORT: 'one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}',
+    NARROW: 'one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}',
   },
   WEEK: {
-    LONG: "one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}",
-    SHORT: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
-    NARROW: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
+    LONG: 'one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}',
+    SHORT: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
+    NARROW: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
   },
   YEAR: {
-    LONG: "one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}",
-    SHORT: "one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}",
-    NARROW: "one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}",
+    LONG: 'one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}',
+    SHORT: 'one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}',
+    NARROW: 'one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ff_Adlm_CM =  {
+exports.DurationSymbols_ff_Adlm_CM = {
   DAY: {
-    LONG: "one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}",
-    SHORT: "one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}",
-    NARROW: "one{#𞤻}other{#𞤻}",
+    LONG: 'one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}',
+    SHORT: 'one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}',
+    NARROW: 'one{#𞤻}other{#𞤻}',
   },
   HOUR: {
-    LONG: "one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}",
-    SHORT: "one{# 𞤶𞤢}other{# 𞤶𞤢}",
-    NARROW: "one{#𞤶}other{#𞤶}",
+    LONG: 'one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}',
+    SHORT: 'one{# 𞤶𞤢}other{# 𞤶𞤢}',
+    NARROW: 'one{#𞤶}other{#𞤶}',
   },
   MINUTE: {
-    LONG: "one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}",
-    SHORT: "one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}",
-    NARROW: "one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}",
+    LONG: 'one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}',
+    SHORT: 'one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}',
+    NARROW: 'one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}',
   },
   MONTH: {
-    LONG: "one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}",
-    SHORT: "one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}",
-    NARROW: "one{# 𞤤}other{# 𞤤}",
+    LONG: 'one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}',
+    SHORT: 'one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}',
+    NARROW: 'one{# 𞤤}other{# 𞤤}',
   },
   SECOND: {
-    LONG: "one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}",
-    SHORT: "one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}",
-    NARROW: "one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}",
+    LONG: 'one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}',
+    SHORT: 'one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}',
+    NARROW: 'one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}',
   },
   WEEK: {
-    LONG: "one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}",
-    SHORT: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
-    NARROW: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
+    LONG: 'one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}',
+    SHORT: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
+    NARROW: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
   },
   YEAR: {
-    LONG: "one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}",
-    SHORT: "one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}",
-    NARROW: "one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}",
+    LONG: 'one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}',
+    SHORT: 'one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}',
+    NARROW: 'one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ff_Adlm_GH =  {
+exports.DurationSymbols_ff_Adlm_GH = {
   DAY: {
-    LONG: "one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}",
-    SHORT: "one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}",
-    NARROW: "one{#𞤻}other{#𞤻}",
+    LONG: 'one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}',
+    SHORT: 'one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}',
+    NARROW: 'one{#𞤻}other{#𞤻}',
   },
   HOUR: {
-    LONG: "one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}",
-    SHORT: "one{# 𞤶𞤢}other{# 𞤶𞤢}",
-    NARROW: "one{#𞤶}other{#𞤶}",
+    LONG: 'one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}',
+    SHORT: 'one{# 𞤶𞤢}other{# 𞤶𞤢}',
+    NARROW: 'one{#𞤶}other{#𞤶}',
   },
   MINUTE: {
-    LONG: "one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}",
-    SHORT: "one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}",
-    NARROW: "one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}",
+    LONG: 'one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}',
+    SHORT: 'one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}',
+    NARROW: 'one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}',
   },
   MONTH: {
-    LONG: "one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}",
-    SHORT: "one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}",
-    NARROW: "one{# 𞤤}other{# 𞤤}",
+    LONG: 'one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}',
+    SHORT: 'one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}',
+    NARROW: 'one{# 𞤤}other{# 𞤤}',
   },
   SECOND: {
-    LONG: "one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}",
-    SHORT: "one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}",
-    NARROW: "one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}",
+    LONG: 'one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}',
+    SHORT: 'one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}',
+    NARROW: 'one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}',
   },
   WEEK: {
-    LONG: "one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}",
-    SHORT: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
-    NARROW: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
+    LONG: 'one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}',
+    SHORT: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
+    NARROW: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
   },
   YEAR: {
-    LONG: "one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}",
-    SHORT: "one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}",
-    NARROW: "one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}",
+    LONG: 'one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}',
+    SHORT: 'one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}',
+    NARROW: 'one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ff_Adlm_GM =  {
+exports.DurationSymbols_ff_Adlm_GM = {
   DAY: {
-    LONG: "one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}",
-    SHORT: "one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}",
-    NARROW: "one{#𞤻}other{#𞤻}",
+    LONG: 'one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}',
+    SHORT: 'one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}',
+    NARROW: 'one{#𞤻}other{#𞤻}',
   },
   HOUR: {
-    LONG: "one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}",
-    SHORT: "one{# 𞤶𞤢}other{# 𞤶𞤢}",
-    NARROW: "one{#𞤶}other{#𞤶}",
+    LONG: 'one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}',
+    SHORT: 'one{# 𞤶𞤢}other{# 𞤶𞤢}',
+    NARROW: 'one{#𞤶}other{#𞤶}',
   },
   MINUTE: {
-    LONG: "one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}",
-    SHORT: "one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}",
-    NARROW: "one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}",
+    LONG: 'one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}',
+    SHORT: 'one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}',
+    NARROW: 'one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}',
   },
   MONTH: {
-    LONG: "one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}",
-    SHORT: "one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}",
-    NARROW: "one{# 𞤤}other{# 𞤤}",
+    LONG: 'one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}',
+    SHORT: 'one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}',
+    NARROW: 'one{# 𞤤}other{# 𞤤}',
   },
   SECOND: {
-    LONG: "one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}",
-    SHORT: "one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}",
-    NARROW: "one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}",
+    LONG: 'one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}',
+    SHORT: 'one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}',
+    NARROW: 'one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}',
   },
   WEEK: {
-    LONG: "one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}",
-    SHORT: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
-    NARROW: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
+    LONG: 'one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}',
+    SHORT: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
+    NARROW: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
   },
   YEAR: {
-    LONG: "one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}",
-    SHORT: "one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}",
-    NARROW: "one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}",
+    LONG: 'one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}',
+    SHORT: 'one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}',
+    NARROW: 'one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ff_Adlm_GN =  {
+exports.DurationSymbols_ff_Adlm_GN = {
   DAY: {
-    LONG: "one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}",
-    SHORT: "one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}",
-    NARROW: "one{#𞤻}other{#𞤻}",
+    LONG: 'one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}',
+    SHORT: 'one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}',
+    NARROW: 'one{#𞤻}other{#𞤻}',
   },
   HOUR: {
-    LONG: "one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}",
-    SHORT: "one{# 𞤶𞤢}other{# 𞤶𞤢}",
-    NARROW: "one{#𞤶}other{#𞤶}",
+    LONG: 'one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}',
+    SHORT: 'one{# 𞤶𞤢}other{# 𞤶𞤢}',
+    NARROW: 'one{#𞤶}other{#𞤶}',
   },
   MINUTE: {
-    LONG: "one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}",
-    SHORT: "one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}",
-    NARROW: "one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}",
+    LONG: 'one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}',
+    SHORT: 'one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}',
+    NARROW: 'one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}',
   },
   MONTH: {
-    LONG: "one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}",
-    SHORT: "one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}",
-    NARROW: "one{# 𞤤}other{# 𞤤}",
+    LONG: 'one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}',
+    SHORT: 'one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}',
+    NARROW: 'one{# 𞤤}other{# 𞤤}',
   },
   SECOND: {
-    LONG: "one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}",
-    SHORT: "one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}",
-    NARROW: "one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}",
+    LONG: 'one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}',
+    SHORT: 'one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}',
+    NARROW: 'one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}',
   },
   WEEK: {
-    LONG: "one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}",
-    SHORT: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
-    NARROW: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
+    LONG: 'one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}',
+    SHORT: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
+    NARROW: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
   },
   YEAR: {
-    LONG: "one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}",
-    SHORT: "one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}",
-    NARROW: "one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}",
+    LONG: 'one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}',
+    SHORT: 'one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}',
+    NARROW: 'one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ff_Adlm_GW =  {
+exports.DurationSymbols_ff_Adlm_GW = {
   DAY: {
-    LONG: "one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}",
-    SHORT: "one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}",
-    NARROW: "one{#𞤻}other{#𞤻}",
+    LONG: 'one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}',
+    SHORT: 'one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}',
+    NARROW: 'one{#𞤻}other{#𞤻}',
   },
   HOUR: {
-    LONG: "one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}",
-    SHORT: "one{# 𞤶𞤢}other{# 𞤶𞤢}",
-    NARROW: "one{#𞤶}other{#𞤶}",
+    LONG: 'one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}',
+    SHORT: 'one{# 𞤶𞤢}other{# 𞤶𞤢}',
+    NARROW: 'one{#𞤶}other{#𞤶}',
   },
   MINUTE: {
-    LONG: "one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}",
-    SHORT: "one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}",
-    NARROW: "one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}",
+    LONG: 'one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}',
+    SHORT: 'one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}',
+    NARROW: 'one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}',
   },
   MONTH: {
-    LONG: "one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}",
-    SHORT: "one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}",
-    NARROW: "one{# 𞤤}other{# 𞤤}",
+    LONG: 'one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}',
+    SHORT: 'one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}',
+    NARROW: 'one{# 𞤤}other{# 𞤤}',
   },
   SECOND: {
-    LONG: "one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}",
-    SHORT: "one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}",
-    NARROW: "one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}",
+    LONG: 'one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}',
+    SHORT: 'one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}',
+    NARROW: 'one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}',
   },
   WEEK: {
-    LONG: "one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}",
-    SHORT: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
-    NARROW: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
+    LONG: 'one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}',
+    SHORT: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
+    NARROW: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
   },
   YEAR: {
-    LONG: "one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}",
-    SHORT: "one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}",
-    NARROW: "one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}",
+    LONG: 'one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}',
+    SHORT: 'one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}',
+    NARROW: 'one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ff_Adlm_LR =  {
+exports.DurationSymbols_ff_Adlm_LR = {
   DAY: {
-    LONG: "one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}",
-    SHORT: "one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}",
-    NARROW: "one{#𞤻}other{#𞤻}",
+    LONG: 'one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}',
+    SHORT: 'one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}',
+    NARROW: 'one{#𞤻}other{#𞤻}',
   },
   HOUR: {
-    LONG: "one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}",
-    SHORT: "one{# 𞤶𞤢}other{# 𞤶𞤢}",
-    NARROW: "one{#𞤶}other{#𞤶}",
+    LONG: 'one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}',
+    SHORT: 'one{# 𞤶𞤢}other{# 𞤶𞤢}',
+    NARROW: 'one{#𞤶}other{#𞤶}',
   },
   MINUTE: {
-    LONG: "one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}",
-    SHORT: "one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}",
-    NARROW: "one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}",
+    LONG: 'one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}',
+    SHORT: 'one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}',
+    NARROW: 'one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}',
   },
   MONTH: {
-    LONG: "one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}",
-    SHORT: "one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}",
-    NARROW: "one{# 𞤤}other{# 𞤤}",
+    LONG: 'one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}',
+    SHORT: 'one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}',
+    NARROW: 'one{# 𞤤}other{# 𞤤}',
   },
   SECOND: {
-    LONG: "one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}",
-    SHORT: "one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}",
-    NARROW: "one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}",
+    LONG: 'one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}',
+    SHORT: 'one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}',
+    NARROW: 'one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}',
   },
   WEEK: {
-    LONG: "one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}",
-    SHORT: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
-    NARROW: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
+    LONG: 'one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}',
+    SHORT: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
+    NARROW: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
   },
   YEAR: {
-    LONG: "one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}",
-    SHORT: "one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}",
-    NARROW: "one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}",
+    LONG: 'one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}',
+    SHORT: 'one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}',
+    NARROW: 'one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ff_Adlm_MR =  {
+exports.DurationSymbols_ff_Adlm_MR = {
   DAY: {
-    LONG: "one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}",
-    SHORT: "one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}",
-    NARROW: "one{#𞤻}other{#𞤻}",
+    LONG: 'one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}',
+    SHORT: 'one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}',
+    NARROW: 'one{#𞤻}other{#𞤻}',
   },
   HOUR: {
-    LONG: "one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}",
-    SHORT: "one{# 𞤶𞤢}other{# 𞤶𞤢}",
-    NARROW: "one{#𞤶}other{#𞤶}",
+    LONG: 'one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}',
+    SHORT: 'one{# 𞤶𞤢}other{# 𞤶𞤢}',
+    NARROW: 'one{#𞤶}other{#𞤶}',
   },
   MINUTE: {
-    LONG: "one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}",
-    SHORT: "one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}",
-    NARROW: "one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}",
+    LONG: 'one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}',
+    SHORT: 'one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}',
+    NARROW: 'one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}',
   },
   MONTH: {
-    LONG: "one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}",
-    SHORT: "one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}",
-    NARROW: "one{# 𞤤}other{# 𞤤}",
+    LONG: 'one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}',
+    SHORT: 'one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}',
+    NARROW: 'one{# 𞤤}other{# 𞤤}',
   },
   SECOND: {
-    LONG: "one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}",
-    SHORT: "one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}",
-    NARROW: "one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}",
+    LONG: 'one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}',
+    SHORT: 'one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}',
+    NARROW: 'one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}',
   },
   WEEK: {
-    LONG: "one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}",
-    SHORT: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
-    NARROW: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
+    LONG: 'one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}',
+    SHORT: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
+    NARROW: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
   },
   YEAR: {
-    LONG: "one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}",
-    SHORT: "one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}",
-    NARROW: "one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}",
+    LONG: 'one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}',
+    SHORT: 'one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}',
+    NARROW: 'one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ff_Adlm_NE =  {
+exports.DurationSymbols_ff_Adlm_NE = {
   DAY: {
-    LONG: "one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}",
-    SHORT: "one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}",
-    NARROW: "one{#𞤻}other{#𞤻}",
+    LONG: 'one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}',
+    SHORT: 'one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}',
+    NARROW: 'one{#𞤻}other{#𞤻}',
   },
   HOUR: {
-    LONG: "one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}",
-    SHORT: "one{# 𞤶𞤢}other{# 𞤶𞤢}",
-    NARROW: "one{#𞤶}other{#𞤶}",
+    LONG: 'one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}',
+    SHORT: 'one{# 𞤶𞤢}other{# 𞤶𞤢}',
+    NARROW: 'one{#𞤶}other{#𞤶}',
   },
   MINUTE: {
-    LONG: "one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}",
-    SHORT: "one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}",
-    NARROW: "one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}",
+    LONG: 'one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}',
+    SHORT: 'one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}',
+    NARROW: 'one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}',
   },
   MONTH: {
-    LONG: "one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}",
-    SHORT: "one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}",
-    NARROW: "one{# 𞤤}other{# 𞤤}",
+    LONG: 'one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}',
+    SHORT: 'one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}',
+    NARROW: 'one{# 𞤤}other{# 𞤤}',
   },
   SECOND: {
-    LONG: "one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}",
-    SHORT: "one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}",
-    NARROW: "one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}",
+    LONG: 'one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}',
+    SHORT: 'one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}',
+    NARROW: 'one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}',
   },
   WEEK: {
-    LONG: "one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}",
-    SHORT: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
-    NARROW: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
+    LONG: 'one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}',
+    SHORT: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
+    NARROW: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
   },
   YEAR: {
-    LONG: "one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}",
-    SHORT: "one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}",
-    NARROW: "one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}",
+    LONG: 'one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}',
+    SHORT: 'one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}',
+    NARROW: 'one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ff_Adlm_NG =  {
+exports.DurationSymbols_ff_Adlm_NG = {
   DAY: {
-    LONG: "one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}",
-    SHORT: "one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}",
-    NARROW: "one{#𞤻}other{#𞤻}",
+    LONG: 'one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}',
+    SHORT: 'one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}',
+    NARROW: 'one{#𞤻}other{#𞤻}',
   },
   HOUR: {
-    LONG: "one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}",
-    SHORT: "one{# 𞤶𞤢}other{# 𞤶𞤢}",
-    NARROW: "one{#𞤶}other{#𞤶}",
+    LONG: 'one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}',
+    SHORT: 'one{# 𞤶𞤢}other{# 𞤶𞤢}',
+    NARROW: 'one{#𞤶}other{#𞤶}',
   },
   MINUTE: {
-    LONG: "one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}",
-    SHORT: "one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}",
-    NARROW: "one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}",
+    LONG: 'one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}',
+    SHORT: 'one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}',
+    NARROW: 'one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}',
   },
   MONTH: {
-    LONG: "one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}",
-    SHORT: "one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}",
-    NARROW: "one{# 𞤤}other{# 𞤤}",
+    LONG: 'one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}',
+    SHORT: 'one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}',
+    NARROW: 'one{# 𞤤}other{# 𞤤}',
   },
   SECOND: {
-    LONG: "one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}",
-    SHORT: "one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}",
-    NARROW: "one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}",
+    LONG: 'one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}',
+    SHORT: 'one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}',
+    NARROW: 'one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}',
   },
   WEEK: {
-    LONG: "one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}",
-    SHORT: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
-    NARROW: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
+    LONG: 'one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}',
+    SHORT: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
+    NARROW: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
   },
   YEAR: {
-    LONG: "one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}",
-    SHORT: "one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}",
-    NARROW: "one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}",
+    LONG: 'one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}',
+    SHORT: 'one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}',
+    NARROW: 'one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ff_Adlm_SL =  {
+exports.DurationSymbols_ff_Adlm_SL = {
   DAY: {
-    LONG: "one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}",
-    SHORT: "one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}",
-    NARROW: "one{#𞤻}other{#𞤻}",
+    LONG: 'one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}',
+    SHORT: 'one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}',
+    NARROW: 'one{#𞤻}other{#𞤻}',
   },
   HOUR: {
-    LONG: "one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}",
-    SHORT: "one{# 𞤶𞤢}other{# 𞤶𞤢}",
-    NARROW: "one{#𞤶}other{#𞤶}",
+    LONG: 'one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}',
+    SHORT: 'one{# 𞤶𞤢}other{# 𞤶𞤢}',
+    NARROW: 'one{#𞤶}other{#𞤶}',
   },
   MINUTE: {
-    LONG: "one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}",
-    SHORT: "one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}",
-    NARROW: "one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}",
+    LONG: 'one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}',
+    SHORT: 'one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}',
+    NARROW: 'one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}',
   },
   MONTH: {
-    LONG: "one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}",
-    SHORT: "one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}",
-    NARROW: "one{# 𞤤}other{# 𞤤}",
+    LONG: 'one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}',
+    SHORT: 'one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}',
+    NARROW: 'one{# 𞤤}other{# 𞤤}',
   },
   SECOND: {
-    LONG: "one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}",
-    SHORT: "one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}",
-    NARROW: "one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}",
+    LONG: 'one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}',
+    SHORT: 'one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}',
+    NARROW: 'one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}',
   },
   WEEK: {
-    LONG: "one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}",
-    SHORT: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
-    NARROW: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
+    LONG: 'one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}',
+    SHORT: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
+    NARROW: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
   },
   YEAR: {
-    LONG: "one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}",
-    SHORT: "one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}",
-    NARROW: "one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}",
+    LONG: 'one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}',
+    SHORT: 'one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}',
+    NARROW: 'one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ff_Adlm_SN =  {
+exports.DurationSymbols_ff_Adlm_SN = {
   DAY: {
-    LONG: "one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}",
-    SHORT: "one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}",
-    NARROW: "one{#𞤻}other{#𞤻}",
+    LONG: 'one{# 𞤻𞤢𞤤𞥆𞤢𞤤}other{# 𞤻𞤢𞤤𞥆𞤫}',
+    SHORT: 'one{# 𞤻𞤢𞤤.}other{# 𞤻𞤢𞤤.}',
+    NARROW: 'one{#𞤻}other{#𞤻}',
   },
   HOUR: {
-    LONG: "one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}",
-    SHORT: "one{# 𞤶𞤢}other{# 𞤶𞤢}",
-    NARROW: "one{#𞤶}other{#𞤶}",
+    LONG: 'one{# 𞤲𞤶𞤢𞤥𞤲𞤣𞤭}other{# 𞤲𞤶𞤢𞤥𞤤𞤭}',
+    SHORT: 'one{# 𞤶𞤢}other{# 𞤶𞤢}',
+    NARROW: 'one{#𞤶}other{#𞤶}',
   },
   MINUTE: {
-    LONG: "one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}",
-    SHORT: "one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}",
-    NARROW: "one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}",
+    LONG: 'one{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫}other{# 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤶𞤫}',
+    SHORT: 'one{# 𞤸𞤮𞤶}other{# 𞤸𞤮𞤶}',
+    NARROW: 'one{#𞤸𞤮𞤶}other{#𞤸𞤮𞤶}',
   },
   MONTH: {
-    LONG: "one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}",
-    SHORT: "one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}",
-    NARROW: "one{# 𞤤}other{# 𞤤}",
+    LONG: 'one{# 𞤤𞤫𞤱𞤪𞤵}other{# 𞤤𞤫𞤦𞥆𞤭}',
+    SHORT: 'one{#/𞤤𞤫𞤱}other{# 𞤤𞤫𞤦}',
+    NARROW: 'one{# 𞤤}other{# 𞤤}',
   },
   SECOND: {
-    LONG: "one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}",
-    SHORT: "one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}",
-    NARROW: "one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}",
+    LONG: 'one{# 𞤳𞤭𞤲𞤰𞤮}other{# 𞤳𞤭𞤲𞤰𞤫}',
+    SHORT: 'one{# 𞤳𞤭𞤲}other{# 𞤳𞤭𞤲}',
+    NARROW: 'one{#𞤳𞤭𞤲}other{#𞤳𞤭𞤲}',
   },
   WEEK: {
-    LONG: "one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}",
-    SHORT: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
-    NARROW: "one{# 𞤴𞤼}other{# 𞤶𞤼}",
+    LONG: 'one{# 𞤴𞤮𞤲𞤼𞤫𞤪𞤫}other{# 𞤶𞤮𞤲𞤼𞤫}',
+    SHORT: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
+    NARROW: 'one{# 𞤴𞤼}other{# 𞤶𞤼}',
   },
   YEAR: {
-    LONG: "one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}",
-    SHORT: "one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}",
-    NARROW: "one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}",
+    LONG: 'one{# 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫}other{# 𞤳𞤭𞤼𞤢𞥄𞤯𞤫}',
+    SHORT: 'one{# 𞤸𞤭𞤼}other{# 𞤳𞤭𞤼}',
+    NARROW: 'one{# 𞤳𞤭𞤼}other{#/𞤳𞤭𞤼}',
   },
 };
 
@@ -6596,41 +6595,41 @@ exports.DurationSymbols_fi_FI = DurationSymbols.DurationSymbols_fi;
 exports.DurationSymbols_fil_PH = DurationSymbols.DurationSymbols_fil;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_fo =  {
+exports.DurationSymbols_fo = {
   DAY: {
-    LONG: "one{# dagur}other{# dagar}",
-    SHORT: "one{# d.}other{# d.}",
-    NARROW: "one{#d.}other{#d.}",
+    LONG: 'one{# dagur}other{# dagar}',
+    SHORT: 'one{# d.}other{# d.}',
+    NARROW: 'one{#d.}other{#d.}',
   },
   HOUR: {
-    LONG: "one{# tími}other{# tímar}",
-    SHORT: "one{# t.}other{# t.}",
-    NARROW: "one{#t.}other{#t.}",
+    LONG: 'one{# tími}other{# tímar}',
+    SHORT: 'one{# t.}other{# t.}',
+    NARROW: 'one{#t.}other{#t.}',
   },
   MINUTE: {
-    LONG: "one{# minuttur}other{# minuttir}",
-    SHORT: "one{# min.}other{# min.}",
-    NARROW: "one{#m.}other{#m.}",
+    LONG: 'one{# minuttur}other{# minuttir}',
+    SHORT: 'one{# min.}other{# min.}',
+    NARROW: 'one{#m.}other{#m.}',
   },
   MONTH: {
-    LONG: "one{# mánaður}other{# mánaðir}",
-    SHORT: "one{# mnð.}other{# mnð.}",
-    NARROW: "one{#m.}other{#m.}",
+    LONG: 'one{# mánaður}other{# mánaðir}',
+    SHORT: 'one{# mnð.}other{# mnð.}',
+    NARROW: 'one{#m.}other{#m.}',
   },
   SECOND: {
-    LONG: "one{# sekund}other{# sekundir}",
-    SHORT: "one{# sek.}other{# sek.}",
-    NARROW: "one{#s.}other{#s.}",
+    LONG: 'one{# sekund}other{# sekundir}',
+    SHORT: 'one{# sek.}other{# sek.}',
+    NARROW: 'one{#s.}other{#s.}',
   },
   WEEK: {
-    LONG: "one{# vika}other{# vikur}",
-    SHORT: "one{# vi.}other{# vi.}",
-    NARROW: "one{#v.}other{#v.}",
+    LONG: 'one{# vika}other{# vikur}',
+    SHORT: 'one{# vi.}other{# vi.}',
+    NARROW: 'one{#v.}other{#v.}',
   },
   YEAR: {
-    LONG: "one{# ár}other{# ár}",
-    SHORT: "one{# ár}other{# ár}",
-    NARROW: "one{#ár}other{#ár}",
+    LONG: 'one{# ár}other{# ár}',
+    SHORT: 'one{# ár}other{# ár}',
+    NARROW: 'one{#ár}other{#ár}',
   },
 };
 
@@ -6776,41 +6775,41 @@ exports.DurationSymbols_fr_WF = DurationSymbols.DurationSymbols_fr;
 exports.DurationSymbols_fr_YT = DurationSymbols.DurationSymbols_fr;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_fur =  {
+exports.DurationSymbols_fur = {
   DAY: {
-    LONG: "one{# zornade}other{# zornadis}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'one{# zornade}other{# zornadis}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "one{# ore}other{# oris}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'one{# ore}other{# oris}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "one{# minût}other{# minûts}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'one{# minût}other{# minûts}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "one{# mês}other{# mês}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'one{# mês}other{# mês}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "one{# secont}other{# seconts}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'one{# secont}other{# seconts}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "one{# setemane}other{# setemanis}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'one{# setemane}other{# setemanis}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "one{# an}other{# agns}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'one{# an}other{# agns}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -6818,41 +6817,41 @@ exports.DurationSymbols_fur =  {
 exports.DurationSymbols_fur_IT = exports.DurationSymbols_fur;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_fy =  {
+exports.DurationSymbols_fy = {
   DAY: {
-    LONG: "one{# dei}other{# deien}",
-    SHORT: "one{# dei}other{# deien}",
-    NARROW: "one{# d}other{# d}",
+    LONG: 'one{# dei}other{# deien}',
+    SHORT: 'one{# dei}other{# deien}',
+    NARROW: 'one{# d}other{# d}',
   },
   HOUR: {
-    LONG: "one{# oere}other{# oere}",
-    SHORT: "one{# oere}other{# oere}",
-    NARROW: "one{# u}other{# u}",
+    LONG: 'one{# oere}other{# oere}',
+    SHORT: 'one{# oere}other{# oere}',
+    NARROW: 'one{# u}other{# u}',
   },
   MINUTE: {
-    LONG: "one{# minút}other{# minuten}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{# m}other{# m}",
+    LONG: 'one{# minút}other{# minuten}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{# m}other{# m}',
   },
   MONTH: {
-    LONG: "one{# moanne}other{# moanneen}",
-    SHORT: "one{# mn}other{# mn}",
-    NARROW: "one{# m}other{# m}",
+    LONG: 'one{# moanne}other{# moanneen}',
+    SHORT: 'one{# mn}other{# mn}',
+    NARROW: 'one{# m}other{# m}',
   },
   SECOND: {
-    LONG: "one{# sekonde}other{# sekonden}",
-    SHORT: "one{# sek.}other{# sek.}",
-    NARROW: "one{# s}other{# s}",
+    LONG: 'one{# sekonde}other{# sekonden}',
+    SHORT: 'one{# sek.}other{# sek.}',
+    NARROW: 'one{# s}other{# s}',
   },
   WEEK: {
-    LONG: "one{# wike}other{# wiken}",
-    SHORT: "one{# wk}other{# wkn}",
-    NARROW: "one{# w}other{# w}",
+    LONG: 'one{# wike}other{# wiken}',
+    SHORT: 'one{# wk}other{# wkn}',
+    NARROW: 'one{# w}other{# w}',
   },
   YEAR: {
-    LONG: "one{# jier}other{# jier}",
-    SHORT: "one{# jr}other{# jr}",
-    NARROW: "one{# jr}other{# jr}",
+    LONG: 'one{# jier}other{# jier}',
+    SHORT: 'one{# jr}other{# jr}',
+    NARROW: 'one{# jr}other{# jr}',
   },
 };
 
@@ -6866,41 +6865,41 @@ exports.DurationSymbols_ga_GB = DurationSymbols.DurationSymbols_ga;
 exports.DurationSymbols_ga_IE = DurationSymbols.DurationSymbols_ga;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_gd =  {
+exports.DurationSymbols_gd = {
   DAY: {
-    LONG: "one{# latha}two{# latha}few{# làithean}other{# latha}",
-    SHORT: "one{# là}two{# là}few{# là}other{# là}",
-    NARROW: "one{#là}two{#là}few{#là}other{#là}",
+    LONG: 'one{# latha}two{# latha}few{# làithean}other{# latha}',
+    SHORT: 'one{# là}two{# là}few{# là}other{# là}',
+    NARROW: 'one{#là}two{#là}few{#là}other{#là}',
   },
   HOUR: {
-    LONG: "one{# uair a thìde}two{# uair a thìde}few{# uairean a thìde}other{# uair a thìde}",
-    SHORT: "one{# uair}two{# uair}few{# uair}other{# uair}",
-    NARROW: "one{#u}two{#u}few{#u}other{#u}",
+    LONG: 'one{# uair a thìde}two{# uair a thìde}few{# uairean a thìde}other{# uair a thìde}',
+    SHORT: 'one{# uair}two{# uair}few{# uair}other{# uair}',
+    NARROW: 'one{#u}two{#u}few{#u}other{#u}',
   },
   MINUTE: {
-    LONG: "one{# mhionaid}two{# mhionaid}few{# mionaidean}other{# mionaid}",
-    SHORT: "one{# mhion}two{# mhion}few{# mion}other{# mion}",
-    NARROW: "one{#m}two{#m}few{#m}other{#m}",
+    LONG: 'one{# mhionaid}two{# mhionaid}few{# mionaidean}other{# mionaid}',
+    SHORT: 'one{# mhion}two{# mhion}few{# mion}other{# mion}',
+    NARROW: 'one{#m}two{#m}few{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mhìos}two{# mhìos}few{# mìosan}other{# mìos}",
-    SHORT: "one{# mhìos}two{# mhìos}few{# mìos}other{# mìos}",
-    NARROW: "one{#m}two{#m}few{#m}other{#m}",
+    LONG: 'one{# mhìos}two{# mhìos}few{# mìosan}other{# mìos}',
+    SHORT: 'one{# mhìos}two{# mhìos}few{# mìos}other{# mìos}',
+    NARROW: 'one{#m}two{#m}few{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# diog}two{# dhiog}few{# diogan}other{# diog}",
-    SHORT: "one{# diog}two{# dhiog}few{# diog}other{# diog}",
-    NARROW: "one{#d}two{#d}few{#d}other{#d}",
+    LONG: 'one{# diog}two{# dhiog}few{# diogan}other{# diog}',
+    SHORT: 'one{# diog}two{# dhiog}few{# diog}other{# diog}',
+    NARROW: 'one{#d}two{#d}few{#d}other{#d}',
   },
   WEEK: {
-    LONG: "one{# seachdain}two{# sheachdain}few{# seachdainean}other{# seachdain}",
-    SHORT: "one{# shn}two{# shn}few{# sn}other{# sn}",
-    NARROW: "one{#s}two{#s}few{#s}other{#s}",
+    LONG: 'one{# seachdain}two{# sheachdain}few{# seachdainean}other{# seachdain}',
+    SHORT: 'one{# shn}two{# shn}few{# sn}other{# sn}',
+    NARROW: 'one{#s}two{#s}few{#s}other{#s}',
   },
   YEAR: {
-    LONG: "one{# bhliadhna}two{# bhliadhna}few{# bliadhnaichean}other{# bliadhna}",
-    SHORT: "one{# bhlia}two{# bhlia}few{# blia}other{# blia}",
-    NARROW: "one{#bl}two{#bl}few{#bl}other{#bl}",
+    LONG: 'one{# bhliadhna}two{# bhliadhna}few{# bliadhnaichean}other{# bliadhna}',
+    SHORT: 'one{# bhlia}two{# bhlia}few{# blia}other{# blia}',
+    NARROW: 'one{#bl}two{#bl}few{#bl}other{#bl}',
   },
 };
 
@@ -6923,41 +6922,41 @@ exports.DurationSymbols_gsw_LI = DurationSymbols.DurationSymbols_gsw;
 exports.DurationSymbols_gu_IN = DurationSymbols.DurationSymbols_gu;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_guz =  {
+exports.DurationSymbols_guz = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -6965,41 +6964,41 @@ exports.DurationSymbols_guz =  {
 exports.DurationSymbols_guz_KE = exports.DurationSymbols_guz;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_gv =  {
+exports.DurationSymbols_gv = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -7007,41 +7006,41 @@ exports.DurationSymbols_gv =  {
 exports.DurationSymbols_gv_IM = exports.DurationSymbols_gv;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ha =  {
+exports.DurationSymbols_ha = {
   DAY: {
-    LONG: "one{rana #}other{ranaku #}",
-    SHORT: "one{rana #}other{Rnk. #}",
-    NARROW: "one{r#}other{r#}",
+    LONG: 'one{rana #}other{ranaku #}',
+    SHORT: 'one{rana #}other{Rnk. #}',
+    NARROW: 'one{r#}other{r#}',
   },
   HOUR: {
-    LONG: "one{sa′a #}other{sa′o′i #}",
-    SHORT: "one{s #}other{s #}",
-    NARROW: "one{s#}other{s#}",
+    LONG: 'one{sa′a #}other{sa′o′i #}',
+    SHORT: 'one{s #}other{s #}',
+    NARROW: 'one{s#}other{s#}',
   },
   MINUTE: {
-    LONG: "one{minti #}other{mintoci #}",
-    SHORT: "one{mnt #}other{mnt #}",
-    NARROW: "one{minti#}other{minti #}",
+    LONG: 'one{minti #}other{mintoci #}',
+    SHORT: 'one{mnt #}other{mnt #}',
+    NARROW: 'one{minti#}other{minti #}',
   },
   MONTH: {
-    LONG: "one{wata #}other{watanni #}",
-    SHORT: "one{wat #}other{wtnn #}",
-    NARROW: "one{w#}other{w#}",
+    LONG: 'one{wata #}other{watanni #}',
+    SHORT: 'one{wat #}other{wtnn #}',
+    NARROW: 'one{w#}other{w#}',
   },
   SECOND: {
-    LONG: "one{daƙiƙa #}other{daƙiƙoƙi #}",
-    SHORT: "one{d #}other{d #}",
-    NARROW: "one{d #}other{d #}",
+    LONG: 'one{daƙiƙa #}other{daƙiƙoƙi #}',
+    SHORT: 'one{d #}other{d #}',
+    NARROW: 'one{d #}other{d #}',
   },
   WEEK: {
-    LONG: "one{mako #}other{makonni #}",
-    SHORT: "one{mk #}other{mkn #}",
-    NARROW: "one{m#}other{m#}",
+    LONG: 'one{mako #}other{makonni #}',
+    SHORT: 'one{mk #}other{mkn #}',
+    NARROW: 'one{m#}other{m#}',
   },
   YEAR: {
-    LONG: "one{shekara #}other{shekaru #}",
-    SHORT: "one{shkr #}other{shkru #}",
-    NARROW: "one{shkr #}other{s#}",
+    LONG: 'one{shekara #}other{shekaru #}',
+    SHORT: 'one{shkr #}other{shkru #}',
+    NARROW: 'one{shkr #}other{s#}',
   },
 };
 
@@ -7064,80 +7063,80 @@ exports.DurationSymbols_he_IL = DurationSymbols.DurationSymbols_he;
 exports.DurationSymbols_hi_IN = DurationSymbols.DurationSymbols_hi;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_hi_Latn =  {
+exports.DurationSymbols_hi_Latn = {
   DAY: {
-    LONG: "one{# din}other{# din}",
-    SHORT: "one{# din}other{# din}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# din}other{# din}',
+    SHORT: 'one{# din}other{# din}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# ghanta}other{# ghante}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# ghanta}other{# ghante}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# saal}other{# saal}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# saal}other{# saal}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_hi_Latn_IN =  {
+exports.DurationSymbols_hi_Latn_IN = {
   DAY: {
-    LONG: "one{# din}other{# din}",
-    SHORT: "one{# din}other{# din}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# din}other{# din}',
+    SHORT: 'one{# din}other{# din}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# ghanta}other{# ghante}",
-    SHORT: "one{# hr}other{# hrs}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# ghanta}other{# ghante}',
+    SHORT: 'one{# hr}other{# hrs}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minute}other{# minutes}",
-    SHORT: "one{# min}other{# mins}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minute}other{# minutes}',
+    SHORT: 'one{# min}other{# mins}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# month}other{# months}",
-    SHORT: "one{# mth}other{# mths}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# month}other{# months}',
+    SHORT: 'one{# mth}other{# mths}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# second}other{# seconds}",
-    SHORT: "one{# sec}other{# secs}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# second}other{# seconds}',
+    SHORT: 'one{# sec}other{# secs}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# week}other{# weeks}",
-    SHORT: "one{# wk}other{# wks}",
-    NARROW: "one{#w}other{#w}",
+    LONG: 'one{# week}other{# weeks}',
+    SHORT: 'one{# wk}other{# wks}',
+    NARROW: 'one{#w}other{#w}',
   },
   YEAR: {
-    LONG: "one{# saal}other{# saal}",
-    SHORT: "one{# yr}other{# yrs}",
-    NARROW: "one{#y}other{#y}",
+    LONG: 'one{# saal}other{# saal}',
+    SHORT: 'one{# yr}other{# yrs}',
+    NARROW: 'one{#y}other{#y}',
   },
 };
 
@@ -7148,41 +7147,41 @@ exports.DurationSymbols_hr_BA = DurationSymbols.DurationSymbols_hr;
 exports.DurationSymbols_hr_HR = DurationSymbols.DurationSymbols_hr;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_hsb =  {
+exports.DurationSymbols_hsb = {
   DAY: {
-    LONG: "one{# dźeń}two{# dnjej}few{# dny}other{# dnjow}",
-    SHORT: "one{# dź.}two{# dn.}few{# dn.}other{# dn.}",
-    NARROW: "one{# d}two{# d}few{# d}other{# d}",
+    LONG: 'one{# dźeń}two{# dnjej}few{# dny}other{# dnjow}',
+    SHORT: 'one{# dź.}two{# dn.}few{# dn.}other{# dn.}',
+    NARROW: 'one{# d}two{# d}few{# d}other{# d}',
   },
   HOUR: {
-    LONG: "one{# hodźina}two{# hodźinje}few{# hodźiny}other{# hodźinow}",
-    SHORT: "one{# hodź.}two{# hodź.}few{# hodź.}other{# hodź.}",
-    NARROW: "one{# h}two{# h}few{# h}other{# h}",
+    LONG: 'one{# hodźina}two{# hodźinje}few{# hodźiny}other{# hodźinow}',
+    SHORT: 'one{# hodź.}two{# hodź.}few{# hodź.}other{# hodź.}',
+    NARROW: 'one{# h}two{# h}few{# h}other{# h}',
   },
   MINUTE: {
-    LONG: "one{# minuta}two{# minuće}few{# minuty}other{# minutow}",
-    SHORT: "one{# min.}two{# min.}few{# min.}other{# min.}",
-    NARROW: "one{# min}two{# min}few{# min}other{# min}",
+    LONG: 'one{# minuta}two{# minuće}few{# minuty}other{# minutow}',
+    SHORT: 'one{# min.}two{# min.}few{# min.}other{# min.}',
+    NARROW: 'one{# min}two{# min}few{# min}other{# min}',
   },
   MONTH: {
-    LONG: "one{# měsac}two{# měsacaj}few{# měsacy}other{# měsacow}",
-    SHORT: "one{# měs.}two{# měs.}few{# měs.}other{# měs.}",
-    NARROW: "one{# měs.}two{# měs.}few{# měs.}other{# měs.}",
+    LONG: 'one{# měsac}two{# měsacaj}few{# měsacy}other{# měsacow}',
+    SHORT: 'one{# měs.}two{# měs.}few{# měs.}other{# měs.}',
+    NARROW: 'one{# měs.}two{# měs.}few{# měs.}other{# měs.}',
   },
   SECOND: {
-    LONG: "one{# sekunda}two{# sekundźe}few{# sekundy}other{# sekundow}",
-    SHORT: "one{# sek.}two{# sek.}few{# sek.}other{# sek.}",
-    NARROW: "one{# s}two{# s}few{# s}other{# s}",
+    LONG: 'one{# sekunda}two{# sekundźe}few{# sekundy}other{# sekundow}',
+    SHORT: 'one{# sek.}two{# sek.}few{# sek.}other{# sek.}',
+    NARROW: 'one{# s}two{# s}few{# s}other{# s}',
   },
   WEEK: {
-    LONG: "one{# tydźeń}two{# tydźenjej}few{# tydźenje}other{# tydźenjow}",
-    SHORT: "one{# tydź.}two{# tydź.}few{# tydź.}other{# tydź.}",
-    NARROW: "one{# t.}two{# t.}few{# t.}other{# t.}",
+    LONG: 'one{# tydźeń}two{# tydźenjej}few{# tydźenje}other{# tydźenjow}',
+    SHORT: 'one{# tydź.}two{# tydź.}few{# tydź.}other{# tydź.}',
+    NARROW: 'one{# t.}two{# t.}few{# t.}other{# t.}',
   },
   YEAR: {
-    LONG: "one{# lěto}two{# lěće}few{# lěta}other{# lět}",
-    SHORT: "one{# l.}two{# l.}few{# l.}other{# l.}",
-    NARROW: "one{# l.}two{# l.}few{# l.}other{# l.}",
+    LONG: 'one{# lěto}two{# lěće}few{# lěta}other{# lět}',
+    SHORT: 'one{# l.}two{# l.}few{# l.}other{# l.}',
+    NARROW: 'one{# l.}two{# l.}few{# l.}other{# l.}',
   },
 };
 
@@ -7196,41 +7195,41 @@ exports.DurationSymbols_hu_HU = DurationSymbols.DurationSymbols_hu;
 exports.DurationSymbols_hy_AM = DurationSymbols.DurationSymbols_hy;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ia =  {
+exports.DurationSymbols_ia = {
   DAY: {
-    LONG: "one{# die}other{# dies}",
-    SHORT: "one{# die}other{# dies}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# die}other{# dies}',
+    SHORT: 'one{# die}other{# dies}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# hora}other{# horas}",
-    SHORT: "one{# hr}other{# hr}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hora}other{# horas}',
+    SHORT: 'one{# hr}other{# hr}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuta}other{# minutas}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minuta}other{# minutas}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mense}other{# menses}",
-    SHORT: "one{# mense}other{# menses}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# mense}other{# menses}',
+    SHORT: 'one{# mense}other{# menses}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# secunda}other{# secundas}",
-    SHORT: "one{# sec}other{# sec}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# secunda}other{# secundas}',
+    SHORT: 'one{# sec}other{# sec}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# septimana}other{# septimanas}",
-    SHORT: "one{# sept}other{# sept}",
-    NARROW: "one{#sept}other{#sept}",
+    LONG: 'one{# septimana}other{# septimanas}',
+    SHORT: 'one{# sept}other{# sept}',
+    NARROW: 'one{#sept}other{#sept}',
   },
   YEAR: {
-    LONG: "one{# anno}other{# annos}",
-    SHORT: "one{# an}other{# an}",
-    NARROW: "one{#an}other{#an}",
+    LONG: 'one{# anno}other{# annos}',
+    SHORT: 'one{# an}other{# an}',
+    NARROW: 'one{#an}other{#an}',
   },
 };
 
@@ -7241,41 +7240,41 @@ exports.DurationSymbols_ia_001 = exports.DurationSymbols_ia;
 exports.DurationSymbols_id_ID = DurationSymbols.DurationSymbols_id;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ig =  {
+exports.DurationSymbols_ig = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -7283,41 +7282,41 @@ exports.DurationSymbols_ig =  {
 exports.DurationSymbols_ig_NG = exports.DurationSymbols_ig;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ii =  {
+exports.DurationSymbols_ii = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -7343,41 +7342,41 @@ exports.DurationSymbols_it_VA = DurationSymbols.DurationSymbols_it;
 exports.DurationSymbols_ja_JP = DurationSymbols.DurationSymbols_ja;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_jgo =  {
+exports.DurationSymbols_jgo = {
   DAY: {
-    LONG: "one{# lɛ́Ꞌ}other{# lɛ́Ꞌ}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'one{# lɛ́Ꞌ}other{# lɛ́Ꞌ}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "one{# háwa}other{# háwa}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'one{# háwa}other{# háwa}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "one{# minút}other{# minút}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'one{# minút}other{# minút}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "one{pɛsaŋ #}other{pɛsaŋ #}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'one{pɛsaŋ #}other{pɛsaŋ #}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "one{ŋguꞋ #}other{ŋguꞋ #}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'one{ŋguꞋ #}other{ŋguꞋ #}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -7385,41 +7384,41 @@ exports.DurationSymbols_jgo =  {
 exports.DurationSymbols_jgo_CM = exports.DurationSymbols_jgo;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_jmc =  {
+exports.DurationSymbols_jmc = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -7427,41 +7426,41 @@ exports.DurationSymbols_jmc =  {
 exports.DurationSymbols_jmc_TZ = exports.DurationSymbols_jmc;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_jv =  {
+exports.DurationSymbols_jv = {
   DAY: {
-    LONG: "other{# dina}",
-    SHORT: "other{# dina}",
-    NARROW: "other{#d}",
+    LONG: 'other{# dina}',
+    SHORT: 'other{# dina}',
+    NARROW: 'other{#d}',
   },
   HOUR: {
-    LONG: "other{# jam}",
-    SHORT: "other{# jam}",
-    NARROW: "other{#j}",
+    LONG: 'other{# jam}',
+    SHORT: 'other{# jam}',
+    NARROW: 'other{#j}',
   },
   MINUTE: {
-    LONG: "other{# menit}",
-    SHORT: "other{# mnt}",
-    NARROW: "other{# mnt}",
+    LONG: 'other{# menit}',
+    SHORT: 'other{# mnt}',
+    NARROW: 'other{# mnt}',
   },
   MONTH: {
-    LONG: "other{# sasi}",
-    SHORT: "other{# sasi}",
-    NARROW: "other{# sasi}",
+    LONG: 'other{# sasi}',
+    SHORT: 'other{# sasi}',
+    NARROW: 'other{# sasi}',
   },
   SECOND: {
-    LONG: "other{# detik}",
-    SHORT: "other{# dtk}",
-    NARROW: "other{# dtk}",
+    LONG: 'other{# detik}',
+    SHORT: 'other{# dtk}',
+    NARROW: 'other{# dtk}',
   },
   WEEK: {
-    LONG: "other{# peken}",
-    SHORT: "other{# peken}",
-    NARROW: "other{# peken}",
+    LONG: 'other{# peken}',
+    SHORT: 'other{# peken}',
+    NARROW: 'other{# peken}',
   },
   YEAR: {
-    LONG: "other{# taun}",
-    SHORT: "other{# taun}",
-    NARROW: "other{# taun}",
+    LONG: 'other{# taun}',
+    SHORT: 'other{# taun}',
+    NARROW: 'other{# taun}',
   },
 };
 
@@ -7472,41 +7471,41 @@ exports.DurationSymbols_jv_ID = exports.DurationSymbols_jv;
 exports.DurationSymbols_ka_GE = DurationSymbols.DurationSymbols_ka;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_kab =  {
+exports.DurationSymbols_kab = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -7514,41 +7513,41 @@ exports.DurationSymbols_kab =  {
 exports.DurationSymbols_kab_DZ = exports.DurationSymbols_kab;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_kam =  {
+exports.DurationSymbols_kam = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -7556,41 +7555,41 @@ exports.DurationSymbols_kam =  {
 exports.DurationSymbols_kam_KE = exports.DurationSymbols_kam;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_kde =  {
+exports.DurationSymbols_kde = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -7598,41 +7597,41 @@ exports.DurationSymbols_kde =  {
 exports.DurationSymbols_kde_TZ = exports.DurationSymbols_kde;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_kea =  {
+exports.DurationSymbols_kea = {
   DAY: {
-    LONG: "other{# dia}",
-    SHORT: "other{# dia}",
-    NARROW: "other{# dia}",
+    LONG: 'other{# dia}',
+    SHORT: 'other{# dia}',
+    NARROW: 'other{# dia}',
   },
   HOUR: {
-    LONG: "other{# ora}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# ora}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# minutu}",
-    SHORT: "other{# min.}",
-    NARROW: "other{# min.}",
+    LONG: 'other{# minutu}',
+    SHORT: 'other{# min.}',
+    NARROW: 'other{# min.}',
   },
   MONTH: {
-    LONG: "other{# mes}",
-    SHORT: "other{# mes}",
-    NARROW: "other{# mes}",
+    LONG: 'other{# mes}',
+    SHORT: 'other{# mes}',
+    NARROW: 'other{# mes}',
   },
   SECOND: {
-    LONG: "other{# sigundu}",
-    SHORT: "other{# sig.}",
-    NARROW: "other{# s}",
+    LONG: 'other{# sigundu}',
+    SHORT: 'other{# sig.}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# simana}",
-    SHORT: "other{# sim.}",
-    NARROW: "other{# sim.}",
+    LONG: 'other{# simana}',
+    SHORT: 'other{# sim.}',
+    NARROW: 'other{# sim.}',
   },
   YEAR: {
-    LONG: "other{# anu}",
-    SHORT: "other{# anu}",
-    NARROW: "other{# anu}",
+    LONG: 'other{# anu}',
+    SHORT: 'other{# anu}',
+    NARROW: 'other{# anu}',
   },
 };
 
@@ -7640,41 +7639,41 @@ exports.DurationSymbols_kea =  {
 exports.DurationSymbols_kea_CV = exports.DurationSymbols_kea;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_kgp =  {
+exports.DurationSymbols_kgp = {
   DAY: {
-    LONG: "one{kurã #}other{kurã #}",
-    SHORT: "one{# kurã}other{# kurã ag}",
-    NARROW: "one{# kurã}other{# kurã ag}",
+    LONG: 'one{kurã #}other{kurã #}',
+    SHORT: 'one{# kurã}other{# kurã ag}',
+    NARROW: 'one{# kurã}other{# kurã ag}',
   },
   HOUR: {
-    LONG: "one{óra #}other{óra ag #}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{# h}other{# h}",
+    LONG: 'one{óra #}other{óra ag #}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{# h}other{# h}',
   },
   MINUTE: {
-    LONG: "one{mĩnũtu #}other{mĩnũtu #}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{# min}other{# min}",
+    LONG: 'one{mĩnũtu #}other{mĩnũtu #}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{# min}other{# min}',
   },
   MONTH: {
-    LONG: "one{kysã #}other{kysã ag #}",
-    SHORT: "one{# kysã}other{# kysã ag}",
-    NARROW: "one{# kysã}other{# kysã ag}",
+    LONG: 'one{kysã #}other{kysã ag #}',
+    SHORT: 'one{# kysã}other{# kysã ag}',
+    NARROW: 'one{# kysã}other{# kysã ag}',
   },
   SECOND: {
-    LONG: "one{sigũnu #}other{sigũnu #}",
-    SHORT: "one{# sig}other{# sig}",
-    NARROW: "one{# s}other{# s}",
+    LONG: 'one{sigũnu #}other{sigũnu #}',
+    SHORT: 'one{# sig}other{# sig}',
+    NARROW: 'one{# s}other{# s}',
   },
   WEEK: {
-    LONG: "one{# simỹnỹ}other{# simỹnỹ ag}",
-    SHORT: "one{# sim.}other{# sim.}",
-    NARROW: "one{# sim.}other{# sim. Ag}",
+    LONG: 'one{# simỹnỹ}other{# simỹnỹ ag}',
+    SHORT: 'one{# sim.}other{# sim.}',
+    NARROW: 'one{# sim.}other{# sim. Ag}',
   },
   YEAR: {
-    LONG: "one{# prỹg}other{# prỹg ag}",
-    SHORT: "one{# prỹg}other{# prỹg ag}",
-    NARROW: "one{# prỹg}other{# prỹg ag}",
+    LONG: 'one{# prỹg}other{# prỹg ag}',
+    SHORT: 'one{# prỹg}other{# prỹg ag}',
+    NARROW: 'one{# prỹg}other{# prỹg ag}',
   },
 };
 
@@ -7682,41 +7681,41 @@ exports.DurationSymbols_kgp =  {
 exports.DurationSymbols_kgp_BR = exports.DurationSymbols_kgp;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_khq =  {
+exports.DurationSymbols_khq = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -7724,41 +7723,41 @@ exports.DurationSymbols_khq =  {
 exports.DurationSymbols_khq_ML = exports.DurationSymbols_khq;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ki =  {
+exports.DurationSymbols_ki = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -7769,41 +7768,41 @@ exports.DurationSymbols_ki_KE = exports.DurationSymbols_ki;
 exports.DurationSymbols_kk_KZ = DurationSymbols.DurationSymbols_kk;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_kkj =  {
+exports.DurationSymbols_kkj = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -7811,41 +7810,41 @@ exports.DurationSymbols_kkj =  {
 exports.DurationSymbols_kkj_CM = exports.DurationSymbols_kkj;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_kl =  {
+exports.DurationSymbols_kl = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -7853,41 +7852,41 @@ exports.DurationSymbols_kl =  {
 exports.DurationSymbols_kl_GL = exports.DurationSymbols_kl;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_kln =  {
+exports.DurationSymbols_kln = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -7907,41 +7906,41 @@ exports.DurationSymbols_ko_KP = DurationSymbols.DurationSymbols_ko;
 exports.DurationSymbols_ko_KR = DurationSymbols.DurationSymbols_ko;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_kok =  {
+exports.DurationSymbols_kok = {
   DAY: {
-    LONG: "other{# दीस}",
-    SHORT: "other{# दीस}",
-    NARROW: "other{#दी}",
+    LONG: 'other{# दीस}',
+    SHORT: 'other{# दीस}',
+    NARROW: 'other{#दी}',
   },
   HOUR: {
-    LONG: "other{# वरां}",
-    SHORT: "other{# वर}",
-    NARROW: "other{#व}",
+    LONG: 'other{# वरां}',
+    SHORT: 'other{# वर}',
+    NARROW: 'other{#व}',
   },
   MINUTE: {
-    LONG: "other{# मिण्टां}",
-    SHORT: "other{# मिनीट}",
-    NARROW: "other{# मि}",
+    LONG: 'other{# मिण्टां}',
+    SHORT: 'other{# मिनीट}',
+    NARROW: 'other{# मि}',
   },
   MONTH: {
-    LONG: "other{# म्हयने}",
-    SHORT: "other{# म्हयने}",
-    NARROW: "other{#म्ह}",
+    LONG: 'other{# म्हयने}',
+    SHORT: 'other{# म्हयने}',
+    NARROW: 'other{#म्ह}',
   },
   SECOND: {
-    LONG: "other{# सेकंदांनी}",
-    SHORT: "other{# सेकंद}",
-    NARROW: "other{#से}",
+    LONG: 'other{# सेकंदांनी}',
+    SHORT: 'other{# सेकंद}',
+    NARROW: 'other{#से}',
   },
   WEEK: {
-    LONG: "other{# सप्तक}",
-    SHORT: "other{# सप्तक}",
-    NARROW: "other{#स}",
+    LONG: 'other{# सप्तक}',
+    SHORT: 'other{# सप्तक}',
+    NARROW: 'other{#स}',
   },
   YEAR: {
-    LONG: "other{# वर्सां}",
-    SHORT: "other{# वर्सां}",
-    NARROW: "other{#व}",
+    LONG: 'other{# वर्सां}',
+    SHORT: 'other{# वर्सां}',
+    NARROW: 'other{#व}',
   },
 };
 
@@ -7949,41 +7948,41 @@ exports.DurationSymbols_kok =  {
 exports.DurationSymbols_kok_IN = exports.DurationSymbols_kok;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ks =  {
+exports.DurationSymbols_ks = {
   DAY: {
-    LONG: "one{# دۄہ}other{# دۄہ}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'one{# دۄہ}other{# دۄہ}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "one{# گَنٹہٕ}other{# گٲنٹہٕ}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'one{# گَنٹہٕ}other{# گٲنٹہٕ}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "one{# مِنَٹ}other{# مِنَٹ}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'one{# مِنَٹ}other{# مِنَٹ}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "one{# ریتھ}other{# ریتھ}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'one{# ریتھ}other{# ریتھ}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "one{# سیکَنڈ}other{# سیکَنڈ}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'one{# سیکَنڈ}other{# سیکَنڈ}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "one{# ہَفتہٕ}other{# ہَفتہٕ}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'one{# ہَفتہٕ}other{# ہَفتہٕ}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "one{# ؤری}other{# ؤری}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'one{# ؤری}other{# ؤری}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -7994,119 +7993,119 @@ exports.DurationSymbols_ks_Arab = exports.DurationSymbols_ks;
 exports.DurationSymbols_ks_Arab_IN = exports.DurationSymbols_ks;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ks_Deva =  {
+exports.DurationSymbols_ks_Deva = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ks_Deva_IN =  {
+exports.DurationSymbols_ks_Deva_IN = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ksb =  {
+exports.DurationSymbols_ksb = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -8114,41 +8113,41 @@ exports.DurationSymbols_ksb =  {
 exports.DurationSymbols_ksb_TZ = exports.DurationSymbols_ksb;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ksf =  {
+exports.DurationSymbols_ksf = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -8156,41 +8155,41 @@ exports.DurationSymbols_ksf =  {
 exports.DurationSymbols_ksf_CM = exports.DurationSymbols_ksf;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ksh =  {
+exports.DurationSymbols_ksh = {
   DAY: {
-    LONG: "zero{# Dääsch}one{# Dääsch}other{# Dääsch}",
-    SHORT: "zero{# d}one{# d}other{# d}",
-    NARROW: "zero{#d}one{#d}other{#d}",
+    LONG: 'zero{# Dääsch}one{# Dääsch}other{# Dääsch}',
+    SHORT: 'zero{# d}one{# d}other{# d}',
+    NARROW: 'zero{#d}one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "zero{# Schtunde}one{# Schtunde}other{# Schtunde}",
-    SHORT: "zero{# h}one{# h}other{# h}",
-    NARROW: "zero{#h}one{#h}other{#h}",
+    LONG: 'zero{# Schtunde}one{# Schtunde}other{# Schtunde}',
+    SHORT: 'zero{# h}one{# h}other{# h}',
+    NARROW: 'zero{#h}one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "zero{# Menutte}one{# Menutte}other{# Menutte}",
-    SHORT: "zero{# min}one{# min}other{# min}",
-    NARROW: "zero{#m}one{#m}other{#m}",
+    LONG: 'zero{# Menutte}one{# Menutte}other{# Menutte}',
+    SHORT: 'zero{# min}one{# min}other{# min}',
+    NARROW: 'zero{#m}one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "zero{# Mohnde}one{# Mohnde}other{# Mohnde}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'zero{# Mohnde}one{# Mohnde}other{# Mohnde}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "zero{# Sekunde}one{# Sekunde}other{# Sekunde}",
-    SHORT: "zero{# s}one{# s}other{# s}",
-    NARROW: "zero{#s}one{#s}other{#s}",
+    LONG: 'zero{# Sekunde}one{# Sekunde}other{# Sekunde}',
+    SHORT: 'zero{# s}one{# s}other{# s}',
+    NARROW: 'zero{#s}one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "zero{# Woche}one{# Woche}other{# Woche}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'zero{# Woche}one{# Woche}other{# Woche}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "zero{# Johre}one{# Johre}other{# Johre}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'zero{# Johre}one{# Johre}other{# Johre}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -8198,41 +8197,41 @@ exports.DurationSymbols_ksh =  {
 exports.DurationSymbols_ksh_DE = exports.DurationSymbols_ksh;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ku =  {
+exports.DurationSymbols_ku = {
   DAY: {
-    LONG: "one{# roj}other{# roj}",
-    SHORT: "one{# roj}other{# roj}",
-    NARROW: "one{#r}other{#r}",
+    LONG: 'one{# roj}other{# roj}',
+    SHORT: 'one{# roj}other{# roj}',
+    NARROW: 'one{#r}other{#r}',
   },
   HOUR: {
-    LONG: "one{# saet}other{# saet}",
-    SHORT: "one{# st}other{# st}",
-    NARROW: "one{#st}other{#st}",
+    LONG: 'one{# saet}other{# saet}',
+    SHORT: 'one{# st}other{# st}',
+    NARROW: 'one{#st}other{#st}',
   },
   MINUTE: {
-    LONG: "one{# deqîqe}other{# deqîqe}",
-    SHORT: "one{# d}other{# d}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# deqîqe}other{# deqîqe}',
+    SHORT: 'one{# d}other{# d}',
+    NARROW: 'one{#d}other{#d}',
   },
   MONTH: {
-    LONG: "one{# meh}other{# meh}",
-    SHORT: "one{# m}other{# m}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# meh}other{# meh}',
+    SHORT: 'one{# m}other{# m}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# saniye}other{# saniye}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# saniye}other{# saniye}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# hefte}other{# hefte}",
-    SHORT: "one{# hf}other{# hf}",
-    NARROW: "one{#hf}other{#hf}",
+    LONG: 'one{# hefte}other{# hefte}',
+    SHORT: 'one{# hf}other{# hf}',
+    NARROW: 'one{#hf}other{#hf}',
   },
   YEAR: {
-    LONG: "one{# sal}other{# sal}",
-    SHORT: "one{# sal}other{# sal}",
-    NARROW: "one{#sl}other{#sl}",
+    LONG: 'one{# sal}other{# sal}',
+    SHORT: 'one{# sal}other{# sal}',
+    NARROW: 'one{#sl}other{#sl}',
   },
 };
 
@@ -8240,41 +8239,41 @@ exports.DurationSymbols_ku =  {
 exports.DurationSymbols_ku_TR = exports.DurationSymbols_ku;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_kw =  {
+exports.DurationSymbols_kw = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -8285,41 +8284,41 @@ exports.DurationSymbols_kw_GB = exports.DurationSymbols_kw;
 exports.DurationSymbols_ky_KG = DurationSymbols.DurationSymbols_ky;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_lag =  {
+exports.DurationSymbols_lag = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -8327,41 +8326,41 @@ exports.DurationSymbols_lag =  {
 exports.DurationSymbols_lag_TZ = exports.DurationSymbols_lag;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_lb =  {
+exports.DurationSymbols_lb = {
   DAY: {
-    LONG: "one{# Dag}other{# Deeg}",
-    SHORT: "one{# D}other{# D}",
-    NARROW: "one{# D}other{# D}",
+    LONG: 'one{# Dag}other{# Deeg}',
+    SHORT: 'one{# D}other{# D}',
+    NARROW: 'one{# D}other{# D}',
   },
   HOUR: {
-    LONG: "one{# Stonn}other{# Stonnen}",
-    SHORT: "one{# St.}other{# St.}",
-    NARROW: "one{# st}other{# st}",
+    LONG: 'one{# Stonn}other{# Stonnen}',
+    SHORT: 'one{# St.}other{# St.}',
+    NARROW: 'one{# st}other{# st}',
   },
   MINUTE: {
-    LONG: "one{# Minutt}other{# Minutten}",
-    SHORT: "one{# Min.}other{# Min.}",
-    NARROW: "one{# min}other{# min}",
+    LONG: 'one{# Minutt}other{# Minutten}',
+    SHORT: 'one{# Min.}other{# Min.}',
+    NARROW: 'one{# min}other{# min}',
   },
   MONTH: {
-    LONG: "one{# Mount}other{# Méint}",
-    SHORT: "one{# Mnt}other{# Mnt}",
-    NARROW: "one{# M}other{# M}",
+    LONG: 'one{# Mount}other{# Méint}',
+    SHORT: 'one{# Mnt}other{# Mnt}',
+    NARROW: 'one{# M}other{# M}',
   },
   SECOND: {
-    LONG: "one{# Sekonn}other{# Sekonnen}",
-    SHORT: "one{# Sek.}other{# Sek.}",
-    NARROW: "one{# s}other{# s}",
+    LONG: 'one{# Sekonn}other{# Sekonnen}',
+    SHORT: 'one{# Sek.}other{# Sek.}',
+    NARROW: 'one{# s}other{# s}',
   },
   WEEK: {
-    LONG: "one{# Woch}other{# Wochen}",
-    SHORT: "one{# W}other{# W}",
-    NARROW: "one{# W}other{# W}",
+    LONG: 'one{# Woch}other{# Wochen}',
+    SHORT: 'one{# W}other{# W}',
+    NARROW: 'one{# W}other{# W}',
   },
   YEAR: {
-    LONG: "one{# Joer}other{# Joer}",
-    SHORT: "one{# J}other{# J}",
-    NARROW: "one{# J}other{# J}",
+    LONG: 'one{# Joer}other{# Joer}',
+    SHORT: 'one{# J}other{# J}',
+    NARROW: 'one{# J}other{# J}',
   },
 };
 
@@ -8369,41 +8368,41 @@ exports.DurationSymbols_lb =  {
 exports.DurationSymbols_lb_LU = exports.DurationSymbols_lb;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_lg =  {
+exports.DurationSymbols_lg = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -8411,41 +8410,41 @@ exports.DurationSymbols_lg =  {
 exports.DurationSymbols_lg_UG = exports.DurationSymbols_lg;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_lkt =  {
+exports.DurationSymbols_lkt = {
   DAY: {
-    LONG: "other{#-čháŋ}",
-    SHORT: "other{#-čháŋ}",
-    NARROW: "other{#-čháŋ}",
+    LONG: 'other{#-čháŋ}',
+    SHORT: 'other{#-čháŋ}',
+    NARROW: 'other{#-čháŋ}',
   },
   HOUR: {
-    LONG: "other{Owápȟe #}",
-    SHORT: "other{Owápȟe #}",
-    NARROW: "other{Owápȟe #}",
+    LONG: 'other{Owápȟe #}',
+    SHORT: 'other{Owápȟe #}',
+    NARROW: 'other{Owápȟe #}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{Wíyawapi #}",
-    SHORT: "other{Wíyawapi #}",
-    NARROW: "other{Wí #}",
+    LONG: 'other{Wíyawapi #}',
+    SHORT: 'other{Wíyawapi #}',
+    NARROW: 'other{Wí #}',
   },
   SECOND: {
-    LONG: "other{Okpí #}",
-    SHORT: "other{Okpí #}",
-    NARROW: "other{Okpí #}",
+    LONG: 'other{Okpí #}',
+    SHORT: 'other{Okpí #}',
+    NARROW: 'other{Okpí #}',
   },
   WEEK: {
-    LONG: "other{okó #}",
-    SHORT: "other{okó #}",
-    NARROW: "other{okó #}",
+    LONG: 'other{okó #}',
+    SHORT: 'other{okó #}',
+    NARROW: 'other{okó #}',
   },
   YEAR: {
-    LONG: "other{ómakȟa #}",
-    SHORT: "other{ómakȟa #}",
-    NARROW: "other{ómakȟa #}",
+    LONG: 'other{ómakȟa #}',
+    SHORT: 'other{ómakȟa #}',
+    NARROW: 'other{ómakȟa #}',
   },
 };
 
@@ -8468,41 +8467,41 @@ exports.DurationSymbols_ln_CG = DurationSymbols.DurationSymbols_ln;
 exports.DurationSymbols_lo_LA = DurationSymbols.DurationSymbols_lo;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_lrc =  {
+exports.DurationSymbols_lrc = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -8516,41 +8515,41 @@ exports.DurationSymbols_lrc_IR = exports.DurationSymbols_lrc;
 exports.DurationSymbols_lt_LT = DurationSymbols.DurationSymbols_lt;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_lu =  {
+exports.DurationSymbols_lu = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -8558,41 +8557,41 @@ exports.DurationSymbols_lu =  {
 exports.DurationSymbols_lu_CD = exports.DurationSymbols_lu;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_luo =  {
+exports.DurationSymbols_luo = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -8600,41 +8599,41 @@ exports.DurationSymbols_luo =  {
 exports.DurationSymbols_luo_KE = exports.DurationSymbols_luo;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_luy =  {
+exports.DurationSymbols_luy = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -8645,41 +8644,41 @@ exports.DurationSymbols_luy_KE = exports.DurationSymbols_luy;
 exports.DurationSymbols_lv_LV = DurationSymbols.DurationSymbols_lv;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_mai =  {
+exports.DurationSymbols_mai = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -8687,41 +8686,41 @@ exports.DurationSymbols_mai =  {
 exports.DurationSymbols_mai_IN = exports.DurationSymbols_mai;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_mas =  {
+exports.DurationSymbols_mas = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -8732,41 +8731,41 @@ exports.DurationSymbols_mas_KE = exports.DurationSymbols_mas;
 exports.DurationSymbols_mas_TZ = exports.DurationSymbols_mas;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_mer =  {
+exports.DurationSymbols_mer = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -8774,41 +8773,41 @@ exports.DurationSymbols_mer =  {
 exports.DurationSymbols_mer_KE = exports.DurationSymbols_mer;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_mfe =  {
+exports.DurationSymbols_mfe = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -8816,41 +8815,41 @@ exports.DurationSymbols_mfe =  {
 exports.DurationSymbols_mfe_MU = exports.DurationSymbols_mfe;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_mg =  {
+exports.DurationSymbols_mg = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -8858,41 +8857,41 @@ exports.DurationSymbols_mg =  {
 exports.DurationSymbols_mg_MG = exports.DurationSymbols_mg;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_mgh =  {
+exports.DurationSymbols_mgh = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -8900,41 +8899,41 @@ exports.DurationSymbols_mgh =  {
 exports.DurationSymbols_mgh_MZ = exports.DurationSymbols_mgh;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_mgo =  {
+exports.DurationSymbols_mgo = {
   DAY: {
-    LONG: "one{# d}other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'one{# d}other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "one{# h}other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'one{# h}other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "one{# min}other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'one{# min}other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "one{# m}other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'one{# m}other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "one{# s}other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'one{# s}other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -8942,41 +8941,41 @@ exports.DurationSymbols_mgo =  {
 exports.DurationSymbols_mgo_CM = exports.DurationSymbols_mgo;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_mi =  {
+exports.DurationSymbols_mi = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -8993,41 +8992,41 @@ exports.DurationSymbols_ml_IN = DurationSymbols.DurationSymbols_ml;
 exports.DurationSymbols_mn_MN = DurationSymbols.DurationSymbols_mn;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_mni =  {
+exports.DurationSymbols_mni = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -9056,41 +9055,41 @@ exports.DurationSymbols_ms_SG = DurationSymbols.DurationSymbols_ms;
 exports.DurationSymbols_mt_MT = DurationSymbols.DurationSymbols_mt;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_mua =  {
+exports.DurationSymbols_mua = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -9101,41 +9100,41 @@ exports.DurationSymbols_mua_CM = exports.DurationSymbols_mua;
 exports.DurationSymbols_my_MM = DurationSymbols.DurationSymbols_my;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_mzn =  {
+exports.DurationSymbols_mzn = {
   DAY: {
-    LONG: "other{# روز}",
-    SHORT: "other{# روز}",
-    NARROW: "other{# روز}",
+    LONG: 'other{# روز}',
+    SHORT: 'other{# روز}',
+    NARROW: 'other{# روز}',
   },
   HOUR: {
-    LONG: "other{# ساعِت}",
-    SHORT: "other{# h}",
-    NARROW: "other{# ساعِت}",
+    LONG: 'other{# ساعِت}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# ساعِت}',
   },
   MINUTE: {
-    LONG: "other{# دقیقه}",
-    SHORT: "other{# دَقه}",
-    NARROW: "other{# دَقه}",
+    LONG: 'other{# دقیقه}',
+    SHORT: 'other{# دَقه}',
+    NARROW: 'other{# دَقه}',
   },
   MONTH: {
-    LONG: "other{# ماه}",
-    SHORT: "other{# ماه}",
-    NARROW: "other{# ماه}",
+    LONG: 'other{# ماه}',
+    SHORT: 'other{# ماه}',
+    NARROW: 'other{# ماه}',
   },
   SECOND: {
-    LONG: "other{# ثانیه}",
-    SHORT: "other{# ثانیه}",
-    NARROW: "other{# ثانیه}",
+    LONG: 'other{# ثانیه}',
+    SHORT: 'other{# ثانیه}',
+    NARROW: 'other{# ثانیه}',
   },
   WEEK: {
-    LONG: "other{# هفته}",
-    SHORT: "other{# هفته}",
-    NARROW: "other{# هفته}",
+    LONG: 'other{# هفته}',
+    SHORT: 'other{# هفته}',
+    NARROW: 'other{# هفته}',
   },
   YEAR: {
-    LONG: "other{# سال}",
-    SHORT: "other{# سال}",
-    NARROW: "other{# سال}",
+    LONG: 'other{# سال}',
+    SHORT: 'other{# سال}',
+    NARROW: 'other{# سال}',
   },
 };
 
@@ -9143,41 +9142,41 @@ exports.DurationSymbols_mzn =  {
 exports.DurationSymbols_mzn_IR = exports.DurationSymbols_mzn;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_naq =  {
+exports.DurationSymbols_naq = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -9191,41 +9190,41 @@ exports.DurationSymbols_nb_NO = DurationSymbols.DurationSymbols_nb;
 exports.DurationSymbols_nb_SJ = DurationSymbols.DurationSymbols_nb;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_nd =  {
+exports.DurationSymbols_nd = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -9260,41 +9259,41 @@ exports.DurationSymbols_nl_SR = DurationSymbols.DurationSymbols_nl;
 exports.DurationSymbols_nl_SX = DurationSymbols.DurationSymbols_nl;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_nmg =  {
+exports.DurationSymbols_nmg = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -9302,41 +9301,41 @@ exports.DurationSymbols_nmg =  {
 exports.DurationSymbols_nmg_CM = exports.DurationSymbols_nmg;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_nn =  {
+exports.DurationSymbols_nn = {
   DAY: {
-    LONG: "one{# døgn}other{# døgn}",
-    SHORT: "one{# d}other{# d}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# døgn}other{# døgn}',
+    SHORT: 'one{# d}other{# d}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# time}other{# timar}",
-    SHORT: "one{# t}other{# t}",
-    NARROW: "one{#t}other{#t}",
+    LONG: 'one{# time}other{# timar}',
+    SHORT: 'one{# t}other{# t}',
+    NARROW: 'one{#t}other{#t}',
   },
   MINUTE: {
-    LONG: "one{# minutt}other{# minutt}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minutt}other{# minutt}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# månad}other{# månadar}",
-    SHORT: "one{# md.}other{# md.}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# månad}other{# månadar}',
+    SHORT: 'one{# md.}other{# md.}',
+    NARROW: 'one{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# sekund}other{# sekund}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# sekund}other{# sekund}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# veke}other{# veker}",
-    SHORT: "one{# v}other{# v}",
-    NARROW: "one{#v}other{#v}",
+    LONG: 'one{# veke}other{# veker}',
+    SHORT: 'one{# v}other{# v}',
+    NARROW: 'one{#v}other{#v}',
   },
   YEAR: {
-    LONG: "one{# år}other{# år}",
-    SHORT: "one{# år}other{# år}",
-    NARROW: "one{#å}other{#å}",
+    LONG: 'one{# år}other{# år}',
+    SHORT: 'one{# år}other{# år}',
+    NARROW: 'one{#å}other{#å}',
   },
 };
 
@@ -9344,41 +9343,41 @@ exports.DurationSymbols_nn =  {
 exports.DurationSymbols_nn_NO = exports.DurationSymbols_nn;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_nnh =  {
+exports.DurationSymbols_nnh = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -9386,41 +9385,41 @@ exports.DurationSymbols_nnh =  {
 exports.DurationSymbols_nnh_CM = exports.DurationSymbols_nnh;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_nus =  {
+exports.DurationSymbols_nus = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -9428,41 +9427,41 @@ exports.DurationSymbols_nus =  {
 exports.DurationSymbols_nus_SS = exports.DurationSymbols_nus;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_nyn =  {
+exports.DurationSymbols_nyn = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -9470,41 +9469,41 @@ exports.DurationSymbols_nyn =  {
 exports.DurationSymbols_nyn_UG = exports.DurationSymbols_nyn;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_om =  {
+exports.DurationSymbols_om = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -9518,41 +9517,41 @@ exports.DurationSymbols_om_KE = exports.DurationSymbols_om;
 exports.DurationSymbols_or_IN = DurationSymbols.DurationSymbols_or;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_os =  {
+exports.DurationSymbols_os = {
   DAY: {
-    LONG: "one{# бон}other{# боны}",
-    SHORT: "one{# бон}other{# боны}",
-    NARROW: "one{# бон}other{# боны}",
+    LONG: 'one{# бон}other{# боны}',
+    SHORT: 'one{# бон}other{# боны}',
+    NARROW: 'one{# бон}other{# боны}',
   },
   HOUR: {
-    LONG: "one{# сахат}other{# сахаты}",
-    SHORT: "one{# с.}other{# с.}",
-    NARROW: "one{# с.}other{# с.}",
+    LONG: 'one{# сахат}other{# сахаты}',
+    SHORT: 'one{# с.}other{# с.}',
+    NARROW: 'one{# с.}other{# с.}',
   },
   MINUTE: {
-    LONG: "one{# минут}other{# минуты}",
-    SHORT: "one{# мин.}other{# мин.}",
-    NARROW: "one{# мин.}other{# мин.}",
+    LONG: 'one{# минут}other{# минуты}',
+    SHORT: 'one{# мин.}other{# мин.}',
+    NARROW: 'one{# мин.}other{# мин.}',
   },
   MONTH: {
-    LONG: "one{# мӕй}other{# мӕйы}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'one{# мӕй}other{# мӕйы}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "one{# секунд}other{# секунды}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'one{# секунд}other{# секунды}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "one{# къуыри}other{# къуырийы}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'one{# къуыри}other{# къуырийы}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "one{# аз}other{# азы}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'one{# аз}other{# азы}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -9563,80 +9562,80 @@ exports.DurationSymbols_os_GE = exports.DurationSymbols_os;
 exports.DurationSymbols_os_RU = exports.DurationSymbols_os;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_pa_Arab =  {
+exports.DurationSymbols_pa_Arab = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_pa_Arab_PK =  {
+exports.DurationSymbols_pa_Arab_PK = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -9647,41 +9646,41 @@ exports.DurationSymbols_pa_Guru = DurationSymbols.DurationSymbols_pa;
 exports.DurationSymbols_pa_Guru_IN = DurationSymbols.DurationSymbols_pa;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_pcm =  {
+exports.DurationSymbols_pcm = {
   DAY: {
-    LONG: "one{# Dè}other{# Dè}",
-    SHORT: "one{# dè}other{# dez}",
-    NARROW: "one{#Dè}other{#Dè}",
+    LONG: 'one{# Dè}other{# Dè}',
+    SHORT: 'one{# dè}other{# dez}',
+    NARROW: 'one{#Dè}other{#Dè}',
   },
   HOUR: {
-    LONG: "one{# Áwa}other{# Áwa}",
-    SHORT: "one{# Áwa}other{# Áwa}",
-    NARROW: "one{#Áwa}other{#Áwa}",
+    LONG: 'one{# Áwa}other{# Áwa}',
+    SHORT: 'one{# Áwa}other{# Áwa}',
+    NARROW: 'one{#Áwa}other{#Áwa}',
   },
   MINUTE: {
-    LONG: "one{# Mínit}other{# Mínit}",
-    SHORT: "one{# Mínit}other{# Mínit}",
-    NARROW: "one{#Mínit}other{#Mínit}",
+    LONG: 'one{# Mínit}other{# Mínit}',
+    SHORT: 'one{# Mínit}other{# Mínit}',
+    NARROW: 'one{#Mínit}other{#Mínit}',
   },
   MONTH: {
-    LONG: "one{# Mọnt}other{# Mọnt}",
-    SHORT: "one{# Mọnt}other{# Mọnt}",
-    NARROW: "one{#Mọnt}other{#Mọnt}",
+    LONG: 'one{# Mọnt}other{# Mọnt}',
+    SHORT: 'one{# Mọnt}other{# Mọnt}',
+    NARROW: 'one{#Mọnt}other{#Mọnt}',
   },
   SECOND: {
-    LONG: "one{# Sẹ́kọn}other{# Sẹ́kọn}",
-    SHORT: "one{# Sẹ́kọn}other{# Sẹ́kọn}",
-    NARROW: "one{#Sẹ́kọn}other{#Sẹ́kọn}",
+    LONG: 'one{# Sẹ́kọn}other{# Sẹ́kọn}',
+    SHORT: 'one{# Sẹ́kọn}other{# Sẹ́kọn}',
+    NARROW: 'one{#Sẹ́kọn}other{#Sẹ́kọn}',
   },
   WEEK: {
-    LONG: "one{# Wik}other{# Wik}",
-    SHORT: "one{# Wik}other{Wik #}",
-    NARROW: "one{#Wik}other{#Wik}",
+    LONG: 'one{# Wik}other{# Wik}',
+    SHORT: 'one{# Wik}other{Wik #}',
+    NARROW: 'one{#Wik}other{#Wik}',
   },
   YEAR: {
-    LONG: "one{# Yiẹ}other{# Yiẹ}",
-    SHORT: "one{# Yiẹ}other{# Yiẹ}",
-    NARROW: "one{#Yiẹ}other{#Yiẹ}",
+    LONG: 'one{# Yiẹ}other{# Yiẹ}',
+    SHORT: 'one{# Yiẹ}other{# Yiẹ}',
+    NARROW: 'one{#Yiẹ}other{#Yiẹ}',
   },
 };
 
@@ -9692,41 +9691,41 @@ exports.DurationSymbols_pcm_NG = exports.DurationSymbols_pcm;
 exports.DurationSymbols_pl_PL = DurationSymbols.DurationSymbols_pl;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ps =  {
+exports.DurationSymbols_ps = {
   DAY: {
-    LONG: "one{# ورځ}other{# ورځې}",
-    SHORT: "one{# ورځ}other{# ورځې}",
-    NARROW: "one{# ورځ}other{#d}",
+    LONG: 'one{# ورځ}other{# ورځې}',
+    SHORT: 'one{# ورځ}other{# ورځې}',
+    NARROW: 'one{# ورځ}other{#d}',
   },
   HOUR: {
-    LONG: "one{# h}other{# h}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{# h}other{# h}",
+    LONG: 'one{# h}other{# h}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{# h}other{# h}',
   },
   MINUTE: {
-    LONG: "one{# min}other{# min}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{# min}other{#m}",
+    LONG: 'one{# min}other{# min}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{# min}other{#m}',
   },
   MONTH: {
-    LONG: "one{# مياشت}other{# مياشتې}",
-    SHORT: "one{# m}other{# mths}",
-    NARROW: "one{# m}other{# m}",
+    LONG: 'one{# مياشت}other{# مياشتې}',
+    SHORT: 'one{# m}other{# mths}',
+    NARROW: 'one{# m}other{# m}',
   },
   SECOND: {
-    LONG: "one{# s}other{# s}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{# s}other{# s}",
+    LONG: 'one{# s}other{# s}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{# s}other{# s}',
   },
   WEEK: {
-    LONG: "one{اونۍ}other{# اونۍ}",
-    SHORT: "one{# w}other{# wks}",
-    NARROW: "one{# w}other{# w}",
+    LONG: 'one{اونۍ}other{# اونۍ}',
+    SHORT: 'one{# w}other{# wks}',
+    NARROW: 'one{# w}other{# w}',
   },
   YEAR: {
-    LONG: "one{# کال}other{# کالونه}",
-    SHORT: "one{# y}other{# y}",
-    NARROW: "one{# y}other{# y}",
+    LONG: 'one{# کال}other{# کالونه}',
+    SHORT: 'one{# y}other{# y}',
+    NARROW: 'one{# y}other{# y}',
   },
 };
 
@@ -9734,41 +9733,41 @@ exports.DurationSymbols_ps =  {
 exports.DurationSymbols_ps_AF = exports.DurationSymbols_ps;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ps_PK =  {
+exports.DurationSymbols_ps_PK = {
   DAY: {
-    LONG: "one{# ورځ}other{# ورځے}",
-    SHORT: "one{# ورځ}other{# ورځے}",
-    NARROW: "one{# ورځ}other{#d}",
+    LONG: 'one{# ورځ}other{# ورځے}',
+    SHORT: 'one{# ورځ}other{# ورځے}',
+    NARROW: 'one{# ورځ}other{#d}',
   },
   HOUR: {
-    LONG: "one{# h}other{# h}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{# h}other{# h}",
+    LONG: 'one{# h}other{# h}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{# h}other{# h}',
   },
   MINUTE: {
-    LONG: "one{# min}other{# min}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{# min}other{#m}",
+    LONG: 'one{# min}other{# min}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{# min}other{#m}',
   },
   MONTH: {
-    LONG: "one{# مياشت}other{# مياشتے}",
-    SHORT: "one{# m}other{# mths}",
-    NARROW: "one{# m}other{# m}",
+    LONG: 'one{# مياشت}other{# مياشتے}',
+    SHORT: 'one{# m}other{# mths}',
+    NARROW: 'one{# m}other{# m}',
   },
   SECOND: {
-    LONG: "one{# s}other{# s}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{# s}other{# s}",
+    LONG: 'one{# s}other{# s}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{# s}other{# s}',
   },
   WEEK: {
-    LONG: "one{اونۍ}other{# اونۍ}",
-    SHORT: "one{# w}other{# wks}",
-    NARROW: "one{# w}other{# w}",
+    LONG: 'one{اونۍ}other{# اونۍ}',
+    SHORT: 'one{# w}other{# wks}',
+    NARROW: 'one{# w}other{# w}',
   },
   YEAR: {
-    LONG: "one{# کال}other{# کالونه}",
-    SHORT: "one{# y}other{# y}",
-    NARROW: "one{# y}other{# y}",
+    LONG: 'one{# کال}other{# کالونه}',
+    SHORT: 'one{# y}other{# y}',
+    NARROW: 'one{# y}other{# y}',
   },
 };
 
@@ -9803,41 +9802,41 @@ exports.DurationSymbols_pt_ST = DurationSymbols.DurationSymbols_pt;
 exports.DurationSymbols_pt_TL = DurationSymbols.DurationSymbols_pt;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_qu =  {
+exports.DurationSymbols_qu = {
   DAY: {
-    LONG: "other{# punchaw}",
-    SHORT: "other{# d}",
-    NARROW: "other{# p}",
+    LONG: 'other{# punchaw}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# p}',
   },
   HOUR: {
-    LONG: "other{# hora}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# hora}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# minuto}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# minuto}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# killa}",
-    SHORT: "other{# m}",
-    NARROW: "other{# k}",
+    LONG: 'other{# killa}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# k}',
   },
   SECOND: {
-    LONG: "other{# segundo}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# segundo}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# semana}",
-    SHORT: "other{# w}",
-    NARROW: "other{# s}",
+    LONG: 'other{# semana}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# s}',
   },
   YEAR: {
-    LONG: "other{# wata}",
-    SHORT: "other{# y}",
-    NARROW: "other{# w}",
+    LONG: 'other{# wata}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# w}',
   },
 };
 
@@ -9851,41 +9850,41 @@ exports.DurationSymbols_qu_EC = exports.DurationSymbols_qu;
 exports.DurationSymbols_qu_PE = exports.DurationSymbols_qu;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_raj =  {
+exports.DurationSymbols_raj = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -9893,41 +9892,41 @@ exports.DurationSymbols_raj =  {
 exports.DurationSymbols_raj_IN = exports.DurationSymbols_raj;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_rm =  {
+exports.DurationSymbols_rm = {
   DAY: {
-    LONG: "one{# di}other{# dis}",
-    SHORT: "one{# di}other{# dis}",
-    NARROW: "one{# dis}other{# dis}",
+    LONG: 'one{# di}other{# dis}',
+    SHORT: 'one{# di}other{# dis}',
+    NARROW: 'one{# dis}other{# dis}',
   },
   HOUR: {
-    LONG: "one{# ura}other{# uras}",
-    SHORT: "one{# ura}other{# uras}",
-    NARROW: "one{# uras}other{# uras}",
+    LONG: 'one{# ura}other{# uras}',
+    SHORT: 'one{# ura}other{# uras}',
+    NARROW: 'one{# uras}other{# uras}',
   },
   MINUTE: {
-    LONG: "one{# minuta}other{# minutas}",
-    SHORT: "one{# min.}other{# mins.}",
-    NARROW: "one{# mins.}other{# mins.}",
+    LONG: 'one{# minuta}other{# minutas}',
+    SHORT: 'one{# min.}other{# mins.}',
+    NARROW: 'one{# mins.}other{# mins.}',
   },
   MONTH: {
-    LONG: "one{# mais}other{# mais}",
-    SHORT: "one{# mais}other{# mais}",
-    NARROW: "one{# mais}other{# mais}",
+    LONG: 'one{# mais}other{# mais}',
+    SHORT: 'one{# mais}other{# mais}',
+    NARROW: 'one{# mais}other{# mais}',
   },
   SECOND: {
-    LONG: "one{# secunda}other{# secundas}",
-    SHORT: "one{# sec.}other{# secs.}",
-    NARROW: "one{# secs.}other{# secs.}",
+    LONG: 'one{# secunda}other{# secundas}',
+    SHORT: 'one{# sec.}other{# secs.}',
+    NARROW: 'one{# secs.}other{# secs.}',
   },
   WEEK: {
-    LONG: "one{# emna}other{# emnas}",
-    SHORT: "one{# emna}other{# emnas}",
-    NARROW: "one{# emnas}other{# emnas}",
+    LONG: 'one{# emna}other{# emnas}',
+    SHORT: 'one{# emna}other{# emnas}',
+    NARROW: 'one{# emnas}other{# emnas}',
   },
   YEAR: {
-    LONG: "one{# onn}other{# onns}",
-    SHORT: "one{# onn}other{# onns}",
-    NARROW: "one{# onns}other{# onns}",
+    LONG: 'one{# onn}other{# onns}',
+    SHORT: 'one{# onn}other{# onns}',
+    NARROW: 'one{# onns}other{# onns}',
   },
 };
 
@@ -9935,41 +9934,41 @@ exports.DurationSymbols_rm =  {
 exports.DurationSymbols_rm_CH = exports.DurationSymbols_rm;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_rn =  {
+exports.DurationSymbols_rn = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -9977,41 +9976,41 @@ exports.DurationSymbols_rn =  {
 exports.DurationSymbols_rn_BI = exports.DurationSymbols_rn;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ro_MD =  {
+exports.DurationSymbols_ro_MD = {
   DAY: {
-    LONG: "one{# zi}few{# zile}other{# de zile}",
-    SHORT: "one{# zi}few{# zile}other{# zile}",
-    NARROW: "one{# zi}few{# zile}other{# zile}",
+    LONG: 'one{# zi}few{# zile}other{# de zile}',
+    SHORT: 'one{# zi}few{# zile}other{# zile}',
+    NARROW: 'one{# zi}few{# zile}other{# zile}',
   },
   HOUR: {
-    LONG: "one{# oră}few{# ore}other{# de ore}",
-    SHORT: "one{# oră}few{# ore}other{# ore}",
-    NARROW: "one{# h}few{# h}other{# h}",
+    LONG: 'one{# oră}few{# ore}other{# de ore}',
+    SHORT: 'one{# oră}few{# ore}other{# ore}',
+    NARROW: 'one{# h}few{# h}other{# h}',
   },
   MINUTE: {
-    LONG: "one{# minut}few{# minute}other{# de minute}",
-    SHORT: "one{# min.}few{# min.}other{# min.}",
-    NARROW: "one{# min.}few{# min.}other{# min.}",
+    LONG: 'one{# minut}few{# minute}other{# de minute}',
+    SHORT: 'one{# min.}few{# min.}other{# min.}',
+    NARROW: 'one{# min.}few{# min.}other{# min.}',
   },
   MONTH: {
-    LONG: "one{# lună}few{# luni}other{# de luni}",
-    SHORT: "one{# lună}few{# luni}other{# luni}",
-    NARROW: "one{# lună}few{# luni}other{# luni}",
+    LONG: 'one{# lună}few{# luni}other{# de luni}',
+    SHORT: 'one{# lună}few{# luni}other{# luni}',
+    NARROW: 'one{# lună}few{# luni}other{# luni}',
   },
   SECOND: {
-    LONG: "one{# secundă}few{# secunde}other{# de secunde}",
-    SHORT: "one{# s}few{# s}other{# s}",
-    NARROW: "one{# s}few{# s}other{# s}",
+    LONG: 'one{# secundă}few{# secunde}other{# de secunde}',
+    SHORT: 'one{# s}few{# s}other{# s}',
+    NARROW: 'one{# s}few{# s}other{# s}',
   },
   WEEK: {
-    LONG: "one{# săptămână}few{# săptămâni}other{# de săptămâni}",
-    SHORT: "one{# săpt.}few{# săpt.}other{# săpt.}",
-    NARROW: "one{# săpt.}few{# săpt.}other{# săpt.}",
+    LONG: 'one{# săptămână}few{# săptămâni}other{# de săptămâni}',
+    SHORT: 'one{# săpt.}few{# săpt.}other{# săpt.}',
+    NARROW: 'one{# săpt.}few{# săpt.}other{# săpt.}',
   },
   YEAR: {
-    LONG: "one{# an}few{# ani}other{# de ani}",
-    SHORT: "one{# an}few{# ani}other{# ani}",
-    NARROW: "one{# an}few{# ani}other{# ani}",
+    LONG: 'one{# an}few{# ani}other{# de ani}',
+    SHORT: 'one{# an}few{# ani}other{# ani}',
+    NARROW: 'one{# an}few{# ani}other{# ani}',
   },
 };
 
@@ -10019,41 +10018,41 @@ exports.DurationSymbols_ro_MD =  {
 exports.DurationSymbols_ro_RO = DurationSymbols.DurationSymbols_ro;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_rof =  {
+exports.DurationSymbols_rof = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -10079,41 +10078,41 @@ exports.DurationSymbols_ru_RU = DurationSymbols.DurationSymbols_ru;
 exports.DurationSymbols_ru_UA = DurationSymbols.DurationSymbols_ru;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_rw =  {
+exports.DurationSymbols_rw = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -10121,41 +10120,41 @@ exports.DurationSymbols_rw =  {
 exports.DurationSymbols_rw_RW = exports.DurationSymbols_rw;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_rwk =  {
+exports.DurationSymbols_rwk = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -10163,41 +10162,41 @@ exports.DurationSymbols_rwk =  {
 exports.DurationSymbols_rwk_TZ = exports.DurationSymbols_rwk;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_sa =  {
+exports.DurationSymbols_sa = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -10205,41 +10204,41 @@ exports.DurationSymbols_sa =  {
 exports.DurationSymbols_sa_IN = exports.DurationSymbols_sa;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_sah =  {
+exports.DurationSymbols_sah = {
   DAY: {
-    LONG: "other{# күн}",
-    SHORT: "other{# күн}",
-    NARROW: "other{# к.}",
+    LONG: 'other{# күн}',
+    SHORT: 'other{# күн}',
+    NARROW: 'other{# к.}',
   },
   HOUR: {
-    LONG: "other{# чаас}",
-    SHORT: "other{# ч}",
-    NARROW: "other{# ч}",
+    LONG: 'other{# чаас}',
+    SHORT: 'other{# ч}',
+    NARROW: 'other{# ч}',
   },
   MINUTE: {
-    LONG: "other{# мүнүүтэ}",
-    SHORT: "other{# мүн}",
-    NARROW: "other{# мүн}",
+    LONG: 'other{# мүнүүтэ}',
+    SHORT: 'other{# мүн}',
+    NARROW: 'other{# мүн}',
   },
   MONTH: {
-    LONG: "other{# ый}",
-    SHORT: "other{# ый}",
-    NARROW: "other{# ый}",
+    LONG: 'other{# ый}',
+    SHORT: 'other{# ый}',
+    NARROW: 'other{# ый}',
   },
   SECOND: {
-    LONG: "other{# сөкүүндэ}",
-    SHORT: "other{# сөк}",
-    NARROW: "other{# с}",
+    LONG: 'other{# сөкүүндэ}',
+    SHORT: 'other{# сөк}',
+    NARROW: 'other{# с}',
   },
   WEEK: {
-    LONG: "other{# нэдиэлэ}",
-    SHORT: "other{# нэд.}",
-    NARROW: "other{# н.}",
+    LONG: 'other{# нэдиэлэ}',
+    SHORT: 'other{# нэд.}',
+    NARROW: 'other{# н.}',
   },
   YEAR: {
-    LONG: "other{# сыл}",
-    SHORT: "other{# с.}",
-    NARROW: "other{# с.}",
+    LONG: 'other{# сыл}',
+    SHORT: 'other{# с.}',
+    NARROW: 'other{# с.}',
   },
 };
 
@@ -10247,41 +10246,41 @@ exports.DurationSymbols_sah =  {
 exports.DurationSymbols_sah_RU = exports.DurationSymbols_sah;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_saq =  {
+exports.DurationSymbols_saq = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -10289,41 +10288,41 @@ exports.DurationSymbols_saq =  {
 exports.DurationSymbols_saq_KE = exports.DurationSymbols_saq;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_sat =  {
+exports.DurationSymbols_sat = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -10334,41 +10333,41 @@ exports.DurationSymbols_sat_Olck = exports.DurationSymbols_sat;
 exports.DurationSymbols_sat_Olck_IN = exports.DurationSymbols_sat;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_sbp =  {
+exports.DurationSymbols_sbp = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -10376,41 +10375,41 @@ exports.DurationSymbols_sbp =  {
 exports.DurationSymbols_sbp_TZ = exports.DurationSymbols_sbp;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_sc =  {
+exports.DurationSymbols_sc = {
   DAY: {
-    LONG: "one{# die}other{# dies}",
-    SHORT: "one{# die}other{# dies}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# die}other{# dies}',
+    SHORT: 'one{# die}other{# dies}',
+    NARROW: 'one{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# ora}other{# oras}",
-    SHORT: "one{# ora}other{# oras}",
-    NARROW: "one{#o}other{#o}",
+    LONG: 'one{# ora}other{# oras}',
+    SHORT: 'one{# ora}other{# oras}',
+    NARROW: 'one{#o}other{#o}',
   },
   MINUTE: {
-    LONG: "one{# minutu}other{# minutos}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minutu}other{# minutos}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mese}other{# meses}",
-    SHORT: "one{# mese}other{# meses}",
-    NARROW: "one{#me.}other{#me.}",
+    LONG: 'one{# mese}other{# meses}',
+    SHORT: 'one{# mese}other{# meses}',
+    NARROW: 'one{#me.}other{#me.}',
   },
   SECOND: {
-    LONG: "one{# segundu}other{# segundos}",
-    SHORT: "one{# seg}other{# seg}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# segundu}other{# segundos}',
+    SHORT: 'one{# seg}other{# seg}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# chida}other{# chidas}",
-    SHORT: "one{# chida}other{# chida}",
-    NARROW: "one{#ch.}other{#ch.}",
+    LONG: 'one{# chida}other{# chidas}',
+    SHORT: 'one{# chida}other{# chida}',
+    NARROW: 'one{#ch.}other{#ch.}',
   },
   YEAR: {
-    LONG: "one{# annu}other{# annos}",
-    SHORT: "one{# annu}other{# annos}",
-    NARROW: "one{#an.}other{#an.}",
+    LONG: 'one{# annu}other{# annos}',
+    SHORT: 'one{# annu}other{# annos}',
+    NARROW: 'one{#an.}other{#an.}',
   },
 };
 
@@ -10418,41 +10417,41 @@ exports.DurationSymbols_sc =  {
 exports.DurationSymbols_sc_IT = exports.DurationSymbols_sc;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_sd =  {
+exports.DurationSymbols_sd = {
   DAY: {
-    LONG: "one{# ڏينهن}other{# ڏينهن}",
-    SHORT: "one{# ڏينهن}other{# ڏينهن}",
-    NARROW: "one{# ڏينهن}other{# ڏينهن}",
+    LONG: 'one{# ڏينهن}other{# ڏينهن}',
+    SHORT: 'one{# ڏينهن}other{# ڏينهن}',
+    NARROW: 'one{# ڏينهن}other{# ڏينهن}',
   },
   HOUR: {
-    LONG: "one{# ڪلاڪ}other{# ڪلاڪ}",
-    SHORT: "one{# ڪلاڪ}other{# ڪلاڪ}",
-    NARROW: "one{# ڪلاڪ}other{# ڪلاڪ}",
+    LONG: 'one{# ڪلاڪ}other{# ڪلاڪ}',
+    SHORT: 'one{# ڪلاڪ}other{# ڪلاڪ}',
+    NARROW: 'one{# ڪلاڪ}other{# ڪلاڪ}',
   },
   MINUTE: {
-    LONG: "one{# منٽ}other{# منٽ}",
-    SHORT: "one{# منٽ}other{# منٽ}",
-    NARROW: "one{# منٽ}other{# منٽ}",
+    LONG: 'one{# منٽ}other{# منٽ}',
+    SHORT: 'one{# منٽ}other{# منٽ}',
+    NARROW: 'one{# منٽ}other{# منٽ}',
   },
   MONTH: {
-    LONG: "one{# مهينا}other{# مهينا}",
-    SHORT: "one{# مهينا}other{# مهينا}",
-    NARROW: "one{# مهينا}other{# مهينا}",
+    LONG: 'one{# مهينا}other{# مهينا}',
+    SHORT: 'one{# مهينا}other{# مهينا}',
+    NARROW: 'one{# مهينا}other{# مهينا}',
   },
   SECOND: {
-    LONG: "one{# في سيڪنڊ}other{# سيڪنڊ}",
-    SHORT: "one{# سيڪنڊ}other{# سيڪنڊ}",
-    NARROW: "one{# s}other{# سيڪنڊ}",
+    LONG: 'one{# في سيڪنڊ}other{# سيڪنڊ}',
+    SHORT: 'one{# سيڪنڊ}other{# سيڪنڊ}',
+    NARROW: 'one{# s}other{# سيڪنڊ}',
   },
   WEEK: {
-    LONG: "one{# هفتا}other{# هفتا}",
-    SHORT: "one{# هفتا}other{# هفتا}",
-    NARROW: "one{# هفتا}other{# هفتي}",
+    LONG: 'one{# هفتا}other{# هفتا}',
+    SHORT: 'one{# هفتا}other{# هفتا}',
+    NARROW: 'one{# هفتا}other{# هفتي}',
   },
   YEAR: {
-    LONG: "one{# سال}other{# سال}",
-    SHORT: "one{# سال}other{# سال}",
-    NARROW: "one{# سال}other{# سال}",
+    LONG: 'one{# سال}other{# سال}',
+    SHORT: 'one{# سال}other{# سال}',
+    NARROW: 'one{# سال}other{# سال}',
   },
 };
 
@@ -10463,119 +10462,119 @@ exports.DurationSymbols_sd_Arab = exports.DurationSymbols_sd;
 exports.DurationSymbols_sd_Arab_PK = exports.DurationSymbols_sd;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_sd_Deva =  {
+exports.DurationSymbols_sd_Deva = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_sd_Deva_IN =  {
+exports.DurationSymbols_sd_Deva_IN = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_se =  {
+exports.DurationSymbols_se = {
   DAY: {
-    LONG: "one{# jándor}two{# jándora}other{# jándora}",
-    SHORT: "one{# d}two{# d}other{# d}",
-    NARROW: "one{#d}two{#d}other{#d}",
+    LONG: 'one{# jándor}two{# jándora}other{# jándora}',
+    SHORT: 'one{# d}two{# d}other{# d}',
+    NARROW: 'one{#d}two{#d}other{#d}',
   },
   HOUR: {
-    LONG: "one{# diibmu}two{# diimmur}other{# diibmur}",
-    SHORT: "one{# h}two{# h}other{# h}",
-    NARROW: "one{#h}two{#h}other{#h}",
+    LONG: 'one{# diibmu}two{# diimmur}other{# diibmur}',
+    SHORT: 'one{# h}two{# h}other{# h}',
+    NARROW: 'one{#h}two{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# minuhta}two{# minuhtta}other{# minuhtta}",
-    SHORT: "one{# min}two{# min}other{# min}",
-    NARROW: "one{#m}two{#m}other{#m}",
+    LONG: 'one{# minuhta}two{# minuhtta}other{# minuhtta}',
+    SHORT: 'one{# min}two{# min}other{# min}',
+    NARROW: 'one{#m}two{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# mánotbadji}two{# mánotbaji}other{# mánotbadji}",
-    SHORT: "one{# mán}two{# mán}other{# mán}",
-    NARROW: "one{#m}two{#m}other{#m}",
+    LONG: 'one{# mánotbadji}two{# mánotbaji}other{# mánotbadji}',
+    SHORT: 'one{# mán}two{# mán}other{# mán}',
+    NARROW: 'one{#m}two{#m}other{#m}',
   },
   SECOND: {
-    LONG: "one{# sekunda}two{# sekundda}other{# sekundda}",
-    SHORT: "one{# s}two{# s}other{# s}",
-    NARROW: "one{#s}two{#s}other{#s}",
+    LONG: 'one{# sekunda}two{# sekundda}other{# sekundda}',
+    SHORT: 'one{# s}two{# s}other{# s}',
+    NARROW: 'one{#s}two{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# váhku}two{# váhkku}other{# váhkku}",
-    SHORT: "one{# v}two{# v}other{# v}",
-    NARROW: "one{#v}two{#v}other{#v}",
+    LONG: 'one{# váhku}two{# váhkku}other{# váhkku}',
+    SHORT: 'one{# v}two{# v}other{# v}',
+    NARROW: 'one{#v}two{#v}other{#v}',
   },
   YEAR: {
-    LONG: "one{# jahki}two{# jahkki}other{# jahkki}",
-    SHORT: "one{# jah}two{# jah}other{# jah}",
-    NARROW: "one{#j}two{#j}other{#j}",
+    LONG: 'one{# jahki}two{# jahkki}other{# jahkki}',
+    SHORT: 'one{# jah}two{# jah}other{# jah}',
+    NARROW: 'one{#j}two{#j}other{#j}',
   },
 };
 
@@ -10589,41 +10588,41 @@ exports.DurationSymbols_se_NO = exports.DurationSymbols_se;
 exports.DurationSymbols_se_SE = exports.DurationSymbols_se;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_seh =  {
+exports.DurationSymbols_seh = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -10631,41 +10630,41 @@ exports.DurationSymbols_seh =  {
 exports.DurationSymbols_seh_MZ = exports.DurationSymbols_seh;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ses =  {
+exports.DurationSymbols_ses = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -10673,41 +10672,41 @@ exports.DurationSymbols_ses =  {
 exports.DurationSymbols_ses_ML = exports.DurationSymbols_ses;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_sg =  {
+exports.DurationSymbols_sg = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -10715,41 +10714,41 @@ exports.DurationSymbols_sg =  {
 exports.DurationSymbols_sg_CF = exports.DurationSymbols_sg;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_shi =  {
+exports.DurationSymbols_shi = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -10775,41 +10774,41 @@ exports.DurationSymbols_sk_SK = DurationSymbols.DurationSymbols_sk;
 exports.DurationSymbols_sl_SI = DurationSymbols.DurationSymbols_sl;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_smn =  {
+exports.DurationSymbols_smn = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -10817,41 +10816,41 @@ exports.DurationSymbols_smn =  {
 exports.DurationSymbols_smn_FI = exports.DurationSymbols_smn;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_sn =  {
+exports.DurationSymbols_sn = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -10859,41 +10858,41 @@ exports.DurationSymbols_sn =  {
 exports.DurationSymbols_sn_ZW = exports.DurationSymbols_sn;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_so =  {
+exports.DurationSymbols_so = {
   DAY: {
-    LONG: "one{# maalin}other{# maalmood}",
-    SHORT: "one{# mln}other{# mln}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# maalin}other{# maalmood}',
+    SHORT: 'one{# mln}other{# mln}',
+    NARROW: 'one{#m}other{#m}',
   },
   HOUR: {
-    LONG: "one{# saacad}other{# saacadood}",
-    SHORT: "one{# scd}other{# scd}",
-    NARROW: "one{# scd}other{# s}",
+    LONG: 'one{# saacad}other{# saacadood}',
+    SHORT: 'one{# scd}other{# scd}',
+    NARROW: 'one{# scd}other{# s}',
   },
   MINUTE: {
-    LONG: "one{# daqiiqad}other{# daqiiqo}",
-    SHORT: "one{# dqqd}other{# daqiiqo}",
-    NARROW: "one{#d}other{#d}",
+    LONG: 'one{# daqiiqad}other{# daqiiqo}',
+    SHORT: 'one{# dqqd}other{# daqiiqo}',
+    NARROW: 'one{#d}other{#d}',
   },
   MONTH: {
-    LONG: "one{# bil}other{# bilood}",
-    SHORT: "one{# bil}other{# bil}",
-    NARROW: "one{#b}other{#b}",
+    LONG: 'one{# bil}other{# bilood}',
+    SHORT: 'one{# bil}other{# bil}',
+    NARROW: 'one{#b}other{#b}',
   },
   SECOND: {
-    LONG: "one{# ilbiriqsi}other{# ilbiriqsi}",
-    SHORT: "one{# ilbrqsi}other{# ilbrqsi}",
-    NARROW: "one{#il}other{#il}",
+    LONG: 'one{# ilbiriqsi}other{# ilbiriqsi}',
+    SHORT: 'one{# ilbrqsi}other{# ilbrqsi}',
+    NARROW: 'one{#il}other{#il}',
   },
   WEEK: {
-    LONG: "one{# toddobaad}other{# toddobaadyo}",
-    SHORT: "one{# tdbd}other{# tdbd}",
-    NARROW: "one{#t}other{#t}",
+    LONG: 'one{# toddobaad}other{# toddobaadyo}',
+    SHORT: 'one{# tdbd}other{# tdbd}',
+    NARROW: 'one{#t}other{#t}',
   },
   YEAR: {
-    LONG: "one{# Sannad}other{# Sannado}",
-    SHORT: "one{snd}other{# snd}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# Sannad}other{# Sannado}',
+    SHORT: 'one{snd}other{# snd}',
+    NARROW: 'one{#s}other{#s}',
   },
 };
 
@@ -10922,80 +10921,80 @@ exports.DurationSymbols_sq_XK = DurationSymbols.DurationSymbols_sq;
 exports.DurationSymbols_sr_Cyrl = DurationSymbols.DurationSymbols_sr;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_sr_Cyrl_BA =  {
+exports.DurationSymbols_sr_Cyrl_BA = {
   DAY: {
-    LONG: "one{# дан}few{# дана}other{# дана}",
-    SHORT: "one{# дан}few{# дана}other{# дана}",
-    NARROW: "one{# д}few{# д}other{# д}",
+    LONG: 'one{# дан}few{# дана}other{# дана}',
+    SHORT: 'one{# дан}few{# дана}other{# дана}',
+    NARROW: 'one{# д}few{# д}other{# д}',
   },
   HOUR: {
-    LONG: "one{# сат}few{# сата}other{# сати}",
-    SHORT: "one{# сат}few{# сата}other{# сати}",
-    NARROW: "one{# ч}few{# ч}other{# ч}",
+    LONG: 'one{# сат}few{# сата}other{# сати}',
+    SHORT: 'one{# сат}few{# сата}other{# сати}',
+    NARROW: 'one{# ч}few{# ч}other{# ч}',
   },
   MINUTE: {
-    LONG: "one{# минут}few{# минута}other{# минута}",
-    SHORT: "one{# мин}few{# мин}other{# мин}",
-    NARROW: "one{# м}few{# м}other{# м}",
+    LONG: 'one{# минут}few{# минута}other{# минута}',
+    SHORT: 'one{# мин}few{# мин}other{# мин}',
+    NARROW: 'one{# м}few{# м}other{# м}',
   },
   MONTH: {
-    LONG: "one{# мјесец}few{# мјесеца}other{# мјесеци}",
-    SHORT: "one{# мјес.}few{# мјес.}other{# мјес.}",
-    NARROW: "one{# м}few{# м}other{# м}",
+    LONG: 'one{# мјесец}few{# мјесеца}other{# мјесеци}',
+    SHORT: 'one{# мјес.}few{# мјес.}other{# мјес.}',
+    NARROW: 'one{# м}few{# м}other{# м}',
   },
   SECOND: {
-    LONG: "one{# секунда}few{# секунде}other{# секунди}",
-    SHORT: "one{# сек}few{# сек}other{# сек}",
-    NARROW: "one{# с}few{# с}other{# с}",
+    LONG: 'one{# секунда}few{# секунде}other{# секунди}',
+    SHORT: 'one{# сек}few{# сек}other{# сек}',
+    NARROW: 'one{# с}few{# с}other{# с}',
   },
   WEEK: {
-    LONG: "one{# недјеља}few{# недјеље}other{# недјеља}",
-    SHORT: "one{# нед.}few{# нед.}other{# нед.}",
-    NARROW: "one{# н}few{# н}other{# н}",
+    LONG: 'one{# недјеља}few{# недјеље}other{# недјеља}',
+    SHORT: 'one{# нед.}few{# нед.}other{# нед.}',
+    NARROW: 'one{# н}few{# н}other{# н}',
   },
   YEAR: {
-    LONG: "one{# година}few{# године}other{# година}",
-    SHORT: "one{# год}few{# год.}other{# год.}",
-    NARROW: "one{# г}few{# г}other{# г}",
+    LONG: 'one{# година}few{# године}other{# година}',
+    SHORT: 'one{# год}few{# год.}other{# год.}',
+    NARROW: 'one{# г}few{# г}other{# г}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_sr_Cyrl_ME =  {
+exports.DurationSymbols_sr_Cyrl_ME = {
   DAY: {
-    LONG: "one{# dan}few{# dana}other{# dana}",
-    SHORT: "one{# dan}few{# dana}other{# dana}",
-    NARROW: "one{# d}few{# d}other{# d}",
+    LONG: 'one{# dan}few{# dana}other{# dana}',
+    SHORT: 'one{# dan}few{# dana}other{# dana}',
+    NARROW: 'one{# d}few{# d}other{# d}',
   },
   HOUR: {
-    LONG: "one{# sat}few{# sata}other{# sati}",
-    SHORT: "one{# sat}few{# sata}other{# sati}",
-    NARROW: "one{# č}few{# č}other{# č}",
+    LONG: 'one{# sat}few{# sata}other{# sati}',
+    SHORT: 'one{# sat}few{# sata}other{# sati}',
+    NARROW: 'one{# č}few{# č}other{# č}',
   },
   MINUTE: {
-    LONG: "one{# minut}few{# minuta}other{# minuta}",
-    SHORT: "one{# min}few{# min}other{# min}",
-    NARROW: "one{# m}few{# m}other{# m}",
+    LONG: 'one{# minut}few{# minuta}other{# minuta}',
+    SHORT: 'one{# min}few{# min}other{# min}',
+    NARROW: 'one{# m}few{# m}other{# m}',
   },
   MONTH: {
-    LONG: "one{# mesec}few{# meseca}other{# meseci}",
-    SHORT: "one{# mes.}few{# mes.}other{# mes.}",
-    NARROW: "one{# m}few{# m}other{# m}",
+    LONG: 'one{# mesec}few{# meseca}other{# meseci}',
+    SHORT: 'one{# mes.}few{# mes.}other{# mes.}',
+    NARROW: 'one{# m}few{# m}other{# m}',
   },
   SECOND: {
-    LONG: "one{# sekunda}few{# sekunde}other{# sekundi}",
-    SHORT: "one{# sek}few{# sek}other{# sek}",
-    NARROW: "one{# s}few{# s}other{# s}",
+    LONG: 'one{# sekunda}few{# sekunde}other{# sekundi}',
+    SHORT: 'one{# sek}few{# sek}other{# sek}',
+    NARROW: 'one{# s}few{# s}other{# s}',
   },
   WEEK: {
-    LONG: "one{# nedelja}few{# nedelje}other{# nedelja}",
-    SHORT: "one{# ned.}few{# ned.}other{# ned.}",
-    NARROW: "one{# n}few{# n}other{# n}",
+    LONG: 'one{# nedelja}few{# nedelje}other{# nedelja}',
+    SHORT: 'one{# ned.}few{# ned.}other{# ned.}',
+    NARROW: 'one{# n}few{# n}other{# n}',
   },
   YEAR: {
-    LONG: "one{# godina}few{# godine}other{# godina}",
-    SHORT: "one{# god}few{# god.}other{# god.}",
-    NARROW: "one{# g}few{# g}other{# g}",
+    LONG: 'one{# godina}few{# godine}other{# godina}',
+    SHORT: 'one{# god}few{# god.}other{# god.}',
+    NARROW: 'one{# g}few{# g}other{# g}',
   },
 };
 
@@ -11006,197 +11005,197 @@ exports.DurationSymbols_sr_Cyrl_RS = DurationSymbols.DurationSymbols_sr;
 exports.DurationSymbols_sr_Cyrl_XK = DurationSymbols.DurationSymbols_sr;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_sr_Latn_BA =  {
+exports.DurationSymbols_sr_Latn_BA = {
   DAY: {
-    LONG: "one{# dan}few{# dana}other{# dana}",
-    SHORT: "one{# dan}few{# dana}other{# dana}",
-    NARROW: "one{# d}few{# d}other{# d}",
+    LONG: 'one{# dan}few{# dana}other{# dana}',
+    SHORT: 'one{# dan}few{# dana}other{# dana}',
+    NARROW: 'one{# d}few{# d}other{# d}',
   },
   HOUR: {
-    LONG: "one{# sat}few{# sata}other{# sati}",
-    SHORT: "one{# sat}few{# sata}other{# sati}",
-    NARROW: "one{# č}few{# č}other{# č}",
+    LONG: 'one{# sat}few{# sata}other{# sati}',
+    SHORT: 'one{# sat}few{# sata}other{# sati}',
+    NARROW: 'one{# č}few{# č}other{# č}',
   },
   MINUTE: {
-    LONG: "one{# minut}few{# minuta}other{# minuta}",
-    SHORT: "one{# min}few{# min}other{# min}",
-    NARROW: "one{# m}few{# m}other{# m}",
+    LONG: 'one{# minut}few{# minuta}other{# minuta}',
+    SHORT: 'one{# min}few{# min}other{# min}',
+    NARROW: 'one{# m}few{# m}other{# m}',
   },
   MONTH: {
-    LONG: "one{# mjesec}few{# mjeseca}other{# mjeseci}",
-    SHORT: "one{# mjes.}few{# mjes.}other{# mjes.}",
-    NARROW: "one{# m}few{# m}other{# m}",
+    LONG: 'one{# mjesec}few{# mjeseca}other{# mjeseci}',
+    SHORT: 'one{# mjes.}few{# mjes.}other{# mjes.}',
+    NARROW: 'one{# m}few{# m}other{# m}',
   },
   SECOND: {
-    LONG: "one{# sekunda}few{# sekunde}other{# sekundi}",
-    SHORT: "one{# sek}few{# sek}other{# sek}",
-    NARROW: "one{# s}few{# s}other{# s}",
+    LONG: 'one{# sekunda}few{# sekunde}other{# sekundi}',
+    SHORT: 'one{# sek}few{# sek}other{# sek}',
+    NARROW: 'one{# s}few{# s}other{# s}',
   },
   WEEK: {
-    LONG: "one{# nedjelja}few{# nedjelje}other{# nedjelja}",
-    SHORT: "one{# ned.}few{# ned.}other{# ned.}",
-    NARROW: "one{# n}few{# n}other{# n}",
+    LONG: 'one{# nedjelja}few{# nedjelje}other{# nedjelja}',
+    SHORT: 'one{# ned.}few{# ned.}other{# ned.}',
+    NARROW: 'one{# n}few{# n}other{# n}',
   },
   YEAR: {
-    LONG: "one{# godina}few{# godine}other{# godina}",
-    SHORT: "one{# god}few{# god.}other{# god.}",
-    NARROW: "one{# g}few{# g}other{# g}",
+    LONG: 'one{# godina}few{# godine}other{# godina}',
+    SHORT: 'one{# god}few{# god.}other{# god.}',
+    NARROW: 'one{# g}few{# g}other{# g}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_sr_Latn_ME =  {
+exports.DurationSymbols_sr_Latn_ME = {
   DAY: {
-    LONG: "one{# dan}few{# dana}other{# dana}",
-    SHORT: "one{# dan}few{# dana}other{# dana}",
-    NARROW: "one{# d}few{# d}other{# d}",
+    LONG: 'one{# dan}few{# dana}other{# dana}',
+    SHORT: 'one{# dan}few{# dana}other{# dana}',
+    NARROW: 'one{# d}few{# d}other{# d}',
   },
   HOUR: {
-    LONG: "one{# sat}few{# sata}other{# sati}",
-    SHORT: "one{# sat}few{# sata}other{# sati}",
-    NARROW: "one{# č}few{# č}other{# č}",
+    LONG: 'one{# sat}few{# sata}other{# sati}',
+    SHORT: 'one{# sat}few{# sata}other{# sati}',
+    NARROW: 'one{# č}few{# č}other{# č}',
   },
   MINUTE: {
-    LONG: "one{# minut}few{# minuta}other{# minuta}",
-    SHORT: "one{# min}few{# min}other{# min}",
-    NARROW: "one{# m}few{# m}other{# m}",
+    LONG: 'one{# minut}few{# minuta}other{# minuta}',
+    SHORT: 'one{# min}few{# min}other{# min}',
+    NARROW: 'one{# m}few{# m}other{# m}',
   },
   MONTH: {
-    LONG: "one{# mesec}few{# meseca}other{# meseci}",
-    SHORT: "one{# mes.}few{# mes.}other{# mes.}",
-    NARROW: "one{# m}few{# m}other{# m}",
+    LONG: 'one{# mesec}few{# meseca}other{# meseci}',
+    SHORT: 'one{# mes.}few{# mes.}other{# mes.}',
+    NARROW: 'one{# m}few{# m}other{# m}',
   },
   SECOND: {
-    LONG: "one{# sekunda}few{# sekunde}other{# sekundi}",
-    SHORT: "one{# sek}few{# sek}other{# sek}",
-    NARROW: "one{# s}few{# s}other{# s}",
+    LONG: 'one{# sekunda}few{# sekunde}other{# sekundi}',
+    SHORT: 'one{# sek}few{# sek}other{# sek}',
+    NARROW: 'one{# s}few{# s}other{# s}',
   },
   WEEK: {
-    LONG: "one{# nedelja}few{# nedelje}other{# nedelja}",
-    SHORT: "one{# ned.}few{# ned.}other{# ned.}",
-    NARROW: "one{# n}few{# n}other{# n}",
+    LONG: 'one{# nedelja}few{# nedelje}other{# nedelja}',
+    SHORT: 'one{# ned.}few{# ned.}other{# ned.}',
+    NARROW: 'one{# n}few{# n}other{# n}',
   },
   YEAR: {
-    LONG: "one{# godina}few{# godine}other{# godina}",
-    SHORT: "one{# god}few{# god.}other{# god.}",
-    NARROW: "one{# g}few{# g}other{# g}",
+    LONG: 'one{# godina}few{# godine}other{# godina}',
+    SHORT: 'one{# god}few{# god.}other{# god.}',
+    NARROW: 'one{# g}few{# g}other{# g}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_sr_Latn_RS =  {
+exports.DurationSymbols_sr_Latn_RS = {
   DAY: {
-    LONG: "one{# dan}few{# dana}other{# dana}",
-    SHORT: "one{# dan}few{# dana}other{# dana}",
-    NARROW: "one{# d}few{# d}other{# d}",
+    LONG: 'one{# dan}few{# dana}other{# dana}',
+    SHORT: 'one{# dan}few{# dana}other{# dana}',
+    NARROW: 'one{# d}few{# d}other{# d}',
   },
   HOUR: {
-    LONG: "one{# sat}few{# sata}other{# sati}",
-    SHORT: "one{# sat}few{# sata}other{# sati}",
-    NARROW: "one{# č}few{# č}other{# č}",
+    LONG: 'one{# sat}few{# sata}other{# sati}',
+    SHORT: 'one{# sat}few{# sata}other{# sati}',
+    NARROW: 'one{# č}few{# č}other{# č}',
   },
   MINUTE: {
-    LONG: "one{# minut}few{# minuta}other{# minuta}",
-    SHORT: "one{# min}few{# min}other{# min}",
-    NARROW: "one{# m}few{# m}other{# m}",
+    LONG: 'one{# minut}few{# minuta}other{# minuta}',
+    SHORT: 'one{# min}few{# min}other{# min}',
+    NARROW: 'one{# m}few{# m}other{# m}',
   },
   MONTH: {
-    LONG: "one{# mesec}few{# meseca}other{# meseci}",
-    SHORT: "one{# mes.}few{# mes.}other{# mes.}",
-    NARROW: "one{# m}few{# m}other{# m}",
+    LONG: 'one{# mesec}few{# meseca}other{# meseci}',
+    SHORT: 'one{# mes.}few{# mes.}other{# mes.}',
+    NARROW: 'one{# m}few{# m}other{# m}',
   },
   SECOND: {
-    LONG: "one{# sekunda}few{# sekunde}other{# sekundi}",
-    SHORT: "one{# sek}few{# sek}other{# sek}",
-    NARROW: "one{# s}few{# s}other{# s}",
+    LONG: 'one{# sekunda}few{# sekunde}other{# sekundi}',
+    SHORT: 'one{# sek}few{# sek}other{# sek}',
+    NARROW: 'one{# s}few{# s}other{# s}',
   },
   WEEK: {
-    LONG: "one{# nedelja}few{# nedelje}other{# nedelja}",
-    SHORT: "one{# ned.}few{# ned.}other{# ned.}",
-    NARROW: "one{# n}few{# n}other{# n}",
+    LONG: 'one{# nedelja}few{# nedelje}other{# nedelja}',
+    SHORT: 'one{# ned.}few{# ned.}other{# ned.}',
+    NARROW: 'one{# n}few{# n}other{# n}',
   },
   YEAR: {
-    LONG: "one{# godina}few{# godine}other{# godina}",
-    SHORT: "one{# god}few{# god.}other{# god.}",
-    NARROW: "one{# g}few{# g}other{# g}",
+    LONG: 'one{# godina}few{# godine}other{# godina}',
+    SHORT: 'one{# god}few{# god.}other{# god.}',
+    NARROW: 'one{# g}few{# g}other{# g}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_sr_Latn_XK =  {
+exports.DurationSymbols_sr_Latn_XK = {
   DAY: {
-    LONG: "one{# dan}few{# dana}other{# dana}",
-    SHORT: "one{# dan}few{# dana}other{# dana}",
-    NARROW: "one{# d}few{# d}other{# d}",
+    LONG: 'one{# dan}few{# dana}other{# dana}',
+    SHORT: 'one{# dan}few{# dana}other{# dana}',
+    NARROW: 'one{# d}few{# d}other{# d}',
   },
   HOUR: {
-    LONG: "one{# sat}few{# sata}other{# sati}",
-    SHORT: "one{# sat}few{# sata}other{# sati}",
-    NARROW: "one{# č}few{# č}other{# č}",
+    LONG: 'one{# sat}few{# sata}other{# sati}',
+    SHORT: 'one{# sat}few{# sata}other{# sati}',
+    NARROW: 'one{# č}few{# č}other{# č}',
   },
   MINUTE: {
-    LONG: "one{# minut}few{# minuta}other{# minuta}",
-    SHORT: "one{# min}few{# min}other{# min}",
-    NARROW: "one{# m}few{# m}other{# m}",
+    LONG: 'one{# minut}few{# minuta}other{# minuta}',
+    SHORT: 'one{# min}few{# min}other{# min}',
+    NARROW: 'one{# m}few{# m}other{# m}',
   },
   MONTH: {
-    LONG: "one{# mesec}few{# meseca}other{# meseci}",
-    SHORT: "one{# mes.}few{# mes.}other{# mes.}",
-    NARROW: "one{# m}few{# m}other{# m}",
+    LONG: 'one{# mesec}few{# meseca}other{# meseci}',
+    SHORT: 'one{# mes.}few{# mes.}other{# mes.}',
+    NARROW: 'one{# m}few{# m}other{# m}',
   },
   SECOND: {
-    LONG: "one{# sekunda}few{# sekunde}other{# sekundi}",
-    SHORT: "one{# sek}few{# sek}other{# sek}",
-    NARROW: "one{# s}few{# s}other{# s}",
+    LONG: 'one{# sekunda}few{# sekunde}other{# sekundi}',
+    SHORT: 'one{# sek}few{# sek}other{# sek}',
+    NARROW: 'one{# s}few{# s}other{# s}',
   },
   WEEK: {
-    LONG: "one{# nedelja}few{# nedelje}other{# nedelja}",
-    SHORT: "one{# ned.}few{# ned.}other{# ned.}",
-    NARROW: "one{# n}few{# n}other{# n}",
+    LONG: 'one{# nedelja}few{# nedelje}other{# nedelja}',
+    SHORT: 'one{# ned.}few{# ned.}other{# ned.}',
+    NARROW: 'one{# n}few{# n}other{# n}',
   },
   YEAR: {
-    LONG: "one{# godina}few{# godine}other{# godina}",
-    SHORT: "one{# god}few{# god.}other{# god.}",
-    NARROW: "one{# g}few{# g}other{# g}",
+    LONG: 'one{# godina}few{# godine}other{# godina}',
+    SHORT: 'one{# god}few{# god.}other{# god.}',
+    NARROW: 'one{# g}few{# g}other{# g}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_su =  {
+exports.DurationSymbols_su = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -11243,41 +11242,41 @@ exports.DurationSymbols_ta_SG = DurationSymbols.DurationSymbols_ta;
 exports.DurationSymbols_te_IN = DurationSymbols.DurationSymbols_te;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_teo =  {
+exports.DurationSymbols_teo = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -11288,41 +11287,41 @@ exports.DurationSymbols_teo_KE = exports.DurationSymbols_teo;
 exports.DurationSymbols_teo_UG = exports.DurationSymbols_teo;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_tg =  {
+exports.DurationSymbols_tg = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -11333,41 +11332,41 @@ exports.DurationSymbols_tg_TJ = exports.DurationSymbols_tg;
 exports.DurationSymbols_th_TH = DurationSymbols.DurationSymbols_th;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ti =  {
+exports.DurationSymbols_ti = {
   DAY: {
-    LONG: "one{# d}other{# d}",
-    SHORT: "one{# d}other{# d}",
-    NARROW: "one{# d}other{# d}",
+    LONG: 'one{# d}other{# d}',
+    SHORT: 'one{# d}other{# d}',
+    NARROW: 'one{# d}other{# d}',
   },
   HOUR: {
-    LONG: "one{# h}other{# h}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{# h}other{# h}",
+    LONG: 'one{# h}other{# h}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{# h}other{# h}',
   },
   MINUTE: {
-    LONG: "one{# min}other{# min}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{# min}other{# min}",
+    LONG: 'one{# min}other{# min}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{# min}other{# min}',
   },
   MONTH: {
-    LONG: "one{# m}other{# m}",
-    SHORT: "one{# m}other{# m}",
-    NARROW: "one{# m}other{# m}",
+    LONG: 'one{# m}other{# m}',
+    SHORT: 'one{# m}other{# m}',
+    NARROW: 'one{# m}other{# m}',
   },
   SECOND: {
-    LONG: "one{# s}other{# s}",
-    SHORT: "one{# s}other{# s}",
-    NARROW: "one{# s}other{# s}",
+    LONG: 'one{# s}other{# s}',
+    SHORT: 'one{# s}other{# s}',
+    NARROW: 'one{# s}other{# s}',
   },
   WEEK: {
-    LONG: "one{# w}other{# w}",
-    SHORT: "one{# w}other{# w}",
-    NARROW: "one{# w}other{# w}",
+    LONG: 'one{# w}other{# w}',
+    SHORT: 'one{# w}other{# w}',
+    NARROW: 'one{# w}other{# w}',
   },
   YEAR: {
-    LONG: "one{# y}other{# y}",
-    SHORT: "one{# y}other{# y}",
-    NARROW: "one{# y}other{# y}",
+    LONG: 'one{# y}other{# y}',
+    SHORT: 'one{# y}other{# y}',
+    NARROW: 'one{# y}other{# y}',
   },
 };
 
@@ -11378,41 +11377,41 @@ exports.DurationSymbols_ti_ER = exports.DurationSymbols_ti;
 exports.DurationSymbols_ti_ET = exports.DurationSymbols_ti;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_tk =  {
+exports.DurationSymbols_tk = {
   DAY: {
-    LONG: "one{# gün}other{# gün}",
-    SHORT: "one{# gün}other{# gün}",
-    NARROW: "one{#g}other{#g}",
+    LONG: 'one{# gün}other{# gün}',
+    SHORT: 'one{# gün}other{# gün}',
+    NARROW: 'one{#g}other{#g}',
   },
   HOUR: {
-    LONG: "one{# sagat}other{# sagat}",
-    SHORT: "one{# sag}other{# sag}",
-    NARROW: "one{#sg}other{#sg}",
+    LONG: 'one{# sagat}other{# sagat}',
+    SHORT: 'one{# sag}other{# sag}',
+    NARROW: 'one{#sg}other{#sg}',
   },
   MINUTE: {
-    LONG: "one{# minut}other{# minut}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# minut}other{# minut}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# aý}other{# aý}",
-    SHORT: "one{# a}other{# a}",
-    NARROW: "one{#a}other{#a}",
+    LONG: 'one{# aý}other{# aý}',
+    SHORT: 'one{# a}other{# a}',
+    NARROW: 'one{#a}other{#a}',
   },
   SECOND: {
-    LONG: "one{# sekunt}other{# sekunt}",
-    SHORT: "one{# sek}other{# sek}",
-    NARROW: "one{#se}other{#se}",
+    LONG: 'one{# sekunt}other{# sekunt}',
+    SHORT: 'one{# sek}other{# sek}',
+    NARROW: 'one{#se}other{#se}',
   },
   WEEK: {
-    LONG: "one{# hepde}other{# hepde}",
-    SHORT: "one{# hep}other{# hep}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# hepde}other{# hepde}',
+    SHORT: 'one{# hep}other{# hep}',
+    NARROW: 'one{#h}other{#h}',
   },
   YEAR: {
-    LONG: "one{# ýyl}other{# ýyl}",
-    SHORT: "one{# ý.}other{# ý.}",
-    NARROW: "one{#ý}other{#ý}",
+    LONG: 'one{# ýyl}other{# ýyl}',
+    SHORT: 'one{# ý.}other{# ý.}',
+    NARROW: 'one{#ý}other{#ý}',
   },
 };
 
@@ -11420,41 +11419,41 @@ exports.DurationSymbols_tk =  {
 exports.DurationSymbols_tk_TM = exports.DurationSymbols_tk;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_to =  {
+exports.DurationSymbols_to = {
   DAY: {
-    LONG: "other{ʻaho ʻe #}",
-    SHORT: "other{ʻa ʻe #}",
-    NARROW: "other{# ʻa}",
+    LONG: 'other{ʻaho ʻe #}',
+    SHORT: 'other{ʻa ʻe #}',
+    NARROW: 'other{# ʻa}',
   },
   HOUR: {
-    LONG: "other{houa ʻe #}",
-    SHORT: "other{h ʻe #}",
-    NARROW: "other{# h}",
+    LONG: 'other{houa ʻe #}',
+    SHORT: 'other{h ʻe #}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{miniti ʻe #}",
-    SHORT: "other{m ʻe #}",
-    NARROW: "other{# m}",
+    LONG: 'other{miniti ʻe #}',
+    SHORT: 'other{m ʻe #}',
+    NARROW: 'other{# m}',
   },
   MONTH: {
-    LONG: "other{māhina ʻe #}",
-    SHORT: "other{mā ʻe #}",
-    NARROW: "other{# m}",
+    LONG: 'other{māhina ʻe #}',
+    SHORT: 'other{mā ʻe #}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{sekoni ʻe #}",
-    SHORT: "other{s ʻe #}",
-    NARROW: "other{# s}",
+    LONG: 'other{sekoni ʻe #}',
+    SHORT: 'other{s ʻe #}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{uike ʻe #}",
-    SHORT: "other{u ʻe #}",
-    NARROW: "other{# u}",
+    LONG: 'other{uike ʻe #}',
+    SHORT: 'other{u ʻe #}',
+    NARROW: 'other{# u}',
   },
   YEAR: {
-    LONG: "other{taʻu ʻe #}",
-    SHORT: "other{taʻu ʻe #}",
-    NARROW: "other{# t}",
+    LONG: 'other{taʻu ʻe #}',
+    SHORT: 'other{taʻu ʻe #}',
+    NARROW: 'other{# t}',
   },
 };
 
@@ -11468,41 +11467,41 @@ exports.DurationSymbols_tr_CY = DurationSymbols.DurationSymbols_tr;
 exports.DurationSymbols_tr_TR = DurationSymbols.DurationSymbols_tr;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_tt =  {
+exports.DurationSymbols_tt = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -11510,41 +11509,41 @@ exports.DurationSymbols_tt =  {
 exports.DurationSymbols_tt_RU = exports.DurationSymbols_tt;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_twq =  {
+exports.DurationSymbols_twq = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -11552,41 +11551,41 @@ exports.DurationSymbols_twq =  {
 exports.DurationSymbols_twq_NE = exports.DurationSymbols_twq;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_tzm =  {
+exports.DurationSymbols_tzm = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -11594,41 +11593,41 @@ exports.DurationSymbols_tzm =  {
 exports.DurationSymbols_tzm_MA = exports.DurationSymbols_tzm;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_ug =  {
+exports.DurationSymbols_ug = {
   DAY: {
-    LONG: "one{# كۈن}other{# كۈن}",
-    SHORT: "one{# كۈن}other{# كۈن}",
-    NARROW: "one{# كۈن}other{# كۈن}",
+    LONG: 'one{# كۈن}other{# كۈن}',
+    SHORT: 'one{# كۈن}other{# كۈن}',
+    NARROW: 'one{# كۈن}other{# كۈن}',
   },
   HOUR: {
-    LONG: "one{# سائەت}other{# سائەت}",
-    SHORT: "one{# سائەت}other{# سائەت}",
-    NARROW: "one{#h}other{#h}",
+    LONG: 'one{# سائەت}other{# سائەت}',
+    SHORT: 'one{# سائەت}other{# سائەت}',
+    NARROW: 'one{#h}other{#h}',
   },
   MINUTE: {
-    LONG: "one{# مىنۇت}other{# مىنۇت}",
-    SHORT: "one{# مىنۇت}other{# مىنۇت}",
-    NARROW: "one{#m}other{#m}",
+    LONG: 'one{# مىنۇت}other{# مىنۇت}',
+    SHORT: 'one{# مىنۇت}other{# مىنۇت}',
+    NARROW: 'one{#m}other{#m}',
   },
   MONTH: {
-    LONG: "one{# ئاي}other{# ئاي}",
-    SHORT: "one{# ئاي}other{# ئاي}",
-    NARROW: "one{# ئاي}other{# ئاي}",
+    LONG: 'one{# ئاي}other{# ئاي}',
+    SHORT: 'one{# ئاي}other{# ئاي}',
+    NARROW: 'one{# ئاي}other{# ئاي}',
   },
   SECOND: {
-    LONG: "one{# سېكۇنت}other{# سېكۇنت}",
-    SHORT: "one{# سېكۇنت}other{# سېكۇنت}",
-    NARROW: "one{#s}other{#s}",
+    LONG: 'one{# سېكۇنت}other{# سېكۇنت}',
+    SHORT: 'one{# سېكۇنت}other{# سېكۇنت}',
+    NARROW: 'one{#s}other{#s}',
   },
   WEEK: {
-    LONG: "one{# ھەپتە}other{# ھەپتە}",
-    SHORT: "one{# ھەپتە}other{# ھەپتە}",
-    NARROW: "one{# ھەپتە}other{# ھەپتە}",
+    LONG: 'one{# ھەپتە}other{# ھەپتە}',
+    SHORT: 'one{# ھەپتە}other{# ھەپتە}',
+    NARROW: 'one{# ھەپتە}other{# ھەپتە}',
   },
   YEAR: {
-    LONG: "one{# يىل}other{# يىل}",
-    SHORT: "one{# يىل}other{# يىل}",
-    NARROW: "one{# يىل}other{# يىل}",
+    LONG: 'one{# يىل}other{# يىل}',
+    SHORT: 'one{# يىل}other{# يىل}',
+    NARROW: 'one{# يىل}other{# يىل}',
   },
 };
 
@@ -11645,158 +11644,158 @@ exports.DurationSymbols_ur_IN = DurationSymbols.DurationSymbols_ur;
 exports.DurationSymbols_ur_PK = DurationSymbols.DurationSymbols_ur;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_uz_Arab =  {
+exports.DurationSymbols_uz_Arab = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_uz_Arab_AF =  {
+exports.DurationSymbols_uz_Arab_AF = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_uz_Cyrl =  {
+exports.DurationSymbols_uz_Cyrl = {
   DAY: {
-    LONG: "one{# кун}other{# кун}",
-    SHORT: "one{# кун}other{# кун}",
-    NARROW: "one{# к}other{# к}",
+    LONG: 'one{# кун}other{# кун}',
+    SHORT: 'one{# кун}other{# кун}',
+    NARROW: 'one{# к}other{# к}',
   },
   HOUR: {
-    LONG: "one{# соат}other{# соат}",
-    SHORT: "one{# соат}other{# соат}",
-    NARROW: "one{# с}other{# с}",
+    LONG: 'one{# соат}other{# соат}',
+    SHORT: 'one{# соат}other{# соат}',
+    NARROW: 'one{# с}other{# с}',
   },
   MINUTE: {
-    LONG: "one{# дақиқа}other{# дақиқа}",
-    SHORT: "one{# дақ}other{# дақ}",
-    NARROW: "one{# дақ}other{# дақ}",
+    LONG: 'one{# дақиқа}other{# дақиқа}',
+    SHORT: 'one{# дақ}other{# дақ}',
+    NARROW: 'one{# дақ}other{# дақ}',
   },
   MONTH: {
-    LONG: "one{# ой}other{# ой}",
-    SHORT: "one{# ой}other{# ой}",
-    NARROW: "one{# ой}other{# ой}",
+    LONG: 'one{# ой}other{# ой}',
+    SHORT: 'one{# ой}other{# ой}',
+    NARROW: 'one{# ой}other{# ой}',
   },
   SECOND: {
-    LONG: "one{# сония}other{# сония}",
-    SHORT: "one{# сония}other{# сония}",
-    NARROW: "one{# сон}other{# сон}",
+    LONG: 'one{# сония}other{# сония}',
+    SHORT: 'one{# сония}other{# сония}',
+    NARROW: 'one{# сон}other{# сон}',
   },
   WEEK: {
-    LONG: "one{# ҳафта}other{# ҳафта}",
-    SHORT: "one{# ҳафт}other{# ҳафт}",
-    NARROW: "one{# ҳафт}other{# ҳафт}",
+    LONG: 'one{# ҳафта}other{# ҳафта}',
+    SHORT: 'one{# ҳафт}other{# ҳафт}',
+    NARROW: 'one{# ҳафт}other{# ҳафт}',
   },
   YEAR: {
-    LONG: "one{# йил}other{# йил}",
-    SHORT: "one{# й}other{# й}",
-    NARROW: "one{# й}other{# й}",
+    LONG: 'one{# йил}other{# йил}',
+    SHORT: 'one{# й}other{# й}',
+    NARROW: 'one{# й}other{# й}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_uz_Cyrl_UZ =  {
+exports.DurationSymbols_uz_Cyrl_UZ = {
   DAY: {
-    LONG: "one{# кун}other{# кун}",
-    SHORT: "one{# кун}other{# кун}",
-    NARROW: "one{# к}other{# к}",
+    LONG: 'one{# кун}other{# кун}',
+    SHORT: 'one{# кун}other{# кун}',
+    NARROW: 'one{# к}other{# к}',
   },
   HOUR: {
-    LONG: "one{# соат}other{# соат}",
-    SHORT: "one{# соат}other{# соат}",
-    NARROW: "one{# с}other{# с}",
+    LONG: 'one{# соат}other{# соат}',
+    SHORT: 'one{# соат}other{# соат}',
+    NARROW: 'one{# с}other{# с}',
   },
   MINUTE: {
-    LONG: "one{# дақиқа}other{# дақиқа}",
-    SHORT: "one{# дақ}other{# дақ}",
-    NARROW: "one{# дақ}other{# дақ}",
+    LONG: 'one{# дақиқа}other{# дақиқа}',
+    SHORT: 'one{# дақ}other{# дақ}',
+    NARROW: 'one{# дақ}other{# дақ}',
   },
   MONTH: {
-    LONG: "one{# ой}other{# ой}",
-    SHORT: "one{# ой}other{# ой}",
-    NARROW: "one{# ой}other{# ой}",
+    LONG: 'one{# ой}other{# ой}',
+    SHORT: 'one{# ой}other{# ой}',
+    NARROW: 'one{# ой}other{# ой}',
   },
   SECOND: {
-    LONG: "one{# сония}other{# сония}",
-    SHORT: "one{# сония}other{# сония}",
-    NARROW: "one{# сон}other{# сон}",
+    LONG: 'one{# сония}other{# сония}',
+    SHORT: 'one{# сония}other{# сония}',
+    NARROW: 'one{# сон}other{# сон}',
   },
   WEEK: {
-    LONG: "one{# ҳафта}other{# ҳафта}",
-    SHORT: "one{# ҳафт}other{# ҳафт}",
-    NARROW: "one{# ҳафт}other{# ҳафт}",
+    LONG: 'one{# ҳафта}other{# ҳафта}',
+    SHORT: 'one{# ҳафт}other{# ҳафт}',
+    NARROW: 'one{# ҳафт}other{# ҳафт}',
   },
   YEAR: {
-    LONG: "one{# йил}other{# йил}",
-    SHORT: "one{# й}other{# й}",
-    NARROW: "one{# й}other{# й}",
+    LONG: 'one{# йил}other{# йил}',
+    SHORT: 'one{# й}other{# й}',
+    NARROW: 'one{# й}other{# й}',
   },
 };
 
@@ -11807,41 +11806,41 @@ exports.DurationSymbols_uz_Latn = DurationSymbols.DurationSymbols_uz;
 exports.DurationSymbols_uz_Latn_UZ = DurationSymbols.DurationSymbols_uz;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_vai =  {
+exports.DurationSymbols_vai = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -11861,41 +11860,41 @@ exports.DurationSymbols_vai_Vaii_LR = exports.DurationSymbols_vai;
 exports.DurationSymbols_vi_VN = DurationSymbols.DurationSymbols_vi;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_vun =  {
+exports.DurationSymbols_vun = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -11903,41 +11902,41 @@ exports.DurationSymbols_vun =  {
 exports.DurationSymbols_vun_TZ = exports.DurationSymbols_vun;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_wae =  {
+exports.DurationSymbols_wae = {
   DAY: {
-    LONG: "one{# täg}other{# täg}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'one{# täg}other{# täg}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "one{# stund}other{# stunde}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'one{# stund}other{# stunde}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "one{# minüta}other{# minüte}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'one{# minüta}other{# minüte}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "one{# mánet}other{# mánet}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'one{# mánet}other{# mánet}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "one{# sekund}other{# sekunde}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'one{# sekund}other{# sekunde}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "one{# wuča}other{# wučä}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'one{# wuča}other{# wučä}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "one{# jár}other{# jár}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'one{# jár}other{# jár}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -11945,41 +11944,41 @@ exports.DurationSymbols_wae =  {
 exports.DurationSymbols_wae_CH = exports.DurationSymbols_wae;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_wo =  {
+exports.DurationSymbols_wo = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -11987,41 +11986,41 @@ exports.DurationSymbols_wo =  {
 exports.DurationSymbols_wo_SN = exports.DurationSymbols_wo;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_xh =  {
+exports.DurationSymbols_xh = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -12029,41 +12028,41 @@ exports.DurationSymbols_xh =  {
 exports.DurationSymbols_xh_ZA = exports.DurationSymbols_xh;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_xog =  {
+exports.DurationSymbols_xog = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -12071,41 +12070,41 @@ exports.DurationSymbols_xog =  {
 exports.DurationSymbols_xog_UG = exports.DurationSymbols_xog;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_yav =  {
+exports.DurationSymbols_yav = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -12113,41 +12112,41 @@ exports.DurationSymbols_yav =  {
 exports.DurationSymbols_yav_CM = exports.DurationSymbols_yav;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_yi =  {
+exports.DurationSymbols_yi = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -12155,80 +12154,80 @@ exports.DurationSymbols_yi =  {
 exports.DurationSymbols_yi_001 = exports.DurationSymbols_yi;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_yo =  {
+exports.DurationSymbols_yo = {
   DAY: {
-    LONG: "other{ọj #}",
-    SHORT: "other{# ọj}",
-    NARROW: "other{ọj #}",
+    LONG: 'other{ọj #}',
+    SHORT: 'other{# ọj}',
+    NARROW: 'other{ọj #}',
   },
   HOUR: {
-    LONG: "other{# wkt}",
-    SHORT: "other{# wkt}",
-    NARROW: "other{# wkt}",
+    LONG: 'other{# wkt}',
+    SHORT: 'other{# wkt}',
+    NARROW: 'other{# wkt}',
   },
   MINUTE: {
-    LONG: "other{# ìṣ}",
-    SHORT: "other{# ìṣ}",
-    NARROW: "other{#/ìṣ}",
+    LONG: 'other{# ìṣ}',
+    SHORT: 'other{# ìṣ}',
+    NARROW: 'other{#/ìṣ}',
   },
   MONTH: {
-    LONG: "other{# oṣù}",
-    SHORT: "other{# oṣù}",
-    NARROW: "other{# oṣù}",
+    LONG: 'other{# oṣù}',
+    SHORT: 'other{# oṣù}',
+    NARROW: 'other{# oṣù}',
   },
   SECOND: {
-    LONG: "other{#ìṣ àáy}",
-    SHORT: "other{# ìṣ àáy}",
-    NARROW: "other{# ìṣ àáy}",
+    LONG: 'other{#ìṣ àáy}',
+    SHORT: 'other{# ìṣ àáy}',
+    NARROW: 'other{# ìṣ àáy}',
   },
   WEEK: {
-    LONG: "other{# ọṣ}",
-    SHORT: "other{# ọṣ}",
-    NARROW: "other{# ọṣ}",
+    LONG: 'other{# ọṣ}',
+    SHORT: 'other{# ọṣ}',
+    NARROW: 'other{# ọṣ}',
   },
   YEAR: {
-    LONG: "other{# ọd}",
-    SHORT: "other{# ọd}",
-    NARROW: "other{# ọd}",
+    LONG: 'other{# ọd}',
+    SHORT: 'other{# ọd}',
+    NARROW: 'other{# ọd}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_yo_BJ =  {
+exports.DurationSymbols_yo_BJ = {
   DAY: {
-    LONG: "other{ɔj #}",
-    SHORT: "other{# ɔj}",
-    NARROW: "other{ɔj #}",
+    LONG: 'other{ɔj #}',
+    SHORT: 'other{# ɔj}',
+    NARROW: 'other{ɔj #}',
   },
   HOUR: {
-    LONG: "other{# wkt}",
-    SHORT: "other{# wkt}",
-    NARROW: "other{# wkt}",
+    LONG: 'other{# wkt}',
+    SHORT: 'other{# wkt}',
+    NARROW: 'other{# wkt}',
   },
   MINUTE: {
-    LONG: "other{# ìsh}",
-    SHORT: "other{# ìsh}",
-    NARROW: "other{#/ìsh}",
+    LONG: 'other{# ìsh}',
+    SHORT: 'other{# ìsh}',
+    NARROW: 'other{#/ìsh}',
   },
   MONTH: {
-    LONG: "other{# oshù}",
-    SHORT: "other{# oshù}",
-    NARROW: "other{# oshù}",
+    LONG: 'other{# oshù}',
+    SHORT: 'other{# oshù}',
+    NARROW: 'other{# oshù}',
   },
   SECOND: {
-    LONG: "other{#ìsh àáy}",
-    SHORT: "other{# ìsh àáy}",
-    NARROW: "other{# ìsh àáy}",
+    LONG: 'other{#ìsh àáy}',
+    SHORT: 'other{# ìsh àáy}',
+    NARROW: 'other{# ìsh àáy}',
   },
   WEEK: {
-    LONG: "other{# ɔsh}",
-    SHORT: "other{# ɔsh}",
-    NARROW: "other{# ɔsh}",
+    LONG: 'other{# ɔsh}',
+    SHORT: 'other{# ɔsh}',
+    NARROW: 'other{# ɔsh}',
   },
   YEAR: {
-    LONG: "other{# ɔd}",
-    SHORT: "other{# ɔd}",
-    NARROW: "other{# ɔd}",
+    LONG: 'other{# ɔd}',
+    SHORT: 'other{# ɔd}',
+    NARROW: 'other{# ɔd}',
   },
 };
 
@@ -12236,41 +12235,41 @@ exports.DurationSymbols_yo_BJ =  {
 exports.DurationSymbols_yo_NG = exports.DurationSymbols_yo;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_yrl =  {
+exports.DurationSymbols_yrl = {
   DAY: {
-    LONG: "one{# ara}other{# ara-ita}",
-    SHORT: "one{# ara}other{# ara}",
-    NARROW: "one{# ara}other{# ara}",
+    LONG: 'one{# ara}other{# ara-ita}',
+    SHORT: 'one{# ara}other{# ara}',
+    NARROW: 'one{# ara}other{# ara}',
   },
   HOUR: {
-    LONG: "one{# hura}other{# hura-ita}",
-    SHORT: "one{# h}other{# h}",
-    NARROW: "one{# h}other{# h}",
+    LONG: 'one{# hura}other{# hura-ita}',
+    SHORT: 'one{# h}other{# h}',
+    NARROW: 'one{# h}other{# h}',
   },
   MINUTE: {
-    LONG: "one{# minutu}other{# minutu-ita}",
-    SHORT: "one{# min}other{# min}",
-    NARROW: "one{# min}other{# min}",
+    LONG: 'one{# minutu}other{# minutu-ita}',
+    SHORT: 'one{# min}other{# min}',
+    NARROW: 'one{# min}other{# min}',
   },
   MONTH: {
-    LONG: "one{# yasí}other{# yasí-ita}",
-    SHORT: "one{# yasí}other{# yasí}",
-    NARROW: "one{# yasí}other{# yasí}",
+    LONG: 'one{# yasí}other{# yasí-ita}',
+    SHORT: 'one{# yasí}other{# yasí}',
+    NARROW: 'one{# yasí}other{# yasí}',
   },
   SECOND: {
-    LONG: "one{# segũdu}other{# segũdu-ita}",
-    SHORT: "one{# seg}other{# seg}",
-    NARROW: "one{# s}other{# s}",
+    LONG: 'one{# segũdu}other{# segũdu-ita}',
+    SHORT: 'one{# seg}other{# seg}',
+    NARROW: 'one{# s}other{# s}',
   },
   WEEK: {
-    LONG: "one{# sẽmãna}other{# sẽmãna-ita}",
-    SHORT: "one{# sem.}other{# sem}",
-    NARROW: "one{# sem.}other{# sem}",
+    LONG: 'one{# sẽmãna}other{# sẽmãna-ita}',
+    SHORT: 'one{# sem.}other{# sem}',
+    NARROW: 'one{# sem.}other{# sem}',
   },
   YEAR: {
-    LONG: "one{# akayú}other{# akayú-ita}",
-    SHORT: "one{# akayú}other{# akayú}",
-    NARROW: "one{# akayú}other{# akayú}",
+    LONG: 'one{# akayú}other{# akayú-ita}',
+    SHORT: 'one{# akayú}other{# akayú}',
+    NARROW: 'one{# akayú}other{# akayú}',
   },
 };
 
@@ -12284,119 +12283,119 @@ exports.DurationSymbols_yrl_CO = exports.DurationSymbols_yrl;
 exports.DurationSymbols_yrl_VE = exports.DurationSymbols_yrl;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_yue =  {
+exports.DurationSymbols_yue = {
   DAY: {
-    LONG: "other{# 天}",
-    SHORT: "other{# 天}",
-    NARROW: "other{# 天}",
+    LONG: 'other{# 天}',
+    SHORT: 'other{# 天}',
+    NARROW: 'other{# 天}',
   },
   HOUR: {
-    LONG: "other{# 小時}",
-    SHORT: "other{# 小時}",
-    NARROW: "other{# 小時}",
+    LONG: 'other{# 小時}',
+    SHORT: 'other{# 小時}',
+    NARROW: 'other{# 小時}',
   },
   MINUTE: {
-    LONG: "other{# 分鐘}",
-    SHORT: "other{# 分鐘}",
-    NARROW: "other{# 分鐘}",
+    LONG: 'other{# 分鐘}',
+    SHORT: 'other{# 分鐘}',
+    NARROW: 'other{# 分鐘}',
   },
   MONTH: {
-    LONG: "other{# 個月}",
-    SHORT: "other{# 個月}",
-    NARROW: "other{# 個月}",
+    LONG: 'other{# 個月}',
+    SHORT: 'other{# 個月}',
+    NARROW: 'other{# 個月}',
   },
   SECOND: {
-    LONG: "other{# 秒}",
-    SHORT: "other{# 秒}",
-    NARROW: "other{# 秒}",
+    LONG: 'other{# 秒}',
+    SHORT: 'other{# 秒}',
+    NARROW: 'other{# 秒}',
   },
   WEEK: {
-    LONG: "other{# 週}",
-    SHORT: "other{# 週}",
-    NARROW: "other{# 週}",
+    LONG: 'other{# 週}',
+    SHORT: 'other{# 週}',
+    NARROW: 'other{# 週}',
   },
   YEAR: {
-    LONG: "other{# 年}",
-    SHORT: "other{# 年}",
-    NARROW: "other{# 年}",
+    LONG: 'other{# 年}',
+    SHORT: 'other{# 年}',
+    NARROW: 'other{# 年}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_yue_Hans =  {
+exports.DurationSymbols_yue_Hans = {
   DAY: {
-    LONG: "other{# 天}",
-    SHORT: "other{# 天}",
-    NARROW: "other{# 天}",
+    LONG: 'other{# 天}',
+    SHORT: 'other{# 天}',
+    NARROW: 'other{# 天}',
   },
   HOUR: {
-    LONG: "other{# 小时}",
-    SHORT: "other{# 小时}",
-    NARROW: "other{# 小时}",
+    LONG: 'other{# 小时}',
+    SHORT: 'other{# 小时}',
+    NARROW: 'other{# 小时}',
   },
   MINUTE: {
-    LONG: "other{# 分钟}",
-    SHORT: "other{# 分钟}",
-    NARROW: "other{# 分钟}",
+    LONG: 'other{# 分钟}',
+    SHORT: 'other{# 分钟}',
+    NARROW: 'other{# 分钟}',
   },
   MONTH: {
-    LONG: "other{# 个月}",
-    SHORT: "other{# 个月}",
-    NARROW: "other{# 个月}",
+    LONG: 'other{# 个月}',
+    SHORT: 'other{# 个月}',
+    NARROW: 'other{# 个月}',
   },
   SECOND: {
-    LONG: "other{# 秒}",
-    SHORT: "other{# 秒}",
-    NARROW: "other{# 秒}",
+    LONG: 'other{# 秒}',
+    SHORT: 'other{# 秒}',
+    NARROW: 'other{# 秒}',
   },
   WEEK: {
-    LONG: "other{# 周}",
-    SHORT: "other{# 周}",
-    NARROW: "other{# 周}",
+    LONG: 'other{# 周}',
+    SHORT: 'other{# 周}',
+    NARROW: 'other{# 周}',
   },
   YEAR: {
-    LONG: "other{# 年}",
-    SHORT: "other{# 年}",
-    NARROW: "other{# 年}",
+    LONG: 'other{# 年}',
+    SHORT: 'other{# 年}',
+    NARROW: 'other{# 年}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_yue_Hans_CN =  {
+exports.DurationSymbols_yue_Hans_CN = {
   DAY: {
-    LONG: "other{# 天}",
-    SHORT: "other{# 天}",
-    NARROW: "other{# 天}",
+    LONG: 'other{# 天}',
+    SHORT: 'other{# 天}',
+    NARROW: 'other{# 天}',
   },
   HOUR: {
-    LONG: "other{# 小时}",
-    SHORT: "other{# 小时}",
-    NARROW: "other{# 小时}",
+    LONG: 'other{# 小时}',
+    SHORT: 'other{# 小时}',
+    NARROW: 'other{# 小时}',
   },
   MINUTE: {
-    LONG: "other{# 分钟}",
-    SHORT: "other{# 分钟}",
-    NARROW: "other{# 分钟}",
+    LONG: 'other{# 分钟}',
+    SHORT: 'other{# 分钟}',
+    NARROW: 'other{# 分钟}',
   },
   MONTH: {
-    LONG: "other{# 个月}",
-    SHORT: "other{# 个月}",
-    NARROW: "other{# 个月}",
+    LONG: 'other{# 个月}',
+    SHORT: 'other{# 个月}',
+    NARROW: 'other{# 个月}',
   },
   SECOND: {
-    LONG: "other{# 秒}",
-    SHORT: "other{# 秒}",
-    NARROW: "other{# 秒}",
+    LONG: 'other{# 秒}',
+    SHORT: 'other{# 秒}',
+    NARROW: 'other{# 秒}',
   },
   WEEK: {
-    LONG: "other{# 周}",
-    SHORT: "other{# 周}",
-    NARROW: "other{# 周}",
+    LONG: 'other{# 周}',
+    SHORT: 'other{# 周}',
+    NARROW: 'other{# 周}',
   },
   YEAR: {
-    LONG: "other{# 年}",
-    SHORT: "other{# 年}",
-    NARROW: "other{# 年}",
+    LONG: 'other{# 年}',
+    SHORT: 'other{# 年}',
+    NARROW: 'other{# 年}',
   },
 };
 
@@ -12407,41 +12406,41 @@ exports.DurationSymbols_yue_Hant = exports.DurationSymbols_yue;
 exports.DurationSymbols_yue_Hant_HK = exports.DurationSymbols_yue;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_zgh =  {
+exports.DurationSymbols_zgh = {
   DAY: {
-    LONG: "other{# d}",
-    SHORT: "other{# d}",
-    NARROW: "other{# d}",
+    LONG: 'other{# d}',
+    SHORT: 'other{# d}',
+    NARROW: 'other{# d}',
   },
   HOUR: {
-    LONG: "other{# h}",
-    SHORT: "other{# h}",
-    NARROW: "other{# h}",
+    LONG: 'other{# h}',
+    SHORT: 'other{# h}',
+    NARROW: 'other{# h}',
   },
   MINUTE: {
-    LONG: "other{# min}",
-    SHORT: "other{# min}",
-    NARROW: "other{# min}",
+    LONG: 'other{# min}',
+    SHORT: 'other{# min}',
+    NARROW: 'other{# min}',
   },
   MONTH: {
-    LONG: "other{# m}",
-    SHORT: "other{# m}",
-    NARROW: "other{# m}",
+    LONG: 'other{# m}',
+    SHORT: 'other{# m}',
+    NARROW: 'other{# m}',
   },
   SECOND: {
-    LONG: "other{# s}",
-    SHORT: "other{# s}",
-    NARROW: "other{# s}",
+    LONG: 'other{# s}',
+    SHORT: 'other{# s}',
+    NARROW: 'other{# s}',
   },
   WEEK: {
-    LONG: "other{# w}",
-    SHORT: "other{# w}",
-    NARROW: "other{# w}",
+    LONG: 'other{# w}',
+    SHORT: 'other{# w}',
+    NARROW: 'other{# w}',
   },
   YEAR: {
-    LONG: "other{# y}",
-    SHORT: "other{# y}",
-    NARROW: "other{# y}",
+    LONG: 'other{# y}',
+    SHORT: 'other{# y}',
+    NARROW: 'other{# y}',
   },
 };
 
@@ -12455,275 +12454,275 @@ exports.DurationSymbols_zh_Hans = DurationSymbols.DurationSymbols_zh;
 exports.DurationSymbols_zh_Hans_CN = DurationSymbols.DurationSymbols_zh;
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_zh_Hans_HK =  {
+exports.DurationSymbols_zh_Hans_HK = {
   DAY: {
-    LONG: "other{#天}",
-    SHORT: "other{#天}",
-    NARROW: "other{#天}",
+    LONG: 'other{#天}',
+    SHORT: 'other{#天}',
+    NARROW: 'other{#天}',
   },
   HOUR: {
-    LONG: "other{#小时}",
-    SHORT: "other{#小时}",
-    NARROW: "other{#小时}",
+    LONG: 'other{#小时}',
+    SHORT: 'other{#小时}',
+    NARROW: 'other{#小时}',
   },
   MINUTE: {
-    LONG: "other{#分钟}",
-    SHORT: "other{#分钟}",
-    NARROW: "other{#分钟}",
+    LONG: 'other{#分钟}',
+    SHORT: 'other{#分钟}',
+    NARROW: 'other{#分钟}',
   },
   MONTH: {
-    LONG: "other{#个月}",
-    SHORT: "other{#个月}",
-    NARROW: "other{#个月}",
+    LONG: 'other{#个月}',
+    SHORT: 'other{#个月}',
+    NARROW: 'other{#个月}',
   },
   SECOND: {
-    LONG: "other{#秒}",
-    SHORT: "other{#秒}",
-    NARROW: "other{#秒}",
+    LONG: 'other{#秒}',
+    SHORT: 'other{#秒}',
+    NARROW: 'other{#秒}',
   },
   WEEK: {
-    LONG: "other{#周}",
-    SHORT: "other{#周}",
-    NARROW: "other{#周}",
+    LONG: 'other{#周}',
+    SHORT: 'other{#周}',
+    NARROW: 'other{#周}',
   },
   YEAR: {
-    LONG: "other{#年}",
-    SHORT: "other{#年}",
-    NARROW: "other{#年}",
+    LONG: 'other{#年}',
+    SHORT: 'other{#年}',
+    NARROW: 'other{#年}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_zh_Hans_MO =  {
+exports.DurationSymbols_zh_Hans_MO = {
   DAY: {
-    LONG: "other{#天}",
-    SHORT: "other{#天}",
-    NARROW: "other{#天}",
+    LONG: 'other{#天}',
+    SHORT: 'other{#天}',
+    NARROW: 'other{#天}',
   },
   HOUR: {
-    LONG: "other{#小时}",
-    SHORT: "other{#小时}",
-    NARROW: "other{#小时}",
+    LONG: 'other{#小时}',
+    SHORT: 'other{#小时}',
+    NARROW: 'other{#小时}',
   },
   MINUTE: {
-    LONG: "other{#分钟}",
-    SHORT: "other{#分钟}",
-    NARROW: "other{#分钟}",
+    LONG: 'other{#分钟}',
+    SHORT: 'other{#分钟}',
+    NARROW: 'other{#分钟}',
   },
   MONTH: {
-    LONG: "other{#个月}",
-    SHORT: "other{#个月}",
-    NARROW: "other{#个月}",
+    LONG: 'other{#个月}',
+    SHORT: 'other{#个月}',
+    NARROW: 'other{#个月}',
   },
   SECOND: {
-    LONG: "other{#秒}",
-    SHORT: "other{#秒}",
-    NARROW: "other{#秒}",
+    LONG: 'other{#秒}',
+    SHORT: 'other{#秒}',
+    NARROW: 'other{#秒}',
   },
   WEEK: {
-    LONG: "other{#周}",
-    SHORT: "other{#周}",
-    NARROW: "other{#周}",
+    LONG: 'other{#周}',
+    SHORT: 'other{#周}',
+    NARROW: 'other{#周}',
   },
   YEAR: {
-    LONG: "other{#年}",
-    SHORT: "other{#年}",
-    NARROW: "other{#年}",
+    LONG: 'other{#年}',
+    SHORT: 'other{#年}',
+    NARROW: 'other{#年}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_zh_Hans_SG =  {
+exports.DurationSymbols_zh_Hans_SG = {
   DAY: {
-    LONG: "other{#天}",
-    SHORT: "other{#天}",
-    NARROW: "other{#天}",
+    LONG: 'other{#天}',
+    SHORT: 'other{#天}',
+    NARROW: 'other{#天}',
   },
   HOUR: {
-    LONG: "other{#小时}",
-    SHORT: "other{#小时}",
-    NARROW: "other{#小时}",
+    LONG: 'other{#小时}',
+    SHORT: 'other{#小时}',
+    NARROW: 'other{#小时}',
   },
   MINUTE: {
-    LONG: "other{#分钟}",
-    SHORT: "other{#分钟}",
-    NARROW: "other{#分钟}",
+    LONG: 'other{#分钟}',
+    SHORT: 'other{#分钟}',
+    NARROW: 'other{#分钟}',
   },
   MONTH: {
-    LONG: "other{#个月}",
-    SHORT: "other{#个月}",
-    NARROW: "other{#个月}",
+    LONG: 'other{#个月}',
+    SHORT: 'other{#个月}',
+    NARROW: 'other{#个月}',
   },
   SECOND: {
-    LONG: "other{#秒}",
-    SHORT: "other{#秒}",
-    NARROW: "other{#秒}",
+    LONG: 'other{#秒}',
+    SHORT: 'other{#秒}',
+    NARROW: 'other{#秒}',
   },
   WEEK: {
-    LONG: "other{#周}",
-    SHORT: "other{#周}",
-    NARROW: "other{#周}",
+    LONG: 'other{#周}',
+    SHORT: 'other{#周}',
+    NARROW: 'other{#周}',
   },
   YEAR: {
-    LONG: "other{#年}",
-    SHORT: "other{#年}",
-    NARROW: "other{#年}",
+    LONG: 'other{#年}',
+    SHORT: 'other{#年}',
+    NARROW: 'other{#年}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_zh_Hant =  {
+exports.DurationSymbols_zh_Hant = {
   DAY: {
-    LONG: "other{# 天}",
-    SHORT: "other{# 天}",
-    NARROW: "other{# 天}",
+    LONG: 'other{# 天}',
+    SHORT: 'other{# 天}',
+    NARROW: 'other{# 天}',
   },
   HOUR: {
-    LONG: "other{# 小時}",
-    SHORT: "other{# 小時}",
-    NARROW: "other{# 小時}",
+    LONG: 'other{# 小時}',
+    SHORT: 'other{# 小時}',
+    NARROW: 'other{# 小時}',
   },
   MINUTE: {
-    LONG: "other{# 分鐘}",
-    SHORT: "other{# 分鐘}",
-    NARROW: "other{# 分鐘}",
+    LONG: 'other{# 分鐘}',
+    SHORT: 'other{# 分鐘}',
+    NARROW: 'other{# 分鐘}',
   },
   MONTH: {
-    LONG: "other{# 個月}",
-    SHORT: "other{# 個月}",
-    NARROW: "other{# 個月}",
+    LONG: 'other{# 個月}',
+    SHORT: 'other{# 個月}',
+    NARROW: 'other{# 個月}',
   },
   SECOND: {
-    LONG: "other{# 秒}",
-    SHORT: "other{# 秒}",
-    NARROW: "other{# 秒}",
+    LONG: 'other{# 秒}',
+    SHORT: 'other{# 秒}',
+    NARROW: 'other{# 秒}',
   },
   WEEK: {
-    LONG: "other{# 週}",
-    SHORT: "other{# 週}",
-    NARROW: "other{# 週}",
+    LONG: 'other{# 週}',
+    SHORT: 'other{# 週}',
+    NARROW: 'other{# 週}',
   },
   YEAR: {
-    LONG: "other{# 年}",
-    SHORT: "other{# 年}",
-    NARROW: "other{# 年}",
+    LONG: 'other{# 年}',
+    SHORT: 'other{# 年}',
+    NARROW: 'other{# 年}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_zh_Hant_HK =  {
+exports.DurationSymbols_zh_Hant_HK = {
   DAY: {
-    LONG: "other{# 日}",
-    SHORT: "other{# 日}",
-    NARROW: "other{#日}",
+    LONG: 'other{# 日}',
+    SHORT: 'other{# 日}',
+    NARROW: 'other{#日}',
   },
   HOUR: {
-    LONG: "other{# 小時}",
-    SHORT: "other{# 小時}",
-    NARROW: "other{#小時}",
+    LONG: 'other{# 小時}',
+    SHORT: 'other{# 小時}',
+    NARROW: 'other{#小時}',
   },
   MINUTE: {
-    LONG: "other{# 分鐘}",
-    SHORT: "other{# 分鐘}",
-    NARROW: "other{#分}",
+    LONG: 'other{# 分鐘}',
+    SHORT: 'other{# 分鐘}',
+    NARROW: 'other{#分}',
   },
   MONTH: {
-    LONG: "other{# 個月}",
-    SHORT: "other{# 個月}",
-    NARROW: "other{#個月}",
+    LONG: 'other{# 個月}',
+    SHORT: 'other{# 個月}',
+    NARROW: 'other{#個月}',
   },
   SECOND: {
-    LONG: "other{# 秒}",
-    SHORT: "other{# 秒}",
-    NARROW: "other{#秒}",
+    LONG: 'other{# 秒}',
+    SHORT: 'other{# 秒}',
+    NARROW: 'other{#秒}',
   },
   WEEK: {
-    LONG: "other{# 星期}",
-    SHORT: "other{# 星期}",
-    NARROW: "other{#週}",
+    LONG: 'other{# 星期}',
+    SHORT: 'other{# 星期}',
+    NARROW: 'other{#週}',
   },
   YEAR: {
-    LONG: "other{# 年}",
-    SHORT: "other{# 年}",
-    NARROW: "other{#年}",
+    LONG: 'other{# 年}',
+    SHORT: 'other{# 年}',
+    NARROW: 'other{#年}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_zh_Hant_MO =  {
+exports.DurationSymbols_zh_Hant_MO = {
   DAY: {
-    LONG: "other{# 日}",
-    SHORT: "other{# 日}",
-    NARROW: "other{#日}",
+    LONG: 'other{# 日}',
+    SHORT: 'other{# 日}',
+    NARROW: 'other{#日}',
   },
   HOUR: {
-    LONG: "other{# 小時}",
-    SHORT: "other{# 小時}",
-    NARROW: "other{#小時}",
+    LONG: 'other{# 小時}',
+    SHORT: 'other{# 小時}',
+    NARROW: 'other{#小時}',
   },
   MINUTE: {
-    LONG: "other{# 分鐘}",
-    SHORT: "other{# 分鐘}",
-    NARROW: "other{#分}",
+    LONG: 'other{# 分鐘}',
+    SHORT: 'other{# 分鐘}',
+    NARROW: 'other{#分}',
   },
   MONTH: {
-    LONG: "other{# 個月}",
-    SHORT: "other{# 個月}",
-    NARROW: "other{#個月}",
+    LONG: 'other{# 個月}',
+    SHORT: 'other{# 個月}',
+    NARROW: 'other{#個月}',
   },
   SECOND: {
-    LONG: "other{# 秒}",
-    SHORT: "other{# 秒}",
-    NARROW: "other{#秒}",
+    LONG: 'other{# 秒}',
+    SHORT: 'other{# 秒}',
+    NARROW: 'other{#秒}',
   },
   WEEK: {
-    LONG: "other{# 星期}",
-    SHORT: "other{# 星期}",
-    NARROW: "other{#週}",
+    LONG: 'other{# 星期}',
+    SHORT: 'other{# 星期}',
+    NARROW: 'other{#週}',
   },
   YEAR: {
-    LONG: "other{# 年}",
-    SHORT: "other{# 年}",
-    NARROW: "other{#年}",
+    LONG: 'other{# 年}',
+    SHORT: 'other{# 年}',
+    NARROW: 'other{#年}',
   },
 };
 
 /** @const {!DurationSymbolTypes.DurationSymbols} */
-exports.DurationSymbols_zh_Hant_TW =  {
+exports.DurationSymbols_zh_Hant_TW = {
   DAY: {
-    LONG: "other{# 天}",
-    SHORT: "other{# 天}",
-    NARROW: "other{# 天}",
+    LONG: 'other{# 天}',
+    SHORT: 'other{# 天}',
+    NARROW: 'other{# 天}',
   },
   HOUR: {
-    LONG: "other{# 小時}",
-    SHORT: "other{# 小時}",
-    NARROW: "other{# 小時}",
+    LONG: 'other{# 小時}',
+    SHORT: 'other{# 小時}',
+    NARROW: 'other{# 小時}',
   },
   MINUTE: {
-    LONG: "other{# 分鐘}",
-    SHORT: "other{# 分鐘}",
-    NARROW: "other{# 分鐘}",
+    LONG: 'other{# 分鐘}',
+    SHORT: 'other{# 分鐘}',
+    NARROW: 'other{# 分鐘}',
   },
   MONTH: {
-    LONG: "other{# 個月}",
-    SHORT: "other{# 個月}",
-    NARROW: "other{# 個月}",
+    LONG: 'other{# 個月}',
+    SHORT: 'other{# 個月}',
+    NARROW: 'other{# 個月}',
   },
   SECOND: {
-    LONG: "other{# 秒}",
-    SHORT: "other{# 秒}",
-    NARROW: "other{# 秒}",
+    LONG: 'other{# 秒}',
+    SHORT: 'other{# 秒}',
+    NARROW: 'other{# 秒}',
   },
   WEEK: {
-    LONG: "other{# 週}",
-    SHORT: "other{# 週}",
-    NARROW: "other{# 週}",
+    LONG: 'other{# 週}',
+    SHORT: 'other{# 週}',
+    NARROW: 'other{# 週}',
   },
   YEAR: {
-    LONG: "other{# 年}",
-    SHORT: "other{# 年}",
-    NARROW: "other{# 年}",
+    LONG: 'other{# 年}',
+    SHORT: 'other{# 年}',
+    NARROW: 'other{# 年}',
   },
 };
 

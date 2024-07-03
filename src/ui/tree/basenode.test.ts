@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.tree.BaseNodeTest');
-goog.setTestOnly();
 
 const BaseNode = goog.require('goog.ui.tree.BaseNode');
 const Component = goog.require('goog.ui.Component');
@@ -51,14 +50,17 @@ testSuite({
     tree.render(dom.createDom(TagName.DIV));
     tree.addChild(node1);
     assertFalse(
-        'node1 should not have aria-expanded state',
-        aria.hasState(node1.getElement(), 'expanded'));
+      'node1 should not have aria-expanded state',
+      aria.hasState(node1.getElement(), 'expanded')
+    );
 
     node1.add(nodeA);
 
     assertEquals(
-        'node1 should have aria-expanded state', 'false',
-        aria.getState(node1.getElement(), 'expanded'));
+      'node1 should have aria-expanded state',
+      'false',
+      aria.getState(node1.getElement(), 'expanded')
+    );
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -69,15 +71,18 @@ testSuite({
     tree.render(dom.createDom(TagName.DIV));
     tree.addChild(node1);
     assertFalse(
-        'node1 should not have aria-expanded state',
-        aria.hasState(node1.getElement(), 'expanded'));
+      'node1 should not have aria-expanded state',
+      aria.hasState(node1.getElement(), 'expanded')
+    );
 
     node1.setExpanded(true);
     node1.add(nodeA);
 
     assertEquals(
-        'node1 should have aria-expanded=true', 'true',
-        aria.getState(node1.getElement(), 'expanded'));
+      'node1 should have aria-expanded=true',
+      'true',
+      aria.getState(node1.getElement(), 'expanded')
+    );
   },
 
   /** @suppress {visibility} suppression added to enable type checking */
@@ -90,15 +95,15 @@ testSuite({
 
     node1.addChild(node2);
     assertTrue(
-        'expand icon of node1 changed to L+',
-        classlist.contains(
-            node1.getExpandIconElement(), 'goog-tree-expand-icon-lplus'));
+      'expand icon of node1 changed to L+',
+      classlist.contains(node1.getExpandIconElement(), 'goog-tree-expand-icon-lplus')
+    );
 
     node1.removeChild(node2);
     assertFalse(
-        'expand icon of node1 changed back to L',
-        classlist.contains(
-            node1.getExpandIconElement(), 'goog-tree-expand-icon-lplus'));
+      'expand icon of node1 changed back to L',
+      classlist.contains(node1.getExpandIconElement(), 'goog-tree-expand-icon-lplus')
+    );
   },
 
   testExpandEvents() {
@@ -190,11 +195,11 @@ testSuite({
 
     node1.removeChild(nodeA);
 
-    assertFalse(
-        'nodeA should be removed from tree of node1', node1.contains(nodeA));
+    assertFalse('nodeA should be removed from tree of node1', node1.contains(nodeA));
     assertTrue(
-        'node1 still has children; node1 should still have aria-expanded state',
-        aria.hasState(node1.getElement(), 'expanded'));
+      'node1 still has children; node1 should still have aria-expanded state',
+      aria.hasState(node1.getElement(), 'expanded')
+    );
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */
@@ -209,8 +214,9 @@ testSuite({
     node1.removeChild(node2);
 
     assertFalse(
-        'node1 has no more children; node1 should not have aria-expanded state',
-        aria.hasState(node1.getElement(), 'expanded'));
+      'node1 has no more children; node1 should not have aria-expanded state',
+      aria.hasState(node1.getElement(), 'expanded')
+    );
   },
 
   testGetNextShownNode() {
@@ -225,21 +231,20 @@ testSuite({
 
     assertNull('next node for unexpanded node1', node1.getNextShownNode());
     node1.expand();
-    assertEquals(
-        'next node for expanded node1', node2, node1.getNextShownNode());
+    assertEquals('next node for expanded node1', node2, node1.getNextShownNode());
     assertEquals('next node for node2', node3, node2.getNextShownNode());
     assertNull('next node for node3', node3.getNextShownNode());
 
     tree.add(node1);
-    assertEquals(
-        'next node for populated tree', node1, tree.getNextShownNode());
+    assertEquals('next node for populated tree', node1, tree.getNextShownNode());
     assertNull('next node for node3 inside the tree', node3.getNextShownNode());
 
     const component = new Component();
     component.addChild(tree);
     assertNull(
-        'next node for node3 inside the tree if the tree has parent',
-        node3.getNextShownNode());
+      'next node for node3 inside the tree if the tree has parent',
+      node3.getNextShownNode()
+    );
   },
 
   testGetPreviousShownNode() {
@@ -254,28 +259,20 @@ testSuite({
     tree.add(node3);
 
     assertEquals(
-        'prev node for node3 when node1 is unexpanded', node1,
-        node3.getPreviousShownNode());
+      'prev node for node3 when node1 is unexpanded',
+      node1,
+      node3.getPreviousShownNode()
+    );
     node1.expand();
-    assertEquals(
-        'prev node for node3 when node1 is expanded', node2,
-        node3.getPreviousShownNode());
-    assertEquals(
-        'prev node for node2 when node1 is expanded', node1,
-        node2.getPreviousShownNode());
-    assertEquals(
-        'prev node for node1 when root is shown', tree,
-        node1.getPreviousShownNode());
+    assertEquals('prev node for node3 when node1 is expanded', node2, node3.getPreviousShownNode());
+    assertEquals('prev node for node2 when node1 is expanded', node1, node2.getPreviousShownNode());
+    assertEquals('prev node for node1 when root is shown', tree, node1.getPreviousShownNode());
     tree.setShowRootNode(false);
-    assertNull(
-        'next node for node1 when root is not shown',
-        node1.getPreviousShownNode());
+    assertNull('next node for node1 when root is not shown', node1.getPreviousShownNode());
 
     const component = new Component();
     component.addChild(tree);
-    assertNull(
-        'prev node for root if the tree has parent',
-        tree.getPreviousShownNode());
+    assertNull('prev node for root if the tree has parent', tree.getPreviousShownNode());
   },
 
   testInvisibleNodesInUnrenderedTree() {
@@ -286,12 +283,10 @@ testSuite({
     a.add(b);
     tree.render();
 
-    let textContent =
-        tree.getElement().textContent || tree.getElement().innerText;
+    let textContent = tree.getElement().textContent || tree.getElement().innerText;
     assertContains('Node should be rendered.', 'tree', textContent);
     assertContains('Node should be rendered.', 'a', textContent);
-    assertNotContains(
-        'Unexpanded node child should not be rendered.', 'b', textContent);
+    assertNotContains('Unexpanded node child should not be rendered.', 'b', textContent);
 
     a.expand();
     textContent = tree.getElement().textContent || tree.getElement().innerText;
@@ -309,12 +304,10 @@ testSuite({
     tree.add(a);
     a.add(b);
 
-    let textContent =
-        tree.getElement().textContent || tree.getElement().innerText;
+    let textContent = tree.getElement().textContent || tree.getElement().innerText;
     assertContains('Node should be rendered.', 'tree', textContent);
     assertContains('Node should be rendered.', 'a', textContent);
-    assertNotContains(
-        'Unexpanded node child should not be rendered.', 'b', textContent);
+    assertNotContains('Unexpanded node child should not be rendered.', 'b', textContent);
 
     a.expand();
     textContent = tree.getElement().textContent || tree.getElement().innerText;

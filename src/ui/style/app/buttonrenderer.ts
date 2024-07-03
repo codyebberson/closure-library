@@ -27,8 +27,6 @@ goog.require('goog.ui.registry');
 goog.requireType('goog.dom.DomHelper');
 goog.requireType('goog.ui.ControlContent');
 
-
-
 /**
  * Custom renderer for {@link goog.ui.Button}s. Imageless buttons can contain
  * almost arbitrary HTML content, will flow like inline elements, but can be
@@ -37,13 +35,11 @@ goog.requireType('goog.ui.ControlContent');
  * @constructor
  * @extends {goog.ui.CustomButtonRenderer}
  */
-goog.ui.style.app.ButtonRenderer = function() {
-  'use strict';
+goog.ui.style.app.ButtonRenderer = function () {
   goog.ui.CustomButtonRenderer.call(this);
 };
 goog.inherits(goog.ui.style.app.ButtonRenderer, goog.ui.CustomButtonRenderer);
 goog.addSingletonGetter(goog.ui.style.app.ButtonRenderer);
-
 
 /**
  * Default CSS class to be applied to the root element of components rendered
@@ -52,7 +48,6 @@ goog.addSingletonGetter(goog.ui.style.app.ButtonRenderer);
  */
 goog.ui.style.app.ButtonRenderer.CSS_CLASS = goog.getCssName('goog-button');
 
-
 /**
  * Array of arrays of CSS classes that we want composite classes added and
  * removed for in IE6 and lower as a workaround for lack of multi-class CSS
@@ -60,7 +55,6 @@ goog.ui.style.app.ButtonRenderer.CSS_CLASS = goog.getCssName('goog-button');
  * @type {!Array<Array<string>>}
  */
 goog.ui.style.app.ButtonRenderer.IE6_CLASS_COMBINATIONS = [];
-
 
 /**
  * Returns the button's contents wrapped in the following DOM structure:
@@ -79,15 +73,9 @@ goog.ui.style.app.ButtonRenderer.IE6_CLASS_COMBINATIONS = [];
  */
 goog.ui.style.app.ButtonRenderer.prototype.createDom;
 
-
 /** @override */
-goog.ui.style.app.ButtonRenderer.prototype.getContentElement = function(
-    element) {
-  'use strict';
-  return element && /** @type {Element} */
-      (element.firstChild.firstChild.firstChild.lastChild);
-};
-
+goog.ui.style.app.ButtonRenderer.prototype.getContentElement = (element) =>
+  element && /** @type {Element} */ (element.firstChild.firstChild.firstChild.lastChild);
 
 /**
  * Takes a text caption or existing DOM structure, and returns the content
@@ -110,27 +98,24 @@ goog.ui.style.app.ButtonRenderer.prototype.getContentElement = function(
  * @return {!Element} Pseudo-rounded-corner box containing the content.
  * @override
  */
-goog.ui.style.app.ButtonRenderer.prototype.createButton = function(
-    content, dom) {
-  'use strict';
+goog.ui.style.app.ButtonRenderer.prototype.createButton = function (content, dom) {
   const baseClass = this.getStructuralCssClass();
   const inlineBlock = goog.ui.INLINE_BLOCK_CLASSNAME + ' ';
   return dom.createDom(
+    goog.dom.TagName.DIV,
+    inlineBlock + goog.getCssName(baseClass, 'outer-box'),
+    dom.createDom(
       goog.dom.TagName.DIV,
-      inlineBlock + goog.getCssName(baseClass, 'outer-box'),
+      inlineBlock + goog.getCssName(baseClass, 'inner-box'),
       dom.createDom(
-          goog.dom.TagName.DIV,
-          inlineBlock + goog.getCssName(baseClass, 'inner-box'),
-          dom.createDom(
-              goog.dom.TagName.DIV, goog.getCssName(baseClass, 'pos'),
-              dom.createDom(
-                  goog.dom.TagName.DIV,
-                  goog.getCssName(baseClass, 'top-shadow'), '\u00A0'),
-              dom.createDom(
-                  goog.dom.TagName.DIV, goog.getCssName(baseClass, 'content'),
-                  content))));
+        goog.dom.TagName.DIV,
+        goog.getCssName(baseClass, 'pos'),
+        dom.createDom(goog.dom.TagName.DIV, goog.getCssName(baseClass, 'top-shadow'), '\u00A0'),
+        dom.createDom(goog.dom.TagName.DIV, goog.getCssName(baseClass, 'content'), content)
+      )
+    )
+  );
 };
-
 
 /**
  * Check if the button's element has a box structure.
@@ -141,9 +126,7 @@ goog.ui.style.app.ButtonRenderer.prototype.createButton = function(
  * @protected
  * @override
  */
-goog.ui.style.app.ButtonRenderer.prototype.hasBoxStructure = function(
-    button, element) {
-  'use strict';
+goog.ui.style.app.ButtonRenderer.prototype.hasBoxStructure = function (button, element) {
   const baseClass = this.getStructuralCssClass();
   const outer = button.getDomHelper().getFirstElementChild(element);
   const outerClassName = goog.getCssName(baseClass, 'outer-box');
@@ -159,8 +142,7 @@ goog.ui.style.app.ButtonRenderer.prototype.hasBoxStructure = function(
         if (shadow && goog.dom.classlist.contains(shadow, shadowClassName)) {
           const content = button.getDomHelper().getNextElementSibling(shadow);
           const contentClassName = goog.getCssName(baseClass, 'content');
-          if (content &&
-              goog.dom.classlist.contains(content, contentClassName)) {
+          if (content && goog.dom.classlist.contains(content, contentClassName)) {
             // We have a proper box structure.
             return true;
           }
@@ -171,35 +153,22 @@ goog.ui.style.app.ButtonRenderer.prototype.hasBoxStructure = function(
   return false;
 };
 
+/** @override */
+goog.ui.style.app.ButtonRenderer.prototype.getCssClass = () =>
+  goog.ui.style.app.ButtonRenderer.CSS_CLASS;
 
 /** @override */
-goog.ui.style.app.ButtonRenderer.prototype.getCssClass = function() {
-  'use strict';
-  return goog.ui.style.app.ButtonRenderer.CSS_CLASS;
-};
-
-
-/** @override */
-goog.ui.style.app.ButtonRenderer.prototype.getStructuralCssClass = function() {
-  'use strict';
+goog.ui.style.app.ButtonRenderer.prototype.getStructuralCssClass = () => {
   // TODO(user): extract to a constant.
   return goog.getCssName('goog-button-base');
 };
 
-
 /** @override */
-goog.ui.style.app.ButtonRenderer.prototype.getIe6ClassCombinations =
-    function() {
-  'use strict';
-  return goog.ui.style.app.ButtonRenderer.IE6_CLASS_COMBINATIONS;
-};
-
-
+goog.ui.style.app.ButtonRenderer.prototype.getIe6ClassCombinations = () =>
+  goog.ui.style.app.ButtonRenderer.IE6_CLASS_COMBINATIONS;
 
 // Register a decorator factory function for goog.ui.style.app.ButtonRenderer.
 goog.ui.registry.setDecoratorByClassName(
-    goog.ui.style.app.ButtonRenderer.CSS_CLASS, function() {
-      'use strict';
-      return new goog.ui.Button(
-          null, goog.ui.style.app.ButtonRenderer.getInstance());
-    });
+  goog.ui.style.app.ButtonRenderer.CSS_CLASS,
+  () => new goog.ui.Button(null, goog.ui.style.app.ButtonRenderer.getInstance())
+);

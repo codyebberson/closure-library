@@ -29,32 +29,32 @@ class MapLike {
    * @param {K} key The key to set in the map.
    * @param {V} val The value to set for the given key in the map.
    */
-  set(key, val) {};
+  set(key, val) {}
 
   /**
    * @param {K} key The key to retrieve from the map.
    * @return {V|undefined} The value for this key, or undefined if the key is
    *     not present in the map.
    */
-  get(key) {};
+  get(key) {}
 
   /**
    * @return {!IteratorIterable<K>} An ES6 Iterator that iterates over the keys
    *     in the map.
    */
-  keys() {};
+  keys() {}
 
   /**
    * @return {!IteratorIterable<V>} An ES6 Iterator that iterates over the
    *     values in the map.
    */
-  values() {};
+  values() {}
 
   /**
    * @param {K} key The key to check.
    * @return {boolean} True iff this key is present in the map.
    */
-  has(key) {};
+  has(key) {}
 }
 exports.MapLike = MapLike;
 

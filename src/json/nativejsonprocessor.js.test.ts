@@ -5,18 +5,13 @@
  */
 
 goog.module('goog.json.processorTest');
-goog.setTestOnly();
 
 const NativeJsonProcessor = goog.require('goog.json.NativeJsonProcessor');
 const testSuite = goog.require('goog.testing.testSuite');
 
-const REPLACER = function(k, v) {
-  return !!k ? v + 'd' : v;
-};
+const REPLACER = (k, v) => (!!k ? v + 'd' : v);
 
-const REVIVER = function(k, v) {
-  return !!k ? v.substring(0, v.length - 1) : v;
-};
+const REVIVER = (k, v) => (!!k ? v.substring(0, v.length - 1) : v);
 
 // Just sanity check parsing and stringifying.
 // Thorough tests are in json_test.html.
@@ -32,8 +27,10 @@ testSuite({
 
   testNativeParser_withReplacer() {
     runParsingTest(
-        new NativeJsonProcessor(REPLACER), '{"a":"foo","b":"goo"}',
-        '{"a":"food","b":"good"}');
+      new NativeJsonProcessor(REPLACER),
+      '{"a":"foo","b":"goo"}',
+      '{"a":"food","b":"good"}'
+    );
   },
 
   testNativeParser_withReviver() {

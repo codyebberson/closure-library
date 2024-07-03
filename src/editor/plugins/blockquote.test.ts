@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.editor.plugins.BlockquoteTest');
-goog.setTestOnly();
 
 const Blockquote = goog.require('goog.editor.plugins.Blockquote');
 const FieldMock = goog.require('goog.testing.editor.FieldMock');
@@ -26,9 +25,10 @@ let root;
  * checking
  */
 function createPlugin(requireClassname, paragraphMode = undefined) {
-  field.queryCommandValue('+defaultTag')
-      .$anyTimes()
-      .$returns(paragraphMode ? TagName.P : undefined);
+  field
+    .queryCommandValue('+defaultTag')
+    .$anyTimes()
+    .$returns(paragraphMode ? TagName.P : undefined);
 
   plugin = new Blockquote(requireClassname);
   plugin.registerFieldObject(field);
@@ -46,7 +46,7 @@ function execCommand() {
   // With splitPoint we try to mimic the behavior of EnterHandler's
   // deleteCursorSelection_.
   const splitPoint = dom.getElement('split-point');
-  const position = {node: splitPoint.nextSibling, offset: 0};
+  const position = { node: splitPoint.nextSibling, offset: 0 };
   dom.removeNode(splitPoint);
   Range.createCaret(position.node, 0).select();
 
@@ -90,9 +90,8 @@ testSuite({
     createPlugin(false);
     assertTrue(execCommand());
     helper.assertHtmlMatches(
-        '<blockquote>Test</blockquote>' +
-        '<div>&nbsp;</div>' +
-        '<blockquote>ing</blockquote>');
+      '<blockquote>Test</blockquote>' + '<div>&nbsp;</div>' + '<blockquote>ing</blockquote>'
+    );
   },
 
   testSplitBlockquoteInBlockquoteWithoutClassInParagraphMode() {
@@ -101,9 +100,8 @@ testSuite({
     createPlugin(false, true);
     assertTrue(execCommand());
     helper.assertHtmlMatches(
-        '<blockquote>Test</blockquote>' +
-        '<p>&nbsp;</p>' +
-        '<blockquote>ing</blockquote>');
+      '<blockquote>Test</blockquote>' + '<p>&nbsp;</p>' + '<blockquote>ing</blockquote>'
+    );
   },
 
   testSplitBlockquoteInBlockquoteWithClass() {
@@ -113,9 +111,10 @@ testSuite({
     assertTrue(execCommand());
 
     helper.assertHtmlMatches(
-        '<blockquote class="tr_bq">Test</blockquote>' +
+      '<blockquote class="tr_bq">Test</blockquote>' +
         '<div>&nbsp;</div>' +
-        '<blockquote class="tr_bq">ing</blockquote>');
+        '<blockquote class="tr_bq">ing</blockquote>'
+    );
   },
 
   testSplitBlockquoteInBlockquoteWithClassInParagraphMode() {
@@ -124,9 +123,10 @@ testSuite({
     createPlugin(true, true);
     assertTrue(execCommand());
     helper.assertHtmlMatches(
-        '<blockquote class="tr_bq">Test</blockquote>' +
+      '<blockquote class="tr_bq">Test</blockquote>' +
         '<p>&nbsp;</p>' +
-        '<blockquote class="tr_bq">ing</blockquote>');
+        '<blockquote class="tr_bq">ing</blockquote>'
+    );
   },
 
   testIsSplittableBlockquoteWhenRequiresClassNameToSplit() {
@@ -134,18 +134,21 @@ testSuite({
 
     const blockquoteWithClassName = dom.createDom(TagName.BLOCKQUOTE, 'tr_bq');
     assertTrue(
-        'blockquote should be detected as splittable',
-        plugin.isSplittableBlockquote(blockquoteWithClassName));
+      'blockquote should be detected as splittable',
+      plugin.isSplittableBlockquote(blockquoteWithClassName)
+    );
 
     const blockquoteWithoutClassName = dom.createDom(TagName.BLOCKQUOTE, 'foo');
     assertFalse(
-        'blockquote should not be detected as splittable',
-        plugin.isSplittableBlockquote(blockquoteWithoutClassName));
+      'blockquote should not be detected as splittable',
+      plugin.isSplittableBlockquote(blockquoteWithoutClassName)
+    );
 
     const nonBlockquote = dom.createDom(TagName.SPAN, 'tr_bq');
     assertFalse(
-        'element should not be detected as splittable',
-        plugin.isSplittableBlockquote(nonBlockquote));
+      'element should not be detected as splittable',
+      plugin.isSplittableBlockquote(nonBlockquote)
+    );
   },
 
   testIsSplittableBlockquoteWhenNotRequiresClassNameToSplit() {
@@ -153,18 +156,21 @@ testSuite({
 
     const blockquoteWithClassName = dom.createDom(TagName.BLOCKQUOTE, 'tr_bq');
     assertTrue(
-        'blockquote should be detected as splittable',
-        plugin.isSplittableBlockquote(blockquoteWithClassName));
+      'blockquote should be detected as splittable',
+      plugin.isSplittableBlockquote(blockquoteWithClassName)
+    );
 
     const blockquoteWithoutClassName = dom.createDom(TagName.BLOCKQUOTE, 'foo');
     assertTrue(
-        'blockquote should be detected as splittable',
-        plugin.isSplittableBlockquote(blockquoteWithoutClassName));
+      'blockquote should be detected as splittable',
+      plugin.isSplittableBlockquote(blockquoteWithoutClassName)
+    );
 
     const nonBlockquote = dom.createDom(TagName.SPAN, 'tr_bq');
     assertFalse(
-        'element should not be detected as splittable',
-        plugin.isSplittableBlockquote(nonBlockquote));
+      'element should not be detected as splittable',
+      plugin.isSplittableBlockquote(nonBlockquote)
+    );
   },
 
   testIsSetupBlockquote() {
@@ -172,18 +178,18 @@ testSuite({
 
     const blockquoteWithClassName = dom.createDom(TagName.BLOCKQUOTE, 'tr_bq');
     assertTrue(
-        'blockquote should be detected as setup',
-        plugin.isSetupBlockquote(blockquoteWithClassName));
+      'blockquote should be detected as setup',
+      plugin.isSetupBlockquote(blockquoteWithClassName)
+    );
 
     const blockquoteWithoutClassName = dom.createDom(TagName.BLOCKQUOTE, 'foo');
     assertFalse(
-        'blockquote should not be detected as setup',
-        plugin.isSetupBlockquote(blockquoteWithoutClassName));
+      'blockquote should not be detected as setup',
+      plugin.isSetupBlockquote(blockquoteWithoutClassName)
+    );
 
     const nonBlockquote = dom.createDom(TagName.SPAN, 'tr_bq');
-    assertFalse(
-        'element should not be detected as setup',
-        plugin.isSetupBlockquote(nonBlockquote));
+    assertFalse('element should not be detected as setup', plugin.isSetupBlockquote(nonBlockquote));
   },
 
   testIsUnsetupBlockquote() {
@@ -191,17 +197,20 @@ testSuite({
 
     const blockquoteWithClassName = dom.createDom(TagName.BLOCKQUOTE, 'tr_bq');
     assertFalse(
-        'blockquote should not be detected as unsetup',
-        plugin.isUnsetupBlockquote(blockquoteWithClassName));
+      'blockquote should not be detected as unsetup',
+      plugin.isUnsetupBlockquote(blockquoteWithClassName)
+    );
 
     const blockquoteWithoutClassName = dom.createDom(TagName.BLOCKQUOTE, 'foo');
     assertTrue(
-        'blockquote should be detected as unsetup',
-        plugin.isUnsetupBlockquote(blockquoteWithoutClassName));
+      'blockquote should be detected as unsetup',
+      plugin.isUnsetupBlockquote(blockquoteWithoutClassName)
+    );
 
     const nonBlockquote = dom.createDom(TagName.SPAN, 'tr_bq');
     assertFalse(
-        'element should not be detected as unsetup',
-        plugin.isUnsetupBlockquote(nonBlockquote));
+      'element should not be detected as unsetup',
+      plugin.isUnsetupBlockquote(nonBlockquote)
+    );
   },
 });

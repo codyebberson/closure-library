@@ -20,8 +20,6 @@ goog.require('goog.editor.node');
 goog.require('goog.functions');
 goog.require('goog.log');
 
-
-
 /**
  * Plugin to handle splitting block quotes.  This plugin does nothing on its
  * own and should be used in conjunction with EnterHandler or one of its
@@ -34,9 +32,7 @@ goog.require('goog.log');
  * @extends {goog.editor.Plugin}
  * @final
  */
-goog.editor.plugins.Blockquote = function(
-    requiresClassNameToSplit, opt_className) {
-  'use strict';
+goog.editor.plugins.Blockquote = function (requiresClassNameToSplit, opt_className) {
   goog.editor.Plugin.call(this);
 
   /**
@@ -59,13 +55,11 @@ goog.editor.plugins.Blockquote = function(
 };
 goog.inherits(goog.editor.plugins.Blockquote, goog.editor.Plugin);
 
-
 /**
  * Command implemented by this plugin.
  * @type {string}
  */
 goog.editor.plugins.Blockquote.SPLIT_COMMAND = '+splitBlockquote';
-
 
 /**
  * Class ID used to identify this plugin.
@@ -73,30 +67,25 @@ goog.editor.plugins.Blockquote.SPLIT_COMMAND = '+splitBlockquote';
  */
 goog.editor.plugins.Blockquote.CLASS_ID = 'Blockquote';
 
-
 /**
  * Logging object.
  * @type {goog.log.Logger}
  * @protected
  * @override
  */
-goog.editor.plugins.Blockquote.prototype.logger =
-    goog.log.getLogger('goog.editor.plugins.Blockquote');
-
+goog.editor.plugins.Blockquote.prototype.logger = goog.log.getLogger(
+  'goog.editor.plugins.Blockquote'
+);
 
 /** @override */
-goog.editor.plugins.Blockquote.prototype.getTrogClassId = function() {
-  'use strict';
-  return goog.editor.plugins.Blockquote.CLASS_ID;
-};
-
+goog.editor.plugins.Blockquote.prototype.getTrogClassId = () =>
+  goog.editor.plugins.Blockquote.CLASS_ID;
 
 /**
  * Since our exec command is always called from elsewhere, we make it silent.
  * @override
  */
 goog.editor.plugins.Blockquote.prototype.isSilentCommand = goog.functions.TRUE;
-
 
 /**
  * Checks if a node is a blockquote which can be split. A splittable blockquote
@@ -110,9 +99,7 @@ goog.editor.plugins.Blockquote.prototype.isSilentCommand = goog.functions.TRUE;
  * @param {Node} node DOM node in question.
  * @return {boolean} Whether the node is a splittable blockquote.
  */
-goog.editor.plugins.Blockquote.prototype.isSplittableBlockquote = function(
-    node) {
-  'use strict';
+goog.editor.plugins.Blockquote.prototype.isSplittableBlockquote = function (node) {
   if (/** @type {!Element} */ (node).tagName != goog.dom.TagName.BLOCKQUOTE) {
     return false;
   }
@@ -121,10 +108,8 @@ goog.editor.plugins.Blockquote.prototype.isSplittableBlockquote = function(
     return true;
   }
 
-  return goog.dom.classlist.contains(
-      /** @type {!Element} */ (node), this.className_);
+  return goog.dom.classlist.contains(/** @type {!Element} */ (node), this.className_);
 };
-
 
 /**
  * Checks if a node is a blockquote element which has been setup.
@@ -132,14 +117,12 @@ goog.editor.plugins.Blockquote.prototype.isSplittableBlockquote = function(
  * @return {boolean} Whether the node is a blockquote with the required class
  *     name applied.
  */
-goog.editor.plugins.Blockquote.prototype.isSetupBlockquote = function(node) {
-  'use strict';
-  return /** @type {!Element} */ (node).tagName ==
-      goog.dom.TagName.BLOCKQUOTE &&
-      goog.dom.classlist.contains(
-          /** @type {!Element} */ (node), this.className_);
+goog.editor.plugins.Blockquote.prototype.isSetupBlockquote = function (node) {
+  return (
+    /** @type {!Element} */ (node).tagName == goog.dom.TagName.BLOCKQUOTE &&
+    goog.dom.classlist.contains(/** @type {!Element} */ (node), this.className_)
+  );
 };
-
 
 /**
  * Checks if a node is a blockquote element which has not been setup yet.
@@ -147,23 +130,20 @@ goog.editor.plugins.Blockquote.prototype.isSetupBlockquote = function(node) {
  * @return {boolean} Whether the node is a blockquote without the required
  *     class name applied.
  */
-goog.editor.plugins.Blockquote.prototype.isUnsetupBlockquote = function(node) {
-  'use strict';
-  return /** @type {!Element} */ (node).tagName ==
-      goog.dom.TagName.BLOCKQUOTE &&
-      !this.isSetupBlockquote(node);
+goog.editor.plugins.Blockquote.prototype.isUnsetupBlockquote = function (node) {
+  return (
+    /** @type {!Element} */ (node).tagName == goog.dom.TagName.BLOCKQUOTE &&
+    !this.isSetupBlockquote(node)
+  );
 };
-
 
 /**
  * Gets the class name required for setup blockquotes.
  * @return {string} The blockquote class name.
  */
-goog.editor.plugins.Blockquote.prototype.getBlockquoteClassName = function() {
-  'use strict';
+goog.editor.plugins.Blockquote.prototype.getBlockquoteClassName = function () {
   return this.className_;
 };
-
 
 /**
  * Helper routine which walks up the tree to find the topmost
@@ -174,29 +154,21 @@ goog.editor.plugins.Blockquote.prototype.getBlockquoteClassName = function() {
  * @param {Node} root The root node to stop the search at.
  * @private
  */
-goog.editor.plugins.Blockquote.findAndRemoveSingleChildAncestor_ = function(
-    node, root) {
-  'use strict';
-  var predicateFunc = function(parentNode) {
-    'use strict';
-    return parentNode != root && parentNode.childNodes.length == 1;
-  };
-  var ancestor =
-      goog.editor.node.findHighestMatchingAncestor(node, predicateFunc);
+goog.editor.plugins.Blockquote.findAndRemoveSingleChildAncestor_ = (node, root) => {
+  var predicateFunc = (parentNode) => parentNode != root && parentNode.childNodes.length == 1;
+  var ancestor = goog.editor.node.findHighestMatchingAncestor(node, predicateFunc);
   if (!ancestor) {
     ancestor = node;
   }
   goog.dom.removeNode(ancestor);
 };
 
-
 /**
  * Remove every nodes from the DOM tree that are all white space nodes.
  * @param {Array<Node>} nodes Nodes to be checked.
  * @private
  */
-goog.editor.plugins.Blockquote.removeAllWhiteSpaceNodes_ = function(nodes) {
-  'use strict';
+goog.editor.plugins.Blockquote.removeAllWhiteSpaceNodes_ = (nodes) => {
   for (var i = 0; i < nodes.length; ++i) {
     if (goog.editor.node.isEmpty(nodes[i], true)) {
       goog.dom.removeNode(nodes[i]);
@@ -204,14 +176,9 @@ goog.editor.plugins.Blockquote.removeAllWhiteSpaceNodes_ = function(nodes) {
   }
 };
 
-
 /** @override */
-goog.editor.plugins.Blockquote.prototype.isSupportedCommand = function(
-    command) {
-  'use strict';
-  return command == goog.editor.plugins.Blockquote.SPLIT_COMMAND;
-};
-
+goog.editor.plugins.Blockquote.prototype.isSupportedCommand = (command) =>
+  command == goog.editor.plugins.Blockquote.SPLIT_COMMAND;
 
 /**
  * Splits a quoted region if any.  To be called on a key press event.  When this
@@ -225,16 +192,16 @@ goog.editor.plugins.Blockquote.prototype.isSupportedCommand = function(
  *     split, false or undefined otherwise.
  * @override
  */
-goog.editor.plugins.Blockquote.prototype.execCommandInternal = function(
-    command, var_args) {
-  'use strict';
+goog.editor.plugins.Blockquote.prototype.execCommandInternal = function (command, var_args) {
   var pos = arguments[1];
-  if (command == goog.editor.plugins.Blockquote.SPLIT_COMMAND && pos &&
-      (this.className_ || !this.requiresClassNameToSplit_)) {
+  if (
+    command == goog.editor.plugins.Blockquote.SPLIT_COMMAND &&
+    pos &&
+    (this.className_ || !this.requiresClassNameToSplit_)
+  ) {
     return this.splitQuotedBlockW3C_(pos);
   }
 };
-
 
 /**
  * Version of splitQuotedBlock_ that uses W3C ranges.
@@ -243,12 +210,12 @@ goog.editor.plugins.Blockquote.prototype.execCommandInternal = function(
  * @private
  * @suppress {strictMissingProperties} Part of the go/strict_warnings_migration
  */
-goog.editor.plugins.Blockquote.prototype.splitQuotedBlockW3C_ = function(
-    anchorPos) {
-  'use strict';
+goog.editor.plugins.Blockquote.prototype.splitQuotedBlockW3C_ = function (anchorPos) {
   var cursorNode = anchorPos.node;
   var quoteNode = goog.editor.node.findTopMostEditableAncestor(
-      cursorNode.parentNode, goog.bind(this.isSplittableBlockquote, this));
+    cursorNode.parentNode,
+    goog.bind(this.isSplittableBlockquote, this)
+  );
 
   var secondHalf, textNodeToRemove;
   var insertTextNode = false;
@@ -312,17 +279,16 @@ goog.editor.plugins.Blockquote.prototype.splitQuotedBlockW3C_ = function(
     return false;
   }
 
-  secondHalf =
-      goog.editor.node.splitDomTreeAt(cursorNode, secondHalf, quoteNode);
+  secondHalf = goog.editor.node.splitDomTreeAt(cursorNode, secondHalf, quoteNode);
   goog.dom.insertSiblingAfter(secondHalf, quoteNode);
 
   // Set the insertion point.
   var dh = this.getFieldDomHelper();
-  var tagToInsert = this.getFieldObject().queryCommandValue(
-                        goog.editor.Command.DEFAULT_TAG) ||
-      goog.dom.TagName.DIV;
+  var tagToInsert =
+    this.getFieldObject().queryCommandValue(goog.editor.Command.DEFAULT_TAG) ||
+    goog.dom.TagName.DIV;
   var container = dh.createElement(/** @type {string} */ (tagToInsert));
-  container.textContent = '\xA0';  // Prevent the div from collapsing.
+  container.textContent = '\xA0'; // Prevent the div from collapsing.
   quoteNode.parentNode.insertBefore(container, secondHalf);
   dh.getWindow().getSelection().collapse(container, 0);
 
@@ -332,27 +298,21 @@ goog.editor.plugins.Blockquote.prototype.splitQuotedBlockW3C_ = function(
   // till we either reach the blockquote or till we hit a node with more
   // than one child. The resulting node is then removed from the DOM.
   if (textNodeToRemove) {
-    goog.editor.plugins.Blockquote.findAndRemoveSingleChildAncestor_(
-        textNodeToRemove, secondHalf);
+    goog.editor.plugins.Blockquote.findAndRemoveSingleChildAncestor_(textNodeToRemove, secondHalf);
   }
 
-  goog.editor.plugins.Blockquote.removeAllWhiteSpaceNodes_(
-      [quoteNode, secondHalf]);
+  goog.editor.plugins.Blockquote.removeAllWhiteSpaceNodes_([quoteNode, secondHalf]);
   return true;
 };
-
 
 /**
  * Inserts an empty text node before the field's range.
  * @return {!Node} The empty text node.
  * @private
  */
-goog.editor.plugins.Blockquote.prototype.insertEmptyTextNodeBeforeRange_ =
-    function() {
-  'use strict';
+goog.editor.plugins.Blockquote.prototype.insertEmptyTextNodeBeforeRange_ = function () {
   var range = this.getFieldObject().getRange();
   var node = this.getFieldDomHelper().createTextNode('');
   range.insertNode(node, true);
   return node;
 };
-

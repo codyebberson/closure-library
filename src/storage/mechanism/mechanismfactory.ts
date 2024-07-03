@@ -17,14 +17,11 @@ goog.require('goog.storage.mechanism.IEUserData');
 goog.require('goog.storage.mechanism.PrefixedMechanism');
 goog.requireType('goog.storage.mechanism.IterableMechanism');
 
-
 /**
  * The key to shared userData storage.
  * @type {string}
  */
-goog.storage.mechanism.mechanismfactory.USER_DATA_SHARED_KEY =
-    'UserDataSharedStore';
-
+goog.storage.mechanism.mechanismfactory.USER_DATA_SHARED_KEY = 'UserDataSharedStore';
 
 /**
  * Returns the best local storage mechanism, or null if unavailable.
@@ -36,13 +33,9 @@ goog.storage.mechanism.mechanismfactory.USER_DATA_SHARED_KEY =
  * @param {string=} opt_namespace Restricts the visibility to given namespace.
  * @return {goog.storage.mechanism.IterableMechanism} Created mechanism or null.
  */
-goog.storage.mechanism.mechanismfactory.create = function(opt_namespace) {
-  'use strict';
-  return goog.storage.mechanism.mechanismfactory.createHTML5LocalStorage(
-             opt_namespace) ||
-      goog.storage.mechanism.mechanismfactory.createIEUserData(opt_namespace);
-};
-
+goog.storage.mechanism.mechanismfactory.create = (opt_namespace) =>
+  goog.storage.mechanism.mechanismfactory.createHTML5LocalStorage(opt_namespace) ||
+  goog.storage.mechanism.mechanismfactory.createIEUserData(opt_namespace);
 
 /**
  * Returns an HTML5 local storage mechanism, or null if unavailable.
@@ -54,18 +47,15 @@ goog.storage.mechanism.mechanismfactory.create = function(opt_namespace) {
  * @param {string=} opt_namespace Restricts the visibility to given namespace.
  * @return {goog.storage.mechanism.IterableMechanism} Created mechanism or null.
  */
-goog.storage.mechanism.mechanismfactory.createHTML5LocalStorage = function(
-    opt_namespace) {
-  'use strict';
+goog.storage.mechanism.mechanismfactory.createHTML5LocalStorage = (opt_namespace) => {
   var storage = new goog.storage.mechanism.HTML5LocalStorage();
   if (storage.isAvailable()) {
-    return opt_namespace ?
-        new goog.storage.mechanism.PrefixedMechanism(storage, opt_namespace) :
-        storage;
+    return opt_namespace
+      ? new goog.storage.mechanism.PrefixedMechanism(storage, opt_namespace)
+      : storage;
   }
   return null;
 };
-
 
 /**
  * Returns an HTML5 session storage mechanism, or null if unavailable.
@@ -77,18 +67,15 @@ goog.storage.mechanism.mechanismfactory.createHTML5LocalStorage = function(
  * @param {string=} opt_namespace Restricts the visibility to given namespace.
  * @return {goog.storage.mechanism.IterableMechanism} Created mechanism or null.
  */
-goog.storage.mechanism.mechanismfactory.createHTML5SessionStorage = function(
-    opt_namespace) {
-  'use strict';
+goog.storage.mechanism.mechanismfactory.createHTML5SessionStorage = (opt_namespace) => {
   var storage = new goog.storage.mechanism.HTML5SessionStorage();
   if (storage.isAvailable()) {
-    return opt_namespace ?
-        new goog.storage.mechanism.PrefixedMechanism(storage, opt_namespace) :
-        storage;
+    return opt_namespace
+      ? new goog.storage.mechanism.PrefixedMechanism(storage, opt_namespace)
+      : storage;
   }
   return null;
 };
-
 
 /**
  * Returns an IE userData local storage mechanism, or null if unavailable.
@@ -98,12 +85,10 @@ goog.storage.mechanism.mechanismfactory.createHTML5SessionStorage = function(
  * @param {string=} opt_namespace Restricts the visibility to given namespace.
  * @return {goog.storage.mechanism.IterableMechanism} Created mechanism or null.
  */
-goog.storage.mechanism.mechanismfactory.createIEUserData = function(
-    opt_namespace) {
-  'use strict';
+goog.storage.mechanism.mechanismfactory.createIEUserData = (opt_namespace) => {
   var storage = new goog.storage.mechanism.IEUserData(
-      opt_namespace ||
-      goog.storage.mechanism.mechanismfactory.USER_DATA_SHARED_KEY);
+    opt_namespace || goog.storage.mechanism.mechanismfactory.USER_DATA_SHARED_KEY
+  );
   if (storage.isAvailable()) {
     return storage;
   }

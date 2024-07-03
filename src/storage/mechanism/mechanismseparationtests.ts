@@ -17,9 +17,8 @@ goog.module('goog.storage.mechanism.mechanismSeparationTests');
 goog.setTestOnly('goog.storage.mechanism.mechanismSeparationTests');
 
 const IterableMechanism = goog.require('goog.storage.mechanism.IterableMechanism');
-const {assertEquals, assertNull, assertTrue} = goog.require('goog.testing.asserts');
-const {bindTests} = goog.require('goog.storage.mechanism.testhelpers');
-
+const { assertEquals, assertNull, assertTrue } = goog.require('goog.testing.asserts');
+const { bindTests } = goog.require('goog.storage.mechanism.testhelpers');
 
 /**
  * @param {!IterableMechanism} mechanism
@@ -95,15 +94,10 @@ function testSeparateClean(mechanism, mechanismSeparate) {
  * }} state
  * @return {!Object}
  */
-exports.register = function(state) {
-  return bindTests(
-      [
-        testSeparateSet,
-        testSeparateSetInverse,
-        testSeparateRemove,
-        testSeparateClean,
-      ],
-      (testCase) => {
-        testCase(state.getMechanism(), state.getMechanismSeparate());
-      });
-};
+exports.register = (state) =>
+  bindTests(
+    [testSeparateSet, testSeparateSetInverse, testSeparateRemove, testSeparateClean],
+    (testCase) => {
+      testCase(state.getMechanism(), state.getMechanismSeparate());
+    }
+  );

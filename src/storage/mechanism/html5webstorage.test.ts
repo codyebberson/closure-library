@@ -57,8 +57,6 @@ class MockThrowableStorage {
   }
 }
 
-
-
 /**
  * Provides an HTML5WebStorage wrapper for MockThrowableStorage.
  * @unrestricted
@@ -69,8 +67,6 @@ class HTML5MockStorage extends HTML5WebStorage {
     super(new MockThrowableStorage(opt_isStorageDisabled));
   }
 }
-
-
 
 testSuite({
   testIsNotAvailableWhenQuotaExceeded() {

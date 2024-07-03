@@ -10,8 +10,6 @@
  * @suppress {strictMissingProperties}
  */
 
-
-
 // TODO(user): We're trying to migrate all ES5 subclasses of Closure
 // Library to ES6. In ES6 this cannot be referenced before super is called. This
 // file has at least one this before a super call (in ES5) and cannot be
@@ -36,8 +34,6 @@ goog.require('goog.dom.TextRange');
 goog.require('goog.iter');
 goog.require('goog.userAgent');
 
-
-
 /**
  * Create a new control selection with no properties.  Do not use this
  * constructor: use one of the goog.dom.Range.createFrom* methods instead.
@@ -45,8 +41,7 @@ goog.require('goog.userAgent');
  * @extends {goog.dom.AbstractMultiRange}
  * @final
  */
-goog.dom.ControlRange = function() {
-  'use strict';
+goog.dom.ControlRange = function () {
   /**
    * The IE control range obejct.
    * @private {?Object}
@@ -67,20 +62,17 @@ goog.dom.ControlRange = function() {
 };
 goog.inherits(goog.dom.ControlRange, goog.dom.AbstractMultiRange);
 
-
 /**
  * Create a new range wrapper from the given browser range object.  Do not use
  * this method directly - please use goog.dom.Range.createFrom* instead.
  * @param {Object} controlRange The browser range object.
  * @return {!goog.dom.ControlRange} A range wrapper object.
  */
-goog.dom.ControlRange.createFromBrowserRange = function(controlRange) {
-  'use strict';
+goog.dom.ControlRange.createFromBrowserRange = (controlRange) => {
   var range = new goog.dom.ControlRange();
   range.range_ = controlRange;
   return range;
 };
-
 
 /**
  * Create a new range wrapper that selects the given element.  Do not use
@@ -88,8 +80,7 @@ goog.dom.ControlRange.createFromBrowserRange = function(controlRange) {
  * @param {...Element} var_args The element(s) to select.
  * @return {!goog.dom.ControlRange} A range wrapper object.
  */
-goog.dom.ControlRange.createFromElements = function(var_args) {
-  'use strict';
+goog.dom.ControlRange.createFromElements = (var_args) => {
   var range = goog.dom.getOwnerDocument(arguments[0]).body.createControlRange();
   for (var i = 0, len = arguments.length; i < len; i++) {
     range.addElement(arguments[i]);
@@ -97,46 +88,32 @@ goog.dom.ControlRange.createFromElements = function(var_args) {
   return goog.dom.ControlRange.createFromBrowserRange(range);
 };
 
-
 // Method implementations
-
 
 /**
  * Clear cached values.
  * @private
  */
-goog.dom.ControlRange.prototype.clearCachedValues_ = function() {
-  'use strict';
+goog.dom.ControlRange.prototype.clearCachedValues_ = function () {
   this.elements_ = null;
   this.sortedElements_ = null;
 };
 
-
 /** @override */
-goog.dom.ControlRange.prototype.clone = function() {
-  'use strict';
-  return goog.dom.ControlRange.createFromElements.apply(
-      this, this.getElements());
+goog.dom.ControlRange.prototype.clone = function () {
+  return goog.dom.ControlRange.createFromElements.apply(this, this.getElements());
 };
 
+/** @override */
+goog.dom.ControlRange.prototype.getType = () => goog.dom.RangeType.CONTROL;
 
 /** @override */
-goog.dom.ControlRange.prototype.getType = function() {
-  'use strict';
-  return goog.dom.RangeType.CONTROL;
-};
-
-
-/** @override */
-goog.dom.ControlRange.prototype.getBrowserRangeObject = function() {
-  'use strict';
+goog.dom.ControlRange.prototype.getBrowserRangeObject = function () {
   return this.range_ || document.body.createControlRange();
 };
 
-
 /** @override */
-goog.dom.ControlRange.prototype.setBrowserRangeObject = function(nativeRange) {
-  'use strict';
+goog.dom.ControlRange.prototype.setBrowserRangeObject = function (nativeRange) {
   if (!goog.dom.AbstractRange.isNativeControlRange(nativeRange)) {
     return false;
   }
@@ -144,67 +121,46 @@ goog.dom.ControlRange.prototype.setBrowserRangeObject = function(nativeRange) {
   return true;
 };
 
-
 /** @override */
-goog.dom.ControlRange.prototype.getTextRangeCount = function() {
-  'use strict';
+goog.dom.ControlRange.prototype.getTextRangeCount = function () {
   return this.range_ ? this.range_.length : 0;
 };
 
-
 /** @override */
-goog.dom.ControlRange.prototype.getTextRange = function(i) {
-  'use strict';
+goog.dom.ControlRange.prototype.getTextRange = function (i) {
   return goog.dom.TextRange.createFromNodeContents(this.range_.item(i));
 };
 
-
 /** @override */
-goog.dom.ControlRange.prototype.getContainer = function() {
-  'use strict';
+goog.dom.ControlRange.prototype.getContainer = function () {
   return goog.dom.findCommonAncestor.apply(null, this.getElements());
 };
 
-
 /** @override */
-goog.dom.ControlRange.prototype.getStartNode = function() {
-  'use strict';
+goog.dom.ControlRange.prototype.getStartNode = function () {
   return this.getSortedElements()[0];
 };
 
+/** @override */
+goog.dom.ControlRange.prototype.getStartOffset = () => 0;
 
 /** @override */
-goog.dom.ControlRange.prototype.getStartOffset = function() {
-  'use strict';
-  return 0;
-};
-
-
-/** @override */
-goog.dom.ControlRange.prototype.getEndNode = function() {
-  'use strict';
+goog.dom.ControlRange.prototype.getEndNode = function () {
   var sorted = this.getSortedElements();
   var startsLast = /** @type {Node} */ (goog.array.peek(sorted));
-  return /** @type {Node} */ (sorted.find(function(el) {
-    'use strict';
-    return goog.dom.contains(el, startsLast);
-  }));
+  return /** @type {Node} */ (sorted.find((el) => goog.dom.contains(el, startsLast)));
 };
-
 
 /** @override */
-goog.dom.ControlRange.prototype.getEndOffset = function() {
-  'use strict';
+goog.dom.ControlRange.prototype.getEndOffset = function () {
   return this.getEndNode().childNodes.length;
 };
-
 
 // TODO(robbyw): Figure out how to unify getElements with TextRange API.
 /**
  * @return {!Array<Element>} Array of elements in the control range.
  */
-goog.dom.ControlRange.prototype.getElements = function() {
-  'use strict';
+goog.dom.ControlRange.prototype.getElements = function () {
   if (!this.elements_) {
     this.elements_ = [];
     if (this.range_) {
@@ -217,37 +173,29 @@ goog.dom.ControlRange.prototype.getElements = function() {
   return this.elements_;
 };
 
-
 /**
  * @return {!Array<Element>} Array of elements comprising the control range,
  *     sorted by document order.
  */
-goog.dom.ControlRange.prototype.getSortedElements = function() {
-  'use strict';
+goog.dom.ControlRange.prototype.getSortedElements = function () {
   if (!this.sortedElements_) {
     this.sortedElements_ = this.getElements().concat();
-    this.sortedElements_.sort(function(a, b) {
-      'use strict';
-      return a.sourceIndex - b.sourceIndex;
-    });
+    this.sortedElements_.sort((a, b) => a.sourceIndex - b.sourceIndex);
   }
 
   return this.sortedElements_;
 };
 
-
 /** @override */
-goog.dom.ControlRange.prototype.isRangeInDocument = function() {
-  'use strict';
+goog.dom.ControlRange.prototype.isRangeInDocument = function () {
   var returnValue = false;
 
   try {
-    returnValue = this.getElements().every(function(element) {
-      'use strict';
+    returnValue = this.getElements().every((element) => {
       // On IE, this throws an exception when the range is detached.
-      return goog.userAgent.IE ?
-          !!element.parentNode :
-          goog.dom.contains(element.ownerDocument.body, element);
+      return goog.userAgent.IE
+        ? !!element.parentNode
+        : goog.dom.contains(element.ownerDocument.body, element);
     });
   } catch (e) {
     // IE sometimes throws Invalid Argument errors for detached elements.
@@ -258,63 +206,46 @@ goog.dom.ControlRange.prototype.isRangeInDocument = function() {
   return returnValue;
 };
 
-
 /** @override */
-goog.dom.ControlRange.prototype.isCollapsed = function() {
-  'use strict';
+goog.dom.ControlRange.prototype.isCollapsed = function () {
   return !this.range_ || !this.range_.length;
 };
 
-
 /** @override */
-goog.dom.ControlRange.prototype.getText = function() {
-  'use strict';
+goog.dom.ControlRange.prototype.getText = () => {
   // TODO(robbyw): What about for table selections?  Should those have text?
   return '';
 };
 
-
 /** @override */
-goog.dom.ControlRange.prototype.getHtmlFragment = function() {
-  'use strict';
+goog.dom.ControlRange.prototype.getHtmlFragment = function () {
   return this.getSortedElements().map(goog.dom.getOuterHtml).join('');
 };
 
-
 /** @override */
-goog.dom.ControlRange.prototype.getValidHtml = function() {
-  'use strict';
+goog.dom.ControlRange.prototype.getValidHtml = function () {
   return this.getHtmlFragment();
 };
 
+/** @override */
+goog.dom.ControlRange.prototype.getPastableHtml = goog.dom.ControlRange.prototype.getValidHtml;
 
 /** @override */
-goog.dom.ControlRange.prototype.getPastableHtml =
-    goog.dom.ControlRange.prototype.getValidHtml;
-
-
-/** @override */
-goog.dom.ControlRange.prototype.__iterator__ = function(opt_keys) {
-  'use strict';
+goog.dom.ControlRange.prototype.__iterator__ = function (opt_keys) {
   return new goog.dom.ControlRangeIterator(this);
 };
 
-
 // RANGE ACTIONS
 
-
 /** @override */
-goog.dom.ControlRange.prototype.select = function() {
-  'use strict';
+goog.dom.ControlRange.prototype.select = function () {
   if (this.range_) {
     this.range_.select();
   }
 };
 
-
 /** @override */
-goog.dom.ControlRange.prototype.removeContents = function() {
-  'use strict';
+goog.dom.ControlRange.prototype.removeContents = function () {
   // TODO(robbyw): Test implementing with execCommand('Delete')
   if (this.range_) {
     var nodes = [];
@@ -327,10 +258,8 @@ goog.dom.ControlRange.prototype.removeContents = function() {
   }
 };
 
-
 /** @override */
-goog.dom.ControlRange.prototype.replaceContentsWithNode = function(node) {
-  'use strict';
+goog.dom.ControlRange.prototype.replaceContentsWithNode = function (node) {
   // Control selections have to have the node inserted before removing the
   // selection contents because a collapsed control range doesn't have start or
   // end nodes.
@@ -343,39 +272,28 @@ goog.dom.ControlRange.prototype.replaceContentsWithNode = function(node) {
   return result;
 };
 
-
 // SAVE/RESTORE
 
-
 /** @override */
-goog.dom.ControlRange.prototype.saveUsingDom = function() {
-  'use strict';
+goog.dom.ControlRange.prototype.saveUsingDom = function () {
   return new goog.dom.DomSavedControlRange_(this);
 };
 
 /** @override */
-goog.dom.ControlRange.prototype.saveUsingCarets = function() {
-  'use strict';
-  return (this.getStartNode() && this.getEndNode()) ?
-      new goog.dom.SavedCaretRange(this) :
-      null;
+goog.dom.ControlRange.prototype.saveUsingCarets = function () {
+  return this.getStartNode() && this.getEndNode() ? new goog.dom.SavedCaretRange(this) : null;
 };
 
 // RANGE MODIFICATION
 
-
 /** @override */
-goog.dom.ControlRange.prototype.collapse = function(toAnchor) {
-  'use strict';
+goog.dom.ControlRange.prototype.collapse = function (toAnchor) {
   // TODO(robbyw): Should this return a text range?  If so, API needs to change.
   this.range_ = null;
   this.clearCachedValues_();
 };
 
-
 // SAVED RANGE OBJECTS
-
-
 
 /**
  * A SavedRange implementation using DOM endpoints.
@@ -384,8 +302,7 @@ goog.dom.ControlRange.prototype.collapse = function(toAnchor) {
  * @extends {goog.dom.SavedRange}
  * @private
  */
-goog.dom.DomSavedControlRange_ = function(range) {
-  'use strict';
+goog.dom.DomSavedControlRange_ = function (range) {
   /**
    * The element list.
    * @type {Array<Element>}
@@ -395,13 +312,9 @@ goog.dom.DomSavedControlRange_ = function(range) {
 };
 goog.inherits(goog.dom.DomSavedControlRange_, goog.dom.SavedRange);
 
-
 /** @override */
-goog.dom.DomSavedControlRange_.prototype.restoreInternal = function() {
-  'use strict';
-  var doc = this.elements_.length ?
-      goog.dom.getOwnerDocument(this.elements_[0]) :
-      document;
+goog.dom.DomSavedControlRange_.prototype.restoreInternal = function () {
+  var doc = this.elements_.length ? goog.dom.getOwnerDocument(this.elements_[0]) : document;
   var controlRange = doc.body.createControlRange();
   for (var i = 0, len = this.elements_.length; i < len; i++) {
     controlRange.addElement(this.elements_[i]);
@@ -409,18 +322,13 @@ goog.dom.DomSavedControlRange_.prototype.restoreInternal = function() {
   return goog.dom.ControlRange.createFromBrowserRange(controlRange);
 };
 
-
 /** @override */
-goog.dom.DomSavedControlRange_.prototype.disposeInternal = function() {
-  'use strict';
+goog.dom.DomSavedControlRange_.prototype.disposeInternal = function () {
   goog.dom.DomSavedControlRange_.superClass_.disposeInternal.call(this);
   delete this.elements_;
 };
 
-
 // RANGE ITERATION
-
-
 
 /**
  * Subclass of goog.dom.TagIterator that iterates over a DOM range.  It
@@ -431,8 +339,7 @@ goog.dom.DomSavedControlRange_.prototype.disposeInternal = function() {
  * @extends {goog.dom.RangeIterator}
  * @final
  */
-goog.dom.ControlRangeIterator = function(range) {
-  'use strict';
+goog.dom.ControlRangeIterator = function (range) {
   /**
    * The first node in the selection.
    * @private {?Node}
@@ -454,50 +361,33 @@ goog.dom.ControlRangeIterator = function(range) {
   if (range) {
     this.elements_ = range.getSortedElements();
     this.startNode_ = this.elements_.shift();
-    this.endNode_ = /** @type {Node} */ (goog.array.peek(this.elements_)) ||
-        this.startNode_;
+    this.endNode_ = /** @type {Node} */ (goog.array.peek(this.elements_)) || this.startNode_;
   }
 
-  goog.dom.ControlRangeIterator.base(
-      this, 'constructor', this.startNode_, false);
+  goog.dom.ControlRangeIterator.base(this, 'constructor', this.startNode_, false);
 };
 goog.inherits(goog.dom.ControlRangeIterator, goog.dom.RangeIterator);
 
+/** @override */
+goog.dom.ControlRangeIterator.prototype.getStartTextOffset = () => 0;
 
 /** @override */
-goog.dom.ControlRangeIterator.prototype.getStartTextOffset = function() {
-  'use strict';
-  return 0;
-};
-
+goog.dom.ControlRangeIterator.prototype.getEndTextOffset = () => 0;
 
 /** @override */
-goog.dom.ControlRangeIterator.prototype.getEndTextOffset = function() {
-  'use strict';
-  return 0;
-};
-
-
-/** @override */
-goog.dom.ControlRangeIterator.prototype.getStartNode = function() {
-  'use strict';
+goog.dom.ControlRangeIterator.prototype.getStartNode = function () {
   return this.startNode_;
 };
 
-
 /** @override */
-goog.dom.ControlRangeIterator.prototype.getEndNode = function() {
-  'use strict';
+goog.dom.ControlRangeIterator.prototype.getEndNode = function () {
   return this.endNode_;
 };
 
-
 /** @override */
-goog.dom.ControlRangeIterator.prototype.isLast = function() {
-  'use strict';
+goog.dom.ControlRangeIterator.prototype.isLast = function () {
   return !this.depth && !this.elements_.length;
 };
-
 
 /**
  * Move to the next position in the selection.
@@ -505,15 +395,13 @@ goog.dom.ControlRangeIterator.prototype.isLast = function() {
  * @return {!IIterableResult<!Node>} The node at the next position.
  * @override
  */
-goog.dom.ControlRangeIterator.prototype.next = function() {
-  'use strict';
+goog.dom.ControlRangeIterator.prototype.next = function () {
   // Iterate over each element in the range, and all of its children.
   if (this.isLast()) {
     return goog.iter.ES6_ITERATOR_DONE;
   } else if (!this.depth) {
     var el = this.elements_.shift();
-    this.setPosition(
-        el, goog.dom.TagWalkType.START_TAG, goog.dom.TagWalkType.START_TAG);
+    this.setPosition(el, goog.dom.TagWalkType.START_TAG, goog.dom.TagWalkType.START_TAG);
     return goog.iter.createEs6IteratorYield(/** @type {!Node} */ (el));
   }
 
@@ -521,10 +409,8 @@ goog.dom.ControlRangeIterator.prototype.next = function() {
   return goog.dom.ControlRangeIterator.superClass_.next.call(this);
 };
 
-
 /** @override */
-goog.dom.ControlRangeIterator.prototype.copyFrom = function(other) {
-  'use strict';
+goog.dom.ControlRangeIterator.prototype.copyFrom = function (other) {
   var that = /** @type {!goog.dom.ControlRangeIterator} */ (other);
   this.elements_ = that.elements_;
   this.startNode_ = that.startNode_;
@@ -533,13 +419,11 @@ goog.dom.ControlRangeIterator.prototype.copyFrom = function(other) {
   goog.dom.ControlRangeIterator.superClass_.copyFrom.call(this, that);
 };
 
-
 /**
  * @return {!goog.dom.ControlRangeIterator} An identical iterator.
  * @override
  */
-goog.dom.ControlRangeIterator.prototype.clone = function() {
-  'use strict';
+goog.dom.ControlRangeIterator.prototype.clone = function () {
   var copy = new goog.dom.ControlRangeIterator(null);
   copy.copyFrom(this);
   return copy;

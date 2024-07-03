@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.PromiseTest');
-goog.setTestOnly();
 
 const GoogPromise = goog.require('goog.Promise');
 const MockClock = goog.require('goog.testing.MockClock');
@@ -22,9 +21,10 @@ const testSuite = goog.require('goog.testing.testSuite');
 // - Add tests for long stack traces.
 
 /** @type {boolean} */
-const SUPPORTS_STRICT_MODE = (function() {
-                               return this;
-                             })() === undefined;
+const SUPPORTS_STRICT_MODE =
+  (function () {
+    return this;
+  })() === undefined;
 
 /**
  * @type {boolean}
@@ -42,10 +42,10 @@ let unhandledRejections;
 
 // Simple shared objects used as test values.
 const dummy = {
-  toString: functions.constant('[object dummy]')
+  toString: functions.constant('[object dummy]'),
 };
 const sentinel = {
-  toString: functions.constant('[object sentinel]')
+  toString: functions.constant('[object sentinel]'),
 };
 
 /**
@@ -89,8 +89,7 @@ class CountingThenable {
     if (shouldCount !== CountingThenable) {
       this.thenCallCount++;
     }
-    return CountingThenable.resolve(
-        this.internalPromise_.then(onResolve, onReject));
+    return CountingThenable.resolve(this.internalPromise_.then(onResolve, onReject));
   }
 }
 
@@ -175,7 +174,7 @@ function validatePromiseChain(testBody) {
 
 testSuite({
   setUpPage() {
-    TestCase.getActiveTestCase().promiseTimeout = 10000;  // 10s
+    TestCase.getActiveTestCase().promiseTimeout = 10000; // 10s
   },
 
   setUp() {
@@ -186,7 +185,7 @@ testSuite({
   tearDown() {
     // The system should leave no pending unhandled rejections. Advance the mock
     // clock (if installed) to catch any rethrows waiting in the queue.
-    mockClock.tick(Infinity);
+    mockClock.tick(Number.POSITIVE_INFINITY);
     mockClock.uninstall();
     mockClock.reset();
 
@@ -204,8 +203,7 @@ testSuite({
       assertEquals(sentinel, value);
     });
 
-    assertEquals(
-        'then() must return before callbacks are invoked.', 0, timesCalled);
+    assertEquals('then() must return before callbacks are invoked.', 0, timesCalled);
 
     return p.then(() => {
       assertEquals('onFulfilled must be called exactly once.', 1, timesCalled);
@@ -221,8 +219,7 @@ testSuite({
       assertEquals(sentinel, value);
     });
 
-    assertEquals(
-        'thenVoid() must return before callbacks are invoked.', 0, timesCalled);
+    assertEquals('thenVoid() must return before callbacks are invoked.', 0, timesCalled);
 
     return p.then(() => {
       assertEquals('onFulfilled must be called exactly once.', 1, timesCalled);
@@ -238,8 +235,7 @@ testSuite({
       assertEquals(sentinel, value);
     });
 
-    assertEquals(
-        'then() must return before callbacks are invoked.', 0, timesCalled);
+    assertEquals('then() must return before callbacks are invoked.', 0, timesCalled);
 
     return p.then(shouldNotCall, () => {
       assertEquals('onRejected must be called exactly once.', 1, timesCalled);
@@ -256,8 +252,7 @@ testSuite({
       assertEquals('onRejected must be called exactly once.', 1, timesCalled);
     });
 
-    assertEquals(
-        'thenVoid() must return before callbacks are invoked.', 0, timesCalled);
+    assertEquals('thenVoid() must return before callbacks are invoked.', 0, timesCalled);
 
     return p.then(shouldNotCall, () => {
       assertEquals('onRejected must be called exactly once.', 1, timesCalled);
@@ -268,12 +263,12 @@ testSuite({
     const p = GoogPromise.resolve();
 
     let m = assertThrows(() => {
-      p.then(/** @type {?} */ ({}));
+      p.then(/** @type {?} */ {});
     });
     assertContains('opt_onFulfilled should be a function.', m.message);
 
     m = assertThrows(() => {
-      p.then(() => {}, /** @type {?} */ ({}));
+      p.then(() => {}, /** @type {?} */ {});
     });
     assertContains('opt_onRejected should be a function.', m.message);
   },
@@ -282,32 +277,32 @@ testSuite({
     const p = GoogPromise.resolve();
 
     let m = assertThrows(() => {
-      p.thenVoid(/** @type {?} */ ({}));
+      p.thenVoid(/** @type {?} */ {});
     });
     assertContains('opt_onFulfilled should be a function.', m.message);
 
     m = assertThrows(() => {
-      p.thenVoid(() => {}, /** @type {?} */ ({}));
+      p.thenVoid(() => {}, /** @type {?} */ {});
     });
     assertContains('opt_onRejected should be a function.', m.message);
   },
 
   testOptionalOnFulfilled() {
     return GoogPromise.resolve(sentinel)
-        .then(null, null)
-        .then(null, shouldNotCall)
-        .then((value) => {
-          assertEquals(sentinel, value);
-        });
+      .then(null, null)
+      .then(null, shouldNotCall)
+      .then((value) => {
+        assertEquals(sentinel, value);
+      });
   },
 
   testOptionalOnRejected() {
     return GoogPromise.reject(sentinel)
-        .then(null, null)
-        .then(shouldNotCall)
-        .then(null, (reason) => {
-          assertEquals(sentinel, reason);
-        });
+      .then(null, null)
+      .then(shouldNotCall)
+      .then(null, (reason) => {
+        assertEquals(sentinel, reason);
+      });
   },
 
   testMultipleResolves() {
@@ -381,10 +376,12 @@ testSuite({
       });
     }, 20);
 
-    return Timer.promise(40).then(() => p.then(() => {
-      timesCalled[3]++;
-      assertArrayEquals([1, 1, 1, 1], timesCalled);
-    }));
+    return Timer.promise(40).then(() =>
+      p.then(() => {
+        timesCalled[3]++;
+        assertArrayEquals([1, 1, 1, 1], timesCalled);
+      })
+    );
   },
 
   testResolveWithPromise() {
@@ -432,7 +429,7 @@ testSuite({
   testRejectWithPromise() {
     let resolveBlocker;
     let hasFulfilled = false;
-    let hasRejected = false;
+    const hasRejected = false;
     const blocker = new GoogPromise((resolve, reject) => {
       resolveBlocker = resolve;
     });
@@ -481,12 +478,13 @@ testSuite({
     });
 
     p.then(
-        () => {
-          onFulfilledCalled = true;
-        },
-        () => {
-          onRejectedCalled = true;
-        });
+      () => {
+        onFulfilledCalled = true;
+      },
+      () => {
+        onRejectedCalled = true;
+      }
+    );
 
     return p.then(() => {
       assertTrue(onFulfilledCalled);
@@ -501,9 +499,7 @@ testSuite({
     });
     r(p);
     return p.then(shouldNotCall, (e) => {
-      assertEquals(
-          /** @type {!Error} */ (e).message,
-          'Promise cannot resolve to itself');
+      assertEquals(/** @type {!Error} */ e.message, 'Promise cannot resolve to itself');
     });
   },
 
@@ -515,10 +511,9 @@ testSuite({
 
   testRejectAndResolve() {
     return new GoogPromise((resolve, reject) => {
-             reject();
-             resolve();
-           })
-        .then(shouldNotCall, () => true);
+      reject();
+      resolve();
+    }).then(shouldNotCall, () => true);
   },
 
   testThenReturnsBeforeCallbackWithFulfill() {
@@ -526,9 +521,7 @@ testSuite({
     const p = GoogPromise.resolve();
 
     const child = p.then(() => {
-      assertTrue(
-          'Callback must be called only after then() has returned.',
-          thenHasReturned);
+      assertTrue('Callback must be called only after then() has returned.', thenHasReturned);
     });
     thenHasReturned = true;
 
@@ -540,9 +533,7 @@ testSuite({
     const p = GoogPromise.reject();
 
     const child = p.then(shouldNotCall, () => {
-      assertTrue(
-          'Callback must be called only after then() has returned.',
-          thenHasReturned);
+      assertTrue('Callback must be called only after then() has returned.', thenHasReturned);
     });
     thenHasReturned = true;
 
@@ -552,24 +543,18 @@ testSuite({
   testResolutionOrder() {
     const callbacks = [];
     return GoogPromise.resolve()
-        .then(
-            () => {
-              callbacks.push(1);
-            },
-            shouldNotCall)
-        .then(
-            () => {
-              callbacks.push(2);
-            },
-            shouldNotCall)
-        .then(
-            () => {
-              callbacks.push(3);
-            },
-            shouldNotCall)
-        .then(() => {
-          assertArrayEquals([1, 2, 3], callbacks);
-        });
+      .then(() => {
+        callbacks.push(1);
+      }, shouldNotCall)
+      .then(() => {
+        callbacks.push(2);
+      }, shouldNotCall)
+      .then(() => {
+        callbacks.push(3);
+      }, shouldNotCall)
+      .then(() => {
+        assertArrayEquals([1, 2, 3], callbacks);
+      });
   },
 
   testResolutionOrderWithThrow() {
@@ -685,29 +670,32 @@ testSuite({
   testBranching() {
     const p = GoogPromise.resolve(2);
 
-    const branch1 =
-        p.then((value) => {
-           assertEquals('then functions should see the same value', 2, value);
-           return value / 2;
-         }).then((value) => {
-          assertEquals('branch should receive the returned value', 1, value);
-        });
+    const branch1 = p
+      .then((value) => {
+        assertEquals('then functions should see the same value', 2, value);
+        return value / 2;
+      })
+      .then((value) => {
+        assertEquals('branch should receive the returned value', 1, value);
+      });
 
-    const branch2 =
-        p.then((value) => {
-           assertEquals('then functions should see the same value', 2, value);
-           throw value + 1;
-         }).then(shouldNotCall, (reason) => {
-          assertEquals('branch should receive the thrown value', 3, reason);
-        });
+    const branch2 = p
+      .then((value) => {
+        assertEquals('then functions should see the same value', 2, value);
+        throw value + 1;
+      })
+      .then(shouldNotCall, (reason) => {
+        assertEquals('branch should receive the thrown value', 3, reason);
+      });
 
-    const branch3 =
-        p.then((value) => {
-           assertEquals('then functions should see the same value', 2, value);
-           return value * 2;
-         }).then((value) => {
-          assertEquals('branch should receive the returned value', 4, value);
-        });
+    const branch3 = p
+      .then((value) => {
+        assertEquals('then functions should see the same value', 2, value);
+        return value * 2;
+      })
+      .then((value) => {
+        assertEquals('branch should receive the returned value', 4, value);
+      });
 
     return GoogPromise.all([branch1, branch2, branch3]);
   },
@@ -717,9 +705,7 @@ testSuite({
     const child = parent.then();
 
     assertTrue(child instanceof GoogPromise);
-    assertNotEquals(
-        'The returned Promise must be different from the input.', parent,
-        child);
+    assertNotEquals('The returned Promise must be different from the input.', parent, child);
   },
 
   testThenVoidReturnsUndefined() {
@@ -737,12 +723,13 @@ testSuite({
     const p2 = p.then(() => new GoogPromise((resolve, reject) => {}));
 
     p2.then(
-        () => {
-          wasFulfilled = true;
-        },
-        () => {
-          wasRejected = true;
-        });
+      () => {
+        wasFulfilled = true;
+      },
+      () => {
+        wasRejected = true;
+      }
+    );
 
     return Timer.promise(10).then(() => {
       assertFalse('p2 should be blocked on the returned Promise', wasFulfilled);
@@ -781,9 +768,9 @@ testSuite({
 
   testBlockingThenableFulfilled() {
     const thenable = {
-      then: function(onFulfill, onReject) {
+      then: (onFulfill, onReject) => {
         onFulfill(sentinel);
-      }
+      },
     };
 
     return GoogPromise.resolve(thenable).then((reason) => {
@@ -793,9 +780,9 @@ testSuite({
 
   testBlockingThenableRejected() {
     const thenable = {
-      then: function(onFulfill, onReject) {
+      then: (onFulfill, onReject) => {
         onReject(sentinel);
-      }
+      },
     };
 
     return GoogPromise.resolve(thenable).then(shouldNotCall, (reason) => {
@@ -805,9 +792,9 @@ testSuite({
 
   testBlockingThenableThrows() {
     const thenable = {
-      then: function(onFulfill, onReject) {
+      then: (onFulfill, onReject) => {
         throw sentinel;
-      }
+      },
     };
 
     return GoogPromise.resolve(thenable).then(shouldNotCall, (reason) => {
@@ -817,7 +804,7 @@ testSuite({
 
   testBlockingThenableMisbehaves() {
     const thenable = {
-      then: function(onFulfill, onReject) {
+      then: (onFulfill, onReject) => {
         onFulfill(sentinel);
         onFulfill(dummy);
         onReject(dummy);
@@ -827,55 +814,54 @@ testSuite({
 
     return GoogPromise.resolve(thenable).then((value) => {
       assertEquals(
-          'Only the first resolution of the Thenable should have a result.',
-          sentinel, value);
+        'Only the first resolution of the Thenable should have a result.',
+        sentinel,
+        value
+      );
     });
   },
 
   testNestingThenables() {
     const thenableA = {
-      then: function(onFulfill, onReject) {
+      then: (onFulfill, onReject) => {
         onFulfill(sentinel);
       },
     };
     const thenableB = {
-      then: function(onFulfill, onReject) {
+      then: (onFulfill, onReject) => {
         onFulfill(thenableA);
       },
     };
     const thenableC = {
-      then: function(onFulfill, onReject) {
+      then: (onFulfill, onReject) => {
         onFulfill(thenableB);
       },
     };
 
     return GoogPromise.resolve(thenableC).then((value) => {
-      assertEquals(
-          'Should resolve to the fulfillment value of thenableA', sentinel,
-          value);
+      assertEquals('Should resolve to the fulfillment value of thenableA', sentinel, value);
     });
   },
 
   testNestingThenablesRejected() {
     const thenableA = {
-      then: function(onFulfill, onReject) {
+      then: (onFulfill, onReject) => {
         onReject(sentinel);
-      }
+      },
     };
     const thenableB = {
-      then: function(onFulfill, onReject) {
+      then: (onFulfill, onReject) => {
         onReject(thenableA);
       },
     };
     const thenableC = {
-      then: function(onFulfill, onReject) {
+      then: (onFulfill, onReject) => {
         onReject(thenableB);
       },
     };
 
     return GoogPromise.reject(thenableC).then(shouldNotCall, (reason) => {
-      assertEquals(
-          'Should resolve to rejection reason of thenableA', sentinel, reason);
+      assertEquals('Should resolve to rejection reason of thenableA', sentinel, reason);
     });
   },
 
@@ -883,15 +869,15 @@ testSuite({
     return validatePromiseChain((promiseChainComplete) => {
       let catchCalled = false;
       GoogPromise.reject()
-          .thenCatch((reason) => {
-            catchCalled = true;
-            return sentinel;
-          })
-          .then((value) => {
-            assertTrue(catchCalled);
-            assertEquals(sentinel, value);
-            promiseChainComplete();
-          });
+        .thenCatch((reason) => {
+          catchCalled = true;
+          return sentinel;
+        })
+        .then((value) => {
+          assertTrue(catchCalled);
+          assertEquals(sentinel, value);
+          promiseChainComplete();
+        });
     });
   },
 
@@ -899,33 +885,34 @@ testSuite({
     return validatePromiseChain((promiseChainComplete) => {
       let catchCalled = false;
       GoogPromise.resolve(sentinel)
-          .thenCatch((reason) => {
-            catchCalled = true;
-            return dummy;
-          })
-          .then((value) => {
-            assertFalse(catchCalled);
-            assertEquals(sentinel, value);
-            promiseChainComplete();
-          });
+        .thenCatch((reason) => {
+          catchCalled = true;
+          return dummy;
+        })
+        .then((value) => {
+          assertFalse(catchCalled);
+          assertEquals(sentinel, value);
+          promiseChainComplete();
+        });
     });
   },
 
   testThenCatchThrows() {
     return validatePromiseChain((promiseChainComplete) => {
       GoogPromise.reject(dummy)
-          .thenCatch((reason) => {
-            assertEquals(dummy, reason);
-            throw sentinel;
-          })
-          .then(
-              () => {
-                fail('Should have rejected.');
-              },
-              (value) => {
-                assertEquals(sentinel, value);
-                promiseChainComplete();
-              });
+        .thenCatch((reason) => {
+          assertEquals(dummy, reason);
+          throw sentinel;
+        })
+        .then(
+          () => {
+            fail('Should have rejected.');
+          },
+          (value) => {
+            assertEquals(sentinel, value);
+            promiseChainComplete();
+          }
+        );
     });
   },
 
@@ -942,15 +929,14 @@ testSuite({
     const a = after(b, () => 'a');
 
     return GoogPromise.race([a, b, c, d])
-        .then((value) => {
-          assertEquals('c', value);
-          // Return the slowest input promise to wait for it to complete.
-          return a;
-        })
-        .then((value) => {
-          assertEquals(
-              'The slowest promise should resolve eventually.', 'a', value);
-        });
+      .then((value) => {
+        assertEquals('c', value);
+        // Return the slowest input promise to wait for it to complete.
+        return a;
+      })
+      .then((value) => {
+        assertEquals('The slowest promise should resolve eventually.', 'a', value);
+      });
   },
 
   testRaceWithThenables() {
@@ -960,18 +946,17 @@ testSuite({
     const a = after(b, () => 'a');
 
     return GoogPromise.race([a, b, c, d])
-        .then((value) => {
-          assertEquals('c', value);
-          // Ensure that the `then` property was only accessed once by
-          // `goog.Promise.race`.
-          assertEquals(1, c.thenCallCount);
-          // Return the slowest input thenable to wait for it to complete.
-          return a;
-        })
-        .then((value) => {
-          assertEquals(
-              'The slowest thenable should resolve eventually.', 'a', value);
-        });
+      .then((value) => {
+        assertEquals('c', value);
+        // Ensure that the `then` property was only accessed once by
+        // `goog.Promise.race`.
+        assertEquals(1, c.thenCallCount);
+        // Return the slowest input thenable to wait for it to complete.
+        return a;
+      })
+      .then((value) => {
+        assertEquals('The slowest thenable should resolve eventually.', 'a', value);
+      });
   },
 
   testRaceWithBuiltIns() {
@@ -981,15 +966,14 @@ testSuite({
     const a = after(d, () => 'a');
 
     return GoogPromise.race([a, b, c, d])
-        .then((value) => {
-          assertEquals('c', value);
-          // Return the slowest input promise to wait for it to complete.
-          return a;
-        })
-        .then((value) => {
-          assertEquals(
-              'The slowest promise should resolve eventually.', 'a', value);
-        });
+      .then((value) => {
+        assertEquals('c', value);
+        // Return the slowest input promise to wait for it to complete.
+        return a;
+      })
+      .then((value) => {
+        assertEquals('The slowest promise should resolve eventually.', 'a', value);
+      });
   },
 
   testRaceWithNonThenable() {
@@ -999,15 +983,14 @@ testSuite({
     const a = after(d, () => 'a');
 
     return GoogPromise.race([a, b, c, d])
-        .then((value) => {
-          assertEquals('b', value);
-          // Return the slowest input promise to wait for it to complete.
-          return a;
-        })
-        .then((value) => {
-          assertEquals(
-              'The slowest promise should resolve eventually.', 'a', value);
-        });
+      .then((value) => {
+        assertEquals('b', value);
+        // Return the slowest input promise to wait for it to complete.
+        return a;
+      })
+      .then((value) => {
+        assertEquals('The slowest promise should resolve eventually.', 'a', value);
+      });
   },
 
   testRaceWithFalseyNonThenable() {
@@ -1017,15 +1000,14 @@ testSuite({
     const a = after(d, () => 'a');
 
     return GoogPromise.race([a, b, c, d])
-        .then((value) => {
-          assertEquals(0, value);
-          // Return the slowest input promise to wait for it to complete.
-          return a;
-        })
-        .then((value) => {
-          assertEquals(
-              'The slowest promise should resolve eventually.', 'a', value);
-        });
+      .then((value) => {
+        assertEquals(0, value);
+        // Return the slowest input promise to wait for it to complete.
+        return a;
+      })
+      .then((value) => {
+        assertEquals('The slowest promise should resolve eventually.', 'a', value);
+      });
   },
 
   testRaceWithFulfilledBeforeNonThenable() {
@@ -1035,15 +1017,14 @@ testSuite({
     const a = after(d, () => 'a');
 
     return GoogPromise.race([a, b, c, d])
-        .then((value) => {
-          assertEquals('b', value);
-          // Return the slowest input promise to wait for it to complete.
-          return a;
-        })
-        .then((value) => {
-          assertEquals(
-              'The slowest promise should resolve eventually.', 'a', value);
-        });
+      .then((value) => {
+        assertEquals('b', value);
+        // Return the slowest input promise to wait for it to complete.
+        return a;
+      })
+      .then((value) => {
+        assertEquals('The slowest promise should resolve eventually.', 'a', value);
+      });
   },
 
   testRaceWithReject() {
@@ -1059,17 +1040,13 @@ testSuite({
     });
 
     return GoogPromise.race([a, b, c, d])
-        .then(
-            shouldNotCall,
-            (value) => {
-              assertEquals('rejected-c', value);
-              return a;
-            })
-        .then(shouldNotCall, (reason) => {
-          assertEquals(
-              'The slowest promise should resolve eventually.', 'rejected-a',
-              reason);
-        });
+      .then(shouldNotCall, (value) => {
+        assertEquals('rejected-c', value);
+        return a;
+      })
+      .then(shouldNotCall, (reason) => {
+        assertEquals('The slowest promise should resolve eventually.', 'rejected-a', reason);
+      });
   },
 
   testRaceWithRejectThenable() {
@@ -1085,17 +1062,13 @@ testSuite({
     });
 
     return GoogPromise.race([a, b, c, d])
-        .then(
-            shouldNotCall,
-            (value) => {
-              assertEquals('rejected-c', value);
-              return a;
-            })
-        .then(shouldNotCall, (reason) => {
-          assertEquals(
-              'The slowest promise should resolve eventually.', 'rejected-a',
-              reason);
-        });
+      .then(shouldNotCall, (value) => {
+        assertEquals('rejected-c', value);
+        return a;
+      })
+      .then(shouldNotCall, (reason) => {
+        assertEquals('The slowest promise should resolve eventually.', 'rejected-a', reason);
+      });
   },
 
   testRaceWithRejectBuiltIn() {
@@ -1111,41 +1084,37 @@ testSuite({
     });
 
     return GoogPromise.race([a, b, c, d])
-        .then(
-            shouldNotCall,
-            (value) => {
-              assertEquals('rejected-c', value);
-              return a;
-            })
-        .then(shouldNotCall, (reason) => {
-          assertEquals(
-              'The slowest promise should resolve eventually.', 'rejected-a',
-              reason);
-        });
+      .then(shouldNotCall, (value) => {
+        assertEquals('rejected-c', value);
+        return a;
+      })
+      .then(shouldNotCall, (reason) => {
+        assertEquals('The slowest promise should resolve eventually.', 'rejected-a', reason);
+      });
   },
 
   testRaceWithRejectAndThrowingThenable() {
     const c = rejectSoon(NativeOrGoogPromise, 'rejected-c');
     const d = new ThrowingThenable('rejected-d');
-    const b = CountingThenable.resolve(after(c, () => {
-      throw 'rejected-b';
-    }));
-    const a = GoogPromise.resolve(after(b, () => {
-      throw 'rejected-a';
-    }));
+    const b = CountingThenable.resolve(
+      after(c, () => {
+        throw 'rejected-b';
+      })
+    );
+    const a = GoogPromise.resolve(
+      after(b, () => {
+        throw 'rejected-a';
+      })
+    );
 
     return GoogPromise.race([a, b, c, d])
-        .then(
-            shouldNotCall,
-            (value) => {
-              assertEquals('rejected-d', value);
-              return a;
-            })
-        .then(shouldNotCall, (reason) => {
-          assertEquals(
-              'The slowest promise should resolve eventually.', 'rejected-a',
-              reason);
-        });
+      .then(shouldNotCall, (value) => {
+        assertEquals('rejected-d', value);
+        return a;
+      })
+      .then(shouldNotCall, (reason) => {
+        assertEquals('The slowest promise should resolve eventually.', 'rejected-a', reason);
+      });
   },
 
   testAllWithEmptyList() {
@@ -1212,20 +1181,18 @@ testSuite({
     const c = fulfillSoon(GoogPromise, 'c');
     const d = fulfillSoon(GoogPromise, 'd');
 
-
     return GoogPromise.all([a, b, c, d])
-        .then(
-            shouldNotCall,
-            (reason) => {
-              assertEquals('rejected-b', reason);
-              return a;
-            })
-        .then((value) => {
-          assertEquals(
-              'Promise "a" should be fulfilled even though the all()' +
-                  'was rejected.',
-              'a', value);
-        });
+      .then(shouldNotCall, (reason) => {
+        assertEquals('rejected-b', reason);
+        return a;
+      })
+      .then((value) => {
+        assertEquals(
+          'Promise "a" should be fulfilled even though the all()' + 'was rejected.',
+          'a',
+          value
+        );
+      });
   },
 
   testAllSettledWithEmptyList() {
@@ -1246,26 +1213,26 @@ testSuite({
     // Test a falsey value.
     const z = 0;
 
-    return GoogPromise.allSettled([a, b, c, d, e, f, g, h, z])
-        .then((results) => {
-          assertArrayEquals(
-              [
-                {fulfilled: true, value: 'a'},
-                {fulfilled: false, reason: 'rejected-b'},
-                {fulfilled: true, value: 'c'},
-                {fulfilled: false, reason: 'rejected-d'},
-                {fulfilled: true, value: 'e'},
-                {fulfilled: true, value: 'f'},
-                {fulfilled: false, reason: 'rejected-g'},
-                {fulfilled: false, reason: 'rejected-h'},
-                {fulfilled: true, value: 0},
-              ],
-              results);
-          // Ensure that the `then` property was only accessed once by
-          // `goog.Promise.allSettled`.
-          assertEquals(1, e.thenCallCount);
-          assertEquals(1, g.thenCallCount);
-        });
+    return GoogPromise.allSettled([a, b, c, d, e, f, g, h, z]).then((results) => {
+      assertArrayEquals(
+        [
+          { fulfilled: true, value: 'a' },
+          { fulfilled: false, reason: 'rejected-b' },
+          { fulfilled: true, value: 'c' },
+          { fulfilled: false, reason: 'rejected-d' },
+          { fulfilled: true, value: 'e' },
+          { fulfilled: true, value: 'f' },
+          { fulfilled: false, reason: 'rejected-g' },
+          { fulfilled: false, reason: 'rejected-h' },
+          { fulfilled: true, value: 0 },
+        ],
+        results
+      );
+      // Ensure that the `then` property was only accessed once by
+      // `goog.Promise.allSettled`.
+      assertEquals(1, e.thenCallCount);
+      assertEquals(1, g.thenCallCount);
+    });
   },
 
   testFirstFulfilledWithEmptyList() {
@@ -1283,23 +1250,25 @@ testSuite({
     const a = after(b, () => 'a');
 
     return GoogPromise.firstFulfilled([a, b, c, d])
-        .then((value) => {
-          assertEquals('d', value);
-          return c;
-        })
-        .then(
-            shouldNotCall,
-            (reason) => {
-              assertEquals(
-                  'Promise "c" should be rejected before firstFulfilled() resolves.',
-                  'rejected-c', reason);
-              return a;
-            })
-        .then((value) => {
-          assertEquals(
-              'Promise "a" should be fulfilled after firstFulfilled() resolves.',
-              'a', value);
-        });
+      .then((value) => {
+        assertEquals('d', value);
+        return c;
+      })
+      .then(shouldNotCall, (reason) => {
+        assertEquals(
+          'Promise "c" should be rejected before firstFulfilled() resolves.',
+          'rejected-c',
+          reason
+        );
+        return a;
+      })
+      .then((value) => {
+        assertEquals(
+          'Promise "a" should be fulfilled after firstFulfilled() resolves.',
+          'a',
+          value
+        );
+      });
   },
 
   testFirstFulfilledWithThenables() {
@@ -1311,27 +1280,29 @@ testSuite({
     const a = after(b, () => 'a');
 
     return GoogPromise.firstFulfilled([a, b, c, d])
-        .then((value) => {
-          assertEquals('d', value);
-          // Ensure that the `then` property was only accessed once by
-          // `goog.Promise.firstFulfilled`.
-          assertEquals(1, d.thenCallCount);
+      .then((value) => {
+        assertEquals('d', value);
+        // Ensure that the `then` property was only accessed once by
+        // `goog.Promise.firstFulfilled`.
+        assertEquals(1, d.thenCallCount);
 
-          return c;
-        })
-        .then(
-            shouldNotCall,
-            (reason) => {
-              assertEquals(
-                  'Thenable "c" should be rejected before firstFulfilled() resolves.',
-                  'rejected-c', reason);
-              return a;
-            })
-        .then((value) => {
-          assertEquals(
-              'Thenable "a" should be fulfilled after firstFulfilled() resolves.',
-              'a', value);
-        });
+        return c;
+      })
+      .then(shouldNotCall, (reason) => {
+        assertEquals(
+          'Thenable "c" should be rejected before firstFulfilled() resolves.',
+          'rejected-c',
+          reason
+        );
+        return a;
+      })
+      .then((value) => {
+        assertEquals(
+          'Thenable "a" should be fulfilled after firstFulfilled() resolves.',
+          'a',
+          value
+        );
+      });
   },
 
   testFirstFulfilledWithBuiltIns() {
@@ -1343,23 +1314,25 @@ testSuite({
     const a = after(b, () => 'a');
 
     return GoogPromise.firstFulfilled([a, b, c, d])
-        .then((value) => {
-          assertEquals('d', value);
-          return c;
-        })
-        .then(
-            shouldNotCall,
-            (reason) => {
-              assertEquals(
-                  'Promise "c" should be rejected before firstFulfilled() resolves.',
-                  'rejected-c', reason);
-              return a;
-            })
-        .then((value) => {
-          assertEquals(
-              'Promise "a" should be fulfilled after firstFulfilled() resolves.',
-              'a', value);
-        });
+      .then((value) => {
+        assertEquals('d', value);
+        return c;
+      })
+      .then(shouldNotCall, (reason) => {
+        assertEquals(
+          'Promise "c" should be rejected before firstFulfilled() resolves.',
+          'rejected-c',
+          reason
+        );
+        return a;
+      })
+      .then((value) => {
+        assertEquals(
+          'Promise "a" should be fulfilled after firstFulfilled() resolves.',
+          'a',
+          value
+        );
+      });
   },
 
   testFirstFulfilledWithNonThenable() {
@@ -1371,15 +1344,14 @@ testSuite({
     const a = after(b, () => 'a');
 
     return GoogPromise.firstFulfilled([a, b, c, d])
-        .then((value) => {
-          assertEquals('d', value);
-          // Return the slowest input promise to wait for it to complete.
-          return a;
-        })
-        .then((value) => {
-          assertEquals(
-              'The slowest promise should resolve eventually.', 'a', value);
-        });
+      .then((value) => {
+        assertEquals('d', value);
+        // Return the slowest input promise to wait for it to complete.
+        return a;
+      })
+      .then((value) => {
+        assertEquals('The slowest promise should resolve eventually.', 'a', value);
+      });
   },
 
   testFirstFulfilledWithFalseyNonThenable() {
@@ -1391,15 +1363,14 @@ testSuite({
     const a = after(b, () => 'a');
 
     return GoogPromise.firstFulfilled([a, b, c, d])
-        .then((value) => {
-          assertEquals(0, value);
-          // Return the slowest input promise to wait for it to complete.
-          return a;
-        })
-        .then((value) => {
-          assertEquals(
-              'The slowest promise should resolve eventually.', 'a', value);
-        });
+      .then((value) => {
+        assertEquals(0, value);
+        // Return the slowest input promise to wait for it to complete.
+        return a;
+      })
+      .then((value) => {
+        assertEquals('The slowest promise should resolve eventually.', 'a', value);
+      });
   },
 
   testFirstFulfilledWithFulfilledBeforeNonThenable() {
@@ -1409,61 +1380,60 @@ testSuite({
     const a = after(c, () => 'a');
 
     return GoogPromise.firstFulfilled([a, b, c, d])
-        .then((value) => {
-          assertEquals('b', value);
-          // Return the slowest input promise to wait for it to complete.
-          return a;
-        })
-        .then((value) => {
-          assertEquals(
-              'The slowest promise should resolve eventually.', 'a', value);
-        });
+      .then((value) => {
+        assertEquals('b', value);
+        // Return the slowest input promise to wait for it to complete.
+        return a;
+      })
+      .then((value) => {
+        assertEquals('The slowest promise should resolve eventually.', 'a', value);
+      });
   },
 
   testFirstFulfilledWithReject() {
     const c = rejectSoon(NativeOrGoogPromise, 'rejected-c');
     const d = new ThrowingThenable('rejected-d');
-    const b = CountingThenable.resolve(after(c, () => {
-      throw 'rejected-b';
-    }));
-    const a = GoogPromise.resolve(after(b, () => {
-      throw 'rejected-a';
-    }));
+    const b = CountingThenable.resolve(
+      after(c, () => {
+        throw 'rejected-b';
+      })
+    );
+    const a = GoogPromise.resolve(
+      after(b, () => {
+        throw 'rejected-a';
+      })
+    );
 
-    return GoogPromise.firstFulfilled([a, b, c, d])
-        .then(shouldNotCall, (reason) => {
-          assertArrayEquals(
-              ['rejected-a', 'rejected-b', 'rejected-c', 'rejected-d'], reason);
-          // Ensure that the `then` property was only accessed once by
-          // `goog.Promise.firstFulfilled`.
-          assertEquals(1, b.thenCallCount);
-        });
+    return GoogPromise.firstFulfilled([a, b, c, d]).then(shouldNotCall, (reason) => {
+      assertArrayEquals(['rejected-a', 'rejected-b', 'rejected-c', 'rejected-d'], reason);
+      // Ensure that the `then` property was only accessed once by
+      // `goog.Promise.firstFulfilled`.
+      assertEquals(1, b.thenCallCount);
+    });
   },
 
   testThenAlwaysWithFulfill() {
     let thenAlwaysCalled = false;
     return GoogPromise.resolve(sentinel)
-        .thenAlways(function() {
-          assertEquals(
-              'thenAlways should have no arguments', 0, arguments.length);
-          thenAlwaysCalled = true;
-        })
-        .then((value) => {
-          assertEquals(sentinel, value);
-          assertTrue(thenAlwaysCalled);
-        });
+      .thenAlways(() => {
+        assertEquals('thenAlways should have no arguments', 0, arguments.length);
+        thenAlwaysCalled = true;
+      })
+      .then((value) => {
+        assertEquals(sentinel, value);
+        assertTrue(thenAlwaysCalled);
+      });
   },
 
   testThenAlwaysWithReject() {
     return GoogPromise.reject(sentinel)
-        .thenAlways(function() {
-          assertEquals(
-              'thenAlways should have no arguments', 0, arguments.length);
-        })
-        .then(shouldNotCall, (err) => {
-          assertEquals(sentinel, err);
-          return null;
-        });
+      .thenAlways(() => {
+        assertEquals('thenAlways should have no arguments', 0, arguments.length);
+      })
+      .then(shouldNotCall, (err) => {
+        assertEquals(sentinel, err);
+        return null;
+      });
   },
 
   testThenAlwaysCalledMultipleTimes() {
@@ -1475,15 +1445,17 @@ testSuite({
       calls.push(1);
       return value;
     });
-    p.thenAlways(function() {
+    p.thenAlways(() => {
       assertEquals(0, arguments.length);
       calls.push(2);
       throw new Error('thenAlways throw');
     });
     p.then((value) => {
       assertEquals(
-          'Promise result should not mutate after throw from thenAlways.',
-          sentinel, value);
+        'Promise result should not mutate after throw from thenAlways.',
+        sentinel,
+        value
+      );
       calls.push(3);
     });
     p.thenAlways(() => {
@@ -1491,8 +1463,10 @@ testSuite({
     });
     p.thenAlways(() => {
       assertEquals(
-          'Should be one unhandled exception from the "thenAlways throw".', 1,
-          unhandledRejections.getCallCount());
+        'Should be one unhandled exception from the "thenAlways throw".',
+        1,
+        unhandledRejections.getCallCount()
+      );
       const rejectionCall = unhandledRejections.popLastCall();
       assertEquals(1, rejectionCall.getArguments().length);
       const err = rejectionCall.getArguments()[0];
@@ -1507,7 +1481,7 @@ testSuite({
 
   testContextWithInit() {
     let initContext;
-    const p = new GoogPromise(function(resolve, reject) {
+    const p = new GoogPromise(function (resolve, reject) {
       initContext = this;
     }, sentinel);
     assertNotNull(p);
@@ -1519,13 +1493,11 @@ testSuite({
       return;
     }
     let initContext;
-    const p = new GoogPromise(function(resolve, reject) {
+    const p = new GoogPromise(function (resolve, reject) {
       initContext = this;
     });
     assertNotNull(p);
-    assertEquals(
-        'initFunc should default to being called with undefined', undefined,
-        initContext);
+    assertEquals('initFunc should default to being called with undefined', undefined, initContext);
   },
 
   testContextWithFulfillment() {
@@ -1533,19 +1505,19 @@ testSuite({
       return;
     }
     return GoogPromise.resolve()
-        .then(function() {
-          assertEquals(
-              '"undefined" should be bound if no context is specified.',
-              undefined, this);
-        })
-        .then(
-            function() {
-              assertEquals(sentinel, this);
-            },
-            shouldNotCall, sentinel)
-        .thenAlways(function() {
+      .then(function () {
+        assertEquals('"undefined" should be bound if no context is specified.', undefined, this);
+      })
+      .then(
+        function () {
           assertEquals(sentinel, this);
-        }, sentinel);
+        },
+        shouldNotCall,
+        sentinel
+      )
+      .thenAlways(function () {
+        assertEquals(sentinel, this);
+      }, sentinel);
   },
 
   testContextWithRejection() {
@@ -1553,28 +1525,23 @@ testSuite({
       return;
     }
     return GoogPromise.reject()
-        .then(
-            shouldNotCall,
-            function() {
-              assertEquals(
-                  'Call should with undefined when no context is set.',
-                  undefined, this);
-              throw new Error('Intentional rejection');
-            })
-        .then(
-            shouldNotCall,
-            function() {
-              assertEquals(sentinel, this);
-            },
-            sentinel)
-        .thenAlways(
-            function() {
-              assertEquals(sentinel, this);
-            },
-            sentinel)
-        .thenCatch(function() {
+      .then(shouldNotCall, function () {
+        assertEquals('Call should with undefined when no context is set.', undefined, this);
+        throw new Error('Intentional rejection');
+      })
+      .then(
+        shouldNotCall,
+        function () {
           assertEquals(sentinel, this);
-        }, sentinel);
+        },
+        sentinel
+      )
+      .thenAlways(function () {
+        assertEquals(sentinel, this);
+      }, sentinel)
+      .thenCatch(function () {
+        assertEquals(sentinel, this);
+      }, sentinel);
   },
 
   testCancel() {
@@ -1582,8 +1549,9 @@ testSuite({
     const child = p.then(shouldNotCall, (reason) => {
       assertTrue(reason instanceof GoogPromise.CancellationError);
       assertEquals(
-          'cancellation message',
-          /** @type {!GoogPromise.CancellationError} */ (reason).message);
+        'cancellation message',
+        /** @type {!GoogPromise.CancellationError} */ reason.message
+      );
 
       // Return a non-Error to resolve the cancellation rejection.
       return null;
@@ -1627,8 +1595,9 @@ testSuite({
     p.thenVoid(shouldNotCall, (reason) => {
       assertTrue(reason instanceof GoogPromise.CancellationError);
       assertEquals(
-          'cancellation message',
-          /** @type {!GoogPromise.CancellationError} */ (reason).message);
+        'cancellation message',
+        /** @type {!GoogPromise.CancellationError} */ reason.message
+      );
       thenVoidCalled = true;
     });
 
@@ -1683,27 +1652,34 @@ testSuite({
     let cancelError;
     const p = new GoogPromise(functions.UNDEFINED);
 
-    const p2 =
-        p.then(shouldNotCall, (reason) => {
-           cancelError = reason;
-           assertTrue(reason instanceof GoogPromise.CancellationError);
-           assertEquals(
-               'parent cancel message',
-               /** @type {!GoogPromise.CancellationError} */ (reason).message);
-           return sentinel;
-         }).then((value) => {
-          assertEquals(
-              'Child promises should receive the returned value of the parent.',
-              sentinel, value);
-        }, shouldNotCall);
+    const p2 = p
+      .then(shouldNotCall, (reason) => {
+        cancelError = reason;
+        assertTrue(reason instanceof GoogPromise.CancellationError);
+        assertEquals(
+          'parent cancel message',
+          /** @type {!GoogPromise.CancellationError} */ reason.message
+        );
+        return sentinel;
+      })
+      .then((value) => {
+        assertEquals(
+          'Child promises should receive the returned value of the parent.',
+          sentinel,
+          value
+        );
+      }, shouldNotCall);
 
     const p3 = p.then(shouldNotCall, (reason) => {
       assertEquals(
-          'Every onRejected handler should receive the same cancel error.',
-          cancelError, reason);
+        'Every onRejected handler should receive the same cancel error.',
+        cancelError,
+        reason
+      );
       assertEquals(
-          'parent cancel message',
-          /** @type {!GoogPromise.CancellationError} */ (reason).message);
+        'parent cancel message',
+        /** @type {!GoogPromise.CancellationError} */ reason.message
+      );
 
       // Return a non-Error to resolve the cancellation rejection.
       return null;
@@ -1730,24 +1706,30 @@ testSuite({
       cancelError = reason;
       assertTrue(reason instanceof GoogPromise.CancellationError);
       assertEquals(
-          'parent cancel message',
-          /** @type {!GoogPromise.CancellationError} */ (reason).message);
+        'parent cancel message',
+        /** @type {!GoogPromise.CancellationError} */ reason.message
+      );
       return sentinel;
     });
     p2.thenVoid((value) => {
       assertEquals(
-          'Child promises should receive the returned value of the parent.',
-          sentinel, value);
+        'Child promises should receive the returned value of the parent.',
+        sentinel,
+        value
+      );
       partialResolve();
     }, shouldNotCall);
 
     p.thenVoid(shouldNotCall, (reason) => {
       assertEquals(
-          'Every onRejected handler should receive the same cancel error.',
-          cancelError, reason);
+        'Every onRejected handler should receive the same cancel error.',
+        cancelError,
+        reason
+      );
       assertEquals(
-          'parent cancel message',
-          /** @type {!GoogPromise.CancellationError} */ (reason).message);
+        'parent cancel message',
+        /** @type {!GoogPromise.CancellationError} */ reason.message
+      );
       partialResolve();
     });
 
@@ -1763,28 +1745,28 @@ testSuite({
     const child = parent.then(shouldNotCall, (reason) => {
       assertTrue(reason instanceof GoogPromise.CancellationError);
       assertEquals(
-          'grandChild cancel message',
-          /** @type {!GoogPromise.CancellationError} */ (reason).message);
+        'grandChild cancel message',
+        /** @type {!GoogPromise.CancellationError} */ reason.message
+      );
       cancelError = reason;
       cancelCalls.push('parent');
     });
 
     const grandChild = child.then(shouldNotCall, (reason) => {
-      assertEquals(
-          'Child should receive the same cancel error.', cancelError, reason);
+      assertEquals('Child should receive the same cancel error.', cancelError, reason);
       cancelCalls.push('child');
     });
 
     const descendant = grandChild.then(shouldNotCall, (reason) => {
-      assertEquals(
-          'GrandChild should receive the same cancel error.', cancelError,
-          reason);
+      assertEquals('GrandChild should receive the same cancel error.', cancelError, reason);
       cancelCalls.push('grandChild');
 
       assertArrayEquals(
-          'Each promise in the hierarchy has a single child, so canceling the ' +
-              'grandChild should cancel each ancestor in order.',
-          ['parent', 'child', 'grandChild'], cancelCalls);
+        'Each promise in the hierarchy has a single child, so canceling the ' +
+          'grandChild should cancel each ancestor in order.',
+        ['parent', 'child', 'grandChild'],
+        cancelCalls
+      );
 
       // Return a non-Error to resolve the cancellation rejection.
       return null;
@@ -1802,22 +1784,20 @@ testSuite({
     const child = parent.then(shouldNotCall, (reason) => {
       assertTrue(reason instanceof GoogPromise.CancellationError);
       assertEquals(
-          'grandChild cancel message',
-          /** @type {!GoogPromise.CancellationError} */ (reason).message);
+        'grandChild cancel message',
+        /** @type {!GoogPromise.CancellationError} */ reason.message
+      );
       cancelError = reason;
       cancelCalls.push('parent');
     });
 
     const grandChild = child.then(shouldNotCall, (reason) => {
-      assertEquals(
-          'Child should receive the same cancel error.', cancelError, reason);
+      assertEquals('Child should receive the same cancel error.', cancelError, reason);
       cancelCalls.push('child');
     });
 
     grandChild.thenVoid(shouldNotCall, (reason) => {
-      assertEquals(
-          'GrandChild should receive the same cancel error.', cancelError,
-          reason);
+      assertEquals('GrandChild should receive the same cancel error.', cancelError, reason);
       cancelCalls.push('grandChild');
     });
 
@@ -1825,9 +1805,11 @@ testSuite({
     return grandChild.thenCatch((reason) => {
       assertEquals(cancelError, reason);
       assertArrayEquals(
-          'Each promise in the hierarchy has a single child, so canceling the ' +
-              'grandChild should cancel each ancestor in order.',
-          ['parent', 'child', 'grandChild'], cancelCalls);
+        'Each promise in the hierarchy has a single child, so canceling the ' +
+          'grandChild should cancel each ancestor in order.',
+        ['parent', 'child', 'grandChild'],
+        cancelCalls
+      );
 
       // Return a non-Error to resolve the cancellation rejection.
       return null;
@@ -1841,15 +1823,18 @@ testSuite({
 
     parent.then((value) => {
       assertEquals(
-          'Non-canceled callbacks should be called after a sibling is canceled.',
-          sentinel, value);
+        'Non-canceled callbacks should be called after a sibling is canceled.',
+        sentinel,
+        value
+      );
     });
 
     const child = parent.then(shouldNotCall, (reason) => {
       assertTrue(reason instanceof GoogPromise.CancellationError);
       assertEquals(
-          'grandChild cancel message',
-          /** @type {!GoogPromise.CancellationError} */ (reason).message);
+        'grandChild cancel message',
+        /** @type {!GoogPromise.CancellationError} */ reason.message
+      );
       cancelError = reason;
       cancelCalls.push('child');
     });
@@ -1863,9 +1848,11 @@ testSuite({
     return grandChild.then(shouldNotCall, (reason) => {
       assertEquals(reason, cancelError);
       assertArrayEquals(
-          'The parent promise has multiple children, so only the child and ' +
-              'grandChild should be canceled.',
-          ['child', 'grandChild'], cancelCalls);
+        'The parent promise has multiple children, so only the child and ' +
+          'grandChild should be canceled.',
+        ['child', 'grandChild'],
+        cancelCalls
+      );
 
       // Return a non-Error to resolve the cancellation rejection.
       return null;
@@ -1879,15 +1866,18 @@ testSuite({
 
     parent.thenVoid((value) => {
       assertEquals(
-          'Non-canceled callbacks should be called after a sibling is canceled.',
-          sentinel, value);
+        'Non-canceled callbacks should be called after a sibling is canceled.',
+        sentinel,
+        value
+      );
     }, shouldNotCall);
 
     const child = parent.then(shouldNotCall, (reason) => {
       assertTrue(reason instanceof GoogPromise.CancellationError);
       assertEquals(
-          'grandChild cancel message',
-          /** @type {!GoogPromise.CancellationError} */ (reason).message);
+        'grandChild cancel message',
+        /** @type {!GoogPromise.CancellationError} */ reason.message
+      );
       cancelError = reason;
       cancelCalls.push('child');
     });
@@ -1906,9 +1896,11 @@ testSuite({
     return grandChild.then(shouldNotCall, (reason) => {
       assertEquals(reason, cancelError);
       assertArrayEquals(
-          'The parent promise has multiple children, so only the child and ' +
-              'grandChildren should be canceled.',
-          ['child', 'grandChild', 'void grandChild'], cancelCalls);
+        'The parent promise has multiple children, so only the child and ' +
+          'grandChildren should be canceled.',
+        ['child', 'grandChild', 'void grandChild'],
+        cancelCalls
+      );
 
       // Return a non-Error to resolve the cancellation rejection.
       return null;
@@ -1922,8 +1914,10 @@ testSuite({
 
     const sibling1 = parent.then((value) => {
       assertEquals(
-          'Non-canceled callbacks should be called after a sibling is canceled.',
-          sentinel, value);
+        'Non-canceled callbacks should be called after a sibling is canceled.',
+        sentinel,
+        value
+      );
     });
 
     const sibling2 = parent.then(shouldNotCall, (reason) => {
@@ -1934,9 +1928,7 @@ testSuite({
 
     const grandChild = sibling2.then((value) => {
       cancelCalls.push('child');
-      assertEquals(
-          'Returning a non-cancel value should uncancel the grandChild.', value,
-          sentinel);
+      assertEquals('Returning a non-cancel value should uncancel the grandChild.', value, sentinel);
       assertArrayEquals(['sibling2', 'child'], cancelCalls);
     }, shouldNotCall);
 
@@ -1969,53 +1961,64 @@ testSuite({
       calls.push('then');
     });
 
-    const fulfilledChild = p.then((value) => {
-                              assertEquals(sentinel, value);
-                              return GoogPromise.resolve(1);
-                            }).then((value) => {
-      assertEquals(1, value);
-      calls.push('fulfilledChild');
-    });
+    const fulfilledChild = p
+      .then((value) => {
+        assertEquals(sentinel, value);
+        return GoogPromise.resolve(1);
+      })
+      .then((value) => {
+        assertEquals(1, value);
+        calls.push('fulfilledChild');
+      });
     assertNotNull(fulfilledChild);
 
-    const rejectedChild = p.then((value) => {
-                             assertEquals(sentinel, value);
-                             return GoogPromise.reject(2);
-                           }).then(shouldNotCall, (reason) => {
-      assertEquals(2, reason);
-      calls.push('rejectedChild');
-    });
+    const rejectedChild = p
+      .then((value) => {
+        assertEquals(sentinel, value);
+        return GoogPromise.reject(2);
+      })
+      .then(shouldNotCall, (reason) => {
+        assertEquals(2, reason);
+        calls.push('rejectedChild');
+      });
     assertNotNull(rejectedChild);
 
-    const unresolvedChild = p.then((value) => {
-                               assertEquals(sentinel, value);
-                               return new GoogPromise((r) => {
-                                 resolveB = r;
-                               });
-                             }).then((value) => {
-      assertEquals(3, value);
-      calls.push('unresolvedChild');
-    });
+    const unresolvedChild = p
+      .then((value) => {
+        assertEquals(sentinel, value);
+        return new GoogPromise((r) => {
+          resolveB = r;
+        });
+      })
+      .then((value) => {
+        assertEquals(3, value);
+        calls.push('unresolvedChild');
+      });
     assertNotNull(unresolvedChild);
 
     resolveA(sentinel);
-    assertArrayEquals(
-        'Calls must not be resolved until the clock ticks.', [], calls);
+    assertArrayEquals('Calls must not be resolved until the clock ticks.', [], calls);
 
     mockClock.tick();
     assertArrayEquals(
-        'All resolved Promises should execute in the same timestep.',
-        ['then', 'fulfilledChild', 'rejectedChild'], calls);
+      'All resolved Promises should execute in the same timestep.',
+      ['then', 'fulfilledChild', 'rejectedChild'],
+      calls
+    );
 
     resolveB(3);
     assertArrayEquals(
-        'New calls must not resolve until the clock ticks.',
-        ['then', 'fulfilledChild', 'rejectedChild'], calls);
+      'New calls must not resolve until the clock ticks.',
+      ['then', 'fulfilledChild', 'rejectedChild'],
+      calls
+    );
 
     mockClock.tick();
     assertArrayEquals(
-        'All callbacks should have executed.',
-        ['then', 'fulfilledChild', 'rejectedChild', 'unresolvedChild'], calls);
+      'All callbacks should have executed.',
+      ['then', 'fulfilledChild', 'rejectedChild', 'unresolvedChild'],
+      calls
+    );
   },
 
   testHandledRejection() {
@@ -2205,13 +2208,13 @@ testSuite({
     assertFalse(Thenable.isImplementedBy({}));
     assertFalse(Thenable.isImplementedBy('string'));
     assertFalse(Thenable.isImplementedBy(1));
-    assertFalse(Thenable.isImplementedBy({then: function() {}}));
+    assertFalse(Thenable.isImplementedBy({ then: () => {} }));
 
     /** @constructor */
     function T() {}
     T.prototype.then = (opt_a, opt_b, opt_c) => {};
     Thenable.addImplementation(T);
-    assertTrue(Thenable.isImplementedBy(new T));
+    assertTrue(Thenable.isImplementedBy(new T()));
 
     // Test COMPILED code path.
     try {
@@ -2220,7 +2223,7 @@ testSuite({
       function C() {}
       C.prototype.then = (opt_a, opt_b, opt_c) => {};
       Thenable.addImplementation(C);
-      assertTrue(Thenable.isImplementedBy(new C));
+      assertTrue(Thenable.isImplementedBy(new C()));
     } finally {
       globalThis['COMPILED'] = false;
     }
@@ -2237,13 +2240,11 @@ testSuite({
       assertEquals(sentinel, value);
     }, fail);
 
-    assertEquals(
-        'then() must return before callbacks are invoked.', 0, timesCalled);
+    assertEquals('then() must return before callbacks are invoked.', 0, timesCalled);
 
     mockClock.tick();
 
-    assertEquals(
-        'promise is not resolved until resolver is invoked.', 0, timesCalled);
+    assertEquals('promise is not resolved until resolver is invoked.', 0, timesCalled);
 
     resolver.resolve(sentinel);
 
@@ -2265,13 +2266,11 @@ testSuite({
       assertEquals(sentinel, reason);
     });
 
-    assertEquals(
-        'then() must return before callbacks are invoked.', 0, timesCalled);
+    assertEquals('then() must return before callbacks are invoked.', 0, timesCalled);
 
     mockClock.tick();
 
-    assertEquals(
-        'promise is not resolved until resolver is invoked.', 0, timesCalled);
+    assertEquals('promise is not resolved until resolver is invoked.', 0, timesCalled);
 
     resolver.reject(sentinel);
 

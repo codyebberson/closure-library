@@ -7,7 +7,6 @@
 /** @fileoverview Unit tests for goog.labs.net.Image. */
 
 goog.module('goog.labs.net.imageTest');
-goog.setTestOnly();
 
 const TestCase = goog.require('goog.testing.TestCase');
 const googString = goog.require('goog.string');
@@ -17,7 +16,7 @@ const testSuite = goog.require('goog.testing.testSuite');
 
 testSuite({
   setUpPage() {
-    TestCase.getActiveTestCase().promiseTimeout = 10000;  // 10s
+    TestCase.getActiveTestCase().promiseTimeout = 10000; // 10s
   },
 
   testValidImage() {
@@ -30,15 +29,16 @@ testSuite({
   },
 
   testInvalidImage() {
-    const url = 'testdata/invalid.gif';  // This file does not exist.
+    const url = 'testdata/invalid.gif'; // This file does not exist.
 
     return netImage.load(url).then(
-        () => {
-          fail('Invalid image should not resolve');
-        },
-        (errResult) => {
-          assertNull(errResult);
-        });
+      () => {
+        fail('Invalid image should not resolve');
+      },
+      (errResult) => {
+        assertNull(errResult);
+      }
+    );
   },
 
   testImageFactory() {

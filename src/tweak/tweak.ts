@@ -23,15 +23,12 @@ goog.require('goog.tweak.Registry');
 goog.require('goog.tweak.StringSetting');
 goog.requireType('goog.tweak.BaseEntry');
 
-
-
 /**
  * The global reference to the registry, if it exists.
  * @type {?goog.tweak.Registry}
  * @private
  */
 goog.tweak.registry_ = null;
-
 
 /**
  * The boolean group set by beginBooleanGroup and cleared by endBooleanGroup.
@@ -40,21 +37,18 @@ goog.tweak.registry_ = null;
  */
 goog.tweak.activeBooleanGroup_ = null;
 
-
 /**
  * Returns/creates the registry singleton.
  * @return {!goog.tweak.Registry} The tweak registry.
  * @deprecated
  */
-goog.tweak.getRegistry = function() {
-  'use strict';
+goog.tweak.getRegistry = () => {
   if (!goog.tweak.registry_) {
     var queryString = window.location.search;
     goog.tweak.registry_ = new goog.tweak.Registry(queryString);
   }
   return goog.tweak.registry_;
 };
-
 
 /**
  * Type for configParams.
@@ -71,7 +65,6 @@ goog.tweak.getRegistry = function() {
  */
 goog.tweak.ConfigParams;
 
-
 /**
  * Applies all extra configuration parameters in configParams.
  * @param {!goog.tweak.BaseEntry} entry The entry to apply them to.
@@ -80,17 +73,17 @@ goog.tweak.ConfigParams;
  * @private
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.tweak.applyConfigParams_ = function(entry, configParams) {
-  'use strict';
+goog.tweak.applyConfigParams_ = (entry, configParams) => {
   if (configParams.label) {
     entry.label = configParams.label;
     delete configParams.label;
   }
   if (configParams.validValues) {
     goog.asserts.assert(
-        entry instanceof goog.tweak.StringSetting ||
-            entry instanceof goog.tweak.NumericSetting,
-        'Cannot set validValues on tweak: %s', entry.getId());
+      entry instanceof goog.tweak.StringSetting || entry instanceof goog.tweak.NumericSetting,
+      'Cannot set validValues on tweak: %s',
+      entry.getId()
+    );
     if (entry instanceof goog.tweak.StringSetting) {
       entry.setValidValues(configParams.validValues);
     } else if (entry instanceof goog.tweak.NumericSetting) {
@@ -100,8 +93,11 @@ goog.tweak.applyConfigParams_ = function(entry, configParams) {
   }
   if (configParams.paramName !== undefined) {
     goog.asserts.assertInstanceof(
-        entry, goog.tweak.BaseSetting, 'Cannot set paramName on tweak: %s',
-        entry.getId());
+      entry,
+      goog.tweak.BaseSetting,
+      'Cannot set paramName on tweak: %s',
+      entry.getId()
+    );
     entry.setParamName(configParams.paramName);
     delete configParams.paramName;
   }
@@ -113,24 +109,27 @@ goog.tweak.applyConfigParams_ = function(entry, configParams) {
     entry.addCallback(configParams.callback);
     delete configParams.callback;
     goog.asserts.assert(
-        !entry.isRestartRequired() || (configParams.restartRequired == false),
-        'Tweak %s should set restartRequired: false, when adding a callback.',
-        entry.getId());
+      !entry.isRestartRequired() || configParams.restartRequired == false,
+      'Tweak %s should set restartRequired: false, when adding a callback.',
+      entry.getId()
+    );
   }
   if (configParams.token) {
     goog.asserts.assertInstanceof(
-        entry, goog.tweak.BooleanInGroupSetting,
-        'Cannot set token on tweak: %s', entry.getId());
+      entry,
+      goog.tweak.BooleanInGroupSetting,
+      'Cannot set token on tweak: %s',
+      entry.getId()
+    );
     entry.setToken(configParams.token);
     delete configParams.token;
   }
   for (var key in configParams) {
     goog.asserts.fail(
-        'Unknown config options (' + key + '=' + configParams[key] +
-        ') for tweak ' + entry.getId());
+      'Unknown config options (' + key + '=' + configParams[key] + ') for tweak ' + entry.getId()
+    );
   }
 };
-
 
 /**
  * Registers a tweak using the given factoryFunc.
@@ -141,8 +140,7 @@ goog.tweak.applyConfigParams_ = function(entry, configParams) {
  * @private
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.tweak.doRegister_ = function(entry, opt_defaultValue, opt_configParams) {
-  'use strict';
+goog.tweak.doRegister_ = (entry, opt_defaultValue, opt_configParams) => {
   if (opt_configParams) {
     goog.tweak.applyConfigParams_(entry, opt_configParams);
   }
@@ -151,15 +149,17 @@ goog.tweak.doRegister_ = function(entry, opt_defaultValue, opt_configParams) {
   }
   if (goog.tweak.activeBooleanGroup_) {
     goog.asserts.assertInstanceof(
-        entry, goog.tweak.BooleanInGroupSetting,
-        'Forgot to end Boolean Group: %s',
-        goog.tweak.activeBooleanGroup_.getId());
+      entry,
+      goog.tweak.BooleanInGroupSetting,
+      'Forgot to end Boolean Group: %s',
+      goog.tweak.activeBooleanGroup_.getId()
+    );
     goog.tweak.activeBooleanGroup_.addChild(
-        /** @type {!goog.tweak.BooleanInGroupSetting} */ (entry));
+      /** @type {!goog.tweak.BooleanInGroupSetting} */ (entry)
+    );
   }
   goog.tweak.getRegistry().register(entry);
 };
-
 
 /**
  * Creates and registers a group of BooleanSettings that are all set by a
@@ -171,22 +171,18 @@ goog.tweak.doRegister_ = function(entry, opt_defaultValue, opt_configParams) {
  * @param {goog.tweak.ConfigParams=} opt_configParams Extra configuration
  *     parameters.
  */
-goog.tweak.beginBooleanGroup = function(id, description, opt_configParams) {
-  'use strict';
+goog.tweak.beginBooleanGroup = (id, description, opt_configParams) => {
   var entry = new goog.tweak.BooleanGroup(id, description);
   goog.tweak.doRegister_(entry, undefined, opt_configParams);
   goog.tweak.activeBooleanGroup_ = entry;
 };
 
-
 /**
  * Stops adding boolean entries to the active boolean group.
  */
-goog.tweak.endBooleanGroup = function() {
-  'use strict';
+goog.tweak.endBooleanGroup = () => {
   goog.tweak.activeBooleanGroup_ = null;
 };
-
 
 /**
  * Creates and registers a BooleanSetting.
@@ -197,20 +193,20 @@ goog.tweak.endBooleanGroup = function() {
  *     parameters.
  * @deprecated
  */
-goog.tweak.registerBoolean = function(
-    id, description, opt_defaultValue, opt_configParams) {
-  'use strict';
+goog.tweak.registerBoolean = (id, description, opt_defaultValue, opt_configParams) => {
   // TODO(agrieve): There is a bug in the compiler that causes these calls not
   //     to be stripped without this outer if. Might be Issue #90.
   if (goog.tweak.activeBooleanGroup_) {
     var entry = new goog.tweak.BooleanInGroupSetting(
-        id, description, goog.tweak.activeBooleanGroup_);
+      id,
+      description,
+      goog.tweak.activeBooleanGroup_
+    );
   } else {
     entry = new goog.tweak.BooleanSetting(id, description);
   }
   goog.tweak.doRegister_(entry, opt_defaultValue, opt_configParams);
 };
-
 
 /**
  * Creates and registers a StringSetting.
@@ -221,14 +217,13 @@ goog.tweak.registerBoolean = function(
  *     parameters.
  * @deprecated
  */
-goog.tweak.registerString = function(
-    id, description, opt_defaultValue, opt_configParams) {
-  'use strict';
+goog.tweak.registerString = (id, description, opt_defaultValue, opt_configParams) => {
   goog.tweak.doRegister_(
-      new goog.tweak.StringSetting(id, description), opt_defaultValue,
-      opt_configParams);
+    new goog.tweak.StringSetting(id, description),
+    opt_defaultValue,
+    opt_configParams
+  );
 };
-
 
 /**
  * Creates and registers a NumericSetting.
@@ -239,14 +234,13 @@ goog.tweak.registerString = function(
  *     parameters.
  * @deprecated
  */
-goog.tweak.registerNumber = function(
-    id, description, opt_defaultValue, opt_configParams) {
-  'use strict';
+goog.tweak.registerNumber = (id, description, opt_defaultValue, opt_configParams) => {
   goog.tweak.doRegister_(
-      new goog.tweak.NumericSetting(id, description), opt_defaultValue,
-      opt_configParams);
+    new goog.tweak.NumericSetting(id, description),
+    opt_defaultValue,
+    opt_configParams
+  );
 };
-
 
 /**
  * Creates and registers a ButtonAction.
@@ -255,42 +249,29 @@ goog.tweak.registerNumber = function(
  * @param {!Function} callback Function to call when the button is clicked.
  * @param {string=} opt_label The button text (instead of the ID).
  */
-goog.tweak.registerButton = function(id, description, callback, opt_label) {
-  'use strict';
+goog.tweak.registerButton = (id, description, callback, opt_label) => {
   var tweak = new goog.tweak.ButtonAction(id, description, callback);
   tweak.label = opt_label || tweak.label;
   goog.tweak.doRegister_(tweak);
 };
-
 
 /**
  * Returns the value of the boolean setting with the given ID.
  * @param {string} id The unique string that identifies this entry.
  * @return {boolean} The value of the tweak.
  */
-goog.tweak.getBoolean = function(id) {
-  'use strict';
-  return goog.tweak.getRegistry().getBooleanSetting(id).getValue();
-};
-
+goog.tweak.getBoolean = (id) => goog.tweak.getRegistry().getBooleanSetting(id).getValue();
 
 /**
  * Returns the value of the string setting with the given ID,
  * @param {string} id The unique string that identifies this entry.
  * @return {string} The value of the tweak.
  */
-goog.tweak.getString = function(id) {
-  'use strict';
-  return goog.tweak.getRegistry().getStringSetting(id).getValue();
-};
-
+goog.tweak.getString = (id) => goog.tweak.getRegistry().getStringSetting(id).getValue();
 
 /**
  * Returns the value of the numeric setting with the given ID.
  * @param {string} id The unique string that identifies this entry.
  * @return {number} The value of the tweak.
  */
-goog.tweak.getNumber = function(id) {
-  'use strict';
-  return goog.tweak.getRegistry().getNumericSetting(id).getValue();
-};
+goog.tweak.getNumber = (id) => goog.tweak.getRegistry().getNumericSetting(id).getValue();

@@ -19,29 +19,23 @@ goog.requireType('goog.dom.DomHelper');
 goog.requireType('goog.ui.Control');
 goog.requireType('goog.ui.ControlContent');
 
-
-
 /**
  * Renderer for {@link goog.ui.ColorMenuButton}s.
  * @constructor
  * @extends {goog.ui.MenuButtonRenderer}
  */
-goog.ui.ColorMenuButtonRenderer = function() {
-  'use strict';
+goog.ui.ColorMenuButtonRenderer = function () {
   goog.ui.MenuButtonRenderer.call(this);
 };
 goog.inherits(goog.ui.ColorMenuButtonRenderer, goog.ui.MenuButtonRenderer);
 goog.addSingletonGetter(goog.ui.ColorMenuButtonRenderer);
-
 
 /**
  * Default CSS class to be applied to the root element of components rendered
  * by this renderer.
  * @type {string}
  */
-goog.ui.ColorMenuButtonRenderer.CSS_CLASS =
-    goog.getCssName('goog-color-menu-button');
-
+goog.ui.ColorMenuButtonRenderer.CSS_CLASS = goog.getCssName('goog-color-menu-button');
 
 /**
  * Overrides the superclass implementation by wrapping the caption text or DOM
@@ -61,13 +55,13 @@ goog.ui.ColorMenuButtonRenderer.CSS_CLASS =
  * @return {!Element} Caption element.
  * @override
  */
-goog.ui.ColorMenuButtonRenderer.prototype.createCaption = function(
-    content, dom) {
-  'use strict';
+goog.ui.ColorMenuButtonRenderer.prototype.createCaption = function (content, dom) {
   return goog.ui.ColorMenuButtonRenderer.superClass_.createCaption.call(
-      this, goog.ui.ColorMenuButtonRenderer.wrapCaption(content, dom), dom);
+    this,
+    goog.ui.ColorMenuButtonRenderer.wrapCaption(content, dom),
+    dom
+  );
 };
-
 
 /**
  * Wrap a caption in a div with the color-menu-button-indicator CSS class.
@@ -75,14 +69,12 @@ goog.ui.ColorMenuButtonRenderer.prototype.createCaption = function(
  * @param {goog.dom.DomHelper} dom DOM helper, used for document interaction.
  * @return {!Element} Caption element.
  */
-goog.ui.ColorMenuButtonRenderer.wrapCaption = function(content, dom) {
-  'use strict';
-  return dom.createDom(
-      goog.dom.TagName.DIV,
-      goog.getCssName(goog.ui.ColorMenuButtonRenderer.CSS_CLASS, 'indicator'),
-      content);
-};
-
+goog.ui.ColorMenuButtonRenderer.wrapCaption = (content, dom) =>
+  dom.createDom(
+    goog.dom.TagName.DIV,
+    goog.getCssName(goog.ui.ColorMenuButtonRenderer.CSS_CLASS, 'indicator'),
+    content
+  );
 
 /**
  * Takes a color menu button control's root element and a value object
@@ -92,14 +84,11 @@ goog.ui.ColorMenuButtonRenderer.wrapCaption = function(content, dom) {
  * @param {*} value New value; assumed to be a color spec string.
  * @override
  */
-goog.ui.ColorMenuButtonRenderer.prototype.setValue = function(element, value) {
-  'use strict';
+goog.ui.ColorMenuButtonRenderer.prototype.setValue = function (element, value) {
   if (element) {
-    goog.ui.ColorMenuButtonRenderer.setCaptionValue(
-        this.getContentElement(element), value);
+    goog.ui.ColorMenuButtonRenderer.setCaptionValue(this.getContentElement(element), value);
   }
 };
-
 
 /**
  * Takes a control's content element and a value object (which is assumed
@@ -107,8 +96,7 @@ goog.ui.ColorMenuButtonRenderer.prototype.setValue = function(element, value) {
  * @param {Element} caption A content element of a control.
  * @param {*} value New value; assumed to be a color spec string.
  */
-goog.ui.ColorMenuButtonRenderer.setCaptionValue = function(caption, value) {
-  'use strict';
+goog.ui.ColorMenuButtonRenderer.setCaptionValue = (caption, value) => {
   // Assume that the caption's first child is the indicator.
   if (caption && caption.firstChild) {
     // Normalize the value to a hex color spec or null (otherwise setting
@@ -116,15 +104,13 @@ goog.ui.ColorMenuButtonRenderer.setCaptionValue = function(caption, value) {
     var hexColor;
 
     var strValue = /** @type {string} */ (value);
-    hexColor = strValue && goog.color.isValidColor(strValue) ?
-        goog.color.parse(strValue).hex :
-        null;
+    hexColor =
+      strValue && goog.color.isValidColor(strValue) ? goog.color.parse(strValue).hex : null;
 
     /** @suppress {strictMissingProperties} Added to tighten compiler checks */
     caption.firstChild.style.borderBottomColor = hexColor || 'transparent';
   }
 };
-
 
 /**
  * Initializes the button's DOM when it enters the document.  Overrides the
@@ -135,12 +121,10 @@ goog.ui.ColorMenuButtonRenderer.setCaptionValue = function(caption, value) {
  * @override
  * @suppress {strictMissingProperties} Added to tighten compiler checks
  */
-goog.ui.ColorMenuButtonRenderer.prototype.initializeDom = function(button) {
-  'use strict';
+goog.ui.ColorMenuButtonRenderer.prototype.initializeDom = function (button) {
   var buttonElement = button.getElement();
   goog.asserts.assert(buttonElement);
   this.setValue(buttonElement, button.getValue());
-  goog.dom.classlist.add(
-      buttonElement, goog.ui.ColorMenuButtonRenderer.CSS_CLASS);
+  goog.dom.classlist.add(buttonElement, goog.ui.ColorMenuButtonRenderer.CSS_CLASS);
   goog.ui.ColorMenuButtonRenderer.superClass_.initializeDom.call(this, button);
 };

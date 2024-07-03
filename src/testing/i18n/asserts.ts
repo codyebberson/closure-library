@@ -38,7 +38,6 @@ goog.setTestOnly('goog.testing.i18n.asserts');
 goog.require('goog.testing.asserts');
 goog.require('goog.testing.i18n.whitespace');
 
-
 /**
  * A map of known tests where locale data changed, but the old values are
  * still tested for by various clients.
@@ -46,7 +45,7 @@ goog.require('goog.testing.i18n.whitespace');
  * @private
  */
 goog.testing.i18n.asserts.EXPECTED_VALUE_MAP_ = {
-    // NOTE: Add mappings for each test file using addI18nMapping.
+  // NOTE: Add mappings for each test file using addI18nMapping.
 };
 
 /**
@@ -58,11 +57,10 @@ goog.testing.i18n.asserts.EXPECTED_VALUE_MAP_ = {
  * @param {string|null|undefined} b The actual or expected.
  * @param {string=} opt_c Null or the actual value.
  */
-goog.testing.i18n.asserts.assertI18nEquals = function(a, b, opt_c) {
-  'use strict';
+goog.testing.i18n.asserts.assertI18nEquals = (a, b, opt_c) => {
   let expected;
   let actual;
-  let msg;  // The comment to be added, if any
+  let msg; // The comment to be added, if any
   // If there are 3 arguments, the first is a comment.
   if (arguments.length === 3) {
     msg = a;
@@ -87,8 +85,7 @@ goog.testing.i18n.asserts.assertI18nEquals = function(a, b, opt_c) {
   // Compare with all horizontal white space characters removed, making
   // this less brittle.
   const wsFixedActual = goog.testing.i18n.whitespace.removeWhitespace(actual);
-  const wsFixedExpected =
-      goog.testing.i18n.whitespace.removeWhitespace(expected);
+  const wsFixedExpected = goog.testing.i18n.whitespace.removeWhitespace(expected);
 
   // Now, check if the expected string and the actual result differ only
   // in whitespace by stripping white space characters from each.
@@ -99,11 +96,12 @@ goog.testing.i18n.asserts.assertI18nEquals = function(a, b, opt_c) {
   // Also handle an alternate expected string, similarly ignoring whitespace.
   // Note that expected can be null!
   const alternativeExpected =
-      goog.testing.i18n.asserts.EXPECTED_VALUE_MAP_[expected] ||
-      goog.testing.i18n.asserts.EXPECTED_VALUE_MAP_[wsFixedExpected];
-  if (alternativeExpected &&
-      wsFixedActual ===
-          goog.testing.i18n.whitespace.removeWhitespace(alternativeExpected)) {
+    goog.testing.i18n.asserts.EXPECTED_VALUE_MAP_[expected] ||
+    goog.testing.i18n.asserts.EXPECTED_VALUE_MAP_[wsFixedExpected];
+  if (
+    alternativeExpected &&
+    wsFixedActual === goog.testing.i18n.whitespace.removeWhitespace(alternativeExpected)
+  ) {
     return;
   }
 
@@ -117,7 +115,6 @@ goog.testing.i18n.asserts.assertI18nEquals = function(a, b, opt_c) {
   }
 };
 
-
 /**
  * Asserts that needle, or a string i18n-equivalent to needle, is a substring of
  * haystack. I18n-equivalent strings are set with addI18nMapping.
@@ -126,8 +123,7 @@ goog.testing.i18n.asserts.assertI18nEquals = function(a, b, opt_c) {
  * @param {string} needle The substring to search for.
  * @param {string} haystack The string to search within.
  */
-goog.testing.i18n.asserts.assertI18nContains = function(needle, haystack) {
-  'use strict';
+goog.testing.i18n.asserts.assertI18nContains = (needle, haystack) => {
   if (needle === haystack) {
     return;
   }
@@ -138,12 +134,10 @@ goog.testing.i18n.asserts.assertI18nContains = function(needle, haystack) {
   }
 
   const wsFixedNeedle = goog.testing.i18n.whitespace.removeWhitespace(needle);
-  const wsFixedHaystack =
-      goog.testing.i18n.whitespace.removeWhitespace(haystack);
+  const wsFixedHaystack = goog.testing.i18n.whitespace.removeWhitespace(haystack);
 
   assertContains(wsFixedNeedle, wsFixedHaystack);
 };
-
 
 /**
  * Adds two strings as being i18n-equivalent. Call this
@@ -152,8 +146,7 @@ goog.testing.i18n.asserts.assertI18nContains = function(needle, haystack) {
  * @param {string} expected The expected string in assertI18nEquals.
  * @param {string} equivalent A string which is i18n-equal.
  */
-goog.testing.i18n.asserts.addI18nMapping = function(expected, equivalent) {
-  'use strict';
+goog.testing.i18n.asserts.addI18nMapping = (expected, equivalent) => {
   if (goog.testing.i18n.asserts.EXPECTED_VALUE_MAP_.hasOwnProperty(expected)) {
     throw new RangeError('Mapping for string already exists');
   }

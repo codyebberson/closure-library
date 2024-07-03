@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.PaletteRendererTest');
-goog.setTestOnly();
 
 const Palette = goog.require('goog.ui.Palette');
 const PaletteRenderer = goog.require('goog.ui.PaletteRenderer');
@@ -31,8 +30,7 @@ let palette;
 /** @param {!Array<string>} items */
 function createPalette(items) {
   sandbox = dom.getElement('sandbox');
-  itemEls = items.map(
-      (item, index, a) => dom.safeHtmlToNode(testing.newSafeHtmlForTest(item)));
+  itemEls = items.map((item, index, a) => dom.safeHtmlToNode(testing.newSafeHtmlForTest(item)));
   renderer = new PaletteRenderer();
   palette = new Palette(itemEls, renderer);
   palette.setSize(4, 1);
@@ -61,44 +59,30 @@ testSuite({
     const grid = renderer.createDom(palette);
     const cells = dom.getElementsByTagName(TagName.TD, grid);
 
-    assertEquals(
-        'An aria-label is used as a label', 'label-0', aria.getLabel(cells[0]));
-    assertEquals(
-        'A title is used as a label', 'title-1', aria.getLabel(cells[1]));
-    assertEquals(
-        'An aria-label takes precedence over a title', 'label-2',
-        aria.getLabel(cells[2]));
-    assertEquals(
-        'Children are traversed to find labels', 'child-title-3',
-        aria.getLabel(cells[3]));
+    assertEquals('An aria-label is used as a label', 'label-0', aria.getLabel(cells[0]));
+    assertEquals('A title is used as a label', 'title-1', aria.getLabel(cells[1]));
+    assertEquals('An aria-label takes precedence over a title', 'label-2', aria.getLabel(cells[2]));
+    assertEquals('Children are traversed to find labels', 'child-title-3', aria.getLabel(cells[3]));
   },
 
   testA11yActiveDescendant() {
     createPalette(items);
     palette.render();
-    const cells =
-        dom.getElementsByTagName(TagName.TD, palette.getElementStrict());
+    const cells = dom.getElementsByTagName(TagName.TD, palette.getElementStrict());
 
     renderer.highlightCell(palette, cells[1].firstChild, true);
-    assertEquals(
-        cells[1].id,
-        aria.getState(palette.getElementStrict(), State.ACTIVEDESCENDANT));
+    assertEquals(cells[1].id, aria.getState(palette.getElementStrict(), State.ACTIVEDESCENDANT));
 
     renderer.highlightCell(palette, cells[0].firstChild, false);
-    assertEquals(
-        cells[1].id,
-        aria.getState(palette.getElementStrict(), State.ACTIVEDESCENDANT));
+    assertEquals(cells[1].id, aria.getState(palette.getElementStrict(), State.ACTIVEDESCENDANT));
 
     renderer.highlightCell(palette, cells[1].firstChild, false);
-    assertNotEquals(
-        cells[1].id,
-        aria.getState(palette.getElementStrict(), State.ACTIVEDESCENDANT));
+    assertNotEquals(cells[1].id, aria.getState(palette.getElementStrict(), State.ACTIVEDESCENDANT));
   },
 
   testSetContentIncremental() {
-    const items = (new Array(6)).fill('<div class="item">item</div>');
-    const itemEls =
-        items.map(item => dom.safeHtmlToNode(testing.newSafeHtmlForTest(item)));
+    const items = new Array(6).fill('<div class="item">item</div>');
+    const itemEls = items.map((item) => dom.safeHtmlToNode(testing.newSafeHtmlForTest(item)));
 
     createPalette([]);
     palette.render();
@@ -126,9 +110,9 @@ testSuite({
   },
 
   testA11yLabelsSetContentIncremental() {
-    const itemEls = items.map(
-        (item, index, a) =>
-            dom.safeHtmlToNode(testing.newSafeHtmlForTest(item)));
+    const itemEls = items.map((item, index, a) =>
+      dom.safeHtmlToNode(testing.newSafeHtmlForTest(item))
+    );
 
     createPalette([]);
     palette.render();
@@ -154,7 +138,7 @@ testSuite({
     createPalette(items);
     palette.render();
     const paletteEl = palette.getElementStrict();
-    let cells = dom.getElementsByTagName(TagName.TD, paletteEl);
+    const cells = dom.getElementsByTagName(TagName.TD, paletteEl);
     assertEquals('label-0', aria.getLabel(cells[0]));
     assertEquals('title-1', aria.getLabel(cells[1]));
     assertEquals('label-2', aria.getLabel(cells[2]));
@@ -166,9 +150,9 @@ testSuite({
       '<div aria-label="newlabel-2" title="title-2"></div>',
       '<div><span></span></div>',
     ];
-    const newItemEls = newItems.map(
-        (item, index, a) =>
-            dom.safeHtmlToNode(testing.newSafeHtmlForTest(item)));
+    const newItemEls = newItems.map((item, index, a) =>
+      dom.safeHtmlToNode(testing.newSafeHtmlForTest(item))
+    );
 
     palette.setContent(newItemEls);
 

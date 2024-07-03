@@ -4,19 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 /**
  * @fileoverview A thicker wrapper around graphics groups.
  */
-
 
 goog.provide('goog.graphics.ext.Group');
 
 goog.require('goog.array');
 goog.require('goog.graphics.ext.Element');
 goog.requireType('goog.graphics.GroupElement');
-
-
 
 /**
  * Wrapper for a graphics group.
@@ -28,10 +24,8 @@ goog.requireType('goog.graphics.GroupElement');
  * @constructor
  * @extends {goog.graphics.ext.Element}
  */
-goog.graphics.ext.Group = function(group, opt_wrapper) {
-  'use strict';
-  opt_wrapper = opt_wrapper ||
-      group.getGraphicsImplementation().createGroup(group.getWrapper());
+goog.graphics.ext.Group = function (group, opt_wrapper) {
+  opt_wrapper = opt_wrapper || group.getGraphicsImplementation().createGroup(group.getWrapper());
   goog.graphics.ext.Element.call(this, group, opt_wrapper);
 
   /**
@@ -43,7 +37,6 @@ goog.graphics.ext.Group = function(group, opt_wrapper) {
 };
 goog.inherits(goog.graphics.ext.Group, goog.graphics.ext.Element);
 
-
 /**
  * Add an element to the group.  This should be treated as package local, as
  * it is called by the draw* methods.
@@ -51,8 +44,7 @@ goog.inherits(goog.graphics.ext.Group, goog.graphics.ext.Element);
  * @param {boolean=} opt_chain Whether this addition is part of a longer set
  *     of element additions.
  */
-goog.graphics.ext.Group.prototype.addChild = function(element, opt_chain) {
-  'use strict';
+goog.graphics.ext.Group.prototype.addChild = function (element, opt_chain) {
   if (!goog.array.contains(this.children_, element)) {
     this.children_.push(element);
   }
@@ -72,20 +64,17 @@ goog.graphics.ext.Group.prototype.addChild = function(element, opt_chain) {
   }
 };
 
-
 /**
  * Remove an element from the group.
  * @param {goog.graphics.ext.Element} element The element to remove.
  */
-goog.graphics.ext.Group.prototype.removeChild = function(element) {
-  'use strict';
+goog.graphics.ext.Group.prototype.removeChild = function (element) {
   goog.array.remove(this.children_, element);
 
   // TODO(robbyw): shape.fireEvent('delete')
 
   this.getGraphicsImplementation().removeElement(element.getWrapper());
 };
-
 
 /**
  * Calls the given function on each of this component's children in order.  If
@@ -96,13 +85,11 @@ goog.graphics.ext.Group.prototype.removeChild = function(element) {
  *    take 2 arguments (the child and its index).
  * @param {Object=} opt_obj Used as the 'this' object in f when called.
  */
-goog.graphics.ext.Group.prototype.forEachChild = function(f, opt_obj) {
-  'use strict';
+goog.graphics.ext.Group.prototype.forEachChild = function (f, opt_obj) {
   if (this.children_) {
     this.children_.forEach(f, opt_obj);
   }
 };
-
 
 /**
  * @return {goog.graphics.GroupElement} The underlying thin wrapper.
@@ -110,18 +97,15 @@ goog.graphics.ext.Group.prototype.forEachChild = function(f, opt_obj) {
  */
 goog.graphics.ext.Group.prototype.getWrapper;
 
-
 /**
  * Reset the element.
  * @override
  */
-goog.graphics.ext.Group.prototype.reset = function() {
-  'use strict';
+goog.graphics.ext.Group.prototype.reset = function () {
   goog.graphics.ext.Group.superClass_.reset.call(this);
 
   this.updateChildren();
 };
-
 
 /**
  * Called from the parent class, this method resets any pre-computed positions
@@ -129,35 +113,28 @@ goog.graphics.ext.Group.prototype.reset = function() {
  * @protected
  * @override
  */
-goog.graphics.ext.Group.prototype.redraw = function() {
-  'use strict';
+goog.graphics.ext.Group.prototype.redraw = function () {
   this.getWrapper().setSize(this.getWidth(), this.getHeight());
   this.transformChildren();
 };
-
 
 /**
  * Transform the children that need to be transformed.
  * @protected
  */
-goog.graphics.ext.Group.prototype.transformChildren = function() {
-  'use strict';
-  this.forEachChild(function(child) {
-    'use strict';
+goog.graphics.ext.Group.prototype.transformChildren = function () {
+  this.forEachChild((child) => {
     if (child.isParentDependent()) {
       child.parentTransform();
     }
   });
 };
 
-
 /**
  * As part of the reset process, update child elements.
  */
-goog.graphics.ext.Group.prototype.updateChildren = function() {
-  'use strict';
-  this.forEachChild(function(child) {
-    'use strict';
+goog.graphics.ext.Group.prototype.updateChildren = function () {
+  this.forEachChild((child) => {
     if (child.isParentDependent() || child.isPendingTransform()) {
       child.reset();
     } else if (child.updateChildren) {
@@ -166,15 +143,13 @@ goog.graphics.ext.Group.prototype.updateChildren = function() {
   });
 };
 
-
 /**
  * When adding an element, grow this group's bounds to fit it.
  * @param {!goog.graphics.ext.Element} element The added element.
  * @return {boolean} Whether the size of this group changed.
  * @private
  */
-goog.graphics.ext.Group.prototype.growToFit_ = function(element) {
-  'use strict';
+goog.graphics.ext.Group.prototype.growToFit_ = function (element) {
   let transformed = false;
 
   const x = element.getMaxX();
@@ -192,30 +167,24 @@ goog.graphics.ext.Group.prototype.growToFit_ = function(element) {
   return transformed;
 };
 
-
 /**
  * @return {number} The width of the element's coordinate space.
  */
-goog.graphics.ext.Group.prototype.getCoordinateWidth = function() {
-  'use strict';
+goog.graphics.ext.Group.prototype.getCoordinateWidth = function () {
   return this.getWidth();
 };
-
 
 /**
  * @return {number} The height of the element's coordinate space.
  */
-goog.graphics.ext.Group.prototype.getCoordinateHeight = function() {
-  'use strict';
+goog.graphics.ext.Group.prototype.getCoordinateHeight = function () {
   return this.getHeight();
 };
-
 
 /**
  * Remove all drawing elements from the group.
  */
-goog.graphics.ext.Group.prototype.clear = function() {
-  'use strict';
+goog.graphics.ext.Group.prototype.clear = function () {
   while (this.children_.length) {
     this.removeChild(this.children_[0]);
   }

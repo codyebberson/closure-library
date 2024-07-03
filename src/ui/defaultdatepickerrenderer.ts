@@ -17,8 +17,6 @@ goog.require('goog.dom.TagName');
 /** @suppress {extraRequire} Interface. */
 goog.require('goog.ui.DatePickerRenderer');
 
-
-
 /**
  * Default renderer for {@link goog.ui.DatePicker}. Renders the date picker's
  * navigation header and footer.
@@ -28,8 +26,7 @@ goog.require('goog.ui.DatePickerRenderer');
  * @constructor
  * @implements {goog.ui.DatePickerRenderer}
  */
-goog.ui.DefaultDatePickerRenderer = function(baseCssClass, opt_domHelper) {
-  'use strict';
+goog.ui.DefaultDatePickerRenderer = function (baseCssClass, opt_domHelper) {
   /**
    * Name of base CSS class of datepicker
    * @type {string}
@@ -44,16 +41,13 @@ goog.ui.DefaultDatePickerRenderer = function(baseCssClass, opt_domHelper) {
   this.dom_ = opt_domHelper || goog.dom.getDomHelper();
 };
 
-
 /**
  * Returns the dom helper that is being used on this component.
  * @return {!goog.dom.DomHelper} The dom helper used on this component.
  */
-goog.ui.DefaultDatePickerRenderer.prototype.getDomHelper = function() {
-  'use strict';
+goog.ui.DefaultDatePickerRenderer.prototype.getDomHelper = function () {
   return this.dom_;
 };
-
 
 /**
  * Returns base CSS class. This getter is used to get base CSS class part.
@@ -61,11 +55,9 @@ goog.ui.DefaultDatePickerRenderer.prototype.getDomHelper = function() {
  *   goog.getCssName(this.getBaseCssClass(), 'CLASS_NAME')
  * @return {string} Base CSS class.
  */
-goog.ui.DefaultDatePickerRenderer.prototype.getBaseCssClass = function() {
-  'use strict';
+goog.ui.DefaultDatePickerRenderer.prototype.getBaseCssClass = function () {
   return this.baseCssClass_;
 };
-
 
 /**
  * Render the navigation row (navigating months and maybe years).
@@ -81,18 +73,19 @@ goog.ui.DefaultDatePickerRenderer.prototype.getBaseCssClass = function() {
  *     {@see goog.i18n.DateTimeSymbols}.
  * @override
  */
-goog.ui.DefaultDatePickerRenderer.prototype.renderNavigationRow = function(
-    row, simpleNavigation, showWeekNum, fullDateFormat) {
-  'use strict';
+goog.ui.DefaultDatePickerRenderer.prototype.renderNavigationRow = function (
+  row,
+  simpleNavigation,
+  showWeekNum,
+  fullDateFormat
+) {
   // Populate the navigation row according to the configured navigation mode.
   var cell, monthCell, yearCell;
 
   if (simpleNavigation) {
     cell = this.getDomHelper().createElement(goog.dom.TagName.TD);
     cell.colSpan = showWeekNum ? 1 : 2;
-    this.createButton_(
-        cell, '\u00AB',
-        goog.getCssName(this.getBaseCssClass(), 'previousMonth'));  // <<
+    this.createButton_(cell, '\u00AB', goog.getCssName(this.getBaseCssClass(), 'previousMonth')); // <<
     row.appendChild(cell);
 
     cell = this.getDomHelper().createElement(goog.dom.TagName.TD);
@@ -101,33 +94,24 @@ goog.ui.DefaultDatePickerRenderer.prototype.renderNavigationRow = function(
     row.appendChild(cell);
 
     cell = this.getDomHelper().createElement(goog.dom.TagName.TD);
-    this.createButton_(
-        cell, '\u00BB',
-        goog.getCssName(this.getBaseCssClass(), 'nextMonth'));  // >>
+    this.createButton_(cell, '\u00BB', goog.getCssName(this.getBaseCssClass(), 'nextMonth')); // >>
     row.appendChild(cell);
-
   } else {
     monthCell = this.getDomHelper().createElement(goog.dom.TagName.TD);
     monthCell.colSpan = 5;
     this.createButton_(
-        monthCell, '\u00AB',
-        goog.getCssName(this.getBaseCssClass(), 'previousMonth'));  // <<
-    this.createButton_(
-        monthCell, '', goog.getCssName(this.getBaseCssClass(), 'month'));
-    this.createButton_(
-        monthCell, '\u00BB',
-        goog.getCssName(this.getBaseCssClass(), 'nextMonth'));  // >>
+      monthCell,
+      '\u00AB',
+      goog.getCssName(this.getBaseCssClass(), 'previousMonth')
+    ); // <<
+    this.createButton_(monthCell, '', goog.getCssName(this.getBaseCssClass(), 'month'));
+    this.createButton_(monthCell, '\u00BB', goog.getCssName(this.getBaseCssClass(), 'nextMonth')); // >>
 
     yearCell = this.getDomHelper().createElement(goog.dom.TagName.TD);
     yearCell.colSpan = 3;
-    this.createButton_(
-        yearCell, '\u00AB',
-        goog.getCssName(this.getBaseCssClass(), 'previousYear'));  // <<
-    this.createButton_(
-        yearCell, '', goog.getCssName(this.getBaseCssClass(), 'year'));
-    this.createButton_(
-        yearCell, '\u00BB',
-        goog.getCssName(this.getBaseCssClass(), 'nextYear'));  // <<
+    this.createButton_(yearCell, '\u00AB', goog.getCssName(this.getBaseCssClass(), 'previousYear')); // <<
+    this.createButton_(yearCell, '', goog.getCssName(this.getBaseCssClass(), 'year'));
+    this.createButton_(yearCell, '\u00BB', goog.getCssName(this.getBaseCssClass(), 'nextYear')); // <<
 
     // If the date format has year ('y') appearing first before month ('m'),
     // show the year on the left hand side of the datepicker popup.  Otherwise,
@@ -143,7 +127,6 @@ goog.ui.DefaultDatePickerRenderer.prototype.renderNavigationRow = function(
   }
 };
 
-
 /**
  * Render the footer row (with select buttons).
  *
@@ -151,9 +134,7 @@ goog.ui.DefaultDatePickerRenderer.prototype.renderNavigationRow = function(
  * @param {boolean} showWeekNum Whether week numbers should be shown.
  * @override
  */
-goog.ui.DefaultDatePickerRenderer.prototype.renderFooterRow = function(
-    row, showWeekNum) {
-  'use strict';
+goog.ui.DefaultDatePickerRenderer.prototype.renderFooterRow = function (row, showWeekNum) {
   // Populate the footer row with buttons for Today and None.
   var cell = this.getDomHelper().createElement(goog.dom.TagName.TD);
   cell.colSpan = showWeekNum ? 2 : 3;
@@ -162,8 +143,10 @@ goog.ui.DefaultDatePickerRenderer.prototype.renderFooterRow = function(
   /** @desc Label for button that selects the current date. */
   var MSG_DATEPICKER_TODAY_BUTTON_LABEL = goog.getMsg('Today');
   this.createButton_(
-      cell, MSG_DATEPICKER_TODAY_BUTTON_LABEL,
-      goog.getCssName(this.getBaseCssClass(), 'today-btn'));
+    cell,
+    MSG_DATEPICKER_TODAY_BUTTON_LABEL,
+    goog.getCssName(this.getBaseCssClass(), 'today-btn')
+  );
   row.appendChild(cell);
 
   cell = this.getDomHelper().createElement(goog.dom.TagName.TD);
@@ -177,11 +160,12 @@ goog.ui.DefaultDatePickerRenderer.prototype.renderFooterRow = function(
   /** @desc Label for button that clears the selection. */
   var MSG_DATEPICKER_NONE = goog.getMsg('None');
   this.createButton_(
-      cell, MSG_DATEPICKER_NONE,
-      goog.getCssName(this.getBaseCssClass(), 'none-btn'));
+    cell,
+    MSG_DATEPICKER_NONE,
+    goog.getCssName(this.getBaseCssClass(), 'none-btn')
+  );
   row.appendChild(cell);
 };
-
 
 /**
  * Support function for button creation.
@@ -193,9 +177,11 @@ goog.ui.DefaultDatePickerRenderer.prototype.renderFooterRow = function(
  * @private
  * @return {!Element} The created button element.
  */
-goog.ui.DefaultDatePickerRenderer.prototype.createButton_ = function(
-    parentNode, label, opt_className) {
-  'use strict';
+goog.ui.DefaultDatePickerRenderer.prototype.createButton_ = function (
+  parentNode,
+  label,
+  opt_className
+) {
   var classes = [goog.getCssName(this.getBaseCssClass(), 'btn')];
   if (opt_className) {
     classes.push(opt_className);

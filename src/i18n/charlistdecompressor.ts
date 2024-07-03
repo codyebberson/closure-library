@@ -29,20 +29,16 @@ goog.provide('goog.i18n.CharListDecompressor');
 goog.require('goog.array');
 goog.require('goog.i18n.uChar');
 
-
-
 /**
  * Class to decompress base88 compressed character list.
  * @constructor
  * @final
  */
-goog.i18n.CharListDecompressor = function() {
-  'use strict';
+goog.i18n.CharListDecompressor = function () {
   this.buildCharMap_(
-      '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr' +
-      'stuvwxyz!#$%()*+,-.:;<=>?@[]^_`{|}~');
+    '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr' + 'stuvwxyz!#$%()*+,-.:;<=>?@[]^_`{|}~'
+  );
 };
-
 
 /**
  * 1-1 mapping from ascii characters used in encoding to an integer in the
@@ -52,15 +48,13 @@ goog.i18n.CharListDecompressor = function() {
  */
 goog.i18n.CharListDecompressor.prototype.charMap_ = null;
 
-
 /**
  * Builds the map from ascii characters used for the base88 scheme to number
  * each character represents.
  * @param {string} str The string of characters used in base88 scheme.
  * @private
  */
-goog.i18n.CharListDecompressor.prototype.buildCharMap_ = function(str) {
-  'use strict';
+goog.i18n.CharListDecompressor.prototype.buildCharMap_ = function (str) {
   if (!this.charMap_) {
     this.charMap_ = {};
     for (var i = 0; i < str.length; i++) {
@@ -68,7 +62,6 @@ goog.i18n.CharListDecompressor.prototype.buildCharMap_ = function(str) {
     }
   }
 };
-
 
 /**
  * Gets the number encoded in base88 scheme by a substring of given length
@@ -80,9 +73,7 @@ goog.i18n.CharListDecompressor.prototype.buildCharMap_ = function(str) {
  * @return {number} The encoded number.
  * @private
  */
-goog.i18n.CharListDecompressor.prototype.getCodeAt_ = function(
-    str, start, leng) {
-  'use strict';
+goog.i18n.CharListDecompressor.prototype.getCodeAt_ = function (str, start, leng) {
   var result = 0;
   for (var i = 0; i < leng; i++) {
     var c = this.charMap_[str.charAt(start + i)];
@@ -90,7 +81,6 @@ goog.i18n.CharListDecompressor.prototype.getCodeAt_ = function(
   }
   return result;
 };
-
 
 /**
  * Add character(s) specified by the value and type to given list and return
@@ -105,9 +95,7 @@ goog.i18n.CharListDecompressor.prototype.getCodeAt_ = function(
  * @return {number} Last codepoint that is added to the list.
  * @private
  */
-goog.i18n.CharListDecompressor.prototype.addChars_ = function(
-    list, lastcode, value, type) {
-  'use strict';
+goog.i18n.CharListDecompressor.prototype.addChars_ = (list, lastcode, value, type) => {
   if (type == 0) {
     lastcode += value + 1;
     goog.array.extend(list, goog.i18n.uChar.fromCharCode(lastcode));
@@ -123,15 +111,13 @@ goog.i18n.CharListDecompressor.prototype.addChars_ = function(
   return lastcode;
 };
 
-
 /**
  * Gets the list of characters specified in the given string by base 88 scheme.
  * @param {string} str The string encoding character list.
  * @return {!Array<string>} The list of characters specified by the given
  *     string in base 88 scheme.
  */
-goog.i18n.CharListDecompressor.prototype.toCharList = function(str) {
-  'use strict';
+goog.i18n.CharListDecompressor.prototype.toCharList = function (str) {
   var metasize = 8;
   var result = [];
   var lastcode = 0;

@@ -11,7 +11,6 @@
 
 goog.provide('goog.html.trustedtypes');
 
-
 /**
  * @define {string} Name for the Trusted Types policy used in Closure Safe
  * Types. Differs from `goog.TRUSTED_TYPES_POLICY_NAME` in that the latter is
@@ -21,10 +20,9 @@ goog.provide('goog.html.trustedtypes');
  * @package
  */
 goog.html.trustedtypes.POLICY_NAME = goog.define(
-    'goog.html.trustedtypes.POLICY_NAME',
-    goog.TRUSTED_TYPES_POLICY_NAME ? goog.TRUSTED_TYPES_POLICY_NAME + '#html' :
-                                     '');
-
+  'goog.html.trustedtypes.POLICY_NAME',
+  goog.TRUSTED_TYPES_POLICY_NAME ? goog.TRUSTED_TYPES_POLICY_NAME + '#html' : ''
+);
 
 /**
  * Cached result of goog.createTrustedTypesPolicy.
@@ -33,22 +31,21 @@ goog.html.trustedtypes.POLICY_NAME = goog.define(
  */
 goog.html.trustedtypes.cachedPolicy_;
 
-
 /**
  * Creates a (singleton) Trusted Type Policy for Safe HTML Types.
  * @return {?TrustedTypePolicy}
  * @package
  */
-goog.html.trustedtypes.getPolicyPrivateDoNotAccessOrElse = function() {
-  'use strict';
+goog.html.trustedtypes.getPolicyPrivateDoNotAccessOrElse = () => {
   if (!goog.html.trustedtypes.POLICY_NAME) {
     // Binary not configured for Trusted Types.
     return null;
   }
 
   if (goog.html.trustedtypes.cachedPolicy_ === undefined) {
-    goog.html.trustedtypes.cachedPolicy_ =
-        goog.createTrustedTypesPolicy(goog.html.trustedtypes.POLICY_NAME);
+    goog.html.trustedtypes.cachedPolicy_ = goog.createTrustedTypesPolicy(
+      goog.html.trustedtypes.POLICY_NAME
+    );
   }
 
   return goog.html.trustedtypes.cachedPolicy_;

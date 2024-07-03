@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.storage.mechanism.IEUserDataTest');
-goog.setTestOnly();
 
 const IEUserData = goog.require('goog.storage.mechanism.IEUserData');
 const iterableMechanismTests = goog.require('goog.storage.mechanism.iterableMechanismTests');
@@ -21,7 +20,6 @@ let mechanismShared;
 let mechanismSeparate;
 
 testSuite({
-
   shouldRunTests() {
     return userAgent.IE && !userAgent.isDocumentModeOrHigher(9);
   },
@@ -72,41 +70,25 @@ testSuite({
       assertEquals(cleartext, IEUserData.decodeKey_(encoded));
     }
     assertEncodingPair('simple', '_simple');
-    assertEncodingPair(
-        'aa.bb%cc!\0$\u4e00.', '_aa.2Ebb.25cc.21.00.24.E4.B8.80.2E');
+    assertEncodingPair('aa.bb%cc!\0$\u4e00.', '_aa.2Ebb.25cc.21.00.24.E4.B8.80.2E');
   },
 
-
   ...mechanismTests.register({
-    getMechanism: function() {
-      return mechanism;
-    },
-    getMinimumQuota: function() {
-      return minimumQuota;
-    },
+    getMechanism: () => mechanism,
+    getMinimumQuota: () => minimumQuota,
   }),
 
   ...iterableMechanismTests.register({
-    getMechanism: function() {
-      return mechanism;
-    },
+    getMechanism: () => mechanism,
   }),
 
   ...mechanismSharingTests.register({
-    getMechanism: function() {
-      return mechanism;
-    },
-    getMechanismShared: function() {
-      return mechanismShared;
-    },
+    getMechanism: () => mechanism,
+    getMechanismShared: () => mechanismShared,
   }),
 
   ...mechanismSeparationTests.register({
-    getMechanism: function() {
-      return mechanism;
-    },
-    getMechanismSeparate: function() {
-      return mechanismSeparate;
-    },
+    getMechanism: () => mechanism,
+    getMechanismSeparate: () => mechanismSeparate,
   }),
 });

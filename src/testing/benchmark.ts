@@ -13,13 +13,11 @@ goog.require('goog.testing.PerformanceTable');
 goog.require('goog.testing.PerformanceTimer');
 goog.require('goog.testing.TestCase');
 
-
 /**
  * Run the benchmarks.
  * @private
  */
-goog.testing.benchmark.run_ = function() {
-  'use strict';
+goog.testing.benchmark.run_ = () => {
   // Parse the 'times' query parameter if it's set.
   var times = 200;
   var search = window.location.search;
@@ -39,7 +37,7 @@ goog.testing.benchmark.run_ = function() {
   for (var i = 0; i < testSources.length; i++) {
     var testSource = testSources[i];
     for (var name in testSource) {
-      if ((new RegExp('^' + prefix)).test(name)) {
+      if (new RegExp('^' + prefix).test(name)) {
         var ref;
         try {
           ref = testSource[name];
@@ -60,8 +58,8 @@ goog.testing.benchmark.run_ = function() {
   }
 
   document.body.appendChild(
-      goog.dom.createTextNode(
-          'Running ' + names.length + ' benchmarks ' + times + ' times each.'));
+    goog.dom.createTextNode('Running ' + names.length + ' benchmarks ' + times + ' times each.')
+  );
   document.body.appendChild(goog.dom.createElement(goog.dom.TagName.BR));
 
   names.sort();
@@ -70,8 +68,7 @@ goog.testing.benchmark.run_ = function() {
   var performanceTimer = new goog.testing.PerformanceTimer(times);
   performanceTimer.setDiscardOutliers(true);
 
-  var performanceTable =
-      new goog.testing.PerformanceTable(document.body, performanceTimer, 2);
+  var performanceTable = new goog.testing.PerformanceTable(document.body, performanceTimer, 2);
 
   // Next, run the benchmarks.
   for (var i = 0; i < names.length; i++) {
@@ -79,12 +76,10 @@ goog.testing.benchmark.run_ = function() {
   }
 };
 
-
 /**
  * Onload handler that runs the benchmarks.
  * @param {Event} e The event object.
  */
-window.onload = function(e) {
-  'use strict';
+window.onload = (e) => {
   goog.testing.benchmark.run_();
 };

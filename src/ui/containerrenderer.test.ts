@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.ui.ContainerRendererTest');
-goog.setTestOnly();
 
 const Container = goog.require('goog.ui.Container');
 const ContainerRenderer = goog.require('goog.ui.ContainerRenderer');
@@ -30,13 +29,14 @@ testSuite({
   setUp() {
     const sandbox = dom.getElement('sandbox');
 
+    sandbox.appendChild(dom.createDom(TagName.SPAN, { id: 'noTabIndex' }, 'Test'));
     sandbox.appendChild(
-        dom.createDom(TagName.SPAN, {id: 'noTabIndex'}, 'Test'));
-    sandbox.appendChild(dom.createDom(
-        TagName.DIV, {id: 'container', 'class': 'goog-container-horizontal'},
-        dom.createDom(
-            TagName.DIV, {id: 'control', 'class': 'goog-control'},
-            'Hello, world!')));
+      dom.createDom(
+        TagName.DIV,
+        { id: 'container', class: 'goog-container-horizontal' },
+        dom.createDom(TagName.DIV, { id: 'control', class: 'goog-control' }, 'Hello, world!')
+      )
+    );
 
     renderer = ContainerRenderer.getInstance();
   },
@@ -49,20 +49,24 @@ testSuite({
 
   testGetInstance() {
     assertTrue(
-        'getInstance() must return a ContainerRenderer',
-        renderer instanceof ContainerRenderer);
+      'getInstance() must return a ContainerRenderer',
+      renderer instanceof ContainerRenderer
+    );
     assertEquals(
-        'getInstance() must return the same object each time', renderer,
-        ContainerRenderer.getInstance());
+      'getInstance() must return the same object each time',
+      renderer,
+      ContainerRenderer.getInstance()
+    );
   },
 
   testGetCustomRenderer() {
     const cssClass = 'special-css-class';
-    const containerRenderer =
-        ContainerRenderer.getCustomRenderer(ContainerRenderer, cssClass);
+    const containerRenderer = ContainerRenderer.getCustomRenderer(ContainerRenderer, cssClass);
     assertEquals(
-        'Renderer should have returned the custom CSS class.', cssClass,
-        containerRenderer.getCssClass());
+      'Renderer should have returned the custom CSS class.',
+      cssClass,
+      containerRenderer.getCssClass()
+    );
   },
 
   testGetAriaRole() {
@@ -75,22 +79,16 @@ testSuite({
    */
   testEnableTabIndex() {
     const container = dom.getElement('container');
-    assertFalse(
-        'Container must not have any tab index',
-        dom.isFocusableTabIndex(container));
+    assertFalse('Container must not have any tab index', dom.isFocusableTabIndex(container));
 
     try {
       renderer.enableTabIndex(container, true);
-      assertTrue(
-          'Container must have a tab index',
-          dom.isFocusableTabIndex(container));
-      assertEquals('Container\'s tab index must be 0', 0, container.tabIndex);
+      assertTrue('Container must have a tab index', dom.isFocusableTabIndex(container));
+      assertEquals("Container's tab index must be 0", 0, container.tabIndex);
 
       renderer.enableTabIndex(container, false);
-      assertFalse(
-          'Container must not have a tab index',
-          dom.isFocusableTabIndex(container));
-      assertEquals('Container\'s tab index must be -1', -1, container.tabIndex);
+      assertFalse('Container must not have a tab index', dom.isFocusableTabIndex(container));
+      assertEquals("Container's tab index must be -1", -1, container.tabIndex);
     } catch (e) {
       expectedFailures.handleException(e);
     }
@@ -101,55 +99,69 @@ testSuite({
     const element1 = renderer.createDom(horizontal);
     assertEquals('Element must be a DIV', 'DIV', element1.tagName);
     assertEquals(
-        'Element must have the expected class name',
-        'goog-container goog-container-horizontal', element1.className);
+      'Element must have the expected class name',
+      'goog-container goog-container-horizontal',
+      element1.className
+    );
 
     const vertical = new Container(Container.Orientation.VERTICAL);
     const element2 = renderer.createDom(vertical);
     assertEquals('Element must be a DIV', 'DIV', element2.tagName);
     assertEquals(
-        'Element must have the expected class name',
-        'goog-container goog-container-vertical', element2.className);
+      'Element must have the expected class name',
+      'goog-container goog-container-vertical',
+      element2.className
+    );
   },
 
   testGetContentElement() {
     assertNull(
-        'getContentElement() must return null if element is null',
-        renderer.getContentElement(null));
+      'getContentElement() must return null if element is null',
+      renderer.getContentElement(null)
+    );
     const element = dom.getElement('container');
     assertEquals(
-        'getContentElement() must return its argument', element,
-        renderer.getContentElement(element));
+      'getContentElement() must return its argument',
+      element,
+      renderer.getContentElement(element)
+    );
   },
 
   testCanDecorate() {
     assertFalse(
-        'canDecorate() must return false for a SPAN',
-        renderer.canDecorate(dom.getElement('noTabIndex')));
+      'canDecorate() must return false for a SPAN',
+      renderer.canDecorate(dom.getElement('noTabIndex'))
+    );
     assertTrue(
-        'canDecorate() must return true for a DIV',
-        renderer.canDecorate(dom.getElement('container')));
+      'canDecorate() must return true for a DIV',
+      renderer.canDecorate(dom.getElement('container'))
+    );
   },
 
   testDecorate() {
     const container = new Container();
     const element = dom.getElement('container');
 
-    assertFalse(
-        'Container must not be in the document', container.isInDocument());
+    assertFalse('Container must not be in the document', container.isInDocument());
     container.decorate(element);
     assertTrue('Container must be in the document', container.isInDocument());
 
     assertEquals(
-        'Container\'s ID must match the decorated element\'s ID', element.id,
-        container.getId());
+      "Container's ID must match the decorated element's ID",
+      element.id,
+      container.getId()
+    );
     assertEquals(
-        'Element must have the expected class name',
-        'goog-container-horizontal goog-container', element.className);
+      'Element must have the expected class name',
+      'goog-container-horizontal goog-container',
+      element.className
+    );
     assertEquals('Container must have one child', 1, container.getChildCount());
     assertEquals(
-        'Child component\'s ID must be as expected', 'control',
-        container.getChildAt(0).getId());
+      "Child component's ID must be as expected",
+      'control',
+      container.getChildAt(0).getId()
+    );
 
     assertThrows('Redecorating must throw error', () => {
       container.decorate(element);
@@ -164,19 +176,21 @@ testSuite({
     const container = new Container();
     stubs.set(renderer, 'getContentElement', () => alternateContainerElement);
 
-    assertFalse(
-        'Container must not be in the document', container.isInDocument());
+    assertFalse('Container must not be in the document', container.isInDocument());
     container.decorate(element);
     assertTrue('Container must be in the document', container.isInDocument());
 
     assertEquals(
-        'Container\'s ID must match the decorated element\'s ID', element.id,
-        container.getId());
+      "Container's ID must match the decorated element's ID",
+      element.id,
+      container.getId()
+    );
     assertEquals(
-        'Element must have the expected class name',
-        'goog-container-horizontal goog-container', element.className);
-    assertEquals(
-        'Container must have 0 children', 0, container.getChildCount());
+      'Element must have the expected class name',
+      'goog-container-horizontal goog-container',
+      element.className
+    );
+    assertEquals('Container must have 0 children', 0, container.getChildCount());
 
     assertThrows('Redecorating must throw error', () => {
       container.decorate(element);
@@ -188,22 +202,25 @@ testSuite({
     const container = new Container();
 
     assertEquals(
-        'Container must be vertical', Container.Orientation.VERTICAL,
-        container.getOrientation());
-    renderer.setStateFromClassName(
-        container, 'goog-container-horizontal', 'goog-container');
+      'Container must be vertical',
+      Container.Orientation.VERTICAL,
+      container.getOrientation()
+    );
+    renderer.setStateFromClassName(container, 'goog-container-horizontal', 'goog-container');
     assertEquals(
-        'Container must be horizontal', Container.Orientation.HORIZONTAL,
-        container.getOrientation());
-    renderer.setStateFromClassName(
-        container, 'goog-container-vertical', 'goog-container');
+      'Container must be horizontal',
+      Container.Orientation.HORIZONTAL,
+      container.getOrientation()
+    );
+    renderer.setStateFromClassName(container, 'goog-container-vertical', 'goog-container');
     assertEquals(
-        'Container must be vertical', Container.Orientation.VERTICAL,
-        container.getOrientation());
+      'Container must be vertical',
+      Container.Orientation.VERTICAL,
+      container.getOrientation()
+    );
 
     assertTrue('Container must be enabled', container.isEnabled());
-    renderer.setStateFromClassName(
-        container, 'goog-container-disabled', 'goog-container');
+    renderer.setStateFromClassName(container, 'goog-container-disabled', 'goog-container');
     assertFalse('Container must be disabled', container.isEnabled());
   },
 
@@ -213,12 +230,15 @@ testSuite({
     container.decorate(element);
 
     assertTrue(
-        'Container\'s root element must be unselectable',
-        style.isUnselectable(container.getElement()));
+      "Container's root element must be unselectable",
+      style.isUnselectable(container.getElement())
+    );
 
     assertEquals(
-        'On IE, container\'s root element must have hideFocus=true',
-        userAgent.IE, !!container.getElement().hideFocus);
+      "On IE, container's root element must have hideFocus=true",
+      userAgent.IE,
+      !!container.getElement().hideFocus
+    );
   },
 
   /** @suppress {checkTypes} suppression added to enable type checking */

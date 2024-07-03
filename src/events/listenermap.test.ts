@@ -13,7 +13,6 @@
  */
 
 goog.module('goog.events.ListenerMapTest');
-goog.setTestOnly();
 
 const EventId = goog.require('goog.events.EventId');
 const GoogEventTarget = goog.require('goog.events.EventTarget');

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.soyTest');
-goog.setTestOnly();
 
 const NodeType = goog.require('goog.dom.NodeType');
 const TagName = goog.require('goog.dom.TagName');
@@ -22,8 +21,7 @@ const testSuite = goog.require('goog.testing.testSuite');
  * @suppress {checkTypes} suppression added to enable type checking
  */
 function assertUnsafeTemplateOutputErrorThrown(func) {
-  assertContains(
-      'Sanitized content was not of kind HTML.', assertThrows(func).message);
+  assertContains('Sanitized content was not of kind HTML.', assertThrows(func).message);
 }
 
 testSuite({
@@ -36,7 +34,7 @@ testSuite({
 
   testRenderElement() {
     const testDiv = dom.createElement(TagName.DIV);
-    soy.renderElement(testDiv, example.multiRootTemplate, {name: 'Boo'});
+    soy.renderElement(testDiv, example.multiRootTemplate, { name: 'Boo' });
     assertEquals('<div>Hello</div><div>Boo</div>', elementToInnerHtml(testDiv));
   },
 
@@ -47,15 +45,19 @@ testSuite({
   },
 
   testRenderAsFragmentTextNode() {
-    const fragment =
-        soy.renderAsFragment(example.textNodeTemplate, {name: 'Boo'});
+    const fragment = soy.renderAsFragment(example.textNodeTemplate, {
+      name: 'Boo',
+    });
     assertEquals(NodeType.TEXT, fragment.nodeType);
     assertEquals('Boo', fragmentToHtml(fragment));
   },
 
   testRenderAsFragmentInjectedData() {
     const fragment = soy.renderAsFragment(
-        example.injectedDataTemplate, {name: 'Boo'}, {name: 'ijBoo'});
+      example.injectedDataTemplate,
+      { name: 'Boo' },
+      { name: 'ijBoo' }
+    );
     assertEquals(NodeType.TEXT, fragment.nodeType);
     assertEquals('BooijBoo', fragmentToHtml(fragment));
   },
@@ -65,16 +67,18 @@ testSuite({
      checking
    */
   testRenderAsFragmentSingleRoot() {
-    const fragment =
-        soy.renderAsFragment(example.singleRootTemplate, {name: 'Boo'});
+    const fragment = soy.renderAsFragment(example.singleRootTemplate, {
+      name: 'Boo',
+    });
     assertEquals(NodeType.ELEMENT, fragment.nodeType);
     assertEquals(String(TagName.SPAN), fragment.tagName);
     assertEquals('Boo', fragment.innerHTML);
   },
 
   testRenderAsFragmentMultiRoot() {
-    const fragment =
-        soy.renderAsFragment(example.multiRootTemplate, {name: 'Boo'});
+    const fragment = soy.renderAsFragment(example.multiRootTemplate, {
+      name: 'Boo',
+    });
     assertEquals(NodeType.DOCUMENT_FRAGMENT, fragment.nodeType);
     assertEquals('<div>Hello</div><div>Boo</div>', fragmentToHtml(fragment));
   },
@@ -86,7 +90,7 @@ testSuite({
   },
 
   testRenderAsElementTextNode() {
-    const elem = soy.renderAsElement(example.textNodeTemplate, {name: 'Boo'});
+    const elem = soy.renderAsElement(example.textNodeTemplate, { name: 'Boo' });
     assertEquals(NodeType.ELEMENT, elem.nodeType);
     assertEquals(String(TagName.DIV), elem.tagName);
     assertEquals('Boo', elementToInnerHtml(elem));
@@ -94,21 +98,28 @@ testSuite({
 
   testRenderAsElementInjectedData() {
     const elem = soy.renderAsElement(
-        example.injectedDataTemplate, {name: 'Boo'}, {name: 'ijBoo'});
+      example.injectedDataTemplate,
+      { name: 'Boo' },
+      { name: 'ijBoo' }
+    );
     assertEquals(NodeType.ELEMENT, elem.nodeType);
     assertEquals(String(TagName.DIV), elem.tagName);
     assertEquals('BooijBoo', elementToInnerHtml(elem));
   },
 
   testRenderAsElementSingleRoot() {
-    const elem = soy.renderAsElement(example.singleRootTemplate, {name: 'Boo'});
+    const elem = soy.renderAsElement(example.singleRootTemplate, {
+      name: 'Boo',
+    });
     assertEquals(NodeType.ELEMENT, elem.nodeType);
     assertEquals(String(TagName.SPAN), elem.tagName);
     assertEquals('Boo', elementToInnerHtml(elem));
   },
 
   testRenderAsElementMultiRoot() {
-    const elem = soy.renderAsElement(example.multiRootTemplate, {name: 'Boo'});
+    const elem = soy.renderAsElement(example.multiRootTemplate, {
+      name: 'Boo',
+    });
     assertEquals(NodeType.ELEMENT, elem.nodeType);
     assertEquals(String(TagName.DIV), elem.tagName);
     assertEquals('<div>Hello</div><div>Boo</div>', elementToInnerHtml(elem));
@@ -133,9 +144,7 @@ testSuite({
     assertEquals('&lt;b&gt;XSS&lt;/b&gt;', div.innerHTML);
     const fragment = soy.renderAsFragment(example.stringTemplate);
     assertEquals('<b>XSS</b>', fragment.nodeValue);
-    assertEquals(
-        '&lt;b&gt;XSS&lt;/b&gt;',
-        soy.renderAsElement(example.stringTemplate).innerHTML);
+    assertEquals('&lt;b&gt;XSS&lt;/b&gt;', soy.renderAsElement(example.stringTemplate).innerHTML);
   },
 
   testRejectSanitizedCss() {
@@ -151,30 +160,27 @@ testSuite({
   },
 
   testStringTemplatesRenderedAsText() {
-    assertEquals(
-        '<b>XSS</b>',
-        dom.getTextContent(soy.renderAsFragment(example.stringTemplate)));
+    assertEquals('<b>XSS</b>', dom.getTextContent(soy.renderAsFragment(example.stringTemplate)));
   },
 
   testAcceptSanitizedHtml() {
     assertEquals(
-        'Hello World',
-        dom.getTextContent(soy.renderAsElement(example.sanitizedHtmlTemplate)));
+      'Hello World',
+      dom.getTextContent(soy.renderAsElement(example.sanitizedHtmlTemplate))
+    );
   },
 
   testRejectSanitizedHtmlAttributes() {
     // Attributes context has nothing to do with html.
-    assertUnsafeTemplateOutputErrorThrown(
-        () => dom.getTextContent(
-            soy.renderAsElement(example.sanitizedHtmlAttributesTemplate)));
+    assertUnsafeTemplateOutputErrorThrown(() =>
+      dom.getTextContent(soy.renderAsElement(example.sanitizedHtmlAttributesTemplate))
+    );
   },
 
   testAcceptNonObject() {
     // Some templates, or things that spoof templates in unit tests, might
     // return non-strings in unusual cases.
-    assertEquals(
-        'null',
-        dom.getTextContent(soy.renderAsElement(functions.constant(null))));
+    assertEquals('null', dom.getTextContent(soy.renderAsElement(functions.constant(null))));
   },
 
   testDebugAssertionWithBadFirstTag() {
@@ -225,30 +231,40 @@ testSuite({
     const testDiv = dom.createDom(TagName.DIV, null, [childDiv]);
     // Expect parent/children links.
     assertArrayEquals(
-        'Expect testDiv to contain childDiv.', [childDiv],
-        Array.from(testDiv.children));
-    assertEquals(
-        'Expect childDiv to be contained in testDiv.', testDiv,
-        childDiv.parentElement);
+      'Expect testDiv to contain childDiv.',
+      [childDiv],
+      Array.from(testDiv.children)
+    );
+    assertEquals('Expect childDiv to be contained in testDiv.', testDiv, childDiv.parentElement);
     assertArrayEquals(
-        'Expect childDiv to contain grandchildDiv.', [grandchildDiv],
-        Array.from(childDiv.children));
+      'Expect childDiv to contain grandchildDiv.',
+      [grandchildDiv],
+      Array.from(childDiv.children)
+    );
     assertEquals(
-        'Expect grandchildDiv to be contained in childDiv.', childDiv,
-        grandchildDiv.parentElement);
+      'Expect grandchildDiv to be contained in childDiv.',
+      childDiv,
+      grandchildDiv.parentElement
+    );
 
     // When the div's content is re-rendered.
     soy.renderHtml(testDiv, example.sanitizedHtmlTemplate());
     assertEquals(
-        `Expect testDiv's contents to complete change`, 'hello <b>world</b>',
-        testDiv.innerHTML.toLowerCase());
+      `Expect testDiv's contents to complete change`,
+      'hello <b>world</b>',
+      testDiv.innerHTML.toLowerCase()
+    );
     // Expect the previous childDiv tree to retain its parent-child connections.
     assertArrayEquals(
-        'Expect childDiv to still contain grandchildDiv.', [grandchildDiv],
-        Array.from(childDiv.children));
+      'Expect childDiv to still contain grandchildDiv.',
+      [grandchildDiv],
+      Array.from(childDiv.children)
+    );
     assertEquals(
-        'Expect grandchildDiv to still be contained in childDiv.', childDiv,
-        grandchildDiv.parentElement);
+      'Expect grandchildDiv to still be contained in childDiv.',
+      childDiv,
+      grandchildDiv.parentElement
+    );
   },
 
   testRenderAsText() {
@@ -256,14 +272,14 @@ testSuite({
     assertEquals('<b>XSS</b>', soy.renderAsText(example.stringTemplate));
     // RenderText on non-text template fails.
     assertEquals(
-        'Assertion failed: ' +
-            'renderText was called with a template of kind other than "text"',
-        assertThrows(/**
-                      * @suppress {checkTypes} suppression added to enable type
-                      * checking.
-                      */
-                     () => void soy.renderAsText(
-                         example.sanitizedHtmlTemplate, {}))
-            .message);
+      'Assertion failed: ' + 'renderText was called with a template of kind other than "text"',
+      assertThrows(
+        /**
+         * @suppress {checkTypes} suppression added to enable type
+         * checking.
+         */
+        () => void soy.renderAsText(example.sanitizedHtmlTemplate, {})
+      ).message
+    );
   },
 });

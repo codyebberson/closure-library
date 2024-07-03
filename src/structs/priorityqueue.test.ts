@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.structs.PriorityQueueTest');
-goog.setTestOnly();
 
 const PriorityQueue = goog.require('goog.structs.PriorityQueue');
 const structs = goog.require('goog.structs');

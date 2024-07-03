@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.tweak.TweakUiTest');
-goog.setTestOnly();
 
 const TagName = goog.require('goog.dom.TagName');
 const TweakUi = goog.require('goog.tweak.TweakUi');
@@ -21,15 +20,13 @@ let registry;
 const EXPECTED_ENTRIES_COUNT = 14;
 
 function createUi(collapsible) {
-  const tweakUiElem =
-      collapsible ? TweakUi.createCollapsible() : TweakUi.create();
+  const tweakUiElem = collapsible ? TweakUi.createCollapsible() : TweakUi.create();
   root.appendChild(tweakUiElem);
 }
 
 /** @suppress {visibility} suppression added to enable type checking */
 function getAllEntryDivs() {
-  return dom.getElementsByTagNameAndClass(
-      TagName.DIV, TweakUi.ENTRY_CSS_CLASS_);
+  return dom.getElementsByTagNameAndClass(TagName.DIV, TweakUi.ENTRY_CSS_CLASS_);
 }
 
 function getEntryDiv(entry) {
@@ -37,10 +34,9 @@ function getEntryDiv(entry) {
   const label = TweakUi.getNamespacedLabel_(entry);
   const allDivs = getAllEntryDivs();
   let ret;
-  for (let i = 0, div; div = allDivs[i]; i++) {
+  for (let i = 0, div; (div = allDivs[i]); i++) {
     const divText = dom.getTextContent(div);
-    if (googString.startsWith(divText, label) &&
-        googString.contains(divText, entry.description)) {
+    if (googString.startsWith(divText, label) && googString.contains(divText, entry.description)) {
       assertFalse('Found multiple divs matching entry ' + entry.getId(), !!ret);
       ret = div;
     }
@@ -51,8 +47,10 @@ function getEntryDiv(entry) {
 
 function getEntryInput(entry) {
   const div = getEntryDiv(entry);
-  return dom.getElementsByTagName(TagName.INPUT, div)[0] ||
-      dom.getElementsByTagName(TagName.SELECT, div)[0];
+  return (
+    dom.getElementsByTagName(TagName.INPUT, div)[0] ||
+    dom.getElementsByTagName(TagName.SELECT, div)[0]
+  );
 }
 
 function assertEntryOrder(entryId1, entryId2) {
@@ -94,33 +92,35 @@ testSuite({
     // already been rendered.
     let entryCounter = 0;
     tweak.registerButton(
-        'CreateNewTweak',
-        'Creates a new tweak. Meant ' +
-            'to simulate a tweak being registered in a lazy-loaded module.',
-        () => {
-          // use computed properties to avoid compiler checks of tweak
-          tweak['registerBoolean'](
-              'Lazy' + ++entryCounter, 'Lazy-loaded tweak.');
-        });
+      'CreateNewTweak',
+      'Creates a new tweak. Meant ' +
+        'to simulate a tweak being registered in a lazy-loaded module.',
+      () => {
+        // use computed properties to avoid compiler checks of tweak
+        tweak['registerBoolean']('Lazy' + ++entryCounter, 'Lazy-loaded tweak.');
+      }
+    );
     tweak.registerButton(
-        'CreateNewTweakInNamespace1',
-        'Creates a new tweak within a namespace. Meant to simulate a tweak ' +
-            'being registered in a lazy-loaded module.',
-        () => {
-          // use computed properties to avoid compiler checks of tweak
-          tweak['registerString'](
-              'foo.bar.Lazy' + ++entryCounter, 'Lazy-loaded tweak.');
-        });
+      'CreateNewTweakInNamespace1',
+      'Creates a new tweak within a namespace. Meant to simulate a tweak ' +
+        'being registered in a lazy-loaded module.',
+      () => {
+        // use computed properties to avoid compiler checks of tweak
+        tweak['registerString']('foo.bar.Lazy' + ++entryCounter, 'Lazy-loaded tweak.');
+      }
+    );
     tweak.registerButton(
-        'CreateNewTweakInNamespace2',
-        'Creates a new tweak within a namespace. Meant to simulate a tweak ' +
-            'being registered in a lazy-loaded module.',
-        () => {
-          // use computed properties to avoid compiler checks of tweak
-          tweak['registerNumber'](
-              'foo.bar.baz.Lazy' + ++entryCounter, 'Lazy combo', 3,
-              {validValues: [1, 2, 3], label: 'Lazy!'});
+      'CreateNewTweakInNamespace2',
+      'Creates a new tweak within a namespace. Meant to simulate a tweak ' +
+        'being registered in a lazy-loaded module.',
+      () => {
+        // use computed properties to avoid compiler checks of tweak
+        tweak['registerNumber']('foo.bar.baz.Lazy' + ++entryCounter, 'Lazy combo', 3, {
+          validValues: [1, 2, 3],
+          label: 'Lazy!',
         });
+      }
+    );
 
     let label = document.createElement('h3');
     dom.setTextContent(label, 'TweakUi:');
@@ -135,14 +135,10 @@ testSuite({
 
   testCreate() {
     createUi(false);
-    assertEquals(
-        'Wrong number of entry divs.', EXPECTED_ENTRIES_COUNT,
-        getAllEntryDivs().length);
+    assertEquals('Wrong number of entry divs.', EXPECTED_ENTRIES_COUNT, getAllEntryDivs().length);
 
-    assertFalse(
-        'checkbox should not be checked 1', getEntryInput(boolEntry).checked);
-    assertTrue(
-        'checkbox should be checked 2', getEntryInput(boolEntry2).checked);
+    assertFalse('checkbox should not be checked 1', getEntryInput(boolEntry).checked);
+    assertTrue('checkbox should be checked 2', getEntryInput(boolEntry2).checked);
     // Enusre custom labels are being used.
     let html = dom.getElementsByTagName(TagName.BUTTON)[0].innerHTML;
     assertTrue('Button label is wrong', html.indexOf('&lt;btn&gt;') > -1);
@@ -161,8 +157,7 @@ testSuite({
     assertTrue('checkbox should be checked', getEntryInput(boolEntry).checked);
 
     boolEntry.setValue(false);
-    assertFalse(
-        'checkbox should not be checked 1', getEntryInput(boolEntry).checked);
+    assertFalse('checkbox should not be checked 1', getEntryInput(boolEntry).checked);
   },
 
   /**
@@ -173,12 +168,10 @@ testSuite({
     strEntry.setValue('val1');
     createUi(false);
 
-    assertEquals(
-        'Textbox has wrong value 1', 'val1', getEntryInput(strEntry).value);
+    assertEquals('Textbox has wrong value 1', 'val1', getEntryInput(strEntry).value);
 
     strEntry.setValue('val2');
-    assertEquals(
-        'Textbox has wrong value 2', 'val2', getEntryInput(strEntry).value);
+    assertEquals('Textbox has wrong value 2', 'val2', getEntryInput(strEntry).value);
   },
 
   /**
@@ -254,28 +247,33 @@ testSuite({
     const heightBefore = root.offsetHeight;
     toggleLink.onclick();
     assertTrue(
-        'Expected div height to grow from toggle descriptions.',
-        root.offsetHeight > heightBefore);
+      'Expected div height to grow from toggle descriptions.',
+      root.offsetHeight > heightBefore
+    );
     toggleLink.onclick();
     assertEquals(
-        'Expected div height to revert from toggle descriptions.', heightBefore,
-        root.offsetHeight);
+      'Expected div height to revert from toggle descriptions.',
+      heightBefore,
+      root.offsetHeight
+    );
   },
 
   testAddEntry() {
     createUi(false);
     // use computed properties to avoid compiler checks of tweak
     tweak['registerBoolean']('Lazy1', 'Lazy-loaded tweak.');
-    tweak['registerBoolean'](
-        'Lazy2', 'Lazy-loaded tweak.',
-        /* defaultValue */ false, {restartRequired: false});
+    tweak['registerBoolean']('Lazy2', 'Lazy-loaded tweak.', /* defaultValue */ false, {
+      restartRequired: false,
+    });
     tweak.beginBooleanGroup('LazyGroup', 'Lazy-loaded tweak.');
     tweak['registerBoolean']('Lazy3', 'Lazy-loaded tweak.');
     tweak.endBooleanGroup();
 
     assertEquals(
-        'Wrong number of entry divs.', EXPECTED_ENTRIES_COUNT + 4,
-        getAllEntryDivs().length);
+      'Wrong number of entry divs.',
+      EXPECTED_ENTRIES_COUNT + 4,
+      getAllEntryDivs().length
+    );
     assertEntryOrder('Enum2', 'Lazy1');
     assertEntryOrder('Lazy1', 'Lazy2');
     assertEntryOrder('Lazy2', 'Num');
@@ -292,8 +290,10 @@ testSuite({
     tweak['registerBoolean']('NS.Apple', 'Lazy-loaded tweak.');
 
     assertEquals(
-        'Wrong number of entry divs.', EXPECTED_ENTRIES_COUNT + 5,
-        getAllEntryDivs().length);
+      'Wrong number of entry divs.',
+      EXPECTED_ENTRIES_COUNT + 5,
+      getAllEntryDivs().length
+    );
     assertEntryOrder('Enum2', 'NS.Apple');
     assertEntryOrder('NS.Apple', 'NS.Banana');
     assertEntryOrder('NS.Banana', 'NS.InGroup');
@@ -307,12 +307,24 @@ testSuite({
       const showLink = dom.getElementsByTagName(TagName.A, root)[0];
       const event = document.createEvent('MouseEvents');
       event.initMouseEvent(
-          'click', true, true, window, 0, 0, 0, 0, 0, false, false, false,
-          false, 0, null);
+        'click',
+        true,
+        true,
+        window,
+        0,
+        0,
+        0,
+        0,
+        0,
+        false,
+        false,
+        false,
+        false,
+        0,
+        null
+      );
       showLink.dispatchEvent(event);
-      assertEquals(
-          'Wrong number of entry divs.', EXPECTED_ENTRIES_COUNT,
-          getAllEntryDivs().length);
+      assertEquals('Wrong number of entry divs.', EXPECTED_ENTRIES_COUNT, getAllEntryDivs().length);
     }
   },
 });

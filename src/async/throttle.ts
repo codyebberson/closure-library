@@ -16,7 +16,6 @@ goog.module.declareLegacyNamespace();
 const Disposable = goog.require('goog.Disposable');
 const Timer = goog.require('goog.Timer');
 
-
 /**
  * Throttle will perform an action that is passed in no more than once
  * per interval (specified in milliseconds). If it gets multiple signals

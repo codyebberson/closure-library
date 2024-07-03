@@ -18,7 +18,6 @@ const StreamParser = goog.requireType('goog.net.streams.StreamParser');
 const XhrIo = goog.require('goog.net.XhrIo');
 const log = goog.require('goog.log');
 
-
 /**
  * Returns a parser that supports the given content-type (mime) and
  * content-transfer-encoding.
@@ -44,8 +43,7 @@ function getStreamParser(io) {
   }
 
   if (contentType.startsWith('application/x-protobuf')) {
-    const encoding =
-        io.getStreamingResponseHeader(XhrIo.CONTENT_TRANSFER_ENCODING);
+    const encoding = io.getStreamingResponseHeader(XhrIo.CONTENT_TRANSFER_ENCODING);
     if (!encoding) {
       return new PbStreamParser();
     }
@@ -53,9 +51,9 @@ function getStreamParser(io) {
       return new Base64PbStreamParser();
     }
     log.warning(
-        logger,
-        'Unsupported Content-Transfer-Encoding: ' + encoding +
-            '\nFor Content-Type: ' + contentType);
+      logger,
+      'Unsupported Content-Transfer-Encoding: ' + encoding + '\nFor Content-Type: ' + contentType
+    );
     return null;
   }
 
@@ -63,4 +61,4 @@ function getStreamParser(io) {
   return null;
 }
 
-exports = {getStreamParser};
+exports = { getStreamParser };

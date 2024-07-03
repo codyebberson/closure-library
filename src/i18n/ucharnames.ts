@@ -12,7 +12,6 @@ goog.provide('goog.i18n.uCharNames');
 
 goog.require('goog.i18n.uChar');
 
-
 /**
  * Map used for looking up the char data.  Will be created lazily.
  * @type {?Object}
@@ -20,14 +19,12 @@ goog.require('goog.i18n.uChar');
  */
 goog.i18n.uCharNames.charData_ = null;
 
-
 /**
  * Gets the name of a character, if available, returns null otherwise.
  * @param {string} ch The character.
  * @return {?string} The name of the character.
  */
-goog.i18n.uCharNames.toName = function(ch) {
-  'use strict';
+goog.i18n.uCharNames.toName = (ch) => {
   if (!goog.i18n.uCharNames.charData_) {
     goog.i18n.uCharNames.createCharData();
   }
@@ -40,40 +37,36 @@ goog.i18n.uCharNames.toName = function(ch) {
     return names[ch];
   } else if (chCodeStr in names) {
     return names[chCode];
-  } else if (
-      0xFE00 <= chCode && chCode <= 0xFE0F ||
-      0xE0100 <= chCode && chCode <= 0xE01EF) {
+  } else if ((0xfe00 <= chCode && chCode <= 0xfe0f) || (0xe0100 <= chCode && chCode <= 0xe01ef)) {
     var seqnum;
-    if (0xFE00 <= chCode && chCode <= 0xFE0F) {
+    if (0xfe00 <= chCode && chCode <= 0xfe0f) {
       // Variation selectors from 1 to 16.
-      seqnum = chCode - 0xFDFF;
+      seqnum = chCode - 0xfdff;
     } else {
       // Variation selectors from 17 to 256.
-      seqnum = chCode - 0xE00EF;
+      seqnum = chCode - 0xe00ef;
     }
 
     /** @desc Variation selector with the sequence number. */
-    var MSG_VARIATION_SELECTOR_SEQNUM = goog.getMsg(
-        'Variation Selector - {$seqnum}', {'seqnum': String(seqnum)});
+    var MSG_VARIATION_SELECTOR_SEQNUM = goog.getMsg('Variation Selector - {$seqnum}', {
+      seqnum: String(seqnum),
+    });
     return MSG_VARIATION_SELECTOR_SEQNUM;
   }
   return null;
 };
-
 
 /**
  * Following lines are programatically created.
  * Details: https://sites/cibu/character-picker.
  **/
 
-
 /**
  * Sets up the character map, lazily.  Some characters are indexed by their
  * decimal value.
  * @protected
  */
-goog.i18n.uCharNames.createCharData = function() {
-  'use strict';
+goog.i18n.uCharNames.createCharData = () => {
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -84,7 +77,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_ARABIC_SIGN_SANAH = goog.getMsg('Arabic Sign Sanah');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -93,9 +85,7 @@ goog.i18n.uCharNames.createCharData = function() {
    *   as consise as possible. More details:
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
-  var MSG_CP_CANADIAN_SYLLABICS_HYPHEN =
-      goog.getMsg('Canadian Syllabics Hyphen');
-
+  var MSG_CP_CANADIAN_SYLLABICS_HYPHEN = goog.getMsg('Canadian Syllabics Hyphen');
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -107,7 +97,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_ARABIC_SIGN_SAFHA = goog.getMsg('Arabic Sign Safha');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -117,7 +106,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_ARABIC_FOOTNOTE_MARKER = goog.getMsg('Arabic Footnote Marker');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -129,7 +117,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_FOUR_PER_EM_SPACE = goog.getMsg('Four-per-em Space');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -139,7 +126,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_THREE_PER_EM_SPACE = goog.getMsg('Three-per-em Space');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -151,7 +137,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_FIGURE_SPACE = goog.getMsg('Figure Space');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -161,7 +146,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_MONGOLIAN_SOFT_HYPHEN = goog.getMsg('Mongolian Soft Hyphen');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -173,7 +157,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_THIN_SPACE = goog.getMsg('Thin Space');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -183,7 +166,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_SOFT_HYPHEN = goog.getMsg('Soft Hyphen');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -195,7 +177,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_ZERO_WIDTH_SPACE = goog.getMsg('Zero Width Space');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -205,7 +186,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_ARMENIAN_HYPHEN = goog.getMsg('Armenian Hyphen');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -217,7 +197,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_ZERO_WIDTH_JOINER = goog.getMsg('Zero Width Joiner');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -227,7 +206,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_EM_SPACE = goog.getMsg('Em Space');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -239,7 +217,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_SYRIAC_ABBREVIATION_MARK = goog.getMsg('Syriac Abbreviation Mark');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -248,9 +225,7 @@ goog.i18n.uCharNames.createCharData = function() {
    *   as consise as possible. More details:
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
-  var MSG_CP_MONGOLIAN_VOWEL_SEPARATOR =
-      goog.getMsg('Mongolian Vowel Separator');
-
+  var MSG_CP_MONGOLIAN_VOWEL_SEPARATOR = goog.getMsg('Mongolian Vowel Separator');
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -262,7 +237,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_NON_BREAKING_HYPHEN = goog.getMsg('Non-breaking Hyphen');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -272,7 +246,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_HYPHEN = goog.getMsg('Hyphen');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -284,7 +257,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_EM_QUAD = goog.getMsg('Em Quad');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -294,7 +266,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_EN_SPACE = goog.getMsg('En Space');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -306,7 +277,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_HORIZONTAL_BAR = goog.getMsg('Horizontal Bar');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -316,7 +286,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_EM_DASH = goog.getMsg('Em Dash');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -328,6 +297,15 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_DOUBLE_OBLIQUE_HYPHEN = goog.getMsg('Double Oblique Hyphen');
 
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
+  var MSG_CP_MUSICAL_SYMBOL_END_PHRASE = goog.getMsg('Musical Symbol End Phrase');
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -337,21 +315,7 @@ goog.i18n.uCharNames.createCharData = function() {
    *   as consise as possible. More details:
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
-  var MSG_CP_MUSICAL_SYMBOL_END_PHRASE =
-      goog.getMsg('Musical Symbol End Phrase');
-
-
-  /**
-   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-   *   shown to a document editing user trying to insert a special character.
-   *   The balloon help would appear while the user hovers over the character
-   *   displayed. Newlines are not allowed; translation should be a noun and
-   *   as consise as possible. More details:
-   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
-   */
-  var MSG_CP_MEDIUM_MATHEMATICAL_SPACE =
-      goog.getMsg('Medium Mathematical Space');
-
+  var MSG_CP_MEDIUM_MATHEMATICAL_SPACE = goog.getMsg('Medium Mathematical Space');
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -363,7 +327,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_WAVE_DASH = goog.getMsg('Wave Dash');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -373,7 +336,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_SPACE = goog.getMsg('Space');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -385,7 +347,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_HYPHEN_WITH_DIAERESIS = goog.getMsg('Hyphen With Diaeresis');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -395,7 +356,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_EN_QUAD = goog.getMsg('En Quad');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -407,7 +367,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_RIGHT_TO_LEFT_EMBEDDING = goog.getMsg('Right-to-left Embedding');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -417,7 +376,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_SIX_PER_EM_SPACE = goog.getMsg('Six-per-em Space');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -429,7 +387,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_HYPHEN_MINUS = goog.getMsg('Hyphen-minus');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -438,9 +395,7 @@ goog.i18n.uCharNames.createCharData = function() {
    *   as consise as possible. More details:
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
-  var MSG_CP_POP_DIRECTIONAL_FORMATTING =
-      goog.getMsg('Pop Directional Formatting');
-
+  var MSG_CP_POP_DIRECTIONAL_FORMATTING = goog.getMsg('Pop Directional Formatting');
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -452,7 +407,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_NARROW_NO_BREAK_SPACE = goog.getMsg('Narrow No-break Space');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -463,7 +417,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_RIGHT_TO_LEFT_OVERRIDE = goog.getMsg('Right-to-left Override');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -472,9 +425,9 @@ goog.i18n.uCharNames.createCharData = function() {
    *   as consise as possible. More details:
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
-  var MSG_CP_PRESENTATION_FORM_FOR_VERTICAL_EM_DASH =
-      goog.getMsg('Presentation Form For Vertical Em Dash');
-
+  var MSG_CP_PRESENTATION_FORM_FOR_VERTICAL_EM_DASH = goog.getMsg(
+    'Presentation Form For Vertical Em Dash'
+  );
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -486,7 +439,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_WAVY_DASH = goog.getMsg('Wavy Dash');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -495,9 +447,9 @@ goog.i18n.uCharNames.createCharData = function() {
    *   as consise as possible. More details:
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
-  var MSG_CP_PRESENTATION_FORM_FOR_VERTICAL_EN_DASH =
-      goog.getMsg('Presentation Form For Vertical En Dash');
-
+  var MSG_CP_PRESENTATION_FORM_FOR_VERTICAL_EN_DASH = goog.getMsg(
+    'Presentation Form For Vertical En Dash'
+  );
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -509,7 +461,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_KHMER_VOWEL_INHERENT_AA = goog.getMsg('Khmer Vowel Inherent Aa');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -519,7 +470,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_KHMER_VOWEL_INHERENT_AQ = goog.getMsg('Khmer Vowel Inherent Aq');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -531,7 +481,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_PUNCTUATION_SPACE = goog.getMsg('Punctuation Space');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -541,7 +490,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_HALFWIDTH_HANGUL_FILLER = goog.getMsg('Halfwidth Hangul Filler');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -553,7 +501,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_KAITHI_NUMBER_SIGN = goog.getMsg('Kaithi Number Sign');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -563,7 +510,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_LEFT_TO_RIGHT_EMBEDDING = goog.getMsg('Left-to-right Embedding');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -575,7 +521,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_HEBREW_PUNCTUATION_MAQAF = goog.getMsg('Hebrew Punctuation Maqaf');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -585,7 +530,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_IDEOGRAPHIC_SPACE = goog.getMsg('Ideographic Space');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -597,7 +541,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_HAIR_SPACE = goog.getMsg('Hair Space');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -607,7 +550,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_NO_BREAK_SPACE = goog.getMsg('No-break Space');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -619,7 +561,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_FULLWIDTH_HYPHEN_MINUS = goog.getMsg('Fullwidth Hyphen-minus');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -629,7 +570,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_PARAGRAPH_SEPARATOR = goog.getMsg('Paragraph Separator');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -641,7 +581,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_LEFT_TO_RIGHT_OVERRIDE = goog.getMsg('Left-to-right Override');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -652,7 +591,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_SMALL_HYPHEN_MINUS = goog.getMsg('Small Hyphen-minus');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -661,9 +599,7 @@ goog.i18n.uCharNames.createCharData = function() {
    *   as consise as possible. More details:
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
-  var MSG_CP_COMBINING_GRAPHEME_JOINER =
-      goog.getMsg('Combining Grapheme Joiner');
-
+  var MSG_CP_COMBINING_GRAPHEME_JOINER = goog.getMsg('Combining Grapheme Joiner');
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -675,7 +611,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_ZERO_WIDTH_NON_JOINER = goog.getMsg('Zero Width Non-joiner');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -684,9 +619,7 @@ goog.i18n.uCharNames.createCharData = function() {
    *   as consise as possible. More details:
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
-  var MSG_CP_MUSICAL_SYMBOL_BEGIN_PHRASE =
-      goog.getMsg('Musical Symbol Begin Phrase');
-
+  var MSG_CP_MUSICAL_SYMBOL_BEGIN_PHRASE = goog.getMsg('Musical Symbol Begin Phrase');
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -698,7 +631,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_ARABIC_NUMBER_SIGN = goog.getMsg('Arabic Number Sign');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -708,7 +640,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_RIGHT_TO_LEFT_MARK = goog.getMsg('Right-to-left Mark');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -720,7 +651,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_OGHAM_SPACE_MARK = goog.getMsg('Ogham Space Mark');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -730,7 +660,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_SMALL_EM_DASH = goog.getMsg('Small Em Dash');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -742,7 +671,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_LEFT_TO_RIGHT_MARK = goog.getMsg('Left-to-right Mark');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -752,7 +680,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_ARABIC_END_OF_AYAH = goog.getMsg('Arabic End Of Ayah');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -764,7 +691,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_HANGUL_CHOSEONG_FILLER = goog.getMsg('Hangul Choseong Filler');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -774,7 +700,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_HANGUL_FILLER = goog.getMsg('Hangul Filler');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -786,7 +711,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_FUNCTION_APPLICATION = goog.getMsg('Function Application');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -796,7 +720,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_HANGUL_JUNGSEONG_FILLER = goog.getMsg('Hangul Jungseong Filler');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -808,7 +731,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_INVISIBLE_SEPARATOR = goog.getMsg('Invisible Separator');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -818,7 +740,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_INVISIBLE_TIMES = goog.getMsg('Invisible Times');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -830,7 +751,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_INVISIBLE_PLUS = goog.getMsg('Invisible Plus');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -840,7 +760,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_WORD_JOINER = goog.getMsg('Word Joiner');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -852,7 +771,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_LINE_SEPARATOR = goog.getMsg('Line Separator');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -861,9 +779,7 @@ goog.i18n.uCharNames.createCharData = function() {
    *   as consise as possible. More details:
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
-  var MSG_CP_KATAKANA_HIRAGANA_DOUBLE_HYPHEN =
-      goog.getMsg('Katakana-hiragana Double Hyphen');
-
+  var MSG_CP_KATAKANA_HIRAGANA_DOUBLE_HYPHEN = goog.getMsg('Katakana-hiragana Double Hyphen');
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -875,7 +791,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_EN_DASH = goog.getMsg('En Dash');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -884,9 +799,7 @@ goog.i18n.uCharNames.createCharData = function() {
    *   as consise as possible. More details:
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
-  var MSG_CP_MUSICAL_SYMBOL_BEGIN_BEAM =
-      goog.getMsg('Musical Symbol Begin Beam');
-
+  var MSG_CP_MUSICAL_SYMBOL_BEGIN_BEAM = goog.getMsg('Musical Symbol Begin Beam');
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -898,7 +811,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_FIGURE_DASH = goog.getMsg('Figure Dash');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -908,7 +820,6 @@ goog.i18n.uCharNames.createCharData = function() {
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
   var MSG_CP_MUSICAL_SYMBOL_BEGIN_TIE = goog.getMsg('Musical Symbol Begin Tie');
-
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -920,7 +831,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_MUSICAL_SYMBOL_END_BEAM = goog.getMsg('Musical Symbol End Beam');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -929,9 +839,7 @@ goog.i18n.uCharNames.createCharData = function() {
    *   as consise as possible. More details:
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
-  var MSG_CP_MUSICAL_SYMBOL_BEGIN_SLUR =
-      goog.getMsg('Musical Symbol Begin Slur');
-
+  var MSG_CP_MUSICAL_SYMBOL_BEGIN_SLUR = goog.getMsg('Musical Symbol Begin Slur');
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -943,7 +851,6 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_MUSICAL_SYMBOL_END_TIE = goog.getMsg('Musical Symbol End Tie');
 
-
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
    *   shown to a document editing user trying to insert a special character.
@@ -952,9 +859,7 @@ goog.i18n.uCharNames.createCharData = function() {
    *   as consise as possible. More details:
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
-  var MSG_CP_INTERLINEAR_ANNOTATION_ANCHOR =
-      goog.getMsg('Interlinear Annotation Anchor');
-
+  var MSG_CP_INTERLINEAR_ANNOTATION_ANCHOR = goog.getMsg('Interlinear Annotation Anchor');
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -966,6 +871,15 @@ goog.i18n.uCharNames.createCharData = function() {
    */
   var MSG_CP_MUSICAL_SYMBOL_END_SLUR = goog.getMsg('Musical Symbol End Slur');
 
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
+  var MSG_CP_INTERLINEAR_ANNOTATION_TERMINATOR = goog.getMsg('Interlinear Annotation Terminator');
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -975,9 +889,7 @@ goog.i18n.uCharNames.createCharData = function() {
    *   as consise as possible. More details:
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
-  var MSG_CP_INTERLINEAR_ANNOTATION_TERMINATOR =
-      goog.getMsg('Interlinear Annotation Terminator');
-
+  var MSG_CP_INTERLINEAR_ANNOTATION_SEPARATOR = goog.getMsg('Interlinear Annotation Separator');
 
   /**
    * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
@@ -987,20 +899,7 @@ goog.i18n.uCharNames.createCharData = function() {
    *   as consise as possible. More details:
    *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
    */
-  var MSG_CP_INTERLINEAR_ANNOTATION_SEPARATOR =
-      goog.getMsg('Interlinear Annotation Separator');
-
-
-  /**
-   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-   *   shown to a document editing user trying to insert a special character.
-   *   The balloon help would appear while the user hovers over the character
-   *   displayed. Newlines are not allowed; translation should be a noun and
-   *   as consise as possible. More details:
-   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
-   */
-  var MSG_CP_ZERO_WIDTH_NO_BREAK_SPACE =
-      goog.getMsg('Zero Width No-break Space');
+  var MSG_CP_ZERO_WIDTH_NO_BREAK_SPACE = goog.getMsg('Zero Width No-break Space');
 
   goog.i18n.uCharNames.charData_ = {
     '\u0601': MSG_CP_ARABIC_SIGN_SANAH,
@@ -1085,6 +984,6 @@ goog.i18n.uCharNames.createCharData = function() {
     '\u1D178': MSG_CP_MUSICAL_SYMBOL_END_SLUR,
     '\uFFFB': MSG_CP_INTERLINEAR_ANNOTATION_TERMINATOR,
     '\uFFFA': MSG_CP_INTERLINEAR_ANNOTATION_SEPARATOR,
-    '\uFEFF': MSG_CP_ZERO_WIDTH_NO_BREAK_SPACE
+    '\uFEFF': MSG_CP_ZERO_WIDTH_NO_BREAK_SPACE,
   };
 };

@@ -5,7 +5,6 @@
  */
 
 goog.module('goog.fx.CssSpriteAnimationTest');
-goog.setTestOnly();
 
 const Box = goog.require('goog.math.Box');
 const CssSpriteAnimation = goog.require('goog.fx.CssSpriteAnimation');
@@ -30,15 +29,20 @@ function assertBackgroundPosition(x, y) {
     if (x == y) {
       // when x and y are the same the browser sometimes collapse the prop
       assertTrue(
-          message,
-          bgPos == x ||  // in case of 0 without a unit
-              bgPos == `${x}px` || bgPos == `${x} ${y}` ||
-              bgPos == `${x}px ${y}px`);
+        message,
+        bgPos == x || // in case of 0 without a unit
+          bgPos == `${x}px` ||
+          bgPos == `${x} ${y}` ||
+          bgPos == `${x}px ${y}px`
+      );
     } else {
       assertTrue(
-          message,
-          bgPos == `${x} ${y}` || bgPos == `${x}px ${y}` ||
-              bgPos == `${x} ${y}px` || bgPos == `${x}px ${y}px`);
+        message,
+        bgPos == `${x} ${y}` ||
+          bgPos == `${x}px ${y}` ||
+          bgPos == `${x} ${y}px` ||
+          bgPos == `${x}px ${y}px`
+      );
     }
   }
 }
@@ -93,8 +97,7 @@ testSuite({
   },
 
   testAnimation_disableLoop() {
-    anim = new CssSpriteAnimation(
-        el, size, box, time, undefined, true /* opt_disableLoop */);
+    anim = new CssSpriteAnimation(el, size, box, time, undefined, true /* opt_disableLoop */);
     anim.play();
 
     assertBackgroundPosition(0, 0);

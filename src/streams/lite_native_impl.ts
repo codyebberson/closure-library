@@ -33,7 +33,8 @@ class NativeReadableStream {
   /** @override */
   getReader() {
     return new NativeReadableStreamDefaultReader(
-        /** @type {!ReadableStreamDefaultReader} */ (this.stream.getReader()));
+      /** @type {!ReadableStreamDefaultReader} */ (this.stream.getReader())
+    );
   }
 }
 
@@ -47,8 +48,7 @@ function newReadableStream(underlyingSource) {
   /** @const {!ReadableStreamSource} */
   const source = {
     start(controller) {
-      return underlyingSource.start(
-          new NativeReadableStreamDefaultController(controller));
+      return underlyingSource.start(new NativeReadableStreamDefaultController(controller));
     },
   };
   const stream = new ReadableStream(source);
